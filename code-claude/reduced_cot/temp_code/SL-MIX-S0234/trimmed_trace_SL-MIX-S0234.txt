@@ -1,0 +1,201 @@
+98
+priority_value
+---
+83 active_nodes = ['node1', 'node2', 'primary_a', 'backup_b']
+83 ['network_data', 'active_nodes'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']"]
+86 connections = {'A-B': 5, 'B-C': 3, 'A-C': 2, 'C-D': 7}
+86 ['network_data', 'active_nodes', 'connections'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{A-B: 5, B-C: 3, A-C: 2, ...}']
+87 traffic_pattern = [45, 80, 60, 30]
+87 ['network_data', 'active_nodes', 'connections', 'traffic_pattern'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{A-B: 5, B-C: 3, A-C: 2, ...}', '[45, 80, 60, 30]']
+PARAM_MAPPING {'connections': {'actual_var': 'connections', 'value': {'A-B': 5, 'B-C': 3, 'A-C': 2, 'C-D': 7}}, 'traffic_pattern': {'actual_var': 'traffic_pattern', 'value': [45, 80, 60, 30]}}
+FUNCTION_ENTER 1 calculate_network_load def calculate_network_load(connections, traffic_pattern):
+1 ['connections', 'traffic_pattern'] [{'_type': 'dict', '_items': {'A-B': {'_type': 'int', '_value': 5}, 'B-C': {'_type': 'int', '_value': 3}, 'A-C': {'_type': 'int', '_value': 2}, 'C-D': {'_type': 'int', '_value': 7}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 30}], '_len': 4}]
+3 load_factor = sum(connections.values()) * 0.15
+3 ['connections', 'traffic_pattern', 'load_factor'] ['{A-B: 5, B-C: 3, A-C: 2, ...}', '[45, 80, 60, 30]', '2.55']
+4 for pattern in traffic_pattern:
+4 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '2.55', '45']
+5 if pattern > 75:
+5 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '2.55', '45']
+8 load_factor += pattern * 0.1
+8 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '7.05', '45']
+4 for pattern in traffic_pattern:
+4 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '7.05', '80']
+5 if pattern > 75:
+5 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '7.05', '80']
+6 load_factor += pattern * 0.25
+6 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '27.05', '80']
+4 for pattern in traffic_pattern:
+4 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '27.05', '60']
+5 if pattern > 75:
+5 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '27.05', '60']
+8 load_factor += pattern * 0.1
+8 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '33.05', '60']
+4 for pattern in traffic_pattern:
+4 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '33.05', '30']
+5 if pattern > 75:
+5 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '33.05', '30']
+8 load_factor += pattern * 0.1
+8 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '36.05', '30']
+4 for pattern in traffic_pattern:
+4 ['traffic_pattern', 'load_factor', 'pattern'] ['[45, 80, 60, 30]', '36.05', '30']
+9 return load_factor
+9 ['load_factor'] ['36.05']
+FUNCTION_RETURN 9 calculate_network_load {'_type': 'float', '_value': 36.05}
+93 route_map = {'node1': 0.75, 'node2': 0.85, 'primary_a': 0.65}
+93 ['network_data', 'active_nodes', 'route_map'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 0.75, node2: 0.85, primary_a: 0.65}']
+PARAM_MAPPING {'route_map': {'actual_var': 'route_map', 'value': {'node1': 0.75, 'node2': 0.85, 'primary_a': 0.65}}, 'start_point': {'actual_var': "'node2'", 'value': "'node2'"}}
+FUNCTION_ENTER 11 optimize_route def optimize_route(route_map, start_point):
+11 ['route_map', 'start_point'] [{'_type': 'dict', '_items': {'node1': {'_type': 'float', '_value': 0.75}, 'node2': {'_type': 'float', '_value': 0.85}, 'primary_a': {'_type': 'float', '_value': 0.65}}, '_len': 3}, {'_type': 'str', '_value': 'node2'}]
+13 if start_point not in route_map:
+13 ['route_map', 'start_point'] ['{node1: 0.75, node2: 0.85, primary_a: 0.65}', "'node2'"]
+16 efficiency = route_map[start_point] * 2
+16 ['route_map', 'start_point', 'efficiency'] ['{node1: 0.75, node2: 0.85, primary_a: 0.65}', "'node2'", '1.7']
+17 hop_count = len(route_map) - 2
+17 ['route_map', 'efficiency', 'hop_count'] ['{node1: 0.75, node2: 0.85, primary_a: 0.65}', '1.7', '1']
+20 if hop_count > 5:
+20 ['efficiency', 'hop_count'] ['1.7', '1']
+23 return efficiency * 1.2
+23 ['efficiency'] ['1.7']
+FUNCTION_RETURN 23 optimize_route {'_type': 'float', '_value': 2.04}
+97 priority_value = calculate_final_priority(network_data, active_nodes)
+97 ['network_data', 'active_nodes'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']"]
+PARAM_MAPPING {'network_data': {'actual_var': 'network_data', 'value': {'node1': {'latency': 25, 'bandwidth': 100, 'reliability': 0.95}, 'node2': {'latency': 15, 'bandwidth': 80, 'reliability': 0.99, 'critical': True}, 'primary_a': {'latency': 30, 'bandwidth': 120, 'reliability': 0.9}, 'backup_b': {'latency': 50, 'bandwidth': 40, 'reliability': 0.85}, 'node5': {'latency': 35, 'bandwidth': 70, 'reliability': 0.92}}}, 'active_nodes': {'actual_var': 'active_nodes', 'value': ['node1', 'node2', 'primary_a', 'backup_b']}}
+FUNCTION_ENTER 25 calculate_final_priority def calculate_final_priority(network_data, active_nodes):
+25 ['network_data', 'active_nodes'] [{'_type': 'dict', '_items': {'node1': {'_type': 'dict', '_items': {'latency': {'_type': 'int', '_value': 25}, 'bandwidth': {'_type': 'int', '_value': 100}, 'reliability': {'_type': 'float', '_value': 0.95}}, '_len': 3}, 'node2': {'_type': 'dict', '_items': {'latency': {'_type': 'int', '_value': 15}, 'bandwidth': {'_type': 'int', '_value': 80}, 'reliability': {'_type': 'float', '_value': 0.99}, 'critical': {'_type': 'bool', '_value': True}}, '_len': 4}, 'primary_a': {'_type': 'dict', '_items': {'latency': {'_type': 'int', '_value': 30}, 'bandwidth': {'_type': 'int', '_value': 120}, 'reliability': {'_type': 'float', '_value': 0.9}}, '_len': 3}, 'backup_b': {'_type': 'dict', '_items': {'latency': {'_type': 'int', '_value': 50}, 'bandwidth': {'_type': 'int', '_value': 40}, 'reliability': {'_type': 'float', '_value': 0.85}}, '_len': 3}, 'node5': {'_type': 'dict', '_items': {'latency': {'_type': 'int', '_value': 35}, 'bandwidth': {'_type': 'int', '_value': 70}, 'reliability': {'_type': 'float', '_value': 0.92}}, '_len': 3}}, '_len': 5}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'node1'}, {'_type': 'str', '_value': 'node2'}, {'_type': 'str', '_value': 'primary_a'}, {'_type': 'str', '_value': 'backup_b'}], '_len': 4}]
+27 node_weights = {}
+27 ['network_data', 'active_nodes', 'node_weights'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{}']
+28 total_weight = 0
+28 ['network_data', 'active_nodes', 'node_weights', 'total_weight'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{}', '0']
+31 for node in active_nodes:
+31 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{}', '0', "'node1'"]
+33 if node.startswith('backup'):
+33 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{}', '0', "'node1'"]
+35 elif node.startswith('primary'):
+35 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{}', '0', "'node1'"]
+41 node_weights[node] = 10
+41 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10}', '0', "'node1'"]
+43 total_weight += node_weights[node]
+43 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10}', '10', "'node1'"]
+31 for node in active_nodes:
+31 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10}', '10', "'node2'"]
+33 if node.startswith('backup'):
+33 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10}', '10', "'node2'"]
+35 elif node.startswith('primary'):
+35 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10}', '10', "'node2'"]
+41 node_weights[node] = 10
+41 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10}', '10', "'node2'"]
+43 total_weight += node_weights[node]
+43 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10}', '20', "'node2'"]
+31 for node in active_nodes:
+31 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10}', '20', "'primary_a'"]
+33 if node.startswith('backup'):
+33 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10}', '20', "'primary_a'"]
+35 elif node.startswith('primary'):
+35 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10}', '20', "'primary_a'"]
+36 node_weights[node] = 20
+36 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20}', '20', "'primary_a'"]
+38 if node == 'primary_main':
+38 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20}', '20', "'primary_a'"]
+43 total_weight += node_weights[node]
+43 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20}', '40', "'primary_a'"]
+31 for node in active_nodes:
+31 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20}', '40', "'backup_b'"]
+33 if node.startswith('backup'):
+33 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20}', '40', "'backup_b'"]
+34 node_weights[node] = 5
+34 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '40', "'backup_b'"]
+43 total_weight += node_weights[node]
+43 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'"]
+31 for node in active_nodes:
+31 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'"]
+46 priority_score = 0
+46 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '0']
+47 for node in active_nodes:
+47 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0']
+48 if node in network_data:
+48 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0']
+50 node_data = network_data[node]
+50 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0', '{latency: 25, bandwidth: 100, reliability: 0.95}']
+51 latency = node_data.get('latency', 100)
+51 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25']
+52 bandwidth = node_data.get('bandwidth', 10)
+52 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25', '100']
+53 reliability = node_data.get('reliability', 0.5)
+53 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25', '100', '0.95']
+56 node_score = (bandwidth / max(1, latency/10)) * reliability
+56 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '0', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25', '100', '0.95', '38.0']
+57 priority_score += node_score * (node_weights[node] / total_weight)
+57 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node1'", '8.444444444444445', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25', '100', '0.95', '38.0']
+47 for node in active_nodes:
+47 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25', '100', '0.95', '38.0']
+48 if node in network_data:
+48 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 25, bandwidth: 100, reliability: 0.95}', '25', '100', '0.95', '38.0']
+50 node_data = network_data[node]
+50 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '25', '100', '0.95', '38.0']
+51 latency = node_data.get('latency', 100)
+51 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '100', '0.95', '38.0']
+52 bandwidth = node_data.get('bandwidth', 10)
+52 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '80', '0.95', '38.0']
+53 reliability = node_data.get('reliability', 0.5)
+53 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '80', '0.99', '38.0']
+56 node_score = (bandwidth / max(1, latency/10)) * reliability
+56 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '8.444444444444445', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '80', '0.99', '52.800000000000004']
+57 priority_score += node_score * (node_weights[node] / total_weight)
+57 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'node2'", '20.177777777777777', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '80', '0.99', '52.800000000000004']
+47 for node in active_nodes:
+47 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '80', '0.99', '52.800000000000004']
+48 if node in network_data:
+48 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}', '15', '80', '0.99', '52.800000000000004']
+50 node_data = network_data[node]
+50 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 30, bandwidth: 120, reliability: 0.9}', '15', '80', '0.99', '52.800000000000004']
+51 latency = node_data.get('latency', 100)
+51 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '80', '0.99', '52.800000000000004']
+52 bandwidth = node_data.get('bandwidth', 10)
+52 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '120', '0.99', '52.800000000000004']
+53 reliability = node_data.get('reliability', 0.5)
+53 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '120', '0.9', '52.800000000000004']
+56 node_score = (bandwidth / max(1, latency/10)) * reliability
+56 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '20.177777777777777', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '120', '0.9', '36.0']
+57 priority_score += node_score * (node_weights[node] / total_weight)
+57 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'primary_a'", '36.17777777777778', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '120', '0.9', '36.0']
+47 for node in active_nodes:
+47 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '120', '0.9', '36.0']
+48 if node in network_data:
+48 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '{latency: 30, bandwidth: 120, reliability: 0.9}', '30', '120', '0.9', '36.0']
+50 node_data = network_data[node]
+50 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '{latency: 50, bandwidth: 40, reliability: 0.85}', '30', '120', '0.9', '36.0']
+51 latency = node_data.get('latency', 100)
+51 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '{latency: 50, bandwidth: 40, reliability: 0.85}', '50', '120', '0.9', '36.0']
+52 bandwidth = node_data.get('bandwidth', 10)
+52 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '{latency: 50, bandwidth: 40, reliability: 0.85}', '50', '40', '0.9', '36.0']
+53 reliability = node_data.get('reliability', 0.5)
+53 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_data', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '{latency: 50, bandwidth: 40, reliability: 0.85}', '50', '40', '0.85', '36.0']
+56 node_score = (bandwidth / max(1, latency/10)) * reliability
+56 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'latency', 'bandwidth', 'reliability', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.17777777777778', '50', '40', '0.85', '6.8']
+57 priority_score += node_score * (node_weights[node] / total_weight)
+57 ['network_data', 'active_nodes', 'node_weights', 'total_weight', 'node', 'priority_score', 'node_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', '45', "'backup_b'", '36.93333333333333', '6.8']
+47 for node in active_nodes:
+47 ['network_data', 'active_nodes', 'node_weights', 'node', 'priority_score'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', "'backup_b'", '36.93333333333333']
+60 unused_metric = sum(node_weights.values()) * 0.25
+60 ['network_data', 'active_nodes', 'node_weights', 'node', 'priority_score', 'unused_metric'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", '{node1: 10, node2: 10, primary_a: 20, ...}', "'backup_b'", '36.93333333333333', '11.25']
+61 if unused_metric > 100:
+61 ['network_data', 'active_nodes', 'node', 'priority_score', 'unused_metric'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", "'backup_b'", '36.93333333333333', '11.25']
+65 network_factor = 1.0
+65 ['network_data', 'active_nodes', 'node', 'priority_score', 'network_factor'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", "'backup_b'", '36.93333333333333', '1.0']
+66 for node, data in network_data.items():
+66 ['network_data', 'active_nodes', 'node', 'priority_score', 'network_factor', 'data'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", "'node1'", '36.93333333333333', '1.0', '{latency: 25, bandwidth: 100, reliability: 0.95}']
+67 if node in active_nodes and data.get('critical', False):
+67 ['network_data', 'active_nodes', 'node', 'priority_score', 'network_factor', 'data'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", "'node1'", '36.93333333333333', '1.0', '{latency: 25, bandwidth: 100, reliability: 0.95}']
+66 for node, data in network_data.items():
+66 ['network_data', 'active_nodes', 'node', 'priority_score', 'network_factor', 'data'] ['{node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}', "['node1', 'node2', 'primary_a', 'backup_b']", "'node2'", '36.93333333333333', '1.0', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}']
+67 if node in active_nodes and data.get('critical', False):
+67 ['active_nodes', 'node', 'priority_score', 'network_factor', 'data'] ["['node1', 'node2', 'primary_a', 'backup_b']", "'node2'", '36.93333333333333', '1.0', '{latency: 15, bandwidth: 80, reliability: 0.99, ...}']
+68 network_factor = 1.25
+68 ['priority_score', 'network_factor'] ['36.93333333333333', '1.25']
+69 break
+69 ['priority_score', 'network_factor'] ['36.93333333333333', '1.25']
+71 return round(priority_score * network_factor, 2)
+71 ['priority_score', 'network_factor'] ['36.93333333333333', '1.25']
+FUNCTION_RETURN 71 calculate_final_priority {'_type': 'float', '_value': 46.17}
+98 print(f"Result: {priority_value}")
+98 ['priority_value'] ['46.17']

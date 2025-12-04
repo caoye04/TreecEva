@@ -1,0 +1,110 @@
+Target: Find the value of variable optimal_threshold after [line 72] executes
+
+[line 36]  intensity_data = [42, 57, 68, 78, 82, 90, 95, 120, 135, 142]
+Compute: [42, 57, 68, 78, 82, 90, 95, 120, 135, 142] = [42, 57, 68, 78, 82, ...]
+[line 39]  base_thresholds = [60, 70, 80, 90, 100]
+Compute: [60, 70, 80, 90, 100] = [60, 70, 80, 90, 100]
+[line 44]  valid_thresholds = [t for t in base_thresholds if 60 <= t <= 100]
+Compute: [t for t in base_thresholds if 60 <= t <= 100], where t=60 (an unknown source), base_thresholds=[60, 70, 80, 90, 100] (defined at [line 39]) = ?
+[line 47]  threshold_scores = analyze_thresholds(intensity_data, valid_thresholds)
+Call function analyze_thresholds(intensity_data=[42, 57, 68, 78, 82, ...] (defined at [line 36]), valid_thresholds=[60, 70, 80, 90, 100] (defined at [line 44]))
+[line 4]  def analyze_thresholds(data_points, thresholds):
+Enter function analyze_thresholds: data_points=[42, 57, 68, 78, 82, ...] (intensity_data defined at [line 36]), thresholds=[60, 70, 80, 90, 100] (valid_thresholds defined at [line 44])
+  [line 6]  results = {}
+  Compute: {} = {}
+  [line 10]  for t in thresholds:
+  Loop Start: t takes its first value 60
+  [line 12]  above = len([x for x in data_points if x > t])
+  Call function len([x for x in data_points if x > t])
+  [line 13]  below = len(data_points) - above
+  Compute: len(data_points) - above, where data_points=[42, 57, 68, 78, 82, ...] (parameter data_points defined at [line 36]), above=8 (defined at [line 12]) = 2
+  [line 16]  precision = above / len(data_points) if above > 0 else 0
+  Compute: above / len(data_points) if above > 0 else 0, where above=8 (defined at [line 12]), data_points=[42, 57, 68, 78, 82, ...] (parameter data_points defined at [line 36]) = 0.8
+  [line 17]  recall = below / (below + above/2) if below + above/2 > 0 else 0
+  Compute: below / (below + above/2) if below + above/2 > 0 else 0, where below=2 (defined at [line 13]), above=8 (defined at [line 12]) = 0.3333333333333333
+  [line 24]  if precision > 0 and recall > 0:
+  Condition: True, entering 'if' block
+  [line 25]  f_score = 2 * (precision * recall) / (precision + recall)
+  Compute: 2 * (precision * recall) / (precision + recall), where precision=0.8 (defined at [line 16]), recall=0.3333333333333333 (defined at [line 17]) = 0.47058823529411764
+  [line 29]  results[t] = f_score
+  (Missing param: 'result')
+  [line 10]  for t in thresholds:
+  Loop Iteration: t is now 70 (iteration 2)
+  [line 13]  below = len(data_points) - above
+  Compute: len(data_points) - above, where data_points=[42, 57, 68, 78, 82, ...] (parameter data_points defined at [line 36]), above=7 (defined at [line 12]) = 3
+  [line 16]  precision = above / len(data_points) if above > 0 else 0
+  Compute: above / len(data_points) if above > 0 else 0, where above=7 (defined at [line 12]), data_points=[42, 57, 68, 78, 82, ...] (parameter data_points defined at [line 36]) = 0.7
+  [line 17]  recall = below / (below + above/2) if below + above/2 > 0 else 0
+  Compute: below / (below + above/2) if below + above/2 > 0 else 0, where below=3 (defined at [line 13]), above=7 (defined at [line 12]) = 0.46153846153846156
+  [line 24]  if precision > 0 and recall > 0:
+  Condition: True, entering 'if' block
+  [line 25]  f_score = 2 * (precision * recall) / (precision + recall)
+  Compute: 2 * (precision * recall) / (precision + recall), where precision=0.7 (defined at [line 16]), recall=0.46153846153846156 (defined at [line 17]) = 0.5562913907284769
+  [line 29]  results[t] = f_score
+  (Missing param: 'result')
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+  [line 10]  for t in thresholds:
+  Loop Iteration: t is now 100 (iteration 5)
+  [line 13]  below = len(data_points) - above
+  Compute: len(data_points) - above, where data_points=[42, 57, 68, 78, 82, ...] (parameter data_points defined at [line 36]), above=3 (defined at [line 12]) = 7
+  [line 16]  precision = above / len(data_points) if above > 0 else 0
+  Compute: above / len(data_points) if above > 0 else 0, where above=3 (defined at [line 12]), data_points=[42, 57, 68, 78, 82, ...] (parameter data_points defined at [line 36]) = 0.3
+  [line 17]  recall = below / (below + above/2) if below + above/2 > 0 else 0
+  Compute: below / (below + above/2) if below + above/2 > 0 else 0, where below=7 (defined at [line 13]), above=3 (defined at [line 12]) = 0.8235294117647058
+  [line 24]  if precision > 0 and recall > 0:
+  Condition: True, entering 'if' block
+  [line 25]  f_score = 2 * (precision * recall) / (precision + recall)
+  Compute: 2 * (precision * recall) / (precision + recall), where precision=0.3 (defined at [line 16]), recall=0.8235294117647058 (defined at [line 17]) = 0.43979057591623033
+  [line 29]  results[t] = f_score
+  (Missing param: 'result')
+  [line 10]  for t in thresholds:
+  Loop End: Iteration finished
+  [line 31]  return results
+  Return: results={60: 0.47058823529411764, 70: 0.5562913907284769, 80: 0.5853658536585366, ...} (defined at [line 6])
+Function analyze_thresholds returns {60: 0.47058823529411764, 70: 0.5562913907284769, 80: 0.5853658536585366, ...}
+[line 50]  best_score = -1
+Compute: -1 = -1
+[line 51]  best_index = 0
+Assign: best_index = 0
+[line 54]  for i, t in enumerate(valid_thresholds):
+(Missing param: 'iter_var')
+[line 56]  if t % 30 == 0:
+Condition: True, entering 'if' block
+[line 54]  for i, t in enumerate(valid_thresholds):
+(Missing param: 'iter_var')
+[line 56]  if t % 30 == 0:
+Condition: True, entering 'if' block
+[line 60]  score = threshold_scores[t]
+Compute: threshold_scores[t], where threshold_scores={60: 0.47058823529411764, 70: 0.5562913907284769, 80: 0.5853658536585366, ...} (defined at [line 47]), t=70 (defined at [line 10]) = 0.5562913907284769
+[line 63]  if score > best_score:
+Condition: True, entering 'if' block
+[line 64]  best_score = score
+Compute: score, where score=0.5562913907284769 (defined at [line 60]) = 0.5562913907284769
+[line 65]  best_index = i
+Compute: i, where i=1 (an unknown source) = 1
+... [Line 54] repeats 2 more times ...
+... [Line 54] repeats 2 more times ...
+... [Line 54] repeats 2 more times ...
+... [Line 54] repeats 2 more times ...
+... [Line 54] repeats 2 more times ...
+... [Line 54] repeats 2 more times ...
+[line 54]  for i, t in enumerate(valid_thresholds):
+(Missing param: 'iter_var')
+[line 56]  if t % 30 == 0:
+Condition: True, entering 'if' block
+[line 60]  score = threshold_scores[t]
+Compute: threshold_scores[t], where threshold_scores={60: 0.47058823529411764, 70: 0.5562913907284769, 80: 0.5853658536585366, ...} (defined at [line 47]), t=100 (defined at [line 10]) = 0.43979057591623033
+[line 63]  if score > best_score:
+Condition: True, entering 'if' block
+[line 54]  for i, t in enumerate(valid_thresholds):
+Loop End: Iteration finished
+[line 72]  optimal_threshold = valid_thresholds[best_index]
+Compute: valid_thresholds[best_index], where valid_thresholds=[60, 70, 80, 90, 100] (defined at [line 44]), best_index=2 (defined at [line 65]) = 80
+
+Answer: optimal_threshold = 80 (last updated on defined at [line 72])

@@ -1,0 +1,43 @@
+40
+common_elements
+---
+PARAM_MAPPING {'parts_available': {'actual_var': 'parts_available', 'value': {'wrench': 5, 'screwdriver': 3, 'pliers': 2, 'hammer': 1, 'drill': 2}}, 'parts_needed': {'actual_var': 'parts_needed', 'value': {'wrench': 2, 'screwdriver': 2, 'pliers': 1, 'nails': 10, 'screws': 20}}, 'usage_history': {'actual_var': 'usage_history', 'value': ['wrench', 'screwdriver', 'pliers', 'wrench', 'hammer', 'drill', 'wrench']}}
+FUNCTION_ENTER 4 calculate_repair_efficiency def calculate_repair_efficiency(parts_available, parts_needed, usage_history):
+4 ['parts_available', 'parts_needed', 'usage_history'] [{'_type': 'dict', '_items': {'wrench': {'_type': 'int', '_value': 5}, 'screwdriver': {'_type': 'int', '_value': 3}, 'pliers': {'_type': 'int', '_value': 2}, 'hammer': {'_type': 'int', '_value': 1}, 'drill': {'_type': 'int', '_value': 2}}, '_len': 5}, {'_type': 'dict', '_items': {'wrench': {'_type': 'int', '_value': 2}, 'screwdriver': {'_type': 'int', '_value': 2}, 'pliers': {'_type': 'int', '_value': 1}, 'nails': {'_type': 'int', '_value': 10}, 'screws': {'_type': 'int', '_value': 20}}, '_len': 5}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'wrench'}, {'_type': 'str', '_value': 'screwdriver'}, {'_type': 'str', '_value': 'pliers'}, {'_type': 'str', '_value': 'wrench'}, {'_type': 'str', '_value': 'hammer'}, {'_type': 'str', '_value': 'drill'}, {'_type': 'str', '_value': 'wrench'}], '_len': 7}]
+11 for part, count in parts_available.items():
+11 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'wrench'", '5']
+12 if part not in parts_needed or count > parts_needed.get(part, 0):
+12 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'wrench'", '5']
+11 for part, count in parts_available.items():
+11 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'screwdriver'", '3']
+12 if part not in parts_needed or count > parts_needed.get(part, 0):
+12 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'screwdriver'", '3']
+11 for part, count in parts_available.items():
+11 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'pliers'", '2']
+12 if part not in parts_needed or count > parts_needed.get(part, 0):
+12 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'pliers'", '2']
+11 for part, count in parts_available.items():
+11 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'hammer'", '1']
+12 if part not in parts_needed or count > parts_needed.get(part, 0):
+12 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'hammer'", '1']
+11 for part, count in parts_available.items():
+11 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'drill'", '2']
+12 if part not in parts_needed or count > parts_needed.get(part, 0):
+12 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'drill'", '2']
+11 for part, count in parts_available.items():
+11 ['parts_available', 'parts_needed', 'part', 'count'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "'drill'", '2']
+16 inventory_set = set(parts_available.keys())
+16 ['parts_available', 'parts_needed', 'inventory_set'] ['{wrench: 5, screwdriver: 3, pliers: 2, ...}', '{wrench: 2, screwdriver: 2, pliers: 1, ...}', "{'hammer', 'pliers', 'screwdriver', 'wrench', 'drill'}"]
+17 required_set = set(parts_needed.keys())
+17 ['parts_needed', 'inventory_set', 'required_set'] ['{wrench: 2, screwdriver: 2, pliers: 1, ...}', "{'hammer', 'pliers', 'screwdriver', 'wrench', 'drill'}", "{'screws', 'pliers', 'nails', 'screwdriver', 'wrench'}"]
+33 efficiency_factor = 2.5
+33 ['inventory_set', 'required_set', 'efficiency_factor'] ["{'hammer', 'pliers', 'screwdriver', 'wrench', 'drill'}", "{'screws', 'pliers', 'nails', 'screwdriver', 'wrench'}", '2.5']
+34 if len(frequently_used.intersection(inventory_set)) >= 3:
+34 ['inventory_set', 'required_set', 'efficiency_factor'] ["{'hammer', 'pliers', 'screwdriver', 'wrench', 'drill'}", "{'screws', 'pliers', 'nails', 'screwdriver', 'wrench'}", '2.5']
+36 elif len(rarely_used.intersection(missing_parts_set)) >= 2:
+36 ['inventory_set', 'required_set', 'efficiency_factor'] ["{'hammer', 'pliers', 'screwdriver', 'wrench', 'drill'}", "{'screws', 'pliers', 'nails', 'screwdriver', 'wrench'}", '2.5']
+40 common_elements = len(inventory_set.intersection(required_set)) * efficiency_factor
+40 ['inventory_set', 'required_set', 'efficiency_factor', 'common_elements'] ["{'hammer', 'pliers', 'screwdriver', 'wrench', 'drill'}", "{'screws', 'pliers', 'nails', 'screwdriver', 'wrench'}", '2.5', '7.5']
+46 return common_elements
+46 ['common_elements'] ['7.5']
+FUNCTION_RETURN 46 calculate_repair_efficiency {'_type': 'float', '_value': 7.5}

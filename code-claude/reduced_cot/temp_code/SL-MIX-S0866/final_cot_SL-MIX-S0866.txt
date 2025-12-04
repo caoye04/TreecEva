@@ -1,0 +1,144 @@
+Target: Find the value of variable optimal_distribution after [line 97] executes
+
+[line 77]  sensor_readings = [45, 62, 38, 57, 42, 53, 47, 63, 38, 42, 51, 37]
+Compute: [45, 62, 38, 57, 42, 53, 47, 63, 38, 42, 51, 37] = [45, 62, 38, 57, 42, ...]
+[line 78]  threshold = 50
+Assign: threshold = 50
+[line 15]  def preprocess_readings(readings, calibration_factor=2.5):
+Enter function preprocess_readings: readings=[45, 62, 38, 57, 42, ...] (sensor_readings defined at [line 77]), calibration_factor=2.5
+  [line 17]  processed = []
+  Compute: [] = []
+  [line 18]  for r in readings:
+  Loop Start: r takes its first value 45
+  [line 20]  calibrated = r * calibration_factor
+  Compute: r * calibration_factor, where r=45 (defined at [line 18]), calibration_factor=2.5 (an unknown source) = 112.5
+  [line 23]  if calibrated > 100:
+  Condition: True, entering 'if' block
+  [line 24]  calibrated = calibrated * 0.95
+  Update: calibrated changed from 112.5 (defined at defined at [line 20]) to 112.5*0.95 = 106.875
+  [line 18]  for r in readings:
+  Loop Iteration: r is now 62 (iteration 2)
+  [line 20]  calibrated = r * calibration_factor
+  Compute: r * calibration_factor, where r=62 (defined at [line 18]), calibration_factor=2.5 (an unknown source) = 155.0
+  [line 23]  if calibrated > 100:
+  Condition: True, entering 'if' block
+  [line 24]  calibrated = calibrated * 0.95
+  Update: calibrated changed from 155.0 (defined at defined at [line 20]) to 155.0*0.95 = 147.25
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+... [Line 18] repeats 9 more times ...
+  [line 18]  for r in readings:
+  Loop Iteration: r is now 37 (iteration 12)
+  [line 20]  calibrated = r * calibration_factor
+  Compute: r * calibration_factor, where r=37 (defined at [line 18]), calibration_factor=2.5 (an unknown source) = 92.5
+  [line 23]  if calibrated > 100:
+  Condition: True, entering 'if' block
+  [line 25]  elif calibrated < 0:
+  'elif' Condition: True, entering block
+  [line 18]  for r in readings:
+  Loop End: Iteration finished
+  [line 30]  return processed
+  Return: processed=[106.88, 147.25, 95.0, 135.38, 99.75, ...] (defined at [line 17])
+Function preprocess_readings returns [106.88, 147.25, 95.0, 135.38, 99.75, ...]
+[line 4]  noise_counter = Counter(readings)
+Call function Counter(readings=[45, 62, 38, 57, 42, ...] (an unknown source))
+[line 5]  most_common = noise_counter.most_common(3)
+(Missing param: 'func_name')
+[line 8]  noise_metrics = {}
+Compute: {} = {}
+[line 9]  for value, count in most_common:
+(Missing param: 'iter_var')
+[line 10]  noise_metrics[value] = count * (value % 5)
+(Missing param: 'result')
+[line 9]  for value, count in most_common:
+(Missing param: 'iter_var')
+[line 10]  noise_metrics[value] = count * (value % 5)
+(Missing param: 'result')
+[line 9]  for value, count in most_common:
+(Missing param: 'iter_var')
+[line 10]  noise_metrics[value] = count * (value % 5)
+(Missing param: 'result')
+[line 9]  for value, count in most_common:
+Loop End: Iteration finished
+[line 13]  return sum(noise_metrics.values()) / max(1, len(noise_metrics))
+Return: sum(noise_metrics.values()) / max(1, len(noise_metrics))
+[line 85]  optimal_distribution = calculate_optimal_distribution(sensor_readings, threshold)
+Call function calculate_optimal_distribution(sensor_readings=[45, 62, 38, 57, 42, ...] (defined at [line 77]), threshold=50 (defined at [line 78]))
+[line 32]  def calculate_optimal_distribution(readings, threshold):
+Enter function calculate_optimal_distribution: readings=[45, 62, 38, 57, 42, ...] (sensor_readings defined at [line 77]), threshold=50 (threshold defined at [line 78])
+  [line 34]  frequency_map = defaultdict(int)
+  Call function defaultdict(int)
+  [line 45]  for reading in readings:
+  Loop Start: reading takes its first value 45
+  [line 46]  if reading > threshold:
+  Condition: True, entering 'if' block
+  [line 45]  for reading in readings:
+  Loop Iteration: reading is now 62 (iteration 2)
+  [line 46]  if reading > threshold:
+  Condition: True, entering 'if' block
+... [Line 45] repeats 9 more times ...
+... [Line 45] repeats 9 more times ...
+... [Line 45] repeats 9 more times ...
+... [Line 45] repeats 9 more times ...
+  [line 45]  for reading in readings:
+  Loop Iteration: reading is now 37 (iteration 12)
+  [line 46]  if reading > threshold:
+  Condition: True, entering 'if' block
+  [line 45]  for reading in readings:
+  Loop End: Iteration finished
+  [line 54]  metrics['threshold_ratio'] = metrics['above_threshold'] / max(1, metrics['below_threshold'])
+  (Missing param: 'result')
+  [line 59]  if metrics['average'] > threshold * 1.5:
+  Condition: True, entering 'if' block
+  [line 61]  elif metrics['average'] < threshold * 0.5:
+  'elif' Condition: True, entering block
+  [line 65]  frequency_items = sorted(frequency_map.items())
+  Call function sorted(frequency_map.items())
+  [line 66]  middle_idx = len(frequency_items) // 2
+  Compute: len(frequency_items) // 2, where frequency_items=[(35, 3), (40, 2), (45, 2), (50, 6), (60, 4)] (defined at [line 65]) = 2
+  [line 67]  optimal = frequency_items[middle_idx][0] if frequency_items else 0
+  Compute: frequency_items[middle_idx][0] if frequency_items else 0, where frequency_items=[(35, 3), (40, 2), (45, 2), (50, 6), (60, 4)] (defined at [line 65]), middle_idx=2 (defined at [line 66]) = 45
+  [line 70]  sorted_readings = sorted(readings)
+  Call function sorted(readings=[45, 62, 38, 57, 42, ...] (parameter readings defined at [line 77]))
+  [line 71]  median = sorted_readings[len(sorted_readings) // 2]
+  Compute: sorted_readings[len(sorted_readings) // 2], where sorted_readings=[37, 38, 38, 42, 42, ...] (defined at [line 70]) = 47
+  [line 74]  return (optimal + median) // 2
+  Return: (optimal + median) // 2
+Function calculate_optimal_distribution returns 46
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=45 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=62 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=38 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=57 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=42 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=53 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=47 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=63 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=38 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=42 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=51 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=37 (defined at [line 18]) = ?
+[line 89]  variance = sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings)
+Compute: sum((r - sum(sensor_readings)/len(sensor_readings))**2 for r in sensor_readings) / len(sensor_readings), where r=37 (defined at [line 18]) = ?
+[line 92]  if variance > 1000:
+Condition: True, entering 'if' block
+[line 94]  elif variance < 0:
+'elif' Condition: True, entering block
+[line 97]  print(f"Result: {optimal_distribution}")
+Output: f"Result: {optimal_distribution}"
+
+Answer: optimal_distribution = 46 (last updated on defined at [line 85])

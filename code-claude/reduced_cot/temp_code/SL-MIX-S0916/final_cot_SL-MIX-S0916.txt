@@ -1,0 +1,24 @@
+Target: Find the value of variable common_words after [line 22] executes
+
+[line 3]  text_a = "The quick brown fox jumps over the lazy dog"
+Assign: text_a = 'The quick brown fox jumps over the lazy dog'
+[line 4]  text_b = "A quick dog barks at the fox in the yard"
+Assign: text_b = 'A quick dog barks at the fox in the yard'
+[line 7]  text_a = text_a.lower()
+(Missing param: 'func_name')
+[line 8]  text_b = text_b.lower()
+(Missing param: 'func_name')
+[line 11]  words_a = text_a.split()
+(Missing param: 'func_name')
+[line 12]  words_b = text_b.split()
+(Missing param: 'func_name')
+[line 15]  stop_words = {'the', 'a', 'at', 'in'}
+Compute: {'the', 'a', 'at', 'in'} = {'at', 'in', 'the', 'a'}
+[line 18]  filtered_words_a = [word for word in words_a if word not in stop_words]
+Compute: [word for word in words_a if word not in stop_words], where word='the' (an unknown source), words_a=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source), stop_words={'at', 'in', 'the', 'a'} (defined at [line 15]) = ?
+[line 19]  filtered_words_b = [word for word in words_b if word not in stop_words]
+Compute: [word for word in words_b if word not in stop_words], where word='a' (an unknown source), words_b=['a', 'quick', 'dog', 'barks', 'at', ...] (an unknown source), stop_words={'at', 'in', 'the', 'a'} (defined at [line 15]) = ?
+[line 22]  common_words = set(filtered_words_a) & set(filtered_words_b)
+Compute: set(filtered_words_a) & set(filtered_words_b), where filtered_words_a=['quick', 'brown', 'fox', 'jumps', 'over', ...] (defined at [line 18]), filtered_words_b=['quick', 'dog', 'barks', 'fox', 'yard'] (defined at [line 19]) = {'dog', 'fox', 'quick'}
+
+Answer: common_words = {'dog', 'fox', 'quick'} (last updated on defined at [line 22])

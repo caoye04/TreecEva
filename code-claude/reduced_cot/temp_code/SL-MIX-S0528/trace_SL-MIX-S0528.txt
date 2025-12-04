@@ -1,0 +1,74 @@
+58 original_price = 250
+58 ['original_price'] [{'_type': 'int', '_value': 250}]
+59 loyalty_tier = 'Gold'
+59 ['original_price', 'loyalty_tier'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}]
+60 years_member = 8
+60 ['original_price', 'loyalty_tier', 'years_member'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}]
+63 membership_score = len(loyalty_tier) * years_member
+63 ['original_price', 'loyalty_tier', 'years_member', 'membership_score'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 32}]
+66 total_discount = calculate_discount(original_price, loyalty_tier, years_member)
+66 ['original_price', 'loyalty_tier', 'years_member', 'membership_score'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 32}]
+PARAM_MAPPING calculate_discount {'price': {'actual_var': 'original_price', 'value': 250}, 'tier': {'actual_var': 'loyalty_tier', 'value': 'Gold'}, 'years': {'actual_var': 'years_member', 'value': 8}}
+FUNCTION_ENTER 22 calculate_discount def calculate_discount(price, tier, years):
+22 ['price', 'tier', 'years'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}]
+DEPTH_2 25         'bronze': 5,
+25 ['price', 'tier', 'years'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}]
+DEPTH_2 26         'silver': 10,
+26 ['price', 'tier', 'years'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}]
+DEPTH_2 27         'gold': 15,
+27 ['price', 'tier', 'years'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}]
+DEPTH_2 28         'platinum': 20
+28 ['price', 'tier', 'years'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}]
+DEPTH_2 24     tier_discounts = {
+24 ['price', 'tier', 'years', 'tier_discounts'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}]
+DEPTH_2 32     base_discount = tier_discounts.get(tier.lower(), 0)
+32 ['price', 'tier', 'years', 'tier_discounts', 'base_discount'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}]
+DEPTH_2 35     loyalty_bonus = min(years * 0.5, 10)  # Cap at 10%
+35 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}]
+DEPTH_2 38     current_month = 3  # March
+38 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}]
+DEPTH_2 39     seasonal_factor = apply_seasonal_factor(current_month)
+39 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}]
+PARAM_MAPPING apply_seasonal_factor {'month': {'actual_var': 'current_month', 'value': 3}}
+FUNCTION_ENTER 1 apply_seasonal_factor def apply_seasonal_factor(month):
+1 ['month'] [{'_type': 'int', '_value': 3}]
+DEPTH_3 3     winter_months = [11, 12, 1, 2]
+3 ['month', 'winter_months'] [{'_type': 'int', '_value': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 4}]
+DEPTH_3 4     summer_months = [6, 7, 8]
+4 ['month', 'winter_months', 'summer_months'] [{'_type': 'int', '_value': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 8}], '_len': 3}]
+DEPTH_3 6     if month in winter_months:
+6 ['month', 'winter_months', 'summer_months'] [{'_type': 'int', '_value': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 8}], '_len': 3}]
+DEPTH_3 8     elif month in summer_months:
+8 ['month', 'winter_months', 'summer_months'] [{'_type': 'int', '_value': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 8}], '_len': 3}]
+DEPTH_3 11         return 1.0
+11 ['month', 'winter_months', 'summer_months'] [{'_type': 'int', '_value': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 11}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 8}], '_len': 3}]
+FUNCTION_RETURN 11 apply_seasonal_factor {'_type': 'float', '_value': 1.0}
+DEPTH_2 42     special_offer = 5 if price > 200 else 0
+42 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}]
+DEPTH_2 45     points = calculate_base_points(price)
+45 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}]
+PARAM_MAPPING calculate_base_points {'price': {'actual_var': 'price', 'value': 250}}
+FUNCTION_ENTER 13 calculate_base_points def calculate_base_points(price):
+13 ['price'] [{'_type': 'int', '_value': 250}]
+DEPTH_3 15     if price < 50:
+15 ['price'] [{'_type': 'int', '_value': 250}]
+DEPTH_3 17     elif price < 100:
+17 ['price'] [{'_type': 'int', '_value': 250}]
+DEPTH_3 20         return price * 1.0
+20 ['price'] [{'_type': 'int', '_value': 250}]
+FUNCTION_RETURN 20 calculate_base_points {'_type': 'float', '_value': 250.0}
+DEPTH_2 48     total_percentage = base_discount + loyalty_bonus
+48 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer', 'points', 'total_percentage'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 250.0}, {'_type': 'float', '_value': 19.0}]
+DEPTH_2 49     discount_amount = price * (total_percentage / 100)
+49 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer', 'points', 'total_percentage', 'discount_amount'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 250.0}, {'_type': 'float', '_value': 19.0}, {'_type': 'float', '_value': 47.5}]
+DEPTH_2 52     max_discount = price * 0.3
+52 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer', 'points', 'total_percentage', 'discount_amount', 'max_discount'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 250.0}, {'_type': 'float', '_value': 19.0}, {'_type': 'float', '_value': 47.5}, {'_type': 'float', '_value': 75.0}]
+DEPTH_2 53     final_discount = discount_amount if discount_amount <= max_discount else max_discount
+53 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer', 'points', 'total_percentage', 'discount_amount', 'max_discount', 'final_discount'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 250.0}, {'_type': 'float', '_value': 19.0}, {'_type': 'float', '_value': 47.5}, {'_type': 'float', '_value': 75.0}, {'_type': 'float', '_value': 47.5}]
+DEPTH_2 55     return round(final_discount, 2)
+55 ['price', 'tier', 'years', 'tier_discounts', 'base_discount', 'loyalty_bonus', 'current_month', 'seasonal_factor', 'special_offer', 'points', 'total_percentage', 'discount_amount', 'max_discount', 'final_discount'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'dict', '_items': {'bronze': {'_type': 'int', '_value': 5}, 'silver': {'_type': 'int', '_value': 10}, 'gold': {'_type': 'int', '_value': 15}, 'platinum': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'int', '_value': 15}, {'_type': 'float', '_value': 4.0}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 1.0}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 250.0}, {'_type': 'float', '_value': 19.0}, {'_type': 'float', '_value': 47.5}, {'_type': 'float', '_value': 75.0}, {'_type': 'float', '_value': 47.5}]
+FUNCTION_RETURN 55 calculate_discount {'_type': 'float', '_value': 47.5}
+69 final_price = original_price - total_discount
+69 ['original_price', 'loyalty_tier', 'years_member', 'membership_score', 'total_discount', 'final_price'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 32}, {'_type': 'float', '_value': 47.5}, {'_type': 'float', '_value': 202.5}]
+71 print(f"Result: {total_discount}")
+71 ['original_price', 'loyalty_tier', 'years_member', 'membership_score', 'total_discount', 'final_price'] [{'_type': 'int', '_value': 250}, {'_type': 'str', '_value': 'Gold'}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 32}, {'_type': 'float', '_value': 47.5}, {'_type': 'float', '_value': 202.5}]

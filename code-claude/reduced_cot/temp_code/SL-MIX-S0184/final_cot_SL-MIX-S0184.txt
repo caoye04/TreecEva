@@ -1,0 +1,62 @@
+Target: Find the value of variable encrypted_value after [line 34] executes
+
+[line 7]  for product in products:
+Loop Start: product takes its first value ('Laptop', 'Electronics', 1200)
+[line 8]  name, category, price = product
+(Missing param: 'result')
+[line 7]  for product in products:
+Loop Iteration: product is now ('Headphones', 'Electronics', 150) (iteration 2)
+[line 8]  name, category, price = product
+(Missing param: 'result')
+[line 7]  for product in products:
+Loop Iteration: product is now ('Desk', 'Furniture', 350) (iteration 3)
+[line 8]  name, category, price = product
+(Missing param: 'result')
+[line 7]  for product in products:
+Loop Iteration: product is now ('Chair', 'Furniture', 200) (iteration 4)
+[line 8]  name, category, price = product
+(Missing param: 'result')
+[line 7]  for product in products:
+Loop End: Iteration finished
+[line 17]  category_counts = {}
+Compute: {} = {}
+[line 18]  for product in products:
+Loop Start: product takes its first value ('Laptop', 'Electronics', 1200)
+[line 19]  category = product[1]
+Compute: product[1], where product=('Laptop', 'Electronics', 1200) (defined at [line 18]) = 'Electronics'
+[line 20]  if category in category_counts:
+Condition: True, entering 'if' block
+[line 23]  category_counts[category] = 1
+(Missing param: 'var')
+[line 18]  for product in products:
+Loop Iteration: product is now ('Headphones', 'Electronics', 150) (iteration 2)
+[line 19]  category = product[1]
+Compute: product[1], where product=('Headphones', 'Electronics', 150) (defined at [line 18]) = 'Electronics'
+[line 20]  if category in category_counts:
+Condition: True, entering 'if' block
+[line 18]  for product in products:
+Loop Iteration: product is now ('Desk', 'Furniture', 350) (iteration 3)
+[line 19]  category = product[1]
+Compute: product[1], where product=('Desk', 'Furniture', 350) (defined at [line 18]) = 'Furniture'
+[line 20]  if category in category_counts:
+Condition: True, entering 'if' block
+[line 23]  category_counts[category] = 1
+(Missing param: 'var')
+[line 18]  for product in products:
+Loop Iteration: product is now ('Chair', 'Furniture', 200) (iteration 4)
+[line 19]  category = product[1]
+Compute: product[1], where product=('Chair', 'Furniture', 200) (defined at [line 18]) = 'Furniture'
+[line 20]  if category in category_counts:
+Condition: True, entering 'if' block
+[line 18]  for product in products:
+Loop End: Iteration finished
+[line 26]  base_value = len(products) * 42  # Base value from inventory count
+Compute: len(products) * 42  # Base value from inventory count, where products=[('Laptop', 'Electronics', 1200), ('Headphones', 'Electronics', 150), ('Desk', 'Furniture', 350), ('Chair', 'Furniture', 200)] (an unknown source) = 168
+[line 30]  bitwise_key = 0xA5  # Binary: 10100101
+Assign: bitwise_key = 165
+[line 31]  mask = 0xFF  # Limit to 8 bits (0-255 range)
+Assign: mask = 255
+[line 34]  encrypted_value = (base_value ^ bitwise_key) & mask
+Compute: (base_value ^ bitwise_key) & mask, where base_value=168 (defined at [line 26]), bitwise_key=165 (defined at [line 30]), mask=255 (defined at [line 31]) = 13
+
+Answer: encrypted_value = 13 (last updated on defined at [line 34])

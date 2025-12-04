@@ -1,0 +1,59 @@
+Target: Find the value of variable total_points after [line 61] executes
+
+[line 10]  raw_scores = [42, 18, 27, 35, 19, 30, 25]
+Compute: [42, 18, 27, 35, 19, 30, 25] = [42, 18, 27, 35, 19, ...]
+[line 11]  score_weights = [1.0, 0.8, 1.2, 1.0, 0.9, 1.1, 1.0]
+Compute: [1.0, 0.8, 1.2, 1.0, 0.9, 1.1, 1.0] = [1.0, 0.8, 1.2, 1.0, 0.9, ...]
+[line 14]  weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+Compute: [score * weight for score, weight in zip(raw_scores, score_weights)], where score=42 (an unknown source), weight=1.0 (an unknown source), raw_scores=[42, 18, 27, 35, 19, ...] (defined at [line 10]), score_weights=[1.0, 0.8, 1.2, 1.0, 0.9, ...] (defined at [line 11]) = ?
+[line 30]  player_level = 4
+Assign: player_level = 4
+[line 31]  win_streak = 3
+Assign: win_streak = 3
+[line 32]  bonus_points = calculate_bonus(player_level, win_streak)
+Call function calculate_bonus(player_level=4 (defined at [line 30]), win_streak=3 (defined at [line 31]))
+[line 3]  def calculate_bonus(level, streak):
+Enter function calculate_bonus: level=4 (player_level defined at [line 30]), streak=3 (win_streak defined at [line 31])
+  [line 5]  multiplier = min(level * 0.5, 3)
+  Call function min(level * 0.5, 3)
+  [line 6]  bonus = streak * multiplier
+  Compute: streak * multiplier, where streak=3 (parameter streak defined at [line 31]), multiplier=2.0 (defined at [line 5]) = 6.0
+  [line 7]  return int(bonus)
+  Return: int(bonus)
+Function calculate_bonus returns 6
+[line 35]  point_combinations = list(itertools.product([5, 10, 15], repeat=2))
+Call function list(itertools.product([5, 10, 15], repeat=2))
+[line 36]  point_options = [sum(combo) for combo in point_combinations]
+Compute: [sum(combo) for combo in point_combinations], where combo=(5, 5) (an unknown source), point_combinations=[(5, 5), (5, 10), (5, 15), (10, 5), (10, 10), ...] (defined at [line 35]) = ?
+[line 39]  valid_options = [p for p in point_options if p <= player_level * 10]
+Compute: [p for p in point_options if p <= player_level * 10], where p=10 (an unknown source), point_options=[10, 15, 20, 15, 20, ...] (defined at [line 36]), player_level=4 (defined at [line 30]) = ?
+[line 42]  base_points = int(sum(weighted_scores))
+Call function int(sum(weighted_scores))
+[line 45]  modifier = base_points % 10
+Compute: base_points % 10, where base_points=198 (defined at [line 42]) = 8
+[line 46]  if modifier > 5:
+Condition: True, entering 'if' block
+[line 47]  base_points += (10 - modifier)
+Update: base_points changed from 198 (defined at defined at [line 42]) to 198+(10 - modifier) = 200
+[line 52]  filtered_points = [base_points]
+Compute: [base_points], where base_points=200 (defined at [line 47]) = [200]
+[line 53]  for option in valid_options:
+Loop Start: option takes its first value 10
+[line 54]  if option % player_level == 0:
+Condition: True, entering 'if' block
+[line 53]  for option in valid_options:
+Loop Iteration: option is now 15 (iteration 2)
+[line 54]  if option % player_level == 0:
+Condition: True, entering 'if' block
+... [Line 53] repeats 6 more times ...
+... [Line 53] repeats 6 more times ...
+[line 53]  for option in valid_options:
+Loop Iteration: option is now 30 (iteration 9)
+[line 54]  if option % player_level == 0:
+Condition: True, entering 'if' block
+[line 53]  for option in valid_options:
+Loop End: Iteration finished
+[line 61]  total_points = sum(filtered_points)
+Call function sum(filtered_points=[206, 20, 20, 20] (defined at [line 52]))
+
+Answer: total_points = 266 (last updated on defined at [line 61])

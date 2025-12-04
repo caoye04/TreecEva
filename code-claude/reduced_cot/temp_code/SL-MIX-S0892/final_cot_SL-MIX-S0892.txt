@@ -1,0 +1,40 @@
+Target: Find the value of variable priority_score after [line 139] executes
+
+[line 132]  encrypted_message = "type:CRITICAL|sec:3|ts:1542|urg:medium|payload:2A4F|cmd:PROCESS"
+Assign: encrypted_message = 'type:CRITICAL|sec:3|ts:1542|urg:medium|payload:2A4F|cmd:PROCESS'
+[line 133]  key_sequence = "XYZAB"
+Assign: key_sequence = 'XYZAB'
+[line 136]  priority_score = calculate_priority(encrypted_message, key_sequence)
+Call function calculate_priority(encrypted_message='type:CRITICAL|sec:3|ts:1542|urg:medium|payload:2A4F|cmd:PROCESS' (defined at [line 132]), key_sequence='XYZAB' (defined at [line 133]))
+[line 25]  if not message or not key_seq:
+Condition: True, entering 'if' block
+[line 29]  message_checksum = calculate_checksum(message)
+Call function calculate_checksum(message='type:CRITICAL|sec:3|ts:1542|urg:medium|payload:2A4F|cmd:PROCESS' (an unknown source))
+[line 10]  checksum = 0
+Assign: checksum = 0
+[line 11]  for byte in data.encode():
+Loop Start: byte takes its first value 116
+[line 12]  checksum = (checksum + byte) % 256
+Compute: (checksum + byte) % 256, where checksum=0 (defined at [line 10]), byte=116 (defined at [line 11]) = 116
+[line 11]  for byte in data.encode():
+Loop Iteration: byte is now 121 (iteration 2)
+[line 12]  checksum = (checksum + byte) % 256
+Compute: (checksum + byte) % 256, where checksum=116 (defined at [line 12]), byte=121 (defined at [line 11]) = 237
+... [Line 11] repeats 60 more times ...
+... [Line 11] repeats 60 more times ...
+[line 11]  for byte in data.encode():
+Loop Iteration: byte is now 83 (iteration 63)
+[line 12]  checksum = (checksum + byte) % 256
+Compute: (checksum + byte) % 256, where checksum=156 (defined at [line 12]), byte=83 (defined at [line 11]) = 239
+[line 11]  for byte in data.encode():
+Loop End: Iteration finished
+[line 13]  return checksum
+Return: checksum=239 (defined at [line 12])
+[line 30]  if message_checksum > 200:
+Condition: True, entering 'if' block
+[line 31]  return 0
+Return: 0
+[line 139]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 0 (last updated on defined at [line 136])

@@ -1,0 +1,213 @@
+Target: Find the value of variable signal_strength after [line 51] executes
+
+[line 1]  def calculate_broadcast_metrics(frequencies, channels, noise_levels):
+Enter function calculate_broadcast_metrics: frequencies=[42, 78, 105, 121, 210, ...], channels=[4, 8, 15, 16, 23, ...], noise_levels=[120, 84, 56, 72]
+  [line 7]  noise_reduction = lambda x: x // 2 if x > 100 else x
+  Compute: lambda x: x // 2 if x > 100 else x = ?
+  [line 8]  reduced_noise = [noise_reduction(n) for n in noise_levels]
+  Compute: [noise_reduction(n) for n in noise_levels], where n=120 (an unknown source), noise_levels=[120, 84, 56, 72] (parameter noise_levels) = ?
+  [line 7]  noise_reduction = lambda x: x // 2 if x > 100 else x
+  Compute: lambda x: x // 2 if x > 100 else x, where x=120 (an unknown source) = ?
+  [line 7]  noise_reduction = lambda x: x // 2 if x > 100 else x
+  Compute: lambda x: x // 2 if x > 100 else x, where x=84 (an unknown source) = ?
+  [line 7]  noise_reduction = lambda x: x // 2 if x > 100 else x
+  Compute: lambda x: x // 2 if x > 100 else x, where x=56 (an unknown source) = ?
+  [line 7]  noise_reduction = lambda x: x // 2 if x > 100 else x
+  Compute: lambda x: x // 2 if x > 100 else x, where x=72 (an unknown source) = ?
+  [line 11]  active_channels = set(channels) - {0, 7, 13}
+  Compute: set(channels) - {0, 7, 13}, where channels=[4, 8, 15, 16, 23, ...] (parameter channels) = {4, 8, 42, 15, 16, ...}
+  [line 12]  backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+  Compute: {ch + 1 for ch in channels if ch % 5 == 0}, where ch=4 (an unknown source), channels=[4, 8, 15, 16, 23, ...] (parameter channels) = ?
+  [line 13]  potential_channels = active_channels.union(backup_channels)
+  (Missing param: 'func_name')
+  [line 16]  main_channel = 42
+  Assign: main_channel = 42
+  [line 17]  for ch in potential_channels:
+  Loop Start: ch takes its first value 16
+  [line 18]  if ch % 4 == 0 and ch in active_channels:
+  Condition: True, entering 'if' block
+  [line 19]  main_channel = (main_channel * ch) % 256
+  Compute: (main_channel * ch) % 256, where main_channel=42 (defined at [line 16]), ch=16 (defined at [line 17]) = 160
+  [line 17]  for ch in potential_channels:
+  Loop Iteration: ch is now 4 (iteration 2)
+  [line 18]  if ch % 4 == 0 and ch in active_channels:
+  Condition: True, entering 'if' block
+  [line 19]  main_channel = (main_channel * ch) % 256
+  Compute: (main_channel * ch) % 256, where main_channel=160 (defined at [line 19]), ch=4 (defined at [line 17]) = 128
+... [Line 17] repeats 3 more times ...
+... [Line 17] repeats 3 more times ...
+  [line 17]  for ch in potential_channels:
+  Loop Iteration: ch is now 15 (iteration 6)
+  [line 18]  if ch % 4 == 0 and ch in active_channels:
+  Condition: True, entering 'if' block
+  [line 17]  for ch in potential_channels:
+  Loop End: Iteration finished
+  [line 23]  for f in frequencies:
+  Loop Start: f takes its first value 42
+  [line 24]  if f > 150:
+  Condition: True, entering 'if' block
+  [line 26]  elif f < 50:
+  'elif' Condition: True, entering block
+  [line 23]  for f in frequencies:
+  Loop Iteration: f is now 78 (iteration 2)
+  [line 24]  if f > 150:
+  Condition: True, entering 'if' block
+  [line 26]  elif f < 50:
+  'elif' Condition: True, entering block
+... [Line 23] repeats 4 more times ...
+... [Line 23] repeats 4 more times ...
+... [Line 23] repeats 4 more times ...
+  [line 23]  for f in frequencies:
+  Loop Iteration: f is now 63 (iteration 7)
+  [line 24]  if f > 150:
+  Condition: True, entering 'if' block
+  [line 26]  elif f < 50:
+  'elif' Condition: True, entering block
+  [line 23]  for f in frequencies:
+  Loop End: Iteration finished
+  [line 34]  error_bits = sum([n & 0x0F for n in reduced_noise])
+  Call function sum([n & 0x0F for n in reduced_noise])
+  [line 35]  error_correction = error_bits ^ (sum(channels) & 0xFF)
+  Compute: error_bits ^ (sum(channels) & 0xFF), where error_bits=32 (defined at [line 34]), channels=[4, 8, 15, 16, 23, ...] (parameter channels) = 76
+  [line 38]  filtered_frequencies = 0
+  Assign: filtered_frequencies = 0
+  [line 39]  for i, f in enumerate(sorted(frequencies)):
+  (Missing param: 'iter_var')
+  [line 40]  if i % 3 == 0 or f % 7 == 0:
+  Condition: True, entering 'if' block
+  [line 39]  for i, f in enumerate(sorted(frequencies)):
+  (Missing param: 'iter_var')
+  [line 40]  if i % 3 == 0 or f % 7 == 0:
+  Condition: True, entering 'if' block
+... [Line 39] repeats 4 more times ...
+... [Line 39] repeats 4 more times ...
+... [Line 39] repeats 4 more times ...
+  [line 39]  for i, f in enumerate(sorted(frequencies)):
+  (Missing param: 'iter_var')
+  [line 40]  if i % 3 == 0 or f % 7 == 0:
+  Condition: True, entering 'if' block
+  [line 39]  for i, f in enumerate(sorted(frequencies)):
+  Loop End: Iteration finished
+  [line 45]  for ch in active_channels:
+  Loop Start: ch takes its first value 4
+  [line 46]  for n in reduced_noise:
+  Loop Start: n takes its first value 60
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 84 (iteration 2)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+... [Line 46] repeats 26 more times ...
+... [Line 46] repeats 26 more times ...
+  [line 45]  for ch in active_channels:
+  Loop Iteration: ch is now 8 (iteration 2)
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 60 (iteration 6)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 84 (iteration 7)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 56 (iteration 8)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 72 (iteration 9)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop End: Iteration finished
+  [line 45]  for ch in active_channels:
+  Loop Iteration: ch is now 42 (iteration 3)
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 60 (iteration 11)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 84 (iteration 12)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 56 (iteration 13)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 72 (iteration 14)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop End: Iteration finished
+  [line 45]  for ch in active_channels:
+  Loop Iteration: ch is now 15 (iteration 4)
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 60 (iteration 16)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 84 (iteration 17)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 56 (iteration 18)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 72 (iteration 19)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop End: Iteration finished
+  [line 45]  for ch in active_channels:
+  Loop Iteration: ch is now 16 (iteration 5)
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 60 (iteration 21)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 84 (iteration 22)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 56 (iteration 23)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 72 (iteration 24)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop End: Iteration finished
+  [line 45]  for ch in active_channels:
+  Loop Iteration: ch is now 23 (iteration 6)
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 60 (iteration 26)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 84 (iteration 27)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 56 (iteration 28)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop Iteration: n is now 72 (iteration 29)
+  [line 47]  if ch % n == 0 and n > 0:
+  Condition: True, entering 'if' block
+  [line 46]  for n in reduced_noise:
+  Loop End: Iteration finished
+  [line 45]  for ch in active_channels:
+  Loop End: Iteration finished
+  [line 51]  signal_strength = (filtered_frequencies & main_channel) | error_correction
+  Compute: (filtered_frequencies & main_channel) | error_correction, where filtered_frequencies=214 (defined at [line 38]), main_channel=0 (defined at [line 19]), error_correction=76 (defined at [line 35]) = 76
+  [line 64]  print(f"Result: {signal_strength}")
+  Output: f"Result: {signal_strength}"
+  [line 66]  return signal_strength
+  Return: signal_strength=76 (defined at [line 51])
+Function calculate_broadcast_metrics returns 76
+
+Answer: signal_strength = 76 (last updated on defined at [line 51])

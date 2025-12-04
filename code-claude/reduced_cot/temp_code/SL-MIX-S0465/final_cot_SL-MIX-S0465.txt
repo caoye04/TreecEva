@@ -1,0 +1,26 @@
+Target: Find the value of variable average_price after [line 15] executes
+
+[line 2]  product_data = "apple:2.5,banana:1.8,orange:3.2,grape:4.5,kiwi:2.0"
+Assign: product_data = 'apple:2.5,banana:1.8,orange:3.2,grape:4.5,kiwi:2.0'
+[line 5]  products = product_data.split(",")
+(Missing param: 'func_name')
+[line 8]  prices = [float(item.split(":")[1]) for item in products]
+Compute: [float(item.split(":")[1]) for item in products], where item='apple:2.5' (an unknown source), products=['apple:2.5', 'banana:1.8', 'orange:3.2', 'grape:4.5', 'kiwi:2.0'] (an unknown source) = ?
+[line 8]  prices = [float(item.split(":")[1]) for item in products]
+Compute: [float(item.split(":")[1]) for item in products], where item='banana:1.8' (an unknown source) = ?
+[line 8]  prices = [float(item.split(":")[1]) for item in products]
+Compute: [float(item.split(":")[1]) for item in products], where item='orange:3.2' (an unknown source) = ?
+[line 8]  prices = [float(item.split(":")[1]) for item in products]
+Compute: [float(item.split(":")[1]) for item in products], where item='grape:4.5' (an unknown source) = ?
+[line 8]  prices = [float(item.split(":")[1]) for item in products]
+Compute: [float(item.split(":")[1]) for item in products], where item='kiwi:2.0' (an unknown source) = ?
+[line 8]  prices = [float(item.split(":")[1]) for item in products]
+Compute: [float(item.split(":")[1]) for item in products], where item='kiwi:2.0' (an unknown source), products=['apple:2.5', 'banana:1.8', 'orange:3.2', 'grape:4.5', 'kiwi:2.0'] (an unknown source) = [2.5, 1.8, 3.2, 4.5, 2.0]
+[line 11]  price_threshold = 2.2
+Assign: price_threshold = 2.2
+[line 12]  filtered_prices = [price for price in prices if price > price_threshold]
+Compute: [price for price in prices if price > price_threshold], where price=2.5 (an unknown source), prices=[2.5, 1.8, 3.2, 4.5, 2.0] (defined at [line 8]), price_threshold=2.2 (defined at [line 11]) = ?
+[line 15]  average_price = sum([price for price in filtered_prices]) / len(filtered_prices)
+Compute: sum([price for price in filtered_prices]) / len(filtered_prices), where price=2.5 (an unknown source), filtered_prices=[2.5, 3.2, 4.5] (defined at [line 12]) = ?
+
+Answer: average_price = 3.4 (last updated on defined at [line 15])

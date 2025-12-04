@@ -1,0 +1,97 @@
+75
+priority_value
+---
+58 discard_threshold = 4
+58 ['all_data', 'discard_threshold'] ["[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'gamma', importance: 3, category: 'primary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}]", '4']
+62 filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+62 ['item'] ["{name: 'alpha', importance: 7, category: 'primary'}"]
+62 filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+62 ['item'] ["{name: 'beta', importance: 9, category: 'secondary'}"]
+62 filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+62 ['item'] ["{name: 'gamma', importance: 3, category: 'primary'}"]
+62 filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+62 ['item'] ["{name: 'delta', importance: 5, category: 'tertiary'}"]
+62 filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+62 ['item'] ["{name: 'epsilon', importance: 8, category: 'primary'}"]
+62 filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+62 ['all_data', 'discard_threshold', 'filtered_data'] ["[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'gamma', importance: 3, category: 'primary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}]", '4', "[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}]"]
+70 priority_value = calculate_priority(filtered_data)
+70 ['filtered_data'] ["[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}]"]
+14 if not data_points:
+14 ['data_points'] ["[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}]"]
+18 sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+18 ['data_points'] ["[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}]"]
+18 sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+18 ['x'] ["{name: 'alpha', importance: 7, category: 'primary'}"]
+18 sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+18 ['x'] ["{name: 'beta', importance: 9, category: 'secondary'}"]
+18 sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+18 ['x'] ["{name: 'delta', importance: 5, category: 'tertiary'}"]
+18 sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+18 ['x'] ["{name: 'epsilon', importance: 8, category: 'primary'}"]
+21 top_items = sorted_data[:3]
+21 ['sorted_data', 'top_items'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}, {name: 'delta', importance: 5, category: 'tertiary'}]", "[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]"]
+24 weight_base = 10
+24 ['top_items', 'weight_base'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '10']
+25 decay_factor = 0.8
+25 ['top_items', 'weight_base', 'decay_factor'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '10', '0.8']
+27 total = 0
+27 ['top_items', 'weight_base', 'decay_factor', 'total'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '10', '0.8', '0']
+28 weight = weight_base
+28 ['top_items', 'weight_base', 'decay_factor', 'total', 'weight'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '10', '0.8', '0', '10']
+30 for item in top_items:
+30 ['top_items', 'decay_factor', 'total', 'weight', 'item'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '0', '10', "{name: 'beta', importance: 9, category: 'secondary'}"]
+32 transformed_name = transform_string(item['name'], 'capitalize')
+32 ['top_items', 'decay_factor', 'total', 'weight', 'item'] ["[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '0', '10', "{name: 'beta', importance: 9, category: 'secondary'}"]
+9 if operation_type in transform_map:
+9 ['text', 'operation_type', 'transform_map'] ["'beta'", "'capitalize'", '{uppercase: function(...), lowercase: function(...), capitalize: function(...), ...}']
+10 return transform_map[operation_type](text)
+10 ['text', 'operation_type', 'transform_map'] ["'beta'", "'capitalize'", '{uppercase: function(...), lowercase: function(...), capitalize: function(...), ...}']
+33 item['display_name'] = transformed_name
+33 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '0', '10', "{name: 'beta', importance: 9, category: 'secondary', ...}", "'Beta'"]
+36 contribution = item['importance'] * weight
+36 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '0', '10', "{name: 'beta', importance: 9, category: 'secondary', ...}", "'Beta'", '90']
+37 total += contribution
+37 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '90', '10', "{name: 'beta', importance: 9, category: 'secondary', ...}", "'Beta'", '90']
+38 weight *= decay_factor
+38 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '90', '8.0', "{name: 'beta', importance: 9, category: 'secondary', ...}", "'Beta'", '90']
+30 for item in top_items:
+30 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '90', '8.0', "{name: 'epsilon', importance: 8, category: 'primary'}", "'Beta'", '90']
+32 transformed_name = transform_string(item['name'], 'capitalize')
+32 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '90', '8.0', "{name: 'epsilon', importance: 8, category: 'primary'}", "'Beta'", '90']
+9 if operation_type in transform_map:
+9 ['text', 'operation_type', 'transform_map'] ["'epsilon'", "'capitalize'", '{uppercase: function(...), lowercase: function(...), capitalize: function(...), ...}']
+10 return transform_map[operation_type](text)
+10 ['text', 'operation_type', 'transform_map'] ["'epsilon'", "'capitalize'", '{uppercase: function(...), lowercase: function(...), capitalize: function(...), ...}']
+33 item['display_name'] = transformed_name
+33 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '90', '8.0', "{name: 'epsilon', importance: 8, category: 'primary', ...}", "'Epsilon'", '90']
+36 contribution = item['importance'] * weight
+36 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '90', '8.0', "{name: 'epsilon', importance: 8, category: 'primary', ...}", "'Epsilon'", '64.0']
+37 total += contribution
+37 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '154.0', '8.0', "{name: 'epsilon', importance: 8, category: 'primary', ...}", "'Epsilon'", '64.0']
+38 weight *= decay_factor
+38 ['top_items', 'decay_factor', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary'}]", '0.8', '154.0', '6.4', "{name: 'epsilon', importance: 8, category: 'primary', ...}", "'Epsilon'", '64.0']
+30 for item in top_items:
+30 ['top_items', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary'}]", '154.0', '6.4', "{name: 'alpha', importance: 7, category: 'primary'}", "'Epsilon'", '64.0']
+32 transformed_name = transform_string(item['name'], 'capitalize')
+32 ['top_items', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary'}]", '154.0', '6.4', "{name: 'alpha', importance: 7, category: 'primary'}", "'Epsilon'", '64.0']
+9 if operation_type in transform_map:
+9 ['text', 'operation_type', 'transform_map'] ["'alpha'", "'capitalize'", '{uppercase: function(...), lowercase: function(...), capitalize: function(...), ...}']
+10 return transform_map[operation_type](text)
+10 ['text', 'operation_type', 'transform_map'] ["'alpha'", "'capitalize'", '{uppercase: function(...), lowercase: function(...), capitalize: function(...), ...}']
+33 item['display_name'] = transformed_name
+33 ['top_items', 'total', 'weight', 'item', 'transformed_name', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary', ...}]", '154.0', '6.4', "{name: 'alpha', importance: 7, category: 'primary', ...}", "'Alpha'", '64.0']
+36 contribution = item['importance'] * weight
+36 ['top_items', 'total', 'weight', 'item', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary', ...}]", '154.0', '6.4', "{name: 'alpha', importance: 7, category: 'primary', ...}", '44.800000000000004']
+37 total += contribution
+37 ['top_items', 'total', 'item', 'contribution'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary', ...}]", '198.8', "{name: 'alpha', importance: 7, category: 'primary', ...}", '44.800000000000004']
+30 for item in top_items:
+30 ['top_items', 'total', 'item'] ["[{name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'epsilon', importance: 8, category: 'primary', ...}, {name: 'alpha', importance: 7, category: 'primary', ...}]", '198.8', "{name: 'alpha', importance: 7, category: 'primary', ...}"]
+45 return round(total)
+45 ['total'] ['198.8']
+73 print(f"Filtered data count: {len(filtered_data)}")
+73 ['filtered_data', 'priority_value'] ["[{name: 'alpha', importance: 7, category: 'primary', ...}, {name: 'beta', importance: 9, category: 'secondary', ...}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary', ...}]", '199']
+74 print(f"Importance range: {importance_range}")
+74 ['priority_value'] ['199']
+75 print(f"Result: {priority_value}")
+75 ['priority_value'] ['199']

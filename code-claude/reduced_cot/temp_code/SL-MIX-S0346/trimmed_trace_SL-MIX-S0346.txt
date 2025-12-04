@@ -1,0 +1,115 @@
+59
+processed_data
+---
+47 data = [3, -1, 4, -2, 7, 0, -3, 5]
+47 ['data'] ['[3, -1, 4, -2, 7, ...]']
+48 noise_threshold = 2
+48 ['data', 'noise_threshold'] ['[3, -1, 4, -2, 7, ...]', '2']
+56 processed_data = process_signal(data, noise_threshold)
+56 ['data', 'noise_threshold'] ['[3, -1, 4, -2, 7, ...]', '2']
+PARAM_MAPPING {'signal': {'actual_var': 'data', 'value': [3, -1, 4, -2, 7, 0, -3, 5]}, 'noise_threshold': {'actual_var': 'noise_threshold', 'value': 2}}
+FUNCTION_ENTER 14 process_signal def process_signal(signal, noise_threshold):
+14 ['signal', 'noise_threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': -2}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 5}], '_len': 8}, {'_type': 'int', '_value': 2}]
+17 filtered = filter_noise(signal, noise_threshold)
+17 ['signal', 'noise_threshold'] ['[3, -1, 4, -2, 7, ...]', '2']
+PARAM_MAPPING {'signal': {'actual_var': 'signal', 'value': [3, -1, 4, -2, 7, 0, -3, 5]}, 'threshold': {'actual_var': 'noise_threshold', 'value': 2}}
+FUNCTION_ENTER 1 filter_noise def filter_noise(signal, threshold):
+1 ['signal', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': -1}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': -2}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 0}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 5}], '_len': 8}, {'_type': 'int', '_value': 2}]
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['signal', 'threshold'] ['[3, -1, 4, -2, 7, ...]', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['3', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['-1', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['4', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['-2', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['7', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['0', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['-3', '2']
+3 return list(filter(lambda x: abs(x) >= threshold, signal))
+3 ['x', 'threshold'] ['5', '2']
+FUNCTION_RETURN 3 filter_noise {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': -2}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': -3}, {'_type': 'int', '_value': 5}], '_len': 6}
+20 avg, peak, variance = calculate_metrics(filtered)
+20 ['signal', 'filtered'] ['[3, -1, 4, -2, 7, ...]', '[3, 4, -2, 7, -3, ...]']
+7 if not signal:
+7 ['signal'] ['[3, 4, -2, 7, -3, ...]']
+9 avg = sum(signal) / len(signal)
+9 ['signal', 'avg'] ['[3, 4, -2, 7, -3, ...]', '2.3333333333333335']
+10 peak = max(abs(x) for x in signal)
+10 [] []
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['3']
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['4']
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['-2']
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['7']
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['-3']
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['5']
+10 peak = max(abs(x) for x in signal)
+10 ['x'] ['5']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['avg'] ['2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['3', '2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['4', '2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['-2', '2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['7', '2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['-3', '2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['5', '2.3333333333333335']
+11 variance = sum((x - avg) ** 2 for x in signal) / len(signal)
+11 ['x', 'avg'] ['5', '2.3333333333333335']
+12 return avg, peak, variance
+12 ['peak', 'variance', 'avg'] ['7', '13.222222222222223', '2.3333333333333335']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'i', 'x'] ['[3, 4, -2, 7, -3, ...]', '0', '3']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'i', 'x'] ['[3, 4, -2, 7, -3, ...]', '1', '4']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'i', 'x'] ['[3, 4, -2, 7, -3, ...]', '2', '-2']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'i', 'x'] ['[3, 4, -2, 7, -3, ...]', '3', '7']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'i', 'x'] ['[3, 4, -2, 7, -3, ...]', '4', '-3']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'i', 'x'] ['[3, 4, -2, 7, -3, ...]', '5', '5']
+23 freq_domain = [x * (-1 if i % 2 else 1) for i, x in enumerate(filtered)]
+23 ['filtered', 'freq_domain'] ['[3, 4, -2, 7, -3, ...]', '[3, -4, -2, -7, -3, ...]']
+33 amplified = []
+33 ['freq_domain', 'amplified'] ['[3, -4, -2, -7, -3, ...]', '[]']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['0', '[3, -4, -2, -7, -3, ...]', '[]', '3']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['1', '[3, -4, -2, -7, -3, ...]', '[0.5]', '-4']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['2', '[3, -4, -2, -7, -3, ...]', '[0.5, -1.3333333333333333]', '-2']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['3', '[3, -4, -2, -7, -3, ...]', '[0.5, -1.3333333333333333, -1.0]', '-7']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['4', '[3, -4, -2, -7, -3, ...]', '[0.5, -1.3333333333333333, -1.0, -4.666666666666666]', '-3']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['5', '[3, -4, -2, -7, -3, ...]', '[0.5, -1.3333333333333333, -1.0, -4.666666666666666, -2.5]', '-5']
+34 for i, value in enumerate(freq_domain):
+34 ['i', 'freq_domain', 'amplified', 'value'] ['5', '[3, -4, -2, -7, -3, ...]', '[0.5, -1.3333333333333333, -1.0, -4.666666666666666, -2.5, ...]', '-5']
+40 result = sum(amplified)
+40 ['amplified', 'result'] ['[0.5, -1.3333333333333333, -1.0, -4.666666666666666, -2.5, ...]', '-14.0']
+43 normalization = 10 / (len(amplified) if amplified else 1)
+43 ['amplified', 'result', 'normalization'] ['[0.5, -1.3333333333333333, -1.0, -4.666666666666666, -2.5, ...]', '-14.0', '1.6666666666666667']
+44 return round(result * normalization, 2)
+44 ['result', 'normalization'] ['-14.0', '1.6666666666666667']
+FUNCTION_RETURN 44 process_signal {'_type': 'float', '_value': -23.33}
+59 print(f"Result: {processed_data}")
+59 ['processed_data'] ['-23.33']

@@ -1,0 +1,80 @@
+Target: Find the value of variable priority_score after [line 82] executes
+
+[line 109]  def find_cross_sell_opportunities(purchase_history):
+Enter function find_cross_sell_opportunities: purchase_history=[{id: 'P001', value: 120, days_ago: 15, ...}, {id: 'P002', value: 85, days_ago: 45, ...}, {id: 'P003', value: 210, days_ago: 7, ...}, {id: 'P004', value: 65, days_ago: 60, ...}]
+  [line 110]  all_categories = list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  Call function list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  [line 110]  all_categories = list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  Call function list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  [line 110]  all_categories = list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  Call function list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  [line 110]  all_categories = list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  Call function list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  [line 110]  all_categories = list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  Call function list(itertools.chain.from_iterable([p.get('categories', []) for p in purchase_history]))
+  [line 111]  category_counts = {cat: all_categories.count(cat) for cat in set(all_categories)}
+  Compute: {cat: all_categories.count(cat) for cat in set(all_categories)} = ?
+  [line 112]  missing_categories = ['beauty', 'fitness', 'travel', 'food']
+  Compute: ['beauty', 'fitness', 'travel', 'food'] = ?
+  [line 113]  opportunities = [cat for cat in missing_categories if cat not in category_counts]
+  Compute: [cat for cat in missing_categories if cat not in category_counts], where category_counts={accessories: 1, gifts: 1, clothing: 1, ...} (defined at [line 111]) = ?
+  [line 114]  return opportunities
+  Return: opportunities
+Function find_cross_sell_opportunities returns ['beauty', 'fitness', 'travel', 'food']
+[line 4]  def calculate_customer_priority(customer_data, purchase_history):
+Enter function calculate_customer_priority: customer_data={id: 'C123456', tier: 'gold', account_age: 38, ...}, purchase_history=[{id: 'P001', value: 120, days_ago: 15, ...}, {id: 'P002', value: 85, days_ago: 45, ...}, {id: 'P003', value: 210, days_ago: 7, ...}, {id: 'P004', value: 65, days_ago: 60, ...}]
+  [line 6]  loyalty_tier = customer_data.get('tier', 'bronze')
+  (Missing param: 'func_name')
+  [line 7]  account_age = customer_data.get('account_age', 0)
+  (Missing param: 'func_name')
+  [line 33]  if not purchase_history:
+  Condition: True, entering 'if' block
+  [line 37]  purchase_frequency = len(purchase_history)
+  Call function len(purchase_history=[{id: 'P001', value: 120, days_ago: 15, ...}, {id: 'P002', value: 85, days_ago: 45, ...}, {id: 'P003', value: 210, days_ago: 7, ...}, {id: 'P004', value: 65, days_ago: 60, ...}] (parameter purchase_history))
+  [line 38]  most_recent = min([p.get('days_ago', 365) for p in purchase_history])
+  Call function min([p.get('days_ago', 365) for p in purchase_history])
+  [line 39]  recency_factor = max(0, 1 - (most_recent / 100))
+  Call function max(0, 1 - (most_recent / 100))
+  [line 42]  categories = []
+  Compute: [] = []
+  [line 43]  for purchase in purchase_history:
+  Loop Start: purchase takes its first value {id: 'P001', value: 120, days_ago: 15, ...}
+  [line 43]  for purchase in purchase_history:
+  Loop End: Iteration finished
+  [line 43]  for purchase in purchase_history:
+  Loop End: Iteration finished
+  [line 43]  for purchase in purchase_history:
+  Loop End: Iteration finished
+  [line 43]  for purchase in purchase_history:
+  Loop End: Iteration finished
+  [line 47]  category_counts = Counter(categories)
+  Call function Counter(categories=['electronics', 'accessories', 'clothing', 'electronics', 'home', ...] (defined at [line 42]))
+  [line 48]  diversity_score = len(category_counts)
+  Call function len(category_counts={electronics: 2, accessories: 1, clothing: 1, ...} (defined at [line 47]))
+  [line 52]  if customer_data.get('referrals', 0) > 0:
+  Condition: True, entering 'if' block
+  [line 54]  if loyalty_tier in ['gold', 'platinum', 'diamond']:
+  Condition: True, entering 'if' block
+  [line 58]  purchase_values = [p.get('value', 0) for p in purchase_history]
+  Compute: [p.get('value', 0) for p in purchase_history], where p={id: 'P001', value: 120, days_ago: 15, ...} (an unknown source), purchase_history=[{id: 'P001', value: 120, days_ago: 15, ...}, {id: 'P002', value: 85, days_ago: 45, ...}, {id: 'P003', value: 210, days_ago: 7, ...}, {id: 'P004', value: 65, days_ago: 60, ...}] (parameter purchase_history) = ?
+  [line 59]  avg_value = sum(purchase_values) / len(purchase_values) if purchase_values else 0
+  Compute: sum(purchase_values) / len(purchase_values) if purchase_values else 0, where purchase_values=[120, 85, 210, 65] (defined at [line 58]) = 120.0
+  [line 67]  if customer_data.get('vip', False):
+  Condition: True, entering 'if' block
+  [line 75]  base_score = tier_values.get(loyalty_tier, 10)
+  (Missing param: 'func_name')
+  [line 76]  loyalty_bonus = min(25, account_age // 12)
+  Call function min(25, account_age // 12)
+  [line 77]  purchase_score = min(15, purchase_frequency) + (avg_value / 20)
+  Compute: min(15, purchase_frequency) + (avg_value / 20), where purchase_frequency=4 (defined at [line 37]), avg_value=120.0 (defined at [line 59]) = 10.0
+  [line 78]  recency_points = int(recency_factor * 15)
+  Call function int(recency_factor * 15)
+  [line 79]  diversity_points = min(10, diversity_score * 2)
+  Call function min(10, diversity_score * 2)
+  [line 82]  priority_score = base_score + loyalty_bonus + purchase_score + recency_points + diversity_points
+  Compute: base_score + loyalty_bonus + purchase_score + recency_points + diversity_points, where base_score=35 (an unknown source), loyalty_bonus=3 (defined at [line 76]), purchase_score=10.0 (defined at [line 77]), recency_points=13 (defined at [line 78]), diversity_points=10 (defined at [line 79]) = 71.0
+  [line 83]  return int(priority_score)
+  Return: int(priority_score)
+Function calculate_customer_priority returns 71
+
+Answer: priority_score = 71.0 (last updated on defined at [line 82])

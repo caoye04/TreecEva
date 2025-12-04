@@ -1,0 +1,63 @@
+32
+optimal_price
+---
+3 inventory_status = {}
+3 ['products', 'sales_data', 'inventory_status'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{}']
+4 for product, quantity in products.items():
+4 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{}', "'widget_a'", '15']
+6 inventory_status[product] = quantity < 10
+6 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False}', "'widget_a'", '15']
+4 for product, quantity in products.items():
+4 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False}', "'widget_b'", '8']
+6 inventory_status[product] = quantity < 10
+6 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True}', "'widget_b'", '8']
+4 for product, quantity in products.items():
+4 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True}', "'widget_c'", '23']
+6 inventory_status[product] = quantity < 10
+6 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '23']
+4 for product, quantity in products.items():
+4 ['products', 'sales_data', 'inventory_status', 'product', 'quantity'] ['{widget_a: 15, widget_b: 8, widget_c: 23}', '{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '23']
+9 total_sales = sum(sales_data.values())
+9 ['sales_data', 'inventory_status', 'product', 'total_sales'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '245']
+10 avg_sale = total_sales / len(sales_data) if sales_data else 0
+10 ['sales_data', 'inventory_status', 'product', 'total_sales', 'avg_sale'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '245', '81.66666666666667']
+13 popularity = {}
+13 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '81.66666666666667', '{}']
+14 price_data = {}
+14 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '81.66666666666667', '{}', '{}']
+15 for product, data in sales_data.items():
+15 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_a'", '81.66666666666667', '{}', '{}', '120']
+17 unit_price = data * 0.8 if inventory_status.get(product, False) else data * 0.75
+17 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_a'", '81.66666666666667', '{}', '{}', '120', '90.0']
+18 price_data[product] = round(unit_price, 2)
+18 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_a'", '81.66666666666667', '{}', '{widget_a: 90.0}', '120', '90.0']
+21 popularity[product] = data / avg_sale if avg_sale > 0 else 0
+21 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_a'", '81.66666666666667', '{widget_a: 1.4693877551020407}', '{widget_a: 90.0}', '120', '90.0']
+15 for product, data in sales_data.items():
+15 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_b'", '81.66666666666667', '{widget_a: 1.4693877551020407}', '{widget_a: 90.0}', '85', '90.0']
+17 unit_price = data * 0.8 if inventory_status.get(product, False) else data * 0.75
+17 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_b'", '81.66666666666667', '{widget_a: 1.4693877551020407}', '{widget_a: 90.0}', '85', '68.0']
+18 price_data[product] = round(unit_price, 2)
+18 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_b'", '81.66666666666667', '{widget_a: 1.4693877551020407}', '{widget_a: 90.0, widget_b: 68.0}', '85', '68.0']
+21 popularity[product] = data / avg_sale if avg_sale > 0 else 0
+21 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_b'", '81.66666666666667', '{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123}', '{widget_a: 90.0, widget_b: 68.0}', '85', '68.0']
+15 for product, data in sales_data.items():
+15 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '81.66666666666667', '{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123}', '{widget_a: 90.0, widget_b: 68.0}', '40', '68.0']
+17 unit_price = data * 0.8 if inventory_status.get(product, False) else data * 0.75
+17 ['sales_data', 'inventory_status', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', '{widget_a: False, widget_b: True, widget_c: False}', "'widget_c'", '81.66666666666667', '{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123}', '{widget_a: 90.0, widget_b: 68.0}', '40', '30.0']
+18 price_data[product] = round(unit_price, 2)
+18 ['sales_data', 'product', 'avg_sale', 'popularity', 'price_data', 'data', 'unit_price'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', "'widget_c'", '81.66666666666667', '{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123}', '{widget_a: 90.0, widget_b: 68.0, widget_c: 30.0}', '40', '30.0']
+21 popularity[product] = data / avg_sale if avg_sale > 0 else 0
+21 ['sales_data', 'product', 'avg_sale', 'popularity', 'price_data', 'data'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', "'widget_c'", '81.66666666666667', '{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123, widget_c: 0.4897959183673469}', '{widget_a: 90.0, widget_b: 68.0, widget_c: 30.0}', '40']
+15 for product, data in sales_data.items():
+15 ['sales_data', 'product', 'popularity', 'price_data', 'data'] ['{widget_a: 120, widget_b: 85, widget_c: 40}', "'widget_c'", '{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123, widget_c: 0.4897959183673469}', '{widget_a: 90.0, widget_b: 68.0, widget_c: 30.0}', '40']
+24 best_product = max(popularity.items(), key=lambda x: x[1])[0] if popularity else None
+24 ['popularity', 'price_data'] ['{widget_a: 1.4693877551020407, widget_b: 1.0408163265306123, widget_c: 0.4897959183673469}', '{widget_a: 90.0, widget_b: 68.0, widget_c: 30.0}']
+24 best_product = max(popularity.items(), key=lambda x: x[1])[0] if popularity else None
+24 ['x'] ["('widget_a', 1.4693877551020407)"]
+24 best_product = max(popularity.items(), key=lambda x: x[1])[0] if popularity else None
+24 ['x'] ["('widget_b', 1.0408163265306123)"]
+24 best_product = max(popularity.items(), key=lambda x: x[1])[0] if popularity else None
+24 ['x'] ["('widget_c', 0.4897959183673469)"]
+32 optimal_price = price_data.get(best_product, 0)
+32 ['price_data', 'best_product', 'optimal_price'] ['{widget_a: 90.0, widget_b: 68.0, widget_c: 30.0}', "'widget_a'", '90.0']

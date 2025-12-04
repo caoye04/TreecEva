@@ -1,0 +1,303 @@
+60
+network_strength
+---
+PARAM_MAPPING {'active_nodes': {'actual_var': 'active_nodes', 'value': [3, 7, 12, 15, 22, 28]}, 'connection_map': {'actual_var': 'connection_map', 'value': {3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], 15: [7, 22], 22: [7, 15, 28], 28: [3, 12, 22], 5: [8, 14], 8: [5, 14, 19], 14: [5, 8, 19], 19: [8, 14]}}}
+FUNCTION_ENTER 25 calculate_network_strength def calculate_network_strength(active_nodes, connection_map):
+25 ['active_nodes', 'connection_map'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 28}], '_len': 6}, {'_type': 'dict', '_items': {'3': {'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 28}], '_len': 3}, '7': {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 22}], '_len': 3}, '12': {'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 28}], '_len': 2}, '15': {'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 22}], '_len': 2}, '22': {'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 28}], '_len': 3}}, '_len': 10}]
+27 if not active_nodes:
+27 ['active_nodes', 'connection_map'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'node'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '3']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'node'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '7']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'node'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '12']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'node'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '15']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'node'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '22']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'node'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '28']
+31 relevant_connections = {node: connection_map.get(node, []) for node in active_nodes}
+31 ['active_nodes', 'connection_map', 'relevant_connections'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}']
+34 importance_scores = {}
+34 ['active_nodes', 'relevant_connections', 'importance_scores'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}', '[7, 12, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}', '[7, 12, 28]', '7']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}', '[7, 12, 28]', '12']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}', '[7, 12, 28]', '28']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}', '[7, 12, 28]', '[7, 12, 28]']
+38 importance_scores[node] = calculate_node_importance(node, active_connections)
+38 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{}', '[7, 12, 28]', '[7, 12, 28]']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['3', '[7, 12, 28]', '7']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['3', '[7, 12, 28]', '12']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['3', '[7, 12, 28]', '28']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'actual_score'] ['3', '[7, 12, 28]', '17']
+5 return (node_id * 3) % 10 + actual_score
+5 ['node_id', 'connections', 'actual_score'] ['3', '[7, 12, 28]', '17']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26}', '[3, 15, 22]', '[7, 12, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26}', '[3, 15, 22]', '3', '[7, 12, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26}', '[3, 15, 22]', '15', '[7, 12, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26}', '[3, 15, 22]', '22', '[7, 12, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26}', '[3, 15, 22]', '[3, 15, 22]']
+38 importance_scores[node] = calculate_node_importance(node, active_connections)
+38 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26}', '[3, 15, 22]', '[3, 15, 22]']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['7', '[3, 15, 22]', '3']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['7', '[3, 15, 22]', '15']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['7', '[3, 15, 22]', '22']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'actual_score'] ['7', '[3, 15, 22]', '10']
+5 return (node_id * 3) % 10 + actual_score
+5 ['node_id', 'connections', 'actual_score'] ['7', '[3, 15, 22]', '10']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '12', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11}', '[3, 28]', '[3, 15, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '12', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11}', '[3, 28]', '3', '[3, 15, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '12', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11}', '[3, 28]', '28', '[3, 15, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '12', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11}', '[3, 28]', '[3, 28]']
+38 importance_scores[node] = calculate_node_importance(node, active_connections)
+38 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '12', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11}', '[3, 28]', '[3, 28]']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['12', '[3, 28]', '3']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['12', '[3, 28]', '28']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'actual_score'] ['12', '[3, 28]', '11']
+5 return (node_id * 3) % 10 + actual_score
+5 ['node_id', 'connections', 'actual_score'] ['12', '[3, 28]', '11']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '15', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17}', '[7, 22]', '[3, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '15', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17}', '[7, 22]', '7', '[3, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '15', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17}', '[7, 22]', '22', '[3, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '15', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17}', '[7, 22]', '[7, 22]']
+38 importance_scores[node] = calculate_node_importance(node, active_connections)
+38 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '15', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17}', '[7, 22]', '[7, 22]']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['15', '[7, 22]', '7']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['15', '[7, 22]', '22']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'actual_score'] ['15', '[7, 22]', '9']
+5 return (node_id * 3) % 10 + actual_score
+5 ['node_id', 'connections', 'actual_score'] ['15', '[7, 22]', '9']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[7, 15, 28]', '[7, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[7, 15, 28]', '7', '[7, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[7, 15, 28]', '15', '[7, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[7, 15, 28]', '28', '[7, 22]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[7, 15, 28]', '[7, 15, 28]']
+38 importance_scores[node] = calculate_node_importance(node, active_connections)
+38 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[7, 15, 28]', '[7, 15, 28]']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['22', '[7, 15, 28]', '7']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['22', '[7, 15, 28]', '15']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['22', '[7, 15, 28]', '28']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'actual_score'] ['22', '[7, 15, 28]', '20']
+5 return (node_id * 3) % 10 + actual_score
+5 ['node_id', 'connections', 'actual_score'] ['22', '[7, 15, 28]', '20']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[7, 15, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '3', '[7, 15, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '12', '[7, 15, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'c', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '22', '[7, 15, 28]']
+37 active_connections = [c for c in connections if c in active_nodes]
+37 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[3, 12, 22]']
+38 importance_scores[node] = calculate_node_importance(node, active_connections)
+38 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'active_connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[3, 12, 22]']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['28', '[3, 12, 22]', '3']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['28', '[3, 12, 22]', '12']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'c'] ['28', '[3, 12, 22]', '22']
+4 actual_score = sum([(c % 10) for c in connections]) if connections else 0
+4 ['node_id', 'connections', 'actual_score'] ['28', '[3, 12, 22]', '7']
+5 return (node_id * 3) % 10 + actual_score
+5 ['node_id', 'connections', 'actual_score'] ['28', '[3, 12, 22]', '7']
+35 for node, connections in relevant_connections.items():
+35 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '3', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '7', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '12', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '15', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '22', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]']
+47 routing_paths = [[node] + relevant_connections[node][:2] for node in active_nodes if relevant_connections[node]]
+47 ['active_nodes', 'node', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths'] ['[3, 7, 12, 15, 22, ...]', '28', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'path'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[3, 7, 12]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'path'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[7, 3, 15]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'path'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[12, 3, 28]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'path'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[15, 7, 22]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'path'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[22, 7, 15]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'path'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[28, 3, 12]']
+48 traffic_levels = [len(path) * 15 for path in routing_paths]
+48 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'routing_paths', 'traffic_levels'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]']
+PARAM_MAPPING {'paths': {'actual_var': 'routing_paths', 'value': [[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], [28, 3, 12]]}, 'traffic_levels': {'actual_var': 'traffic_levels', 'value': [45, 45, 45, 45, 45, 45]}}
+FUNCTION_ENTER 7 optimize_routing def optimize_routing(paths, traffic_levels):
+7 ['paths', 'traffic_levels'] [{'_type': 'list', '_items': [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 12}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 15}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 28}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 22}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 15}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 12}], '_len': 3}], '_len': 6}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 45}], '_len': 6}]
+9 optimized = []
+9 ['paths', 'traffic_levels', 'optimized'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[]']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[]', '[3, 7, 12]', '45']
+11 if traffic > 75:
+11 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[]', '[3, 7, 12]', '45']
+13 elif traffic < 25:
+13 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[]', '[3, 7, 12]', '45']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12]]', '[7, 3, 15]', '45']
+11 if traffic > 75:
+11 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12]]', '[7, 3, 15]', '45']
+13 elif traffic < 25:
+13 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12]]', '[7, 3, 15]', '45']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15]]', '[12, 3, 28]', '45']
+11 if traffic > 75:
+11 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15]]', '[12, 3, 28]', '45']
+13 elif traffic < 25:
+13 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15]]', '[12, 3, 28]', '45']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28]]', '[15, 7, 22]', '45']
+11 if traffic > 75:
+11 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28]]', '[15, 7, 22]', '45']
+13 elif traffic < 25:
+13 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28]]', '[15, 7, 22]', '45']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22]]', '[22, 7, 15]', '45']
+11 if traffic > 75:
+11 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22]]', '[22, 7, 15]', '45']
+13 elif traffic < 25:
+13 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22]]', '[22, 7, 15]', '45']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15]]', '[28, 3, 12]', '45']
+11 if traffic > 75:
+11 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15]]', '[28, 3, 12]', '45']
+13 elif traffic < 25:
+13 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15]]', '[28, 3, 12]', '45']
+10 for path, traffic in zip(paths, traffic_levels):
+10 ['paths', 'traffic_levels', 'optimized', 'path', 'traffic'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[45, 45, 45, 45, 45, ...]', '[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]', '[28, 3, 12]', '45']
+17 return optimized
+17 ['optimized'] ['[[3, 7, 12], [7, 3, 15], [12, 3, 28], [15, 7, 22], [22, 7, 15], ...]']
+FUNCTION_RETURN 17 optimize_routing {'_type': 'list', '_items': [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 12}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 15}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 28}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 22}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 15}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 12}], '_len': 3}], '_len': 6}
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'i', '_'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '0', '3']
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'i', '_'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '1', '7']
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'i', '_'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '2', '12']
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'i', '_'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '3', '15']
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'i', '_'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '4', '22']
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'i', '_'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '5', '28']
+52 transmission_data = [{"sent": 100, "received": 95 - i % 10} for i, _ in enumerate(active_nodes)]
+52 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'transmission_data'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[{sent: 100, received: 95}, {sent: 100, received: 94}, {sent: 100, received: 93}, {sent: 100, received: 92}, {sent: 100, received: 91}, ...]']
+53 packet_loss = analyze_packet_loss(transmission_data)
+53 ['active_nodes', 'relevant_connections', 'importance_scores', 'connections', 'transmission_data'] ['[3, 7, 12, 15, 22, ...]', '{3: [7, 12, 28], 7: [3, 15, 22], 12: [3, 28], ...}', '{3: 26, 7: 11, 12: 17, ...}', '[3, 12, 22]', '[{sent: 100, received: 95}, {sent: 100, received: 94}, {sent: 100, received: 93}, {sent: 100, received: 92}, {sent: 100, received: 91}, ...]']
+PARAM_MAPPING {'transmission_data': {'actual_var': 'transmission_data', 'value': [{'sent': 100, 'received': 95}, {'sent': 100, 'received': 94}, {'sent': 100, 'received': 93}, {'sent': 100, 'received': 92}, {'sent': 100, 'received': 91}, {'sent': 100, 'received': 90}]}}
+FUNCTION_ENTER 19 analyze_packet_loss def analyze_packet_loss(transmission_data):
+19 ['transmission_data'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'sent': {'_type': 'int', '_value': 100}, 'received': {'_type': 'int', '_value': 95}}, '_len': 2}, {'_type': 'dict', '_items': {'sent': {'_type': 'int', '_value': 100}, 'received': {'_type': 'int', '_value': 94}}, '_len': 2}, {'_type': 'dict', '_items': {'sent': {'_type': 'int', '_value': 100}, 'received': {'_type': 'int', '_value': 93}}, '_len': 2}, {'_type': 'dict', '_items': {'sent': {'_type': 'int', '_value': 100}, 'received': {'_type': 'int', '_value': 92}}, '_len': 2}, {'_type': 'dict', '_items': {'sent': {'_type': 'int', '_value': 100}, 'received': {'_type': 'int', '_value': 91}}, '_len': 2}, {'_type': 'dict', '_items': {'sent': {'_type': 'int', '_value': 100}, 'received': {'_type': 'int', '_value': 90}}, '_len': 2}], '_len': 6}]
+21 sent = sum(t['sent'] for t in transmission_data)
+21 [] []
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 95}']
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 94}']
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 93}']
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 92}']
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 91}']
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 90}']
+21 sent = sum(t['sent'] for t in transmission_data)
+21 ['t'] ['{sent: 100, received: 90}']
+22 received = sum(t['received'] for t in transmission_data)
+22 [] []
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 95}']
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 94}']
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 93}']
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 92}']
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 91}']
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 90}']
+22 received = sum(t['received'] for t in transmission_data)
+22 ['t'] ['{sent: 100, received: 90}']
+23 return 100 - (received * 100 / sent) if sent > 0 else 0
+23 ['sent', 'received'] ['600', '555']
+FUNCTION_RETURN 23 analyze_packet_loss {'_type': 'float', '_value': 7.5}
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 [] []
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[7, 12, 28]']
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[3, 15, 22]']
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[3, 28]']
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[7, 22]']
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[7, 15, 28]']
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[3, 12, 22]']
+56 connection_density = sum(len(connections) for connections in relevant_connections.values()) / len(active_nodes)
+56 ['connections'] ['[3, 12, 22]']
+57 importance_factor = sum(importance_scores.values()) / len(importance_scores) if importance_scores else 0
+57 ['importance_scores', 'connection_density', 'importance_factor'] ['{3: 26, 7: 11, 12: 17, ...}', '2.6666666666666665', '17.5']
+60 network_strength = int((connection_density * 5) + (importance_factor * 3))
+60 ['connection_density', 'importance_factor', 'network_strength'] ['2.6666666666666665', '17.5', '65']
+67 if packet_loss > 5:
+67 ['network_strength'] ['65']
+73 return network_strength
+73 ['network_strength'] ['65']
+FUNCTION_RETURN 73 calculate_network_strength {'_type': 'int', '_value': 65}

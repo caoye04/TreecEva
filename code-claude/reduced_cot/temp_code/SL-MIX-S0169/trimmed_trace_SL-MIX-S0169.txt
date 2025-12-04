@@ -1,0 +1,75 @@
+69
+priority_level
+---
+PARAM_MAPPING {'message_data': {'actual_var': 'message_data', 'value': {'urgency': 8, 'importance': 7, 'category': 'system', 'content': 'Database connection failed with error code 5123. Backup systems activated.', 'from_admin': True, 'encrypted': True}}, 'system_config': {'actual_var': 'system_config', 'value': {'memory': 16384, 'backup_complete': True, 'maintenance_mode': False, 'debug_level': 3}}}
+FUNCTION_ENTER 24 calculate_priority def calculate_priority(message_data, system_config):
+24 ['message_data', 'system_config'] [{'_type': 'dict', '_items': {'urgency': {'_type': 'int', '_value': 8}, 'importance': {'_type': 'int', '_value': 7}, 'category': {'_type': 'str', '_value': 'system'}, 'content': {'_type': 'str', '_value': 'Database connection failed with error code 5123. Backup systems activated.'}, 'from_admin': {'_type': 'bool', '_value': True}}, '_len': 6}, {'_type': 'dict', '_items': {'memory': {'_type': 'int', '_value': 16384}, 'backup_complete': {'_type': 'bool', '_value': True}, 'maintenance_mode': {'_type': 'bool', '_value': False}, 'debug_level': {'_type': 'int', '_value': 3}}, '_len': 4}]
+32 urgency = message_data.get('urgency', 0)
+32 ['message_data', 'urgency'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8']
+33 importance = message_data.get('importance', 0)
+33 ['message_data', 'urgency', 'importance'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7']
+36 potential_impact = urgency * importance * 0.5
+36 ['message_data', 'urgency', 'importance', 'potential_impact'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', '28.0']
+37 if potential_impact > 50:
+37 ['message_data', 'urgency', 'importance', 'potential_impact'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', '28.0']
+14 total_load = 0
+14 ['servers', 'total_load'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '0']
+15 for server, stats in servers.items():
+15 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '0', "'server1'", '{active: True, connections: 120, cpu_usage: 85}']
+16 if stats['active']:
+16 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '0', "'server1'", '{active: True, connections: 120, cpu_usage: 85}']
+17 total_load += stats['connections'] * 0.5
+17 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '60.0', "'server1'", '{active: True, connections: 120, cpu_usage: 85}']
+18 if stats['cpu_usage'] > 80:
+18 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '60.0', "'server1'", '{active: True, connections: 120, cpu_usage: 85}']
+19 total_load += 15
+19 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '75.0', "'server1'", '{active: True, connections: 120, cpu_usage: 85}']
+15 for server, stats in servers.items():
+15 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '75.0', "'server2'", '{active: True, connections: 90, cpu_usage: 65}']
+16 if stats['active']:
+16 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '75.0', "'server2'", '{active: True, connections: 90, cpu_usage: 65}']
+17 total_load += stats['connections'] * 0.5
+17 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '120.0', "'server2'", '{active: True, connections: 90, cpu_usage: 65}']
+18 if stats['cpu_usage'] > 80:
+18 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '120.0', "'server2'", '{active: True, connections: 90, cpu_usage: 65}']
+20 elif stats['cpu_usage'] > 60:
+20 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '120.0', "'server2'", '{active: True, connections: 90, cpu_usage: 65}']
+21 total_load += 10
+21 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '130.0', "'server2'", '{active: True, connections: 90, cpu_usage: 65}']
+15 for server, stats in servers.items():
+15 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '130.0', "'server3'", '{active: False, connections: 0, cpu_usage: 5}']
+16 if stats['active']:
+16 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '130.0', "'server3'", '{active: False, connections: 0, cpu_usage: 5}']
+15 for server, stats in servers.items():
+15 ['servers', 'total_load', 'server', 'stats'] ['{server1: {active: True, connections: 120, cpu_usage: 85}, server2: {active: True, connections: 90, cpu_usage: 65}, server3: {active: False, connections: 0, cpu_usage: 5}}', '130.0', "'server3'", '{active: False, connections: 0, cpu_usage: 5}']
+22 return total_load
+22 ['total_load'] ['130.0']
+51 message_length = len(message_data.get('content', ''))
+51 ['message_data', 'urgency', 'importance', 'message_length'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', '74']
+52 is_encrypted = message_data.get('encrypted', False)
+52 ['message_data', 'urgency', 'importance', 'message_length', 'is_encrypted'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', '74', 'True']
+PARAM_MAPPING {'text': {'actual_var': "message_data.get('content'", 'value': "message_data.get('content'"}}
+FUNCTION_ENTER 1 analyze_sentiment def analyze_sentiment(text):
+1 ['text'] [{'_type': 'str', '_value': 'Database connection failed with error code 5123. Backup systems activated.'}]
+10 return max(-10, min(10, sentiment_score))
+10 ['sentiment_score'] ['0']
+FUNCTION_RETURN 10 analyze_sentiment {'_type': 'int', '_value': 0}
+56 if is_encrypted and message_length > 1000:
+56 ['message_data', 'urgency', 'importance', 'message_length', 'is_encrypted'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', '74', 'True']
+58 elif is_encrypted:
+58 ['message_data', 'urgency', 'importance', 'is_encrypted'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', 'True']
+64 base_priority = urgency * 0.7 + importance * 0.3
+64 ['message_data', 'urgency', 'importance', 'base_priority'] ["{urgency: 8, importance: 7, category: 'system', ...}", '8', '7', '7.699999999999999']
+65 category_weight = {'system': 2.5, 'user': 1.0, 'info': 0.5}
+65 ['message_data', 'base_priority', 'category_weight'] ["{urgency: 8, importance: 7, category: 'system', ...}", '7.699999999999999', '{system: 2.5, user: 1.0, info: 0.5}']
+66 message_category = message_data.get('category', 'info')
+66 ['message_data', 'base_priority', 'category_weight', 'message_category'] ["{urgency: 8, importance: 7, category: 'system', ...}", '7.699999999999999', '{system: 2.5, user: 1.0, info: 0.5}', "'system'"]
+69 priority_level = base_priority * category_weight.get(message_category, 1.0)
+69 ['message_data', 'base_priority', 'category_weight', 'message_category', 'priority_level'] ["{urgency: 8, importance: 7, category: 'system', ...}", '7.699999999999999', '{system: 2.5, user: 1.0, info: 0.5}', "'system'", '19.25']
+72 if message_data.get('from_admin', False):
+72 ['message_data', 'priority_level'] ["{urgency: 8, importance: 7, category: 'system', ...}", '19.25']
+78 if system_config.get('maintenance_mode', False):
+78 ['priority_level'] ['19.25']
+82 return priority_level
+82 ['priority_level'] ['19.25']
+FUNCTION_RETURN 82 calculate_priority {'_type': 'float', '_value': 19.25}

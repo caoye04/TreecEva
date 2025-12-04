@@ -1,0 +1,118 @@
+Target: Find the value of variable priority_score after [line 79] executes
+
+[line 24]  def calculate_document_priority(text, sensitive_terms):
+Enter function calculate_document_priority: text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.', sensitive_terms=['confidential', 'classified', 'security', 'sensitive']
+  [line 26]  word_count = len(text.split())
+  Call function len(text.split())
+  [line 35]  keywords = extract_keywords(text)
+  Call function extract_keywords(text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.' (parameter text))
+  [line 4]  def extract_keywords(text):
+  Enter function extract_keywords: text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'
+    [line 6]  words = [word.lower() for word in text.split() if len(word) > 3]
+    Compute: [word.lower() for word in text.split() if len(word) > 3], where word='This' (an unknown source), text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.' (parameter text) = ?
+    [line 7]  return Counter(words)
+    Return: Counter(words)
+  Function extract_keywords returns {this: 1, confidential: 1, document: 1, ...}
+  [line 36]  total_keywords = sum(keywords.values())
+  Call function sum(keywords.values())
+  [line 16]  def analyze_readability(text):
+  Enter function analyze_readability: text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'
+    [line 18]  sentences = text.count('.') + text.count('!') + text.count('?')
+    Compute: text.count('.') + text.count('!') + text.count('?'), where text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.' (parameter text) = 2
+    [line 19]  words = len(text.split())
+    Call function len(text.split())
+    [line 20]  if sentences == 0:
+    Condition: True, entering 'if' block
+    [line 22]  return 100 - min(100, 10 * (words / sentences))
+    Return: 100 - min(100, 10 * (words / sentences))
+  Function analyze_readability returns 15.0
+  [line 9]  def calculate_sentiment(text):
+  Enter function calculate_sentiment: text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'
+    [line 11]  positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+    Call function sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+    [line 12]  negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+    Call function sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+    [line 13]  sentiment_score = positive - negative
+    Compute: positive - negative, where positive=0 (defined at [line 11]), negative=0 (defined at [line 12]) = 0
+    [line 14]  return max(-5, min(5, sentiment_score))
+    Return: max(-5, min(5, sentiment_score))
+  Function calculate_sentiment returns 0
+  [line 47]  sensitive_count = 0
+  Assign: sensitive_count = 0
+  [line 48]  for term in sensitive_terms:
+  Loop Start: term takes its first value 'confidential'
+  [line 49]  term_lower = term.lower()
+  (Missing param: 'func_name')
+  [line 50]  if term_lower in text.lower():
+  Condition: True, entering 'if' block
+  [line 51]  sensitive_count += text.lower().count(term_lower)
+  Update: sensitive_count changed from 0 (defined at defined at [line 47]) to 0+text.lower().count(term_lower) = 1
+  [line 53]  if text.lower().startswith(term_lower):
+  Condition: True, entering 'if' block
+  [line 48]  for term in sensitive_terms:
+  Loop Iteration: term is now 'classified' (iteration 2)
+  [line 49]  term_lower = term.lower()
+  (Missing param: 'func_name')
+  [line 50]  if term_lower in text.lower():
+  Condition: True, entering 'if' block
+  [line 51]  sensitive_count += text.lower().count(term_lower)
+  Update: sensitive_count changed from 1 (defined at defined at [line 51]) to 1+text.lower().count(term_lower) = 2
+  [line 53]  if text.lower().startswith(term_lower):
+  Condition: True, entering 'if' block
+  [line 48]  for term in sensitive_terms:
+  Loop Iteration: term is now 'security' (iteration 3)
+  [line 49]  term_lower = term.lower()
+  (Missing param: 'func_name')
+  [line 50]  if term_lower in text.lower():
+  Condition: True, entering 'if' block
+  [line 51]  sensitive_count += text.lower().count(term_lower)
+  Update: sensitive_count changed from 2 (defined at defined at [line 51]) to 2+text.lower().count(term_lower) = 3
+  [line 53]  if text.lower().startswith(term_lower):
+  Condition: True, entering 'if' block
+  [line 48]  for term in sensitive_terms:
+  Loop Iteration: term is now 'sensitive' (iteration 4)
+  [line 49]  term_lower = term.lower()
+  (Missing param: 'func_name')
+  [line 50]  if term_lower in text.lower():
+  Condition: True, entering 'if' block
+  [line 51]  sensitive_count += text.lower().count(term_lower)
+  Update: sensitive_count changed from 3 (defined at defined at [line 51]) to 3+text.lower().count(term_lower) = 4
+  [line 53]  if text.lower().startswith(term_lower):
+  Condition: True, entering 'if' block
+  [line 48]  for term in sensitive_terms:
+  Loop End: Iteration finished
+  [line 62]  base_priority = 10
+  Assign: base_priority = 10
+  [line 63]  if sensitive_count > 0:
+  Condition: True, entering 'if' block
+  [line 65]  base_priority = base_priority << 1
+  Compute: base_priority << 1, where base_priority=10 (defined at [line 62]) = 20
+  [line 66]  if sensitive_count > 2:
+  Condition: True, entering 'if' block
+  [line 68]  base_priority = base_priority << 1
+  Compute: base_priority << 1, where base_priority=20 (defined at [line 65]) = 40
+  [line 75]  if word_count < 20:
+  Condition: True, entering 'if' block
+  [line 79]  priority_score = (base_priority ^ 15) + sensitive_count * 5
+  Compute: (base_priority ^ 15) + sensitive_count * 5, where base_priority=40 (defined at [line 68]), sensitive_count=4 (defined at [line 51]) = 59
+  [line 82]  keyword_density = total_keywords / max(1, word_count) * 100
+  Compute: total_keywords / max(1, word_count) * 100, where word_count=17 (defined at [line 26]) = ?
+  [line 83]  if keyword_density > 30:
+  Condition: True, entering 'if' block
+  [line 86]  return priority_score
+  Return: priority_score=59 (defined at [line 79])
+Function calculate_document_priority returns 59
+[line 18]  sentences = text.count('.') + text.count('!') + text.count('?')
+Compute: text.count('.') + text.count('!') + text.count('?'), where text='This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.' (an unknown source) = 2
+[line 19]  words = len(text.split())
+Call function len(text.split())
+[line 20]  if sentences == 0:
+Condition: True, entering 'if' block
+[line 22]  return 100 - min(100, 10 * (words / sentences))
+Return: 100 - min(100, 10 * (words / sentences))
+[line 13]  sentiment_score = positive - negative
+Compute: positive - negative, where positive=0 (defined at [line 11]), negative=0 (defined at [line 12]) = 0
+[line 14]  return max(-5, min(5, sentiment_score))
+Return: max(-5, min(5, sentiment_score))
+
+Answer: priority_score = 59 (last updated on defined at [line 79])

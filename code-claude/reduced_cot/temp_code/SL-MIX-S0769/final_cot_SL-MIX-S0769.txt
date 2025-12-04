@@ -1,0 +1,88 @@
+Target: Find the value of variable final_power after [line 61] executes
+
+[line 1]  def analyze_elemental_composition(raw_data, threshold=50):
+Enter function analyze_elemental_composition: raw_data=[1554, 1605, 1656, 1680, 1554, ...], threshold=50
+  [line 3]  elements = {}
+  Compute: {} = {}
+  [line 4]  for i, value in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 5]  element_code = (value & 0xFF00) >> 8
+  Compute: (value & 0xFF00) >> 8, where value=1554 (an unknown source) = 6
+  [line 7]  if element_code not in elements:
+  Condition: True, entering 'if' block
+  [line 8]  elements[element_code] = []
+  (Missing param: 'result')
+  [line 4]  for i, value in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 5]  element_code = (value & 0xFF00) >> 8
+  Compute: (value & 0xFF00) >> 8, where value=1605 (an unknown source) = 6
+  [line 7]  if element_code not in elements:
+  Condition: True, entering 'if' block
+... [Line 4] repeats 6 more times ...
+... [Line 4] repeats 6 more times ...
+... [Line 4] repeats 6 more times ...
+  [line 4]  for i, value in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 5]  element_code = (value & 0xFF00) >> 8
+  Compute: (value & 0xFF00) >> 8, where value=1554 (an unknown source) = 6
+  [line 7]  if element_code not in elements:
+  Condition: True, entering 'if' block
+  [line 4]  for i, value in enumerate(raw_data):
+  Loop End: Iteration finished
+  [line 16]  stability = {}
+  Compute: {} = {}
+  [line 17]  for code, intensities in elements.items():
+  (Missing param: 'iter_var')
+  [line 18]  avg = sum(intensities) / len(intensities) if intensities else 0
+  Compute: sum(intensities) / len(intensities) if intensities else 0, where intensities=[18, 69, 120, 144, 18, ...] (an unknown source) = 70.55555555555556
+  [line 19]  stability[code] = avg > threshold
+  (Missing param: 'result')
+  [line 17]  for code, intensities in elements.items():
+  Loop End: Iteration finished
+  [line 22]  power_levels = {}
+  Compute: {} = {}
+  [line 23]  for code, intensities in elements.items():
+  (Missing param: 'iter_var')
+  [line 25]  if code % 3 == 0 and code <= 15:
+  Condition: True, entering 'if' block
+  [line 26]  power = len(intensities) * (sum(intensities) / len(intensities) if intensities else 0)
+  Compute: len(intensities) * (sum(intensities) / len(intensities) if intensities else 0), where intensities=[18, 69, 120, 144, 18, ...] (an unknown source) = 635.0
+  [line 27]  power_levels[code] = int(power)
+  (Missing param: 'func_name')
+  [line 23]  for code, intensities in elements.items():
+  Loop End: Iteration finished
+  [line 35]  candidate_elements = [code for code in elements if sum(elements[code]) > threshold * 2]
+  Compute: [code for code in elements if sum(elements[code]) > threshold * 2], where code=6 (an unknown source), elements={6: [18, 69, 120, 144, 18, ...]} (defined at [line 3]), threshold=50 (an unknown source) = ?
+  [line 36]  filtered_elements = [code for code in candidate_elements if code in power_levels]
+  Compute: [code for code in candidate_elements if code in power_levels], where code=6 (an unknown source), candidate_elements=[6] (defined at [line 35]), power_levels={6: 635} (defined at [line 22]) = ?
+  [line 39]  active_element = 0
+  Assign: active_element = 0
+  [line 40]  max_single_reading = 0
+  Assign: max_single_reading = 0
+  [line 41]  for code in filtered_elements:
+  Loop Start: code takes its first value 6
+  [line 42]  current_max = max(elements[code]) if elements[code] else 0
+  Compute: max(elements[code]) if elements[code] else 0, where elements={6: [18, 69, 120, 144, 18, ...]} (defined at [line 3]), code=6 (defined at [line 41]) = 144
+  [line 43]  if current_max > max_single_reading:
+  Condition: True, entering 'if' block
+  [line 45]  active_element = code
+  Compute: code, where code=6 (defined at [line 41]) = 6
+  [line 41]  for code in filtered_elements:
+  Loop End: Iteration finished
+  [line 48]  env_modifiers = {3: 1.5, 6: 0.8, 9: 2.0, 12: 1.2, 15: 0.5}
+  Compute: {3: 1.5, 6: 0.8, 9: 2.0, 12: 1.2, 15: 0.5} = {3: 1.5, 6: 0.8, 9: 2.0, ...}
+  [line 51]  base_multiplier = 1.0
+  Assign: base_multiplier = 1.0
+  [line 52]  if active_element in stability and stability[active_element]:
+  Condition: True, entering 'if' block
+  [line 53]  base_multiplier = 2.0
+  Assign: base_multiplier = 2.0
+  [line 58]  multiplier = base_multiplier * env_modifiers.get(active_element, 1.0)
+  Compute: base_multiplier * env_modifiers.get(active_element, 1.0), where base_multiplier=2.0 (defined at [line 53]), env_modifiers={3: 1.5, 6: 0.8, 9: 2.0, ...} (defined at [line 48]), active_element=6 (defined at [line 45]) = 1.6
+  [line 61]  final_power = power_levels.get(active_element, 0) * multiplier
+  Compute: power_levels.get(active_element, 0) * multiplier, where power_levels={6: 635} (defined at [line 22]), active_element=6 (defined at [line 45]), multiplier=1.6 (defined at [line 58]) = 1016.0
+  [line 72]  return result_data
+  Return: result_data
+Function analyze_elemental_composition returns {radiation: 635, elements_detected: 1, power_output: 1016.0, ...}
+
+Answer: final_power = 1016.0 (last updated on defined at [line 61])

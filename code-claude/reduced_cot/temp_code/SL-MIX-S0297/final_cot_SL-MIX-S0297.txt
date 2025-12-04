@@ -1,0 +1,32 @@
+Target: Find the value of variable valid_word_count after [line 54] executes
+
+[line 4]  text = "machine learning algorithms have become essential tools for data analysis and pattern recognition in various domains including healthcare finance and education"
+Assign: text = 'machine learning algorithms have become essential tools for data analysis and pattern recognition in various domains including healthcare finance and education'
+[line 6]  stop_words = {"and", "for", "in", "the", "have", "become"}
+Compute: {"and", "for", "in", "the", "have", "become"} = {'in', 'the', 'become', 'have', 'for', ...}
+[line 8]  min_word_length = 4
+Assign: min_word_length = 4
+[line 28]  words = text.lower().split()
+(Missing param: 'func_name')
+[line 32]  filtered_words = [w for w in words if w not in stop_words and len(w) >= min_word_length]
+Compute: [w for w in words if w not in stop_words and len(w) >= min_word_length], where w='machine' (an unknown source), words=['machine', 'learning', 'algorithms', 'have', 'become', ...] (an unknown source), stop_words={'in', 'the', 'become', 'have', 'for', ...} (defined at [line 6]), min_word_length=4 (defined at [line 8]) = ?
+[line 40]  for word in filtered_words:
+Loop Start: word takes its first value 'machine'
+[line 41]  if word in word_scores:
+Condition: True, entering 'if' block
+[line 40]  for word in filtered_words:
+Loop Iteration: word is now 'learning' (iteration 2)
+[line 41]  if word in word_scores:
+Condition: True, entering 'if' block
+... [Line 40] repeats 12 more times ...
+... [Line 40] repeats 12 more times ...
+[line 40]  for word in filtered_words:
+Loop Iteration: word is now 'education' (iteration 15)
+[line 41]  if word in word_scores:
+Condition: True, entering 'if' block
+[line 40]  for word in filtered_words:
+Loop End: Iteration finished
+[line 54]  valid_word_count = len([w for w in filtered_words if w in word_scores])
+Call function len([w for w in filtered_words if w in word_scores])
+
+Answer: valid_word_count = 13 (last updated on defined at [line 54])

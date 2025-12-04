@@ -1,0 +1,47 @@
+50
+overlap_score
+---
+PARAM_MAPPING {'doc1_tags': {'actual_var': 'doc1_tags', 'value': ['python', 'programming', 'development', 'code', 'tutorial']}, 'doc2_tags': {'actual_var': 'doc2_tags', 'value': ['python', 'tutorial', 'learning', 'education']}, 'priority_tags': {'actual_var': 'priority_tags', 'value': ['python', 'development', 'tutorial']}}
+FUNCTION_ENTER 1 analyze_document_tags def analyze_document_tags(doc1_tags, doc2_tags, priority_tags=None):
+1 ['doc1_tags', 'doc2_tags', 'priority_tags'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'python'}, {'_type': 'str', '_value': 'programming'}, {'_type': 'str', '_value': 'development'}, {'_type': 'str', '_value': 'code'}, {'_type': 'str', '_value': 'tutorial'}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'python'}, {'_type': 'str', '_value': 'tutorial'}, {'_type': 'str', '_value': 'learning'}, {'_type': 'str', '_value': 'education'}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'python'}, {'_type': 'str', '_value': 'development'}, {'_type': 'str', '_value': 'tutorial'}], '_len': 3}]
+3 tags1 = set(doc1_tags)
+3 ['doc1_tags', 'doc2_tags', 'priority_tags', 'tags1'] ["['python', 'programming', 'development', 'code', 'tutorial']", "['python', 'tutorial', 'learning', 'education']", "['python', 'development', 'tutorial']", "{'python', 'development', 'tutorial', 'code', 'programming'}"]
+4 tags2 = set(doc2_tags)
+4 ['doc2_tags', 'priority_tags', 'tags1', 'tags2'] ["['python', 'tutorial', 'learning', 'education']", "['python', 'development', 'tutorial']", "{'python', 'development', 'tutorial', 'code', 'programming'}", "{'learning', 'python', 'education', 'tutorial'}"]
+7 common_elements = tags1.intersection(tags2)
+7 ['priority_tags', 'tags1', 'tags2', 'common_elements'] ["['python', 'development', 'tutorial']", "{'python', 'development', 'tutorial', 'code', 'programming'}", "{'learning', 'python', 'education', 'tutorial'}", "{'python', 'tutorial'}"]
+13 longest_tag = ""
+13 ['priority_tags', 'common_elements', 'longest_tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "''"]
+16 for tag in common_elements:
+16 ['priority_tags', 'common_elements', 'longest_tag', 'tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "''", "'python'"]
+17 if len(tag) > len(longest_tag):
+17 ['priority_tags', 'common_elements', 'longest_tag', 'tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "''", "'python'"]
+18 longest_tag = tag
+18 ['priority_tags', 'common_elements', 'longest_tag', 'tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "'python'", "'python'"]
+16 for tag in common_elements:
+16 ['priority_tags', 'common_elements', 'longest_tag', 'tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "'python'", "'tutorial'"]
+17 if len(tag) > len(longest_tag):
+17 ['priority_tags', 'common_elements', 'longest_tag', 'tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "'python'", "'tutorial'"]
+16 for tag in common_elements:
+16 ['priority_tags', 'common_elements', 'tag'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", "'tutorial'"]
+25 priority_factor = 1.0
+25 ['priority_tags', 'common_elements', 'priority_factor'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", '1.0']
+26 if priority_tags:
+26 ['priority_tags', 'common_elements', 'priority_factor'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", '1.0']
+27 priority_set = set(priority_tags)
+27 ['priority_tags', 'common_elements', 'priority_factor', 'priority_set'] ["['python', 'development', 'tutorial']", "{'python', 'tutorial'}", '1.0', "{'python', 'development', 'tutorial'}"]
+28 priority_matches = priority_set.intersection(common_elements)
+28 ['common_elements', 'priority_factor', 'priority_set', 'priority_matches'] ["{'python', 'tutorial'}", '1.0', "{'python', 'development', 'tutorial'}", "{'python', 'tutorial'}"]
+29 if priority_matches:
+29 ['common_elements', 'priority_factor', 'priority_matches'] ["{'python', 'tutorial'}", '1.0', "{'python', 'tutorial'}"]
+31 priority_factor = 1.5
+31 ['common_elements', 'priority_factor', 'priority_matches'] ["{'python', 'tutorial'}", '1.5', "{'python', 'tutorial'}"]
+34 if "urgent" in priority_matches or "critical" in priority_matches:
+34 ['common_elements', 'priority_factor', 'priority_matches'] ["{'python', 'tutorial'}", '1.5', "{'python', 'tutorial'}"]
+50 overlap_score = len(common_elements) * priority_factor
+50 ['common_elements', 'priority_factor', 'overlap_score'] ["{'python', 'tutorial'}", '1.5', '3.0']
+53 print(f"Result: {overlap_score}")
+53 ['overlap_score'] ['3.0']
+54 return overlap_score
+54 ['overlap_score'] ['3.0']
+FUNCTION_RETURN 54 analyze_document_tags {'_type': 'float', '_value': 3.0}

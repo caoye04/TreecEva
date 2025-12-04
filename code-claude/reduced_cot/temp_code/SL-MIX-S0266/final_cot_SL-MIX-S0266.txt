@@ -1,0 +1,41 @@
+Target: Find the value of variable product_value after [line 46] executes
+
+[line 21]  raw_text = "The 3 scientists examined 7 samples over 2 weeks"
+Assign: raw_text = 'The 3 scientists examined 7 samples over 2 weeks'
+[line 22]  processed_data = process_text(raw_text)
+Call function process_text(raw_text='The 3 scientists examined 7 samples over 2 weeks' (defined at [line 21]))
+[line 3]  words = text.lower().split()
+(Missing param: 'func_name')
+[line 4]  extracted = [int(word) for word in words if word.isdigit()]
+Compute: [int(word) for word in words if word.isdigit()], where word='the' (an unknown source), words=['the', '3', 'scientists', 'examined', '7', ...] (an unknown source) = ?
+[line 5]  return extracted
+Return: extracted=[3, 7, 2] (defined at [line 4])
+[line 33]  threshold = 5
+Assign: threshold = 5
+[line 34]  filtered_data = [x for x in processed_data if x < threshold]
+Compute: [x for x in processed_data if x < threshold], where x=3 (an unknown source), processed_data=[3, 7, 2] (defined at [line 22]), threshold=5 (defined at [line 33]) = ?
+[line 9]  if not numbers:
+Condition: True, entering 'if' block
+[line 11]  return sum(numbers) / len(numbers)
+Return: sum(numbers) / len(numbers)
+[line 46]  product_value = calculate_product(filtered_data)
+Call function calculate_product(filtered_data=[3, 2] (defined at [line 34]))
+[line 13]  def calculate_product(data):
+Enter function calculate_product: data=[3, 2] (filtered_data defined at [line 34])
+  [line 15]  result = 1
+  Assign: result = 1
+  [line 16]  for item in data:
+  Loop Start: item takes its first value 3
+  [line 17]  result *= item
+  Update: result changed from 1 (defined at defined at [line 15]) to 1*item = 3
+  [line 16]  for item in data:
+  Loop Iteration: item is now 2 (iteration 2)
+  [line 17]  result *= item
+  Update: result changed from 3 (defined at defined at [line 17]) to 3*item = 6
+  [line 16]  for item in data:
+  Loop End: Iteration finished
+  [line 18]  return result
+  Return: result=6 (defined at [line 17])
+Function calculate_product returns 6
+
+Answer: product_value = 6 (last updated on defined at [line 46])

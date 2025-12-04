@@ -1,0 +1,149 @@
+64
+optimal_capacity
+---
+17 packages = inventory['packages']
+17 ['inventory', 'constraints', 'packages'] ["{packages: [{...4 items}, {...4 items}, {...4 items}, {...4 items}], shelves: 5, temperature_zones: ['ambient', 'refrigerated', 'frozen']}", '{height: 10, width: 12, safety_margin: 0.1}', "[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]"]
+18 shelf_count = inventory['shelves']
+18 ['inventory', 'constraints', 'packages', 'shelf_count'] ["{packages: [{...4 items}, {...4 items}, {...4 items}, {...4 items}], shelves: 5, temperature_zones: ['ambient', 'refrigerated', 'frozen']}", '{height: 10, width: 12, safety_margin: 0.1}', "[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5']
+22 max_height = constraints['height']
+22 ['constraints', 'packages', 'shelf_count', 'max_height'] ['{height: 10, width: 12, safety_margin: 0.1}', "[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10']
+23 max_width = constraints['width']
+23 ['constraints', 'packages', 'shelf_count', 'max_height', 'max_width'] ['{height: 10, width: 12, safety_margin: 0.1}', "[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12']
+27 package_data = []
+27 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', '[]']
+28 for pkg in packages:
+28 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', '[]', "{id: 'A1', dimensions: (2, 3, 4), weight: 5, ...}"]
+29 volume = calculate_volume(pkg['dimensions'])
+29 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', '[]', "{id: 'A1', dimensions: (2, 3, 4), weight: 5, ...}"]
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(2, 3, 4)', '2', '3', '4']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(2, 3, 4)', '2', '3', '4']
+30 weight = pkg['weight']
+30 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', '[]', "{id: 'A1', dimensions: (2, 3, 4), weight: 5, ...}", '24', '5']
+PARAM_MAPPING {'weight': {'actual_var': 'weight', 'value': 5}, 'dimensions': {'actual_var': "pkg['dimensions']", 'value': "pkg['dimensions']"}}
+FUNCTION_ENTER 8 calculate_density def calculate_density(weight, dimensions):
+8 ['weight', 'dimensions'] [{'_type': 'int', '_value': 5}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}], '_len': 3}]
+10 volume = calculate_volume(dimensions)
+10 ['weight', 'dimensions'] ['5', '(2, 3, 4)']
+PARAM_MAPPING {'dimensions': {'actual_var': 'dimensions', 'value': (2, 3, 4)}}
+FUNCTION_ENTER 3 calculate_volume def calculate_volume(dimensions):
+3 ['dimensions'] [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}], '_len': 3}]
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(2, 3, 4)', '2', '3', '4']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(2, 3, 4)', '2', '3', '4']
+FUNCTION_RETURN 6 calculate_volume {'_type': 'int', '_value': 24}
+11 return weight / volume if volume > 0 else 0
+11 ['weight', 'dimensions', 'volume'] ['5', '(2, 3, 4)', '24']
+FUNCTION_RETURN 11 calculate_density {'_type': 'float', '_value': 0.20833333333333334}
+28 for pkg in packages:
+28 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}]", "{id: 'B2', dimensions: (1, 2, 2), weight: 3, ...}", '24', '5']
+29 volume = calculate_volume(pkg['dimensions'])
+29 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}]", "{id: 'B2', dimensions: (1, 2, 2), weight: 3, ...}", '24', '5']
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(1, 2, 2)', '1', '2', '2']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(1, 2, 2)', '1', '2', '2']
+30 weight = pkg['weight']
+30 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}]", "{id: 'B2', dimensions: (1, 2, 2), weight: 3, ...}", '4', '3']
+PARAM_MAPPING {'weight': {'actual_var': 'weight', 'value': 3}, 'dimensions': {'actual_var': "pkg['dimensions']", 'value': "pkg['dimensions']"}}
+FUNCTION_ENTER 8 calculate_density def calculate_density(weight, dimensions):
+8 ['weight', 'dimensions'] [{'_type': 'int', '_value': 3}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}], '_len': 3}]
+10 volume = calculate_volume(dimensions)
+10 ['weight', 'dimensions'] ['3', '(1, 2, 2)']
+PARAM_MAPPING {'dimensions': {'actual_var': 'dimensions', 'value': (1, 2, 2)}}
+FUNCTION_ENTER 3 calculate_volume def calculate_volume(dimensions):
+3 ['dimensions'] [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}], '_len': 3}]
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(1, 2, 2)', '1', '2', '2']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(1, 2, 2)', '1', '2', '2']
+FUNCTION_RETURN 6 calculate_volume {'_type': 'int', '_value': 4}
+11 return weight / volume if volume > 0 else 0
+11 ['weight', 'dimensions', 'volume'] ['3', '(1, 2, 2)', '4']
+FUNCTION_RETURN 11 calculate_density {'_type': 'float', '_value': 0.75}
+28 for pkg in packages:
+28 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}]", "{id: 'C3', dimensions: (3, 4, 5), weight: 8, ...}", '4', '3']
+29 volume = calculate_volume(pkg['dimensions'])
+29 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}]", "{id: 'C3', dimensions: (3, 4, 5), weight: 8, ...}", '4', '3']
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(3, 4, 5)', '3', '4', '5']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(3, 4, 5)', '3', '4', '5']
+30 weight = pkg['weight']
+30 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}]", "{id: 'C3', dimensions: (3, 4, 5), weight: 8, ...}", '60', '8']
+PARAM_MAPPING {'weight': {'actual_var': 'weight', 'value': 8}, 'dimensions': {'actual_var': "pkg['dimensions']", 'value': "pkg['dimensions']"}}
+FUNCTION_ENTER 8 calculate_density def calculate_density(weight, dimensions):
+8 ['weight', 'dimensions'] [{'_type': 'int', '_value': 8}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 5}], '_len': 3}]
+10 volume = calculate_volume(dimensions)
+10 ['weight', 'dimensions'] ['8', '(3, 4, 5)']
+PARAM_MAPPING {'dimensions': {'actual_var': 'dimensions', 'value': (3, 4, 5)}}
+FUNCTION_ENTER 3 calculate_volume def calculate_volume(dimensions):
+3 ['dimensions'] [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 5}], '_len': 3}]
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(3, 4, 5)', '3', '4', '5']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(3, 4, 5)', '3', '4', '5']
+FUNCTION_RETURN 6 calculate_volume {'_type': 'int', '_value': 60}
+11 return weight / volume if volume > 0 else 0
+11 ['weight', 'dimensions', 'volume'] ['8', '(3, 4, 5)', '60']
+FUNCTION_RETURN 11 calculate_density {'_type': 'float', '_value': 0.13333333333333333}
+28 for pkg in packages:
+28 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}, {id: 'C3', volume: 60, efficiency: 20.0}]", "{id: 'D4', dimensions: (2, 2, 2), weight: 4, ...}", '60', '8']
+29 volume = calculate_volume(pkg['dimensions'])
+29 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}, {id: 'C3', volume: 60, efficiency: 20.0}]", "{id: 'D4', dimensions: (2, 2, 2), weight: 4, ...}", '60', '8']
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(2, 2, 2)', '2', '2', '2']
+6 return length * width * height
+6 ['dimensions', 'length', 'width', 'height'] ['(2, 2, 2)', '2', '2', '2']
+30 weight = pkg['weight']
+30 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg', 'volume', 'weight'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}, {id: 'C3', volume: 60, efficiency: 20.0}]", "{id: 'D4', dimensions: (2, 2, 2), weight: 4, ...}", '8', '4']
+PARAM_MAPPING {'weight': {'actual_var': 'weight', 'value': 4}, 'dimensions': {'actual_var': "pkg['dimensions']", 'value': "pkg['dimensions']"}}
+FUNCTION_ENTER 8 calculate_density def calculate_density(weight, dimensions):
+8 ['weight', 'dimensions'] [{'_type': 'int', '_value': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}], '_len': 3}]
+10 volume = calculate_volume(dimensions)
+10 ['weight', 'dimensions'] ['4', '(2, 2, 2)']
+PARAM_MAPPING {'dimensions': {'actual_var': 'dimensions', 'value': (2, 2, 2)}}
+FUNCTION_ENTER 3 calculate_volume def calculate_volume(dimensions):
+3 ['dimensions'] [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 2}], '_len': 3}]
+5 length, width, height = dimensions
+5 ['dimensions', 'length', 'width', 'height'] ['(2, 2, 2)', '2', '2', '2']
+6 return length * width * height
+6 ['length', 'width', 'height'] ['2', '2', '2']
+FUNCTION_RETURN 6 calculate_volume {'_type': 'int', '_value': 8}
+11 return weight / volume if volume > 0 else 0
+11 ['weight', 'volume'] ['4', '8']
+FUNCTION_RETURN 11 calculate_density {'_type': 'float', '_value': 0.5}
+28 for pkg in packages:
+28 ['packages', 'shelf_count', 'max_height', 'max_width', 'package_data', 'pkg'] ["[{id: 'A1', dimensions: (...3 items), weight: 5, ...}, {id: 'B2', dimensions: (...3 items), weight: 3, ...}, {id: 'C3', dimensions: (...3 items), weight: 8, ...}, {id: 'D4', dimensions: (...3 items), weight: 4, ...}]", '5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}, {id: 'C3', volume: 60, efficiency: 20.0}, {id: 'D4', volume: 8, efficiency: 3.2}]", "{id: 'D4', dimensions: (2, 2, 2), weight: 4, ...}"]
+46 sorted_packages = sorted(package_data, key=lambda x: x['efficiency'], reverse=True)
+46 ['shelf_count', 'max_height', 'max_width', 'package_data'] ['5', '10', '12', "[{id: 'A1', volume: 24, efficiency: 8.0}, {id: 'B2', volume: 4, efficiency: 1.0}, {id: 'C3', volume: 60, efficiency: 20.0}, {id: 'D4', volume: 8, efficiency: 3.2}]"]
+46 sorted_packages = sorted(package_data, key=lambda x: x['efficiency'], reverse=True)
+46 ['x'] ["{id: 'A1', volume: 24, efficiency: 8.0}"]
+46 sorted_packages = sorted(package_data, key=lambda x: x['efficiency'], reverse=True)
+46 ['x'] ["{id: 'B2', volume: 4, efficiency: 1.0}"]
+46 sorted_packages = sorted(package_data, key=lambda x: x['efficiency'], reverse=True)
+46 ['x'] ["{id: 'C3', volume: 60, efficiency: 20.0}"]
+46 sorted_packages = sorted(package_data, key=lambda x: x['efficiency'], reverse=True)
+46 ['x'] ["{id: 'D4', volume: 8, efficiency: 3.2}"]
+49 total_volume = sum(p['volume'] for p in sorted_packages)
+49 [] []
+49 total_volume = sum(p['volume'] for p in sorted_packages)
+49 ['p'] ["{id: 'C3', volume: 60, efficiency: 20.0}"]
+49 total_volume = sum(p['volume'] for p in sorted_packages)
+49 ['p'] ["{id: 'A1', volume: 24, efficiency: 8.0}"]
+49 total_volume = sum(p['volume'] for p in sorted_packages)
+49 ['p'] ["{id: 'D4', volume: 8, efficiency: 3.2}"]
+49 total_volume = sum(p['volume'] for p in sorted_packages)
+49 ['p'] ["{id: 'B2', volume: 4, efficiency: 1.0}"]
+49 total_volume = sum(p['volume'] for p in sorted_packages)
+49 ['p'] ["{id: 'B2', volume: 4, efficiency: 1.0}"]
+52 shelf_capacity = max_height * max_width * shelf_count
+52 ['shelf_count', 'max_height', 'max_width', 'total_volume', 'shelf_capacity'] ['5', '10', '12', '96', '600']
+62 base_capacity = min(total_volume, shelf_capacity)
+62 ['total_volume', 'shelf_capacity', 'base_capacity'] ['96', '600', '96']
+63 utilization_factor = 0.85  # Realistic utilization factor
+63 ['base_capacity', 'utilization_factor'] ['96', '0.85']
+64 optimal_capacity = int(base_capacity * utilization_factor)
+64 ['base_capacity', 'utilization_factor', 'optimal_capacity'] ['96', '0.85', '81']

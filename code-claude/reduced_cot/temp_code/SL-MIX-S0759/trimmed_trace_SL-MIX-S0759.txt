@@ -1,0 +1,29 @@
+27
+valid_count
+---
+14 min_temp = 30
+14 ['temperature_data', 'min_temp'] ['{New York: 28, Los Angeles: 32, Chicago: 26, ...}', '30']
+16 excluded_cities = {'Phoenix', 'Dallas'}
+16 ['temperature_data', 'min_temp', 'excluded_cities'] ['{New York: 28, Los Angeles: 32, Chicago: 26, ...}', '30', "{'Dallas', 'Phoenix'}"]
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'New York'", '28']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'Los Angeles'", '32']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'Chicago'", '26']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'Houston'", '35']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'Phoenix'", '40']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'Philadelphia'", '30']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'San Antonio'", '37']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['city', 'temp'] ["'San Diego'", '29']
+19 warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+19 ['temperature_data', 'min_temp', 'excluded_cities', 'warm_cities'] ['{New York: 28, Los Angeles: 32, Chicago: 26, ...}', '30', "{'Dallas', 'Phoenix'}", "{'Houston', 'Phoenix', 'San Antonio', 'Philadelphia', 'Los Angeles'}"]
+24 qualified_cities = warm_cities - excluded_cities
+24 ['excluded_cities', 'warm_cities', 'qualified_cities'] ["{'Dallas', 'Phoenix'}", "{'Houston', 'Phoenix', 'San Antonio', 'Philadelphia', 'Los Angeles'}", "{'San Antonio', 'Los Angeles', 'Philadelphia', 'Houston'}"]
+27 valid_count = len(qualified_cities)
+27 ['qualified_cities', 'valid_count'] ["{'San Antonio', 'Los Angeles', 'Philadelphia', 'Houston'}", '4']

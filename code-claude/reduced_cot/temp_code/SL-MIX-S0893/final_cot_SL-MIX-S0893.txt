@@ -1,0 +1,54 @@
+Target: Find the value of variable signal_strength after [line 55] executes
+
+[line 26]  threshold = lambda x: sum(x) / len(x) >= 40
+Compute: lambda x: sum(x) / len(x) >= 40 = ?
+[line 27]  valid_stations = [station for station, readings in sensor_data.items() if threshold(readings)]
+Compute: [station for station, readings in sensor_data.items() if threshold(readings)], where station='station1' (an unknown source), readings=[42, 45, 41, 38, 44] (an unknown source), sensor_data={station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...} (an unknown source) = ?
+[line 26]  threshold = lambda x: sum(x) / len(x) >= 40
+Compute: lambda x: sum(x) / len(x) >= 40, where x=[42, 45, 41, 38, 44] (an unknown source) = ?
+[line 26]  threshold = lambda x: sum(x) / len(x) >= 40
+Compute: lambda x: sum(x) / len(x) >= 40, where x=[39, 37, 42, 41, 40] (an unknown source) = ?
+[line 26]  threshold = lambda x: sum(x) / len(x) >= 40
+Compute: lambda x: sum(x) / len(x) >= 40, where x=[44, 46, 45, 47, 43] (an unknown source) = ?
+[line 26]  threshold = lambda x: sum(x) / len(x) >= 40
+Compute: lambda x: sum(x) / len(x) >= 40, where x=[36, 38, 35, 37, 39] (an unknown source) = ?
+[line 30]  all_readings = []
+Compute: [] = []
+[line 31]  for station in valid_stations:
+Loop Start: station takes its first value 'station1'
+[line 33]  readings = sensor_data[station]
+Compute: sensor_data[station], where sensor_data={station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...} (an unknown source), station='station1' (defined at [line 31]) = [42, 45, 41, 38, 44]
+[line 31]  for station in valid_stations:
+Loop Iteration: station is now 'station3' (iteration 2)
+[line 33]  readings = sensor_data[station]
+Compute: sensor_data[station], where sensor_data={station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...} (an unknown source), station='station3' (defined at [line 31]) = [44, 46, 45, 47, 43]
+[line 31]  for station in valid_stations:
+Loop End: Iteration finished
+[line 49]  min_acceptable = 38
+Assign: min_acceptable = 38
+[line 50]  max_acceptable = 50
+Assign: max_acceptable = 50
+[line 51]  filtered_readings = [r for r in all_readings if min_acceptable <= r <= max_acceptable]
+Compute: [r for r in all_readings if min_acceptable <= r <= max_acceptable], where r=47 (an unknown source), all_readings=[47, 35, 43, 49] (defined at [line 30]), min_acceptable=38 (defined at [line 49]), max_acceptable=50 (defined at [line 50]) = ?
+[line 54]  signal_strength = calculate_signal_quality(filtered_readings)
+Call function calculate_signal_quality(filtered_readings=[47, 43, 49] (defined at [line 51]))
+[line 5]  if not readings:
+Condition: True, entering 'if' block
+[line 8]  signal_mean = sum(readings) / len(readings)
+Compute: sum(readings) / len(readings), where readings=[47, 43, 49] (defined at [line 33]) = 46.333333333333336
+[line 10]  weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+Call function sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+[line 10]  weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+Call function sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+[line 10]  weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+Call function sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+[line 10]  weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+Call function sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+[line 10]  weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+Call function sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+[line 11]  return round(weighted_sum * 10, 2)
+Return: round(weighted_sum * 10, 2)
+[line 55]  print(f"Result: {signal_strength}")
+Output: f"Result: {signal_strength}"
+
+Answer: signal_strength = 11.03 (last updated on defined at [line 54])

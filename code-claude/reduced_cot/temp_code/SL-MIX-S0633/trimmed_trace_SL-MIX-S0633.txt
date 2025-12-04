@@ -1,0 +1,37 @@
+23
+priority_level
+---
+3 urgency_markers = ['urgent', 'asap', 'immediately']
+3 ['text', 'urgency_markers'] ["'This is an urgent request that needs immediate attention.'", "['urgent', 'asap', 'immediately']"]
+4 importance_markers = ['critical', 'important', 'attention']
+4 ['text', 'urgency_markers', 'importance_markers'] ["'This is an urgent request that needs immediate attention.'", "['urgent', 'asap', 'immediately']", "['critical', 'important', 'attention']"]
+7 text_lower = text.lower()
+7 ['text', 'urgency_markers', 'importance_markers', 'text_lower'] ["'This is an urgent request that needs immediate attention.'", "['urgent', 'asap', 'immediately']", "['critical', 'important', 'attention']", "'this is an urgent request that needs immediate attention.'"]
+10 urgency_score = sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+10 ['text_lower'] ["'this is an urgent request that needs immediate attention.'"]
+10 urgency_score = sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+10 ['marker', 'text_lower'] ["'urgent'", "'this is an urgent request that needs immediate attention.'"]
+10 urgency_score = sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+10 ['marker', 'text_lower'] ["'asap'", "'this is an urgent request that needs immediate attention.'"]
+10 urgency_score = sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+10 ['marker', 'text_lower'] ["'immediately'", "'this is an urgent request that needs immediate attention.'"]
+10 urgency_score = sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+10 ['marker', 'text_lower'] ["'immediately'", "'this is an urgent request that needs immediate attention.'"]
+11 importance_score = sum(2 if marker in text_lower else 0 for marker in importance_markers)
+11 ['text_lower'] ["'this is an urgent request that needs immediate attention.'"]
+11 importance_score = sum(2 if marker in text_lower else 0 for marker in importance_markers)
+11 ['marker', 'text_lower'] ["'critical'", "'this is an urgent request that needs immediate attention.'"]
+11 importance_score = sum(2 if marker in text_lower else 0 for marker in importance_markers)
+11 ['marker', 'text_lower'] ["'important'", "'this is an urgent request that needs immediate attention.'"]
+11 importance_score = sum(2 if marker in text_lower else 0 for marker in importance_markers)
+11 ['marker', 'text_lower'] ["'attention'", "'this is an urgent request that needs immediate attention.'"]
+11 importance_score = sum(2 if marker in text_lower else 0 for marker in importance_markers)
+11 ['marker', 'text_lower'] ["'attention'", "'this is an urgent request that needs immediate attention.'"]
+14 base_priority = urgency_score + importance_score
+14 ['text', 'urgency_score', 'importance_score', 'base_priority'] ["'This is an urgent request that needs immediate attention.'", '3', '2', '5']
+17 length_modifier = max(0, 5 - len(text) // 20)
+17 ['text', 'base_priority', 'length_modifier'] ["'This is an urgent request that needs immediate attention.'", '5', '3']
+20 raw_priority = base_priority + length_modifier
+20 ['base_priority', 'length_modifier', 'raw_priority'] ['5', '3', '8']
+23 priority_level = min(10, max(1, raw_priority))
+23 ['raw_priority', 'priority_level'] ['8', '8']

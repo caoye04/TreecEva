@@ -1,0 +1,98 @@
+Target: Find the value of variable optimal_investment after [line 84] executes
+
+[line 47]  def calculate_optimal_investment(portfolio_data, tax_rates):
+Enter function calculate_optimal_investment: portfolio_data={low: 12000, medium: 28000, high: 15000, ...}, tax_rates={base: 0.15, capital_gains: 0.2, estate: 0.4}
+  [line 49]  market_sentiment = {'bullish': 1.2, 'neutral': 1.0, 'bearish': 0.8}
+  Compute: {'bullish': 1.2, 'neutral': 1.0, 'bearish': 0.8} = {bullish: 1.2, neutral: 1.0, bearish: 0.8}
+  [line 54]  portfolio_diversity = len(portfolio_data)
+  Call function len(portfolio_data={low: 12000, medium: 28000, high: 15000, ...} (parameter portfolio_data))
+  [line 55]  risk_tolerance = 0.75 if portfolio_diversity > 3 else 0.6
+  Compute: 0.75 if portfolio_diversity > 3 else 0.6, where portfolio_diversity=4 (defined at [line 54]) = 0.75
+  [line 56]  market_volatility = 0.18
+  Assign: market_volatility = 0.18
+  [line 59]  base_value = calculate_portfolio_metrics(portfolio_data)
+  Call function calculate_portfolio_metrics(portfolio_data={low: 12000, medium: 28000, high: 15000, ...} (parameter portfolio_data))
+  [line 10]  risk_adjusted = 0
+  Assign: risk_adjusted = 0
+  [line 11]  for category, amount in data.items():
+  (Missing param: 'iter_var')
+  [line 12]  if category in risk_scores and (include_speculative or category != 'speculative'):
+  Condition: True, entering 'if' block
+  [line 13]  risk_adjusted += risk_scores[category](amount)
+  Update: risk_adjusted changed from 0 (defined at defined at [line 10]) to 0+risk_scores[category](amount) = 0
+  [line 11]  for category, amount in data.items():
+  (Missing param: 'iter_var')
+  [line 12]  if category in risk_scores and (include_speculative or category != 'speculative'):
+  Condition: True, entering 'if' block
+  [line 13]  risk_adjusted += risk_scores[category](amount)
+  Update: risk_adjusted changed from 600.0 (defined at defined at [line 13]) to 600.0+risk_scores[category](amount) = 600.0
+  [line 11]  for category, amount in data.items():
+  (Missing param: 'iter_var')
+  [line 12]  if category in risk_scores and (include_speculative or category != 'speculative'):
+  Condition: True, entering 'if' block
+  [line 13]  risk_adjusted += risk_scores[category](amount)
+  Update: risk_adjusted changed from 3960.0 (defined at defined at [line 13]) to 3960.0+risk_scores[category](amount) = 3960.0
+  [line 11]  for category, amount in data.items():
+  (Missing param: 'iter_var')
+  [line 12]  if category in risk_scores and (include_speculative or category != 'speculative'):
+  Condition: True, entering 'if' block
+  [line 11]  for category, amount in data.items():
+  Loop End: Iteration finished
+  [line 20]  return risk_adjusted
+  Return: risk_adjusted=7260.0 (defined at [line 13])
+  [line 60]  tax_factor = apply_tax_adjustments(base_value, tax_rates)
+  Call function apply_tax_adjustments(base_value=7260.0 (defined at [line 59]), tax_rates={base: 0.15, capital_gains: 0.2, estate: 0.4} (parameter tax_rates))
+  [line 22]  def apply_tax_adjustments(value, tax_rates):
+  Enter function apply_tax_adjustments: value=7260.0 (base_value defined at [line 59]), tax_rates={base: 0.15, capital_gains: 0.2, estate: 0.4}
+    [line 26]  thresholds = [(1000, 0.05), (5000, 0.08), (20000, 0.12)]
+    Compute: [(1000, 0.05), (5000, 0.08), (20000, 0.12)] = [(1000, 0.05), (5000, 0.08), (20000, 0.12)]
+    [line 27]  remaining = value
+    Compute: value, where value=7260.0 (parameter value defined at [line 59]) = 7260.0
+    [line 29]  for threshold, rate in thresholds:
+    (Missing param: 'iter_var')
+    [line 30]  if remaining > threshold:
+    Condition: True, entering 'if' block
+    [line 32]  remaining -= threshold
+    Update: remaining changed from 7260.0 (defined at defined at [line 27]) to 7260.0-threshold = 6260.0
+    [line 29]  for threshold, rate in thresholds:
+    (Missing param: 'iter_var')
+    [line 30]  if remaining > threshold:
+    Condition: True, entering 'if' block
+    [line 32]  remaining -= threshold
+    Update: remaining changed from 6260.0 (defined at defined at [line 32]) to 6260.0-threshold = 1260.0
+    [line 29]  for threshold, rate in thresholds:
+    (Missing param: 'iter_var')
+    [line 30]  if remaining > threshold:
+    Condition: True, entering 'if' block
+    [line 35]  remaining = 0
+    Assign: remaining = 0
+    [line 38]  if remaining > 0:
+    Condition: True, entering 'if' block
+    [line 42]  capital_gains_factor = 1 - tax_rates.get('capital_gains', 0.25)
+    Compute: 1 - tax_rates.get('capital_gains', 0.25), where tax_rates={base: 0.15, capital_gains: 0.2, estate: 0.4} (parameter tax_rates) = 0.8
+    [line 45]  return capital_gains_factor
+    Return: capital_gains_factor=0.8 (defined at [line 42])
+  Function apply_tax_adjustments returns 0.8
+  [line 63]  if risk_tolerance > market_volatility:
+  Condition: True, entering 'if' block
+  [line 69]  if current_sentiment == market_sentiment['bullish']:
+  Condition: True, entering 'if' block
+  [line 71]  elif current_sentiment == market_sentiment['bearish']:
+  'elif' Condition: True, entering block
+  [line 77]  binary_flag = 0b1101
+  Assign: binary_flag = 13
+  [line 78]  binary_mask = 0b1100
+  Assign: binary_mask = 12
+  [line 79]  operation_code = (binary_flag & binary_mask) >> 2  # Equals 3
+  Compute: (binary_flag & binary_mask) >> 2  # Equals 3, where binary_flag=13 (defined at [line 77]), binary_mask=12 (defined at [line 78]) = 3
+  [line 82]  raw_investment = (base_value * 0.75) * tax_factor
+  Compute: (base_value * 0.75) * tax_factor, where base_value=7260.0 (defined at [line 59]), tax_factor=0.8 (defined at [line 60]) = 4356.0
+  [line 83]  adjustment_factor = operation_code / 10  # 3/10 = 0.3
+  Compute: operation_code / 10  # 3/10 = 0.3, where operation_code=3 (defined at [line 79]) = 0.3
+  [line 84]  optimal_investment = raw_investment * (1 + adjustment_factor)
+  Compute: raw_investment * (1 + adjustment_factor), where raw_investment=4356.0 (defined at [line 82]), adjustment_factor=0.3 (defined at [line 83]) = 5662.8
+  [line 91]  return optimal_investment
+  Return: optimal_investment=5662.8 (defined at [line 84])
+Function calculate_optimal_investment returns 5662.8
+
+Answer: optimal_investment = 5662.8 (last updated on defined at [line 84])

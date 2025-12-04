@@ -1,0 +1,83 @@
+Target: Find the value of variable final_frequency after [line 98] executes
+
+[line 79]  signal_data = [3, -2, 0, 5, -1, 0, 4, 2]
+Compute: [3, -2, 0, 5, -1, 0, 4, 2] = [3, -2, 0, 5, -1, ...]
+[line 80]  noise_threshold = 1.5
+Assign: noise_threshold = 1.5
+[line 91]  final_frequency = get_dominant_frequency(signal_data, noise_threshold)
+Call function get_dominant_frequency(signal_data=[3, -2, 0, 5, -1, ...] (defined at [line 79]), noise_threshold=1.5 (defined at [line 80]))
+[line 40]  normalized = [(x / max(abs(min(signal)), abs(max(signal)))) if signal else 0 for x in signal]
+Compute: [(x / max(abs(min(signal)), abs(max(signal)))) if signal else 0 for x in signal], where x=3 (an unknown source), signal=[3, -2, 0, 5, -1, ...] (an unknown source) = ?
+[line 47]  bandwidth = len([x for x in normalized if abs(x) > 0.5])  # Another distractor
+Call function len([x for x in normalized if abs(x) > 0.5])
+[line 50]  if bandwidth > 10:
+Condition: True, entering 'if' block
+[line 58]  filtered_signal = apply_noise_filter(signal, threshold)
+Call function apply_noise_filter(signal=[3, -2, 0, 5, -1, ...] (an unknown source), threshold=1.5 (an unknown source))
+[line 9]  def apply_noise_filter(signal, threshold):
+Enter function apply_noise_filter: signal=[3, -2, 0, 5, -1, ...], threshold=1.5
+  [line 11]  filtered = []
+  Compute: [] = []
+  [line 18]  for amplitude in signal:
+  Loop Start: amplitude takes its first value 3
+  [line 19]  if abs(amplitude) > threshold:
+  Condition: True, entering 'if' block
+  [line 18]  for amplitude in signal:
+  Loop Iteration: amplitude is now -2 (iteration 2)
+  [line 19]  if abs(amplitude) > threshold:
+  Condition: True, entering 'if' block
+... [Line 18] repeats 5 more times ...
+... [Line 18] repeats 5 more times ...
+  [line 18]  for amplitude in signal:
+  Loop Iteration: amplitude is now 2 (iteration 8)
+  [line 19]  if abs(amplitude) > threshold:
+  Condition: True, entering 'if' block
+  [line 18]  for amplitude in signal:
+  Loop End: Iteration finished
+  [line 28]  return filtered
+  Return: filtered=[3, -2, 0, 5, 0, ...] (defined at [line 11])
+Function apply_noise_filter returns [3, -2, 0, 5, 0, ...]
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 62]  if filtered_signal[i-1] * filtered_signal[i] < 0)
+Condition: True, entering 'if' block
+[line 65]  freq_estimation = sum([i + 1 for i, x in enumerate(filtered_signal) if abs(x) > 0])
+Call function sum([i + 1 for i, x in enumerate(filtered_signal) if abs(x) > 0])
+[line 3]  harmonics = []
+Compute: [] = []
+[line 4]  for i in range(1, len(data_points)):
+Loop Start: i takes its first value 1
+[line 5]  if i % filter_strength == 0:
+Condition: True, entering 'if' block
+[line 4]  for i in range(1, len(data_points)):
+Loop Iteration: i is now 2 (iteration 2)
+[line 5]  if i % filter_strength == 0:
+Condition: True, entering 'if' block
+... [Line 4] repeats 4 more times ...
+... [Line 4] repeats 4 more times ...
+[line 4]  for i in range(1, len(data_points)):
+Loop Iteration: i is now 7 (iteration 7)
+[line 5]  if i % filter_strength == 0:
+Condition: True, entering 'if' block
+[line 4]  for i in range(1, len(data_points)):
+Loop End: Iteration finished
+[line 7]  return harmonics
+Return: harmonics=[0.19999999999999996, 1.2, 1.0] (defined at [line 3])
+[line 72]  if len(signal) < 3:
+Condition: True, entering 'if' block
+[line 76]  return freq_estimation
+Return: freq_estimation=22 (defined at [line 65])
+[line 98]  print(f"Result: {final_frequency}")
+Output: f"Result: {final_frequency}"
+
+Answer: final_frequency = 22 (last updated on defined at [line 91])

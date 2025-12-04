@@ -1,0 +1,70 @@
+Target: Find the value of variable actual_signal_strength after [line 63] executes
+
+[line 1]  def process_signal_data(raw_readings):
+Enter function process_signal_data: raw_readings=[65, 72, 48, 53, 89, ...]
+  [line 3]  noise_threshold = 15
+  Assign: noise_threshold = 15
+  [line 4]  amplification_factor = 2.5
+  Assign: amplification_factor = 2.5
+  [line 5]  signal_offset = 42
+  Assign: signal_offset = 42
+  [line 8]  normalized = [r - signal_offset for r in raw_readings]
+  Compute: [r - signal_offset for r in raw_readings], where r=65 (an unknown source), signal_offset=42 (defined at [line 5]), raw_readings=[65, 72, 48, 53, 89, ...] (parameter raw_readings) = ?
+  [line 11]  denoised = []
+  Compute: [] = []
+  [line 12]  for signal in normalized:
+  Loop Start: signal takes its first value 23
+  [line 13]  if abs(signal) > noise_threshold:
+  Condition: True, entering 'if' block
+  [line 12]  for signal in normalized:
+  Loop Iteration: signal is now 30 (iteration 2)
+  [line 13]  if abs(signal) > noise_threshold:
+  Condition: True, entering 'if' block
+... [Line 12] repeats 7 more times ...
+... [Line 12] repeats 7 more times ...
+  [line 12]  for signal in normalized:
+  Loop Iteration: signal is now 38 (iteration 10)
+  [line 13]  if abs(signal) > noise_threshold:
+  Condition: True, entering 'if' block
+  [line 12]  for signal in normalized:
+  Loop End: Iteration finished
+  [line 20]  interference_count = sum(1 for s in denoised if s == 0)
+  Call function sum(1 for s in denoised if s == 0)
+  [line 21]  interference_ratio = interference_count / len(denoised) if denoised else 0
+  Compute: interference_count / len(denoised) if denoised else 0, where interference_count=5 (defined at [line 20]), denoised=[23, 30, 0, 0, 47, ...] (defined at [line 11]) = 0.5
+  [line 24]  amplified = [s * amplification_factor if abs(s) > 2*noise_threshold else s for s in denoised]
+  Compute: [s * amplification_factor if abs(s) > 2*noise_threshold else s for s in denoised], where s=23 (an unknown source), amplification_factor=2.5 (defined at [line 4]), noise_threshold=15 (defined at [line 3]), denoised=[23, 30, 0, 0, 47, ...] (defined at [line 11]) = ?
+  [line 32]  transformed = []
+  Compute: [] = []
+  [line 33]  for i, signal in enumerate(amplified):
+  (Missing param: 'iter_var')
+  [line 34]  if i % 3 == 0:  # Every third reading gets special processing
+  Condition: True, entering 'if' block
+  [line 33]  for i, signal in enumerate(amplified):
+  (Missing param: 'iter_var')
+  [line 34]  if i % 3 == 0:  # Every third reading gets special processing
+  Condition: True, entering 'if' block
+  [line 36]  elif i % 2 == 0:  # Every second (but not third) reading
+  'elif' Condition: True, entering block
+... [Line 33] repeats 7 more times ...
+... [Line 33] repeats 7 more times ...
+... [Line 33] repeats 7 more times ...
+  [line 33]  for i, signal in enumerate(amplified):
+  (Missing param: 'iter_var')
+  [line 34]  if i % 3 == 0:  # Every third reading gets special processing
+  Condition: True, entering 'if' block
+  [line 33]  for i, signal in enumerate(amplified):
+  Loop End: Iteration finished
+  [line 43]  filtered_signals = [s for i, s in enumerate(transformed) if i % 2 == 1 and s > 0]
+  Compute: [s for i, s in enumerate(transformed) if i % 2 == 1 and s > 0], where s=34.5 (an unknown source), i=0 (an unknown source), transformed=[34.5, 30, 0.0, 0.0, 94.0, ...] (defined at [line 32]) = ?
+  [line 55]  if interference_ratio > 0.5:
+  Condition: True, entering 'if' block
+  [line 57]  elif interference_ratio > 0.3:
+  'elif' Condition: True, entering block
+  [line 63]  actual_signal_strength = sum(filtered_signals)
+  Call function sum(filtered_signals=[30, 27, 142.5] (defined at [line 43]))
+  [line 69]  return {
+  Return: {
+Function process_signal_data returns {raw_count: 10, filtered_count: 3, interference_ratio: 0.5, ...}
+
+Answer: actual_signal_strength = {raw_count: 10, filtered_count: 3, interference_ratio: 0.5, ...} (last updated on defined at [line 63])

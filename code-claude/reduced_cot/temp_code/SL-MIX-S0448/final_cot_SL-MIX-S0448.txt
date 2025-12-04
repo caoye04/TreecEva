@@ -1,0 +1,183 @@
+Target: Find the value of variable final_inventory_value after [line 103] executes
+
+[line 95]  for product in inventory_data:
+Loop Start: product takes its first value 'A123'
+[line 95]  for product in inventory_data:
+Loop End: Iteration finished
+[line 95]  for product in inventory_data:
+Loop End: Iteration finished
+[line 95]  for product in inventory_data:
+Loop End: Iteration finished
+[line 95]  for product in inventory_data:
+Loop End: Iteration finished
+[line 102]  final_inventory_value = calculate_adjusted_value(inventory_data, pricing_factors)
+Call function calculate_adjusted_value(inventory_data={A123: 10, B456: 5, C789: 15, ...} (an unknown source), pricing_factors={season: 'winter', tax_rate: 0.08, market: 'domestic', ...} (an unknown source))
+[line 40]  def calculate_adjusted_value(inventory_data, pricing_factors):
+Enter function calculate_adjusted_value: inventory_data={A123: 10, B456: 5, C789: 15, ...}, pricing_factors={season: 'winter', tax_rate: 0.08, market: 'domestic', ...}
+  [line 28]  def process_inventory_data(data):
+  Enter function process_inventory_data: data={A123: 10, B456: 5, C789: 15, ...}
+    [line 30]  transformed = defaultdict(list)
+    Call function defaultdict(list)
+    [line 31]  for k, v in data.items():
+    (Missing param: 'iter_var')
+    [line 32]  if isinstance(v, list):
+    Condition: True, entering 'if' block
+    [line 35]  transformed[k] = v + 10
+    (Missing param: 'result')
+    [line 31]  for k, v in data.items():
+    (Missing param: 'iter_var')
+    [line 32]  if isinstance(v, list):
+    Condition: True, entering 'if' block
+    [line 35]  transformed[k] = v + 10
+    (Missing param: 'result')
+    [line 31]  for k, v in data.items():
+    (Missing param: 'iter_var')
+    [line 32]  if isinstance(v, list):
+    Condition: True, entering 'if' block
+    [line 35]  transformed[k] = v + 10
+    (Missing param: 'result')
+    [line 31]  for k, v in data.items():
+    (Missing param: 'iter_var')
+    [line 32]  if isinstance(v, list):
+    Condition: True, entering 'if' block
+    [line 35]  transformed[k] = v + 10
+    (Missing param: 'result')
+    [line 31]  for k, v in data.items():
+    Loop End: Iteration finished
+    [line 38]  return transformed
+    Return: transformed={A123: 20, B456: 15, C789: 25, ...} (defined at [line 30])
+  Function process_inventory_data returns {A123: 20, B456: 15, C789: 25, ...}
+  [line 50]  total_value = 0
+  Assign: total_value = 0
+  [line 51]  for product_id, quantity in inventory_data.items():
+  (Missing param: 'iter_var')
+  [line 52]  base_price = calculate_base_price(product_id)
+  Call function calculate_base_price(product_id='A123' (an unknown source))
+  [line 3]  def calculate_base_price(product_code):
+  Enter function calculate_base_price: product_code='A123'
+    [line 5]  digits = [int(d) for d in product_code if d.isdigit()]
+    Compute: [int(d) for d in product_code if d.isdigit()], where d='A' (an unknown source), product_code='A123' (parameter product_code) = ?
+    [line 6]  if not digits:
+    Condition: True, entering 'if' block
+    [line 13]  price = sum(digits) * 10
+    Compute: sum(digits) * 10, where digits=[1, 2, 3] (defined at [line 5]) = 60
+    [line 14]  return price
+    Return: price=60 (defined at [line 13])
+  Function calculate_base_price returns 60
+  [line 53]  season = pricing_factors.get('season', 'spring')
+  (Missing param: 'func_name')
+  [line 54]  discounted_price = apply_seasonal_discount(base_price, season)
+  Call function apply_seasonal_discount(base_price=60 (defined at [line 52]), season='winter' (an unknown source))
+  [line 16]  def apply_seasonal_discount(price, season):
+  Enter function apply_seasonal_discount: price=60 (base_price defined at [line 52]), season='winter'
+    [line 22]  if season.lower() == 'winter':
+    Condition: True, entering 'if' block
+    [line 23]  return price * 0.8  # 20% winter discount
+    Return: price * 0.8  # 20% winter discount
+  Function apply_seasonal_discount returns 48.0
+  [line 57]  if product_id.startswith('Z') and product_id.endswith('X'):
+  Condition: True, entering 'if' block
+  [line 63]  item_value = discounted_price * quantity
+  Compute: discounted_price * quantity, where discounted_price=48.0 (defined at [line 54]), quantity=10 (an unknown source) = 480.0
+  [line 64]  total_value += item_value
+  Update: total_value changed from 0 (defined at defined at [line 50]) to 0+item_value = 480.0
+  [line 51]  for product_id, quantity in inventory_data.items():
+  (Missing param: 'iter_var')
+  [line 52]  base_price = calculate_base_price(product_id)
+  Call function calculate_base_price(product_id='B456' (an unknown source))
+  [line 3]  def calculate_base_price(product_code):
+  Enter function calculate_base_price: product_code='B456'
+    [line 6]  if not digits:
+    Condition: True, entering 'if' block
+    [line 13]  price = sum(digits) * 10
+    Compute: sum(digits) * 10, where digits=[4, 5, 6] (defined at [line 5]) = 150
+    [line 14]  return price
+    Return: price=150 (defined at [line 13])
+  Function calculate_base_price returns 150
+  [line 53]  season = pricing_factors.get('season', 'spring')
+  (Missing param: 'func_name')
+  [line 54]  discounted_price = apply_seasonal_discount(base_price, season)
+  Call function apply_seasonal_discount(base_price=150 (defined at [line 52]), season='winter' (an unknown source))
+  [line 16]  def apply_seasonal_discount(price, season):
+  Enter function apply_seasonal_discount: price=150 (base_price defined at [line 52]), season='winter'
+    [line 22]  if season.lower() == 'winter':
+    Condition: True, entering 'if' block
+    [line 23]  return price * 0.8  # 20% winter discount
+    Return: price * 0.8  # 20% winter discount
+  Function apply_seasonal_discount returns 120.0
+  [line 57]  if product_id.startswith('Z') and product_id.endswith('X'):
+  Condition: True, entering 'if' block
+  [line 63]  item_value = discounted_price * quantity
+  Compute: discounted_price * quantity, where discounted_price=120.0 (defined at [line 54]), quantity=5 (an unknown source) = 600.0
+  [line 64]  total_value += item_value
+  Update: total_value changed from 480.0 (defined at defined at [line 64]) to 480.0+item_value = 1080.0
+  [line 51]  for product_id, quantity in inventory_data.items():
+  (Missing param: 'iter_var')
+  [line 52]  base_price = calculate_base_price(product_id)
+  Call function calculate_base_price(product_id='C789' (an unknown source))
+  [line 3]  def calculate_base_price(product_code):
+  Enter function calculate_base_price: product_code='C789'
+    [line 6]  if not digits:
+    Condition: True, entering 'if' block
+    [line 13]  price = sum(digits) * 10
+    Compute: sum(digits) * 10, where digits=[7, 8, 9] (defined at [line 5]) = 240
+    [line 14]  return price
+    Return: price=240 (defined at [line 13])
+  Function calculate_base_price returns 240
+  [line 53]  season = pricing_factors.get('season', 'spring')
+  (Missing param: 'func_name')
+  [line 54]  discounted_price = apply_seasonal_discount(base_price, season)
+  Call function apply_seasonal_discount(base_price=240 (defined at [line 52]), season='winter' (an unknown source))
+  [line 16]  def apply_seasonal_discount(price, season):
+  Enter function apply_seasonal_discount: price=240 (base_price defined at [line 52]), season='winter'
+    [line 22]  if season.lower() == 'winter':
+    Condition: True, entering 'if' block
+    [line 23]  return price * 0.8  # 20% winter discount
+    Return: price * 0.8  # 20% winter discount
+  Function apply_seasonal_discount returns 192.0
+  [line 57]  if product_id.startswith('Z') and product_id.endswith('X'):
+  Condition: True, entering 'if' block
+  [line 63]  item_value = discounted_price * quantity
+  Compute: discounted_price * quantity, where discounted_price=192.0 (defined at [line 54]), quantity=15 (an unknown source) = 2880.0
+  [line 64]  total_value += item_value
+  Update: total_value changed from 1080.0 (defined at defined at [line 64]) to 1080.0+item_value = 3960.0
+  [line 51]  for product_id, quantity in inventory_data.items():
+  (Missing param: 'iter_var')
+  [line 52]  base_price = calculate_base_price(product_id)
+  Call function calculate_base_price(product_id='D012' (an unknown source))
+  [line 3]  def calculate_base_price(product_code):
+  Enter function calculate_base_price: product_code='D012'
+    [line 6]  if not digits:
+    Condition: True, entering 'if' block
+    [line 13]  price = sum(digits) * 10
+    Compute: sum(digits) * 10, where digits=[0, 1, 2] (defined at [line 5]) = 30
+    [line 14]  return price
+    Return: price=30 (defined at [line 13])
+  Function calculate_base_price returns 30
+  [line 53]  season = pricing_factors.get('season', 'spring')
+  (Missing param: 'func_name')
+  [line 54]  discounted_price = apply_seasonal_discount(base_price, season)
+  Call function apply_seasonal_discount(base_price=30 (defined at [line 52]), season='winter' (an unknown source))
+  [line 22]  if season.lower() == 'winter':
+  Condition: True, entering 'if' block
+  [line 23]  return price * 0.8  # 20% winter discount
+  Return: price * 0.8  # 20% winter discount
+  [line 57]  if product_id.startswith('Z') and product_id.endswith('X'):
+  Condition: True, entering 'if' block
+  [line 63]  item_value = discounted_price * quantity
+  Compute: discounted_price * quantity, where discounted_price=24.0 (defined at [line 54]), quantity=8 (an unknown source) = 192.0
+  [line 64]  total_value += item_value
+  Update: total_value changed from 3960.0 (defined at defined at [line 64]) to 3960.0+item_value = 4152.0
+  [line 51]  for product_id, quantity in inventory_data.items():
+  Loop End: Iteration finished
+  [line 67]  tax_rate = pricing_factors.get('tax_rate', 0.1)  # Default 10%
+  (Missing param: 'func_name')
+  [line 68]  final_value = total_value * (1 + tax_rate)
+  Compute: total_value * (1 + tax_rate), where total_value=4152.0 (defined at [line 64]), tax_rate=0.08 (an unknown source) = 4484.16
+  [line 75]  return round(final_value, 2)
+  Return: round(final_value, 2)
+Function calculate_adjusted_value returns 4484.16
+[line 103]  print(f"Target result: {final_inventory_value}")
+Output: f"Target result: {final_inventory_value}"
+
+Answer: final_inventory_value = 4484.16 (last updated on defined at [line 102])

@@ -1,0 +1,129 @@
+82
+signal_strength
+---
+67 raw_data = [3.2, -1.4, 5.8, -2.3, 7.1, -0.6, 4.9, -3.5, 6.0, -1.8]
+67 ['raw_data'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]']
+68 noise_threshold = 2
+68 ['raw_data', 'noise_threshold'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2']
+78 filtered_data = apply_noise_filter(raw_data, noise_threshold)
+78 ['raw_data', 'noise_threshold'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2']
+PARAM_MAPPING {'data': {'actual_var': 'raw_data', 'value': [3.2, -1.4, 5.8, -2.3, 7.1, -0.6, 4.9, -3.5, 6.0, -1.8]}, 'threshold': {'actual_var': 'noise_threshold', 'value': 2}}
+FUNCTION_ENTER 5 apply_noise_filter def apply_noise_filter(data, threshold):
+5 ['data', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': -1.4}, {'_type': 'float', '_value': 5.8}, {'_type': 'float', '_value': -2.3}, {'_type': 'float', '_value': 7.1}, {'_type': 'float', '_value': -0.6}, {'_type': 'float', '_value': 4.9}, {'_type': 'float', '_value': -3.5}, {'_type': 'float', '_value': 6.0}, {'_type': 'float', '_value': -1.8}], '_len': 10}, {'_type': 'int', '_value': 2}]
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '3.2']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '-1.4']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '5.8']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '-2.3']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '7.1']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '-0.6']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '4.9']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '-3.5']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '6.0']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold', 'd'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2', '-1.8']
+7 return [d for d in data if abs(d) >= threshold]
+7 ['data', 'threshold'] ['[3.2, -1.4, 5.8, -2.3, 7.1, ...]', '2']
+FUNCTION_RETURN 7 apply_noise_filter {'_type': 'list', '_items': [{'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': 5.8}, {'_type': 'float', '_value': -2.3}, {'_type': 'float', '_value': 7.1}, {'_type': 'float', '_value': 4.9}, {'_type': 'float', '_value': -3.5}, {'_type': 'float', '_value': 6.0}], '_len': 7}
+79 features = extract_features(filtered_data)
+79 ['noise_threshold', 'filtered_data'] ['2', '[3.2, 5.8, -2.3, 7.1, 4.9, ...]']
+PARAM_MAPPING {'signal_data': {'actual_var': 'filtered_data', 'value': [3.2, 5.8, -2.3, 7.1, 4.9, -3.5, 6.0]}}
+FUNCTION_ENTER 9 extract_features def extract_features(signal_data):
+9 ['signal_data'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': 5.8}, {'_type': 'float', '_value': -2.3}, {'_type': 'float', '_value': 7.1}, {'_type': 'float', '_value': 4.9}, {'_type': 'float', '_value': -3.5}, {'_type': 'float', '_value': 6.0}], '_len': 7}]
+11 if not signal_data:
+11 ['signal_data'] ['[3.2, 5.8, -2.3, 7.1, 4.9, ...]']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['features'] ['{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['3.2', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['5.8', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['-2.3', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['7.1', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['4.9', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['-3.5', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['6.0', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+22 features['variance'] = sum((x - features['mean'])**2 for x in signal_data) / len(signal_data)
+22 ['x', 'features'] ['6.0', '{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+23 return features
+23 ['features'] ['{max: 7.1, min: -3.5, mean: 3.0285714285714285, ...}']
+FUNCTION_RETURN 23 extract_features {'_type': 'dict', '_items': {'max': {'_type': 'float', '_value': 7.1}, 'min': {'_type': 'float', '_value': -3.5}, 'mean': {'_type': 'float', '_value': 3.0285714285714285}, 'range': {'_type': 'float', '_value': 10.6}, 'variance': {'_type': 'float', '_value': 15.376326530612245}}, '_len': 5}
+82 signal_strength = process_signal(filtered_data, noise_threshold)
+82 ['noise_threshold', 'filtered_data'] ['2', '[3.2, 5.8, -2.3, 7.1, 4.9, ...]']
+PARAM_MAPPING {'data': {'actual_var': 'filtered_data', 'value': [3.2, 5.8, -2.3, 7.1, 4.9, -3.5, 6.0]}, 'threshold': {'actual_var': 'noise_threshold', 'value': 2}}
+FUNCTION_ENTER 25 process_signal def process_signal(data, threshold):
+25 ['data', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': 5.8}, {'_type': 'float', '_value': -2.3}, {'_type': 'float', '_value': 7.1}, {'_type': 'float', '_value': 4.9}, {'_type': 'float', '_value': -3.5}, {'_type': 'float', '_value': 6.0}], '_len': 7}, {'_type': 'int', '_value': 2}]
+27 if threshold > 5:
+27 ['data', 'threshold'] ['[3.2, 5.8, -2.3, 7.1, 4.9, ...]', '2']
+33 filtered = data[::2]  # Every second element
+33 ['data', 'threshold', 'filtered'] ['[3.2, 5.8, -2.3, 7.1, 4.9, ...]', '2', '[3.2, -2.3, 4.9, 6.0]']
+34 quality_factor = 0.85
+34 ['threshold', 'filtered', 'quality_factor'] ['2', '[3.2, -2.3, 4.9, 6.0]', '0.85']
+37 components = [d * quality_factor for d in filtered]
+37 ['threshold', 'filtered', 'quality_factor', 'd'] ['2', '[3.2, -2.3, 4.9, 6.0]', '0.85', '3.2']
+37 components = [d * quality_factor for d in filtered]
+37 ['threshold', 'filtered', 'quality_factor', 'd'] ['2', '[3.2, -2.3, 4.9, 6.0]', '0.85', '-2.3']
+37 components = [d * quality_factor for d in filtered]
+37 ['threshold', 'filtered', 'quality_factor', 'd'] ['2', '[3.2, -2.3, 4.9, 6.0]', '0.85', '4.9']
+37 components = [d * quality_factor for d in filtered]
+37 ['threshold', 'filtered', 'quality_factor', 'd'] ['2', '[3.2, -2.3, 4.9, 6.0]', '0.85', '6.0']
+37 components = [d * quality_factor for d in filtered]
+37 ['threshold', 'filtered', 'quality_factor', 'components'] ['2', '[3.2, -2.3, 4.9, 6.0]', '0.85', '[2.72, -1.9549999999999998, 4.165, 5.1]']
+46 base_value = len(components) & 0x7  # Mask with 0111 in binary
+46 ['threshold', 'filtered', 'components', 'base_value'] ['2', '[3.2, -2.3, 4.9, 6.0]', '[2.72, -1.9549999999999998, 4.165, 5.1]', '4']
+47 shift_amount = threshold & 0x3      # Mask with 0011 in binary
+47 ['threshold', 'filtered', 'base_value', 'shift_amount'] ['2', '[3.2, -2.3, 4.9, 6.0]', '4', '2']
+53 harmonic_series = [1/h for h in range(1, 6)]
+53 ['filtered', 'base_value', 'shift_amount', 'h'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '1']
+53 harmonic_series = [1/h for h in range(1, 6)]
+53 ['filtered', 'base_value', 'shift_amount', 'h'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '2']
+53 harmonic_series = [1/h for h in range(1, 6)]
+53 ['filtered', 'base_value', 'shift_amount', 'h'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '3']
+53 harmonic_series = [1/h for h in range(1, 6)]
+53 ['filtered', 'base_value', 'shift_amount', 'h'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '4']
+53 harmonic_series = [1/h for h in range(1, 6)]
+53 ['filtered', 'base_value', 'shift_amount', 'h'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '5']
+53 harmonic_series = [1/h for h in range(1, 6)]
+53 ['filtered', 'base_value', 'shift_amount', 'harmonic_series'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '[1.0, 0.5, 0.3333333333333333, 0.25, 0.2]']
+54 correction_factor = harmonic_series[base_value % len(harmonic_series)]
+54 ['filtered', 'base_value', 'shift_amount', 'harmonic_series', 'correction_factor'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '[1.0, 0.5, 0.3333333333333333, 0.25, 0.2]', '0.2']
+57 result = (base_value << shift_amount) + (len(filtered) & 0xF)
+57 ['filtered', 'base_value', 'shift_amount', 'correction_factor', 'result'] ['[3.2, -2.3, 4.9, 6.0]', '4', '2', '0.2', '20']
+64 return result * correction_factor
+64 ['correction_factor', 'result'] ['0.2', '20']
+FUNCTION_RETURN 64 process_signal {'_type': 'float', '_value': 4.0}
+PARAM_MAPPING {'values': {'actual_var': 'filtered_data', 'value': [3.2, 5.8, -2.3, 7.1, 4.9, -3.5, 6.0]}}
+FUNCTION_ENTER 1 calculate_magnitude def calculate_magnitude(values):
+1 ['values'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': 5.8}, {'_type': 'float', '_value': -2.3}, {'_type': 'float', '_value': 7.1}, {'_type': 'float', '_value': 4.9}, {'_type': 'float', '_value': -3.5}, {'_type': 'float', '_value': 6.0}], '_len': 7}]
+3 return sum(v**2 for v in values)**0.5
+3 [] []
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['3.2']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['5.8']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['-2.3']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['7.1']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['4.9']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['-3.5']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['6.0']
+3 return sum(v**2 for v in values)**0.5
+3 ['v'] ['6.0']
+FUNCTION_RETURN 3 calculate_magnitude {'_type': 'float', '_value': 13.108775686539152}

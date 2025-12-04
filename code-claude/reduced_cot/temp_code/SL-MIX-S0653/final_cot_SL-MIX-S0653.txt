@@ -1,0 +1,81 @@
+Target: Find the value of variable target_position after [line 85] executes
+
+[line 84]  target_position = calculate_position(inventory, moves)
+Call function calculate_position(inventory={compass: 3, map: 1, food: 5, ...} (an unknown source), moves=[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...] (an unknown source))
+[line 1]  def calculate_position(inventory, moves):
+Enter function calculate_position: inventory={compass: 3, map: 1, food: 5, ...}, moves=[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]
+  [line 3]  x, y = 0, 0
+  (Missing param: 'result')
+  [line 7]  compass_bonus = 0
+  Assign: compass_bonus = 0
+  [line 8]  if 'compass' in inventory:
+  Condition: True, entering 'if' block
+  [line 9]  compass_value = inventory['compass']
+  Compute: inventory['compass'], where inventory={compass: 3, map: 1, food: 5, ...} (parameter inventory) = 3
+  [line 10]  if compass_value > 0:
+  Condition: True, entering 'if' block
+  [line 11]  compass_bonus = min(compass_value, 2)
+  Call function min(compass_value=3 (defined at [line 9]), 2)
+  [line 22]  current_terrain = 'plains'
+  Assign: current_terrain = 'plains'
+  [line 26]  if 'rainy' in inventory.get('weather', []):
+  Condition: True, entering 'if' block
+  [line 30]  for move in moves:
+  Loop Start: move takes its first value ('forward', 5)
+  [line 32]  value = move[1]
+  Compute: move[1], where move=('forward', 5) (defined at [line 30]) = 5
+  [line 34]  if command == 'forward':
+  Condition: True, entering 'if' block
+  [line 36]  terrain_factor = terrain_factors.get(current_terrain, 1.0)
+  (Missing param: 'func_name')
+  [line 37]  effective_value = int(value * terrain_factor)
+  Call function int(value * terrain_factor)
+  [line 39]  if direction == 0:  # North
+  Condition: True, entering 'if' block
+  [line 40]  y += effective_value
+  Update: y changed from 0 (defined at an unknown source) to 0+effective_value = 6
+  [line 30]  for move in moves:
+  Loop Iteration: move is now ('turn', 1) (iteration 2)
+  [line 32]  value = move[1]
+  Compute: move[1], where move=('turn', 1) (defined at [line 30]) = 1
+  [line 34]  if command == 'forward':
+  Condition: True, entering 'if' block
+  [line 48]  elif command == 'turn':
+  'elif' Condition: True, entering block
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+... [Line 30] repeats 4 more times ...
+  [line 30]  for move in moves:
+  Loop Iteration: move is now ('forward', 2) (iteration 7)
+  [line 32]  value = move[1]
+  Compute: move[1], where move=('forward', 2) (defined at [line 30]) = 2
+  [line 34]  if command == 'forward':
+  Condition: True, entering 'if' block
+  [line 36]  terrain_factor = terrain_factors.get(current_terrain, 1.0)
+  (Missing param: 'func_name')
+  [line 37]  effective_value = int(value * terrain_factor)
+  Call function int(value * terrain_factor)
+  [line 39]  if direction == 0:  # North
+  Condition: True, entering 'if' block
+  [line 41]  elif direction == 1:  # East
+  'elif' Condition: True, entering block
+  [line 43]  elif direction == 2:  # South
+  'elif' Condition: True, entering block
+  [line 46]  x -= effective_value
+  Update: x changed from 7 (defined at an unknown source) to 7-effective_value = 6
+  [line 30]  for move in moves:
+  Loop End: Iteration finished
+  [line 57]  position_value = abs(x) + abs(y) + compass_bonus
+  Compute: abs(x) + abs(y) + compass_bonus, where x=6 (defined at [line 46]), y=6 (defined at [line 40]), compass_bonus=2 (defined at [line 11]) = 14
+  [line 62]  return position_value
+  Return: position_value=14 (defined at [line 57])
+Function calculate_position returns 14
+[line 85]  print(f"Result: {target_position}")
+Output: f"Result: {target_position}"
+
+Answer: target_position = 14 (last updated on defined at [line 84])

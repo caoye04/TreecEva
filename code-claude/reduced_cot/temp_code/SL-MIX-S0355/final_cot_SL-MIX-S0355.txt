@@ -1,0 +1,73 @@
+Target: Find the value of variable optimal_capacity after [line 80] executes
+
+[line 17]  def calculate_optimal_container_capacity(inventory, shipping_constraints):
+Enter function calculate_optimal_container_capacity: inventory=[{id: 'A1', volume: 50, priority: 3}, {id: 'B2', volume: 30, priority: 1}, {id: 'C3', volume: 80, priority: 4}, {id: 'D4', volume: 20, priority: 2}, {id: 'E5', volume: 60, priority: 3}], shipping_constraints={weather_code: 10, transport_mode: 'train', fuel: 80, ...}
+  [line 19]  base_capacity = 1000  # Standard container size
+  Assign: base_capacity = 1000
+  [line 24]  priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+  Call function sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+  [line 27]  potential_efficiency = calculate_packing_efficiency(inventory, base_capacity)
+  Call function calculate_packing_efficiency(inventory=[{id: 'A1', volume: 50, priority: 3}, {id: 'B2', volume: 30, priority: 1}, {id: 'C3', volume: 80, priority: 4}, {id: 'D4', volume: 20, priority: 2}, {id: 'E5', volume: 60, priority: 3}] (parameter inventory), base_capacity=1000 (defined at [line 19]))
+  [line 1]  def calculate_packing_efficiency(items, container_size):
+  Enter function calculate_packing_efficiency: items=[{id: 'A1', volume: 50, priority: 3}, {id: 'B2', volume: 30, priority: 1}, {id: 'C3', volume: 80, priority: 4}, {id: 'D4', volume: 20, priority: 2}, {id: 'E5', volume: 60, priority: 3}], container_size=1000 (base_capacity defined at [line 19])
+    [line 3]  volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+    Call function sum(item['volume'] for item in items if item['priority'] > 0)
+    [line 4]  return volume_used / container_size if container_size > 0 else 0
+    Return: volume_used / container_size if container_size > 0 else 0
+  Function calculate_packing_efficiency returns 0.24
+  [line 6]  def optimize_shipping_route(destinations, fuel_capacity):
+  Enter function optimize_shipping_route: destinations=[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}], fuel_capacity=80
+    [line 8]  route_efficiency = 0
+    Assign: route_efficiency = 0
+    [line 9]  for dest in destinations:
+    Loop Start: dest takes its first value {name: 'Warehouse A', distance: 120, importance: 3}
+    [line 10]  distance = dest.get('distance', 100)
+    (Missing param: 'func_name')
+    [line 11]  importance = dest.get('importance', 1)
+    (Missing param: 'func_name')
+    [line 12]  route_efficiency += (importance * 50) / (distance + 10)
+    Update: route_efficiency changed from 0 (defined at defined at [line 8]) to 0+(importance * 50) / (distance + 10) = 1.1538461538461537
+    [line 9]  for dest in destinations:
+    Loop Iteration: dest is now {name: 'Warehouse B', distance: 80, importance: 2} (iteration 2)
+    [line 10]  distance = dest.get('distance', 100)
+    (Missing param: 'func_name')
+    [line 11]  importance = dest.get('importance', 1)
+    (Missing param: 'func_name')
+    [line 12]  route_efficiency += (importance * 50) / (distance + 10)
+    Update: route_efficiency changed from 1.1538461538461537 (defined at defined at [line 12]) to 1.1538461538461537+(importance * 50) / (distance + 10) = 2.264957264957265
+    [line 9]  for dest in destinations:
+    Loop End: Iteration finished
+    [line 15]  return route_efficiency * (fuel_capacity / 100)
+    Return: route_efficiency * (fuel_capacity / 100)
+  Function optimize_shipping_route returns 1.811965811965812
+  [line 32]  if potential_efficiency > 0.8:
+  Condition: True, entering 'if' block
+  [line 34]  elif potential_efficiency > 0.5:
+  'elif' Condition: True, entering block
+  [line 42]  weather_impact = 0
+  Assign: weather_impact = 0
+  [line 43]  if weather_conditions & 0b1111 == 0b1010:  # Check specific weather pattern
+  Condition: True, entering 'if' block
+  [line 44]  weather_impact = -200  # Bad weather reduces capacity
+  Compute: -200  # Bad weather reduces capacity = -200
+  [line 57]  capacity = base_capacity + weather_impact + transport_factor
+  Compute: base_capacity + weather_impact + transport_factor, where base_capacity=1000 (defined at [line 19]), weather_impact=-200 (defined at [line 44]), transport_factor=200 (an unknown source) = 1000
+  [line 60]  if route_optimization > 2.5:
+  Condition: True, entering 'if' block
+  [line 66]  dimensions = shipping_constraints.get('dimensions', (0, 0, 0))
+  (Missing param: 'func_name')
+  [line 67]  length, width, height = dimensions
+  (Missing param: 'result')
+  [line 68]  volume_constraint = length * width * height
+  Compute: length * width * height, where length=20 (an unknown source), width=15 (an unknown source), height=10 (an unknown source) = 3000
+  [line 71]  if volume_constraint > 10000:
+  Condition: True, entering 'if' block
+  [line 77]  priority_adjustment = priority_items * 50
+  Compute: priority_items * 50, where priority_items=3 (defined at [line 24]) = 150
+  [line 80]  optimal_capacity = capacity + priority_adjustment
+  Compute: capacity + priority_adjustment, where capacity=1000 (defined at [line 57]), priority_adjustment=150 (defined at [line 77]) = 1150
+  [line 82]  return optimal_capacity
+  Return: optimal_capacity=1150 (defined at [line 80])
+Function calculate_optimal_container_capacity returns 1150
+
+Answer: optimal_capacity = 1150 (last updated on defined at [line 80])

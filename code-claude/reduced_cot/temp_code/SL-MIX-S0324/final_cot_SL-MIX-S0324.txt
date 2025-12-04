@@ -1,0 +1,61 @@
+Target: Find the value of variable product_score after [line 54] executes
+
+[line 46]  valid_products = [p for p in products if p['rating'] > 3.5]
+Compute: [p for p in products if p['rating'] > 3.5], where p={name: 'Gadget A', rating: 4.2, price: 37, ...} (an unknown source) = ?
+[line 49]  base_weight = factorial(3) % 5
+Compute: factorial(3) % 5 = ?
+[line 2]  if n <= 1:
+Condition: True, entering 'if' block
+[line 4]  return n * factorial(n-1)
+Return: n * factorial(n-1)
+[line 2]  if n <= 1:
+Condition: True, entering 'if' block
+[line 4]  return n * factorial(n-1)
+Return: n * factorial(n-1)
+[line 2]  if n <= 1:
+Condition: True, entering 'if' block
+[line 3]  return 1
+Return: 1
+[line 50]  weight_modifier = sum(1 for p in valid_products if p['price'] > 30)
+Call function sum(1 for p in valid_products if p['price'] > 30)
+[line 51]  weight_factor = base_weight + weight_modifier
+Compute: base_weight + weight_modifier, where base_weight=1 (defined at [line 49]), weight_modifier=2 (defined at [line 50]) = 3
+[line 54]  product_score = calculate_product_score(valid_products, weight_factor)
+Call function calculate_product_score(valid_products=[{name: 'Gadget A', rating: 4.2, price: 37, ...}, {name: 'Gadget B', rating: 3.8, price: 25, ...}, {name: 'Gadget C', rating: 4.7, price: 42, ...}] (defined at [line 46]), weight_factor=3 (defined at [line 51]))
+[line 6]  def calculate_product_score(products, weight):
+Enter function calculate_product_score: products=[{name: 'Gadget A', rating: 4.2, price: 37, ...}, {name: 'Gadget B', rating: 3.8, price: 25, ...}, {name: 'Gadget C', rating: 4.7, price: 42, ...}] (valid_products defined at [line 46]), weight=3 (weight_factor defined at [line 51])
+  [line 7]  base_score = 0
+  Assign: base_score = 0
+  [line 8]  quality_factor = 3
+  Assign: quality_factor = 3
+  [line 15]  for idx, product in enumerate(products):
+  (Missing param: 'iter_var')
+  [line 17]  adjusted_rating = product['rating'] * quality_factor
+  Compute: product['rating'] * quality_factor, where product={name: 'Gadget A', rating: 4.2, price: 37, ...} (an unknown source), quality_factor=3 (defined at [line 8]) = 12.600000000000001
+  [line 23]  price_factor = product['price'] % 10
+  Compute: product['price'] % 10, where product={name: 'Gadget A', rating: 4.2, price: 37, ...} (an unknown source) = 7
+  [line 26]  base_score += (adjusted_rating + price_factor) * weight
+  Update: base_score changed from 0 (defined at defined at [line 7]) to 0+(adjusted_rating + price_factor) * weight = 58.800000000000004
+  [line 15]  for idx, product in enumerate(products):
+  (Missing param: 'iter_var')
+  [line 17]  adjusted_rating = product['rating'] * quality_factor
+  Compute: product['rating'] * quality_factor, where product={name: 'Gadget B', rating: 3.8, price: 25, ...} (an unknown source), quality_factor=3 (defined at [line 8]) = 11.399999999999999
+  [line 23]  price_factor = product['price'] % 10
+  Compute: product['price'] % 10, where product={name: 'Gadget B', rating: 3.8, price: 25, ...} (an unknown source) = 5
+  [line 26]  base_score += (adjusted_rating + price_factor) * weight
+  Update: base_score changed from 58.800000000000004 (defined at defined at [line 26]) to 58.800000000000004+(adjusted_rating + price_factor) * weight = 108.0
+  [line 15]  for idx, product in enumerate(products):
+  (Missing param: 'iter_var')
+  [line 17]  adjusted_rating = product['rating'] * quality_factor
+  Compute: product['rating'] * quality_factor, where product={name: 'Gadget C', rating: 4.7, price: 42, ...} (an unknown source), quality_factor=3 (defined at [line 8]) = 14.100000000000001
+  [line 23]  price_factor = product['price'] % 10
+  Compute: product['price'] % 10, where product={name: 'Gadget C', rating: 4.7, price: 42, ...} (an unknown source) = 2
+  [line 26]  base_score += (adjusted_rating + price_factor) * weight
+  Update: base_score changed from 108.0 (defined at defined at [line 26]) to 108.0+(adjusted_rating + price_factor) * weight = 156.3
+  [line 15]  for idx, product in enumerate(products):
+  Loop End: Iteration finished
+  [line 35]  return int(base_score)
+  Return: int(base_score)
+Function calculate_product_score returns 156
+
+Answer: product_score = 156 (last updated on defined at [line 54])

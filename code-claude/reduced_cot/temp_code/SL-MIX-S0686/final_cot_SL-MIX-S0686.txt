@@ -1,0 +1,101 @@
+Target: Find the value of variable optimal_sequence after [line 43] executes
+
+[line 1]  def analyze_signal_patterns(raw_data, threshold=10):
+Enter function analyze_signal_patterns: raw_data=[5, 12, 8, 3, 15, ...], threshold=10
+  [line 3]  noise_levels = {i: (i * 3) % 7 for i in range(20)}
+  Compute: {i: (i * 3) % 7 for i in range(20)}, where i=0 (an unknown source) = ?
+  [line 4]  active_signals = set([2, 5, 8, 13, 17])
+  Call function set([2, 5, 8, 13, 17])
+  [line 5]  reference_pattern = set([3, 5, 8, 10, 17, 19])
+  Call function set([3, 5, 8, 10, 17, 19])
+  [line 8]  baseline = sum(noise_levels.values()) // len(noise_levels)
+  Compute: sum(noise_levels.values()) // len(noise_levels), where noise_levels={0: 0, 1: 3, 2: 6, ...} (defined at [line 3]) = 2
+  [line 9]  significance_factor = 4 if baseline > 10 else 3
+  Compute: 4 if baseline > 10 else 3, where baseline=2 (defined at [line 8]) = 3
+  [line 12]  filtered_data = []
+  Compute: [] = []
+  [line 13]  for idx, value in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 14]  if idx in noise_levels and noise_levels[idx] < threshold:
+  Condition: True, entering 'if' block
+  [line 13]  for idx, value in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 14]  if idx in noise_levels and noise_levels[idx] < threshold:
+  Condition: True, entering 'if' block
+... [Line 13] repeats 9 more times ...
+... [Line 13] repeats 9 more times ...
+  [line 13]  for idx, value in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 14]  if idx in noise_levels and noise_levels[idx] < threshold:
+  Condition: True, entering 'if' block
+  [line 13]  for idx, value in enumerate(raw_data):
+  Loop End: Iteration finished
+  [line 20]  interference_detected = False
+  Assign: interference_detected = False
+  [line 21]  potential_matches = set()
+  Call function set()
+  [line 22]  for i in range(len(filtered_data) - 2):
+  Loop Start: i takes its first value 0
+  [line 23]  segment = filtered_data[i:i+3]
+  Compute: filtered_data[i:i+3], where filtered_data=[10, 24, 16, 6, 30, ...] (defined at [line 12]), i=0 (defined at [line 22]) = [10, 24, 16]
+  [line 24]  if sum(segment) > threshold * 2:
+  Condition: True, entering 'if' block
+  [line 25]  interference_detected = True
+  Assign: interference_detected = True
+  [line 22]  for i in range(len(filtered_data) - 2):
+  Loop Iteration: i is now 1 (iteration 2)
+  [line 23]  segment = filtered_data[i:i+3]
+  Compute: filtered_data[i:i+3], where filtered_data=[10, 24, 16, 6, 30, ...] (defined at [line 12]), i=1 (defined at [line 22]) = [24, 16, 6]
+  [line 24]  if sum(segment) > threshold * 2:
+  Condition: True, entering 'if' block
+  [line 25]  interference_detected = True
+  Assign: interference_detected = True
+... [Line 22] repeats 7 more times ...
+... [Line 22] repeats 7 more times ...
+... [Line 22] repeats 7 more times ...
+... [Line 22] repeats 7 more times ...
+  [line 22]  for i in range(len(filtered_data) - 2):
+  Loop Iteration: i is now 9 (iteration 10)
+  [line 23]  segment = filtered_data[i:i+3]
+  Compute: filtered_data[i:i+3], where filtered_data=[10, 24, 16, 6, 30, ...] (defined at [line 12]), i=9 (defined at [line 22]) = [8, 12, 26]
+  [line 24]  if sum(segment) > threshold * 2:
+  Condition: True, entering 'if' block
+  [line 25]  interference_detected = True
+  Assign: interference_detected = True
+  [line 22]  for i in range(len(filtered_data) - 2):
+  Loop End: Iteration finished
+  [line 29]  if interference_detected and len(potential_matches) > 2:
+  Condition: True, entering 'if' block
+  [line 31]  active_signals = active_signals.union(potential_matches)
+  (Missing param: 'func_name')
+  [line 32]  significance_factor = significance_factor - 1
+  Update: significance_factor changed from 3 (defined at defined at [line 9]) to 3-1 = 2
+  [line 36]  for signal in active_signals:
+  Loop Start: signal takes its first value 0
+  [line 37]  if signal in reference_pattern:
+  Condition: True, entering 'if' block
+  [line 36]  for signal in active_signals:
+  Loop Iteration: signal is now 1 (iteration 2)
+  [line 37]  if signal in reference_pattern:
+  Condition: True, entering 'if' block
+... [Line 36] repeats 9 more times ...
+... [Line 36] repeats 9 more times ...
+  [line 36]  for signal in active_signals:
+  Loop Iteration: signal is now 17 (iteration 12)
+  [line 37]  if signal in reference_pattern:
+  Condition: True, entering 'if' block
+  [line 36]  for signal in active_signals:
+  Loop End: Iteration finished
+  [line 43]  optimal_sequence = len(active_signals & reference_pattern) * significance_factor
+  Compute: len(active_signals & reference_pattern) * significance_factor, where active_signals={0, 1, 2, 3, 4, ...} (defined at [line 4]), reference_pattern={3, 5, 8, 10, 17, ...} (defined at [line 5]), significance_factor=2 (defined at [line 32]) = 8
+  [line 46]  alternative_sequence = significance_factor * sum(1 for s in active_signals if s % 2 == 0)
+  Compute: significance_factor * sum(1 for s in active_signals if s % 2 == 0), where significance_factor=2 (defined at [line 32]), active_signals={0, 1, 2, 3, 4, ...} (defined at [line 4]) = ?
+  [line 47]  sequence_ratio = optimal_sequence / alternative_sequence if alternative_sequence else 0
+  Compute: optimal_sequence / alternative_sequence if alternative_sequence else 0, where optimal_sequence=8 (defined at [line 43]) = ?
+  [line 50]  if sequence_ratio > 5:
+  Condition: True, entering 'if' block
+  [line 53]  return optimal_sequence if optimal_sequence > 0 else baseline
+  Return: optimal_sequence if optimal_sequence > 0 else baseline
+Function analyze_signal_patterns returns 8
+
+Answer: optimal_sequence = 8 (last updated on defined at [line 43])

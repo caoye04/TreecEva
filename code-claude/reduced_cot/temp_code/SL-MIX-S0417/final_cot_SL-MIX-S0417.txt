@@ -1,0 +1,36 @@
+Target: Find the value of variable final_signal_strength after [line 54] executes
+
+[line 15]  threshold_values = [8, 10, 12]
+Compute: [8, 10, 12] = [8, 10, 12]
+[line 20]  all_readings = list(itertools.chain.from_iterable(sensor_stations))
+Call function list(itertools.chain.from_iterable(sensor_stations))
+[line 30]  filtered_by_threshold = [reading for reading in all_readings if reading >= threshold_values[1]]
+Compute: [reading for reading in all_readings if reading >= threshold_values[1]], where reading=12 (an unknown source), all_readings=[12, 15, 9, 3, 8, ...] (defined at [line 20]), threshold_values=[8, 10, 12] (defined at [line 15]) = ?
+[line 33]  processed_signals = []
+Compute: [] = []
+[line 34]  for reading in filtered_by_threshold:
+Loop Start: reading takes its first value 12
+[line 36]  if reading > threshold_values[2]:
+Condition: True, entering 'if' block
+[line 34]  for reading in filtered_by_threshold:
+Loop Iteration: reading is now 15 (iteration 2)
+[line 36]  if reading > threshold_values[2]:
+Condition: True, entering 'if' block
+... [Line 34] repeats 4 more times ...
+... [Line 34] repeats 4 more times ...
+[line 34]  for reading in filtered_by_threshold:
+Loop Iteration: reading is now 16 (iteration 7)
+[line 36]  if reading > threshold_values[2]:
+Condition: True, entering 'if' block
+[line 34]  for reading in filtered_by_threshold:
+Loop End: Iteration finished
+[line 44]  signal_segment_b = processed_signals[-3:]  # Last three signals
+Compute: processed_signals[-3:]  # Last three signals, where processed_signals=[10.8, 18.5, 9.0, 17.6, 9.9, ...] (defined at [line 33]) = [9.9, 16.700000000000003, 19.4]
+[line 48]  filtered_segment_b = [x for x in signal_segment_b if x > 14]
+Compute: [x for x in signal_segment_b if x > 14], where x=9.9 (an unknown source), signal_segment_b=[9.9, 16.700000000000003, 19.4] (defined at [line 44]) = ?
+[line 51]  filtered_signals = processed_signals[2:-3] + filtered_segment_b
+Compute: processed_signals[2:-3] + filtered_segment_b, where processed_signals=[10.8, 18.5, 9.0, 17.6, 9.9, ...] (defined at [line 33]), filtered_segment_b=[16.700000000000003, 19.4] (defined at [line 48]) = [9.0, 17.6, 16.700000000000003, 19.4]
+[line 54]  final_signal_strength = sum(filtered_signals)
+Call function sum(filtered_signals=[9.0, 17.6, 16.700000000000003, 19.4] (defined at [line 51]))
+
+Answer: final_signal_strength = 62.7 (last updated on defined at [line 54])

@@ -1,0 +1,629 @@
+70
+target_frequency
+---
+PARAM_MAPPING {'sequences': {'actual_var': 'sequences', 'value': ['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']}}
+FUNCTION_ENTER 1 analyze_genetic_sequences def analyze_genetic_sequences(sequences):
+1 ['sequences'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'ATGCGTACGATCG'}, {'_type': 'str', '_value': 'ACGTACGTACGTA'}, {'_type': 'str', '_value': 'GCTACGATCGTAG'}, {'_type': 'str', '_value': 'CGATCGTACGAAC'}], '_len': 4}]
+3 observed_frequencies = {}
+3 ['sequences', 'observed_frequencies'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{}']
+5 decoy_patterns = ['AAGT', 'CTGA', 'GGCT']
+5 ['sequences', 'observed_frequencies', 'decoy_patterns'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{}', "['AAGT', 'CTGA', 'GGCT']"]
+8 for idx, sequence in enumerate(sequences):
+8 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '0']
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '0', "'ATG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '0', "'ATG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '0', "'ATG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '1', "'ATG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '1', "'TGC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '1', "'TGC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '1', "'TGC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '2', "'TGC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '2', "'GCG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '2', "'GCG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '2', "'GCG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '3', "'GCG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '3', "'CGT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '3', "'CGT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '3', "'CGT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '4', "'CGT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '4', "'GTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '4', "'GTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '4', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '5', "'GTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '5', "'TAC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '5', "'TAC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '5', "'TAC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '6', "'TAC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '6', "'ACG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '6', "'ACG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '6', "'ACG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '7', "'ACG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '7', "'CGA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '7', "'CGA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '7', "'CGA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '8', "'CGA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '8', "'GAT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '8', "'GAT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '8', "'GAT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '9', "'GAT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '9', "'ATC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '9', "'ATC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '9', "'ATC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '10', "'ATC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '10', "'TCG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '10', "'TCG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '10', "'TCG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '0', "'ATGCGTACGATCG'", '10', "'TCG'"]
+8 for idx, sequence in enumerate(sequences):
+8 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '10', "'TCG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '0', "'TCG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '0', "'ACG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '0', "'ACG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '0', "'ACG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '1', "'ACG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '1', "'CGT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '1', "'CGT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '1', "'CGT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '2', "'CGT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '2', "'GTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '2', "'GTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '2', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '3', "'GTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '3', "'TAC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '3', "'TAC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '3', "'TAC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '4', "'TAC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '4', "'ACG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '4', "'ACG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '4', "'ACG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '5', "'ACG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '5', "'CGT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '5', "'CGT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '5', "'CGT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '6', "'CGT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '6', "'GTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '6', "'GTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '6', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '7', "'GTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '7', "'TAC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '7', "'TAC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '7', "'TAC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '8', "'TAC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '8', "'ACG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '8', "'ACG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '8', "'ACG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '9', "'ACG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '9', "'CGT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '9', "'CGT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '9', "'CGT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '10', "'CGT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '10', "'GTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '10', "'GTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '10', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '1', "'ACGTACGTACGTA'", '10', "'GTA'"]
+8 for idx, sequence in enumerate(sequences):
+8 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '10', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '0', "'GTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '0', "'GCT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '0', "'GCT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '0', "'GCT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '1', "'GCT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '1', "'CTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '1', "'CTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '1', "'CTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '2', "'CTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '2', "'TAC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '2', "'TAC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '2', "'TAC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '3', "'TAC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '3', "'ACG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '3', "'ACG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '3', "'ACG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '4', "'ACG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '4', "'CGA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '4', "'CGA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '4', "'CGA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '5', "'CGA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '5', "'GAT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '5', "'GAT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '5', "'GAT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '6', "'GAT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '6', "'ATC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '6', "'ATC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '6', "'ATC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '7', "'ATC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '7', "'TCG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '7', "'TCG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '7', "'TCG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '8', "'TCG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '8', "'CGT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '8', "'CGT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '8', "'CGT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '9', "'CGT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '9', "'GTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '9', "'GTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '9', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '10', "'GTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '10', "'TAG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '10', "'TAG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '10', "'TAG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '2', "'GCTACGATCGTAG'", '10', "'TAG'"]
+8 for idx, sequence in enumerate(sequences):
+8 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '10', "'TAG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '0', "'TAG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '0', "'CGA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '0', "'CGA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '0', "'CGA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '1', "'CGA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '1', "'GAT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '1', "'GAT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '1', "'GAT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '2', "'GAT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '2', "'ATC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '2', "'ATC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '2', "'ATC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '3', "'ATC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '3', "'TCG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '3', "'TCG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '3', "'TCG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '4', "'TCG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '4', "'CGT'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '4', "'CGT'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '4', "'CGT'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '5', "'CGT'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '5', "'GTA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '5', "'GTA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '5', "'GTA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '6', "'GTA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '6', "'TAC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '6', "'TAC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '6', "'TAC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '7', "'TAC'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '7', "'ACG'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '7', "'ACG'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '7', "'ACG'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '8', "'ACG'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '8', "'CGA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '8', "'CGA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '8', "'CGA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '9', "'CGA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '9', "'GAA'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '9', "'GAA'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '9', "'GAA'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '10', "'GAA'"]
+11 pattern = sequence[i:i+3]
+11 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '10', "'AAC'"]
+12 observed_frequencies[pattern] = observed_frequencies.get(pattern, 0) + 1
+12 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '10', "'AAC'"]
+15 if 'G' in pattern and 'C' not in pattern:
+15 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '10', "'AAC'"]
+10 for i in range(len(sequence) - 2):
+10 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'i', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", '10', "'AAC'"]
+8 for idx, sequence in enumerate(sequences):
+8 ['sequences', 'observed_frequencies', 'decoy_patterns', 'idx', 'sequence', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", '3', "'CGATCGTACGAAC'", "'AAC'"]
+20 for pattern in decoy_patterns:
+20 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'ATGCGTACGATCG'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'ATGCGTACGATCG'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'ACGTACGTACGTA'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'ACGTACGTACGTA'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'GCTACGATCGTAG'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'GCTACGATCGTAG'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'CGATCGTACGAAC'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'CGATCGTACGAAC'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'AAGT'", "'CGATCGTACGAAC'"]
+20 for pattern in decoy_patterns:
+20 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'CGATCGTACGAAC'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'ATGCGTACGATCG'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'ATGCGTACGATCG'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'ACGTACGTACGTA'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'ACGTACGTACGTA'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'GCTACGATCGTAG'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'GCTACGATCGTAG'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'CGATCGTACGAAC'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'CGATCGTACGAAC'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'CTGA'", "'CGATCGTACGAAC'"]
+20 for pattern in decoy_patterns:
+20 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'CGATCGTACGAAC'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'ATGCGTACGATCG'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'ATGCGTACGATCG'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'ACGTACGTACGTA'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'ACGTACGTACGTA'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'GCTACGATCGTAG'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'GCTACGATCGTAG'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'CGATCGTACGAAC'"]
+23 if pattern in seq:
+23 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'CGATCGTACGAAC'"]
+22 for seq in sequences:
+22 ['sequences', 'observed_frequencies', 'decoy_patterns', 'pattern', 'seq'] ["['ATGCGTACGATCG', 'ACGTACGTACGTA', 'GCTACGATCGTAG', 'CGATCGTACGAAC']", '{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'", "'CGATCGTACGAAC'"]
+20 for pattern in decoy_patterns:
+20 ['observed_frequencies', 'decoy_patterns', 'pattern'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "['AAGT', 'CTGA', 'GGCT']", "'GGCT'"]
+29 max_product = -1
+29 ['observed_frequencies', 'pattern', 'max_product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GGCT'", '-1']
+30 max_product_idx = ''
+30 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GGCT'", '-1', "''"]
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '-1', "''", '1']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '-1', "''", '1']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '-1', "''", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '-1', "''", '1', '3']
+43 max_product = product
+43 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '3', "''", '1', '3']
+44 max_product_idx = pattern
+44 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '3', "'ATG'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATG'", '3', "'ATG'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TGC'", '3', "'ATG'", '1', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TGC'", '3', "'ATG'", '1', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TGC'", '3', "'ATG'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TGC'", '3', "'ATG'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TGC'", '3', "'ATG'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCG'", '3', "'ATG'", '1', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCG'", '3', "'ATG'", '1', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCG'", '3', "'ATG'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCG'", '3', "'ATG'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCG'", '3', "'ATG'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '3', "'ATG'", '6', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '3', "'ATG'", '6', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '3', "'ATG'", '6', '18']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '3', "'ATG'", '6', '18']
+43 max_product = product
+43 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '18', "'ATG'", '6', '18']
+44 max_product_idx = pattern
+44 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '18', "'CGT'", '6', '18']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '18', "'CGT'", '6', '18']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GTA'", '18', "'CGT'", '6', '18']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GTA'", '18', "'CGT'", '6', '18']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GTA'", '18', "'CGT'", '6', '18']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GTA'", '18', "'CGT'", '6', '18']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GTA'", '18', "'CGT'", '6', '18']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAC'", '18', "'CGT'", '5', '18']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAC'", '18', "'CGT'", '5', '18']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAC'", '18', "'CGT'", '5', '15']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAC'", '18', "'CGT'", '5', '15']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAC'", '18', "'CGT'", '5', '15']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ACG'", '18', "'CGT'", '6', '15']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ACG'", '18', "'CGT'", '6', '15']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ACG'", '18', "'CGT'", '6', '18']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ACG'", '18', "'CGT'", '6', '18']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ACG'", '18', "'CGT'", '6', '18']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGA'", '18', "'CGT'", '4', '18']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGA'", '18', "'CGT'", '4', '18']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGA'", '18', "'CGT'", '4', '12']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGA'", '18', "'CGT'", '4', '12']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGA'", '18', "'CGT'", '4', '12']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAT'", '18', "'CGT'", '3', '12']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAT'", '18', "'CGT'", '3', '12']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAT'", '18', "'CGT'", '3', '9']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAT'", '18', "'CGT'", '3', '9']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAT'", '18', "'CGT'", '3', '9']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATC'", '18', "'CGT'", '3', '9']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATC'", '18', "'CGT'", '3', '9']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATC'", '18', "'CGT'", '3', '9']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATC'", '18', "'CGT'", '3', '9']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'ATC'", '18', "'CGT'", '3', '9']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TCG'", '18', "'CGT'", '3', '9']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TCG'", '18', "'CGT'", '3', '9']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TCG'", '18', "'CGT'", '3', '9']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TCG'", '18', "'CGT'", '3', '9']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TCG'", '18', "'CGT'", '3', '9']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCT'", '18', "'CGT'", '1', '9']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCT'", '18', "'CGT'", '1', '9']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCT'", '18', "'CGT'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCT'", '18', "'CGT'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GCT'", '18', "'CGT'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CTA'", '18', "'CGT'", '1', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CTA'", '18', "'CGT'", '1', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CTA'", '18', "'CGT'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CTA'", '18', "'CGT'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CTA'", '18', "'CGT'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAG'", '18', "'CGT'", '1', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAG'", '18', "'CGT'", '1', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAG'", '18', "'CGT'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAG'", '18', "'CGT'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'TAG'", '18', "'CGT'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAA'", '18', "'CGT'", '1', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAA'", '18', "'CGT'", '1', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAA'", '18', "'CGT'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAA'", '18', "'CGT'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'GAA'", '18', "'CGT'", '1', '3']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'AAC'", '18', "'CGT'", '1', '3']
+40 if 'G' in pattern or 'C' in pattern:  # Relevant condition
+40 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'AAC'", '18', "'CGT'", '1', '3']
+41 product = freq * len(pattern)
+41 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'AAC'", '18', "'CGT'", '1', '3']
+42 if product > max_product:
+42 ['observed_frequencies', 'pattern', 'max_product', 'max_product_idx', 'freq', 'product'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'AAC'", '18', "'CGT'", '1', '3']
+48 if pattern in ['ATG', 'CAT', 'GGG']:
+48 ['observed_frequencies', 'pattern', 'max_product_idx', 'freq'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'AAC'", "'CGT'", '1']
+34 for pattern, freq in observed_frequencies.items():
+34 ['observed_frequencies', 'pattern', 'max_product_idx', 'freq'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'AAC'", "'CGT'", '1']
+53 highest_freq_pattern = max(observed_frequencies, key=observed_frequencies.get)
+53 ['observed_frequencies', 'max_product_idx', 'highest_freq_pattern'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", "'CGT'"]
+54 highest_freq = observed_frequencies[highest_freq_pattern]
+54 ['observed_frequencies', 'max_product_idx', 'highest_freq_pattern', 'highest_freq'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", "'CGT'", '6']
+57 if highest_freq > 100:
+57 ['observed_frequencies', 'max_product_idx', 'highest_freq'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '6']
+61 target_frequency = observed_frequencies[max_product_idx]
+61 ['observed_frequencies', 'max_product_idx', 'target_frequency'] ['{ATG: 1, TGC: 1, GCG: 1, ...}', "'CGT'", '6']
+70 print(f"Target result: {target_frequency}")
+70 ['target_frequency'] ['6']
+71 return target_frequency
+71 ['target_frequency'] ['6']
+FUNCTION_RETURN 71 analyze_genetic_sequences {'_type': 'int', '_value': 6}

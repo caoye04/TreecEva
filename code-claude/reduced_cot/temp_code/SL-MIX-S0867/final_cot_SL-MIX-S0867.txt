@@ -1,0 +1,47 @@
+Target: Find the value of variable active_connections after [line 38] executes
+
+[line 4]  def analyze_network_traffic(log_entries):
+Enter function analyze_network_traffic: log_entries=['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]
+  [line 6]  connection_data = []
+  Compute: [] = []
+  [line 11]  for entry in log_entries:
+  Loop Start: entry takes its first value '192.168.1.5:connected'
+  [line 12]  parts = entry.split(':')
+  (Missing param: 'func_name')
+  [line 13]  if len(parts) < 2:
+  Condition: True, entering 'if' block
+  [line 24]  if status == 'retry':
+  Condition: True, entering 'if' block
+  [line 11]  for entry in log_entries:
+  Loop Iteration: entry is now '10.0.0.1:retry' (iteration 2)
+  [line 12]  parts = entry.split(':')
+  (Missing param: 'func_name')
+  [line 13]  if len(parts) < 2:
+  Condition: True, entering 'if' block
+  [line 24]  if status == 'retry':
+  Condition: True, entering 'if' block
+... [Line 11] repeats 5 more times ...
+... [Line 11] repeats 5 more times ...
+... [Line 11] repeats 5 more times ...
+... [Line 11] repeats 5 more times ...
+  [line 11]  for entry in log_entries:
+  Loop Iteration: entry is now '10.0.0.1:connected' (iteration 8)
+  [line 12]  parts = entry.split(':')
+  (Missing param: 'func_name')
+  [line 13]  if len(parts) < 2:
+  Condition: True, entering 'if' block
+  [line 24]  if status == 'retry':
+  Condition: True, entering 'if' block
+  [line 11]  for entry in log_entries:
+  Loop End: Iteration finished
+  [line 29]  connection_counter = Counter(connection_data)
+  Call function Counter(connection_data=['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...] (defined at [line 6]))
+  [line 38]  active_connections = len(connection_counter)
+  Call function len(connection_counter={192.168.1.5: 2, 10.0.0.1: 2, 172.16.0.1: 1, ...} (defined at [line 29]))
+  [line 44]  print(f"Result: {active_connections}")
+  Output: f"Result: {active_connections}"
+  [line 45]  return active_connections
+  Return: active_connections=6 (defined at [line 38])
+Function analyze_network_traffic returns 6
+
+Answer: active_connections = 6 (last updated on defined at [line 38])

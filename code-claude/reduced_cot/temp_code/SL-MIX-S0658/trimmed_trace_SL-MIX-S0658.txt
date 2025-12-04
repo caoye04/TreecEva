@@ -1,0 +1,85 @@
+27
+encrypted_message
+---
+PARAM_MAPPING {'message': {'actual_var': 'message', 'value': 'Hello World!'}, 'key': {'actual_var': 'key', 'value': 'secretkey'}}
+FUNCTION_ENTER 1 process_message def process_message(message, key):
+1 ['message', 'key'] [{'_type': 'str', '_value': 'Hello World!'}, {'_type': 'str', '_value': 'secretkey'}]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'H'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'e'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'l'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'l'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'o'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "' '"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'W'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'o'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'r'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'l'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'d'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'c'] ["'Hello World!'", "'secretkey'", "'!'"]
+3 message_bytes = [ord(c) for c in message]
+3 ['message', 'key', 'message_bytes'] ["'Hello World!'", "'secretkey'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'s'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'e'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'c'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'r'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'e'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'t'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'k'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'e'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'c', 'message_bytes'] ["'secretkey'", "'y'", '[72, 101, 108, 108, 111, ...]']
+4 key_bytes = [ord(c) for c in key]
+4 ['key', 'message_bytes', 'key_bytes'] ["'secretkey'", '[72, 101, 108, 108, 111, ...]', '[115, 101, 99, 114, 101, ...]']
+19 segment_b = message_bytes[2:8:2]  # Every other character from index 2 to 7
+19 ['message_bytes', 'key_bytes', 'segment_b'] ['[72, 101, 108, 108, 111, ...]', '[115, 101, 99, 114, 101, ...]', '[108, 111, 87]']
+20 segment_c = key_bytes[1:7:2]      # Every other character from index 1 to 6
+20 ['key_bytes', 'segment_b', 'segment_c'] ['[115, 101, 99, 114, 101, ...]', '[108, 111, 87]', '[101, 114, 116]']
+27 encrypted_message = segment_b[0] ^ segment_c[0]
+27 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '9']
+33 encrypted_message = 0
+33 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '0']
+34 for i in range(len(segment_b)):
+34 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '0']
+35 if i < len(segment_c):
+35 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '0']
+36 encrypted_message ^= segment_b[i] ^ segment_c[i]
+36 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '9']
+34 for i in range(len(segment_b)):
+34 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '9']
+35 if i < len(segment_c):
+35 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '9']
+36 encrypted_message ^= segment_b[i] ^ segment_c[i]
+36 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '20']
+34 for i in range(len(segment_b)):
+34 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '20']
+35 if i < len(segment_c):
+35 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '20']
+36 encrypted_message ^= segment_b[i] ^ segment_c[i]
+36 ['segment_b', 'segment_c', 'encrypted_message'] ['[108, 111, 87]', '[101, 114, 116]', '55']
+34 for i in range(len(segment_b)):
+34 ['segment_b', 'encrypted_message'] ['[108, 111, 87]', '55']
+41 print(f"Result: {encrypted_message}")
+41 ['encrypted_message'] ['55']
+42 return encrypted_message
+42 ['encrypted_message'] ['55']
+FUNCTION_RETURN 42 process_message {'_type': 'int', '_value': 55}

@@ -1,0 +1,32 @@
+4 ticket_id = "TKT-4289"
+4 ['ticket_id'] [{'_type': 'str', '_value': 'TKT-4289'}]
+5 ticket_type = "technical"
+5 ['ticket_id', 'ticket_type'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}]
+6 is_urgent = True
+6 ['ticket_id', 'ticket_type', 'is_urgent'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}]
+7 waiting_time = 45  # minutes
+7 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}]
+10 base_score = waiting_time // 10
+10 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 4}]
+11 if waiting_time % 10 >= 5:
+11 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 4}]
+12     base_score += 1
+12 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 5}]
+15 urgency_factor = 0.5
+15 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 0.5}]
+16 penalty = 2
+16 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}]
+19 subscription = "premium"
+19 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}]
+20 customer_tier = 2 if subscription == "premium" else 1
+20 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}, {'_type': 'int', '_value': 2}]
+23 base_score = base_score + customer_tier
+23 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 7}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}, {'_type': 'int', '_value': 2}]
+26 priority_score = base_score * (1 + urgency_factor) if is_urgent else base_score - penalty
+26 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier', 'priority_score'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 7}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}, {'_type': 'int', '_value': 2}, {'_type': 'float', '_value': 10.5}]
+29 weekend_bonus = 3
+29 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier', 'priority_score', 'weekend_bonus'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 7}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}, {'_type': 'int', '_value': 2}, {'_type': 'float', '_value': 10.5}, {'_type': 'int', '_value': 3}]
+30 holiday_bonus = 5
+30 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier', 'priority_score', 'weekend_bonus', 'holiday_bonus'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 7}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}, {'_type': 'int', '_value': 2}, {'_type': 'float', '_value': 10.5}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 5}]
+32 print(f"Result: {priority_score}")
+32 ['ticket_id', 'ticket_type', 'is_urgent', 'waiting_time', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier', 'priority_score', 'weekend_bonus', 'holiday_bonus'] [{'_type': 'str', '_value': 'TKT-4289'}, {'_type': 'str', '_value': 'technical'}, {'_type': 'bool', '_value': True}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 7}, {'_type': 'float', '_value': 0.5}, {'_type': 'int', '_value': 2}, {'_type': 'str', '_value': 'premium'}, {'_type': 'int', '_value': 2}, {'_type': 'float', '_value': 10.5}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 5}]

@@ -1,0 +1,169 @@
+Target: Find the value of variable signal_strength after [line 88] executes
+
+[line 28]  signal_data = [0.2, -0.1, 0.5, 0.8, 1.2, 0.7, 0.3, -0.2, -0.5, -0.3, 0.1, 0.4]
+Compute: [0.2, -0.1, 0.5, 0.8, 1.2, 0.7, 0.3, -0.2, -0.5, -0.3, 0.1, 0.4] = [0.2, -0.1, 0.5, 0.8, 1.2, ...]
+[line 39]  filtered_data = apply_filters(signal_data, filters)
+Call function apply_filters(signal_data=[0.2, -0.1, 0.5, 0.8, 1.2, ...] (defined at [line 28]), filters={lowpass: function(...), highpass: function(...), bandpass: function(...)} (an unknown source))
+[line 8]  results = {}
+Compute: {} = {}
+[line 9]  for filter_name, filter_func in filters.items():
+(Missing param: 'iter_var')
+[line 10]  filtered = list(map(filter_func, signal_data))
+Call function list(map(filter_func, signal_data))
+[line 11]  results[filter_name] = filtered
+(Missing param: 'result')
+[line 9]  for filter_name, filter_func in filters.items():
+(Missing param: 'iter_var')
+[line 10]  filtered = list(map(filter_func, signal_data))
+Call function list(map(filter_func, signal_data))
+[line 11]  results[filter_name] = filtered
+(Missing param: 'result')
+[line 9]  for filter_name, filter_func in filters.items():
+(Missing param: 'iter_var')
+[line 10]  filtered = list(map(filter_func, signal_data))
+Call function list(map(filter_func, signal_data))
+[line 11]  results[filter_name] = filtered
+(Missing param: 'result')
+[line 9]  for filter_name, filter_func in filters.items():
+Loop End: Iteration finished
+[line 12]  return results.get('bandpass', signal_data)  # Default to original if no bandpass
+Return: results.get('bandpass', signal_data)  # Default to original if no bandpass
+[line 1]  def calculate_noise_floor(data, threshold=0.05):
+Enter function calculate_noise_floor: data=[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...] (filtered_data defined at [line 39]), threshold=0.05
+  [line 3]  noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+  Call function sum([abs(x) for x in data if abs(x) < threshold])
+  [line 4]  return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+  Return: noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+Function calculate_noise_floor returns 0.0
+[line 45]  potential_freqs = [433.92, 868.3, 915.0, 2400.0, 5800.0]
+Compute: [433.92, 868.3, 915.0, 2400.0, 5800.0] = [433.92, 868.3, 915.0, 2400.0, 5800.0]
+[line 46]  freq_weights = [0.3, 0.2, 0.15, 0.25, 0.1]
+Compute: [0.3, 0.2, 0.15, 0.25, 0.1] = [0.3, 0.2, 0.15, 0.25, 0.1]
+[line 47]  weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+Compute: [(f, w) for f, w in zip(potential_freqs, freq_weights)], where f=433.92 (an unknown source), w=0.3 (an unknown source), potential_freqs=[433.92, 868.3, 915.0, 2400.0, 5800.0] (defined at [line 45]), freq_weights=[0.3, 0.2, 0.15, 0.25, 0.1] (defined at [line 46]) = ?
+[line 50]  optimal_freq = 0
+Assign: optimal_freq = 0
+[line 51]  max_weight = 0
+Assign: max_weight = 0
+[line 52]  for freq, weight in weighted_freqs:
+(Missing param: 'iter_var')
+[line 54]  if freq > 2000:
+Condition: True, entering 'if' block
+[line 52]  for freq, weight in weighted_freqs:
+(Missing param: 'iter_var')
+[line 54]  if freq > 2000:
+Condition: True, entering 'if' block
+... [Line 52] repeats 2 more times ...
+... [Line 52] repeats 2 more times ...
+[line 52]  for freq, weight in weighted_freqs:
+(Missing param: 'iter_var')
+[line 54]  if freq > 2000:
+Condition: True, entering 'if' block
+[line 55]  adjusted_weight = weight * (1 + 0.1 * (freq // 1000))
+Compute: weight * (1 + 0.1 * (freq // 1000)), where weight=0.1 (an unknown source), freq=5800.0 (an unknown source) = 0.15000000000000002
+[line 56]  if adjusted_weight > max_weight:
+Condition: True, entering 'if' block
+[line 52]  for freq, weight in weighted_freqs:
+Loop End: Iteration finished
+[line 14]  def find_peaks(data, window_size=3):
+Enter function find_peaks: data=[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...] (filtered_data defined at [line 39]), window_size=3
+  [line 16]  peaks = []
+  Compute: [] = []
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop Start: i takes its first value 3
+  [line 18]  is_peak = True
+  Assign: is_peak = True
+  [line 19]  for j in range(1, window_size + 1):
+  Loop Start: j takes its first value 1
+  [line 20]  if data[i] <= data[i - j] or data[i] <= data[i + j]:
+  Condition: True, entering 'if' block
+  [line 21]  is_peak = False
+  Assign: is_peak = False
+  [line 23]  if is_peak:
+  Condition: True, entering 'if' block
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop Iteration: i is now 4 (iteration 2)
+  [line 18]  is_peak = True
+  Assign: is_peak = True
+  [line 19]  for j in range(1, window_size + 1):
+  Loop Iteration: j is now 1 (iteration 2)
+  [line 20]  if data[i] <= data[i - j] or data[i] <= data[i + j]:
+  Condition: True, entering 'if' block
+... [Line 19] repeats 5 more times ...
+... [Line 19] repeats 5 more times ...
+  [line 23]  if is_peak:
+  Condition: True, entering 'if' block
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop Iteration: i is now 5 (iteration 3)
+  [line 18]  is_peak = True
+  Assign: is_peak = True
+  [line 19]  for j in range(1, window_size + 1):
+  Loop Iteration: j is now 1 (iteration 6)
+  [line 20]  if data[i] <= data[i - j] or data[i] <= data[i + j]:
+  Condition: True, entering 'if' block
+  [line 21]  is_peak = False
+  Assign: is_peak = False
+  [line 23]  if is_peak:
+  Condition: True, entering 'if' block
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop Iteration: i is now 6 (iteration 4)
+  [line 18]  is_peak = True
+  Assign: is_peak = True
+  [line 19]  for j in range(1, window_size + 1):
+  Loop Iteration: j is now 1 (iteration 7)
+  [line 20]  if data[i] <= data[i - j] or data[i] <= data[i + j]:
+  Condition: True, entering 'if' block
+  [line 21]  is_peak = False
+  Assign: is_peak = False
+  [line 23]  if is_peak:
+  Condition: True, entering 'if' block
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop Iteration: i is now 7 (iteration 5)
+  [line 18]  is_peak = True
+  Assign: is_peak = True
+  [line 19]  for j in range(1, window_size + 1):
+  Loop Iteration: j is now 1 (iteration 8)
+  [line 20]  if data[i] <= data[i - j] or data[i] <= data[i + j]:
+  Condition: True, entering 'if' block
+  [line 21]  is_peak = False
+  Assign: is_peak = False
+  [line 23]  if is_peak:
+  Condition: True, entering 'if' block
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop Iteration: i is now 8 (iteration 6)
+  [line 18]  is_peak = True
+  Assign: is_peak = True
+  [line 19]  for j in range(1, window_size + 1):
+  Loop Iteration: j is now 1 (iteration 9)
+  [line 20]  if data[i] <= data[i - j] or data[i] <= data[i + j]:
+  Condition: True, entering 'if' block
+  [line 21]  is_peak = False
+  Assign: is_peak = False
+  [line 23]  if is_peak:
+  Condition: True, entering 'if' block
+  [line 17]  for i in range(window_size, len(data) - window_size):
+  Loop End: Iteration finished
+  [line 25]  return sorted(peaks, key=lambda x: x[1], reverse=True)[:5]  # Top 5 peaks
+  Return: sorted(peaks, key=lambda x: x[1], reverse=True)[:5]  # Top 5 peaks
+  [line 25]  return sorted(peaks, key=lambda x: x[1], reverse=True)[:5]  # Top 5 peaks
+  Return: sorted(peaks, key=lambda x: x[1], reverse=True)[:5]  # Top 5 peaks
+Function find_peaks returns [(4, 0.84)]
+[line 88]  signal_strength = analyze_signal(filtered_data, optimal_freq)
+Call function analyze_signal(filtered_data=[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...] (defined at [line 39]), optimal_freq=2400.0 (defined at [line 50]))
+[line 68]  def analyze_signal(data, frequency):
+Enter function analyze_signal: data=[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...] (filtered_data defined at [line 39]), frequency=2400.0 (optimal_freq defined at [line 50])
+  [line 70]  middle_slice = data[len(data)//4:3*len(data)//4]
+  Compute: data[len(data)//4:3*len(data)//4], where data=[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...] (parameter data defined at [line 39]) = [0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]
+  [line 73]  freq_coef = (frequency / 1000) ** 0.5
+  Compute: (frequency / 1000) ** 0.5, where frequency=2400.0 (parameter frequency defined at [line 50]) = 1.5491933384829668
+  [line 76]  adjusted_values = [val * freq_coef for val in middle_slice]
+  Compute: [val * freq_coef for val in middle_slice], where val=0.7200000000000001 (an unknown source), freq_coef=1.5491933384829668 (defined at [line 73]), middle_slice=[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...] (defined at [line 70]) = ?
+  [line 79]  base_strength = sum(adjusted_values) / len(adjusted_values)
+  Compute: sum(adjusted_values) / len(adjusted_values), where adjusted_values=[1.1154192037077362, 1.3013224043256921, 0.9759918032442692, 0.41828220139040106, -0.21688706738761532, ...] (defined at [line 76]) = 0.48283192382719137
+  [line 82]  tuned_strength = base_strength * (10 - len(data[:3]))
+  Compute: base_strength * (10 - len(data[:3])), where base_strength=0.48283192382719137 (defined at [line 79]), data=[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...] (parameter data defined at [line 39]) = 3.3798234667903397
+  [line 85]  return round(tuned_strength * 10) / 10
+  Return: round(tuned_strength * 10) / 10
+Function analyze_signal returns 3.4
+
+Answer: signal_strength = 3.4 (last updated on defined at [line 88])

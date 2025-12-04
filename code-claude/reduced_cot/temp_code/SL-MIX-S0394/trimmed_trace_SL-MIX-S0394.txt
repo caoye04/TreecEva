@@ -1,0 +1,49 @@
+26
+encrypted_value
+---
+9 base_value = 17
+9 ['base_value'] ['17']
+10 modulus = 100
+10 ['base_value', 'modulus'] ['17', '100']
+11 multiplier = 7
+11 ['base_value', 'modulus', 'multiplier'] ['17', '100', '7']
+15 offset = calculate_hash("secret", 17)
+15 ['base_value', 'modulus', 'multiplier'] ['17', '100', '7']
+3 hash_value = seed
+3 ['input_data', 'seed', 'hash_value'] ["'secret'", '17', '17']
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '17', "'s'"]
+5 hash_value = (hash_value * 31 + ord(char)) % 997
+5 ['input_data', 'hash_value', 'char'] ["'secret'", '642', "'s'"]
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '642', "'e'"]
+5 hash_value = (hash_value * 31 + ord(char)) % 997
+5 ['input_data', 'hash_value', 'char'] ["'secret'", '63', "'e'"]
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '63', "'c'"]
+5 hash_value = (hash_value * 31 + ord(char)) % 997
+5 ['input_data', 'hash_value', 'char'] ["'secret'", '58', "'c'"]
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '58', "'r'"]
+5 hash_value = (hash_value * 31 + ord(char)) % 997
+5 ['input_data', 'hash_value', 'char'] ["'secret'", '915', "'r'"]
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '915', "'e'"]
+5 hash_value = (hash_value * 31 + ord(char)) % 997
+5 ['input_data', 'hash_value', 'char'] ["'secret'", '550', "'e'"]
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '550', "'t'"]
+5 hash_value = (hash_value * 31 + ord(char)) % 997
+5 ['input_data', 'hash_value', 'char'] ["'secret'", '217', "'t'"]
+4 for char in input_data:
+4 ['input_data', 'hash_value', 'char'] ["'secret'", '217', "'t'"]
+6 return hash_value
+6 ['hash_value'] ['217']
+18 intermediate = base_value + offset
+18 ['base_value', 'modulus', 'multiplier', 'offset', 'intermediate'] ['17', '100', '7', '217', '234']
+19 shifted = intermediate << 2
+19 ['base_value', 'modulus', 'multiplier', 'intermediate', 'shifted'] ['17', '100', '7', '234', '936']
+22 base_value = base_value + 5 if shifted > 200 else base_value - 3
+22 ['base_value', 'modulus', 'multiplier', 'shifted'] ['22', '100', '7', '936']
+26 encrypted_value = (base_value * multiplier) % modulus
+26 ['base_value', 'modulus', 'multiplier', 'encrypted_value'] ['22', '100', '7', '54']

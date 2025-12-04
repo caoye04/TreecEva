@@ -1,0 +1,180 @@
+Target: Find the value of variable final_frequency after [line 112] executes
+
+[line 90]  raw_data = [5, 8, 3, 7, 7, 7, 4, 7, 7, 9, 2, 5, 8, 3, 1]
+Compute: [5, 8, 3, 7, 7, 7, 4, 7, 7, 9, 2, 5, 8, 3, 1] = [5, 8, 3, 7, 7, ...]
+[line 91]  sampling_rate = 32
+Assign: sampling_rate = 32
+[line 100]  if sampling_rate < 16:
+Condition: True, entering 'if' block
+[line 29]  harmonics = [base * (i + 1) for i in range(count)]
+Compute: [base * (i + 1) for i in range(count)], where base=8.0 (an unknown source), i=0 (an unknown source), count=5 (an unknown source) = ?
+[line 30]  return set(harmonics)
+Return: set(harmonics)
+[line 17]  def filter_noise(signal_data, threshold=10):
+Enter function filter_noise: signal_data=[5, 8, 3, 7, 7, ...] (raw_data defined at [line 90]), threshold=5
+  [line 19]  filtered = []
+  Compute: [] = []
+  [line 20]  for val in signal_data:
+  Loop Start: val takes its first value 5
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 8 (iteration 2)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+... [Line 20] repeats 23 more times ...
+... [Line 20] repeats 23 more times ...
+  [line 25]  return filtered
+  Return: filtered=[5, 5, 3, 5, 5, ...] (defined at [line 19])
+Function filter_noise returns [5, 5, 3, 5, 5, ...]
+[line 6]  spectral_map = defaultdict(int)
+Call function defaultdict(int)
+[line 7]  for i in range(len(data) - window_size + 1):
+Loop Start: i takes its first value 0
+[line 7]  for i in range(len(data) - window_size + 1):
+Loop Iteration: i is now 1 (iteration 2)
+... [Line 7] repeats 19 more times ...
+... [Line 7] repeats 19 more times ...
+[line 12]  potential_patterns = [k for k, v in spectral_map.items() if v > 1]
+Compute: [k for k, v in spectral_map.items() if v > 1], where k=(5, 5, 3) (an unknown source), v=2 (an unknown source), spectral_map={(5, 5, 3): 2, (5, 3, 5): 1, (3, 5, 5): 1, ...} (defined at [line 6]) = ?
+[line 13]  if not potential_patterns:
+Condition: True, entering 'if' block
+[line 15]  return len(potential_patterns)
+Return: len(potential_patterns)
+[line 111]  final_frequency = normalized_signal(raw_data, sampling_rate)
+Call function normalized_signal(raw_data=[5, 8, 3, 7, 7, ...] (defined at [line 90]), sampling_rate=32 (defined at [line 91]))
+[line 32]  def normalized_signal(raw_data, sampling_rate):
+Enter function normalized_signal: raw_data=[5, 8, 3, 7, 7, ...] (raw_data defined at [line 90]), sampling_rate=32 (sampling_rate defined at [line 91])
+  [line 35]  signal_count = len(raw_data)
+  Call function len(raw_data=[5, 8, 3, 7, 7, ...] (parameter raw_data defined at [line 90]))
+  [line 36]  dominant_freq = 0
+  Assign: dominant_freq = 0
+  [line 39]  if signal_count > 10:
+  Condition: True, entering 'if' block
+  [line 40]  raw_data = raw_data[3:13]  # Only positions 3-12 matter
+  Compute: raw_data[3:13]  # Only positions 3-12 matter, where raw_data=[5, 8, 3, 7, 7, ...] (parameter raw_data defined at [line 90]) = [7, 7, 7, 4, 7, ...]
+  [line 43]  freq_counter = Counter(raw_data)
+  Call function Counter(raw_data=[7, 7, 7, 4, 7, ...] (parameter raw_data defined at [line 90]))
+  [line 44]  most_common = freq_counter.most_common(2)
+  (Missing param: 'func_name')
+  [line 47]  harmonics = calculate_harmonic_series(sampling_rate / 8, 3)
+  Call function calculate_harmonic_series(sampling_rate / 8, 3)
+  [line 30]  return set(harmonics)
+  Return: set(harmonics)
+  [line 51]  if most_common:
+  Condition: True, entering 'if' block
+  [line 52]  dominant_value, count = most_common[0]
+  (Missing param: 'result')
+  [line 53]  secondary_value = 0
+  Assign: secondary_value = 0
+  [line 54]  if len(most_common) > 1:
+  Condition: True, entering 'if' block
+  [line 55]  secondary_value = most_common[1][0]
+  Compute: most_common[1][0], where most_common=[(7, 5), (4, 1)] (an unknown source) = 4
+  [line 58]  correction_factor = (sampling_rate & 0xF) / 8  # Bitwise AND with 0xF (15)
+  Compute: (sampling_rate & 0xF) / 8  # Bitwise AND with 0xF (15), where sampling_rate=32 (parameter sampling_rate defined at [line 91]) = 0.0
+  [line 61]  intermediate_a = dominant_value * correction_factor
+  Compute: dominant_value * correction_factor, where dominant_value=7 (an unknown source), correction_factor=0.0 (defined at [line 58]) = 0.0
+  [line 62]  intermediate_b = secondary_value * (correction_factor / 2)
+  Compute: secondary_value * (correction_factor / 2), where secondary_value=4 (defined at [line 55]), correction_factor=0.0 (defined at [line 58]) = 0.0
+  [line 65]  if dominant_value > secondary_value and count > 2:
+  Condition: True, entering 'if' block
+  [line 6]  spectral_map = defaultdict(int)
+  Call function defaultdict(int)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 0 (iteration 15)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 1 (iteration 16)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 2 (iteration 17)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 3 (iteration 18)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 4 (iteration 19)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 5 (iteration 20)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 6 (iteration 21)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 7 (iteration 22)
+  [line 7]  for i in range(len(data) - window_size + 1):
+  Loop Iteration: i is now 7 (iteration 23)
+  [line 13]  if not potential_patterns:
+  Condition: True, entering 'if' block
+  [line 14]  return 0
+  Return: 0
+  [line 73]  dominant_freq = intermediate_a - intermediate_b
+  Compute: intermediate_a - intermediate_b, where intermediate_a=0.0 (defined at [line 61]), intermediate_b=0.0 (defined at [line 62]) = 0.0
+  [line 19]  filtered = []
+  Compute: [] = []
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 7 (iteration 17)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 7 (iteration 18)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 7 (iteration 19)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 4 (iteration 20)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 7 (iteration 21)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 7 (iteration 22)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 9 (iteration 23)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 2 (iteration 24)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 5 (iteration 25)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 8 (iteration 26)
+  [line 21]  if abs(val) > threshold:
+  Condition: True, entering 'if' block
+  [line 20]  for val in signal_data:
+  Loop Iteration: val is now 8 (iteration 27)
+  [line 25]  return filtered
+  Return: filtered=[7, 7, 7, 4, 7, ...] (defined at [line 19])
+  [line 79]  cycles = itertools.cycle([1, -1, 0.5, -0.5])
+  (Missing param: 'func_name')
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 80]  cycle_sum = sum(next(cycles) for _ in range(5))  # Sum of first 5 elements = 0
+  Call function sum(next(cycles) for _ in range(5))
+  [line 83]  bit_factor = (sampling_rate >> 2) & 7  # Right shift by 2 then AND with 7
+  Compute: (sampling_rate >> 2) & 7  # Right shift by 2 then AND with 7, where sampling_rate=32 (parameter sampling_rate defined at [line 91]) = 0
+  [line 84]  final_adjustment = cycle_sum + bit_factor
+  Compute: cycle_sum + bit_factor, where cycle_sum=1.0 (defined at [line 80]), bit_factor=0 (defined at [line 83]) = 1.0
+  [line 87]  return dominant_freq + final_adjustment
+  Return: dominant_freq + final_adjustment
+Function normalized_signal returns 1.0
+[line 112]  print(f"Result: {final_frequency}")
+Output: f"Result: {final_frequency}"
+
+Answer: final_frequency = 1.0 (last updated on defined at [line 111])

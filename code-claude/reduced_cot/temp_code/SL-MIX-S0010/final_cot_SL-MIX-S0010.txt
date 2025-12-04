@@ -1,0 +1,90 @@
+Target: Find the value of variable final_priority after [line 77] executes
+
+[line 43]  def calculate_security_risk(nodes, connections):
+Enter function calculate_security_risk: nodes=[{id: 1, name: 'router-1', active: True, ...}, {id: 2, name: 'switch-1', active: True, ...}, {id: 3, name: 'server-1', active: False, ...}, {id: 4, name: 'router-2', active: True, ...}, {id: 5, name: 'firewall-1', active: True, ...}], connections=[[0, 10, 5, 0, 8], [10, 0, 15, 12, 0], [5, 15, 0, 6, 9], [0, 12, 6, 0, 7], [8, 0, 9, 7, 0]]
+  [line 44]  risk_factor = sum(n['priority'] for n in nodes if n['active']) / len(nodes)
+  Compute: sum(n['priority'] for n in nodes if n['active']) / len(nodes), where nodes={'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 1}, 'name': {'_type': 'str', '_value': 'router-1'}, 'active': {'_type': 'bool', '_value': True}, 'priority': {'_type': 'int', '_value': 23}, 'weight': {'_type': 'int', '_value': 5}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 2}, 'name': {'_type': 'str', '_value': 'switch-1'}, 'active': {'_type': 'bool', '_value': True}, 'priority': {'_type': 'int', '_value': 17}, 'weight': {'_type': 'int', '_value': 3}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 3}, 'name': {'_type': 'str', '_value': 'server-1'}, 'active': {'_type': 'bool', '_value': False}, 'priority': {'_type': 'int', '_value': 42}, 'weight': {'_type': 'int', '_value': 8}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 4}, 'name': {'_type': 'str', '_value': 'router-2'}, 'active': {'_type': 'bool', '_value': True}, 'priority': {'_type': 'int', '_value': 19}, 'weight': {'_type': 'int', '_value': 4}}, '_len': 6}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 5}, 'name': {'_type': 'str', '_value': 'firewall-1'}, 'active': {'_type': 'bool', '_value': True}, 'priority': {'_type': 'int', '_value': 31}, 'weight': {'_type': 'int', '_value': 7}}, '_len': 6}], '_len': 5} (parameter nodes) = ?
+  [line 45]  exposed_connections = sum(1 for row in connections for val in row if val > 10)
+  Call function sum(1 for row in connections for val in row if val > 10)
+  [line 46]  return risk_factor * exposed_connections / 10
+  Return: risk_factor * exposed_connections / 10
+Function calculate_security_risk returns 7.2
+[line 12]  def analyze_network_topology(connections):
+Enter function analyze_network_topology: connections=[[0, 10, 5, 0, 8], [10, 0, 15, 12, 0], [5, 15, 0, 6, 9], [0, 12, 6, 0, 7], [8, 0, 9, 7, 0]]
+  [line 14]  paths = []
+  Compute: [] = []
+  [line 15]  for a, b in itertools.combinations(range(len(connections)), 2):
+  (Missing param: 'iter_var')
+  [line 16]  if connections[a][b]:
+  Condition: True, entering 'if' block
+  [line 15]  for a, b in itertools.combinations(range(len(connections)), 2):
+  (Missing param: 'iter_var')
+  [line 16]  if connections[a][b]:
+  Condition: True, entering 'if' block
+... [Line 15] repeats 7 more times ...
+... [Line 15] repeats 7 more times ...
+  [line 15]  for a, b in itertools.combinations(range(len(connections)), 2):
+  (Missing param: 'iter_var')
+  [line 16]  if connections[a][b]:
+  Condition: True, entering 'if' block
+  [line 15]  for a, b in itertools.combinations(range(len(connections)), 2):
+  Loop End: Iteration finished
+  [line 20]  total_bandwidth = sum(p[2] for p in paths)
+  Call function sum(p[2] for p in paths)
+  [line 21]  avg_latency = total_bandwidth / len(paths) if paths else 0
+  Compute: total_bandwidth / len(paths) if paths else 0, where total_bandwidth=72 (defined at [line 20]), paths=[(0, 1, 10), (0, 2, 5), (0, 4, 8), (1, 2, 15), (1, 3, 12), ...] (defined at [line 14]) = 9.0
+  [line 22]  return {'paths': len(paths), 'bandwidth': total_bandwidth, 'latency': avg_latency}
+  Return: {'paths': len(paths), 'bandwidth': total_bandwidth, 'latency': avg_latency}
+Function analyze_network_topology returns {paths: 8, bandwidth: 72, latency: 9.0}
+[line 54]  filtered_nodes = []
+Compute: [] = []
+[line 55]  for node in nodes:
+Loop Start: node takes its first value {id: 1, name: 'router-1', active: True, ...}
+[line 57]  if security_risk > 20 and node['id'] % 2 == 0:
+Condition: True, entering 'if' block
+[line 61]  if node['active'] and (node['priority'] > 15 or node['name'].startswith('router')):
+Condition: True, entering 'if' block
+[line 66]  if 'server' in node['name']:
+Condition: True, entering 'if' block
+[line 55]  for node in nodes:
+Loop Iteration: node is now {id: 2, name: 'switch-1', active: True, ...} (iteration 2)
+[line 57]  if security_risk > 20 and node['id'] % 2 == 0:
+Condition: True, entering 'if' block
+[line 61]  if node['active'] and (node['priority'] > 15 or node['name'].startswith('router')):
+Condition: True, entering 'if' block
+[line 66]  if 'server' in node['name']:
+Condition: True, entering 'if' block
+... [Line 55] repeats 2 more times ...
+... [Line 55] repeats 2 more times ...
+... [Line 55] repeats 2 more times ...
+[line 55]  for node in nodes:
+Loop Iteration: node is now {id: 5, name: 'firewall-1', active: True, ...} (iteration 5)
+[line 57]  if security_risk > 20 and node['id'] % 2 == 0:
+Condition: True, entering 'if' block
+[line 61]  if node['active'] and (node['priority'] > 15 or node['name'].startswith('router')):
+Condition: True, entering 'if' block
+[line 66]  if 'server' in node['name']:
+Condition: True, entering 'if' block
+[line 55]  for node in nodes:
+Loop End: Iteration finished
+[line 77]  final_priority = calculate_network_priority(filtered_nodes)
+Call function calculate_network_priority(filtered_nodes=[{id: 1, name: 'router-1', active: True, ...}, {id: 2, name: 'switch-1', active: True, ...}, {id: 4, name: 'router-2', active: True, ...}, {id: 5, name: 'firewall-1', active: True, ...}] (defined at [line 54]))
+[line 3]  def calculate_network_priority(nodes):
+Enter function calculate_network_priority: nodes=[{id: 1, name: 'router-1', active: True, ...}, {id: 2, name: 'switch-1', active: True, ...}, {id: 4, name: 'router-2', active: True, ...}, {id: 5, name: 'firewall-1', active: True, ...}] (filtered_nodes defined at [line 54])
+  [line 5]  valid_nodes = [n for n in nodes if n['active'] and n['config'] is not None]
+  Compute: [n for n in nodes if n['active'] and n['config'] is not None], where n={id: 1, name: 'router-1', active: True, ...} (an unknown source), nodes=[{id: 1, name: 'router-1', active: True, ...}, {id: 2, name: 'switch-1', active: True, ...}, {id: 4, name: 'router-2', active: True, ...}, {id: 5, name: 'firewall-1', active: True, ...}] (parameter nodes defined at [line 54]) = ?
+  [line 8]  if valid_nodes:
+  Condition: True, entering 'if' block
+  [line 9]  return sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  Return: sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  [line 9]  return sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  Return: sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  [line 9]  return sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  Return: sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  [line 9]  return sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  Return: sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  [line 9]  return sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+  Return: sum(n['weight'] * (n['priority'] % 10) for n in valid_nodes)
+Function calculate_network_priority returns 43
+
+Answer: final_priority = 43 (last updated on defined at [line 77])

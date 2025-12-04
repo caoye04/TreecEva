@@ -1,0 +1,170 @@
+Target: Find the value of variable encryption_key after [line 62] executes
+
+[line 28]  network_load = 78
+Assign: network_load = 78
+[line 29]  security_threshold = 4
+Assign: security_threshold = 4
+[line 32]  fibonacci_sequence = compute_fibonacci(200)
+Call function compute_fibonacci(200)
+[line 3]  sequence = [1, 1]
+Compute: [1, 1] = [1, 1]
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop Start: Condition is true
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop End: Condition is false
+[line 4]  while sequence[-1] + sequence[-2] <= limit:
+while Loop Iteration: Condition is still true
+[line 6]  return sequence
+Return: sequence=[1, 1, 2, 3, 5, ...] (defined at [line 3])
+[line 33]  primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+Compute: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] = [2, 3, 5, 7, 11, ...]
+[line 36]  packet_buffer = [0x3A21, 0x4F19, 0x7B22, 0x8C01]
+Compute: [0x3A21, 0x4F19, 0x7B22, 0x8C01] = [14881, 20249, 31522, 35841]
+[line 37]  valid_packets = 0
+Assign: valid_packets = 0
+[line 39]  for packet in packet_buffer:
+Loop Start: packet takes its first value 14881
+[line 44]  if network_load < 90:
+Condition: True, entering 'if' block
+[line 45]  security_bits = analyze_network_packet(packet, security_threshold)
+Call function analyze_network_packet(packet=14881 (defined at [line 39]), security_threshold=4 (defined at [line 29]))
+[line 8]  def analyze_network_packet(packet_data, security_level):
+Enter function analyze_network_packet: packet_data=14881 (packet defined at [line 39]), security_level=4 (security_threshold defined at [line 29])
+  [line 11]  header_size = (packet_data & 0xFF00) >> 8
+  Compute: (packet_data & 0xFF00) >> 8, where packet_data=14881 (parameter packet_data defined at [line 39]) = 58
+  [line 12]  protocol_type = packet_data & 0xFF
+  Compute: packet_data & 0xFF, where packet_data=14881 (parameter packet_data defined at [line 39]) = 33
+  [line 15]  checksum = (header_size * 17) ^ protocol_type
+  Compute: (header_size * 17) ^ protocol_type, where header_size=58 (defined at [line 11]), protocol_type=33 (defined at [line 12]) = 1019
+  [line 18]  validation_bits = 0
+  Assign: validation_bits = 0
+  [line 19]  if security_level > 3:
+  Condition: True, entering 'if' block
+  [line 20]  validation_bits = (packet_data & 0xF000) >> 12
+  Compute: (packet_data & 0xF000) >> 12, where packet_data=14881 (parameter packet_data defined at [line 39]) = 3
+  [line 24]  return validation_bits | (checksum & 0x0F)
+  Return: validation_bits | (checksum & 0x0F)
+Function analyze_network_packet returns 11
+[line 46]  if security_bits > 0:
+Condition: True, entering 'if' block
+[line 47]  valid_packets += 1
+Update: valid_packets changed from 0 (defined at defined at [line 37]) to 0+1 = 1
+[line 39]  for packet in packet_buffer:
+Loop Iteration: packet is now 20249 (iteration 2)
+[line 44]  if network_load < 90:
+Condition: True, entering 'if' block
+[line 45]  security_bits = analyze_network_packet(packet, security_threshold)
+Call function analyze_network_packet(packet=20249 (defined at [line 39]), security_threshold=4 (defined at [line 29]))
+[line 8]  def analyze_network_packet(packet_data, security_level):
+Enter function analyze_network_packet: packet_data=20249 (packet defined at [line 39]), security_level=4 (security_threshold defined at [line 29])
+  [line 11]  header_size = (packet_data & 0xFF00) >> 8
+  Compute: (packet_data & 0xFF00) >> 8, where packet_data=20249 (parameter packet_data defined at [line 39]) = 79
+  [line 12]  protocol_type = packet_data & 0xFF
+  Compute: packet_data & 0xFF, where packet_data=20249 (parameter packet_data defined at [line 39]) = 25
+  [line 15]  checksum = (header_size * 17) ^ protocol_type
+  Compute: (header_size * 17) ^ protocol_type, where header_size=79 (defined at [line 11]), protocol_type=25 (defined at [line 12]) = 1318
+  [line 18]  validation_bits = 0
+  Assign: validation_bits = 0
+  [line 19]  if security_level > 3:
+  Condition: True, entering 'if' block
+  [line 20]  validation_bits = (packet_data & 0xF000) >> 12
+  Compute: (packet_data & 0xF000) >> 12, where packet_data=20249 (parameter packet_data defined at [line 39]) = 4
+  [line 24]  return validation_bits | (checksum & 0x0F)
+  Return: validation_bits | (checksum & 0x0F)
+Function analyze_network_packet returns 6
+[line 46]  if security_bits > 0:
+Condition: True, entering 'if' block
+[line 47]  valid_packets += 1
+Update: valid_packets changed from 1 (defined at defined at [line 47]) to 1+1 = 2
+[line 39]  for packet in packet_buffer:
+Loop Iteration: packet is now 31522 (iteration 3)
+[line 44]  if network_load < 90:
+Condition: True, entering 'if' block
+[line 45]  security_bits = analyze_network_packet(packet, security_threshold)
+Call function analyze_network_packet(packet=31522 (defined at [line 39]), security_threshold=4 (defined at [line 29]))
+[line 8]  def analyze_network_packet(packet_data, security_level):
+Enter function analyze_network_packet: packet_data=31522 (packet defined at [line 39]), security_level=4 (security_threshold defined at [line 29])
+  [line 11]  header_size = (packet_data & 0xFF00) >> 8
+  Compute: (packet_data & 0xFF00) >> 8, where packet_data=31522 (parameter packet_data defined at [line 39]) = 123
+  [line 12]  protocol_type = packet_data & 0xFF
+  Compute: packet_data & 0xFF, where packet_data=31522 (parameter packet_data defined at [line 39]) = 34
+  [line 15]  checksum = (header_size * 17) ^ protocol_type
+  Compute: (header_size * 17) ^ protocol_type, where header_size=123 (defined at [line 11]), protocol_type=34 (defined at [line 12]) = 2057
+  [line 18]  validation_bits = 0
+  Assign: validation_bits = 0
+  [line 19]  if security_level > 3:
+  Condition: True, entering 'if' block
+  [line 20]  validation_bits = (packet_data & 0xF000) >> 12
+  Compute: (packet_data & 0xF000) >> 12, where packet_data=31522 (parameter packet_data defined at [line 39]) = 7
+  [line 24]  return validation_bits | (checksum & 0x0F)
+  Return: validation_bits | (checksum & 0x0F)
+Function analyze_network_packet returns 15
+[line 46]  if security_bits > 0:
+Condition: True, entering 'if' block
+[line 47]  valid_packets += 1
+Update: valid_packets changed from 2 (defined at defined at [line 47]) to 2+1 = 3
+[line 39]  for packet in packet_buffer:
+Loop Iteration: packet is now 35841 (iteration 4)
+[line 44]  if network_load < 90:
+Condition: True, entering 'if' block
+[line 45]  security_bits = analyze_network_packet(packet, security_threshold)
+Call function analyze_network_packet(packet=35841 (defined at [line 39]), security_threshold=4 (defined at [line 29]))
+[line 8]  def analyze_network_packet(packet_data, security_level):
+Enter function analyze_network_packet: packet_data=35841 (packet defined at [line 39]), security_level=4 (security_threshold defined at [line 29])
+  [line 11]  header_size = (packet_data & 0xFF00) >> 8
+  Compute: (packet_data & 0xFF00) >> 8, where packet_data=35841 (parameter packet_data defined at [line 39]) = 140
+  [line 12]  protocol_type = packet_data & 0xFF
+  Compute: packet_data & 0xFF, where packet_data=35841 (parameter packet_data defined at [line 39]) = 1
+  [line 15]  checksum = (header_size * 17) ^ protocol_type
+  Compute: (header_size * 17) ^ protocol_type, where header_size=140 (defined at [line 11]), protocol_type=1 (defined at [line 12]) = 2381
+  [line 18]  validation_bits = 0
+  Assign: validation_bits = 0
+  [line 19]  if security_level > 3:
+  Condition: True, entering 'if' block
+  [line 20]  validation_bits = (packet_data & 0xF000) >> 12
+  Compute: (packet_data & 0xF000) >> 12, where packet_data=35841 (parameter packet_data defined at [line 39]) = 8
+  [line 24]  return validation_bits | (checksum & 0x0F)
+  Return: validation_bits | (checksum & 0x0F)
+Function analyze_network_packet returns 13
+[line 46]  if security_bits > 0:
+Condition: True, entering 'if' block
+[line 47]  valid_packets += 1
+Update: valid_packets changed from 3 (defined at defined at [line 47]) to 3+1 = 4
+[line 39]  for packet in packet_buffer:
+Loop End: Iteration finished
+[line 50]  integrity_level = valid_packets * primes[valid_packets % len(primes)]
+Compute: valid_packets * primes[valid_packets % len(primes)], where valid_packets=4 (defined at [line 47]), primes=[2, 3, 5, 7, 11, ...] (defined at [line 33]) = 44
+[line 54]  for i in range(5):
+Loop Start: i takes its first value 0
+[line 54]  for i in range(5):
+Loop End: Iteration finished
+[line 54]  for i in range(5):
+Loop End: Iteration finished
+[line 54]  for i in range(5):
+Loop End: Iteration finished
+[line 54]  for i in range(5):
+Loop End: Iteration finished
+[line 54]  for i in range(5):
+Loop End: Iteration finished
+[line 59]  valid_bits = integrity_level + (fibonacci_sequence[valid_packets] if valid_packets < len(fibonacci_sequence) else 0)
+Compute: integrity_level + (fibonacci_sequence[valid_packets] if valid_packets < len(fibonacci_sequence) else 0), where integrity_level=44 (defined at [line 50]), fibonacci_sequence=[1, 1, 2, 3, 5, ...] (defined at [line 32]), valid_packets=4 (defined at [line 47]) = 49
+[line 62]  encryption_key = (valid_bits >> 2) ^ ((fibonacci_sequence[-3] & 0xFF) << 3)
+Compute: (valid_bits >> 2) ^ ((fibonacci_sequence[-3] & 0xFF) << 3), where valid_bits=49 (defined at [line 59]), fibonacci_sequence=[1, 1, 2, 3, 5, ...] (defined at [line 32]) = 436
+
+Answer: encryption_key = 436 (last updated on defined at [line 62])

@@ -1,0 +1,101 @@
+Target: Find the value of variable password_strength after [line 50] executes
+
+[line 2]  base_score = 0
+Assign: base_score = 0
+[line 3]  length_factor = min(len(pwd), 12) / 4
+Compute: min(len(pwd), 12) / 4, where pwd='Py@3xCode' (an unknown source) = 2.25
+[line 6]  has_lower = any(c.islower() for c in pwd)
+Call function any(c.islower() for c in pwd)
+[line 6]  has_lower = any(c.islower() for c in pwd)
+Call function any(c.islower() for c in pwd)
+[line 6]  has_lower = any(c.islower() for c in pwd)
+Call function any(c.islower() for c in pwd)
+[line 7]  has_upper = any(c.isupper() for c in pwd)
+Call function any(c.isupper() for c in pwd)
+[line 7]  has_upper = any(c.isupper() for c in pwd)
+Call function any(c.isupper() for c in pwd)
+[line 8]  has_digit = any(c.isdigit() for c in pwd)
+Call function any(c.isdigit() for c in pwd)
+[line 8]  has_digit = any(c.isdigit() for c in pwd)
+Call function any(c.isdigit() for c in pwd)
+[line 8]  has_digit = any(c.isdigit() for c in pwd)
+Call function any(c.isdigit() for c in pwd)
+[line 8]  has_digit = any(c.isdigit() for c in pwd)
+Call function any(c.isdigit() for c in pwd)
+[line 8]  has_digit = any(c.isdigit() for c in pwd)
+Call function any(c.isdigit() for c in pwd)
+[line 9]  has_special = any(not c.isalnum() for c in pwd)
+Call function any(not c.isalnum() for c in pwd)
+[line 9]  has_special = any(not c.isalnum() for c in pwd)
+Call function any(not c.isalnum() for c in pwd)
+[line 9]  has_special = any(not c.isalnum() for c in pwd)
+Call function any(not c.isalnum() for c in pwd)
+[line 9]  has_special = any(not c.isalnum() for c in pwd)
+Call function any(not c.isalnum() for c in pwd)
+[line 12]  diversity = sum([has_lower, has_upper, has_digit, has_special])
+Call function sum([has_lower, has_upper=True (defined at [line 7]), has_digit=True (defined at [line 8]), has_special])
+[line 15]  char_freq = {}
+Compute: {} = {}
+[line 16]  for c in pwd:
+Loop Start: c takes its first value 'P'
+[line 17]  if c in char_freq:
+Condition: True, entering 'if' block
+[line 20]  char_freq[c] = 1
+(Missing param: 'var')
+[line 16]  for c in pwd:
+Loop Iteration: c is now 'y' (iteration 2)
+[line 17]  if c in char_freq:
+Condition: True, entering 'if' block
+[line 20]  char_freq[c] = 1
+(Missing param: 'var')
+... [Line 16] repeats 6 more times ...
+... [Line 16] repeats 6 more times ...
+... [Line 16] repeats 6 more times ...
+[line 16]  for c in pwd:
+Loop Iteration: c is now 'e' (iteration 9)
+[line 17]  if c in char_freq:
+Condition: True, entering 'if' block
+[line 16]  for c in pwd:
+Loop End: Iteration finished
+[line 27]  for i in range(len(pwd) - 2):
+Loop Start: i takes its first value 0
+[line 28]  if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+Condition: True, entering 'if' block
+[line 27]  for i in range(len(pwd) - 2):
+Loop Iteration: i is now 1 (iteration 2)
+[line 28]  if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+Condition: True, entering 'if' block
+... [Line 27] repeats 4 more times ...
+... [Line 27] repeats 4 more times ...
+[line 27]  for i in range(len(pwd) - 2):
+Loop Iteration: i is now 6 (iteration 7)
+[line 28]  if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+Condition: True, entering 'if' block
+[line 27]  for i in range(len(pwd) - 2):
+Loop End: Iteration finished
+[line 33]  for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+(Missing param: 'iter_var')
+[line 34]  if char in pwd.lower():
+Condition: True, entering 'if' block
+[line 33]  for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+(Missing param: 'iter_var')
+[line 34]  if char in pwd.lower():
+Condition: True, entering 'if' block
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+[line 33]  for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+(Missing param: 'iter_var')
+[line 34]  if char in pwd.lower():
+Condition: True, entering 'if' block
+[line 33]  for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+Loop End: Iteration finished
+[line 38]  strength_multiplier = 1.5 if diversity >= 3 else 1.0
+Compute: 1.5 if diversity >= 3 else 1.0, where diversity=4 (defined at [line 12]) = 1.5
+[line 39]  base_score = 10 * length_factor * strength_multiplier
+Compute: 10 * length_factor * strength_multiplier, where length_factor=2.25 (defined at [line 3]), strength_multiplier=1.5 (defined at [line 38]) = 33.75
+[line 42]  if base_score > 30:
+Condition: True, entering 'if' block
+[line 50]  password_strength = int(base_score + diversity * 5)
+Call function int(base_score + diversity * 5)
+
+Answer: password_strength = 53 (last updated on defined at [line 50])

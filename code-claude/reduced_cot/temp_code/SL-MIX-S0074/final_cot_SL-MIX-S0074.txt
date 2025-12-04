@@ -1,0 +1,48 @@
+Target: Find the value of variable final_elevation after [line 34] executes
+
+[line 3]  highest_peak = max(peaks) if peaks else 0
+Compute: max(peaks) if peaks else 0, where peaks=[120, 340, 225, 190, 280] (an unknown source) = 340
+[line 4]  lowest_peak = min(peaks) if peaks else 0
+Compute: min(peaks) if peaks else 0, where peaks=[120, 340, 225, 190, 280] (an unknown source) = 120
+[line 7]  raw_elevations = [p + base_height for p in peaks]
+Compute: [p + base_height for p in peaks], where p=120 (an unknown source), base_height=1000 (an unknown source), peaks=[120, 340, 225, 190, 280] (an unknown source) = ?
+[line 8]  avg_elevation = sum(raw_elevations) / len(raw_elevations) if raw_elevations else 0
+Compute: sum(raw_elevations) / len(raw_elevations) if raw_elevations else 0, where raw_elevations=[1120, 1340, 1225, 1190, 1280] (defined at [line 7]) = 1231.0
+[line 11]  terrain_factor = (highest_peak - lowest_peak) / 100 if highest_peak != lowest_peak else 1
+Compute: (highest_peak - lowest_peak) / 100 if highest_peak != lowest_peak else 1, where highest_peak=340 (defined at [line 3]), lowest_peak=120 (defined at [line 4]) = 2.2
+[line 14]  process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+Compute: lambda x: int(x / terrain_factor) if terrain_factor > 0 else x, where terrain_factor=2.2 (defined at [line 11]) = ?
+[line 15]  filter_significant = lambda x: x > avg_elevation / 2
+Compute: lambda x: x > avg_elevation / 2, where avg_elevation=1231.0 (defined at [line 8]) = ?
+[line 18]  processed_elevations = [process_elevation(e) for e in raw_elevations]
+Compute: [process_elevation(e) for e in raw_elevations], where e=1120 (an unknown source), raw_elevations=[1120, 1340, 1225, 1190, 1280] (defined at [line 7]) = ?
+[line 14]  process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+Compute: lambda x: int(x / terrain_factor) if terrain_factor > 0 else x, where x=1120 (an unknown source), terrain_factor=2.2 (defined at [line 11]) = ?
+[line 14]  process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+Compute: lambda x: int(x / terrain_factor) if terrain_factor > 0 else x, where x=1340 (an unknown source), terrain_factor=2.2 (defined at [line 11]) = ?
+[line 14]  process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+Compute: lambda x: int(x / terrain_factor) if terrain_factor > 0 else x, where x=1225 (an unknown source), terrain_factor=2.2 (defined at [line 11]) = ?
+[line 14]  process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+Compute: lambda x: int(x / terrain_factor) if terrain_factor > 0 else x, where x=1190 (an unknown source), terrain_factor=2.2 (defined at [line 11]) = ?
+[line 14]  process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+Compute: lambda x: int(x / terrain_factor) if terrain_factor > 0 else x, where x=1280 (an unknown source), terrain_factor=2.2 (defined at [line 11]) = ?
+[line 19]  significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+Compute: [e for e in processed_elevations if filter_significant(e)], where e=509 (an unknown source), processed_elevations=[509, 609, 556, 540, 581] (defined at [line 18]) = ?
+[line 15]  filter_significant = lambda x: x > avg_elevation / 2
+Compute: lambda x: x > avg_elevation / 2, where x=509 (an unknown source), avg_elevation=1231.0 (defined at [line 8]) = ?
+[line 15]  filter_significant = lambda x: x > avg_elevation / 2
+Compute: lambda x: x > avg_elevation / 2, where x=609 (an unknown source), avg_elevation=1231.0 (defined at [line 8]) = ?
+[line 15]  filter_significant = lambda x: x > avg_elevation / 2
+Compute: lambda x: x > avg_elevation / 2, where x=556 (an unknown source), avg_elevation=1231.0 (defined at [line 8]) = ?
+[line 15]  filter_significant = lambda x: x > avg_elevation / 2
+Compute: lambda x: x > avg_elevation / 2, where x=540 (an unknown source), avg_elevation=1231.0 (defined at [line 8]) = ?
+[line 15]  filter_significant = lambda x: x > avg_elevation / 2
+Compute: lambda x: x > avg_elevation / 2, where x=581 (an unknown source), avg_elevation=1231.0 (defined at [line 8]) = ?
+[line 26]  actual_elevation = int(sum(significant_elevations) / len(significant_elevations)) if significant_elevations else 0
+Compute: int(sum(significant_elevations) / len(significant_elevations)) if significant_elevations else 0, where significant_elevations=[] (defined at [line 19]) = 0
+[line 33]  elevation_adjustment = int((highest_peak - lowest_peak) / 20)
+Call function int((highest_peak - lowest_peak) / 20)
+[line 34]  final_elevation = actual_elevation - elevation_adjustment
+Compute: actual_elevation - elevation_adjustment, where actual_elevation=0 (defined at [line 26]), elevation_adjustment=11 (defined at [line 33]) = -11
+
+Answer: final_elevation = -11 (last updated on defined at [line 34])

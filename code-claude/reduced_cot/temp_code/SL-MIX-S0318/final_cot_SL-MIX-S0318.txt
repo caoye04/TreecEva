@@ -1,0 +1,106 @@
+Target: Find the value of variable optimal_compression after [line 97] executes
+
+[line 42]  signal_readings = [82, 67, 91, 105, 49, 72, 84, 65, 95, 102]
+Compute: [82, 67, 91, 105, 49, 72, 84, 65, 95, 102] = [82, 67, 91, 105, 49, ...]
+[line 1]  def analyze_signal_strength(values, threshold=75):
+Enter function analyze_signal_strength: values=[82, 67, 91, 105, 49, ...] (signal_readings defined at [line 42]), threshold=75
+  [line 3]  strength = sum(v for v in values if v > threshold)
+  Call function sum(v for v in values if v > threshold)
+  [line 4]  noise = sum(v for v in values if v <= threshold)
+  Call function sum(v for v in values if v <= threshold)
+  [line 5]  return strength - noise if strength > noise * 2 else 0
+  Return: strength - noise if strength > noise * 2 else 0
+Function analyze_signal_strength returns 306
+[line 46]  processed_data = []
+Compute: [] = []
+[line 47]  filter_threshold = 80
+Assign: filter_threshold = 80
+[line 51]  for i, reading in enumerate(signal_readings):
+(Missing param: 'iter_var')
+[line 59]  if reading > filter_threshold:
+Condition: True, entering 'if' block
+[line 51]  for i, reading in enumerate(signal_readings):
+(Missing param: 'iter_var')
+[line 59]  if reading > filter_threshold:
+Condition: True, entering 'if' block
+... [Line 51] repeats 7 more times ...
+... [Line 51] repeats 7 more times ...
+[line 51]  for i, reading in enumerate(signal_readings):
+(Missing param: 'iter_var')
+[line 59]  if reading > filter_threshold:
+Condition: True, entering 'if' block
+[line 51]  for i, reading in enumerate(signal_readings):
+Loop End: Iteration finished
+[line 88]  optimal_compression = calculate_compression_ratio(processed_data, metadata)
+Call function calculate_compression_ratio(processed_data=[80, 67, 80, 96, 49, ...] (defined at [line 46]), metadata={format: 'binary', base_factor: 4, timestamp: 1635724800, ...} (an unknown source))
+[line 7]  def calculate_compression_ratio(data, metadata):
+Enter function calculate_compression_ratio: data=[80, 67, 80, 96, 49, ...] (processed_data defined at [line 46]), metadata={format: 'binary', base_factor: 4, timestamp: 1635724800, ...}
+  [line 9]  if not data or 'format' not in metadata:
+  Condition: True, entering 'if' block
+  [line 13]  original_size = len(data)
+  Call function len(data=[80, 67, 80, 96, 49, ...] (parameter data defined at [line 46]))
+  [line 14]  compression_factor = metadata.get('base_factor', 2)
+  (Missing param: 'func_name')
+  [line 18]  if format_type == 'binary':
+  Condition: True, entering 'if' block
+  [line 20]  checksum = 0
+  Assign: checksum = 0
+  [line 21]  for value in data:
+  Loop Start: value takes its first value 80
+  [line 21]  for value in data:
+  Loop Iteration: value is now 67 (iteration 2)
+... [Line 21] repeats 7 more times ...
+... [Line 21] repeats 7 more times ...
+  [line 21]  for value in data:
+  Loop Iteration: value is now 96 (iteration 10)
+  [line 21]  for value in data:
+  Loop End: Iteration finished
+  [line 25]  pattern_efficiency = (checksum / 255) if checksum else 0.5
+  Compute: (checksum / 255) if checksum else 0.5, where checksum=123 (defined at [line 20]) = 0.4823529411764706
+  [line 26]  ratio = (original_size / (compression_factor + pattern_efficiency)) / 10
+  Compute: (original_size / (compression_factor + pattern_efficiency)) / 10, where original_size=10 (defined at [line 13]), compression_factor=4 (an unknown source), pattern_efficiency=0.4823529411764706 (defined at [line 25]) = 0.22309711286089237
+  [line 39]  return round(ratio, 2)
+  Return: round(ratio, 2)
+Function calculate_compression_ratio returns 0.22
+[line 9]  if not data or 'format' not in metadata:
+Condition: True, entering 'if' block
+[line 13]  original_size = len(data)
+Call function len(data=[80, 67, 80, 96, 49, ...] (an unknown source))
+[line 14]  compression_factor = metadata.get('base_factor', 2)
+(Missing param: 'func_name')
+[line 18]  if format_type == 'binary':
+Condition: True, entering 'if' block
+[line 27]  elif format_type == 'text':
+'elif' Condition: True, entering block
+[line 29]  char_counts = {}
+Compute: {} = {}
+[line 30]  for value in data:
+Loop Start: value takes its first value 80
+[line 31]  char_counts[value] = char_counts.get(value, 0) + 1
+(Missing param: 'result')
+[line 30]  for value in data:
+Loop Iteration: value is now 67 (iteration 2)
+[line 31]  char_counts[value] = char_counts.get(value, 0) + 1
+(Missing param: 'result')
+... [Line 30] repeats 7 more times ...
+... [Line 30] repeats 7 more times ...
+[line 30]  for value in data:
+Loop Iteration: value is now 96 (iteration 10)
+[line 31]  char_counts[value] = char_counts.get(value, 0) + 1
+(Missing param: 'result')
+[line 30]  for value in data:
+Loop End: Iteration finished
+[line 32]  entropy = len(char_counts) / original_size
+Compute: len(char_counts) / original_size, where char_counts={80: 4, 67: 1, 96: 2, ...} (defined at [line 29]), original_size=10 (defined at [line 13]) = 0.6
+[line 33]  ratio = (original_size / (compression_factor * entropy)) / 10
+Compute: (original_size / (compression_factor * entropy)) / 10, where original_size=10 (defined at [line 13]), compression_factor=4 (an unknown source), entropy=0.6 (defined at [line 32]) = 0.4166666666666667
+[line 39]  return round(ratio, 2)
+Return: round(ratio, 2)
+[line 95]  print(f"Signal quality: {signal_quality}")
+Output: f"Signal quality: {signal_quality}"
+[line 96]  print(f"Text compression: {text_compression}")
+Output: f"Text compression: {text_compression}"
+[line 97]  print(f"Result: {optimal_compression}")
+Output: f"Result: {optimal_compression}"
+
+Answer: optimal_compression = 0.22 (last updated on defined at [line 88])

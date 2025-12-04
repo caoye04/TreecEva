@@ -1,0 +1,83 @@
+122
+final_elevation
+---
+121 final_elevation = calculate_effective_elevation(terrain_data)
+121 ['terrain_data'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}"]
+PARAM_MAPPING {'terrain_data': {'actual_var': 'terrain_data', 'value': {'base_altitude': 1250, 'height_samples': [10, 15, 8, 12, 20, 17, 9], 'weather_conditions': ['clear', 'fog'], 'apply_weather': True, 'analyze_complexity': False, 'season': 'summer', 'soil_density': 1.2, 'vegetation': 0.7, 'pressure': 1010.5, 'location': {'lat': 47.25, 'lon': -122.45}}}}
+FUNCTION_ENTER 32 calculate_effective_elevation def calculate_effective_elevation(terrain_data):
+32 ['terrain_data'] [{'_type': 'dict', '_items': {'base_altitude': {'_type': 'int', '_value': 1250}, 'height_samples': {'_type': 'list', '_items': [{'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': 9}], '_len': 7}, 'weather_conditions': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'clear'}, {'_type': 'str', '_value': 'fog'}], '_len': 2}, 'apply_weather': {'_type': 'bool', '_value': True}, 'analyze_complexity': {'_type': 'bool', '_value': False}}, '_len': 10}]
+34 base_elevation = terrain_data['base_altitude']
+34 ['terrain_data', 'base_elevation'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1250']
+36 weather = terrain_data['weather_conditions']
+36 ['terrain_data', 'base_elevation', 'weather'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1250', "['clear', 'fog']"]
+39 apply_complexity = terrain_data.get('analyze_complexity', False)
+39 ['terrain_data', 'base_elevation', 'weather', 'apply_complexity'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1250', "['clear', 'fog']", 'False']
+40 consider_weather = terrain_data.get('apply_weather', True)
+40 ['terrain_data', 'base_elevation', 'weather', 'apply_complexity', 'consider_weather'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1250', "['clear', 'fog']", 'False', 'True']
+51 preliminary = base_elevation
+51 ['terrain_data', 'base_elevation', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1250', "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250']
+54 for path in exploration_paths:
+54 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250', "{direction: 'north', distance: 5, gradient: 0.12}"]
+55 if path['direction'] == 'south':
+55 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250', "{direction: 'north', distance: 5, gradient: 0.12}"]
+54 for path in exploration_paths:
+54 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250', "{direction: 'east', distance: 8, gradient: 0.08}"]
+55 if path['direction'] == 'south':
+55 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250', "{direction: 'east', distance: 8, gradient: 0.08}"]
+54 for path in exploration_paths:
+54 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250', "{direction: 'south', distance: 6, gradient: 0.15}"]
+55 if path['direction'] == 'south':
+55 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1250', "{direction: 'south', distance: 6, gradient: 0.15}"]
+57 preliminary += path['distance'] * path['gradient'] * 100
+57 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1340.0', "{direction: 'south', distance: 6, gradient: 0.15}"]
+54 for path in exploration_paths:
+54 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1340.0', "{direction: 'west', distance: 4, gradient: 0.1}"]
+55 if path['direction'] == 'south':
+55 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1340.0', "{direction: 'west', distance: 4, gradient: 0.1}"]
+54 for path in exploration_paths:
+54 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'exploration_paths', 'preliminary', 'path'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', "[{direction: 'north', distance: 5, gradient: 0.12}, {direction: 'east', distance: 8, gradient: 0.08}, {direction: 'south', distance: 6, gradient: 0.15}, {direction: 'west', distance: 4, gradient: 0.1}]", '1340.0', "{direction: 'west', distance: 4, gradient: 0.1}"]
+61 if apply_complexity:
+61 ['terrain_data', 'weather', 'apply_complexity', 'consider_weather', 'preliminary'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'False', 'True', '1340.0']
+80 if consider_weather:
+80 ['terrain_data', 'weather', 'consider_weather', 'preliminary'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", 'True', '1340.0']
+81 preliminary = apply_weather_effects(preliminary, weather)
+81 ['terrain_data', 'weather', 'preliminary'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", "['clear', 'fog']", '1340.0']
+PARAM_MAPPING {'base_value': {'actual_var': 'preliminary', 'value': 1340.0}, 'conditions': {'actual_var': 'weather', 'value': ['clear', 'fog']}}
+FUNCTION_ENTER 14 apply_weather_effects def apply_weather_effects(base_value, conditions):
+14 ['base_value', 'conditions'] [{'_type': 'float', '_value': 1340.0}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'clear'}, {'_type': 'str', '_value': 'fog'}], '_len': 2}]
+25 effect = 1.0
+25 ['base_value', 'conditions', 'modifiers', 'effect'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '1.0']
+26 for condition in conditions:
+26 ['base_value', 'conditions', 'modifiers', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '1.0', "'clear'"]
+27 if condition in modifiers:
+27 ['base_value', 'conditions', 'modifiers', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '1.0', "'clear'"]
+28 effect *= (1 + modifiers[condition])
+28 ['base_value', 'conditions', 'modifiers', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '1.05', "'clear'"]
+26 for condition in conditions:
+26 ['base_value', 'conditions', 'modifiers', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '1.05', "'fog'"]
+27 if condition in modifiers:
+27 ['base_value', 'conditions', 'modifiers', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '1.05', "'fog'"]
+28 effect *= (1 + modifiers[condition])
+28 ['base_value', 'conditions', 'modifiers', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '{rain: -0.15, snow: -0.35, fog: -0.25, ...}', '0.7875000000000001', "'fog'"]
+26 for condition in conditions:
+26 ['base_value', 'conditions', 'effect', 'condition'] ['1340.0', "['clear', 'fog']", '0.7875000000000001', "'fog'"]
+30 return base_value * effect
+30 ['base_value', 'effect'] ['1340.0', '0.7875000000000001']
+FUNCTION_RETURN 30 apply_weather_effects {'_type': 'float', '_value': 1055.2500000000002}
+91 true_elevation = preliminary - (preliminary % 10)
+91 ['terrain_data', 'preliminary', 'true_elevation'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1055.2500000000002', '1050.0']
+94 pressure_adjustment = 0
+94 ['terrain_data', 'true_elevation', 'pressure_adjustment'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1050.0', '0']
+95 if 'pressure' in terrain_data:
+95 ['terrain_data', 'true_elevation', 'pressure_adjustment'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1050.0', '0']
+97 pressure_diff = terrain_data['pressure'] - 1013.25
+97 ['terrain_data', 'true_elevation', 'pressure_adjustment', 'pressure_diff'] ["{base_altitude: 1250, height_samples: [10, 15, 8, 12, 20, ...], weather_conditions: ['clear', 'fog'], ...}", '1050.0', '0', '-2.75']
+98 pressure_adjustment = pressure_diff * 0.08
+98 ['true_elevation', 'pressure_adjustment', 'pressure_diff'] ['1050.0', '-0.22', '-2.75']
+101 result = true_elevation + pressure_adjustment
+101 ['true_elevation', 'pressure_adjustment', 'result'] ['1050.0', '-0.22', '1049.78']
+104 return round(result)
+104 ['result'] ['1049.78']
+FUNCTION_RETURN 104 calculate_effective_elevation {'_type': 'int', '_value': 1050}
+122 print(f"Result: {final_elevation}")
+122 ['final_elevation'] ['1050']

@@ -1,0 +1,203 @@
+43
+total_valid_orders
+---
+PARAM_MAPPING {'orders_data': {'actual_var': 'orders_data', 'value': [{'id': 101, 'status': 'shipped', 'amount': 120, 'customer_tier': 'standard'}, {'id': 102, 'status': 'pending', 'amount': 85, 'customer_tier': 'standard'}, {'id': 103, 'status': 'shipped', 'amount': 250, 'customer_tier': 'premium'}, {'id': 104, 'status': 'cancelled', 'amount': 75, 'customer_tier': 'standard'}, {'id': 105, 'status': 'delivered', 'amount': 175, 'customer_tier': 'premium'}, {'id': 106, 'status': 'shipped', 'amount': 95, 'customer_tier': 'standard'}, {'id': 107, 'status': 'returned', 'amount': 200, 'customer_tier': 'premium'}]}}
+FUNCTION_ENTER 3 calculate_stats def calculate_stats(orders_data):
+3 ['orders_data'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 101}, 'status': {'_type': 'str', '_value': 'shipped'}, 'amount': {'_type': 'int', '_value': 120}, 'customer_tier': {'_type': 'str', '_value': 'standard'}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 102}, 'status': {'_type': 'str', '_value': 'pending'}, 'amount': {'_type': 'int', '_value': 85}, 'customer_tier': {'_type': 'str', '_value': 'standard'}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 103}, 'status': {'_type': 'str', '_value': 'shipped'}, 'amount': {'_type': 'int', '_value': 250}, 'customer_tier': {'_type': 'str', '_value': 'premium'}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 104}, 'status': {'_type': 'str', '_value': 'cancelled'}, 'amount': {'_type': 'int', '_value': 75}, 'customer_tier': {'_type': 'str', '_value': 'standard'}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 105}, 'status': {'_type': 'str', '_value': 'delivered'}, 'amount': {'_type': 'int', '_value': 175}, 'customer_tier': {'_type': 'str', '_value': 'premium'}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 106}, 'status': {'_type': 'str', '_value': 'shipped'}, 'amount': {'_type': 'int', '_value': 95}, 'customer_tier': {'_type': 'str', '_value': 'standard'}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 107}, 'status': {'_type': 'str', '_value': 'returned'}, 'amount': {'_type': 'int', '_value': 200}, 'customer_tier': {'_type': 'str', '_value': 'premium'}}, '_len': 4}], '_len': 7}]
+5 processed_orders = {}
+5 ['orders_data', 'processed_orders'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", '{}']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", '{}', "{id: 101, status: 'shipped', amount: 120, ...}"]
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", '{}', "{id: 101, status: 'shipped', amount: 120, ...}", '101']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}}", "{id: 102, status: 'pending', amount: 85, ...}", '101']
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}}", "{id: 102, status: 'pending', amount: 85, ...}", '102']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}}", "{id: 103, status: 'shipped', amount: 250, ...}", '102']
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}}", "{id: 103, status: 'shipped', amount: 250, ...}", '103']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}", "{id: 104, status: 'cancelled', amount: 75, ...}", '103']
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}", "{id: 104, status: 'cancelled', amount: 75, ...}", '104']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 105, status: 'delivered', amount: 175, ...}", '104']
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 105, status: 'delivered', amount: 175, ...}", '105']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 106, status: 'shipped', amount: 95, ...}", '105']
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 106, status: 'shipped', amount: 95, ...}", '106']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 107, status: 'returned', amount: 200, ...}", '106']
+7 order_id = order["id"]
+7 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 107, status: 'returned', amount: 200, ...}", '107']
+6 for order in orders_data:
+6 ['orders_data', 'processed_orders', 'order', 'order_id'] ["[{id: 101, status: 'shipped', amount: 120, ...}, {id: 102, status: 'pending', amount: 85, ...}, {id: 103, status: 'shipped', amount: 250, ...}, {id: 104, status: 'cancelled', amount: 75, ...}, {id: 105, status: 'delivered', amount: 175, ...}, ...]", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", "{id: 107, status: 'returned', amount: 200, ...}", '107']
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '102', "{status: 'pending', amount: 85, customer_tier: 'standard'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '104', "{status: 'cancelled', amount: 75, customer_tier: 'standard'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}"]
+16 for order_id, details in processed_orders.items():
+16 ['processed_orders', 'order_id', 'details'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}"]
+22 filtered_orders = {}
+22 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", '{}']
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", '{}']
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", '{}']
+33 filtered_orders[order_id] = details
+33 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}}"]
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}}"]
+33 filtered_orders[order_id] = details
+33 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}}"]
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}}"]
+33 filtered_orders[order_id] = details
+33 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '104', "{status: 'cancelled', amount: 75, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}"]
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '104', "{status: 'cancelled', amount: 75, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}"]
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}}"]
+33 filtered_orders[order_id] = details
+33 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+33 filtered_orders[order_id] = details
+33 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+32 if details["status"] != "cancelled":
+32 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+33 filtered_orders[order_id] = details
+33 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+23 for order_id, details in processed_orders.items():
+23 ['processed_orders', 'order_id', 'details', 'filtered_orders'] ["{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+36 status_counts = {"pending": 0, "shipped": 0, "delivered": 0, "returned": 0}
+36 ['order_id', 'details', 'filtered_orders', 'status_counts'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 0, delivered: 0, ...}']
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders', 'status_counts'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 0, delivered: 0, ...}']
+38 status = details["status"]
+38 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 0, delivered: 0, ...}', "'shipped'"]
+39 if status in status_counts:
+39 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 0, delivered: 0, ...}', "'shipped'"]
+40 status_counts[status] += 1
+40 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 1, delivered: 0, ...}', "'shipped'"]
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 1, delivered: 0, ...}', "'shipped'"]
+38 status = details["status"]
+38 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 1, delivered: 0, ...}', "'pending'"]
+39 if status in status_counts:
+39 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 0, shipped: 1, delivered: 0, ...}', "'pending'"]
+40 status_counts[status] += 1
+40 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 1, delivered: 0, ...}', "'pending'"]
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 1, delivered: 0, ...}', "'pending'"]
+38 status = details["status"]
+38 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 1, delivered: 0, ...}', "'shipped'"]
+39 if status in status_counts:
+39 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 1, delivered: 0, ...}', "'shipped'"]
+40 status_counts[status] += 1
+40 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 0, ...}', "'shipped'"]
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 0, ...}', "'shipped'"]
+38 status = details["status"]
+38 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 0, ...}', "'delivered'"]
+39 if status in status_counts:
+39 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 0, ...}', "'delivered'"]
+40 status_counts[status] += 1
+40 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 1, ...}', "'delivered'"]
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 1, ...}', "'delivered'"]
+38 status = details["status"]
+38 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 1, ...}', "'shipped'"]
+39 if status in status_counts:
+39 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 2, delivered: 1, ...}', "'shipped'"]
+40 status_counts[status] += 1
+40 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 3, delivered: 1, ...}', "'shipped'"]
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 3, delivered: 1, ...}', "'shipped'"]
+38 status = details["status"]
+38 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 3, delivered: 1, ...}', "'returned'"]
+39 if status in status_counts:
+39 ['order_id', 'details', 'filtered_orders', 'status_counts', 'status'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}", '{pending: 1, shipped: 3, delivered: 1, ...}', "'returned'"]
+37 for order_id, details in filtered_orders.items():
+37 ['order_id', 'details', 'filtered_orders'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}", "{101: {status: 'shipped', amount: 120, customer_tier: 'standard'}, 102: {status: 'pending', amount: 85, customer_tier: 'standard'}, 103: {status: 'shipped', amount: 250, customer_tier: 'premium'}, ...}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 [] []
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}"]
+44 if details["status"] == "shipped")
+44 ['order_id', 'details'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['101', "{status: 'shipped', amount: 120, customer_tier: 'standard'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}"]
+44 if details["status"] == "shipped")
+44 ['order_id', 'details'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['102', "{status: 'pending', amount: 85, customer_tier: 'standard'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}"]
+44 if details["status"] == "shipped")
+44 ['order_id', 'details'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['103', "{status: 'shipped', amount: 250, customer_tier: 'premium'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}"]
+44 if details["status"] == "shipped")
+44 ['order_id', 'details'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['105', "{status: 'delivered', amount: 175, customer_tier: 'premium'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}"]
+44 if details["status"] == "shipped")
+44 ['order_id', 'details'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['106', "{status: 'shipped', amount: 95, customer_tier: 'standard'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}"]
+44 if details["status"] == "shipped")
+44 ['order_id', 'details'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}"]
+43 total_valid_orders = sum(1 for order_id, details in filtered_orders.items()
+43 ['order_id', 'details'] ['107', "{status: 'returned', amount: 200, customer_tier: 'premium'}"]
+48 if details["customer_tier"] == "premium")
+48 [] []
+48 if details["customer_tier"] == "premium")
+48 [] []
+48 if details["customer_tier"] == "premium")
+48 [] []
+48 if details["customer_tier"] == "premium")
+48 [] []
+48 if details["customer_tier"] == "premium")
+48 [] []
+48 if details["customer_tier"] == "premium")
+48 [] []
+50 return total_valid_orders
+50 ['total_valid_orders'] ['3']
+FUNCTION_RETURN 50 calculate_stats {'_type': 'int', '_value': 3}

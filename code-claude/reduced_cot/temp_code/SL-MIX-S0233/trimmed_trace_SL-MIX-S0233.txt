@@ -1,0 +1,63 @@
+30
+unique_items
+---
+PARAM_MAPPING {'readings': {'actual_var': 'sensor_readings', 'value': [12, 15, 14, 17, 19, 22, 25, 22, 19, 17]}, 'threshold': {'actual_var': 'threshold', 'value': 2}}
+FUNCTION_ENTER 3 analyze_sensor_readings def analyze_sensor_readings(readings, threshold):
+3 ['readings', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 17}], '_len': 10}, {'_type': 'int', '_value': 2}]
+8 baseline = sum(readings[:3]) / 3
+8 ['readings', 'threshold', 'baseline'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '12']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '15']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '14']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '17']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '19']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '22']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '25']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '22']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '19']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'r'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '17']
+9 adjusted = [r - baseline for r in readings]
+9 ['readings', 'threshold', 'baseline', 'adjusted'] ['[12, 15, 14, 17, 19, ...]', '2', '13.666666666666666', '[-1.666666666666666, 1.333333333333334, 0.3333333333333339, 3.333333333333334, 5.333333333333334, ...]']
+12 outlier_filter = lambda x: abs(x) < threshold * 2
+12 ['threshold', 'adjusted'] ['2', '[-1.666666666666666, 1.333333333333334, 0.3333333333333339, 3.333333333333334, 5.333333333333334, ...]']
+13 preliminary = list(filter(outlier_filter, adjusted))
+13 ['threshold', 'adjusted'] ['2', '[-1.666666666666666, 1.333333333333334, 0.3333333333333339, 3.333333333333334, 5.333333333333334, ...]']
+23 pairs = list(itertools.pairwise(preliminary))
+23 ['threshold', 'preliminary', 'pairs'] ['2', '[-1.666666666666666, 1.333333333333334, 0.3333333333333339, 3.333333333333334, 3.333333333333334]', '[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)]']
+24 differences = [abs(b - a) for a, b in pairs]
+24 ['threshold', 'pairs', 'a', 'b'] ['2', '[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)]', '-1.666666666666666', '1.333333333333334']
+24 differences = [abs(b - a) for a, b in pairs]
+24 ['threshold', 'pairs', 'a', 'b'] ['2', '[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)]', '1.333333333333334', '0.3333333333333339']
+24 differences = [abs(b - a) for a, b in pairs]
+24 ['threshold', 'pairs', 'a', 'b'] ['2', '[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)]', '0.3333333333333339', '3.333333333333334']
+24 differences = [abs(b - a) for a, b in pairs]
+24 ['threshold', 'pairs', 'a', 'b'] ['2', '[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)]', '3.333333333333334', '3.333333333333334']
+24 differences = [abs(b - a) for a, b in pairs]
+24 ['threshold', 'pairs', 'differences'] ['2', '[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)]', '[3.0, 1.0, 3.0, 0.0]']
+27 filtered_data = [d for d in differences if d > threshold]
+27 ['threshold', 'differences', 'd'] ['2', '[3.0, 1.0, 3.0, 0.0]', '3.0']
+27 filtered_data = [d for d in differences if d > threshold]
+27 ['threshold', 'differences', 'd'] ['2', '[3.0, 1.0, 3.0, 0.0]', '1.0']
+27 filtered_data = [d for d in differences if d > threshold]
+27 ['threshold', 'differences', 'd'] ['2', '[3.0, 1.0, 3.0, 0.0]', '3.0']
+27 filtered_data = [d for d in differences if d > threshold]
+27 ['threshold', 'differences', 'd'] ['2', '[3.0, 1.0, 3.0, 0.0]', '0.0']
+27 filtered_data = [d for d in differences if d > threshold]
+27 ['threshold', 'differences', 'filtered_data'] ['2', '[3.0, 1.0, 3.0, 0.0]', '[3.0, 3.0]']
+30 unique_items = len(set(filtered_data))
+30 ['filtered_data', 'unique_items'] ['[3.0, 3.0]', '1']
+36 print(f"Result: {unique_items}")
+36 ['unique_items'] ['1']
+37 return unique_items
+37 ['unique_items'] ['1']
+FUNCTION_RETURN 37 analyze_sensor_readings {'_type': 'int', '_value': 1}

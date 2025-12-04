@@ -1,0 +1,16 @@
+Target: Find the value of variable encrypted_value after [line 25] executes
+
+[line 4]  valid_readings = [r for r in readings if 10 <= r <= 100]
+Compute: [r for r in readings if 10 <= r <= 100], where r=15 (an unknown source), readings=[15, 27, 8, 42, 53, ...] (an unknown source) = ?
+[line 10]  transformed = [(r + offset) * 2 for r in valid_readings]
+Compute: [(r + offset) * 2 for r in valid_readings], where r=15 (an unknown source), offset=3 (an unknown source), valid_readings=[15, 27, 42, 53, 19, ...] (defined at [line 4]) = ?
+[line 13]  selected_readings = transformed[1::2]  # Every second reading starting from index 1
+Compute: transformed[1::2]  # Every second reading starting from index 1, where transformed=[36, 60, 90, 112, 44, ...] (defined at [line 10]) = [60, 112, 72]
+[line 16]  processed_data = sum(selected_readings) if selected_readings else 0
+Compute: sum(selected_readings) if selected_readings else 0, where selected_readings=[60, 112, 72] (defined at [line 13]) = 244
+[line 22]  result = (processed_data << 4) | (len(valid_readings) & 0xF)
+Compute: (processed_data << 4) | (len(valid_readings) & 0xF), where processed_data=244 (defined at [line 16]), valid_readings=[15, 27, 42, 53, 19, ...] (defined at [line 4]) = 3911
+[line 25]  encrypted_value = (result >> 2) ^ 42
+Compute: (result >> 2) ^ 42, where result=3911 (defined at [line 22]) = 1019
+
+Answer: encrypted_value = 1019 (last updated on defined at [line 25])

@@ -1,0 +1,124 @@
+Target: Find the value of variable priority_value after [line 116] executes
+
+[line 87]  active_protocols = ['HTTP', 'HTTPS', 'DNS', 'FTP']
+Compute: ['HTTP', 'HTTPS', 'DNS', 'FTP'] = ['HTTP', 'HTTPS', 'DNS', 'FTP']
+[line 3]  risk_score = 0
+Assign: risk_score = 0
+[line 4]  suspicious_ports = {22: 'SSH', 23: 'Telnet', 3389: 'RDP', 445: 'SMB'}
+Compute: {22: 'SSH', 23: 'Telnet', 3389: 'RDP', 445: 'SMB'} = {22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}
+[line 6]  for header in headers:
+Loop Start: header takes its first value {port: 80, encrypted: False}
+[line 7]  if header.get('port') in suspicious_ports:
+Condition: True, entering 'if' block
+[line 9]  if header.get('encrypted') == False:
+Condition: True, entering 'if' block
+[line 10]  risk_score += 15
+Update: risk_score changed from 0 (defined at defined at [line 3]) to 0+15 = 15
+[line 6]  for header in headers:
+Loop Iteration: header is now {port: 443, encrypted: True} (iteration 2)
+[line 7]  if header.get('port') in suspicious_ports:
+Condition: True, entering 'if' block
+[line 9]  if header.get('encrypted') == False:
+Condition: True, entering 'if' block
+[line 6]  for header in headers:
+Loop Iteration: header is now {port: 22, encrypted: True} (iteration 3)
+[line 7]  if header.get('port') in suspicious_ports:
+Condition: True, entering 'if' block
+[line 8]  risk_score += 10
+Update: risk_score changed from 15 (defined at defined at [line 10]) to 15+10 = 25
+[line 9]  if header.get('encrypted') == False:
+Condition: True, entering 'if' block
+[line 6]  for header in headers:
+Loop End: Iteration finished
+[line 13]  if filter_criteria:
+Condition: True, entering 'if' block
+[line 17]  return risk_score / max(1, len(headers))
+Return: risk_score / max(1, len(headers))
+[line 109]  priority_value = calculate_priority(network_traffic, active_protocols)
+Call function calculate_priority(network_traffic=[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}] (an unknown source), active_protocols=['HTTP', 'HTTPS', 'DNS', 'FTP'] (defined at [line 87]))
+[line 34]  base_value = 0
+Assign: base_value = 0
+[line 35]  multiplier = 1
+Assign: multiplier = 1
+[line 36]  threshold = 75
+Assign: threshold = 75
+[line 39]  protocol_weights = {'HTTP': 1, 'HTTPS': 2, 'FTP': 3, 'DNS': 4, 'SMTP': 2}
+Compute: {'HTTP': 1, 'HTTPS': 2, 'FTP': 3, 'DNS': 4, 'SMTP': 2} = {HTTP: 1, HTTPS: 2, FTP: 3, ...}
+[line 45]  total_packets = sum(t.get('packets', 0) for t in traffic)
+Call function sum(t.get('packets', 0) for t in traffic)
+[line 45]  total_packets = sum(t.get('packets', 0) for t in traffic)
+Call function sum(t.get('packets', 0) for t in traffic)
+[line 45]  total_packets = sum(t.get('packets', 0) for t in traffic)
+Call function sum(t.get('packets', 0) for t in traffic)
+[line 45]  total_packets = sum(t.get('packets', 0) for t in traffic)
+Call function sum(t.get('packets', 0) for t in traffic)
+[line 45]  total_packets = sum(t.get('packets', 0) for t in traffic)
+Call function sum(t.get('packets', 0) for t in traffic)
+[line 46]  dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+Call function sum(t.get('dropped', 0) for t in traffic)
+[line 46]  dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+Call function sum(t.get('dropped', 0) for t in traffic)
+[line 46]  dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+Call function sum(t.get('dropped', 0) for t in traffic)
+[line 46]  dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+Call function sum(t.get('dropped', 0) for t in traffic)
+[line 46]  dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+Call function sum(t.get('dropped', 0) for t in traffic)
+[line 49]  packet_loss = (dropped_packets / total_packets * 100) if total_packets > 0 else 0
+Compute: (dropped_packets / total_packets * 100) if total_packets > 0 else 0, where dropped_packets=200 (defined at [line 46]), total_packets=2400 (defined at [line 45]) = 8.333333333333332
+[line 55]  if packet_loss > 5:
+Condition: True, entering 'if' block
+[line 56]  multiplier = 2
+Assign: multiplier = 2
+[line 57]  if packet_loss > 15:
+Condition: True, entering 'if' block
+[line 61]  for protocol in protocols:
+Loop Start: protocol takes its first value 'HTTP'
+[line 62]  weight = protocol_weights.get(protocol, 1)
+(Missing param: 'func_name')
+[line 63]  base_value += weight
+Update: base_value changed from 0 (defined at defined at [line 34]) to 0+weight = 1
+[line 66]  if protocol == 'DNS':
+Condition: True, entering 'if' block
+[line 61]  for protocol in protocols:
+Loop Iteration: protocol is now 'HTTPS' (iteration 2)
+[line 62]  weight = protocol_weights.get(protocol, 1)
+(Missing param: 'func_name')
+[line 63]  base_value += weight
+Update: base_value changed from 1 (defined at defined at [line 63]) to 1+weight = 3
+[line 66]  if protocol == 'DNS':
+Condition: True, entering 'if' block
+[line 61]  for protocol in protocols:
+Loop Iteration: protocol is now 'DNS' (iteration 3)
+[line 62]  weight = protocol_weights.get(protocol, 1)
+(Missing param: 'func_name')
+[line 63]  base_value += weight
+Update: base_value changed from 3 (defined at defined at [line 63]) to 3+weight = 7
+[line 66]  if protocol == 'DNS':
+Condition: True, entering 'if' block
+[line 67]  base_value *= 2
+Update: base_value changed from 7 (defined at defined at [line 63]) to 7*2 = 14
+[line 61]  for protocol in protocols:
+Loop Iteration: protocol is now 'FTP' (iteration 4)
+[line 62]  weight = protocol_weights.get(protocol, 1)
+(Missing param: 'func_name')
+[line 63]  base_value += weight
+Update: base_value changed from 14 (defined at defined at [line 67]) to 14+weight = 17
+[line 66]  if protocol == 'DNS':
+Condition: True, entering 'if' block
+[line 61]  for protocol in protocols:
+Loop End: Iteration finished
+[line 70]  if base_value > threshold:
+Condition: True, entering 'if' block
+[line 74]  result = base_value * multiplier
+Compute: base_value * multiplier, where base_value=17 (defined at [line 63]), multiplier=2 (defined at [line 56]) = 34
+[line 77]  return result % 100
+Return: result % 100
+[line 114]  print(f"Network reliability: {reliability:.2f}%")
+Output: f"Network reliability: {reliability:.2f}%"
+[line 115]  print(f"Security risk level: {risk_level:.2f}")
+Output: f"Security risk level: {risk_level:.2f}"
+[line 116]  print(f"Priority value: {priority_value}")
+Output: f"Priority value: {priority_value}"
+
+Answer: priority_value = 34 (last updated on defined at [line 109])

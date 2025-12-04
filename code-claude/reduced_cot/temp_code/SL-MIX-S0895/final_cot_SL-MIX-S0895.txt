@@ -1,0 +1,149 @@
+Target: Find the value of variable actual_checksum after [line 105] executes
+
+[line 56]  inventory = [(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)]
+Compute: [(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] = [(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)]
+[line 75]  for item in inventory:
+Loop Start: item takes its first value (1234, 5)
+[line 76]  code, qty = item
+(Missing param: 'result')
+[line 77]  if code in pending_orders:
+Condition: True, entering 'if' block
+[line 75]  for item in inventory:
+Loop Iteration: item is now (5678, 15) (iteration 2)
+[line 76]  code, qty = item
+(Missing param: 'result')
+[line 77]  if code in pending_orders:
+Condition: True, entering 'if' block
+... [Line 75] repeats 2 more times ...
+... [Line 75] repeats 2 more times ...
+... [Line 75] repeats 2 more times ...
+[line 75]  for item in inventory:
+Loop Iteration: item is now (7890, 20) (iteration 5)
+[line 76]  code, qty = item
+(Missing param: 'result')
+[line 77]  if code in pending_orders:
+Condition: True, entering 'if' block
+[line 75]  for item in inventory:
+Loop End: Iteration finished
+[line 88]  product_data = [(item[0], item[1]) for item in inventory]
+Compute: [(item[0], item[1]) for item in inventory], where item=(1234, 5) (defined at [line 75]), inventory=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 56]) = ?
+[line 88]  product_data = [(item[0], item[1]) for item in inventory]
+Compute: [(item[0], item[1]) for item in inventory], where item=(5678, 15) (defined at [line 75]), inventory=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 56]) = ?
+[line 88]  product_data = [(item[0], item[1]) for item in inventory]
+Compute: [(item[0], item[1]) for item in inventory], where item=(9012, 3) (defined at [line 75]), inventory=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 56]) = ?
+[line 88]  product_data = [(item[0], item[1]) for item in inventory]
+Compute: [(item[0], item[1]) for item in inventory], where item=(3456, 0) (defined at [line 75]), inventory=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 56]) = ?
+[line 88]  product_data = [(item[0], item[1]) for item in inventory]
+Compute: [(item[0], item[1]) for item in inventory], where item=(7890, 20) (defined at [line 75]), inventory=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 56]) = ?
+[line 88]  product_data = [(item[0], item[1]) for item in inventory]
+Compute: [(item[0], item[1]) for item in inventory], where item=(7890, 20) (defined at [line 75]), inventory=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 56]) = [(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)]
+[line 91]  actual_checksum = calculate_weighted_checksum(product_data, weight_factors)
+Call function calculate_weighted_checksum(product_data=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (defined at [line 88]), weight_factors={4: 1.5, 8: 2.0, 2: 0.8, ...} (an unknown source))
+[line 1]  def calculate_weighted_checksum(product_data, weights):
+Enter function calculate_weighted_checksum: product_data=[(1234, 5), (5678, 15), (9012, 3), (3456, 0), (7890, 20)] (product_data defined at [line 88]), weights={4: 1.5, 8: 2.0, 2: 0.8, ...}
+  [line 3]  valid_items = 0
+  Assign: valid_items = 0
+  [line 5]  checksum = 0
+  Assign: checksum = 0
+  [line 12]  for idx, product in enumerate(product_data):
+  (Missing param: 'iter_var')
+  [line 14]  code, quantity = product
+  (Missing param: 'result')
+  [line 20]  weight = weights.get(code % 10, 1)
+  (Missing param: 'func_name')
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where code=1234 (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='1' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='2' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='3' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='4' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='4' (an unknown source) = ?
+  [line 24]  if validation_score > 5:
+  Condition: True, entering 'if' block
+  [line 32]  if code > 1000 and quantity > 0:
+  Condition: True, entering 'if' block
+  [line 33]  contribution = (code % 100) * weight * (1 if quantity > 10 else quantity / 10)
+  Compute: (code % 100) * weight * (1 if quantity > 10 else quantity / 10), where code=1234 (an unknown source), weight=1.5 (an unknown source), quantity=5 (an unknown source) = 25.5
+  [line 34]  checksum += contribution
+  Update: checksum changed from 0 (defined at defined at [line 5]) to 0+contribution = 25.5
+  [line 12]  for idx, product in enumerate(product_data):
+  (Missing param: 'iter_var')
+  [line 14]  code, quantity = product
+  (Missing param: 'result')
+  [line 20]  weight = weights.get(code % 10, 1)
+  (Missing param: 'func_name')
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where code=5678 (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='5' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='6' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='7' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='8' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='8' (an unknown source) = ?
+  [line 24]  if validation_score > 5:
+  Condition: True, entering 'if' block
+  [line 32]  if code > 1000 and quantity > 0:
+  Condition: True, entering 'if' block
+  [line 33]  contribution = (code % 100) * weight * (1 if quantity > 10 else quantity / 10)
+  Compute: (code % 100) * weight * (1 if quantity > 10 else quantity / 10), where code=5678 (an unknown source), weight=2.0 (an unknown source), quantity=15 (an unknown source) = 156.0
+  [line 34]  checksum += contribution
+  Update: checksum changed from 25.5 (defined at defined at [line 34]) to 25.5+contribution = 181.5
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+... [Line 12] repeats 2 more times ...
+  [line 12]  for idx, product in enumerate(product_data):
+  (Missing param: 'iter_var')
+  [line 14]  code, quantity = product
+  (Missing param: 'result')
+  [line 20]  weight = weights.get(code % 10, 1)
+  (Missing param: 'func_name')
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where code=7890 (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='7' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='8' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='9' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='0' (an unknown source) = ?
+  [line 23]  validation_score = sum(int(digit) for digit in str(code)) * 0.1
+  Compute: sum(int(digit) for digit in str(code)) * 0.1, where digit='0' (an unknown source) = ?
+  [line 24]  if validation_score > 5:
+  Condition: True, entering 'if' block
+  [line 32]  if code > 1000 and quantity > 0:
+  Condition: True, entering 'if' block
+  [line 33]  contribution = (code % 100) * weight * (1 if quantity > 10 else quantity / 10)
+  Compute: (code % 100) * weight * (1 if quantity > 10 else quantity / 10), where code=7890 (an unknown source), weight=1 (an unknown source), quantity=20 (an unknown source) = 90
+  [line 34]  checksum += contribution
+  Update: checksum changed from 184.38 (defined at defined at [line 34]) to 184.38+contribution = 274.38
+  [line 12]  for idx, product in enumerate(product_data):
+  Loop End: Iteration finished
+  [line 41]  checksum = checksum * (1 + 0.01 * (valid_items % 3))
+  Compute: checksum * (1 + 0.01 * (valid_items % 3)), where checksum=274.38 (defined at [line 34]), valid_items=0 (defined at [line 3]) = 274.38
+  [line 51]  return int(checksum) if checksum > 0 else 0
+  Return: int(checksum) if checksum > 0 else 0
+Function calculate_weighted_checksum returns 274
+[line 105]  print(f"Result: {actual_checksum}")
+Output: f"Result: {actual_checksum}"
+
+Answer: actual_checksum = 274 (last updated on defined at [line 91])

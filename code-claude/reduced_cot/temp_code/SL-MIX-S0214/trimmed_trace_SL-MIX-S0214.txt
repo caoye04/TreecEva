@@ -1,0 +1,305 @@
+51
+signal_strength
+---
+PARAM_MAPPING {'frequencies': {'actual_var': 'frequencies', 'value': [42, 78, 105, 121, 210, 36, 63]}, 'channels': {'actual_var': 'channels', 'value': [4, 8, 15, 16, 23, 42]}, 'noise_levels': {'actual_var': 'noise_levels', 'value': [120, 84, 56, 72]}}
+FUNCTION_ENTER 1 calculate_broadcast_metrics def calculate_broadcast_metrics(frequencies, channels, noise_levels):
+1 ['frequencies', 'channels', 'noise_levels'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 105}, {'_type': 'int', '_value': 121}, {'_type': 'int', '_value': 210}, {'_type': 'int', '_value': 36}, {'_type': 'int', '_value': 63}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 16}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 42}], '_len': 6}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 84}, {'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 72}], '_len': 4}]
+7 noise_reduction = lambda x: x // 2 if x > 100 else x
+7 ['frequencies', 'channels', 'noise_levels'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[120, 84, 56, 72]']
+8 reduced_noise = [noise_reduction(n) for n in noise_levels]
+8 ['frequencies', 'channels', 'noise_levels', 'n'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[120, 84, 56, 72]', '120']
+7 noise_reduction = lambda x: x // 2 if x > 100 else x
+7 ['x'] ['120']
+8 reduced_noise = [noise_reduction(n) for n in noise_levels]
+8 ['frequencies', 'channels', 'noise_levels', 'n'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[120, 84, 56, 72]', '84']
+7 noise_reduction = lambda x: x // 2 if x > 100 else x
+7 ['x'] ['84']
+8 reduced_noise = [noise_reduction(n) for n in noise_levels]
+8 ['frequencies', 'channels', 'noise_levels', 'n'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[120, 84, 56, 72]', '56']
+7 noise_reduction = lambda x: x // 2 if x > 100 else x
+7 ['x'] ['56']
+8 reduced_noise = [noise_reduction(n) for n in noise_levels]
+8 ['frequencies', 'channels', 'noise_levels', 'n'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[120, 84, 56, 72]', '72']
+7 noise_reduction = lambda x: x // 2 if x > 100 else x
+7 ['x'] ['72']
+8 reduced_noise = [noise_reduction(n) for n in noise_levels]
+8 ['frequencies', 'channels', 'noise_levels', 'reduced_noise'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[120, 84, 56, 72]', '[60, 84, 56, 72]']
+11 active_channels = set(channels) - {0, 7, 13}
+11 ['frequencies', 'channels', 'reduced_noise', 'active_channels'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42']
+12 backup_channels = {ch + 1 for ch in channels if ch % 5 == 0}
+12 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'backup_channels'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '{16}']
+13 potential_channels = active_channels.union(backup_channels)
+13 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'backup_channels', 'potential_channels'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '{16}', '{16, 4, 23, 8, 42, ...}']
+16 main_channel = 42
+16 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '{16, 4, 23, 8, 42, ...}', '42']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '{16, 4, 23, 8, 42, ...}', '42']
+18 if ch % 4 == 0 and ch in active_channels:
+18 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '{16, 4, 23, 8, 42, ...}', '42']
+19 main_channel = (main_channel * ch) % 256
+19 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '{16, 4, 23, 8, 42, ...}', '160']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '{16, 4, 23, 8, 42, ...}', '160']
+18 if ch % 4 == 0 and ch in active_channels:
+18 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '{16, 4, 23, 8, 42, ...}', '160']
+19 main_channel = (main_channel * ch) % 256
+19 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '{16, 4, 23, 8, 42, ...}', '128']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '{16, 4, 23, 8, 42, ...}', '128']
+18 if ch % 4 == 0 and ch in active_channels:
+18 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '{16, 4, 23, 8, 42, ...}', '128']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '{16, 4, 23, 8, 42, ...}', '128']
+18 if ch % 4 == 0 and ch in active_channels:
+18 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '{16, 4, 23, 8, 42, ...}', '128']
+19 main_channel = (main_channel * ch) % 256
+19 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '{16, 4, 23, 8, 42, ...}', '0']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '{16, 4, 23, 8, 42, ...}', '0']
+18 if ch % 4 == 0 and ch in active_channels:
+18 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '{16, 4, 23, 8, 42, ...}', '0']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '{16, 4, 23, 8, 42, ...}', '0']
+18 if ch % 4 == 0 and ch in active_channels:
+18 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '{16, 4, 23, 8, 42, ...}', '0']
+17 for ch in potential_channels:
+17 ['frequencies', 'channels', 'reduced_noise', 'active_channels', 'ch', 'potential_channels', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '{16, 4, 23, 8, 42, ...}', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '42', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '42', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+26 elif f < 50:
+26 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '42', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '78', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '78', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+26 elif f < 50:
+26 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '78', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '105', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '105', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+26 elif f < 50:
+26 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '105', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '121', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '121', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+26 elif f < 50:
+26 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '121', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '210', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '210', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '36', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '36', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+26 elif f < 50:
+26 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '36', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+24 if f > 150:
+24 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+26 elif f < 50:
+26 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+23 for f in frequencies:
+23 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+34 error_bits = sum([n & 0x0F for n in reduced_noise])
+34 ['frequencies', 'channels', 'f', 'n', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+34 error_bits = sum([n & 0x0F for n in reduced_noise])
+34 ['frequencies', 'channels', 'f', 'n', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+34 error_bits = sum([n & 0x0F for n in reduced_noise])
+34 ['frequencies', 'channels', 'f', 'n', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+34 error_bits = sum([n & 0x0F for n in reduced_noise])
+34 ['frequencies', 'channels', 'f', 'n', 'reduced_noise', 'active_channels', 'ch', 'main_channel'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0']
+34 error_bits = sum([n & 0x0F for n in reduced_noise])
+34 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_bits'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '32']
+35 error_correction = error_bits ^ (sum(channels) & 0xFF)
+35 ['frequencies', 'channels', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_bits', 'error_correction'] ['[42, 78, 105, 121, 210, ...]', '[4, 8, 15, 16, 23, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '32', '76']
+38 filtered_frequencies = 0
+38 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['[42, 78, 105, 121, 210, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '0']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '36', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '0', '0']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '36', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '0', '0']
+41 filtered_frequencies |= (1 << (f % 8))
+41 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '36', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '16', '0']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '42', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '16', '1']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '42', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '16', '1']
+41 filtered_frequencies |= (1 << (f % 8))
+41 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '42', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '20', '1']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '20', '2']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '20', '2']
+41 filtered_frequencies |= (1 << (f % 8))
+41 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '63', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '148', '2']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '78', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '148', '3']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '78', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '148', '3']
+41 filtered_frequencies |= (1 << (f % 8))
+41 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '78', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '212', '3']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '105', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '212', '4']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '105', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '212', '4']
+41 filtered_frequencies |= (1 << (f % 8))
+41 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '105', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '4']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '121', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '5']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '121', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '5']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '210', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '6']
+40 if i % 3 == 0 or f % 7 == 0:
+40 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '210', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '6']
+41 filtered_frequencies |= (1 << (f % 8))
+41 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '210', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '6']
+39 for i, f in enumerate(sorted(frequencies)):
+39 ['frequencies', 'f', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies', 'i'] ['[42, 78, 105, 121, 210, ...]', '210', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214', '6']
+45 for ch in active_channels:
+45 ['reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '4', '0', '76', '214']
+45 for ch in active_channels:
+45 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '8', '0', '76', '214']
+45 for ch in active_channels:
+45 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '42', '0', '76', '214']
+45 for ch in active_channels:
+45 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '15', '0', '76', '214']
+45 for ch in active_channels:
+45 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '16', '0', '76', '214']
+45 for ch in active_channels:
+45 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['60', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['84', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['56', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+47 if ch % n == 0 and n > 0:
+47 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+46 for n in reduced_noise:
+46 ['n', 'reduced_noise', 'active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['72', '[60, 84, 56, 72]', '{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+45 for ch in active_channels:
+45 ['active_channels', 'ch', 'main_channel', 'error_correction', 'filtered_frequencies'] ['{4, 8, 42, 15, 16, ...}', '23', '0', '76', '214']
+51 signal_strength = (filtered_frequencies & main_channel) | error_correction
+51 ['main_channel', 'error_correction', 'filtered_frequencies', 'signal_strength'] ['0', '76', '214', '76']
+64 print(f"Result: {signal_strength}")
+64 ['signal_strength'] ['76']
+66 return signal_strength
+66 ['signal_strength'] ['76']
+FUNCTION_RETURN 66 calculate_broadcast_metrics {'_type': 'int', '_value': 76}

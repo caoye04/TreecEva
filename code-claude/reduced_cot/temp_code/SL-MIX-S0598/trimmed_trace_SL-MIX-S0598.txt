@@ -1,0 +1,111 @@
+44
+priority_score
+---
+36 scores = []
+36 ['email_data', 'scores'] ["[('Project deadline tomorrow', 'client.org', 120), ('URGENT: Meeting rescheduled', 'company.com', 75), ('Weekly newsletter', 'marketing.com', 350)]", '[]']
+37 for i, (subject, domain, words) in enumerate(email_data):
+37 ['email_data', 'scores', 'i', 'subject', 'domain', 'words'] ["[('Project deadline tomorrow', 'client.org', 120), ('URGENT: Meeting rescheduled', 'company.com', 75), ('Weekly newsletter', 'marketing.com', 350)]", '[]', '0', "'Project deadline tomorrow'", "'client.org'", '120']
+PARAM_MAPPING {'subject': {'actual_var': 'subject', 'value': 'Project deadline tomorrow'}, 'sender_domain': {'actual_var': 'domain', 'value': 'client.org'}, 'word_count': {'actual_var': 'words', 'value': 120}}
+FUNCTION_ENTER 4 calculate_priority def calculate_priority(subject, sender_domain, word_count):
+4 ['subject', 'sender_domain', 'word_count'] [{'_type': 'str', '_value': 'Project deadline tomorrow'}, {'_type': 'str', '_value': 'client.org'}, {'_type': 'int', '_value': 120}]
+6 subject_lower = subject.lower()
+6 ['subject', 'sender_domain', 'word_count', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', "'project deadline tomorrow'"]
+9 urgency_level = 3
+9 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', "'project deadline tomorrow'"]
+10 sender_importance = 5 if "company.com" in sender_domain else 2
+10 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', '2', "'project deadline tomorrow'"]
+13 length_factor = min(word_count // 50, 4)  # Cap at 4
+13 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', '2', '2', "'project deadline tomorrow'"]
+16 urgent_keywords = ["urgent", "important", "asap", "deadline"]
+16 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', '2', '2', "['urgent', 'important', 'asap', 'deadline']", "'project deadline tomorrow'"]
+17 keyword_bonus = 0
+17 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', '2', '2', "['urgent', 'important', 'asap', 'deadline']", '0', "'project deadline tomorrow'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['subject_lower'] ["'project deadline tomorrow'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'urgent'", "'project deadline tomorrow'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'important'", "'project deadline tomorrow'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'asap'", "'project deadline tomorrow'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'deadline'", "'project deadline tomorrow'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'deadline'", "'project deadline tomorrow'"]
+23 base_score = urgency_level + sender_importance + length_factor + keyword_bonus
+23 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'base_score', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', '2', '2', "['urgent', 'important', 'asap', 'deadline']", '2', '9', "'project deadline tomorrow'"]
+26 return min(base_score, 10)
+26 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'base_score', 'subject_lower'] ["'Project deadline tomorrow'", "'client.org'", '120', '3', '2', '2', "['urgent', 'important', 'asap', 'deadline']", '2', '9', "'project deadline tomorrow'"]
+FUNCTION_RETURN 26 calculate_priority {'_type': 'int', '_value': 9}
+37 for i, (subject, domain, words) in enumerate(email_data):
+37 ['email_data', 'scores', 'i', 'subject', 'domain', 'words'] ["[('Project deadline tomorrow', 'client.org', 120), ('URGENT: Meeting rescheduled', 'company.com', 75), ('Weekly newsletter', 'marketing.com', 350)]", '[9]', '1', "'URGENT: Meeting rescheduled'", "'company.com'", '75']
+PARAM_MAPPING {'subject': {'actual_var': 'subject', 'value': 'URGENT: Meeting rescheduled'}, 'sender_domain': {'actual_var': 'domain', 'value': 'company.com'}, 'word_count': {'actual_var': 'words', 'value': 75}}
+FUNCTION_ENTER 4 calculate_priority def calculate_priority(subject, sender_domain, word_count):
+4 ['subject', 'sender_domain', 'word_count'] [{'_type': 'str', '_value': 'URGENT: Meeting rescheduled'}, {'_type': 'str', '_value': 'company.com'}, {'_type': 'int', '_value': 75}]
+6 subject_lower = subject.lower()
+6 ['subject', 'sender_domain', 'word_count', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', "'urgent: meeting rescheduled'"]
+9 urgency_level = 3
+9 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', "'urgent: meeting rescheduled'"]
+10 sender_importance = 5 if "company.com" in sender_domain else 2
+10 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', '5', "'urgent: meeting rescheduled'"]
+13 length_factor = min(word_count // 50, 4)  # Cap at 4
+13 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', '5', '1', "'urgent: meeting rescheduled'"]
+16 urgent_keywords = ["urgent", "important", "asap", "deadline"]
+16 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', '5', '1', "['urgent', 'important', 'asap', 'deadline']", "'urgent: meeting rescheduled'"]
+17 keyword_bonus = 0
+17 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', '5', '1', "['urgent', 'important', 'asap', 'deadline']", '0', "'urgent: meeting rescheduled'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['subject_lower'] ["'urgent: meeting rescheduled'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'urgent'", "'urgent: meeting rescheduled'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'important'", "'urgent: meeting rescheduled'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'asap'", "'urgent: meeting rescheduled'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'deadline'", "'urgent: meeting rescheduled'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'deadline'", "'urgent: meeting rescheduled'"]
+23 base_score = urgency_level + sender_importance + length_factor + keyword_bonus
+23 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'base_score', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', '5', '1', "['urgent', 'important', 'asap', 'deadline']", '2', '11', "'urgent: meeting rescheduled'"]
+26 return min(base_score, 10)
+26 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'base_score', 'subject_lower'] ["'URGENT: Meeting rescheduled'", "'company.com'", '75', '3', '5', '1', "['urgent', 'important', 'asap', 'deadline']", '2', '11', "'urgent: meeting rescheduled'"]
+FUNCTION_RETURN 26 calculate_priority {'_type': 'int', '_value': 10}
+37 for i, (subject, domain, words) in enumerate(email_data):
+37 ['email_data', 'scores', 'i', 'subject', 'domain', 'words'] ["[('Project deadline tomorrow', 'client.org', 120), ('URGENT: Meeting rescheduled', 'company.com', 75), ('Weekly newsletter', 'marketing.com', 350)]", '[9, 10]', '2', "'Weekly newsletter'", "'marketing.com'", '350']
+PARAM_MAPPING {'subject': {'actual_var': 'subject', 'value': 'Weekly newsletter'}, 'sender_domain': {'actual_var': 'domain', 'value': 'marketing.com'}, 'word_count': {'actual_var': 'words', 'value': 350}}
+FUNCTION_ENTER 4 calculate_priority def calculate_priority(subject, sender_domain, word_count):
+4 ['subject', 'sender_domain', 'word_count'] [{'_type': 'str', '_value': 'Weekly newsletter'}, {'_type': 'str', '_value': 'marketing.com'}, {'_type': 'int', '_value': 350}]
+6 subject_lower = subject.lower()
+6 ['subject', 'sender_domain', 'word_count', 'subject_lower'] ["'Weekly newsletter'", "'marketing.com'", '350', "'weekly newsletter'"]
+9 urgency_level = 3
+9 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'subject_lower'] ["'Weekly newsletter'", "'marketing.com'", '350', '3', "'weekly newsletter'"]
+10 sender_importance = 5 if "company.com" in sender_domain else 2
+10 ['subject', 'sender_domain', 'word_count', 'urgency_level', 'sender_importance', 'subject_lower'] ["'Weekly newsletter'", "'marketing.com'", '350', '3', '2', "'weekly newsletter'"]
+13 length_factor = min(word_count // 50, 4)  # Cap at 4
+13 ['subject', 'word_count', 'urgency_level', 'sender_importance', 'length_factor', 'subject_lower'] ["'Weekly newsletter'", '350', '3', '2', '4', "'weekly newsletter'"]
+16 urgent_keywords = ["urgent", "important", "asap", "deadline"]
+16 ['subject', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'subject_lower'] ["'Weekly newsletter'", '3', '2', '4', "['urgent', 'important', 'asap', 'deadline']", "'weekly newsletter'"]
+17 keyword_bonus = 0
+17 ['subject', 'urgency_level', 'sender_importance', 'length_factor', 'urgent_keywords', 'keyword_bonus', 'subject_lower'] ["'Weekly newsletter'", '3', '2', '4', "['urgent', 'important', 'asap', 'deadline']", '0', "'weekly newsletter'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['subject_lower'] ["'weekly newsletter'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'urgent'", "'weekly newsletter'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'important'", "'weekly newsletter'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'asap'", "'weekly newsletter'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'deadline'", "'weekly newsletter'"]
+20 keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+20 ['keyword', 'subject_lower'] ["'deadline'", "'weekly newsletter'"]
+23 base_score = urgency_level + sender_importance + length_factor + keyword_bonus
+23 ['subject', 'urgency_level', 'sender_importance', 'length_factor', 'keyword_bonus', 'base_score'] ["'Weekly newsletter'", '3', '2', '4', '0', '9']
+26 return min(base_score, 10)
+26 ['subject', 'base_score'] ["'Weekly newsletter'", '9']
+FUNCTION_RETURN 26 calculate_priority {'_type': 'int', '_value': 9}
+37 for i, (subject, domain, words) in enumerate(email_data):
+37 ['email_data', 'scores', 'i', 'subject', 'domain', 'words'] ["[('Project deadline tomorrow', 'client.org', 120), ('URGENT: Meeting rescheduled', 'company.com', 75), ('Weekly newsletter', 'marketing.com', 350)]", '[9, 10, 9]', '2', "'Weekly newsletter'", "'marketing.com'", '350']
+44 priority_score = sum(scores)
+44 ['scores', 'priority_score'] ['[9, 10, 9]', '28']

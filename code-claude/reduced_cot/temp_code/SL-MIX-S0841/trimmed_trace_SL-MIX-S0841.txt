@@ -1,0 +1,93 @@
+55
+final_water_level
+---
+45 evaporation_factor = 0.4
+45 ['rainfall_data', 'evaporation_factor'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4']
+48 final_water_level = calculate_water_level(rainfall_data, evaporation_factor)
+48 ['rainfall_data', 'evaporation_factor'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4']
+3 initial_level = 100  # Starting water level in reservoir
+3 ['rainfall', 'evaporation', 'initial_level'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '100']
+4 water_level = initial_level
+4 ['rainfall', 'evaporation', 'initial_level', 'water_level'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '100', '100']
+6 max_recorded = -float('inf')
+6 [] []
+7 min_recorded = float('inf')
+7 [] []
+10 for day, amount in rainfall.items():
+10 [] []
+12 water_level += amount
+12 [] []
+16 max_recorded = max(max_recorded, water_level)
+16 [] []
+17 min_recorded = min(min_recorded, water_level)
+17 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '125', '125', '125', "'Monday'", '25']
+20 daily_evaporation = amount * evaporation if amount > 0 else 5
+20 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '125', '125', '125', "'Monday'", '25', '10.0']
+21 water_level -= daily_evaporation
+21 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '125', "'Monday'", '25', '10.0']
+24 water_level = max(0, water_level)
+24 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '125', "'Monday'", '25', '10.0']
+10 for day, amount in rainfall.items():
+10 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '125', "'Tuesday'", '0', '10.0']
+12 water_level += amount
+12 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '125', "'Tuesday'", '0', '10.0']
+16 max_recorded = max(max_recorded, water_level)
+16 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '125', "'Tuesday'", '0', '10.0']
+17 min_recorded = min(min_recorded, water_level)
+17 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '115.0', "'Tuesday'", '0', '10.0']
+20 daily_evaporation = amount * evaporation if amount > 0 else 5
+20 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '115.0', '125', '115.0', "'Tuesday'", '0', '5']
+21 water_level -= daily_evaporation
+21 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '110.0', '125', '115.0', "'Tuesday'", '0', '5']
+24 water_level = max(0, water_level)
+24 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '110.0', '125', '115.0', "'Tuesday'", '0', '5']
+10 for day, amount in rainfall.items():
+10 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '110.0', '125', '115.0', "'Wednesday'", '15', '5']
+12 water_level += amount
+12 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '125.0', '125', '115.0', "'Wednesday'", '15', '5']
+16 max_recorded = max(max_recorded, water_level)
+16 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '125.0', '125', '115.0', "'Wednesday'", '15', '5']
+17 min_recorded = min(min_recorded, water_level)
+17 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '125.0', '125', '115.0', "'Wednesday'", '15', '5']
+20 daily_evaporation = amount * evaporation if amount > 0 else 5
+20 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '125.0', '125', '115.0', "'Wednesday'", '15', '6.0']
+21 water_level -= daily_evaporation
+21 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '119.0', '125', '115.0', "'Wednesday'", '15', '6.0']
+24 water_level = max(0, water_level)
+24 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '119.0', '125', '115.0', "'Wednesday'", '15', '6.0']
+10 for day, amount in rainfall.items():
+10 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '119.0', '125', '115.0', "'Thursday'", '30', '6.0']
+12 water_level += amount
+12 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '149.0', '125', '115.0', "'Thursday'", '30', '6.0']
+16 max_recorded = max(max_recorded, water_level)
+16 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '149.0', '149.0', '115.0', "'Thursday'", '30', '6.0']
+17 min_recorded = min(min_recorded, water_level)
+17 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '149.0', '149.0', '115.0', "'Thursday'", '30', '6.0']
+20 daily_evaporation = amount * evaporation if amount > 0 else 5
+20 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '149.0', '149.0', '115.0', "'Thursday'", '30', '12.0']
+21 water_level -= daily_evaporation
+21 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '137.0', '149.0', '115.0', "'Thursday'", '30', '12.0']
+24 water_level = max(0, water_level)
+24 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '137.0', '149.0', '115.0', "'Thursday'", '30', '12.0']
+10 for day, amount in rainfall.items():
+10 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '137.0', '149.0', '115.0', "'Friday'", '10', '12.0']
+12 water_level += amount
+12 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '147.0', '149.0', '115.0', "'Friday'", '10', '12.0']
+16 max_recorded = max(max_recorded, water_level)
+16 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '147.0', '149.0', '115.0', "'Friday'", '10', '12.0']
+17 min_recorded = min(min_recorded, water_level)
+17 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '147.0', '149.0', '115.0', "'Friday'", '10', '12.0']
+20 daily_evaporation = amount * evaporation if amount > 0 else 5
+20 ['rainfall', 'evaporation', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '0.4', '147.0', '149.0', '115.0', "'Friday'", '10', '4.0']
+21 water_level -= daily_evaporation
+21 ['rainfall', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount', 'daily_evaporation'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '143.0', '149.0', '115.0', "'Friday'", '10', '4.0']
+24 water_level = max(0, water_level)
+24 ['rainfall', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '143.0', '149.0', '115.0', "'Friday'", '10']
+10 for day, amount in rainfall.items():
+10 ['rainfall', 'water_level', 'max_recorded', 'min_recorded', 'day', 'amount'] ['{Monday: 25, Tuesday: 0, Wednesday: 15, ...}', '143.0', '149.0', '115.0', "'Friday'", '10']
+30 season_factor = 0.8 if min_recorded < 50 else 1.2
+30 ['water_level', 'max_recorded', 'min_recorded', 'season_factor'] ['143.0', '149.0', '115.0', '1.2']
+33 return water_level * (season_factor if max_recorded > 150 else 1.0)
+33 ['water_level', 'max_recorded', 'season_factor'] ['143.0', '149.0', '1.2']
+55 print(f"Result: {final_water_level}")
+55 ['final_water_level'] ['143.0']

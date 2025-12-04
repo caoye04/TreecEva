@@ -1,0 +1,311 @@
+84
+security_level
+---
+82 security_level = calculate_security_score(password_data)
+82 ['password_data'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]"]
+PARAM_MAPPING {'password_data': {'actual_var': 'password_data', 'value': [{'username': 'admin', 'password': 'Secure123!', 'timestamp': '14:25'}, {'username': 'user1', 'password': 'password123', 'timestamp': '09:30'}, {'username': 'developer', 'password': 'C0d3r@2023', 'timestamp': '11:45'}]}}
+FUNCTION_ENTER 1 calculate_security_score def calculate_security_score(password_data):
+1 ['password_data'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'username': {'_type': 'str', '_value': 'admin'}, 'password': {'_type': 'str', '_value': 'Secure123!'}, 'timestamp': {'_type': 'str', '_value': '14:25'}}, '_len': 3}, {'_type': 'dict', '_items': {'username': {'_type': 'str', '_value': 'user1'}, 'password': {'_type': 'str', '_value': 'password123'}, 'timestamp': {'_type': 'str', '_value': '09:30'}}, '_len': 3}, {'_type': 'dict', '_items': {'username': {'_type': 'str', '_value': 'developer'}, 'password': {'_type': 'str', '_value': 'C0d3r@2023'}, 'timestamp': {'_type': 'str', '_value': '11:45'}}, '_len': 3}], '_len': 3}]
+3 base_score = 0
+3 ['password_data', 'base_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0']
+4 length_factor = 0
+4 ['password_data', 'base_score', 'length_factor'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0']
+5 complexity_bonus = 0
+5 ['password_data', 'base_score', 'length_factor', 'complexity_bonus'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0', '0']
+6 penalty = 0
+6 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0', '0', '0']
+9 for entry in password_data:
+9 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0', '0', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}"]
+11 password = entry['password']
+11 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0', '0', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'"]
+15 if len(password) >= 12:
+15 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0', '0', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'"]
+17 elif len(password) >= 8:
+17 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '0', '0', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'"]
+18 length_factor = 30
+18 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '0', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'"]
+23 has_upper = any(c.isupper() for c in password)
+23 [] []
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'S'"]
+24 has_lower = any(c.islower() for c in password)
+24 [] []
+24 has_lower = any(c.islower() for c in password)
+24 ['c'] ["'S'"]
+24 has_lower = any(c.islower() for c in password)
+24 ['c'] ["'e'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 [] []
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'S'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'e'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'c'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'u'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'r'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'e'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'1'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 [] []
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'S'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'e'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'c'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'u'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'r'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'e'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'1'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'2'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'3'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'!'"]
+29 complexity_count = sum([has_upper, has_lower, has_digit, has_special])
+29 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '0', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4']
+30 complexity_bonus = complexity_count * 10
+30 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4']
+33 common_patterns = ['123', 'abc', 'password', 'admin']
+33 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']"]
+34 pattern_check = password.lower()
+34 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'"]
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'"]
+36 if pattern in pattern_check:
+36 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '0', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'"]
+37 penalty += 15
+37 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '15', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'"]
+38 break
+38 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '15', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'"]
+41 entry_score = length_factor + complexity_bonus - penalty
+41 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '15', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+44 if entry_score > base_score:
+44 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '0', '30', '40', '15', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+45 base_score = entry_score
+45 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+9 for entry in password_data:
+9 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'Secure123!'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+11 password = entry['password']
+11 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+15 if len(password) >= 12:
+15 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+17 elif len(password) >= 8:
+17 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+18 length_factor = 30
+18 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+23 has_upper = any(c.isupper() for c in password)
+23 [] []
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'p'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'a'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'s'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'s'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'w'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'o'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'r'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'d'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'1'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'2'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'3'"]
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'3'"]
+24 has_lower = any(c.islower() for c in password)
+24 [] []
+24 has_lower = any(c.islower() for c in password)
+24 ['c'] ["'p'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 [] []
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'p'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'a'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'s'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'s'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'w'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'o'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'r'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'d'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'1'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 [] []
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'p'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'a'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'s'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'s'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'w'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'o'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'r'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'d'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'1'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'2'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'3'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'3'"]
+29 complexity_count = sum([has_upper, has_lower, has_digit, has_special])
+29 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+30 complexity_bonus = complexity_count * 10
+30 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+33 common_patterns = ['123', 'abc', 'password', 'admin']
+33 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'secure123!'", "'123'", '55']
+34 pattern_check = password.lower()
+34 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '55']
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '55']
+36 if pattern in pattern_check:
+36 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '15', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '55']
+37 penalty += 15
+37 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '55']
+38 break
+38 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '55']
+41 entry_score = length_factor + complexity_bonus - penalty
+41 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+44 if entry_score > base_score:
+44 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'user1', password: 'password123', timestamp: '09:30'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+9 for entry in password_data:
+9 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'password123'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+11 password = entry['password']
+11 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+15 if len(password) >= 12:
+15 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+17 elif len(password) >= 8:
+17 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+18 length_factor = 30
+18 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", 'False', 'True', 'True', 'False', '2', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+23 has_upper = any(c.isupper() for c in password)
+23 [] []
+23 has_upper = any(c.isupper() for c in password)
+23 ['c'] ["'C'"]
+24 has_lower = any(c.islower() for c in password)
+24 [] []
+24 has_lower = any(c.islower() for c in password)
+24 ['c'] ["'C'"]
+24 has_lower = any(c.islower() for c in password)
+24 ['c'] ["'0'"]
+24 has_lower = any(c.islower() for c in password)
+24 ['c'] ["'d'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 [] []
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'C'"]
+25 has_digit = any(c.isdigit() for c in password)
+25 ['c'] ["'0'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 [] []
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'C'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'0'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'d'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'3'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'r'"]
+26 has_special = any(not c.isalnum() for c in password)
+26 ['c'] ["'@'"]
+29 complexity_count = sum([has_upper, has_lower, has_digit, has_special])
+29 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '20', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", 'True', 'True', 'True', 'True', '4', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+30 complexity_bonus = complexity_count * 10
+30 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'complexity_count', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", '4', "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+33 common_patterns = ['123', 'abc', 'password', 'admin']
+33 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", "['123', 'abc', 'password', 'admin']", "'password123'", "'123'", '20']
+34 pattern_check = password.lower()
+34 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'password', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "'C0d3r@2023'", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'123'", '20']
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'123'", '20']
+36 if pattern in pattern_check:
+36 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'123'", '20']
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'abc'", '20']
+36 if pattern in pattern_check:
+36 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'abc'", '20']
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'password'", '20']
+36 if pattern in pattern_check:
+36 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'password'", '20']
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'admin'", '20']
+36 if pattern in pattern_check:
+36 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern_check', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'c0d3r@2023'", "'admin'", '20']
+35 for pattern in common_patterns:
+35 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'common_patterns', 'pattern', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", "['123', 'abc', 'password', 'admin']", "'admin'", '20']
+41 entry_score = length_factor + complexity_bonus - penalty
+41 ['password_data', 'base_score', 'length_factor', 'complexity_bonus', 'penalty', 'entry', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', '30', '40', '30', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", '40']
+44 if entry_score > base_score:
+44 ['password_data', 'base_score', 'entry', 'entry_score'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", '55', "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", '40']
+9 for entry in password_data:
+9 ['password_data', 'entry'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}"]
+54 username_stats = {}
+54 ['password_data', 'entry', 'username_stats'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", '{}']
+55 for entry in password_data:
+55 ['password_data', 'entry', 'username_stats'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", '{}']
+56 first_char = entry['username'][0].lower() if entry['username'] else ''
+56 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", '{}', "'a'"]
+57 if first_char in username_stats:
+57 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", '{}', "'a'"]
+60 username_stats[first_char] = 1
+60 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'admin', password: 'Secure123!', timestamp: '14:25'}", '{a: 1}', "'a'"]
+55 for entry in password_data:
+55 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'user1', password: 'password123', timestamp: '09:30'}", '{a: 1}', "'a'"]
+56 first_char = entry['username'][0].lower() if entry['username'] else ''
+56 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'user1', password: 'password123', timestamp: '09:30'}", '{a: 1}', "'u'"]
+57 if first_char in username_stats:
+57 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'user1', password: 'password123', timestamp: '09:30'}", '{a: 1}', "'u'"]
+60 username_stats[first_char] = 1
+60 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'user1', password: 'password123', timestamp: '09:30'}", '{a: 1, u: 1}', "'u'"]
+55 for entry in password_data:
+55 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", '{a: 1, u: 1}', "'u'"]
+56 first_char = entry['username'][0].lower() if entry['username'] else ''
+56 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", '{a: 1, u: 1}', "'d'"]
+57 if first_char in username_stats:
+57 ['password_data', 'entry', 'username_stats', 'first_char'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}", '{a: 1, u: 1}', "'d'"]
+55 for entry in password_data:
+55 ['password_data', 'entry'] ["[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]", "{username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}"]
+67 if base_score >= 70:
+67 [] []
+69 elif base_score >= 40:
+69 [] []
+70 return 2  # Medium security
+70 [] []
+FUNCTION_RETURN 70 calculate_security_score {'_type': 'int', '_value': 2}
+84 print(f"Result: {security_level}")
+84 ['security_level'] ['2']

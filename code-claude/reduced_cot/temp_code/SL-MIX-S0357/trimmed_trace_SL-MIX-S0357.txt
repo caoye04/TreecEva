@@ -1,0 +1,167 @@
+59
+target_hash
+---
+33 base_signal = [42, -17, 28, 13, -5, 104, 76, -42, 19, 11]
+33 ['base_signal'] ['[42, -17, 28, 13, -5, ...]']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['42']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['-17']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['28']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['13']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['-5']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['104']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['76']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['-42']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['19']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['x'] ['11']
+34 signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+34 ['base_signal', 'signal_strength'] ['[42, -17, 28, 13, -5, ...]', '[42, 28, 13, 104, 76, ...]']
+37 noise_factors = [3, 7, 2, 9, 4]
+37 ['base_signal', 'signal_strength', 'noise_factors'] ['[42, -17, 28, 13, -5, ...]', '[42, 28, 13, 104, 76, ...]', '[3, 7, 2, 9, 4]']
+38 primary_noise = noise_factors[2]  # Only this value is relevant
+38 ['base_signal', 'signal_strength', 'noise_factors', 'primary_noise'] ['[42, -17, 28, 13, -5, ...]', '[42, 28, 13, 104, 76, ...]', '[3, 7, 2, 9, 4]', '2']
+PARAM_MAPPING {'signal': {'actual_var': 'base_signal', 'value': [42, -17, 28, 13, -5, 104, 76, -42, 19, 11]}}
+FUNCTION_ENTER 8 analyze_frequencies def analyze_frequencies(signal):
+8 ['signal'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': -17}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -5}, {'_type': 'int', '_value': 104}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': -42}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 11}], '_len': 10}]
+10 freq_counter = Counter(signal)
+10 ['signal', 'freq_counter'] ['[42, -17, 28, 13, -5, ...]', '{42: 1, -17: 1, 28: 1, ...}']
+11 return freq_counter.most_common(3)
+11 ['signal', 'freq_counter'] ['[42, -17, 28, 13, -5, ...]', '{42: 1, -17: 1, 28: 1, ...}']
+FUNCTION_RETURN 11 analyze_frequencies {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 1}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': -17}, {'_type': 'int', '_value': 1}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 1}], '_len': 2}], '_len': 3}
+PARAM_MAPPING {'data': {'actual_var': 'base_signal', 'value': [42, -17, 28, 13, -5, 104, 76, -42, 19, 11]}, 'threshold': {'actual_var': '10', 'value': '10'}}
+FUNCTION_ENTER 13 filter_noise def filter_noise(data, threshold):
+13 ['data', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': -17}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': -5}, {'_type': 'int', '_value': 104}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': -42}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 11}], '_len': 10}, {'_type': 'int', '_value': 10}]
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '42']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '-17']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '28']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '13']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '-5']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '104']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '76']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '-42']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '19']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold', 'x'] ['[42, -17, 28, 13, -5, ...]', '10', '11']
+15 return [x for x in data if abs(x) > threshold]
+15 ['data', 'threshold'] ['[42, -17, 28, 13, -5, ...]', '10']
+FUNCTION_RETURN 15 filter_noise {'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': -17}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': 104}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': -42}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 11}], '_len': 9}
+50 interference_pattern = calculate_interference(base_signal, primary_noise)
+50 ['base_signal', 'signal_strength', 'primary_noise'] ['[42, -17, 28, 13, -5, ...]', '[42, 28, 13, 104, 76, ...]', '2']
+19 interference = defaultdict(int)
+19 ['signal', 'noise_level', 'interference'] ['[42, -17, 28, 13, -5, ...]', '2', '{}']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{}', '0', '42']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{}', '0', '42']
+22 interference[i % 5] += val
+22 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42}', '0', '42']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42}', '1', '-17']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42}', '1', '-17']
+24 interference[i % 3] -= val // 2
+24 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42, 1: 9}', '1', '-17']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42, 1: 9}', '2', '28']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42, 1: 9}', '2', '28']
+22 interference[i % 5] += val
+22 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42, 1: 9, 2: 28}', '2', '28']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42, 1: 9, 2: 28}', '3', '13']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 42, 1: 9, 2: 28}', '3', '13']
+24 interference[i % 3] -= val // 2
+24 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: 28}', '3', '13']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: 28}', '4', '-5']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: 28}', '4', '-5']
+22 interference[i % 5] += val
+22 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: 28, ...}', '4', '-5']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: 28, ...}', '5', '104']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: 28, ...}', '5', '104']
+24 interference[i % 3] -= val // 2
+24 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: -24, ...}', '5', '104']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: -24, ...}', '6', '76']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 9, 2: -24, ...}', '6', '76']
+22 interference[i % 5] += val
+22 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 85, 2: -24, ...}', '6', '76']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 85, 2: -24, ...}', '7', '-42']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 85, 2: -24, ...}', '7', '-42']
+24 interference[i % 3] -= val // 2
+24 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 106, 2: -24, ...}', '7', '-42']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 106, 2: -24, ...}', '8', '19']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 106, 2: -24, ...}', '8', '19']
+22 interference[i % 5] += val
+22 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 106, 2: -24, ...}', '8', '19']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 106, 2: -24, ...}', '9', '11']
+21 if i % 2 == 0:
+21 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 36, 1: 106, 2: -24, ...}', '9', '11']
+24 interference[i % 3] -= val // 2
+24 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 31, 1: 106, 2: -24, ...}', '9', '11']
+20 for i, val in enumerate(signal):
+20 ['signal', 'noise_level', 'interference', 'i', 'val'] ['[42, -17, 28, 13, -5, ...]', '2', '{0: 31, 1: 106, 2: -24, ...}', '9', '11']
+27 result = [0] * 5
+27 ['noise_level', 'interference', 'result'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[0, 0, 0, 0, 0]']
+28 for k, v in interference.items():
+28 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[0, 0, 0, 0, 0]', '0', '31']
+29 result[k] = (v * noise_level) % 1337
+29 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 0, 0, 0, 0]', '0', '31']
+28 for k, v in interference.items():
+28 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 0, 0, 0, 0]', '1', '106']
+29 result[k] = (v * noise_level) % 1337
+29 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 0, 0, 0]', '1', '106']
+28 for k, v in interference.items():
+28 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 0, 0, 0]', '2', '-24']
+29 result[k] = (v * noise_level) % 1337
+29 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 1289, 0, 0]', '2', '-24']
+28 for k, v in interference.items():
+28 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 1289, 0, 0]', '4', '-5']
+29 result[k] = (v * noise_level) % 1337
+29 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 1289, 0, 1327]', '4', '-5']
+28 for k, v in interference.items():
+28 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 1289, 0, 1327]', '3', '19']
+29 result[k] = (v * noise_level) % 1337
+29 ['noise_level', 'interference', 'result', 'k', 'v'] ['2', '{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 1289, 38, 1327]', '3', '19']
+28 for k, v in interference.items():
+28 ['interference', 'result', 'k', 'v'] ['{0: 31, 1: 106, 2: -24, ...}', '[62, 212, 1289, 38, 1327]', '3', '19']
+30 return result
+30 ['result'] ['[62, 212, 1289, 38, 1327]']
+59 target_hash = calculate_hash(signal_strength, interference_pattern)
+59 ['signal_strength', 'interference_pattern'] ['[42, 28, 13, 104, 76, ...]', '[62, 212, 1289, 38, 1327]']
+PARAM_MAPPING {'strength': {'actual_var': 'signal_strength', 'value': [42, 28, 13, 104, 76, 19, 11]}, 'pattern': {'actual_var': 'interference_pattern', 'value': [62, 212, 1289, 38, 1327]}}
+FUNCTION_ENTER 3 calculate_hash def calculate_hash(strength, pattern):
+3 ['strength', 'pattern'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 13}, {'_type': 'int', '_value': 104}, {'_type': 'int', '_value': 76}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 11}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 62}, {'_type': 'int', '_value': 212}, {'_type': 'int', '_value': 1289}, {'_type': 'int', '_value': 38}, {'_type': 'int', '_value': 1327}], '_len': 5}]
+5 base_value = sum(strength) % 997
+5 ['strength', 'pattern', 'base_value'] ['[42, 28, 13, 104, 76, ...]', '[62, 212, 1289, 38, 1327]', '293']
+6 return (base_value * pattern[2]) % 10000
+6 ['pattern', 'base_value'] ['[62, 212, 1289, 38, 1327]', '293']
+FUNCTION_RETURN 6 calculate_hash {'_type': 'int', '_value': 7677}

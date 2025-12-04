@@ -1,0 +1,2917 @@
+Target: Find the value of variable valid_combinations after [line 82] executes
+
+[line 55]  max_power_limit = 25
+Assign: max_power_limit = 25
+[line 56]  min_components = 2
+Assign: min_components = 2
+[line 61]  available_components = ['A1', 'A2', 'B1', 'B3', 'C1', 'C2']
+Compute: ['A1', 'A2', 'B1', 'B3', 'C1', 'C2'] = ['A1', 'A2', 'B1', 'B3', 'C1', ...]
+[line 64]  potential_configs = []
+Compute: [] = []
+[line 65]  for i in range(min_components, min(5, len(available_components) + 1)):
+Loop Start: i takes its first value 2
+[line 65]  for i in range(min_components, min(5, len(available_components) + 1)):
+Loop End: Iteration finished
+[line 65]  for i in range(min_components, min(5, len(available_components) + 1)):
+Loop End: Iteration finished
+[line 65]  for i in range(min_components, min(5, len(available_components) + 1)):
+Loop End: Iteration finished
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where component_throughput={A1: 50, A2: 80, A3: 120, ...} (an unknown source), available_components=['A1', 'A2', 'B1', 'B3', 'C1', ...] (defined at [line 61]) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='A1' (an unknown source) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='A2' (an unknown source) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='B1' (an unknown source) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='B3' (an unknown source) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='C1' (an unknown source) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='C2' (an unknown source) = ?
+[line 72]  potential_throughput = sum(component_throughput.get(c, 0) for c in available_components) // 2
+Compute: sum(component_throughput.get(c, 0) for c in available_components) // 2, where c='C2' (an unknown source) = ?
+[line 73]  optimal_config, max_throughput = optimize_network(available_components, potential_throughput)
+(Missing param: 'func_name')
+[line 18]  best_config = []
+Compute: [] = []
+[line 19]  max_throughput = 0
+Assign: max_throughput = 0
+[line 20]  for i in range(1, len(components) + 1):
+Loop Start: i takes its first value 1
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Start: subset takes its first value ('A1')
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=50 (defined at [line 22]) = 50
+[line 25]  best_config = subset
+Compute: subset, where subset=('A1') (defined at [line 21]) = ('A1')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2') (iteration 2)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=80 (defined at [line 22]) = 80
+[line 25]  best_config = subset
+Compute: subset, where subset=('A2') (defined at [line 21]) = ('A2')
+... [Line 21] repeats 65 more times ...
+... [Line 21] repeats 65 more times ...
+... [Line 21] repeats 65 more times ...
+... [Line 21] repeats 65 more times ...
+... [Line 21] repeats 65 more times ...
+[line 20]  for i in range(1, len(components) + 1):
+Loop Iteration: i is now 2 (iteration 2)
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2') (iteration 8)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=130 (defined at [line 22]) = 130
+[line 25]  best_config = subset
+Compute: subset, where subset=('A1', 'A2') (defined at [line 21]) = ('A1', 'A2')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1') (iteration 9)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B3') (iteration 10)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'C1') (iteration 11)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'C2') (iteration 12)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=140 (defined at [line 22]) = 140
+[line 25]  best_config = subset
+Compute: subset, where subset=('A1', 'C2') (defined at [line 21]) = ('A1', 'C2')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1') (iteration 13)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=150 (defined at [line 22]) = 150
+[line 25]  best_config = subset
+Compute: subset, where subset=('A2', 'B1') (defined at [line 21]) = ('A2', 'B1')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B3') (iteration 14)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'C1') (iteration 15)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'C2') (iteration 16)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=170 (defined at [line 22]) = 170
+[line 25]  best_config = subset
+Compute: subset, where subset=('A2', 'C2') (defined at [line 21]) = ('A2', 'C2')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'B3') (iteration 17)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'C1') (iteration 18)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'C2') (iteration 19)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B3', 'C1') (iteration 20)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B3', 'C2') (iteration 21)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('C1', 'C2') (iteration 22)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop End: Iteration finished
+[line 20]  for i in range(1, len(components) + 1):
+Loop Iteration: i is now 3 (iteration 3)
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1') (iteration 24)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=200 (defined at [line 22]) = 200
+[line 25]  best_config = subset
+Compute: subset, where subset=('A1', 'A2', 'B1') (defined at [line 21]) = ('A1', 'A2', 'B1')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B3') (iteration 25)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'C1') (iteration 26)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'C2') (iteration 27)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=220 (defined at [line 22]) = 220
+[line 25]  best_config = subset
+Compute: subset, where subset=('A1', 'A2', 'C2') (defined at [line 21]) = ('A1', 'A2', 'C2')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'B3') (iteration 28)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'C1') (iteration 29)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'C2') (iteration 30)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B3', 'C1') (iteration 31)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B3', 'C2') (iteration 32)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'C1', 'C2') (iteration 33)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'B3') (iteration 34)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'C1') (iteration 35)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'C2') (iteration 36)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B3', 'C1') (iteration 37)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B3', 'C2') (iteration 38)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 22]  throughput = sum(component_throughput.get(c, 0) for c in subset)
+Call function sum(component_throughput.get(c, 0) for c in subset)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 24]  max_throughput = throughput
+Compute: throughput, where throughput=230 (defined at [line 22]) = 230
+[line 25]  best_config = subset
+Compute: subset, where subset=('A2', 'B3', 'C2') (defined at [line 21]) = ('A2', 'B3', 'C2')
+[line 21]  for subset in itertools.combinations(components, i):
+Loop End: Iteration finished
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'B3', 'C1') (iteration 40)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'B3', 'C2') (iteration 41)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'C1', 'C2') (iteration 42)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B3', 'C1', 'C2') (iteration 43)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop End: Iteration finished
+[line 20]  for i in range(1, len(components) + 1):
+Loop Iteration: i is now 4 (iteration 4)
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'B3') (iteration 45)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'C1') (iteration 46)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'C2') (iteration 47)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B3', 'C1') (iteration 48)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B3', 'C2') (iteration 49)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'C1', 'C2') (iteration 50)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'B3', 'C1') (iteration 51)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'B3', 'C2') (iteration 52)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'C1', 'C2') (iteration 53)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B3', 'C1', 'C2') (iteration 54)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'B3', 'C1') (iteration 55)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'B3', 'C2') (iteration 56)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'C1', 'C2') (iteration 57)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B3', 'C1', 'C2') (iteration 58)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('B1', 'B3', 'C1', 'C2') (iteration 59)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop End: Iteration finished
+[line 20]  for i in range(1, len(components) + 1):
+Loop Iteration: i is now 5 (iteration 5)
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'B3', 'C1') (iteration 61)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'B3', 'C2') (iteration 62)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'C1', 'C2') (iteration 63)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B3', 'C1', 'C2') (iteration 64)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'B1', 'B3', 'C1', 'C2') (iteration 65)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A2', 'B1', 'B3', 'C1', 'C2') (iteration 66)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop End: Iteration finished
+[line 20]  for i in range(1, len(components) + 1):
+Loop Iteration: i is now 6 (iteration 6)
+[line 21]  for subset in itertools.combinations(components, i):
+Loop Iteration: subset is now ('A1', 'A2', 'B1', 'B3', 'C1', ...) (iteration 68)
+[line 23]  if throughput > max_throughput and throughput <= target_throughput * 1.2:
+Condition: True, entering 'if' block
+[line 21]  for subset in itertools.combinations(components, i):
+Loop End: Iteration finished
+[line 20]  for i in range(1, len(components) + 1):
+Loop End: Iteration finished
+[line 26]  return best_config, max_throughput
+Return: best_config, max_throughput
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 82]  valid_combinations = len([c for c in potential_configs if is_valid_config(c)])
+Call function len([c for c in potential_configs if is_valid_config(c)])
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 5]  total_power = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 6]  return total_power <= max_power_limit and len(config) >= min_components
+Return: total_power <= max_power_limit and len(config) >= min_components
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+[line 10]  if not config:
+Condition: True, entering 'if' block
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 12]  power_used = sum(component_power.get(c, 0) for c in config)
+Call function sum(component_power.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 13]  performance = sum(component_performance.get(c, 0) for c in config)
+Call function sum(component_performance.get(c, 0) for c in config)
+[line 14]  return performance / power_used if power_used > 0 else 0
+Return: performance / power_used if power_used > 0 else 0
+
+Answer: valid_combinations = 37 (last updated on defined at [line 82])

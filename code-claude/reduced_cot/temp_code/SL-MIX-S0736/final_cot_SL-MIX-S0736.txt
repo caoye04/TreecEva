@@ -1,0 +1,106 @@
+Target: Find the value of variable optimal_bandwidth after [line 110] executes
+
+[line 77]  for i, packet in enumerate(network_data):
+(Missing param: 'iter_var')
+[line 79]  correct_checksum = calculate_checksum(packet[:-1])
+Call function calculate_checksum(packet[:-1])
+[line 3]  base_value = sum([(i * val) for i, val in enumerate(data_packet)])
+Call function sum([(i * val) for i, val in enumerate(data_packet)])
+[line 4]  return (base_value & 0xFF) ^ (base_value >> 8)
+Return: (base_value & 0xFF) ^ (base_value >> 8)
+[line 80]  network_data[i][-1] = correct_checksum
+(Missing param: 'result')
+[line 77]  for i, packet in enumerate(network_data):
+(Missing param: 'iter_var')
+[line 79]  correct_checksum = calculate_checksum(packet[:-1])
+Call function calculate_checksum(packet[:-1])
+[line 4]  return (base_value & 0xFF) ^ (base_value >> 8)
+Return: (base_value & 0xFF) ^ (base_value >> 8)
+[line 80]  network_data[i][-1] = correct_checksum
+(Missing param: 'result')
+... [Line 77] repeats 2 more times ...
+... [Line 77] repeats 2 more times ...
+... [Line 77] repeats 2 more times ...
+... [Line 77] repeats 2 more times ...
+[line 77]  for i, packet in enumerate(network_data):
+(Missing param: 'iter_var')
+[line 79]  correct_checksum = calculate_checksum(packet[:-1])
+Call function calculate_checksum(packet[:-1])
+[line 4]  return (base_value & 0xFF) ^ (base_value >> 8)
+Return: (base_value & 0xFF) ^ (base_value >> 8)
+[line 80]  network_data[i][-1] = correct_checksum
+(Missing param: 'result')
+[line 77]  for i, packet in enumerate(network_data):
+Loop End: Iteration finished
+[line 93]  true_threshold = 30  # Actual threshold used for optimization
+Assign: true_threshold = 30
+[line 101]  for packet in network_data:
+Loop Start: packet takes its first value [10, 15, 1024, 3, 16]
+[line 102]  source, destination = packet[0], packet[1]
+(Missing param: 'result')
+[line 103]  if source > destination:
+Condition: True, entering 'if' block
+[line 101]  for packet in network_data:
+Loop Iteration: packet is now [8, 12, 512, 2, 22] (iteration 2)
+[line 102]  source, destination = packet[0], packet[1]
+(Missing param: 'result')
+[line 103]  if source > destination:
+Condition: True, entering 'if' block
+... [Line 101] repeats 4 more times ...
+... [Line 101] repeats 4 more times ...
+... [Line 101] repeats 4 more times ...
+[line 101]  for packet in network_data:
+Loop Iteration: packet is now [3, 18, 896, 3, 0] (iteration 7)
+[line 102]  source, destination = packet[0], packet[1]
+(Missing param: 'result')
+[line 103]  if source > destination:
+Condition: True, entering 'if' block
+[line 101]  for packet in network_data:
+Loop End: Iteration finished
+[line 109]  optimal_bandwidth = packet_analyzer(network_data, true_threshold)
+Call function packet_analyzer(network_data=[[10, 15, 1024, 3, 16], [8, 12, 512, 2, 22], [5, 20, 2048, 5, 51], [12, 9, 768, 4, 19], [7, 14, 1536, 1, 29], ...] (an unknown source), true_threshold=30 (defined at [line 93]))
+[line 6]  def packet_analyzer(network_data, threshold):
+Enter function packet_analyzer: network_data=[[10, 15, 1024, 3, 16], [8, 12, 512, 2, 22], [5, 20, 2048, 5, 51], [12, 9, 768, 4, 19], [7, 14, 1536, 1, 29], ...], threshold=30 (true_threshold defined at [line 93])
+  [line 8]  traffic_patterns = {}
+  Compute: {} = {}
+  [line 10]  baseline = 0
+  Assign: baseline = 0
+  [line 13]  for packet in network_data:
+  Loop Start: packet takes its first value [10, 15, 1024, 3, 16]
+  [line 15]  if calculate_checksum(packet) != packet[-1]:
+  Condition: True, entering 'if' block
+  [line 4]  return (base_value & 0xFF) ^ (base_value >> 8)
+  Return: (base_value & 0xFF) ^ (base_value >> 8)
+  [line 13]  for packet in network_data:
+  Loop Iteration: packet is now [8, 12, 512, 2, 22] (iteration 2)
+  [line 15]  if calculate_checksum(packet) != packet[-1]:
+  Condition: True, entering 'if' block
+  [line 4]  return (base_value & 0xFF) ^ (base_value >> 8)
+  Return: (base_value & 0xFF) ^ (base_value >> 8)
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+... [Line 13] repeats 4 more times ...
+  [line 13]  for packet in network_data:
+  Loop Iteration: packet is now [3, 18, 896, 3, 0] (iteration 7)
+  [line 15]  if calculate_checksum(packet) != packet[-1]:
+  Condition: True, entering 'if' block
+  [line 4]  return (base_value & 0xFF) ^ (base_value >> 8)
+  Return: (base_value & 0xFF) ^ (base_value >> 8)
+  [line 13]  for packet in network_data:
+  Loop End: Iteration finished
+  [line 36]  potential_values = []
+  Compute: [] = []
+  [line 37]  for route, packets in traffic_patterns.items():
+  (Missing param: 'iter_var')
+  [line 53]  if potential_values:
+  Condition: True, entering 'if' block
+  [line 57]  optimal = baseline * 0.75
+  Compute: baseline * 0.75, where baseline=0 (defined at [line 10]) = 0.0
+  [line 60]  return int(optimal) ^ (threshold & 0xFF)
+  Return: int(optimal) ^ (threshold & 0xFF)
+Function packet_analyzer returns 30
+[line 110]  print(f"Result: {optimal_bandwidth}")
+Output: f"Result: {optimal_bandwidth}"
+
+Answer: optimal_bandwidth = 30 (last updated on defined at [line 109])

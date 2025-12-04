@@ -1,0 +1,116 @@
+Target: Find the value of variable effective_power after [line 63] executes
+
+[line 3]  fluctuation_index = 0
+Assign: fluctuation_index = 0
+[line 4]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 5]  delta = abs(reading - baseline)
+Call function abs(reading - baseline)
+[line 6]  if delta > 50:
+Condition: True, entering 'if' block
+[line 7]  fluctuation_index += delta * 0.1
+Update: fluctuation_index changed from 0 (defined at defined at [line 3]) to 0+delta * 0.1 = 5.800000000000001
+[line 4]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 5]  delta = abs(reading - baseline)
+Call function abs(reading - baseline)
+[line 6]  if delta > 50:
+Condition: True, entering 'if' block
+[line 7]  fluctuation_index += delta * 0.1
+Update: fluctuation_index changed from 5.800000000000001 (defined at defined at [line 7]) to 5.800000000000001+delta * 0.1 = 12.0
+[line 4]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 5]  delta = abs(reading - baseline)
+Call function abs(reading - baseline)
+[line 6]  if delta > 50:
+Condition: True, entering 'if' block
+[line 7]  fluctuation_index += delta * 0.1
+Update: fluctuation_index changed from 12.0 (defined at defined at [line 7]) to 12.0+delta * 0.1 = 17.5
+[line 4]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 5]  delta = abs(reading - baseline)
+Call function abs(reading - baseline)
+[line 6]  if delta > 50:
+Condition: True, entering 'if' block
+[line 7]  fluctuation_index += delta * 0.1
+Update: fluctuation_index changed from 17.5 (defined at defined at [line 7]) to 17.5+delta * 0.1 = 23.4
+[line 4]  for i, reading in enumerate(readings):
+Loop End: Iteration finished
+[line 10]  return max(0, min(fluctuation_index, 100))
+Return: max(0, min(fluctuation_index, 100))
+[line 12]  def optimize_configuration(settings, target_efficiency):
+Enter function optimize_configuration: settings={main: {active: True, priority: 'critical', efficiency: 0.95}, backup: {active: False, priority: 'high', efficiency: 0.85}, auxiliary: {active: True, priority: 'normal', efficiency: 0.75}}, target_efficiency=0.8
+  [line 14]  optimization_factor = 0
+  Assign: optimization_factor = 0
+  [line 15]  priority_levels = {'critical': 3, 'high': 2, 'normal': 1, 'low': 0.5}
+  Compute: {'critical': 3, 'high': 2, 'normal': 1, 'low': 0.5} = {critical: 3, high: 2, normal: 1, ...}
+  [line 17]  for component, config in settings.items():
+  (Missing param: 'iter_var')
+  [line 18]  if config['active']:
+  Condition: True, entering 'if' block
+  [line 19]  priority = priority_levels.get(config['priority'], 0)
+  (Missing param: 'func_name')
+  [line 20]  efficiency = config['efficiency']
+  Compute: config['efficiency'], where config={active: True, priority: 'critical', efficiency: 0.95} (an unknown source) = 0.95
+  [line 21]  if efficiency > target_efficiency:
+  Condition: True, entering 'if' block
+  [line 22]  optimization_factor += (priority * 1.5)
+  Update: optimization_factor changed from 0 (defined at defined at [line 14]) to 0+(priority * 1.5) = 4.5
+  [line 17]  for component, config in settings.items():
+  (Missing param: 'iter_var')
+  [line 18]  if config['active']:
+  Condition: True, entering 'if' block
+  [line 17]  for component, config in settings.items():
+  (Missing param: 'iter_var')
+  [line 18]  if config['active']:
+  Condition: True, entering 'if' block
+  [line 19]  priority = priority_levels.get(config['priority'], 0)
+  (Missing param: 'func_name')
+  [line 20]  efficiency = config['efficiency']
+  Compute: config['efficiency'], where config={active: True, priority: 'normal', efficiency: 0.75} (an unknown source), efficiency=0.95 (defined at [line 20]) = 0.75
+  [line 21]  if efficiency > target_efficiency:
+  Condition: True, entering 'if' block
+  [line 24]  optimization_factor += (priority * 0.8)
+  Update: optimization_factor changed from 4.5 (defined at defined at [line 22]) to 4.5+(priority * 0.8) = 5.3
+  [line 17]  for component, config in settings.items():
+  Loop End: Iteration finished
+  [line 26]  return optimization_factor
+  Return: optimization_factor=5.3 (defined at [line 24])
+Function optimize_configuration returns 5.3
+[line 28]  def calculate_power(current_readings, threshold_values):
+Enter function calculate_power: current_readings={voltage: 220, amperage: 5, resistance: 3, ...}, threshold_values={optimal_temp: 30, critical_temp: 85, max_voltage: 250, ...}
+  [line 31]  voltage = current_readings.get('voltage', 0)
+  (Missing param: 'func_name')
+  [line 32]  amperage = current_readings.get('amperage', 0)
+  (Missing param: 'func_name')
+  [line 33]  resistance = current_readings.get('resistance', 1)  # Default to 1 to avoid division by zero
+  (Missing param: 'func_name')
+  [line 34]  temperature = current_readings.get('temperature', 25)  # Default room temperature
+  (Missing param: 'func_name')
+  [line 37]  nominal_power = voltage * amperage
+  Compute: voltage * amperage, where voltage=220 (an unknown source), amperage=5 (an unknown source) = 1100
+  [line 40]  temp_factor = 1.0 - (max(0, temperature - threshold_values['optimal_temp']) * 0.01)
+  Compute: 1.0 - (max(0, temperature - threshold_values['optimal_temp']) * 0.01), where temperature=45 (an unknown source), threshold_values={optimal_temp: 30, critical_temp: 85, max_voltage: 250, ...} (parameter threshold_values) = 0.85
+  [line 43]  resistance_loss = (amperage ** 2) * resistance
+  Compute: (amperage ** 2) * resistance, where amperage=5 (an unknown source), resistance=3 (an unknown source) = 75
+  [line 52]  if temperature > threshold_values.get('critical_temp', 85):
+  Condition: True, entering 'if' block
+  [line 58]  failsafe_mode = False
+  Assign: failsafe_mode = ?
+  [line 59]  backup_systems = []
+  Compute: [] = ?
+  [line 62]  raw_power = nominal_power * temp_factor
+  Compute: nominal_power * temp_factor, where nominal_power=1100 (defined at [line 37]), temp_factor=0.85 (defined at [line 40]) = 935.0
+  [line 63]  effective_power = max(0, raw_power - resistance_loss)
+  Call function max(0, raw_power - resistance_loss)
+  [line 66]  efficiency_rating = effective_power / nominal_power if nominal_power > 0 else 0
+  Compute: effective_power / nominal_power if nominal_power > 0 else 0, where effective_power=860.0 (defined at [line 63]), nominal_power=1100 (defined at [line 37]) = ?
+  [line 72]  if failsafe_mode and len(backup_systems) > 0:
+  Condition: True, entering 'if' block
+  [line 74]  elif efficiency_rating < 0.5:
+  'elif' Condition: True, entering block
+  [line 79]  return round(effective_power, 2)
+  Return: round(effective_power, 2)
+Function calculate_power returns 860.0
+
+Answer: effective_power = 860.0 (last updated on defined at [line 63])

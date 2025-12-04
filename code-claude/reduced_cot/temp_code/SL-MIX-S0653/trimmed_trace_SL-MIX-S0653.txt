@@ -1,0 +1,125 @@
+85
+target_position
+---
+84 target_position = calculate_position(inventory, moves)
+84 ['inventory', 'moves'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]"]
+PARAM_MAPPING {'inventory': {'actual_var': 'inventory', 'value': {'compass': 3, 'map': 1, 'food': 5, 'weather': ['sunny', 'clear']}}, 'moves': {'actual_var': 'moves', 'value': [('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ('turn', 2), ('forward', 2)]}}
+FUNCTION_ENTER 1 calculate_position def calculate_position(inventory, moves):
+1 ['inventory', 'moves'] [{'_type': 'dict', '_items': {'compass': {'_type': 'int', '_value': 3}, 'map': {'_type': 'int', '_value': 1}, 'food': {'_type': 'int', '_value': 5}, 'weather': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'sunny'}, {'_type': 'str', '_value': 'clear'}], '_len': 2}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'forward'}, {'_type': 'int', '_value': 5}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'turn'}, {'_type': 'int', '_value': 1}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'forward'}, {'_type': 'int', '_value': 3}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'terrain'}, {'_type': 'str', '_value': 'forest'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'forward'}, {'_type': 'int', '_value': 5}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'turn'}, {'_type': 'int', '_value': 2}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'forward'}, {'_type': 'int', '_value': 2}], '_len': 2}], '_len': 7}]
+3 x, y = 0, 0
+3 ['inventory', 'moves', 'x', 'y'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0']
+7 compass_bonus = 0
+7 ['inventory', 'moves', 'x', 'y', 'compass_bonus'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '0']
+8 if 'compass' in inventory:
+8 ['inventory', 'moves', 'x', 'y', 'compass_bonus'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '0']
+9 compass_value = inventory['compass']
+9 ['inventory', 'moves', 'x', 'y', 'compass_bonus', 'compass_value'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '0', '3']
+10 if compass_value > 0:
+10 ['inventory', 'moves', 'x', 'y', 'compass_bonus', 'compass_value'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '0', '3']
+11 compass_bonus = min(compass_value, 2)
+11 ['inventory', 'moves', 'x', 'y', 'compass_bonus', 'compass_value'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '3']
+22 current_terrain = 'plains'
+22 ['inventory', 'moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'"]
+26 if 'rainy' in inventory.get('weather', []):
+26 ['inventory', 'moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain'] ['{compass: 3, map: 1, food: 5, ...}', "[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'"]
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)"]
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)", '5']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)", '5']
+36 terrain_factor = terrain_factors.get(current_terrain, 1.0)
+36 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)", '5', '1.2']
+37 effective_value = int(value * terrain_factor)
+37 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)", '5', '1.2', '6']
+39 if direction == 0:  # North
+39 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '0', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)", '5', '1.2', '6']
+40 y += effective_value
+40 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 5)", '5', '1.2', '6']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('turn', 1)", '5', '1.2', '6']
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('turn', 1)", '1', '1.2', '6']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('turn', 1)", '1', '1.2', '6']
+48 elif command == 'turn':
+48 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('turn', 1)", '1', '1.2', '6']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '1', '1.2', '6']
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '6']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '6']
+36 terrain_factor = terrain_factors.get(current_terrain, 1.0)
+36 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '6']
+37 effective_value = int(value * terrain_factor)
+37 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '3']
+39 if direction == 0:  # North
+39 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '3']
+41 elif direction == 1:  # East
+41 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '0', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '3']
+42 x += effective_value
+42 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('forward', 3)", '3', '1.2', '3']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('terrain', 'forest')", '3', '1.2', '3']
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('terrain', 'forest')", "'forest'", '1.2', '3']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('terrain', 'forest')", "'forest'", '1.2', '3']
+48 elif command == 'turn':
+48 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('terrain', 'forest')", "'forest'", '1.2', '3']
+52 elif command == 'terrain':
+52 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'plains'", "('terrain', 'forest')", "'forest'", '1.2', '3']
+54 current_terrain = value
+54 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('terrain', 'forest')", "'forest'", '1.2', '3']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", "'forest'", '1.2', '3']
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '1.2', '3']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '1.2', '3']
+36 terrain_factor = terrain_factors.get(current_terrain, 1.0)
+36 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '0.8', '3']
+37 effective_value = int(value * terrain_factor)
+37 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '0.8', '4']
+39 if direction == 0:  # North
+39 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '0.8', '4']
+41 elif direction == 1:  # East
+41 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '3', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '0.8', '4']
+42 x += effective_value
+42 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 5)", '5', '0.8', '4']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('turn', 2)", '5', '0.8', '4']
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('turn', 2)", '2', '0.8', '4']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('turn', 2)", '2', '0.8', '4']
+48 elif command == 'turn':
+48 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('turn', 2)", '2', '0.8', '4']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 2)", '2', '0.8', '4']
+32 value = move[1]
+32 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 2)", '2', '0.8', '4']
+34 if command == 'forward':
+34 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 2)", '2', '0.8', '4']
+36 terrain_factor = terrain_factors.get(current_terrain, 1.0)
+36 ['moves', 'x', 'y', 'compass_bonus', 'terrain_factors', 'current_terrain', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', '{forest: 0.8, mountain: 0.5, plains: 1.2, ...}', "'forest'", "('forward', 2)", '2', '0.8', '4']
+37 effective_value = int(value * terrain_factor)
+37 ['moves', 'x', 'y', 'compass_bonus', 'move', 'value', 'terrain_factor', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', "('forward', 2)", '2', '0.8', '1']
+39 if direction == 0:  # North
+39 ['moves', 'x', 'y', 'compass_bonus', 'move', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', "('forward', 2)", '1']
+41 elif direction == 1:  # East
+41 ['moves', 'x', 'y', 'compass_bonus', 'move', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', "('forward', 2)", '1']
+43 elif direction == 2:  # South
+43 ['moves', 'x', 'y', 'compass_bonus', 'move', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '7', '6', '2', "('forward', 2)", '1']
+46 x -= effective_value
+46 ['moves', 'x', 'y', 'compass_bonus', 'move', 'effective_value'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '6', '6', '2', "('forward', 2)", '1']
+30 for move in moves:
+30 ['moves', 'x', 'y', 'compass_bonus', 'move'] ["[('forward', 5), ('turn', 1), ('forward', 3), ('terrain', 'forest'), ('forward', 5), ...]", '6', '6', '2', "('forward', 2)"]
+57 position_value = abs(x) + abs(y) + compass_bonus
+57 ['x', 'y', 'compass_bonus', 'position_value'] ['6', '6', '2', '14']
+62 return position_value
+62 ['position_value'] ['14']
+FUNCTION_RETURN 62 calculate_position {'_type': 'int', '_value': 14}
+85 print(f"Result: {target_position}")
+85 ['target_position'] ['14']

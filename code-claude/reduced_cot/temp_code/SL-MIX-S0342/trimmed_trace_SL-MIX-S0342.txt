@@ -1,0 +1,425 @@
+102
+actual_revenue
+---
+101 actual_revenue = calculate_adjusted_revenue(transactions, tax_rates)
+101 ['transactions', 'tax_rates'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}']
+PARAM_MAPPING {'transactions': {'actual_var': 'transactions', 'value': {'north': {'product': 2500, 'service': 1800, 'subscription': 950}, 'east': {'product': 3200, 'service': 2100, 'subscription': 1050}, 'west': {'product': 2800, 'service': 1950, 'other': 500}}}, 'tax_rates': {'actual_var': 'tax_rates', 'value': {'north': 0.08, 'east': 0.06, 'south': 0.05, 'west': 0.09}}}
+FUNCTION_ENTER 12 calculate_adjusted_revenue def calculate_adjusted_revenue(transactions, tax_rates):
+12 ['transactions', 'tax_rates'] [{'_type': 'dict', '_items': {'north': {'_type': 'dict', '_items': {'product': {'_type': 'int', '_value': 2500}, 'service': {'_type': 'int', '_value': 1800}, 'subscription': {'_type': 'int', '_value': 950}}, '_len': 3}, 'east': {'_type': 'dict', '_items': {'product': {'_type': 'int', '_value': 3200}, 'service': {'_type': 'int', '_value': 2100}, 'subscription': {'_type': 'int', '_value': 1050}}, '_len': 3}, 'west': {'_type': 'dict', '_items': {'product': {'_type': 'int', '_value': 2800}, 'service': {'_type': 'int', '_value': 1950}, 'other': {'_type': 'int', '_value': 500}}, '_len': 3}}, '_len': 3}, {'_type': 'dict', '_items': {'north': {'_type': 'float', '_value': 0.08}, 'east': {'_type': 'float', '_value': 0.06}, 'south': {'_type': 'float', '_value': 0.05}, 'west': {'_type': 'float', '_value': 0.09}}, '_len': 4}]
+14 raw_sum = 0
+14 ['transactions', 'tax_rates', 'raw_sum'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0']
+29 for region, items in transactions.items():
+29 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}']
+31 region_modifier = len(region) % 3
+31 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '2']
+32 if region_modifier == 0:
+32 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '2']
+34 elif region_modifier == 1:
+34 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '2']
+37 region_modifier = 1.1
+37 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1']
+2 if n <= 0:
+2 ['n'] ['5']
+4 elif n == 1:
+4 ['n'] ['5']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['5']
+2 if n <= 0:
+2 ['n'] ['4']
+4 elif n == 1:
+4 ['n'] ['4']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['4']
+2 if n <= 0:
+2 ['n'] ['3']
+4 elif n == 1:
+4 ['n'] ['3']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['3']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['3']
+4 elif n == 1:
+4 ['n'] ['3']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['3']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+43 regional_total = 0
+43 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '0']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '0', "'product'", '2500']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '0', "'product'", '2500']
+48 item_value = amount * region_modifier
+48 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '0', "'product'", '2500', '2750.0']
+51 regional_total += item_value
+51 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '2750.0', "'product'", '2500', '2750.0']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '2750.0', "'service'", '1800', '2750.0']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '2750.0', "'service'", '1800', '2750.0']
+52 elif item_type == 'service':
+52 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '2750.0', "'service'", '1800', '2750.0']
+54 item_value = amount * region_modifier * 1.2
+54 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '2750.0', "'service'", '1800', '2376.0']
+55 regional_total += item_value
+55 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5126.0', "'service'", '1800', '2376.0']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5126.0', "'subscription'", '950', '2376.0']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5126.0', "'subscription'", '950', '2376.0']
+52 elif item_type == 'service':
+52 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5126.0', "'subscription'", '950', '2376.0']
+56 elif item_type == 'subscription':
+56 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5126.0', "'subscription'", '950', '2376.0']
+58 item_value = amount * region_modifier * market_segments['online']
+58 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5126.0', "'subscription'", '950', '261.25']
+59 regional_total += item_value
+59 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5387.25', "'subscription'", '950', '261.25']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5387.25', "'subscription'", '950', '261.25']
+65 tax_rate = tax_rates.get(region, 0.05)  # Default 5% if not specified
+65 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5387.25', "'subscription'", '950', '261.25', '0.08']
+66 tax_adjusted = regional_total * (1 + tax_rate)
+66 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '0', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+72 raw_sum += tax_adjusted
+72 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'north'", '{product: 2500, service: 1800, subscription: 950}', '1.1', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+29 for region, items in transactions.items():
+29 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.1', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+31 region_modifier = len(region) % 3
+31 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+32 if region_modifier == 0:
+32 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+34 elif region_modifier == 1:
+34 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+35 region_modifier = 1.0
+35 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5387.25', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+2 if n <= 0:
+2 ['n'] ['5']
+4 elif n == 1:
+4 ['n'] ['5']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['5']
+2 if n <= 0:
+2 ['n'] ['4']
+4 elif n == 1:
+4 ['n'] ['4']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['4']
+2 if n <= 0:
+2 ['n'] ['3']
+4 elif n == 1:
+4 ['n'] ['3']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['3']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['3']
+4 elif n == 1:
+4 ['n'] ['3']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['3']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+43 regional_total = 0
+43 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '0', "'subscription'", '950', '261.25', '0.08', '5818.2300000000005']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '0', "'product'", '3200', '261.25', '0.08', '5818.2300000000005']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '0', "'product'", '3200', '261.25', '0.08', '5818.2300000000005']
+48 item_value = amount * region_modifier
+48 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '0', "'product'", '3200', '3200.0', '0.08', '5818.2300000000005']
+51 regional_total += item_value
+51 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '3200.0', "'product'", '3200', '3200.0', '0.08', '5818.2300000000005']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '3200.0', "'service'", '2100', '3200.0', '0.08', '5818.2300000000005']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '3200.0', "'service'", '2100', '3200.0', '0.08', '5818.2300000000005']
+52 elif item_type == 'service':
+52 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '3200.0', "'service'", '2100', '3200.0', '0.08', '5818.2300000000005']
+54 item_value = amount * region_modifier * 1.2
+54 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '3200.0', "'service'", '2100', '2520.0', '0.08', '5818.2300000000005']
+55 regional_total += item_value
+55 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5720.0', "'service'", '2100', '2520.0', '0.08', '5818.2300000000005']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5720.0', "'subscription'", '1050', '2520.0', '0.08', '5818.2300000000005']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5720.0', "'subscription'", '1050', '2520.0', '0.08', '5818.2300000000005']
+52 elif item_type == 'service':
+52 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5720.0', "'subscription'", '1050', '2520.0', '0.08', '5818.2300000000005']
+56 elif item_type == 'subscription':
+56 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5720.0', "'subscription'", '1050', '2520.0', '0.08', '5818.2300000000005']
+58 item_value = amount * region_modifier * market_segments['online']
+58 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5720.0', "'subscription'", '1050', '262.5', '0.08', '5818.2300000000005']
+59 regional_total += item_value
+59 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.08', '5818.2300000000005']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.08', '5818.2300000000005']
+65 tax_rate = tax_rates.get(region, 0.05)  # Default 5% if not specified
+65 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.06', '5818.2300000000005']
+66 tax_adjusted = regional_total * (1 + tax_rate)
+66 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '5818.2300000000005', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+72 raw_sum += tax_adjusted
+72 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'east'", '{product: 3200, service: 2100, subscription: 1050}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+29 for region, items in transactions.items():
+29 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+31 region_modifier = len(region) % 3
+31 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+32 if region_modifier == 0:
+32 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+34 elif region_modifier == 1:
+34 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+35 region_modifier = 1.0
+35 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '5982.5', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+2 if n <= 0:
+2 ['n'] ['5']
+4 elif n == 1:
+4 ['n'] ['5']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['5']
+2 if n <= 0:
+2 ['n'] ['4']
+4 elif n == 1:
+4 ['n'] ['4']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['4']
+2 if n <= 0:
+2 ['n'] ['3']
+4 elif n == 1:
+4 ['n'] ['3']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['3']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 ['n'] ['1']
+4 elif n == 1:
+4 ['n'] ['1']
+5 return 1
+5 ['n'] ['1']
+2 if n <= 0:
+2 ['n'] ['0']
+3 return 0
+3 ['n'] ['0']
+2 if n <= 0:
+2 ['n'] ['3']
+4 elif n == 1:
+4 ['n'] ['3']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['3']
+2 if n <= 0:
+2 ['n'] ['2']
+4 elif n == 1:
+4 ['n'] ['2']
+7 return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
+7 ['n'] ['2']
+2 if n <= 0:
+2 [] []
+4 elif n == 1:
+4 [] []
+5 return 1
+5 [] []
+2 if n <= 0:
+2 [] []
+3 return 0
+3 [] []
+2 if n <= 0:
+2 [] []
+4 elif n == 1:
+4 [] []
+5 return 1
+5 [] []
+43 regional_total = 0
+43 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '0', "'subscription'", '1050', '262.5', '0.06', '6341.450000000001']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '0', "'product'", '2800', '262.5', '0.06', '6341.450000000001']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '0', "'product'", '2800', '262.5', '0.06', '6341.450000000001']
+48 item_value = amount * region_modifier
+48 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '0', "'product'", '2800', '2800.0', '0.06', '6341.450000000001']
+51 regional_total += item_value
+51 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '2800.0', "'product'", '2800', '2800.0', '0.06', '6341.450000000001']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '2800.0', "'service'", '1950', '2800.0', '0.06', '6341.450000000001']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '2800.0', "'service'", '1950', '2800.0', '0.06', '6341.450000000001']
+52 elif item_type == 'service':
+52 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '2800.0', "'service'", '1950', '2800.0', '0.06', '6341.450000000001']
+54 item_value = amount * region_modifier * 1.2
+54 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'region_modifier', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '1.0', '2800.0', "'service'", '1950', '2340.0', '0.06', '6341.450000000001']
+55 regional_total += item_value
+55 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'item_value', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5140.0', "'service'", '1950', '2340.0', '0.06', '6341.450000000001']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5140.0', "'other'", '500', '0.06', '6341.450000000001']
+46 if item_type == 'product':
+46 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5140.0', "'other'", '500', '0.06', '6341.450000000001']
+52 elif item_type == 'service':
+52 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5140.0', "'other'", '500', '0.06', '6341.450000000001']
+56 elif item_type == 'subscription':
+56 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5140.0', "'other'", '500', '0.06', '6341.450000000001']
+62 regional_total += amount
+62 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5640.0', "'other'", '500', '0.06', '6341.450000000001']
+44 for item_type, amount in items.items():
+44 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'item_type', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5640.0', "'other'", '500', '0.06', '6341.450000000001']
+65 tax_rate = tax_rates.get(region, 0.05)  # Default 5% if not specified
+65 ['transactions', 'tax_rates', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '{north: 0.08, east: 0.06, south: 0.05, ...}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5640.0', '500', '0.09', '6341.450000000001']
+66 tax_adjusted = regional_total * (1 + tax_rate)
+66 ['transactions', 'raw_sum', 'market_segments', 'region', 'items', 'regional_total', 'amount', 'tax_rate', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '12159.68', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '5640.0', '500', '0.09', '6147.6']
+72 raw_sum += tax_adjusted
+72 ['transactions', 'raw_sum', 'market_segments', 'region', 'items', 'amount', 'tax_adjusted'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '18307.28', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '500', '6147.6']
+29 for region, items in transactions.items():
+29 ['transactions', 'raw_sum', 'market_segments', 'region', 'items', 'amount'] ['{north: {product: 2500, service: 1800, subscription: 950}, east: {product: 3200, service: 2100, subscription: 1050}, west: {product: 2800, service: 1950, other: 500}}', '18307.28', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', "'west'", '{product: 2800, service: 1950, other: 500}', '500']
+75 discounted_revenue = apply_discount(raw_sum, market_segments['wholesale'])
+75 ['raw_sum', 'market_segments', 'amount'] ['18307.28', '{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', '500']
+10 return amount * (1 - discount_rate)
+10 ['amount', 'discount_rate'] ['18307.28', '0.35']
+78 normalized_revenue = discounted_revenue % 10000
+78 ['market_segments', 'discounted_revenue', 'normalized_revenue'] ['{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', '11899.732', '1899.732']
+81 final_revenue = normalized_revenue * (market_segments['retail'] + market_segments['wholesale'])
+81 ['market_segments', 'normalized_revenue', 'final_revenue'] ['{retail: 0.4, wholesale: 0.35, online: 0.25, ...}', '1899.732', '1424.799']
+83 return round(final_revenue, 2)
+83 ['final_revenue'] ['1424.799']
+FUNCTION_RETURN 83 calculate_adjusted_revenue {'_type': 'float', '_value': 1424.8}
+102 print(f"Result: {actual_revenue}")
+102 ['actual_revenue'] ['1424.8']

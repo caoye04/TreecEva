@@ -1,0 +1,107 @@
+58
+word_score
+---
+25 text = "programming puzzles are challenging and fun"
+25 ['text'] ["'programming puzzles are challenging and fun'"]
+26 words = text.split()
+26 ['text', 'words'] ["'programming puzzles are challenging and fun'", "['programming', 'puzzles', 'are', 'challenging', 'and', ...]"]
+33 min_length = 5
+33 ['words', 'min_length'] ["['programming', 'puzzles', 'are', 'challenging', 'and', ...]", '5']
+34 max_length = 10
+34 ['words', 'min_length', 'max_length'] ["['programming', 'puzzles', 'are', 'challenging', 'and', ...]", '5', '10']
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['word'] ["'programming'"]
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['word'] ["'puzzles'"]
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['word'] ["'are'"]
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['word'] ["'challenging'"]
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['word'] ["'and'"]
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['word'] ["'fun'"]
+35 filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+35 ['words', 'min_length', 'max_length', 'filtered_words'] ["['programming', 'puzzles', 'are', 'challenging', 'and', ...]", '5', '10', "['puzzles']"]
+41 word_index = 2 % len(filtered_words)
+41 ['filtered_words', 'word_index'] ["['puzzles']", '0']
+42 filtered_word = filtered_words[word_index]
+42 ['filtered_words', 'word_index', 'filtered_word'] ["['puzzles']", '0', "'puzzles'"]
+45 base_multipliers = [1, 2, 1, 3, 1]
+45 ['filtered_word', 'base_multipliers'] ["'puzzles'", '[1, 2, 1, 3, 1]']
+46 multiplier_cycles = itertools.cycle(base_multipliers)
+46 ['filtered_word', 'base_multipliers', 'multiplier_cycles'] ["'puzzles'", '[1, 2, 1, 3, 1]', '<itertools.cycle object at 0x0000022B19B13940>']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['0']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['1']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['2']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['3']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['4']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['5']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['_'] ['6']
+47 multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+47 ['filtered_word', 'multiplier_cycles', 'multipliers'] ["'puzzles'", '<itertools.cycle object at 0x0000022B19B13940>', '[1, 2, 1, 3, 1, ...]']
+53 word_score = calculate_word_value(filtered_word, multipliers)
+53 ['filtered_word', 'multipliers'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]']
+PARAM_MAPPING {'word': {'actual_var': 'filtered_word', 'value': 'puzzles'}, 'multipliers': {'actual_var': 'multipliers', 'value': [1, 2, 1, 3, 1, 1, 2]}}
+FUNCTION_ENTER 3 calculate_word_value def calculate_word_value(word, multipliers):
+3 ['word', 'multipliers'] [{'_type': 'str', '_value': 'puzzles'}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 7}]
+11 value = 0
+11 ['word', 'multipliers', 'letter_values', 'value'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '0']
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '0', '0', "'p'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '0', '0', "'p'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '3', '0', "'p'"]
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '3', '1', "'u'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '3', '1', "'u'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '5', '1', "'u'"]
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '5', '2', "'z'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '5', '2', "'z'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '15', '2', "'z'"]
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '15', '3', "'z'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '15', '3', "'z'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '45', '3', "'z'"]
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '45', '4', "'l'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '45', '4', "'l'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '46', '4', "'l'"]
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '46', '5', "'e'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '46', '5', "'e'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '47', '5', "'e'"]
+12 for i, char in enumerate(word):
+12 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '47', '6', "'s'"]
+14 if i < len(multipliers):
+14 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '47', '6', "'s'"]
+15 value += letter_values.get(char.lower(), 0) * multipliers[i]
+15 ['word', 'multipliers', 'letter_values', 'value', 'i', 'char'] ["'puzzles'", '[1, 2, 1, 3, 1, ...]', '{a: 1, b: 3, c: 3, ...}', '49', '6', "'s'"]
+12 for i, char in enumerate(word):
+12 ['word', 'value', 'i', 'char'] ["'puzzles'", '49', '6', "'s'"]
+20 length_bonus = max(0, len(word) - 4)
+20 ['word', 'value', 'length_bonus'] ["'puzzles'", '49', '3']
+22 return value + length_bonus
+22 ['value', 'length_bonus'] ['49', '3']
+FUNCTION_RETURN 22 calculate_word_value {'_type': 'int', '_value': 52}
+58 print(f"Result: {word_score}")
+58 ['word_score'] ['52']

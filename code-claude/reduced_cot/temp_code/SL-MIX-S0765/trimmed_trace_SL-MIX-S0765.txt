@@ -1,0 +1,51 @@
+41
+optimal_discount
+---
+12 cart_total = sum(cart.values())
+12 ['cart', 'cart_total'] ['{shoes: 95.0, jacket: 120.0, scarf: 25.5}', '240.5']
+15 volume_discount = 0.05 if cart_total > 150 else 0
+15 ['cart_total', 'volume_discount'] ['240.5', '0.05']
+22 season_code = 'SUMMER'
+22 ['cart_total', 'volume_discount', 'season_code'] ['240.5', '0.05', "'SUMMER'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'c'] ['240.5', '0.05', "'SUMMER'", "'S'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'c'] ['240.5', '0.05', "'SUMMER'", "'U'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'c'] ['240.5', '0.05', "'SUMMER'", "'M'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'c'] ['240.5', '0.05', "'SUMMER'", "'M'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'c'] ['240.5', '0.05', "'SUMMER'", "'E'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'c'] ['240.5', '0.05', "'SUMMER'", "'R'"]
+23 season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+23 ['cart_total', 'volume_discount', 'season_code', 'season_multiplier'] ['240.5', '0.05', "'SUMMER'", '1.3']
+29 tier_threshold = [100, 200, 300]
+29 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold'] ['240.5', '0.05', '1.3', '[100, 200, 300]']
+30 tier_rates = [0.02, 0.05, 0.08]
+30 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]']
+32 tier_discount = 0
+32 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0']
+33 for threshold, rate in zip(tier_threshold, tier_rates):
+33 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0', '100', '0.02']
+34 if cart_total > threshold:
+34 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0', '100', '0.02']
+35 tier_discount = rate
+35 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.02', '100', '0.02']
+33 for threshold, rate in zip(tier_threshold, tier_rates):
+33 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.02', '200', '0.05']
+34 if cart_total > threshold:
+34 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.02', '200', '0.05']
+35 tier_discount = rate
+35 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.05', '200', '0.05']
+33 for threshold, rate in zip(tier_threshold, tier_rates):
+33 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.05', '300', '0.08']
+34 if cart_total > threshold:
+34 ['cart_total', 'volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['240.5', '0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.05', '300', '0.08']
+33 for threshold, rate in zip(tier_threshold, tier_rates):
+33 ['volume_discount', 'season_multiplier', 'tier_threshold', 'tier_rates', 'tier_discount', 'threshold', 'rate'] ['0.05', '1.3', '[100, 200, 300]', '[0.02, 0.05, 0.08]', '0.05', '300', '0.08']
+38 tier_discount = tier_discount * season_multiplier
+38 ['volume_discount', 'season_multiplier', 'tier_discount'] ['0.05', '1.3', '0.065']
+41 optimal_discount = max(volume_discount, tier_discount) * 100
+41 ['volume_discount', 'tier_discount', 'optimal_discount'] ['0.05', '0.065', '6.5']

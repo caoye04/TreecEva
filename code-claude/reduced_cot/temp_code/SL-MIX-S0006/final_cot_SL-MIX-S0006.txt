@@ -1,0 +1,70 @@
+Target: Find the value of variable encrypted_value after [line 79] executes
+
+[line 20]  message = "Python programming is fun!"
+Assign: message = 'Python programming is fun!'
+[line 32]  vowels, consonants, specials, complexity, readability = text_analyzer(message)
+(Missing param: 'func_name')
+[line 3]  vowel_count = sum(1 for char in message.lower() if char in 'aeiou')
+Call function sum(1 for char in message.lower() if char in 'aeiou')
+[line 4]  consonant_count = sum(1 for char in message.lower() if char in 'bcdfghjklmnpqrstvwxyz')
+Call function sum(1 for char in message.lower() if char in 'bcdfghjklmnpqrstvwxyz')
+[line 5]  special_chars = set(char for char in message if not char.isalnum() and not char.isspace())
+Call function set(char for char in message if not char.isalnum() and not char.isspace())
+[line 8]  complexity_score = (vowel_count * 1.5) + (consonant_count * 0.8) + (len(special_chars) * 2.3)
+Compute: (vowel_count * 1.5) + (consonant_count * 0.8) + (len(special_chars) * 2.3), where vowel_count=6 (defined at [line 3]), consonant_count=16 (defined at [line 4]), special_chars={'!'} (defined at [line 5]) = 24.1
+[line 9]  readability_index = 100 - min(complexity_score * 1.2, 95)
+Compute: 100 - min(complexity_score * 1.2, 95), where complexity_score=24.1 (defined at [line 8]) = 71.08
+[line 10]  return vowel_count, consonant_count, len(special_chars), complexity_score, readability_index
+Return: vowel_count, consonant_count, len(special_chars), complexity_score, readability_index
+[line 35]  cipher_base = 17
+Assign: cipher_base = 17
+[line 36]  cipher_mod = 1000
+Assign: cipher_mod = 1000
+[line 37]  secret_key = 42
+Assign: secret_key = 42
+[line 46]  base_value = len(message)
+Call function len(message='Python programming is fun!' (defined at [line 20]))
+[line 47]  position_value = message.find('fun')
+(Missing param: 'func_name')
+[line 50]  if position_value < 0:
+Condition: True, entering 'if' block
+[line 54]  alternative_path = False
+Assign: alternative_path = False
+[line 57]  if alternative_path:
+Condition: True, entering 'if' block
+[line 66]  intermediate_value = (vowels * 10) + consonants
+Compute: (vowels * 10) + consonants, where vowels=6 (an unknown source), consonants=16 (an unknown source) = 76
+[line 67]  shift_amount = (specials * 5) % 16
+Compute: (specials * 5) % 16, where specials=1 (an unknown source) = 5
+[line 68]  bitwise_value = (intermediate_value << shift_amount) & 0xFF
+Compute: (intermediate_value << shift_amount) & 0xFF, where intermediate_value=76 (defined at [line 66]), shift_amount=5 (defined at [line 67]) = 128
+[line 74]  base_factor = base_value + position_value
+Compute: base_value + position_value, where base_value=26 (defined at [line 46]), position_value=22 (an unknown source) = 48
+[line 75]  security_adjustment = (secret_key * base_factor) % 100
+Compute: (secret_key * base_factor) % 100, where secret_key=42 (defined at [line 37]), base_factor=48 (defined at [line 74]) = 16
+[line 76]  processed_value = (bitwise_value + security_adjustment) % 255
+Compute: (bitwise_value + security_adjustment) % 255, where bitwise_value=128 (defined at [line 68]), security_adjustment=16 (defined at [line 75]) = 144
+[line 79]  encrypted_value = (cipher_base * processed_value) % cipher_mod
+Compute: (cipher_base * processed_value) % cipher_mod, where cipher_base=17 (defined at [line 35]), processed_value=144 (defined at [line 76]), cipher_mod=1000 (defined at [line 36]) = 448
+[line 14]  hash_value = 0
+Assign: hash_value = 0
+[line 15]  for i, char in enumerate(data_string):
+(Missing param: 'iter_var')
+[line 16]  hash_value = (hash_value * 31 + ord(char) + i) & 0xFFFFFFFF
+Compute: (hash_value * 31 + ord(char) + i) & 0xFFFFFFFF, where hash_value=0 (defined at [line 14]), char='P' (an unknown source), i=0 (an unknown source) = 80
+[line 15]  for i, char in enumerate(data_string):
+(Missing param: 'iter_var')
+[line 16]  hash_value = (hash_value * 31 + ord(char) + i) & 0xFFFFFFFF
+Compute: (hash_value * 31 + ord(char) + i) & 0xFFFFFFFF, where hash_value=80 (defined at [line 16]), char='y' (an unknown source), i=1 (an unknown source) = 2602
+... [Line 15] repeats 23 more times ...
+... [Line 15] repeats 23 more times ...
+[line 15]  for i, char in enumerate(data_string):
+(Missing param: 'iter_var')
+[line 16]  hash_value = (hash_value * 31 + ord(char) + i) & 0xFFFFFFFF
+Compute: (hash_value * 31 + ord(char) + i) & 0xFFFFFFFF, where hash_value=2997562848 (defined at [line 16]), char='!' (an unknown source), i=25 (an unknown source) = 2730135130
+[line 15]  for i, char in enumerate(data_string):
+Loop End: Iteration finished
+[line 17]  return hash_value
+Return: hash_value=2730135130 (defined at [line 16])
+
+Answer: encrypted_value = 448 (last updated on defined at [line 79])

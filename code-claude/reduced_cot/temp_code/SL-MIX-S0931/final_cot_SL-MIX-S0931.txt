@@ -1,0 +1,98 @@
+Target: Find the value of variable priority_score after [line 83] executes
+
+[line 31]  sample_text = "The quick brown fox jumps over the lazy dog and runs away happily"
+Assign: sample_text = 'The quick brown fox jumps over the lazy dog and runs away happily'
+[line 34]  char_stats, frequent_chars = analyze_frequency(sample_text, 2)
+(Missing param: 'func_name')
+[line 3]  char_freq = {}
+Compute: {} = {}
+[line 4]  for char in text.lower():
+Loop Start: char takes its first value 't'
+[line 5]  if char.isalpha():
+Condition: True, entering 'if' block
+[line 6]  char_freq[char] = char_freq.get(char, 0) + 1
+(Missing param: 'result')
+[line 4]  for char in text.lower():
+Loop Iteration: char is now 'h' (iteration 2)
+[line 5]  if char.isalpha():
+Condition: True, entering 'if' block
+[line 6]  char_freq[char] = char_freq.get(char, 0) + 1
+(Missing param: 'result')
+... [Line 4] repeats 62 more times ...
+... [Line 4] repeats 62 more times ...
+... [Line 4] repeats 62 more times ...
+[line 4]  for char in text.lower():
+Loop Iteration: char is now 'y' (iteration 65)
+[line 5]  if char.isalpha():
+Condition: True, entering 'if' block
+[line 6]  char_freq[char] = char_freq.get(char, 0) + 1
+(Missing param: 'result')
+[line 4]  for char in text.lower():
+Loop End: Iteration finished
+[line 9]  frequent_chars = {c for c, count in char_freq.items() if count >= threshold}
+Compute: {c for c, count in char_freq.items() if count >= threshold}, where c='t' (an unknown source), count=2 (an unknown source), char_freq={t: 2, h: 3, e: 3, ...} (defined at [line 3]), threshold=2 (an unknown source) = ?
+[line 10]  return char_freq, frequent_chars
+Return: char_freq, frequent_chars
+[line 37]  segment_1 = sample_text[4:14]  # "quick brow"
+Compute: sample_text[4:14]  # "quick brow", where sample_text='The quick brown fox jumps over the lazy dog and runs away happily' (defined at [line 31]) = 'quick brow'
+[line 38]  segment_2 = sample_text[16:30]  # "fox jumps over"
+Compute: sample_text[16:30]  # "fox jumps over", where sample_text='The quick brown fox jumps over the lazy dog and runs away happily' (defined at [line 31]) = 'fox jumps over'
+[line 50]  for i, segment in enumerate([segment_1, segment_2]):
+(Missing param: 'iter_var')
+[line 51]  if i % 2 == 0:  # Even index segments
+Condition: True, entering 'if' block
+[line 50]  for i, segment in enumerate([segment_1, segment_2]):
+(Missing param: 'iter_var')
+[line 51]  if i % 2 == 0:  # Even index segments
+Condition: True, entering 'if' block
+[line 50]  for i, segment in enumerate([segment_1, segment_2]):
+Loop End: Iteration finished
+[line 60]  filtered_text = ''
+Assign: filtered_text = ''
+[line 61]  for i, char in enumerate(sample_text):
+(Missing param: 'iter_var')
+[line 63]  if i % 2 == 0 or char.lower() in 'aeiou':
+Condition: True, entering 'if' block
+[line 64]  filtered_text += char
+Update: filtered_text changed from '' (defined at defined at [line 60]) to ''+char = 'T'
+[line 61]  for i, char in enumerate(sample_text):
+(Missing param: 'iter_var')
+[line 63]  if i % 2 == 0 or char.lower() in 'aeiou':
+Condition: True, entering 'if' block
+... [Line 61] repeats 62 more times ...
+... [Line 61] repeats 62 more times ...
+... [Line 61] repeats 62 more times ...
+[line 61]  for i, char in enumerate(sample_text):
+(Missing param: 'iter_var')
+[line 63]  if i % 2 == 0 or char.lower() in 'aeiou':
+Condition: True, entering 'if' block
+[line 64]  filtered_text += char
+Update: filtered_text changed from 'Tequikbonfoxjumsoe he aydogadrun awayhapi' (defined at defined at [line 64]) to 'Tequikbonfoxjumsoe he aydogadrun awayhapi'+char = 'Tequikbonfoxjumsoe he aydogadrun awayhapiy'
+[line 61]  for i, char in enumerate(sample_text):
+Loop End: Iteration finished
+[line 67]  priority_score = calculate_word_priority(filtered_text)
+Call function calculate_word_priority(filtered_text='Tequikbonfoxjumsoe he aydogadrun awayhapiy' (defined at [line 64]))
+[line 14]  words = text.split()
+(Missing param: 'func_name')
+[line 15]  unique_words = set(words)
+Call function set(words=['Tequikbonfoxjumsoe', 'he', 'aydogadrun', 'awayhapiy'] (an unknown source))
+[line 18]  word_lengths = [len(word) for word in unique_words]
+Compute: [len(word) for word in unique_words], where word='awayhapiy' (an unknown source), unique_words={'awayhapiy', 'he', 'Tequikbonfoxjumsoe', 'aydogadrun'} (defined at [line 15]) = ?
+[line 19]  avg_length = sum(word_lengths) / len(word_lengths) if word_lengths else 0
+Compute: sum(word_lengths) / len(word_lengths) if word_lengths else 0, where word_lengths=[9, 2, 18, 10] (defined at [line 18]) = 9.75
+[line 22]  vowel_count = sum(1 for char in text.lower() if char in 'aeiou')
+Call function sum(1 for char in text.lower() if char in 'aeiou')
+[line 23]  consonant_count = sum(1 for char in text.lower() if char.isalpha() and char not in 'aeiou')
+Call function sum(1 for char in text.lower() if char.isalpha() and char not in 'aeiou')
+[line 26]  priority = (vowel_count * 2) - (consonant_count // 3) + int(avg_length)
+Compute: (vowel_count * 2) - (consonant_count // 3) + int(avg_length), where vowel_count=17 (defined at [line 22]), consonant_count=22 (defined at [line 23]), avg_length=9.75 (defined at [line 19]) = 36
+[line 28]  return priority
+Return: priority=36 (defined at [line 26])
+[line 81]  print(f"Text complexity: {complexity_index:.2f}")
+Output: f"Text complexity: {complexity_index:.2f}"
+[line 82]  print(f"Character diversity: {entropy_score}")
+Output: f"Character diversity: {entropy_score}"
+[line 83]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 36 (last updated on defined at [line 67])

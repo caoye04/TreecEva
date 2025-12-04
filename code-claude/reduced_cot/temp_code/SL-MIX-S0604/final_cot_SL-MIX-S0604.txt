@@ -1,0 +1,99 @@
+Target: Find the value of variable result after [line 65] executes
+
+[line 10]  student_scores = {'quiz': 85, 'midterm': 72, 'project': 95, 'participation': 88, 'final': 79}
+Compute: {'quiz': 85, 'midterm': 72, 'project': 95, 'participation': 88, 'final': 79} = {quiz: 85, midterm: 72, project: 95, ...}
+[line 13]  weights = {'quiz': 0.15, 'midterm': 0.25, 'project': 0.2, 'participation': 0.1, 'final': 0.3}
+Compute: {'quiz': 0.15, 'midterm': 0.25, 'project': 0.2, 'participation': 0.1, 'final': 0.3} = {quiz: 0.15, midterm: 0.25, project: 0.2, ...}
+[line 16]  extra_credit = {'quiz': 2, 'midterm': 0, 'project': 5, 'participation': 0, 'final': 3}
+Compute: {'quiz': 2, 'midterm': 0, 'project': 5, 'participation': 0, 'final': 3} = {quiz: 2, midterm: 0, project: 5, ...}
+[line 20]  process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+Compute: lambda score, component: score if component != 'participation' else min(score, 100) = ?
+[line 21]  adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+Compute: lambda w, component: w * 1.05 if component == 'final' else w = ?
+[line 64]  result = calculate_final_score(student_scores, weights)
+Call function calculate_final_score(student_scores={quiz: 85, midterm: 72, project: 95, ...} (defined at [line 10]), weights={quiz: 0.15, midterm: 0.25, project: 0.2, ...} (defined at [line 13]))
+[line 23]  def calculate_final_score(scores, weights):
+Enter function calculate_final_score: scores={quiz: 85, midterm: 72, project: 95, ...} (student_scores defined at [line 10]), weights={quiz: 0.15, midterm: 0.25, project: 0.2, ...} (weights defined at [line 13])
+  [line 25]  weighted_sum = 0
+  Assign: weighted_sum = 0
+  [line 26]  weight_total = 0
+  Assign: weight_total = 0
+  [line 33]  for component in scores:
+  Loop Start: component takes its first value 'quiz'
+  [line 35]  processed_score = process_score(scores[component], component)
+  Call function process_score(scores[component], component='quiz' (defined at [line 33]))
+  [line 20]  process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+  Compute: lambda score, component: score if component != 'participation' else min(score, 100), where score=85 (an unknown source), component='quiz' (defined at [line 33]) = ?
+  [line 38]  norm_weight = normalize_weight(weights[component])
+  Call function normalize_weight(weights[component])
+  [line 7]  return max(0, min(1, weight))
+  Return: max(0, min(1, weight))
+  [line 41]  adjusted_weight = adjust_weight(norm_weight, component)
+  Call function adjust_weight(norm_weight=0.15 (defined at [line 38]), component='quiz' (defined at [line 33]))
+  [line 21]  adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+  Compute: lambda w, component: w * 1.05 if component == 'final' else w, where w=0.15 (an unknown source), component='quiz' (defined at [line 33]) = ?
+  [line 44]  if component in extra_credit:
+  Condition: True, entering 'if' block
+  [line 48]  weighted_sum += processed_score * adjusted_weight
+  Update: weighted_sum changed from 0 (defined at defined at [line 25]) to 0+processed_score * adjusted_weight = 12.75
+  [line 49]  weight_total += adjusted_weight
+  Update: weight_total changed from 0 (defined at defined at [line 26]) to 0+adjusted_weight = 0.15
+  [line 33]  for component in scores:
+  Loop Iteration: component is now 'midterm' (iteration 2)
+  [line 35]  processed_score = process_score(scores[component], component)
+  Call function process_score(scores[component], component='midterm' (defined at [line 33]))
+  [line 20]  process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+  Compute: lambda score, component: score if component != 'participation' else min(score, 100), where score=72 (an unknown source), component='midterm' (defined at [line 33]) = ?
+  [line 38]  norm_weight = normalize_weight(weights[component])
+  Call function normalize_weight(weights[component])
+  [line 7]  return max(0, min(1, weight))
+  Return: max(0, min(1, weight))
+  [line 41]  adjusted_weight = adjust_weight(norm_weight, component)
+  Call function adjust_weight(norm_weight=0.25 (defined at [line 38]), component='midterm' (defined at [line 33]))
+  [line 21]  adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+  Compute: lambda w, component: w * 1.05 if component == 'final' else w, where w=0.25 (an unknown source), component='midterm' (defined at [line 33]) = ?
+  [line 44]  if component in extra_credit:
+  Condition: True, entering 'if' block
+  [line 48]  weighted_sum += processed_score * adjusted_weight
+  Update: weighted_sum changed from 12.75 (defined at defined at [line 48]) to 12.75+processed_score * adjusted_weight = 30.75
+  [line 49]  weight_total += adjusted_weight
+  Update: weight_total changed from 0.15 (defined at defined at [line 49]) to 0.15+adjusted_weight = 0.4
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+  [line 33]  for component in scores:
+  Loop Iteration: component is now 'final' (iteration 5)
+  [line 35]  processed_score = process_score(scores[component], component)
+  Call function process_score(scores[component], component='final' (defined at [line 33]))
+  [line 38]  norm_weight = normalize_weight(weights[component])
+  Call function normalize_weight(weights[component])
+  [line 7]  return max(0, min(1, weight))
+  Return: max(0, min(1, weight))
+  [line 41]  adjusted_weight = adjust_weight(norm_weight, component)
+  Call function adjust_weight(norm_weight=0.3 (defined at [line 38]), component='final' (defined at [line 33]))
+  [line 44]  if component in extra_credit:
+  Condition: True, entering 'if' block
+  [line 48]  weighted_sum += processed_score * adjusted_weight
+  Update: weighted_sum changed from 58.55 (defined at defined at [line 48]) to 58.55+processed_score * adjusted_weight = 83.435
+  [line 49]  weight_total += adjusted_weight
+  Update: weight_total changed from 0.7000000000000001 (defined at defined at [line 49]) to 0.7000000000000001+adjusted_weight = 1.0150000000000001
+  [line 33]  for component in scores:
+  Loop End: Iteration finished
+  [line 55]  if weight_total > 0:
+  Condition: True, entering 'if' block
+  [line 56]  final_score = weighted_sum / weight_total
+  Compute: weighted_sum / weight_total, where weighted_sum=83.435 (defined at [line 48]), weight_total=1.0150000000000001 (defined at [line 49]) = 82.20197044334975
+  [line 61]  return round(final_score, 1)
+  Return: round(final_score, 1)
+Function calculate_final_score returns 82.2
+[line 65]  print(f"Result: {result}")
+Output: f"Result: {result}"
+
+Answer: result = 82.2 (last updated on defined at [line 64])

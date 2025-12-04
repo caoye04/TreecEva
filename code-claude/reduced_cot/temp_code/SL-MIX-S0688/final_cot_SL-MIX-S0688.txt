@@ -1,0 +1,59 @@
+Target: Find the value of variable total_priority after [line 42] executes
+
+[line 27]  active_items = [item for item in inventory if item['active']]
+Compute: [item for item in inventory if item['active']], where item={id: 101, name: 'Server Backup', value: 75, ...} (an unknown source) = ?
+[line 35]  filter_condition = lambda x: x['value'] > 50
+Compute: lambda x: x['value'] > 50 = ?
+[line 36]  filtered_data = [item for item in active_items if filter_condition(item)]
+Compute: [item for item in active_items if filter_condition(item)], where item={id: 101, name: 'Server Backup', value: 75, ...} (an unknown source), active_items=[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}, {id: 105, name: 'Password Manager', value: 45, ...}] (defined at [line 27]) = ?
+[line 35]  filter_condition = lambda x: x['value'] > 50
+Compute: lambda x: x['value'] > 50, where x={id: 101, name: 'Server Backup', value: 75, ...} (an unknown source) = ?
+[line 35]  filter_condition = lambda x: x['value'] > 50
+Compute: lambda x: x['value'] > 50, where x={id: 102, name: 'Data Encryption', value: 60, ...} (an unknown source) = ?
+[line 35]  filter_condition = lambda x: x['value'] > 50
+Compute: lambda x: x['value'] > 50, where x={id: 104, name: 'Firewall Config', value: 90, ...} (an unknown source) = ?
+[line 35]  filter_condition = lambda x: x['value'] > 50
+Compute: lambda x: x['value'] > 50, where x={id: 105, name: 'Password Manager', value: 45, ...} (an unknown source) = ?
+[line 42]  total_priority = calculate_priority(filtered_data)
+Call function calculate_priority(filtered_data=[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}] (defined at [line 36]))
+[line 3]  def calculate_priority(items):
+Enter function calculate_priority: items=[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}] (filtered_data defined at [line 36])
+  [line 5]  result = 0
+  Assign: result = 0
+  [line 6]  for item in items:
+  Loop Start: item takes its first value {id: 101, name: 'Server Backup', value: 75, ...}
+  [line 7]  item_value = item['value'] if item['active'] else 0
+  Compute: item['value'] if item['active'] else 0, where item={id: 101, name: 'Server Backup', value: 75, ...} (defined at [line 6]) = 75
+  [line 8]  category_multiplier = 1.5 if item['category'] == 'critical' else 1.0
+  Compute: 1.5 if item['category'] == 'critical' else 1.0, where item={id: 101, name: 'Server Backup', value: 75, ...} (defined at [line 6]) = 1.5
+  [line 12]  priority = item_value * category_multiplier
+  Compute: item_value * category_multiplier, where item_value=75 (defined at [line 7]), category_multiplier=1.5 (defined at [line 8]) = 112.5
+  [line 13]  result += priority
+  Update: result changed from 0 (defined at defined at [line 5]) to 0+priority = 112.5
+  [line 6]  for item in items:
+  Loop Iteration: item is now {id: 102, name: 'Data Encryption', value: 60, ...} (iteration 2)
+  [line 7]  item_value = item['value'] if item['active'] else 0
+  Compute: item['value'] if item['active'] else 0, where item={id: 102, name: 'Data Encryption', value: 60, ...} (defined at [line 6]) = 60
+  [line 8]  category_multiplier = 1.5 if item['category'] == 'critical' else 1.0
+  Compute: 1.5 if item['category'] == 'critical' else 1.0, where item={id: 102, name: 'Data Encryption', value: 60, ...} (defined at [line 6]) = 1.0
+  [line 12]  priority = item_value * category_multiplier
+  Compute: item_value * category_multiplier, where item_value=60 (defined at [line 7]), category_multiplier=1.0 (defined at [line 8]) = 60.0
+  [line 13]  result += priority
+  Update: result changed from 112.5 (defined at defined at [line 13]) to 112.5+priority = 172.5
+  [line 6]  for item in items:
+  Loop Iteration: item is now {id: 104, name: 'Firewall Config', value: 90, ...} (iteration 3)
+  [line 7]  item_value = item['value'] if item['active'] else 0
+  Compute: item['value'] if item['active'] else 0, where item={id: 104, name: 'Firewall Config', value: 90, ...} (defined at [line 6]) = 90
+  [line 8]  category_multiplier = 1.5 if item['category'] == 'critical' else 1.0
+  Compute: 1.5 if item['category'] == 'critical' else 1.0, where item={id: 104, name: 'Firewall Config', value: 90, ...} (defined at [line 6]) = 1.5
+  [line 12]  priority = item_value * category_multiplier
+  Compute: item_value * category_multiplier, where item_value=90 (defined at [line 7]), category_multiplier=1.5 (defined at [line 8]) = 135.0
+  [line 13]  result += priority
+  Update: result changed from 172.5 (defined at defined at [line 13]) to 172.5+priority = 307.5
+  [line 6]  for item in items:
+  Loop End: Iteration finished
+  [line 15]  return result
+  Return: result=307.5 (defined at [line 13])
+Function calculate_priority returns 307.5
+
+Answer: total_priority = 307.5 (last updated on defined at [line 42])

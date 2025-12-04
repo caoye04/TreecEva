@@ -1,0 +1,129 @@
+53
+actual_priority
+---
+10 packet_types = Counter(packets)
+10 ['packets', 'packet_types'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}']
+14 interference_levels = []
+14 ['packets', 'packet_types', 'interference_levels'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]']
+18 frequencies = [len(p) % 10 + 5 for p in packets[:4]]
+18 ['packets', 'packet_types', 'interference_levels', 'p'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'TCP'"]
+18 frequencies = [len(p) % 10 + 5 for p in packets[:4]]
+18 ['packets', 'packet_types', 'interference_levels', 'p'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'UDP'"]
+18 frequencies = [len(p) % 10 + 5 for p in packets[:4]]
+18 ['packets', 'packet_types', 'interference_levels', 'p'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'ICMP'"]
+18 frequencies = [len(p) % 10 + 5 for p in packets[:4]]
+18 ['packets', 'packet_types', 'interference_levels', 'p'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'TCP'"]
+18 frequencies = [len(p) % 10 + 5 for p in packets[:4]]
+18 ['packets', 'packet_types', 'interference_levels', 'frequencies'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', '[8, 8, 9, 8]']
+PARAM_MAPPING {'frequencies': {'actual_var': 'frequencies', 'value': [8, 8, 9, 8]}, 'channel_width': {'actual_var': '5', 'value': '5'}}
+FUNCTION_ENTER 3 calculate_signal_strength def calculate_signal_strength(frequencies, channel_width):
+3 ['frequencies', 'channel_width'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 8}], '_len': 4}, {'_type': 'int', '_value': 5}]
+5 strength = sum([f * 0.75 for f in frequencies])
+5 ['frequencies', 'channel_width', 'f'] ['[8, 8, 9, 8]', '5', '8']
+5 strength = sum([f * 0.75 for f in frequencies])
+5 ['frequencies', 'channel_width', 'f'] ['[8, 8, 9, 8]', '5', '8']
+5 strength = sum([f * 0.75 for f in frequencies])
+5 ['frequencies', 'channel_width', 'f'] ['[8, 8, 9, 8]', '5', '9']
+5 strength = sum([f * 0.75 for f in frequencies])
+5 ['frequencies', 'channel_width', 'f'] ['[8, 8, 9, 8]', '5', '8']
+5 strength = sum([f * 0.75 for f in frequencies])
+5 ['frequencies', 'channel_width', 'strength'] ['[8, 8, 9, 8]', '5', '24.75']
+6 return strength / (channel_width * 2)
+6 ['channel_width', 'strength'] ['5', '24.75']
+FUNCTION_RETURN 6 calculate_signal_strength {'_type': 'float', '_value': 2.475}
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'TCP'", '3']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'TCP'", '3']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'UDP'", '1']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'UDP'", '1']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'ICMP'", '1']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'ICMP'", '1']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'DNS'", '1']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'DNS'", '1']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'HTTP'", '1']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'HTTP'", '1']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'FTP'", '1']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'FTP'", '1']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'SSH'", '1']
+27 if count > 3:
+27 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'SSH'", '1']
+22 for packet_type, count in packet_types.items():
+22 ['packets', 'packet_types', 'interference_levels', 'packet_type', 'count'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 1, ICMP: 1, ...}', '[]', "'SSH'", '1']
+38 if len(packets) > 10:
+38 ['packets', 'interference_levels'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '[]']
+41 distribution = packets
+41 ['packets', 'interference_levels', 'distribution'] ["['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]"]
+44 priority_scores = {}
+44 ['interference_levels', 'distribution', 'priority_scores'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{}']
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{}', '0', "'TCP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{}', '0', "'TCP'"]
+47 priority_scores[packet] = len(packet) * 2
+47 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6}', '0', "'TCP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6}', '1', "'UDP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6}', '1', "'UDP'"]
+49 priority_scores[packet] = len(packet)
+49 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3}', '1', "'UDP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3}', '2', "'ICMP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3}', '2', "'ICMP'"]
+49 priority_scores[packet] = len(packet)
+49 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4}', '2', "'ICMP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4}', '3', "'TCP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4}', '3', "'TCP'"]
+47 priority_scores[packet] = len(packet) * 2
+47 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4}', '3', "'TCP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4}', '4', "'DNS'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4}', '4', "'DNS'"]
+49 priority_scores[packet] = len(packet)
+49 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4, ...}', '4', "'DNS'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4, ...}', '5', "'TCP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 6, UDP: 3, ICMP: 4, ...}', '5', "'TCP'"]
+49 priority_scores[packet] = len(packet)
+49 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '5', "'TCP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '6', "'HTTP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '6', "'HTTP'"]
+47 priority_scores[packet] = len(packet) * 2
+47 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '6', "'HTTP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '7', "'FTP'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '7', "'FTP'"]
+49 priority_scores[packet] = len(packet)
+49 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '7', "'FTP'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '8', "'SSH'"]
+46 if i % 3 == 0:  # Every third packet gets special priority
+46 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '8', "'SSH'"]
+49 priority_scores[packet] = len(packet)
+49 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '8', "'SSH'"]
+45 for i, packet in enumerate(distribution):
+45 ['interference_levels', 'distribution', 'priority_scores', 'i', 'packet'] ['[]', "['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]", '{TCP: 3, UDP: 3, ICMP: 4, ...}', '8', "'SSH'"]
+52 noise_factor = len(interference_levels) * 5
+52 ['interference_levels', 'priority_scores', 'noise_factor'] ['[]', '{TCP: 3, UDP: 3, ICMP: 4, ...}', '0']
+53 actual_priority = sum(priority_scores.values()) - noise_factor
+53 ['priority_scores', 'noise_factor', 'actual_priority'] ['{TCP: 3, UDP: 3, ICMP: 4, ...}', '0', '27']

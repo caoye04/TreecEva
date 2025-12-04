@@ -1,0 +1,66 @@
+Target: Find the value of variable encrypted_priority after [line 72] executes
+
+[line 3]  raw_data = packet_data.strip().lower()
+(Missing param: 'func_name')
+[line 6]  packet_type = raw_data[:4]
+Compute: raw_data[:4], where raw_data='ctrl-urgent-packet-v3-enc' (an unknown source) = 'ctrl'
+[line 10]  for i in range(len(raw_data)):
+Loop Start: i takes its first value 0
+[line 11]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 10]  for i in range(len(raw_data)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 11]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 10] repeats 22 more times ...
+... [Line 10] repeats 22 more times ...
+[line 10]  for i in range(len(raw_data)):
+Loop Iteration: i is now 24 (iteration 25)
+[line 11]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 10]  for i in range(len(raw_data)):
+Loop End: Iteration finished
+[line 29]  base_priority = priority_map.get(packet_type, 75)
+(Missing param: 'func_name')
+[line 32]  urgent_flag = 'urgent' in raw_data
+Compute: 'urgent' in raw_data, where raw_data='ctrl-urgent-packet-v3-enc' (an unknown source) = True
+[line 33]  encrypted = raw_data.endswith('enc')
+(Missing param: 'func_name')
+[line 37]  priority_value = base_priority
+Compute: base_priority, where base_priority=200 (an unknown source) = 200
+[line 39]  if urgent_flag:
+Condition: True, entering 'if' block
+[line 40]  priority_value += 25
+Update: priority_value changed from 200 (defined at defined at [line 37]) to 200+25 = 225
+[line 48]  if encrypted:
+Condition: True, entering 'if' block
+[line 49]  priority_value = max(1, priority_value + 15)
+Call function max(1, priority_value + 15)
+[line 52]  header_modifier = min(header_size, 32) // 8
+Compute: min(header_size, 32) // 8, where header_size=16 (an unknown source) = 2
+[line 53]  priority_value += header_modifier
+Update: priority_value changed from 240 (defined at defined at [line 49]) to 240+header_modifier = 242
+[line 56]  hop_count = 0
+Assign: hop_count = 0
+[line 57]  for i in range(min(len(raw_data), 10)):
+Loop Start: i takes its first value 0
+[line 58]  if raw_data[i] in 'aeiou':
+Condition: True, entering 'if' block
+[line 57]  for i in range(min(len(raw_data), 10)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 58]  if raw_data[i] in 'aeiou':
+Condition: True, entering 'if' block
+... [Line 57] repeats 7 more times ...
+... [Line 57] repeats 7 more times ...
+[line 57]  for i in range(min(len(raw_data), 10)):
+Loop Iteration: i is now 9 (iteration 10)
+[line 58]  if raw_data[i] in 'aeiou':
+Condition: True, entering 'if' block
+[line 57]  for i in range(min(len(raw_data), 10)):
+Loop End: Iteration finished
+[line 62]  if hop_count > 3:
+Condition: True, entering 'if' block
+[line 72]  encrypted_priority = ((priority_value & 0xFF) << 4) | ((priority_value & 0xF00) >> 8)
+Compute: ((priority_value & 0xFF) << 4) | ((priority_value & 0xF00) >> 8), where priority_value=242 (defined at [line 53]) = 3872
+
+Answer: encrypted_priority = 3872 (last updated on defined at [line 72])

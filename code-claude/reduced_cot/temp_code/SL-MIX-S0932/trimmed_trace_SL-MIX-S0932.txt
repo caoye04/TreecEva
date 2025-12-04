@@ -1,0 +1,205 @@
+34
+valid_items
+---
+PARAM_MAPPING {'products': {'actual_var': 'products', 'value': [('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ('Action Figure', 19.99, 'toys'), ('Board Game', 29.95, 'toys'), ('Apples', 0, 'groceries')]}, 'categories': {'actual_var': 'categories', 'value': ['electronics', 'books', 'toys', 'groceries']}}
+FUNCTION_ENTER 4 process_inventory def process_inventory(products, categories):
+4 ['products', 'categories'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Smartphone'}, {'_type': 'float', '_value': 499.99}, {'_type': 'str', '_value': 'electronics'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Laptop'}, {'_type': 'float', '_value': 899.5}, {'_type': 'str', '_value': 'electronics'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Headphones'}, {'_type': 'float', '_value': 59.99}, {'_type': 'str', '_value': 'electronics'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Novel'}, {'_type': 'float', '_value': 12.95}, {'_type': 'str', '_value': 'books'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Textbook'}, {'_type': 'float', '_value': 75.0}, {'_type': 'str', '_value': 'books'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Action Figure'}, {'_type': 'float', '_value': 19.99}, {'_type': 'str', '_value': 'toys'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Board Game'}, {'_type': 'float', '_value': 29.95}, {'_type': 'str', '_value': 'toys'}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Apples'}, {'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'groceries'}], '_len': 3}], '_len': 8}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'electronics'}, {'_type': 'str', '_value': 'books'}, {'_type': 'str', '_value': 'toys'}, {'_type': 'str', '_value': 'groceries'}], '_len': 4}]
+6 category_thresholds = {'electronics': 5, 'books': 10, 'toys': 7, 'groceries': 15}
+6 ['products', 'categories', 'category_thresholds'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "['electronics', 'books', 'toys', 'groceries']", '{electronics: 5, books: 10, toys: 7, ...}']
+17 for cat in categories:
+17 ['products', 'categories', 'category_thresholds', 'cat'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "['electronics', 'books', 'toys', 'groceries']", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'"]
+17 for cat in categories:
+17 ['products', 'categories', 'category_thresholds', 'cat'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "['electronics', 'books', 'toys', 'groceries']", '{electronics: 5, books: 10, toys: 7, ...}', "'books'"]
+17 for cat in categories:
+17 ['products', 'categories', 'category_thresholds', 'cat'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "['electronics', 'books', 'toys', 'groceries']", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'"]
+17 for cat in categories:
+17 ['products', 'categories', 'category_thresholds', 'cat'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "['electronics', 'books', 'toys', 'groceries']", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'"]
+17 for cat in categories:
+17 ['products', 'categories', 'category_thresholds', 'cat'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "['electronics', 'books', 'toys', 'groceries']", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'"]
+22 for cat, threshold in category_thresholds.items():
+22 ['products', 'category_thresholds', 'cat', 'threshold'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5']
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Smartphone', 499.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Smartphone', 499.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Laptop', 899.5, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Laptop', 899.5, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Headphones', 59.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Headphones', 59.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Novel', 12.95, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Novel', 12.95, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Textbook', 75.0, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Textbook', 75.0, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Action Figure', 19.99, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Action Figure', 19.99, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Board Game', 29.95, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Board Game', 29.95, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Apples', 0, 'groceries')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'electronics'", '5', "('Apples', 0, 'groceries')"]
+22 for cat, threshold in category_thresholds.items():
+22 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Smartphone', 499.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Smartphone', 499.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Laptop', 899.5, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Laptop', 899.5, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Headphones', 59.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Headphones', 59.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Novel', 12.95, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Novel', 12.95, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Textbook', 75.0, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Textbook', 75.0, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Action Figure', 19.99, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Action Figure', 19.99, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Board Game', 29.95, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Board Game', 29.95, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Apples', 0, 'groceries')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'books'", '10', "('Apples', 0, 'groceries')"]
+22 for cat, threshold in category_thresholds.items():
+22 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Smartphone', 499.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Smartphone', 499.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Laptop', 899.5, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Laptop', 899.5, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Headphones', 59.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Headphones', 59.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Novel', 12.95, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Novel', 12.95, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Textbook', 75.0, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Textbook', 75.0, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Action Figure', 19.99, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Action Figure', 19.99, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Board Game', 29.95, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Board Game', 29.95, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Apples', 0, 'groceries')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'toys'", '7', "('Apples', 0, 'groceries')"]
+22 for cat, threshold in category_thresholds.items():
+22 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Smartphone', 499.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Smartphone', 499.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Laptop', 899.5, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Laptop', 899.5, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Headphones', 59.99, 'electronics')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Headphones', 59.99, 'electronics')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Novel', 12.95, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Novel', 12.95, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Textbook', 75.0, 'books')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Textbook', 75.0, 'books')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Action Figure', 19.99, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Action Figure', 19.99, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Board Game', 29.95, 'toys')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Board Game', 29.95, 'toys')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Apples', 0, 'groceries')"]
+24 if prod[2] == cat and prod[1] < threshold:
+24 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Apples', 0, 'groceries')"]
+23 for prod in products:
+23 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Apples', 0, 'groceries')"]
+22 for cat, threshold in category_thresholds.items():
+22 ['products', 'category_thresholds', 'cat', 'threshold', 'prod'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '{electronics: 5, books: 10, toys: 7, ...}', "'groceries'", '15', "('Apples', 0, 'groceries')"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Smartphone'", '499.99', "'electronics'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Laptop'", '899.5', "'electronics'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Headphones'", '59.99', "'electronics'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Novel'", '12.95', "'books'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Textbook'", '75.0', "'books'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Action Figure'", '19.99', "'toys'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Board Game'", '29.95', "'toys'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'name', 'price', 'category'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "'Apples'", '0', "'groceries'"]
+31 filtered_products = [(name, price, category) for name, price, category in products]
+31 ['products', 'prod', 'filtered_products'] ["[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", "('Apples', 0, 'groceries')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Smartphone', 499.99, 'electronics')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Laptop', 899.5, 'electronics')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Headphones', 59.99, 'electronics')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Novel', 12.95, 'books')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Textbook', 75.0, 'books')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Action Figure', 19.99, 'toys')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Board Game', 29.95, 'toys')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products'] ["('Apples', 0, 'groceries')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]"]
+34 valid_items = len([prod for prod in filtered_products if prod[1] > 0])
+34 ['prod', 'filtered_products', 'valid_items'] ["('Apples', 0, 'groceries')", "[('Smartphone', 499.99, 'electronics'), ('Laptop', 899.5, 'electronics'), ('Headphones', 59.99, 'electronics'), ('Novel', 12.95, 'books'), ('Textbook', 75.0, 'books'), ...]", '7']
+39 print(f"Result: {valid_items}")
+39 ['valid_items'] ['7']
+40 return valid_items
+40 ['valid_items'] ['7']
+FUNCTION_RETURN 40 process_inventory {'_type': 'int', '_value': 7}

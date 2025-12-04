@@ -1,0 +1,90 @@
+Target: Find the value of variable final_priority after [line 88] executes
+
+[line 66]  email_content = "URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP."
+Assign: email_content = 'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'
+[line 67]  sender_email = "manager@company.com"
+Assign: sender_email = 'manager@company.com'
+[line 70]  sender_domain = extract_domain(sender_email)
+Call function extract_domain(sender_email='manager@company.com' (defined at [line 67]))
+[line 18]  if '@' in email_address:
+Condition: True, entering 'if' block
+[line 19]  return email_address.split('@')[1]
+Return: email_address.split('@')[1]
+[line 85]  final_priority = calculate_email_priority(email_content, sender_domain)
+Call function calculate_email_priority(email_content='URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.' (defined at [line 66]), sender_domain='company.com' (defined at [line 70]))
+[line 22]  def calculate_email_priority(content, sender_domain):
+Enter function calculate_email_priority: content='URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.' (email_content defined at [line 66]), sender_domain='company.com' (sender_domain defined at [line 70])
+  [line 25]  priority_score = 50
+  Assign: priority_score = 50
+  [line 1]  def check_spam_indicators(text):
+  Enter function check_spam_indicators: text='URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'
+    [line 2]  spam_words = ['free', 'discount', 'offer', 'limited']
+    Compute: ['free', 'discount', 'offer', 'limited'] = ['free', 'discount', 'offer', 'limited']
+    [line 3]  count = 0
+    Assign: count = 0
+    [line 6]  text_lower = text.lower()
+    (Missing param: 'func_name')
+    [line 8]  for word in spam_words:
+    Loop Start: word takes its first value 'free'
+    [line 9]  if word in text_lower:
+    Condition: True, entering 'if' block
+    [line 8]  for word in spam_words:
+    Loop Iteration: word is now 'discount' (iteration 2)
+    [line 9]  if word in text_lower:
+    Condition: True, entering 'if' block
+    [line 8]  for word in spam_words:
+    Loop Iteration: word is now 'offer' (iteration 3)
+    [line 9]  if word in text_lower:
+    Condition: True, entering 'if' block
+    [line 8]  for word in spam_words:
+    Loop Iteration: word is now 'limited' (iteration 4)
+    [line 9]  if word in text_lower:
+    Condition: True, entering 'if' block
+    [line 8]  for word in spam_words:
+    Loop End: Iteration finished
+    [line 14]  return count
+    Return: count=0 (defined at [line 3])
+  Function check_spam_indicators returns 0
+  [line 41]  domain_bonus = trusted_domains.get(sender_domain, 0)
+  (Missing param: 'func_name')
+  [line 44]  urgency_words = ['urgent', 'immediate', 'asap', 'important']
+  Compute: ['urgent', 'immediate', 'asap', 'important'] = ['urgent', 'immediate', 'asap', 'important']
+  [line 45]  urgency_count = 0
+  Assign: urgency_count = 0
+  [line 47]  for word in urgency_words:
+  Loop Start: word takes its first value 'urgent'
+  [line 48]  if word in content.lower():
+  Condition: True, entering 'if' block
+  [line 49]  urgency_count += 1
+  Update: urgency_count changed from 0 (defined at defined at [line 45]) to 0+1 = 1
+  [line 47]  for word in urgency_words:
+  Loop Iteration: word is now 'immediate' (iteration 2)
+  [line 48]  if word in content.lower():
+  Condition: True, entering 'if' block
+  [line 47]  for word in urgency_words:
+  Loop Iteration: word is now 'asap' (iteration 3)
+  [line 48]  if word in content.lower():
+  Condition: True, entering 'if' block
+  [line 49]  urgency_count += 1
+  Update: urgency_count changed from 1 (defined at defined at [line 49]) to 1+1 = 2
+  [line 47]  for word in urgency_words:
+  Loop Iteration: word is now 'important' (iteration 4)
+  [line 48]  if word in content.lower():
+  Condition: True, entering 'if' block
+  [line 49]  urgency_count += 1
+  Update: urgency_count changed from 2 (defined at defined at [line 49]) to 2+1 = 3
+  [line 47]  for word in urgency_words:
+  Loop End: Iteration finished
+  [line 52]  if spam_count >= 2:
+  Condition: True, entering 'if' block
+  [line 57]  priority_score += domain_bonus
+  Update: priority_score changed from 50 (defined at defined at [line 25]) to 50+domain_bonus = 60
+  [line 60]  priority_score += urgency_count * 7
+  Update: priority_score changed from 60 (defined at defined at [line 57]) to 60+urgency_count * 7 = 81
+  [line 63]  return max(min(priority_score, 100), 0)
+  Return: max(min(priority_score, 100), 0)
+Function calculate_email_priority returns 81
+[line 88]  print(f"Email priority score: {final_priority}")
+Output: f"Email priority score: {final_priority}"
+
+Answer: final_priority = 81 (last updated on defined at [line 85])

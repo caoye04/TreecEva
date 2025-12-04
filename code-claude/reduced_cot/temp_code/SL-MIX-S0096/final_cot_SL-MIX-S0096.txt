@@ -1,0 +1,289 @@
+Target: Find the value of variable priority_score after [line 94] executes
+
+[line 44]  filtered = []
+Compute: [] = []
+[line 45]  for idx, task in enumerate(task_list):
+(Missing param: 'iter_var')
+[line 50]  task_id, description, urgency, importance, dependencies = task
+(Missing param: 'result')
+[line 53]  if urgency > 10 and 'impossible' in description.lower():
+Condition: True, entering 'if' block
+[line 56]  if urgency >= min_urgency and importance >= min_importance:
+Condition: True, entering 'if' block
+[line 45]  for idx, task in enumerate(task_list):
+(Missing param: 'iter_var')
+[line 50]  task_id, description, urgency, importance, dependencies = task
+(Missing param: 'result')
+[line 53]  if urgency > 10 and 'impossible' in description.lower():
+Condition: True, entering 'if' block
+[line 56]  if urgency >= min_urgency and importance >= min_importance:
+Condition: True, entering 'if' block
+... [Line 45] repeats 2 more times ...
+... [Line 45] repeats 2 more times ...
+... [Line 45] repeats 2 more times ...
+... [Line 45] repeats 2 more times ...
+[line 45]  for idx, task in enumerate(task_list):
+(Missing param: 'iter_var')
+[line 50]  task_id, description, urgency, importance, dependencies = task
+(Missing param: 'result')
+[line 53]  if urgency > 10 and 'impossible' in description.lower():
+Condition: True, entering 'if' block
+[line 56]  if urgency >= min_urgency and importance >= min_importance:
+Condition: True, entering 'if' block
+[line 45]  for idx, task in enumerate(task_list):
+Loop End: Iteration finished
+[line 62]  return filtered
+Return: filtered=[('A123', 'Update user interface components', 4, 3, [...1 items]), ('B456', 'Fix database connection issue', 5, 5, []), ('C789', 'Implement new search feature', 3, 4, [...1 items])] (defined at [line 44])
+[line 64]  def calculate_final_priority(filtered_tasks):
+Enter function calculate_final_priority: filtered_tasks=[('A123', 'Update user interface components', 4, 3, [...1 items]), ('B456', 'Fix database connection issue', 5, 5, []), ('C789', 'Implement new search feature', 3, 4, [...1 items])]
+  [line 66]  total_priority = 0
+  Assign: total_priority = 0
+  [line 74]  for task in filtered_tasks:
+  Loop Start: task takes its first value ('A123', 'Update user interface components', 4, 3, ['B456'])
+  [line 76]  current_priority = calculate_priority(task)
+  Call function calculate_priority(task=('A123', 'Update user interface components', 4, 3, ['B456']) (defined at [line 74]))
+  [line 24]  def calculate_priority(task):
+  Enter function calculate_priority: task=('A123', 'Update user interface components', 4, 3, ['B456']) (task defined at [line 74])
+    [line 26]  task_id, description, urgency, importance, dependencies = task
+    (Missing param: 'result')
+    [line 32]  base_priority = urgency * 2 + importance * 3
+    Compute: urgency * 2 + importance * 3, where urgency=4 (an unknown source), importance=3 (an unknown source) = 17
+    [line 11]  def analyze_dependencies(dependencies):
+    Enter function analyze_dependencies: dependencies=['B456']
+      [line 13]  if not dependencies:
+      Condition: True, entering 'if' block
+      [line 16]  dependency_score = len(dependencies) * 5
+      Compute: len(dependencies) * 5, where dependencies=['B456'] (parameter dependencies) = 5
+      [line 17]  critical_paths = [d for d in dependencies if d.startswith('critical-')]
+      Compute: [d for d in dependencies if d.startswith('critical-')], where d='B456' (an unknown source), dependencies=['B456'] (parameter dependencies) = ?
+      [line 19]  if critical_paths:
+      Condition: True, entering 'if' block
+      [line 22]  return dependency_score
+      Return: dependency_score=5 (defined at [line 16])
+    Function analyze_dependencies returns 5
+    [line 38]  complexity = calculate_complexity(description)
+    Call function calculate_complexity(description='Update user interface components' (an unknown source))
+    [line 1]  def calculate_complexity(task_details):
+    Enter function calculate_complexity: task_details='Update user interface components'
+      [line 3]  word_count = len(task_details.split())
+      Call function len(task_details.split())
+      [line 4]  unique_chars = len(set(task_details.lower()))
+      Call function len(set(task_details.lower()))
+      [line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+      Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=15 (defined at [line 4]) = 8.4
+      [line 9]  return int(complexity)
+      Return: int(complexity)
+    Function calculate_complexity returns 8
+    [line 40]  return base_priority
+    Return: base_priority=17 (defined at [line 32])
+  Function calculate_priority returns 17
+  [line 79]  total_priority += current_priority
+  Update: total_priority changed from ? (defined at defined at [line 66]) to ?+current_priority = 17
+  [line 84]  task_id, _, _, _, _ = task
+  (Missing param: 'result')
+  [line 85]  if task_id.startswith('A'):
+  Condition: True, entering 'if' block
+  [line 74]  for task in filtered_tasks:
+  Loop Iteration: task is now ('B456', 'Fix database connection issue', 5, 5, []) (iteration 2)
+  [line 76]  current_priority = calculate_priority(task)
+  Call function calculate_priority(task=('B456', 'Fix database connection issue', 5, 5, []) (defined at [line 74]))
+  [line 24]  def calculate_priority(task):
+  Enter function calculate_priority: task=('B456', 'Fix database connection issue', 5, 5, []) (task defined at [line 74])
+    [line 26]  task_id, description, urgency, importance, dependencies = task
+    (Missing param: 'result')
+    [line 32]  base_priority = urgency * 2 + importance * 3
+    Compute: urgency * 2 + importance * 3, where urgency=5 (an unknown source), importance=5 (an unknown source) = 25
+    [line 11]  def analyze_dependencies(dependencies):
+    Enter function analyze_dependencies: dependencies=[]
+      [line 13]  if not dependencies:
+      Condition: True, entering 'if' block
+      [line 14]  return 0
+      Return: 0
+    Function analyze_dependencies returns 0
+    [line 38]  complexity = calculate_complexity(description)
+    Call function calculate_complexity(description='Fix database connection issue' (an unknown source))
+    [line 1]  def calculate_complexity(task_details):
+    Enter function calculate_complexity: task_details='Fix database connection issue'
+      [line 3]  word_count = len(task_details.split())
+      Call function len(task_details.split())
+      [line 4]  unique_chars = len(set(task_details.lower()))
+      Call function len(set(task_details.lower()))
+      [line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+      Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=14 (defined at [line 4]) = 8.0
+      [line 9]  return int(complexity)
+      Return: int(complexity)
+    Function calculate_complexity returns 8
+    [line 40]  return base_priority
+    Return: base_priority=25 (defined at [line 32])
+  Function calculate_priority returns 25
+  [line 79]  total_priority += current_priority
+  Update: total_priority changed from ? (defined at defined at [line 79]) to ?+current_priority = 42
+  [line 84]  task_id, _, _, _, _ = task
+  (Missing param: 'result')
+  [line 85]  if task_id.startswith('A'):
+  Condition: True, entering 'if' block
+  [line 87]  elif task_id.startswith('B'):
+  'elif' Condition: True, entering block
+  [line 74]  for task in filtered_tasks:
+  Loop Iteration: task is now ('C789', 'Implement new search feature', 3, 4, ['A123']) (iteration 3)
+  [line 76]  current_priority = calculate_priority(task)
+  Call function calculate_priority(task=('C789', 'Implement new search feature', 3, 4, ['A123']) (defined at [line 74]))
+  [line 24]  def calculate_priority(task):
+  Enter function calculate_priority: task=('C789', 'Implement new search feature', 3, 4, ['A123']) (task defined at [line 74])
+    [line 26]  task_id, description, urgency, importance, dependencies = task
+    (Missing param: 'result')
+    [line 32]  base_priority = urgency * 2 + importance * 3
+    Compute: urgency * 2 + importance * 3, where urgency=3 (an unknown source), importance=4 (an unknown source) = 18
+    [line 11]  def analyze_dependencies(dependencies):
+    Enter function analyze_dependencies: dependencies=['A123']
+      [line 13]  if not dependencies:
+      Condition: True, entering 'if' block
+      [line 16]  dependency_score = len(dependencies) * 5
+      Compute: len(dependencies) * 5, where dependencies=['A123'] (parameter dependencies) = 5
+      [line 19]  if critical_paths:
+      Condition: True, entering 'if' block
+      [line 22]  return dependency_score
+      Return: dependency_score=5 (defined at [line 16])
+    Function analyze_dependencies returns 5
+    [line 38]  complexity = calculate_complexity(description)
+    Call function calculate_complexity(description='Implement new search feature' (an unknown source))
+    [line 1]  def calculate_complexity(task_details):
+    Enter function calculate_complexity: task_details='Implement new search feature'
+      [line 3]  word_count = len(task_details.split())
+      Call function len(task_details.split())
+      [line 4]  unique_chars = len(set(task_details.lower()))
+      Call function len(set(task_details.lower()))
+      [line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+      Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=16 (defined at [line 4]) = 8.8
+      [line 9]  return int(complexity)
+      Return: int(complexity)
+    Function calculate_complexity returns 8
+    [line 40]  return base_priority
+    Return: base_priority=18 (defined at [line 32])
+  Function calculate_priority returns 18
+  [line 79]  total_priority += current_priority
+  Update: total_priority changed from ? (defined at defined at [line 79]) to ?+current_priority = 60
+  [line 84]  task_id, _, _, _, _ = task
+  (Missing param: 'result')
+  [line 85]  if task_id.startswith('A'):
+  Condition: True, entering 'if' block
+  [line 87]  elif task_id.startswith('B'):
+  'elif' Condition: True, entering block
+  [line 74]  for task in filtered_tasks:
+  Loop End: Iteration finished
+  [line 93]  if filtered_tasks:
+  Condition: True, entering 'if' block
+  [line 94]  priority_score = total_priority // len(filtered_tasks)
+  Compute: total_priority // len(filtered_tasks), where total_priority=60 (defined at [line 79]), filtered_tasks=[('A123', 'Update user interface components', 4, 3, [...1 items]), ('B456', 'Fix database connection issue', 5, 5, []), ('C789', 'Implement new search feature', 3, 4, [...1 items])] (parameter filtered_tasks) = 20
+  [line 26]  task_id, description, urgency, importance, dependencies = task
+  (Missing param: 'result')
+  [line 32]  base_priority = urgency * 2 + importance * 3
+  Compute: urgency * 2 + importance * 3, where urgency=4 (an unknown source), importance=3 (an unknown source) = 17
+  [line 11]  def analyze_dependencies(dependencies):
+  Enter function analyze_dependencies: dependencies=['B456']
+    [line 13]  if not dependencies:
+    Condition: True, entering 'if' block
+    [line 16]  dependency_score = len(dependencies) * 5
+    Compute: len(dependencies) * 5, where dependencies=['B456'] (parameter dependencies) = 5
+    [line 19]  if critical_paths:
+    Condition: True, entering 'if' block
+    [line 22]  return dependency_score
+    Return: dependency_score=5 (defined at [line 16])
+  Function analyze_dependencies returns 5
+  [line 38]  complexity = calculate_complexity(description)
+  Call function calculate_complexity(description='Update user interface components' (an unknown source))
+  [line 1]  def calculate_complexity(task_details):
+  Enter function calculate_complexity: task_details='Update user interface components'
+    [line 3]  word_count = len(task_details.split())
+    Call function len(task_details.split())
+    [line 4]  unique_chars = len(set(task_details.lower()))
+    Call function len(set(task_details.lower()))
+    [line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+    Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=15 (defined at [line 4]) = 8.4
+    [line 9]  return int(complexity)
+    Return: int(complexity)
+  Function calculate_complexity returns 8
+  [line 40]  return base_priority
+  Return: base_priority=17 (defined at [line 32])
+  [line 26]  task_id, description, urgency, importance, dependencies = task
+  (Missing param: 'result')
+  [line 32]  base_priority = urgency * 2 + importance * 3
+  Compute: urgency * 2 + importance * 3, where urgency=5 (an unknown source), importance=5 (an unknown source) = 25
+  [line 11]  def analyze_dependencies(dependencies):
+  Enter function analyze_dependencies: dependencies=[]
+    [line 13]  if not dependencies:
+    Condition: True, entering 'if' block
+    [line 14]  return 0
+    Return: 0
+  Function analyze_dependencies returns 0
+  [line 38]  complexity = calculate_complexity(description)
+  Call function calculate_complexity(description='Fix database connection issue' (an unknown source))
+  [line 1]  def calculate_complexity(task_details):
+  Enter function calculate_complexity: task_details='Fix database connection issue'
+    [line 3]  word_count = len(task_details.split())
+    Call function len(task_details.split())
+    [line 4]  unique_chars = len(set(task_details.lower()))
+    Call function len(set(task_details.lower()))
+    [line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+    Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=14 (defined at [line 4]) = 8.0
+    [line 9]  return int(complexity)
+    Return: int(complexity)
+  Function calculate_complexity returns 8
+  [line 40]  return base_priority
+  Return: base_priority=25 (defined at [line 32])
+  [line 26]  task_id, description, urgency, importance, dependencies = task
+  (Missing param: 'result')
+  [line 32]  base_priority = urgency * 2 + importance * 3
+  Compute: urgency * 2 + importance * 3, where urgency=3 (an unknown source), importance=4 (an unknown source) = 18
+  [line 11]  def analyze_dependencies(dependencies):
+  Enter function analyze_dependencies: dependencies=['A123']
+    [line 13]  if not dependencies:
+    Condition: True, entering 'if' block
+    [line 16]  dependency_score = len(dependencies) * 5
+    Compute: len(dependencies) * 5, where dependencies=['A123'] (parameter dependencies) = 5
+    [line 19]  if critical_paths:
+    Condition: True, entering 'if' block
+    [line 22]  return dependency_score
+    Return: dependency_score=5 (defined at [line 16])
+  Function analyze_dependencies returns 5
+  [line 38]  complexity = calculate_complexity(description)
+  Call function calculate_complexity(description='Implement new search feature' (an unknown source))
+  [line 3]  word_count = len(task_details.split())
+  Call function len(task_details.split())
+  [line 4]  unique_chars = len(set(task_details.lower()))
+  Call function len(set(task_details.lower()))
+  [line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+  Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=16 (defined at [line 4]) = 8.8
+  [line 9]  return int(complexity)
+  Return: int(complexity)
+  [line 40]  return base_priority
+  Return: base_priority=18 (defined at [line 32])
+  [line 102]  return priority_score
+  Return: priority_score=20 (defined at [line 94])
+Function calculate_final_priority returns 20
+[line 3]  word_count = len(task_details.split())
+Call function len(task_details.split())
+[line 4]  unique_chars = len(set(task_details.lower()))
+Call function len(set(task_details.lower()))
+[line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=15 (defined at [line 4]) = 8.4
+[line 9]  return int(complexity)
+Return: int(complexity)
+[line 3]  word_count = len(task_details.split())
+Call function len(task_details.split())
+[line 4]  unique_chars = len(set(task_details.lower()))
+Call function len(set(task_details.lower()))
+[line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=14 (defined at [line 4]) = 8.0
+[line 9]  return int(complexity)
+Return: int(complexity)
+[line 3]  word_count = len(task_details.split())
+Call function len(task_details.split())
+[line 4]  unique_chars = len(set(task_details.lower()))
+Call function len(set(task_details.lower()))
+[line 5]  complexity = (word_count * 0.6) + (unique_chars * 0.4)
+Compute: (word_count * 0.6) + (unique_chars * 0.4), where word_count=4 (defined at [line 3]), unique_chars=16 (defined at [line 4]) = 8.8
+[line 9]  return int(complexity)
+Return: int(complexity)
+
+Answer: priority_score = 20 (last updated on defined at [line 94])

@@ -1,0 +1,171 @@
+Target: Find the value of variable security_level after [line 110] executes
+
+[line 60]  password = "P@ssw0rd123!"
+Assign: password = 'P@ssw0rd123!'
+[line 66]  for char in password:
+Loop Start: char takes its first value 'P'
+[line 67]  if char.islower():
+Condition: True, entering 'if' block
+[line 69]  elif char.isupper():
+'elif' Condition: True, entering block
+[line 66]  for char in password:
+Loop Iteration: char is now '@' (iteration 2)
+[line 67]  if char.islower():
+Condition: True, entering 'if' block
+[line 69]  elif char.isupper():
+'elif' Condition: True, entering block
+[line 71]  elif char.isdigit():
+'elif' Condition: True, entering block
+... [Line 66] repeats 9 more times ...
+... [Line 66] repeats 9 more times ...
+[line 66]  for char in password:
+Loop Iteration: char is now '!' (iteration 12)
+[line 67]  if char.islower():
+Condition: True, entering 'if' block
+[line 69]  elif char.isupper():
+'elif' Condition: True, entering block
+[line 71]  elif char.isdigit():
+'elif' Condition: True, entering block
+[line 66]  for char in password:
+Loop End: Iteration finished
+[line 81]  pattern_score = analyze_password_patterns(password)
+Call function analyze_password_patterns(password='P@ssw0rd123!' (defined at [line 60]))
+[line 1]  def analyze_password_patterns(password):
+Enter function analyze_password_patterns: password='P@ssw0rd123!' (password defined at [line 60])
+  [line 3]  pattern_score = 0
+  Assign: pattern_score = 0
+  [line 4]  consecutive_count = 0
+  Assign: consecutive_count = 0
+  [line 5]  for i in range(1, len(password)):
+  Loop Start: i takes its first value 1
+  [line 6]  if ord(password[i]) == ord(password[i-1]) + 1:
+  Condition: True, entering 'if' block
+  [line 9]  consecutive_count = 0
+  Assign: consecutive_count = 0
+  [line 5]  for i in range(1, len(password)):
+  Loop Iteration: i is now 2 (iteration 2)
+  [line 6]  if ord(password[i]) == ord(password[i-1]) + 1:
+  Condition: True, entering 'if' block
+  [line 9]  consecutive_count = 0
+  Assign: consecutive_count = 0
+... [Line 5] repeats 8 more times ...
+... [Line 5] repeats 8 more times ...
+... [Line 5] repeats 8 more times ...
+  [line 5]  for i in range(1, len(password)):
+  Loop Iteration: i is now 11 (iteration 11)
+  [line 6]  if ord(password[i]) == ord(password[i-1]) + 1:
+  Condition: True, entering 'if' block
+  [line 9]  consecutive_count = 0
+  Assign: consecutive_count = 0
+  [line 5]  for i in range(1, len(password)):
+  Loop End: Iteration finished
+  [line 11]  pattern_score = max(0, 100 - consecutive_count * 5)
+  Call function max(0, 100 - consecutive_count * 5)
+  [line 12]  return pattern_score
+  Return: pattern_score=100 (defined at [line 11])
+Function analyze_password_patterns returns 100
+[line 14]  def calculate_entropy(text):
+Enter function calculate_entropy: text='P@ssw0rd123!' (password defined at [line 60])
+  [line 16]  char_freq = {}
+  Compute: {} = {}
+  [line 17]  for char in text:
+  Loop Start: char takes its first value 'P'
+  [line 18]  if char in char_freq:
+  Condition: True, entering 'if' block
+  [line 21]  char_freq[char] = 1
+  (Missing param: 'var')
+  [line 17]  for char in text:
+  Loop Iteration: char is now '@' (iteration 2)
+  [line 18]  if char in char_freq:
+  Condition: True, entering 'if' block
+  [line 21]  char_freq[char] = 1
+  (Missing param: 'var')
+... [Line 17] repeats 9 more times ...
+... [Line 17] repeats 9 more times ...
+... [Line 17] repeats 9 more times ...
+  [line 17]  for char in text:
+  Loop Iteration: char is now '!' (iteration 12)
+  [line 18]  if char in char_freq:
+  Condition: True, entering 'if' block
+  [line 21]  char_freq[char] = 1
+  (Missing param: 'var')
+  [line 17]  for char in text:
+  Loop End: Iteration finished
+  [line 23]  entropy = len(char_freq) * sum([freq for freq in char_freq.values()])
+  Compute: len(char_freq) * sum([freq for freq in char_freq.values()]), where char_freq={P: 1, @: 1, s: 2, ...} (defined at [line 16]), freq=1 (an unknown source) = ?
+  [line 24]  return entropy / 10
+  Return: entropy / 10
+Function calculate_entropy returns 13.2
+[line 83]  common_words = ['password', 'admin', '123456']
+Compute: ['password', 'admin', '123456'], where password='P@ssw0rd123!' (defined at [line 60]) = ['password', 'admin', '123456']
+[line 87]  lower_pwd = password.lower()
+(Missing param: 'func_name')
+[line 88]  for word in common_words:
+Loop Start: word takes its first value 'password'
+[line 89]  if word in lower_pwd:
+Condition: True, entering 'if' block
+[line 88]  for word in common_words:
+Loop Iteration: word is now 'admin' (iteration 2)
+[line 89]  if word in lower_pwd:
+Condition: True, entering 'if' block
+[line 88]  for word in common_words:
+Loop Iteration: word is now '123456' (iteration 3)
+[line 89]  if word in lower_pwd:
+Condition: True, entering 'if' block
+[line 88]  for word in common_words:
+Loop End: Iteration finished
+[line 110]  security_level = calculate_security_strength(password_metrics)
+Call function calculate_security_strength(password_metrics={length: 12, char_counts: {lowercase: 5, uppercase: 1, digits: 4, ...}, entropy: 13.2, ...} (an unknown source))
+[line 26]  def calculate_security_strength(metrics):
+Enter function calculate_security_strength: metrics={length: 12, char_counts: {lowercase: 5, uppercase: 1, digits: 4, ...}, entropy: 13.2, ...}
+  [line 28]  length_factor = metrics['length'] * 0.4
+  Compute: metrics['length'] * 0.4, where metrics={length: 12, char_counts: {lowercase: 5, uppercase: 1, digits: 4, ...}, entropy: 13.2, ...} (parameter metrics) = 4.800000000000001
+  [line 31]  complexity = 0
+  Assign: complexity = 0
+  [line 32]  for char_type, count in metrics['char_counts'].items():
+  (Missing param: 'iter_var')
+  [line 33]  if char_type == 'lowercase' and count > 0:
+  Condition: True, entering 'if' block
+  [line 34]  complexity += 10
+  Update: complexity changed from 0 (defined at defined at [line 31]) to 0+10 = 10
+  [line 32]  for char_type, count in metrics['char_counts'].items():
+  (Missing param: 'iter_var')
+  [line 33]  if char_type == 'lowercase' and count > 0:
+  Condition: True, entering 'if' block
+  [line 35]  elif char_type == 'uppercase' and count > 0:
+  'elif' Condition: True, entering block
+  [line 36]  complexity += 15
+  Update: complexity changed from 10 (defined at defined at [line 34]) to 10+15 = 25
+  [line 32]  for char_type, count in metrics['char_counts'].items():
+  (Missing param: 'iter_var')
+  [line 33]  if char_type == 'lowercase' and count > 0:
+  Condition: True, entering 'if' block
+  [line 35]  elif char_type == 'uppercase' and count > 0:
+  'elif' Condition: True, entering block
+  [line 37]  elif char_type == 'digits' and count > 0:
+  'elif' Condition: True, entering block
+  [line 38]  complexity += 12
+  Update: complexity changed from 25 (defined at defined at [line 36]) to 25+12 = 37
+  [line 32]  for char_type, count in metrics['char_counts'].items():
+  (Missing param: 'iter_var')
+  [line 33]  if char_type == 'lowercase' and count > 0:
+  Condition: True, entering 'if' block
+  [line 35]  elif char_type == 'uppercase' and count > 0:
+  'elif' Condition: True, entering block
+  [line 37]  elif char_type == 'digits' and count > 0:
+  'elif' Condition: True, entering block
+  [line 39]  elif char_type == 'special' and count > 0:
+  'elif' Condition: True, entering block
+  [line 40]  complexity += 20
+  Update: complexity changed from 37 (defined at defined at [line 38]) to 37+20 = 57
+  [line 32]  for char_type, count in metrics['char_counts'].items():
+  Loop End: Iteration finished
+  [line 48]  base_security = length_factor + complexity
+  Compute: length_factor + complexity, where length_factor=4.800000000000001 (defined at [line 28]), complexity=57 (defined at [line 40]) = 61.8
+  [line 51]  if metrics['has_common_words']:
+  Condition: True, entering 'if' block
+  [line 57]  return max(0, min(100, base_security))
+  Return: max(0, min(100, base_security))
+Function calculate_security_strength returns 61.8
+
+Answer: security_level = 61.8 (last updated on defined at [line 110])

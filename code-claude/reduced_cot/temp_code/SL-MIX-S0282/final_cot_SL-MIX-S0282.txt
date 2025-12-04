@@ -1,0 +1,150 @@
+Target: Find the value of variable encryption_strength after [line 103] executes
+
+[line 74]  password = "P@ssw0rd!"
+Assign: password = 'P@ssw0rd!'
+[line 93]  iterations = 12
+Assign: iterations = 12
+[line 97]  encryption_strength = calculate_final_strength(password, iterations)
+Call function calculate_final_strength(password='P@ssw0rd!' (defined at [line 74]), iterations=12 (defined at [line 93]))
+[line 41]  def calculate_final_strength(password, iterations):
+Enter function calculate_final_strength: password='P@ssw0rd!' (password defined at [line 74]), iterations=12 (iterations defined at [line 93])
+  [line 43]  historical_passwords = ["123456", "password", "qwerty", "admin"]
+  Compute: ["123456", "password", "qwerty", "admin"], where password='P@ssw0rd!' (parameter password defined at [line 74]) = ['123456', 'password', 'qwerty', 'admin']
+  [line 45]  if password.lower() in [p.lower() for p in historical_passwords]:
+  Condition: True, entering 'if' block
+  [line 19]  def calculate_complexity(password):
+  Enter function calculate_complexity: password='P@ssw0rd!' (password defined at [line 74])
+    [line 21]  has_upper = any(c.isupper() for c in password)
+    Call function any(c.isupper() for c in password)
+    [line 21]  has_upper = any(c.isupper() for c in password)
+    Call function any(c.isupper() for c in password)
+    [line 22]  has_lower = any(c.islower() for c in password)
+    Call function any(c.islower() for c in password)
+    [line 22]  has_lower = any(c.islower() for c in password)
+    Call function any(c.islower() for c in password)
+    [line 22]  has_lower = any(c.islower() for c in password)
+    Call function any(c.islower() for c in password)
+    [line 22]  has_lower = any(c.islower() for c in password)
+    Call function any(c.islower() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 23]  has_digit = any(c.isdigit() for c in password)
+    Call function any(c.isdigit() for c in password)
+    [line 24]  has_special = any(not c.isalnum() for c in password)
+    Call function any(not c.isalnum() for c in password)
+    [line 24]  has_special = any(not c.isalnum() for c in password)
+    Call function any(not c.isalnum() for c in password)
+    [line 24]  has_special = any(not c.isalnum() for c in password)
+    Call function any(not c.isalnum() for c in password)
+    [line 27]  char_type_score = sum([has_upper, has_lower, has_digit, has_special])
+    Call function sum([has_upper, has_lower=True (defined at [line 22]), has_digit=True (defined at [line 23]), has_special])
+    [line 30]  length_score = min(len(password) * 0.5, 10)
+    Call function min(len(password) * 0.5, 10)
+    [line 34]  for i in range(1, len(password)):
+    Loop Start: i takes its first value 1
+    [line 35]  if password[i] == password[i-1]:
+    Condition: True, entering 'if' block
+    [line 34]  for i in range(1, len(password)):
+    Loop Iteration: i is now 2 (iteration 2)
+    [line 35]  if password[i] == password[i-1]:
+    Condition: True, entering 'if' block
+... [Line 34] repeats 5 more times ...
+... [Line 34] repeats 5 more times ...
+    [line 34]  for i in range(1, len(password)):
+    Loop Iteration: i is now 8 (iteration 8)
+    [line 35]  if password[i] == password[i-1]:
+    Condition: True, entering 'if' block
+    [line 34]  for i in range(1, len(password)):
+    Loop End: Iteration finished
+    [line 39]  return char_type_score * 2.5 + length_score
+    Return: char_type_score * 2.5 + length_score
+  Function calculate_complexity returns 14.5
+  [line 52]  entropy = calculate_entropy(password)
+  Call function calculate_entropy(password='P@ssw0rd!' (parameter password defined at [line 74]))
+  [line 4]  prob = {}
+  Compute: {} = {}
+  [line 5]  for c in text:
+  Loop Start: c takes its first value 'P'
+  [line 6]  if c in prob:
+  Condition: True, entering 'if' block
+  [line 9]  prob[c] = 1
+  (Missing param: 'var')
+  [line 5]  for c in text:
+  Loop Iteration: c is now '@' (iteration 2)
+  [line 6]  if c in prob:
+  Condition: True, entering 'if' block
+  [line 9]  prob[c] = 1
+  (Missing param: 'var')
+... [Line 5] repeats 6 more times ...
+... [Line 5] repeats 6 more times ...
+... [Line 5] repeats 6 more times ...
+  [line 5]  for c in text:
+  Loop Iteration: c is now '!' (iteration 9)
+  [line 6]  if c in prob:
+  Condition: True, entering 'if' block
+  [line 9]  prob[c] = 1
+  (Missing param: 'var')
+  [line 5]  for c in text:
+  Loop End: Iteration finished
+  [line 11]  entropy = 0
+  Assign: entropy = 0
+  [line 12]  for c in prob:
+  Loop Start: c takes its first value 'P'
+  [line 13]  p = prob[c] / len(text)
+  Compute: prob[c] / len(text), where prob={P: 1, @: 1, s: 2, ...} (defined at [line 4]), c='P' (defined at [line 12]), text='P@ssw0rd!' (an unknown source) = 0.1111111111111111
+  [line 14]  entropy -= p * math.log2(p)
+  Update: entropy changed from 0 (defined at defined at [line 11]) to 0-p * math.log2(p) = 0.3522138890491458
+  [line 12]  for c in prob:
+  Loop Iteration: c is now '@' (iteration 2)
+  [line 13]  p = prob[c] / len(text)
+  Compute: prob[c] / len(text), where prob={P: 1, @: 1, s: 2, ...} (defined at [line 4]), c='@' (defined at [line 12]), text='P@ssw0rd!' (an unknown source) = 0.1111111111111111
+  [line 14]  entropy -= p * math.log2(p)
+  Update: entropy changed from 0.3522138890491458 (defined at defined at [line 14]) to 0.3522138890491458-p * math.log2(p) = 0.7044277780982916
+... [Line 12] repeats 5 more times ...
+... [Line 12] repeats 5 more times ...
+... [Line 12] repeats 5 more times ...
+  [line 12]  for c in prob:
+  Loop Iteration: c is now '!' (iteration 8)
+  [line 13]  p = prob[c] / len(text)
+  Compute: prob[c] / len(text), where prob={P: 1, @: 1, s: 2, ...} (defined at [line 4]), c='!' (defined at [line 12]), text='P@ssw0rd!' (an unknown source) = 0.1111111111111111
+  [line 14]  entropy -= p * math.log2(p)
+  Update: entropy changed from 2.595488890170944 (defined at defined at [line 14]) to 2.595488890170944-p * math.log2(p) = 2.94770277922009
+  [line 12]  for c in prob:
+  Loop End: Iteration finished
+  [line 17]  return entropy * len(text) / 8
+  Return: entropy * len(text) / 8
+  [line 58]  for i in range(min(iterations, 5)):
+  Loop Start: i takes its first value 0
+  [line 59]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 58]  for i in range(min(iterations, 5)):
+  Loop Iteration: i is now 1 (iteration 2)
+  [line 59]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+  [line 58]  for i in range(min(iterations, 5)):
+  Loop Iteration: i is now 4 (iteration 5)
+  [line 59]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 58]  for i in range(min(iterations, 5)):
+  Loop End: Iteration finished
+  [line 68]  if len(password) >= 8 and iterations >= 10:
+  Condition: True, entering 'if' block
+  [line 69]  return 42
+  Return: 42
+Function calculate_final_strength returns 42
+[line 103]  print(f"Result: {encryption_strength}")
+Output: f"Result: {encryption_strength}"
+
+Answer: encryption_strength = 42 (last updated on defined at [line 97])

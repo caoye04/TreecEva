@@ -1,0 +1,119 @@
+119
+priority_score
+---
+35 if not description:
+35 ['description'] ["'Fix vulnerability in authentication API'"]
+38 words = description.lower().split()
+38 ['description', 'words'] ["'Fix vulnerability in authentication API'", "['fix', 'vulnerability', 'in', 'authentication', 'api']"]
+39 complexity_score = len(words) * 2
+39 ['description', 'words', 'complexity_score'] ["'Fix vulnerability in authentication API'", "['fix', 'vulnerability', 'in', 'authentication', 'api']", '10']
+41 technical_terms = ['api', 'database', 'server', 'network', 'interface']
+41 ['description', 'words', 'complexity_score', 'technical_terms'] ["'Fix vulnerability in authentication API'", "['fix', 'vulnerability', 'in', 'authentication', 'api']", '10', "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['technical_terms'] ["['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'fix'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'vulnerability'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'in'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'authentication'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'api'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'api'", "['api', 'database', 'server', 'network', 'interface']"]
+44 return complexity_score
+44 ['description', 'words', 'complexity_score', 'technical_terms'] ["'Fix vulnerability in authentication API'", "['fix', 'vulnerability', 'in', 'authentication', 'api']", '15', "['api', 'database', 'server', 'network', 'interface']"]
+112 priority_score = calculate_final_priority(request_data)
+112 ['request_data'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}"]
+PARAM_MAPPING {'request_data': {'actual_var': 'request_data', 'value': {'id': 'B12345', 'category': 'security', 'urgency_level': 8, 'days_pending': 20, 'description': 'Fix vulnerability in authentication API', 'team_size': 4, 'current_workload': 30}}}
+FUNCTION_ENTER 51 calculate_final_priority def calculate_final_priority(request_data):
+51 ['request_data'] [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'B12345'}, 'category': {'_type': 'str', '_value': 'security'}, 'urgency_level': {'_type': 'int', '_value': 8}, 'days_pending': {'_type': 'int', '_value': 20}, 'description': {'_type': 'str', '_value': 'Fix vulnerability in authentication API'}}, '_len': 7}]
+53 category = request_data.get('category', 'general')
+53 ['request_data', 'category'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'"]
+54 urgency = request_data.get('urgency_level', 5)
+54 ['request_data', 'category', 'urgency'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'", '8']
+55 days_pending = request_data.get('days_pending', 0)
+55 ['request_data', 'category', 'urgency', 'days_pending'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'", '8', '20']
+56 description = request_data.get('description', '')
+56 ['request_data', 'category', 'urgency', 'days_pending', 'description'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'", '8', '20', "'Fix vulnerability in authentication API'"]
+59 team_size = request_data.get('team_size', 5)
+59 ['request_data', 'category', 'urgency', 'days_pending', 'description', 'team_size'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'", '8', '20', "'Fix vulnerability in authentication API'", '4']
+60 current_workload = request_data.get('current_workload', 25)
+60 ['request_data', 'category', 'urgency', 'days_pending', 'description', 'team_size', 'current_workload'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'", '8', '20', "'Fix vulnerability in authentication API'", '4', '30']
+61 request_id = request_data.get('id', '000')
+61 ['request_data', 'category', 'urgency', 'days_pending', 'description', 'team_size', 'current_workload', 'request_id'] ["{id: 'B12345', category: 'security', urgency_level: 8, ...}", "'security'", '8', '20', "'Fix vulnerability in authentication API'", '4', '30', "'B12345'"]
+64 base_score = calculate_priority_factor(category, urgency)
+64 ['category', 'urgency', 'days_pending', 'description', 'team_size', 'current_workload', 'request_id'] ["'security'", '8', '20', "'Fix vulnerability in authentication API'", '4', '30', "'B12345'"]
+PARAM_MAPPING {'category': {'actual_var': 'category', 'value': 'security'}, 'urgency': {'actual_var': 'urgency', 'value': 8}}
+FUNCTION_ENTER 1 calculate_priority_factor def calculate_priority_factor(category, urgency):
+1 ['category', 'urgency'] [{'_type': 'str', '_value': 'security'}, {'_type': 'int', '_value': 8}]
+14 if category in category_weights:
+14 ['category', 'urgency', 'category_weights'] ["'security'", '8', '{maintenance: 30, security: 70, feature: 20, ...}']
+15 return category_weights[category] * (urgency / 10)
+15 ['category', 'urgency', 'category_weights'] ["'security'", '8', '{maintenance: 30, security: 70, feature: 20, ...}']
+FUNCTION_RETURN 15 calculate_priority_factor {'_type': 'float', '_value': 56.0}
+PARAM_MAPPING {'description': {'actual_var': 'description', 'value': 'Fix vulnerability in authentication API'}}
+FUNCTION_ENTER 32 analyze_request_complexity def analyze_request_complexity(description):
+32 ['description'] [{'_type': 'str', '_value': 'Fix vulnerability in authentication API'}]
+35 if not description:
+35 ['description'] ["'Fix vulnerability in authentication API'"]
+38 words = description.lower().split()
+38 ['description', 'words'] ["'Fix vulnerability in authentication API'", "['fix', 'vulnerability', 'in', 'authentication', 'api']"]
+39 complexity_score = len(words) * 2
+39 ['words', 'complexity_score'] ["['fix', 'vulnerability', 'in', 'authentication', 'api']", '10']
+41 technical_terms = ['api', 'database', 'server', 'network', 'interface']
+41 ['words', 'complexity_score', 'technical_terms'] ["['fix', 'vulnerability', 'in', 'authentication', 'api']", '10', "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['technical_terms'] ["['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'fix'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'vulnerability'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'in'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'authentication'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'api'", "['api', 'database', 'server', 'network', 'interface']"]
+42 complexity_score += sum(5 for word in words if word in technical_terms)
+42 ['word', 'technical_terms'] ["'api'", "['api', 'database', 'server', 'network', 'interface']"]
+44 return complexity_score
+44 ['complexity_score'] ['15']
+FUNCTION_RETURN 44 analyze_request_complexity {'_type': 'int', '_value': 15}
+PARAM_MAPPING {'team_size': {'actual_var': 'team_size', 'value': 4}, 'current_workload': {'actual_var': 'current_workload', 'value': 30}}
+FUNCTION_ENTER 46 calculate_team_availability def calculate_team_availability(team_size, current_workload):
+46 ['team_size', 'current_workload'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 30}]
+48 availability = max(0, team_size * 10 - current_workload)
+48 ['team_size', 'current_workload', 'availability'] ['4', '30', '10']
+49 return availability * 0.8
+49 ['availability'] ['10']
+FUNCTION_RETURN 49 calculate_team_availability {'_type': 'float', '_value': 8.0}
+72 time_adjusted_score = apply_time_factors(base_score, days_pending)
+72 ['urgency', 'days_pending', 'request_id', 'base_score'] ['8', '20', "'B12345'", '56.0']
+PARAM_MAPPING {'base_score': {'actual_var': 'base_score', 'value': 56.0}, 'days_pending': {'actual_var': 'days_pending', 'value': 20}}
+FUNCTION_ENTER 19 apply_time_factors def apply_time_factors(base_score, days_pending):
+19 ['base_score', 'days_pending'] [{'_type': 'float', '_value': 56.0}, {'_type': 'int', '_value': 20}]
+21 time_multiplier = min(3.0, 1 + (days_pending / 30))
+21 ['base_score', 'days_pending', 'time_multiplier'] ['56.0', '20', '1.6666666666666665']
+30 return base_score * time_multiplier
+30 ['base_score', 'days_pending', 'time_multiplier'] ['56.0', '20', '1.6666666666666665']
+FUNCTION_RETURN 30 apply_time_factors {'_type': 'float', '_value': 93.33333333333333}
+75 if request_id.startswith('A'):
+75 ['urgency', 'days_pending', 'request_id', 'time_adjusted_score'] ['8', '20', "'B12345'", '93.33333333333333']
+88 final_score = time_adjusted_score
+88 ['urgency', 'days_pending', 'time_adjusted_score', 'final_score'] ['8', '20', '93.33333333333333', '93.33333333333333']
+89 if urgency > 7:
+89 ['urgency', 'days_pending', 'final_score'] ['8', '20', '93.33333333333333']
+90 final_score += 15
+90 ['days_pending', 'final_score'] ['20', '108.33333333333333']
+92 if days_pending > 14:
+92 ['days_pending', 'final_score'] ['20', '108.33333333333333']
+93 final_score += 10
+93 ['final_score'] ['118.33333333333333']
+95 return round(final_score)
+95 ['final_score'] ['118.33333333333333']
+FUNCTION_RETURN 95 calculate_final_priority {'_type': 'int', '_value': 118}
+119 print(f"Result: {priority_score}")
+119 ['priority_score'] ['118']

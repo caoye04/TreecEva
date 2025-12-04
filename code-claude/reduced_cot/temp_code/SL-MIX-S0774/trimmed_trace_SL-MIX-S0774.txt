@@ -1,0 +1,15 @@
+20
+transaction_result
+---
+4 transaction_types = ['success', 'success', 'failed', 'success', 'cancelled', 'failed']
+4 ['transaction_types'] ["['success', 'success', 'failed', 'success', 'cancelled', ...]"]
+7 transaction_counts = Counter(transaction_types)
+7 ['transaction_types', 'transaction_counts'] ["['success', 'success', 'failed', 'success', 'cancelled', ...]", '{success: 3, failed: 2, cancelled: 1}']
+10 successful_count = transaction_counts['success']
+10 ['transaction_counts', 'successful_count'] ['{success: 3, failed: 2, cancelled: 1}', '3']
+11 failed = transaction_counts['failed']
+11 ['transaction_counts', 'successful_count', 'failed'] ['{success: 3, failed: 2, cancelled: 1}', '3', '2']
+12 cancelled = transaction_counts['cancelled']
+12 ['transaction_counts', 'successful_count', 'failed', 'cancelled'] ['{success: 3, failed: 2, cancelled: 1}', '3', '2', '1']
+20 transaction_result = successful_count - (failed & cancelled)
+20 ['successful_count', 'failed', 'cancelled', 'transaction_result'] ['3', '2', '1', '3']

@@ -1,0 +1,51 @@
+Target: Find the value of variable optimal_crop_yield after [line 55] executes
+
+[line 43]  rainfall_data = [45, 52, 37, 41, 58, 63, 25]
+Compute: [45, 52, 37, 41, 58, 63, 25] = [45, 52, 37, 41, 58, ...]
+[line 44]  soil_quality = 7
+Assign: soil_quality = 7
+[line 52]  optimal_crop_yield = calculate_yield(rainfall_data, soil_quality)
+Call function calculate_yield(rainfall_data=[45, 52, 37, 41, 58, ...] (defined at [line 43]), soil_quality=7 (defined at [line 44]))
+[line 11]  initial_estimate = sum(rainfall) / len(rainfall)
+Compute: sum(rainfall) / len(rainfall), where rainfall=[45, 52, 37, 41, 58, ...] (an unknown source) = 45.857142857142854
+[line 15]  for i in range(0, len(rainfall), 3):
+Loop Start: i takes its first value 0
+[line 16]  season_slice = rainfall[i:i+3]
+Compute: rainfall[i:i+3], where rainfall=[45, 52, 37, 41, 58, ...] (an unknown source), i=0 (defined at [line 15]) = [45, 52, 37]
+[line 17]  if season_slice:
+Condition: True, entering 'if' block
+[line 15]  for i in range(0, len(rainfall), 3):
+Loop Iteration: i is now 3 (iteration 2)
+[line 16]  season_slice = rainfall[i:i+3]
+Compute: rainfall[i:i+3], where rainfall=[45, 52, 37, 41, 58, ...] (an unknown source), i=3 (defined at [line 15]) = [41, 58, 63]
+[line 17]  if season_slice:
+Condition: True, entering 'if' block
+[line 15]  for i in range(0, len(rainfall), 3):
+Loop Iteration: i is now 6 (iteration 3)
+[line 16]  season_slice = rainfall[i:i+3]
+Compute: rainfall[i:i+3], where rainfall=[45, 52, 37, 41, 58, ...] (an unknown source), i=6 (defined at [line 15]) = [25]
+[line 17]  if season_slice:
+Condition: True, entering 'if' block
+[line 15]  for i in range(0, len(rainfall), 3):
+Loop End: Iteration finished
+[line 31]  effective_rain = rainfall[1:6]
+Compute: rainfall[1:6], where rainfall=[45, 52, 37, 41, 58, ...] (an unknown source) = [52, 37, 41, 58, 63]
+[line 32]  growth_factor = calculate_growth_factor(sum(effective_rain) / len(effective_rain), quality)
+Call function calculate_growth_factor(sum(effective_rain) / len(effective_rain), quality=7 (an unknown source))
+[line 3]  def calculate_growth_factor(rain, quality):
+Enter function calculate_growth_factor: rain=50.2, quality=7
+  [line 5]  base_factor = min(rain * 0.5, 100) / 100
+  Compute: min(rain * 0.5, 100) / 100, where rain=50.2 (parameter rain) = 0.251
+  [line 6]  quality_factor = quality / 10
+  Compute: quality / 10, where quality=7 (parameter quality) = 0.7
+  [line 7]  return base_factor * quality_factor
+  Return: base_factor * quality_factor
+Function calculate_growth_factor returns 0.1757
+[line 39]  base_yield = initial_estimate * growth_factor * 2.5
+Compute: initial_estimate * growth_factor * 2.5, where initial_estimate=45.857142857142854 (defined at [line 11]), growth_factor=0.1757 (defined at [line 32]) = 20.142749999999996
+[line 40]  return int(base_yield)
+Return: int(base_yield)
+[line 55]  print(f"Result: {optimal_crop_yield}")
+Output: f"Result: {optimal_crop_yield}"
+
+Answer: optimal_crop_yield = 20 (last updated on defined at [line 52])

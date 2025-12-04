@@ -1,0 +1,69 @@
+Target: Find the value of variable actual_signal_strength after [line 67] executes
+
+[line 43]  transmitted_data = [142, 75, 210, 15, 198, 240, 112, 64, 99, 178, 212, 241]
+Compute: [142, 75, 210, 15, 198, 240, 112, 64, 99, 178, 212, 241] = [142, 75, 210, 15, 198, ...]
+[line 7]  def apply_modulation(signal, carrier=1000):
+Enter function apply_modulation: signal=[142, 75, 210, 15, 198, ...] (transmitted_data defined at [line 43]), carrier=1000
+  [line 9]  return [(x + carrier) % 256 for x in signal]
+  Return: [(x + carrier) % 256 for x in signal]
+Function apply_modulation returns [118, 51, 186, 247, 174, ...]
+[line 56]  actual_signal_strength = sum(filter_frequencies(transmitted_data))
+Call function sum(filter_frequencies(transmitted_data))
+[line 20]  valid_data = []
+Compute: [] = []
+[line 21]  noise_threshold = 75
+Assign: noise_threshold = 75
+[line 24]  for i in range(0, len(data), 3):
+Loop Start: i takes its first value 0
+[line 25]  segment = data[i:i+3]
+Compute: data[i:i+3], where data=[142, 75, 210, 15, 198, ...] (an unknown source), i=0 (defined at [line 24]) = [142, 75, 210]
+[line 26]  if len(segment) == 3:
+Condition: True, entering 'if' block
+[line 28]  processed_value = (segment[0] ^ segment[1]) & segment[2]
+Compute: (segment[0] ^ segment[1]) & segment[2], where segment=[142, 75, 210] (defined at [line 25]) = 192
+[line 29]  if processed_value > noise_threshold:
+Condition: True, entering 'if' block
+[line 24]  for i in range(0, len(data), 3):
+Loop Iteration: i is now 3 (iteration 2)
+[line 25]  segment = data[i:i+3]
+Compute: data[i:i+3], where data=[142, 75, 210, 15, 198, ...] (an unknown source), i=3 (defined at [line 24]) = [15, 198, 240]
+[line 26]  if len(segment) == 3:
+Condition: True, entering 'if' block
+[line 28]  processed_value = (segment[0] ^ segment[1]) & segment[2]
+Compute: (segment[0] ^ segment[1]) & segment[2], where segment=[15, 198, 240] (defined at [line 25]) = 192
+[line 29]  if processed_value > noise_threshold:
+Condition: True, entering 'if' block
+[line 24]  for i in range(0, len(data), 3):
+Loop Iteration: i is now 6 (iteration 3)
+[line 25]  segment = data[i:i+3]
+Compute: data[i:i+3], where data=[142, 75, 210, 15, 198, ...] (an unknown source), i=6 (defined at [line 24]) = [112, 64, 99]
+[line 26]  if len(segment) == 3:
+Condition: True, entering 'if' block
+[line 28]  processed_value = (segment[0] ^ segment[1]) & segment[2]
+Compute: (segment[0] ^ segment[1]) & segment[2], where segment=[112, 64, 99] (defined at [line 25]) = 32
+[line 29]  if processed_value > noise_threshold:
+Condition: True, entering 'if' block
+[line 24]  for i in range(0, len(data), 3):
+Loop Iteration: i is now 9 (iteration 4)
+[line 25]  segment = data[i:i+3]
+Compute: data[i:i+3], where data=[142, 75, 210, 15, 198, ...] (an unknown source), i=9 (defined at [line 24]) = [178, 212, 241]
+[line 26]  if len(segment) == 3:
+Condition: True, entering 'if' block
+[line 28]  processed_value = (segment[0] ^ segment[1]) & segment[2]
+Compute: (segment[0] ^ segment[1]) & segment[2], where segment=[178, 212, 241] (defined at [line 25]) = 96
+[line 29]  if processed_value > noise_threshold:
+Condition: True, entering 'if' block
+[line 24]  for i in range(0, len(data), 3):
+Loop End: Iteration finished
+[line 34]  return valid_data
+Return: valid_data=[117, 117, 21] (defined at [line 20])
+[line 3]  noise = sum([x % threshold for x in data if x % threshold > 10])
+Call function sum([x % threshold for x in data if x % threshold > 10])
+[line 4]  interference = len([x for x in data if x < 0]) * 5
+Compute: len([x for x in data if x < 0]) * 5, where x=142 (an unknown source), data=[142, 75, 210, 15, 198, ...] (an unknown source) = ?
+[line 5]  return noise + interference
+Return: noise + interference
+[line 67]  print(f"Result: {actual_signal_strength}")
+Output: f"Result: {actual_signal_strength}"
+
+Answer: actual_signal_strength = 255 (last updated on defined at [line 56])

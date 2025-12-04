@@ -1,0 +1,32 @@
+Target: Find the value of variable price_index after [line 48] executes
+
+[line 9]  product_prices = [450, 65, 30, 25, 120]
+Compute: [450, 65, 30, 25, 120] = [450, 65, 30, 25, 120]
+[line 22]  max_price = max(product_prices)
+Call function max(product_prices=[450, 65, 30, 25, 120] (defined at [line 9]))
+[line 23]  min_price = min(product_prices)
+Call function min(product_prices=[450, 65, 30, 25, 120] (defined at [line 9]))
+[line 24]  price_range = max_price - min_price
+Compute: max_price - min_price, where max_price=450 (defined at [line 22]), min_price=25 (defined at [line 23]) = 425
+[line 27]  raw_weights = [(p - min_price) / price_range for p in product_prices]
+Compute: [(p - min_price) / price_range for p in product_prices], where p=450 (an unknown source), min_price=25 (defined at [line 23]), price_range=425 (defined at [line 24]), product_prices=[450, 65, 30, 25, 120] (defined at [line 9]) = ?
+[line 34]  average_price = sum(product_prices) / len(product_prices)
+Compute: sum(product_prices) / len(product_prices), where product_prices=[450, 65, 30, 25, 120] (defined at [line 9]) = 138.0
+[line 35]  expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+Compute: [i for i, p in enumerate(product_prices) if p > average_price], where i=0 (an unknown source), p=450 (an unknown source), product_prices=[450, 65, 30, 25, 120] (defined at [line 9]), average_price=138.0 (defined at [line 34]) = ?
+[line 39]  filtered_weights = [raw_weights[i] for i in expensive_indices]
+Compute: [raw_weights[i] for i in expensive_indices], where raw_weights=[1.0, 0.09411764705882353, 0.011764705882352941, 0.0, 0.2235294117647059] (defined at [line 27]), i=0 (an unknown source), expensive_indices=[0] (defined at [line 35]) = ?
+[line 39]  filtered_weights = [raw_weights[i] for i in expensive_indices]
+Compute: [raw_weights[i] for i in expensive_indices], where raw_weights=[1.0, 0.09411764705882353, 0.011764705882352941, 0.0, 0.2235294117647059] (defined at [line 27]), i=0 (an unknown source), expensive_indices=[0] (defined at [line 35]) = [1.0]
+[line 46]  price_index = calculate_price_index(product_prices, filtered_weights)
+Call function calculate_price_index(product_prices=[450, 65, 30, 25, 120] (defined at [line 9]), filtered_weights=[1.0] (defined at [line 39]))
+[line 3]  total_weighted_price = sum(p * w for p, w in zip(prices, weights))
+Call function sum(p * w for p, w in zip(prices, weights))
+[line 4]  total_weight = sum(weights)
+Call function sum(weights=[1.0] (an unknown source))
+[line 5]  return total_weighted_price / total_weight if total_weight > 0 else 0
+Return: total_weighted_price / total_weight if total_weight > 0 else 0
+[line 48]  print(f"Result: {price_index}")
+Output: f"Result: {price_index}"
+
+Answer: price_index = 450.0 (last updated on defined at [line 46])

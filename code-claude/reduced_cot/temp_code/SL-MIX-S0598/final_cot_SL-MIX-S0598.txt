@@ -1,0 +1,75 @@
+Target: Find the value of variable priority_score after [line 44] executes
+
+[line 36]  scores = []
+Compute: [] = []
+[line 37]  for i, (subject, domain, words) in enumerate(email_data):
+(Missing param: 'iter_var')
+[line 4]  def calculate_priority(subject, sender_domain, word_count):
+Enter function calculate_priority: subject='Project deadline tomorrow', sender_domain='client.org', word_count=120
+  [line 6]  subject_lower = subject.lower()
+  (Missing param: 'func_name')
+  [line 9]  urgency_level = 3
+  Assign: urgency_level = 3
+  [line 10]  sender_importance = 5 if "company.com" in sender_domain else 2
+  Compute: 5 if "company.com" in sender_domain else 2, where sender_domain='client.org' (parameter sender_domain) = 2
+  [line 13]  length_factor = min(word_count // 50, 4)  # Cap at 4
+  Call function min(word_count // 50, 4)
+  [line 16]  urgent_keywords = ["urgent", "important", "asap", "deadline"]
+  Compute: ["urgent", "important", "asap", "deadline"] = ['urgent', 'important', 'asap', 'deadline']
+  [line 17]  keyword_bonus = 0
+  Assign: keyword_bonus = 0
+  [line 20]  keyword_bonus = sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+  Call function sum(2 for keyword in urgent_keywords if keyword in subject_lower)
+  [line 23]  base_score = urgency_level + sender_importance + length_factor + keyword_bonus
+  Compute: urgency_level + sender_importance + length_factor + keyword_bonus, where urgency_level=3 (defined at [line 9]), sender_importance=2 (defined at [line 10]), length_factor=2 (defined at [line 13]), keyword_bonus=2 (defined at [line 20]) = 9
+  [line 26]  return min(base_score, 10)
+  Return: min(base_score, 10)
+Function calculate_priority returns 9
+[line 37]  for i, (subject, domain, words) in enumerate(email_data):
+Loop End: Iteration finished
+[line 4]  def calculate_priority(subject, sender_domain, word_count):
+Enter function calculate_priority: subject='URGENT: Meeting rescheduled', sender_domain='company.com', word_count=75
+  [line 6]  subject_lower = subject.lower()
+  (Missing param: 'func_name')
+  [line 9]  urgency_level = 3
+  Assign: urgency_level = 3
+  [line 10]  sender_importance = 5 if "company.com" in sender_domain else 2
+  Compute: 5 if "company.com" in sender_domain else 2, where sender_domain='company.com' (parameter sender_domain) = 5
+  [line 13]  length_factor = min(word_count // 50, 4)  # Cap at 4
+  Call function min(word_count // 50, 4)
+  [line 16]  urgent_keywords = ["urgent", "important", "asap", "deadline"]
+  Compute: ["urgent", "important", "asap", "deadline"] = ['urgent', 'important', 'asap', 'deadline']
+  [line 17]  keyword_bonus = 0
+  Assign: keyword_bonus = 0
+  [line 23]  base_score = urgency_level + sender_importance + length_factor + keyword_bonus
+  Compute: urgency_level + sender_importance + length_factor + keyword_bonus, where urgency_level=3 (defined at [line 9]), sender_importance=5 (defined at [line 10]), length_factor=1 (defined at [line 13]), keyword_bonus=2 (defined at [line 17]) = 11
+  [line 26]  return min(base_score, 10)
+  Return: min(base_score, 10)
+Function calculate_priority returns 10
+[line 37]  for i, (subject, domain, words) in enumerate(email_data):
+Loop End: Iteration finished
+[line 4]  def calculate_priority(subject, sender_domain, word_count):
+Enter function calculate_priority: subject='Weekly newsletter', sender_domain='marketing.com', word_count=350
+  [line 6]  subject_lower = subject.lower()
+  (Missing param: 'func_name')
+  [line 9]  urgency_level = 3
+  Assign: urgency_level = 3
+  [line 10]  sender_importance = 5 if "company.com" in sender_domain else 2
+  Compute: 5 if "company.com" in sender_domain else 2, where sender_domain='marketing.com' (parameter sender_domain) = 2
+  [line 13]  length_factor = min(word_count // 50, 4)  # Cap at 4
+  Call function min(word_count // 50, 4)
+  [line 16]  urgent_keywords = ["urgent", "important", "asap", "deadline"]
+  Compute: ["urgent", "important", "asap", "deadline"] = ['urgent', 'important', 'asap', 'deadline']
+  [line 17]  keyword_bonus = 0
+  Assign: keyword_bonus = 0
+  [line 23]  base_score = urgency_level + sender_importance + length_factor + keyword_bonus
+  Compute: urgency_level + sender_importance + length_factor + keyword_bonus, where urgency_level=3 (defined at [line 9]), sender_importance=2 (defined at [line 10]), length_factor=4 (defined at [line 13]), keyword_bonus=0 (defined at [line 17]) = 9
+  [line 26]  return min(base_score, 10)
+  Return: min(base_score, 10)
+Function calculate_priority returns 9
+[line 37]  for i, (subject, domain, words) in enumerate(email_data):
+Loop End: Iteration finished
+[line 44]  priority_score = sum(scores)
+Call function sum(scores=[9, 10, 9] (defined at [line 36]))
+
+Answer: priority_score = 28 (last updated on defined at [line 44])

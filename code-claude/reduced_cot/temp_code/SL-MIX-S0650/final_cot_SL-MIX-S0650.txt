@@ -1,0 +1,184 @@
+Target: Find the value of variable final_hash after [line 39] executes
+
+[line 5]  primary_hash = 0
+Assign: primary_hash = 0
+[line 6]  secondary_hash = 0
+Assign: secondary_hash = 0
+[line 7]  tertiary_hash = 0  # Used for integrity checking, not part of final result
+Assign: tertiary_hash = 0
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Start: window takes its first value (42, 128, 255)
+[line 12]  valid_packets = [p for p in window if p is not None]
+Compute: [p for p in window if p is not None], where p=42 (an unknown source), window=(42, 128, 255) (defined at [line 10]) = ?
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Start: packet takes its first value 42
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 128 (iteration 2)
+... [Line 19] repeats 23 more times ...
+... [Line 19] repeats 23 more times ...
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=0 (defined at [line 5]), window_signature=85 (defined at [line 18]) = 85
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[42, 128, 255] (defined at [line 12]) = 169
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=0 (defined at [line 6]), alt_signature=169 (defined at [line 26]), valid_packets=[42, 128, 255] (defined at [line 12]) = 507
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=0 (defined at [line 7]), valid_packets=[42, 128, 255] (defined at [line 12]) = 510
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Iteration: window is now (16, 32, 64) (iteration 2)
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 16 (iteration 5)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 32 (iteration 6)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 64 (iteration 7)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 64 (iteration 8)
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=85 (defined at [line 23]), window_signature=112 (defined at [line 18]) = 2747
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[16, 32, 64] (defined at [line 12]) = 112
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=507 (defined at [line 27]), alt_signature=112 (defined at [line 26]), valid_packets=[16, 32, 64] (defined at [line 12]) = 843
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=510 (defined at [line 30]), valid_packets=[16, 32, 64] (defined at [line 12]) = 1020
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Iteration: window is now (90, 131, 200) (iteration 3)
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 90 (iteration 9)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 131 (iteration 10)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 200 (iteration 11)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 200 (iteration 12)
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=2747 (defined at [line 23]), window_signature=17 (defined at [line 18]) = 19638
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[90, 131, 200] (defined at [line 12]) = 165
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=843 (defined at [line 27]), alt_signature=165 (defined at [line 26]), valid_packets=[90, 131, 200] (defined at [line 12]) = 1338
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=1020 (defined at [line 30]), valid_packets=[90, 131, 200] (defined at [line 12]) = 2040
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Iteration: window is now (45, 78, 12) (iteration 4)
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 45 (iteration 13)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 78 (iteration 14)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 12 (iteration 15)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 12 (iteration 16)
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=19638 (defined at [line 23]), window_signature=111 (defined at [line 18]) = 19065
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[45, 78, 12] (defined at [line 12]) = 135
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=1338 (defined at [line 27]), alt_signature=135 (defined at [line 26]), valid_packets=[45, 78, 12] (defined at [line 12]) = 1743
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=2040 (defined at [line 30]), valid_packets=[45, 78, 12] (defined at [line 12]) = 4092
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Iteration: window is now (39, 250, 84) (iteration 5)
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 39 (iteration 17)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 250 (iteration 18)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 84 (iteration 19)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 84 (iteration 20)
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=19065 (defined at [line 23]), window_signature=137 (defined at [line 18]) = 1328
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[39, 250, 84] (defined at [line 12]) = 117
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=1743 (defined at [line 27]), alt_signature=117 (defined at [line 26]), valid_packets=[39, 250, 84] (defined at [line 12]) = 2094
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=4092 (defined at [line 30]), valid_packets=[39, 250, 84] (defined at [line 12]) = 8188
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Iteration: window is now (23, 177, 99) (iteration 6)
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 23 (iteration 21)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 177 (iteration 22)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 99 (iteration 23)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 99 (iteration 24)
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=1328 (defined at [line 23]), window_signature=197 (defined at [line 18]) = 41365
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[23, 177, 99] (defined at [line 12]) = 43
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=2094 (defined at [line 27]), alt_signature=43 (defined at [line 26]), valid_packets=[23, 177, 99] (defined at [line 12]) = 2223
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=8188 (defined at [line 30]), valid_packets=[23, 177, 99] (defined at [line 12]) = 16378
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop Iteration: window is now (45, 143, None) (iteration 7)
+[line 14]  if not valid_packets:
+Condition: True, entering 'if' block
+[line 18]  window_signature = 0
+Assign: window_signature = 0
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 45 (iteration 25)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 143 (iteration 26)
+[line 19]  for packet in valid_packets:
+Loop Iteration: packet is now 143 (iteration 27)
+[line 23]  primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+Compute: (primary_hash * 31 + window_signature) & 0xFFFF, where primary_hash=41365 (defined at [line 23]), window_signature=162 (defined at [line 18]) = 37293
+[line 26]  alt_signature = sum(valid_packets) % 256
+Compute: sum(valid_packets) % 256, where valid_packets=[45, 143] (defined at [line 12]) = 188
+[line 27]  secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+Compute: (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF, where secondary_hash=2223 (defined at [line 27]), alt_signature=188 (defined at [line 26]), valid_packets=[45, 143] (defined at [line 12]) = 2599
+[line 30]  tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+Compute: (tertiary_hash | (max(valid_packets) & 0xFF)) << 1, where tertiary_hash=16378 (defined at [line 30]), valid_packets=[45, 143] (defined at [line 12]) = 32766
+[line 31]  if tertiary_hash > 0xFFFF:
+Condition: True, entering 'if' block
+[line 10]  for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+Loop End: Iteration finished
+[line 35]  primary_hash = (primary_hash * 17) % 65536
+Compute: (primary_hash * 17) % 65536, where primary_hash=37293 (defined at [line 23]) = 44157
+[line 36]  secondary_hash = (secondary_hash + 1000) % 65536
+Compute: (secondary_hash + 1000) % 65536, where secondary_hash=2599 (defined at [line 27]) = 3599
+[line 39]  final_hash = (primary_hash ^ secondary_hash) % 10000
+Compute: (primary_hash ^ secondary_hash) % 10000, where primary_hash=44157 (defined at [line 35]), secondary_hash=3599 (defined at [line 36]) = 1586
+
+Answer: final_hash = 1586 (last updated on defined at [line 39])

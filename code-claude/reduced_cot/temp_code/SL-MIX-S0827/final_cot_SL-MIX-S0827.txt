@@ -1,0 +1,99 @@
+Target: Find the value of variable valid_words after [line 47] executes
+
+[line 3]  raw_text = "AI machine learning data science algorithms neural networks models training datasets validation"
+Assign: raw_text = 'AI machine learning data science algorithms neural networks models training datasets validation'
+[line 4]  stop_words = ["and", "the", "in", "of", "for", "with", "on"]
+Compute: ["and", "the", "in", "of", "for", "with", "on"] = ['and', 'the', 'in', 'of', 'for', ...]
+[line 5]  min_length = 3
+Assign: min_length = 3
+[line 11]  all_words = raw_text.lower().split()
+(Missing param: 'func_name')
+[line 13]  document_length = len(raw_text)
+Call function len(raw_text='AI machine learning data science algorithms neural networks models training datasets validation' (defined at [line 3]))
+[line 16]  word_freq = {}
+Compute: {} = {}
+[line 17]  for word in all_words:
+Loop Start: word takes its first value 'ai'
+[line 18]  word_freq[word] = word_freq.get(word, 0) + 1
+(Missing param: 'result')
+[line 17]  for word in all_words:
+Loop Iteration: word is now 'machine' (iteration 2)
+[line 18]  word_freq[word] = word_freq.get(word, 0) + 1
+(Missing param: 'result')
+... [Line 17] repeats 9 more times ...
+... [Line 17] repeats 9 more times ...
+[line 17]  for word in all_words:
+Loop Iteration: word is now 'validation' (iteration 12)
+[line 18]  word_freq[word] = word_freq.get(word, 0) + 1
+(Missing param: 'result')
+[line 17]  for word in all_words:
+Loop End: Iteration finished
+[line 21]  filtered_words = []
+Compute: [] = []
+[line 23]  for i, word in enumerate(all_words):
+(Missing param: 'iter_var')
+[line 24]  if len(word) >= min_length and word not in stop_words:
+Condition: True, entering 'if' block
+[line 23]  for i, word in enumerate(all_words):
+(Missing param: 'iter_var')
+[line 24]  if len(word) >= min_length and word not in stop_words:
+Condition: True, entering 'if' block
+... [Line 23] repeats 9 more times ...
+... [Line 23] repeats 9 more times ...
+[line 23]  for i, word in enumerate(all_words):
+(Missing param: 'iter_var')
+[line 24]  if len(word) >= min_length and word not in stop_words:
+Condition: True, entering 'if' block
+[line 23]  for i, word in enumerate(all_words):
+Loop End: Iteration finished
+[line 30]  max_freq = max(word_freq.values()) if word_freq else 0
+Compute: max(word_freq.values()) if word_freq else 0, where word_freq={ai: 1, machine: 1, learning: 1, ...} (defined at [line 16]) = 1
+[line 31]  word_scores = {}
+Compute: {} = {}
+[line 32]  for word in filtered_words:
+Loop Start: word takes its first value 'machine'
+[line 34]  freq_score = word_freq[word] / max_freq if max_freq > 0 else 0
+Compute: word_freq[word] / max_freq if max_freq > 0 else 0, where word_freq={ai: 1, machine: 1, learning: 1, ...} (defined at [line 16]), word='machine' (defined at [line 32]), max_freq=1 (defined at [line 30]) = 1.0
+[line 36]  length_score = min(1.0, len(word) / 10)
+Call function min(1.0, len(word) / 10)
+[line 38]  importance = word_importance.get(word, 5.0) / 10
+Compute: word_importance.get(word, 5.0) / 10, where word_importance={AI: 8.5, machine: 7.2, learning: 9.0, ...} (an unknown source), word='machine' (defined at [line 32]) = 0.72
+[line 39]  word_scores[word] = (freq_score * 0.3) + (length_score * 0.2) + (importance * 0.5)
+(Missing param: 'result')
+[line 32]  for word in filtered_words:
+Loop Iteration: word is now 'learning' (iteration 2)
+[line 34]  freq_score = word_freq[word] / max_freq if max_freq > 0 else 0
+Compute: word_freq[word] / max_freq if max_freq > 0 else 0, where word_freq={ai: 1, machine: 1, learning: 1, ...} (defined at [line 16]), word='learning' (defined at [line 32]), max_freq=1 (defined at [line 30]) = 1.0
+[line 36]  length_score = min(1.0, len(word) / 10)
+Call function min(1.0, len(word) / 10)
+[line 38]  importance = word_importance.get(word, 5.0) / 10
+Compute: word_importance.get(word, 5.0) / 10, where word_importance={AI: 8.5, machine: 7.2, learning: 9.0, ...} (an unknown source), word='learning' (defined at [line 32]) = 0.9
+[line 39]  word_scores[word] = (freq_score * 0.3) + (length_score * 0.2) + (importance * 0.5)
+(Missing param: 'result')
+... [Line 32] repeats 8 more times ...
+... [Line 32] repeats 8 more times ...
+... [Line 32] repeats 8 more times ...
+... [Line 32] repeats 8 more times ...
+... [Line 32] repeats 8 more times ...
+[line 32]  for word in filtered_words:
+Loop Iteration: word is now 'validation' (iteration 11)
+[line 34]  freq_score = word_freq[word] / max_freq if max_freq > 0 else 0
+Compute: word_freq[word] / max_freq if max_freq > 0 else 0, where word_freq={ai: 1, machine: 1, learning: 1, ...} (defined at [line 16]), word='validation' (defined at [line 32]), max_freq=1 (defined at [line 30]) = 1.0
+[line 36]  length_score = min(1.0, len(word) / 10)
+Call function min(1.0, len(word) / 10)
+[line 38]  importance = word_importance.get(word, 5.0) / 10
+Compute: word_importance.get(word, 5.0) / 10, where word_importance={AI: 8.5, machine: 7.2, learning: 9.0, ...} (an unknown source), word='validation' (defined at [line 32]) = 0.55
+[line 39]  word_scores[word] = (freq_score * 0.3) + (length_score * 0.2) + (importance * 0.5)
+(Missing param: 'result')
+[line 32]  for word in filtered_words:
+Loop End: Iteration finished
+[line 42]  base_threshold = 0.6
+Assign: base_threshold = 0.6
+[line 43]  threshold_modifier = 0.1 if document_length > 100 else 0
+Compute: 0.1 if document_length > 100 else 0, where document_length=95 (defined at [line 13]) = 0
+[line 44]  threshold = base_threshold - threshold_modifier
+Compute: base_threshold - threshold_modifier, where base_threshold=0.6 (defined at [line 42]), threshold_modifier=0 (defined at [line 43]) = 0.6
+[line 47]  valid_words = len([word for word in filtered_words if word_scores[word] > threshold])
+Call function len([word for word in filtered_words if word_scores[word] > threshold])
+
+Answer: valid_words = 11 (last updated on defined at [line 47])

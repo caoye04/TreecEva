@@ -1,0 +1,27 @@
+28
+total_discount
+---
+4 item_purchases = ["book", "electronics", "book", "clothing", "electronics", "book"]
+4 ['item_purchases'] ["['book', 'electronics', 'book', 'clothing', 'electronics', ...]"]
+5 purchase_counts = Counter(item_purchases)
+5 ['item_purchases', 'purchase_counts'] ["['book', 'electronics', 'book', 'clothing', 'electronics', ...]", '{book: 3, electronics: 2, clothing: 1}']
+8 membership_tier = "gold"  # Options: standard, silver, gold, platinum
+8 ['purchase_counts', 'membership_tier'] ['{book: 3, electronics: 2, clothing: 1}', "'gold'"]
+9 purchase_years = 3  # Years as a customer
+9 ['purchase_counts', 'membership_tier', 'purchase_years'] ['{book: 3, electronics: 2, clothing: 1}', "'gold'", '3']
+12 base_discount = sum(count for item, count in purchase_counts.items() if count > 1) * 2.5
+12 [] []
+12 base_discount = sum(count for item, count in purchase_counts.items() if count > 1) * 2.5
+12 ['item', 'count'] ["'book'", '3']
+12 base_discount = sum(count for item, count in purchase_counts.items() if count > 1) * 2.5
+12 ['item', 'count'] ["'electronics'", '2']
+12 base_discount = sum(count for item, count in purchase_counts.items() if count > 1) * 2.5
+12 ['item', 'count'] ["'clothing'", '1']
+12 base_discount = sum(count for item, count in purchase_counts.items() if count > 1) * 2.5
+12 ['item', 'count'] ["'clothing'", '1']
+22 premium_discount = tier_discounts.get(membership_tier, 0)
+22 ['membership_tier', 'purchase_years', 'base_discount', 'tier_discounts', 'premium_discount'] ["'gold'", '3', '12.5', '{standard: 0, silver: 5, gold: 10, ...}', '10']
+25 loyalty_bonus = purchase_years * 2
+25 ['purchase_years', 'base_discount', 'premium_discount', 'loyalty_bonus'] ['3', '12.5', '10', '6']
+28 total_discount = max(base_discount, min(premium_discount, loyalty_bonus))
+28 ['base_discount', 'premium_discount', 'loyalty_bonus', 'total_discount'] ['12.5', '10', '6', '12.5']

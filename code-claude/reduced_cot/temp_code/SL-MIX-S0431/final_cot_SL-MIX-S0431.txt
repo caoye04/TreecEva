@@ -1,0 +1,93 @@
+Target: Find the value of variable priority_score after [line 77] executes
+
+[line 32]  def calculate_final_score(customer_data, metrics):
+Enter function calculate_final_score: customer_data={customer_id: 'C1092', credit_score: 720, account_age: 42, ...}, metrics={response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}
+  [line 34]  credit_score = customer_data.get('credit_score', 650)
+  (Missing param: 'func_name')
+  [line 35]  account_age = customer_data.get('account_age', 24)  # in months
+  (Missing param: 'func_name')
+  [line 36]  income = customer_data.get('income', 50000)
+  (Missing param: 'func_name')
+  [line 3]  pattern_score = 0
+  Assign: pattern_score = 0
+  [line 4]  for transaction in history:
+  Loop Start: transaction takes its first value 250
+  [line 5]  if transaction > 500:
+  Condition: True, entering 'if' block
+  [line 7]  elif transaction > 100:
+  'elif' Condition: True, entering block
+  [line 8]  pattern_score += 1
+  Update: pattern_score changed from 0 (defined at defined at [line 3]) to 0+1 = 1
+  [line 4]  for transaction in history:
+  Loop Iteration: transaction is now 340 (iteration 2)
+  [line 5]  if transaction > 500:
+  Condition: True, entering 'if' block
+  [line 7]  elif transaction > 100:
+  'elif' Condition: True, entering block
+  [line 8]  pattern_score += 1
+  Update: pattern_score changed from 1 (defined at defined at [line 8]) to 1+1 = 2
+... [Line 4] repeats 2 more times ...
+... [Line 4] repeats 2 more times ...
+... [Line 4] repeats 2 more times ...
+... [Line 4] repeats 2 more times ...
+  [line 4]  for transaction in history:
+  Loop Iteration: transaction is now 80 (iteration 5)
+  [line 5]  if transaction > 500:
+  Condition: True, entering 'if' block
+  [line 7]  elif transaction > 100:
+  'elif' Condition: True, entering block
+  [line 4]  for transaction in history:
+  Loop End: Iteration finished
+  [line 9]  return pattern_score * 1.5
+  Return: pattern_score * 1.5
+  [line 17]  def calculate_potential_value(income, spending_ratio):
+  Enter function calculate_potential_value: income=65000, spending_ratio=0.7
+    [line 19]  base_value = income * 0.01
+    Compute: income * 0.01, where income=65000 (parameter income) = 650.0
+    [line 20]  multiplier = 1 + (spending_ratio * 0.5)
+    Compute: 1 + (spending_ratio * 0.5), where spending_ratio=0.7 (parameter spending_ratio) = 1.35
+    [line 21]  return base_value * multiplier
+    Return: base_value * multiplier
+  Function calculate_potential_value returns 877.5000000000001
+  [line 30]  return score * seasonal_factors.get(month, 1.0)
+  Return: score * seasonal_factors.get(month, 1.0)
+  [line 49]  risk_factor = calculate_risk_factor(credit_score, account_age)
+  Call function calculate_risk_factor(credit_score=720 (an unknown source), account_age=42 (an unknown source))
+  [line 11]  def calculate_risk_factor(credit_score, account_age):
+  Enter function calculate_risk_factor: credit_score=720, account_age=42
+    [line 13]  base_risk = 100 - (credit_score / 10)
+    Compute: 100 - (credit_score / 10), where credit_score=720 (parameter credit_score) = 28.0
+    [line 14]  age_adjustment = min(account_age / 12, 5)  # Cap at 5 years
+    Call function min(account_age / 12, 5)
+    [line 15]  return max(base_risk - age_adjustment * 3, 10)  # Minimum risk is 10
+    Return: max(base_risk - age_adjustment * 3, 10)  # Minimum risk is 10
+  Function calculate_risk_factor returns 17.5
+  [line 52]  base_score = 80 - (risk_factor * 0.5)
+  Compute: 80 - (risk_factor * 0.5), where risk_factor=17.5 (defined at [line 49]) = 71.25
+  [line 55]  adjustment = 0
+  Assign: adjustment = 0
+  [line 56]  if 'response_time' in metrics:
+  Condition: True, entering 'if' block
+  [line 58]  response_hours = metrics['response_time']
+  Compute: metrics['response_time'], where metrics={response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2} (parameter metrics) = 18
+  [line 59]  adjustment += 10 if response_hours < 24 else (5 if response_hours < 48 else 0)
+  Update: adjustment changed from 0 (defined at defined at [line 55]) to 0+10 if response_hours < 24 else (5 if response_hours < 48 else 0) = 10
+  [line 61]  if 'resolution_rate' in metrics:
+  Condition: True, entering 'if' block
+  [line 63]  resolution = metrics['resolution_rate']
+  Compute: metrics['resolution_rate'], where metrics={response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2} (parameter metrics) = 0.85
+  [line 64]  adjustment += resolution * 10
+  Update: adjustment changed from 10 (defined at defined at [line 59]) to 10+resolution * 10 = 18.5
+  [line 71]  engagement_factor = 1.2 if account_age > 36 else 1.0
+  Compute: 1.2 if account_age > 36 else 1.0, where account_age=42 (an unknown source) = 1.2
+  [line 74]  priority_calculator = lambda base, adj, factor: (base + adj) * factor
+  Compute: lambda base, adj, factor: (base + adj) * factor = ?
+  [line 77]  priority_score = priority_calculator(base_score, adjustment, engagement_factor)
+  Call function priority_calculator(base_score=71.25 (defined at [line 52]), adjustment=18.5 (defined at [line 64]), engagement_factor=1.2 (defined at [line 71]))
+  [line 74]  priority_calculator = lambda base, adj, factor: (base + adj) * factor
+  Compute: lambda base, adj, factor: (base + adj) * factor, where base=71.25 (an unknown source), adj=18.5 (an unknown source), factor=1.2 (an unknown source) = ?
+  [line 84]  return round(priority_score, 2)
+  Return: round(priority_score, 2)
+Function calculate_final_score returns 107.7
+
+Answer: priority_score = 107.7 (last updated on defined at [line 77])

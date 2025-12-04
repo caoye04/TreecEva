@@ -1,0 +1,55 @@
+68
+optimal_threshold
+---
+51 sensor_data = [22.5, 22.7, 22.4, 22.6, 22.8, 22.5, 35.2, 22.6, 22.5, 22.7]
+51 ['sensor_data'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]']
+PARAM_MAPPING {'readings': {'actual_var': 'sensor_data', 'value': [22.5, 22.7, 22.4, 22.6, 22.8, 22.5, 35.2, 22.6, 22.5, 22.7]}}
+FUNCTION_ENTER 3 calculate_noise_level def calculate_noise_level(readings):
+3 ['readings'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 22.5}, {'_type': 'float', '_value': 22.7}, {'_type': 'float', '_value': 22.4}, {'_type': 'float', '_value': 22.6}, {'_type': 'float', '_value': 22.8}, {'_type': 'float', '_value': 22.5}, {'_type': 'float', '_value': 35.2}, {'_type': 'float', '_value': 22.6}, {'_type': 'float', '_value': 22.5}, {'_type': 'float', '_value': 22.7}], '_len': 10}]
+5 if not readings:
+5 ['readings'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '1']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '2']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '3']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '4']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '5']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '6']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '7']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '8']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'i'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '9']
+7 differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+7 ['readings', 'differences'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '[0.1999999999999993, 0.3000000000000007, 0.20000000000000284, 0.1999999999999993, 0.3000000000000007, ...]']
+8 mean_diff = sum(differences) / max(1, len(differences))
+8 ['readings', 'differences', 'mean_diff'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '[0.1999999999999993, 0.3000000000000007, 0.20000000000000284, 0.1999999999999993, 0.3000000000000007, ...]', '2.9777777777777787']
+10 return mean_diff
+10 ['readings', 'mean_diff'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '2.9777777777777787']
+FUNCTION_RETURN 10 calculate_noise_level {'_type': 'float', '_value': 2.9777777777777787}
+66 optimal_threshold = calculate_optimal_threshold(sensor_data)
+66 ['sensor_data'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]']
+14 if not readings:
+14 ['readings'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]']
+18 avg_reading = sum(readings) / len(readings)
+18 ['readings', 'avg_reading'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '23.85']
+23 reading_counts = Counter(readings)
+23 ['readings', 'reading_counts', 'avg_reading'] ['[22.5, 22.7, 22.4, 22.6, 22.8, ...]', '{22.5: 3, 22.7: 2, 22.4: 1, ...}', '23.85']
+24 most_common = reading_counts.most_common(1)[0][0] if reading_counts else 0
+24 ['reading_counts', 'most_common', 'avg_reading'] ['{22.5: 3, 22.7: 2, 22.4: 1, ...}', '22.5', '23.85']
+31 base_threshold = (avg_reading + most_common) / 2
+31 ['most_common', 'base_threshold', 'avg_reading'] ['22.5', '23.175', '23.85']
+41 result = base_threshold * 0.75 + avg_reading * 0.25
+41 ['base_threshold', 'result', 'avg_reading'] ['23.175', '23.34375', '23.85']
+45 if avg_reading > 0:
+45 ['result', 'avg_reading'] ['23.34375', '23.85']
+46 return round(result, 2)
+46 ['result'] ['23.34375']
+68 print(f"Result: {optimal_threshold}")
+68 ['optimal_threshold'] ['23.34']

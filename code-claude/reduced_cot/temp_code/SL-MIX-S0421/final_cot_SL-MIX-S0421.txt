@@ -1,0 +1,95 @@
+Target: Find the value of variable active_users after [line 48] executes
+
+[line 13]  user_sessions = defaultdict(list)
+Call function defaultdict(list)
+[line 14]  for user_id, platform, duration in login_data:
+(Missing param: 'iter_var')
+[line 14]  for user_id, platform, duration in login_data:
+Loop End: Iteration finished
+[line 14]  for user_id, platform, duration in login_data:
+Loop End: Iteration finished
+[line 14]  for user_id, platform, duration in login_data:
+Loop End: Iteration finished
+[line 14]  for user_id, platform, duration in login_data:
+Loop End: Iteration finished
+[line 14]  for user_id, platform, duration in login_data:
+Loop End: Iteration finished
+[line 14]  for user_id, platform, duration in login_data:
+Loop End: Iteration finished
+[line 21]  total_time = {}
+Compute: {} = {}
+[line 22]  for user_id, sessions in user_sessions.items():
+(Missing param: 'iter_var')
+[line 24]  total = sum(duration for _, duration in sessions)
+Call function sum(duration for _, duration in sessions)
+[line 26]  total_time[user_id] = total
+(Missing param: 'result')
+[line 22]  for user_id, sessions in user_sessions.items():
+(Missing param: 'iter_var')
+[line 26]  total_time[user_id] = total
+(Missing param: 'result')
+... [Line 22] repeats 2 more times ...
+... [Line 22] repeats 2 more times ...
+[line 22]  for user_id, sessions in user_sessions.items():
+(Missing param: 'iter_var')
+[line 26]  total_time[user_id] = total
+(Missing param: 'result')
+[line 22]  for user_id, sessions in user_sessions.items():
+Loop End: Iteration finished
+[line 29]  multi_platform_users = set()
+Call function set()
+[line 30]  for user_id, sessions in user_sessions.items():
+(Missing param: 'iter_var')
+[line 31]  platforms = {platform for platform, _ in sessions}
+Compute: {platform for platform, _ in sessions}, where platform='web' (an unknown source), _=4 (an unknown source), sessions=[('web', 4), ('mobile', 3)] (an unknown source) = ?
+[line 32]  if len(platforms) > 1:
+Condition: True, entering 'if' block
+[line 30]  for user_id, sessions in user_sessions.items():
+(Missing param: 'iter_var')
+[line 32]  if len(platforms) > 1:
+Condition: True, entering 'if' block
+... [Line 30] repeats 2 more times ...
+... [Line 30] repeats 2 more times ...
+[line 30]  for user_id, sessions in user_sessions.items():
+(Missing param: 'iter_var')
+[line 32]  if len(platforms) > 1:
+Condition: True, entering 'if' block
+[line 30]  for user_id, sessions in user_sessions.items():
+Loop End: Iteration finished
+[line 36]  user_activity = {}
+Compute: {} = {}
+[line 37]  threshold = 5  # Minimum engagement threshold
+Assign: threshold = 5
+[line 39]  for user_id, total in total_time.items():
+(Missing param: 'iter_var')
+[line 41]  engagement_score = total * 1.5 if user_id in multi_platform_users else total
+Compute: total * 1.5 if user_id in multi_platform_users else total, where total=7 (defined at [line 24]), user_id=101 (an unknown source), multi_platform_users={101} (defined at [line 29]) = 10.5
+[line 44]  if engagement_score > threshold:
+Condition: True, entering 'if' block
+[line 45]  user_activity[user_id] = engagement_score
+(Missing param: 'result')
+[line 39]  for user_id, total in total_time.items():
+(Missing param: 'iter_var')
+[line 41]  engagement_score = total * 1.5 if user_id in multi_platform_users else total
+Compute: total * 1.5 if user_id in multi_platform_users else total, where total=7 (defined at [line 24]), user_id=102 (an unknown source), multi_platform_users={101} (defined at [line 29]) = 7
+[line 44]  if engagement_score > threshold:
+Condition: True, entering 'if' block
+[line 45]  user_activity[user_id] = engagement_score
+(Missing param: 'result')
+... [Line 39] repeats 2 more times ...
+... [Line 39] repeats 2 more times ...
+... [Line 39] repeats 2 more times ...
+[line 39]  for user_id, total in total_time.items():
+(Missing param: 'iter_var')
+[line 41]  engagement_score = total * 1.5 if user_id in multi_platform_users else total
+Compute: total * 1.5 if user_id in multi_platform_users else total, where total=8 (defined at [line 24]), user_id=105 (an unknown source), multi_platform_users={101} (defined at [line 29]) = 8
+[line 44]  if engagement_score > threshold:
+Condition: True, entering 'if' block
+[line 45]  user_activity[user_id] = engagement_score
+(Missing param: 'result')
+[line 39]  for user_id, total in total_time.items():
+Loop End: Iteration finished
+[line 48]  active_users = len(user_activity)
+Call function len(user_activity={101: 10.5, 102: 7, 105: 8} (defined at [line 36]))
+
+Answer: active_users = 3 (last updated on defined at [line 48])

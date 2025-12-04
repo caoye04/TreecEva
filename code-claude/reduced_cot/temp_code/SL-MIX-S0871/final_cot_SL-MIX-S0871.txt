@@ -1,0 +1,50 @@
+Target: Find the value of variable filtered_sum after [line 37] executes
+
+[line 4]  temperature_readings = [23.4, 22.1, 25.7, -999.0, 21.5, 24.3, -999.0, 26.2, 19.8]
+Compute: [23.4, 22.1, 25.7, -999.0, 21.5, 24.3, -999.0, 26.2, 19.8] = [23.4, 22.1, 25.7, -999.0, 21.5, ...]
+[line 7]  invalid_marker = -999.0
+Compute: -999.0 = -999.0
+[line 8]  valid_temps = [t for t in temperature_readings if t != invalid_marker]
+Compute: [t for t in temperature_readings if t != invalid_marker], where t=23.4 (an unknown source), temperature_readings=[23.4, 22.1, 25.7, -999.0, 21.5, ...] (defined at [line 4]), invalid_marker=-999.0 (defined at [line 7]) = ?
+[line 11]  min_valid = min(valid_temps)
+Call function min(valid_temps=[23.4, 22.1, 25.7, 21.5, 24.3, ...] (defined at [line 8]))
+[line 12]  max_valid = max(valid_temps)
+Call function max(valid_temps=[23.4, 22.1, 25.7, 21.5, 24.3, ...] (defined at [line 8]))
+[line 13]  threshold = (max_valid + min_valid) / 2
+Compute: (max_valid + min_valid) / 2, where max_valid=26.2 (defined at [line 12]), min_valid=19.8 (defined at [line 11]) = 23.0
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 16]  above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+Call function list(filter(lambda x: x > threshold, valid_temps))
+[line 19]  sorted_temps = sorted(valid_temps)
+Call function sorted(valid_temps=[23.4, 22.1, 25.7, 21.5, 24.3, ...] (defined at [line 8]))
+[line 20]  middle_temps = sorted_temps[1:-1]
+Compute: sorted_temps[1:-1], where sorted_temps=[19.8, 21.5, 22.1, 23.4, 24.3, ...] (defined at [line 19]) = [21.5, 22.1, 23.4, 24.3, 25.7]
+[line 23]  analysis_set = middle_temps + above_threshold[-2:]
+Compute: middle_temps + above_threshold[-2:], where middle_temps=[21.5, 22.1, 23.4, 24.3, 25.7] (defined at [line 20]), above_threshold=[23.4, 25.7, 24.3, 26.2] (defined at [line 16]) = [21.5, 22.1, 23.4, 24.3, 25.7, ...]
+[line 26]  correction = len(analysis_set) % 3
+Compute: len(analysis_set) % 3, where analysis_set=[21.5, 22.1, 23.4, 24.3, 25.7, ...] (defined at [line 23]) = 1
+[line 27]  if correction == 0:
+Condition: True, entering 'if' block
+[line 30]  corrected_temps = analysis_set[:-correction]
+Compute: analysis_set[:-correction], where analysis_set=[21.5, 22.1, 23.4, 24.3, 25.7, ...] (defined at [line 23]), correction=1 (defined at [line 26]) = [21.5, 22.1, 23.4, 24.3, 25.7, ...]
+[line 33]  filter_threshold = 0.8 * max_valid
+Compute: 0.8 * max_valid, where max_valid=26.2 (defined at [line 12]) = 20.96
+[line 34]  filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+Compute: [t for t in corrected_temps if t >= filter_threshold], where t=21.5 (an unknown source), corrected_temps=[21.5, 22.1, 23.4, 24.3, 25.7, ...] (defined at [line 30]), filter_threshold=20.96 (defined at [line 33]) = ?
+[line 37]  filtered_sum = sum(filtered_temps)
+Call function sum(filtered_temps=[21.5, 22.1, 23.4, 24.3, 25.7, ...] (defined at [line 34]))
+
+Answer: filtered_sum = 141.3 (last updated on defined at [line 37])

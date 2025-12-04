@@ -1,0 +1,203 @@
+99
+final_score
+---
+3 base_rating = (level << 2) | (gear_score >> 3)
+3 ['level', 'gear_score', 'base_rating'] ['42', '78', '169']
+4 modifier = ~(level & 31) & 63
+4 ['level', 'base_rating', 'modifier'] ['42', '169', '53']
+5 return (base_rating + modifier) % 100
+5 ['base_rating', 'modifier'] ['169', '53']
+86 player_stats = apply_achievement_bonus(base_stats, achievements)
+86 ['achievements', 'base_stats'] ["[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '{strength: 65, agility: 48, intelligence: 72, ...}']
+PARAM_MAPPING {'stats': {'actual_var': 'base_stats', 'value': {'strength': 65, 'agility': 48, 'intelligence': 72, 'endurance': 55, 'charisma': 40, 'vitality': 60, 'wisdom': 30, 'dexterity': 45, 'luck': 25}}, 'achievements': {'actual_var': 'achievements', 'value': [{'name': 'Dungeon Master', 'points': 30, 'unlocked': True}, {'name': 'Legendary Warrior', 'points': 50, 'unlocked': False, 'legendary': True}, {'name': 'Speed Runner', 'points': 15, 'unlocked': True}]}}
+FUNCTION_ENTER 7 apply_achievement_bonus def apply_achievement_bonus(stats, achievements):
+7 ['stats', 'achievements'] [{'_type': 'dict', '_items': {'strength': {'_type': 'int', '_value': 65}, 'agility': {'_type': 'int', '_value': 48}, 'intelligence': {'_type': 'int', '_value': 72}, 'endurance': {'_type': 'int', '_value': 55}, 'charisma': {'_type': 'int', '_value': 40}}, '_len': 9}, {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Dungeon Master'}, 'points': {'_type': 'int', '_value': 30}, 'unlocked': {'_type': 'bool', '_value': True}}, '_len': 3}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Legendary Warrior'}, 'points': {'_type': 'int', '_value': 50}, 'unlocked': {'_type': 'bool', '_value': False}, 'legendary': {'_type': 'bool', '_value': True}}, '_len': 4}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Speed Runner'}, 'points': {'_type': 'int', '_value': 15}, 'unlocked': {'_type': 'bool', '_value': True}}, '_len': 3}], '_len': 3}]
+9 potential_bonus = sum(a['points'] for a in achievements if a['unlocked'])
+9 [] []
+9 potential_bonus = sum(a['points'] for a in achievements if a['unlocked'])
+9 ['a'] ["{name: 'Dungeon Master', points: 30, unlocked: True}"]
+9 potential_bonus = sum(a['points'] for a in achievements if a['unlocked'])
+9 ['a'] ["{name: 'Legendary Warrior', points: 50, unlocked: False, ...}"]
+9 potential_bonus = sum(a['points'] for a in achievements if a['unlocked'])
+9 ['a'] ["{name: 'Speed Runner', points: 15, unlocked: True}"]
+9 potential_bonus = sum(a['points'] for a in achievements if a['unlocked'])
+9 ['a'] ["{name: 'Speed Runner', points: 15, unlocked: True}"]
+10 actual_bonus = min(potential_bonus, 50)
+10 ['stats', 'achievements', 'potential_bonus', 'actual_bonus'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', '45']
+14 for a in achievements:
+14 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Dungeon Master', points: 30, unlocked: True}"]
+15 if a.get('legendary', False) and a['unlocked']:
+15 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Dungeon Master', points: 30, unlocked: True}"]
+14 for a in achievements:
+14 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Legendary Warrior', points: 50, unlocked: False, ...}"]
+15 if a.get('legendary', False) and a['unlocked']:
+15 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Legendary Warrior', points: 50, unlocked: False, ...}"]
+14 for a in achievements:
+14 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Speed Runner', points: 15, unlocked: True}"]
+15 if a.get('legendary', False) and a['unlocked']:
+15 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Speed Runner', points: 15, unlocked: True}"]
+14 for a in achievements:
+14 ['stats', 'achievements', 'actual_bonus', 'a'] ['{strength: 65, agility: 48, intelligence: 72, ...}', "[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]", '45', "{name: 'Speed Runner', points: 15, unlocked: True}"]
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'strength'", '65']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'agility'", '48']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'intelligence'", '72']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'endurance'", '55']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'charisma'", '40']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'vitality'", '60']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'wisdom'", '30']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'dexterity'", '45']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus', 'k', 'v'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45', "'luck'", '25']
+18 return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+18 ['stats', 'actual_bonus'] ['{strength: 65, agility: 48, intelligence: 72, ...}', '45']
+FUNCTION_RETURN 18 apply_achievement_bonus {'_type': 'dict', '_items': {'strength': {'_type': 'float', '_value': 70.85}, 'agility': {'_type': 'float', '_value': 52.32}, 'intelligence': {'_type': 'float', '_value': 78.48}, 'endurance': {'_type': 'float', '_value': 59.95}, 'charisma': {'_type': 'float', '_value': 43.6}}, '_len': 9}
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '0', "'strength'", '70.85']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '0', "'strength'", '70.85']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '1', "'agility'", '52.32']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '1', "'agility'", '52.32']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '2', "'intelligence'", '78.48']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '2', "'intelligence'", '78.48']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '3', "'endurance'", '59.95']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '3', "'endurance'", '59.95']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '4', "'charisma'", '43.6']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '4', "'charisma'", '43.6']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '5', "'vitality'", '65.4']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '5', "'vitality'", '65.4']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '6', "'wisdom'", '32.7']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '6', "'wisdom'", '32.7']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '7', "'dexterity'", '49.05']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '7', "'dexterity'", '49.05']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '8', "'luck'", '27.25']
+95 if i % 2 == 0:  # Only even indexed stats
+95 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '8', "'luck'", '27.25']
+94 for i, (stat, value) in enumerate(player_stats.items()):
+94 ['player_stats', 'i', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '8', "'luck'", '27.25']
+99 final_score = calculate_normalized_score(player_stats)
+99 ['player_stats', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', "'luck'", '27.25']
+PARAM_MAPPING {'stats': {'actual_var': 'player_stats', 'value': {'strength': 70.85, 'agility': 52.32, 'intelligence': 78.48, 'endurance': 59.95, 'charisma': 43.6, 'vitality': 65.4, 'wisdom': 32.7, 'dexterity': 49.05, 'luck': 27.25}}}
+FUNCTION_ENTER 20 calculate_normalized_score def calculate_normalized_score(stats):
+20 ['stats'] [{'_type': 'dict', '_items': {'strength': {'_type': 'float', '_value': 70.85}, 'agility': {'_type': 'float', '_value': 52.32}, 'intelligence': {'_type': 'float', '_value': 78.48}, 'endurance': {'_type': 'float', '_value': 59.95}, 'charisma': {'_type': 'float', '_value': 43.6}}, '_len': 9}]
+22 strength_factor = stats.get('strength', 0) * 0.7
+22 ['stats', 'strength_factor'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '49.59499999999999']
+23 agility_factor = stats.get('agility', 0) * 0.9
+23 ['stats', 'strength_factor', 'agility_factor'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '49.59499999999999', '47.088']
+24 intelligence_factor = stats.get('intelligence', 0) * 1.2
+24 ['stats', 'strength_factor', 'agility_factor', 'intelligence_factor'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '49.59499999999999', '47.088', '94.176']
+32 base_score = (strength_factor + agility_factor + intelligence_factor) / 3
+32 ['stats', 'strength_factor', 'agility_factor', 'intelligence_factor', 'base_score'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '49.59499999999999', '47.088', '94.176', '63.61966666666666']
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '0', "'strength'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1', "'agility'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '2', "'intelligence'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '3', "'endurance'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '4', "'charisma'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '5', "'vitality'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '6', "'wisdom'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '7', "'dexterity'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'idx', 'name'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '8', "'luck'"]
+35 stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+35 ['stats', 'base_score', 'stat_modifiers'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}']
+38 weighted_sum = 0
+38 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0']
+39 total_weight = 0
+39 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'strength'", '70.85']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'strength'", '70.85']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'agility'", '52.32']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'agility'", '52.32']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'intelligence'", '78.48']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'intelligence'", '78.48']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'endurance'", '59.95']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'endurance'", '59.95']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'charisma'", '43.6']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'charisma'", '43.6']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'vitality'", '65.4']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'vitality'", '65.4']
+42 weight = stat_modifiers.get(stat, 1) + 1
+42 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '0', '0', "'vitality'", '65.4', '6']
+43 weighted_sum += value * weight
+43 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '392.40000000000003', '0', "'vitality'", '65.4', '6']
+44 total_weight += weight
+44 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '392.40000000000003', '6', "'vitality'", '65.4', '6']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '392.40000000000003', '6', "'wisdom'", '32.7', '6']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '392.40000000000003', '6', "'wisdom'", '32.7', '6']
+42 weight = stat_modifiers.get(stat, 1) + 1
+42 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '392.40000000000003', '6', "'wisdom'", '32.7', '7']
+43 weighted_sum += value * weight
+43 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '621.3000000000001', '6', "'wisdom'", '32.7', '7']
+44 total_weight += weight
+44 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '621.3000000000001', '13', "'wisdom'", '32.7', '7']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '621.3000000000001', '13', "'dexterity'", '49.05', '7']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '621.3000000000001', '13', "'dexterity'", '49.05', '7']
+42 weight = stat_modifiers.get(stat, 1) + 1
+42 ['stats', 'base_score', 'stat_modifiers', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '{strength: 0, agility: 1, intelligence: 2, ...}', '621.3000000000001', '13', "'dexterity'", '49.05', '8']
+43 weighted_sum += value * weight
+43 ['stats', 'base_score', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1013.7', '13', "'dexterity'", '49.05', '8']
+44 total_weight += weight
+44 ['stats', 'base_score', 'weighted_sum', 'total_weight', 'stat', 'value', 'weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1013.7', '21', "'dexterity'", '49.05', '8']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1013.7', '21', "'luck'", '27.25']
+41 if stat in ['vitality', 'wisdom', 'dexterity']:
+41 ['stats', 'base_score', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1013.7', '21', "'luck'", '27.25']
+40 for stat, value in stats.items():
+40 ['stats', 'base_score', 'weighted_sum', 'total_weight', 'stat', 'value'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1013.7', '21', "'luck'", '27.25']
+47 if 'legendary_factor' in stats and stats['legendary_factor'] > 100:
+47 ['stats', 'base_score', 'weighted_sum', 'total_weight'] ['{strength: 70.85, agility: 52.32, intelligence: 78.48, ...}', '63.61966666666666', '1013.7', '21']
+51 normalized = base_score
+51 ['base_score', 'weighted_sum', 'total_weight', 'normalized'] ['63.61966666666666', '1013.7', '21', '63.61966666666666']
+52 if total_weight > 0:
+52 ['base_score', 'weighted_sum', 'total_weight', 'normalized'] ['63.61966666666666', '1013.7', '21', '63.61966666666666']
+53 normalized = (base_score * 0.8) + (weighted_sum / total_weight * 0.2)
+53 ['base_score', 'weighted_sum', 'total_weight', 'normalized'] ['63.61966666666666', '1013.7', '21', '60.550019047619045']
+56 return round(normalized) % 1000
+56 ['normalized'] ['60.550019047619045']
+FUNCTION_RETURN 56 calculate_normalized_score {'_type': 'int', '_value': 61}

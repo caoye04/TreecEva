@@ -1,0 +1,58 @@
+Target: Find the value of variable final_priority after [line 58] executes
+
+[line 17]  text_data = "Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI"
+Assign: text_data = 'Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI'
+[line 20]  words = text_data.split()
+(Missing param: 'func_name')
+[line 21]  word_count = len(words)
+Call function len(words=['Machine', 'learning', 'algorithms', 'require', 'extensive', ...] (an unknown source))
+[line 24]  tags_part = text_data.split('#')[1:] if '#' in text_data else []
+Compute: text_data.split('#')[1:] if '#' in text_data else [], where text_data='Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI' (defined at [line 17]) = ['AI,', 'DataScience,', 'ML,', 'AI']
+[line 25]  tags_string = ','.join([tag.strip() for tag in tags_part])
+(Missing param: 'func_name')
+[line 32]  importance_base = 25
+Assign: importance_base = 25
+[line 33]  importance_factor = 3
+Assign: importance_factor = 3
+[line 36]  calculate_weight = lambda x, y: (x * 2 + y) // 3
+Compute: lambda x, y: (x * 2 + y) // 3 = ?
+[line 39]  tag_count = process_tags(tags_string)
+Call function process_tags(tags_string='AI,,DataScience,,ML,,AI' (an unknown source))
+[line 1]  def process_tags(tags_string):
+Enter function process_tags: tags_string='AI,,DataScience,,ML,,AI'
+  [line 3]  if not tags_string:
+  Condition: True, entering 'if' block
+  [line 5]  tags = tags_string.split(',')
+  (Missing param: 'func_name')
+  [line 6]  unique_tags = set(tags)
+  Call function set(tags=['AI', '', 'DataScience', '', 'ML', ...] (an unknown source))
+  [line 7]  return len(unique_tags)
+  Return: len(unique_tags)
+Function process_tags returns 4
+[line 55]  final_priority = calculate_priority(text_data, importance_factor)
+Call function calculate_priority(text_data='Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI' (defined at [line 17]), importance_factor=3 (defined at [line 33]))
+[line 44]  importance = calculate_importance(text)
+Call function calculate_importance(text='Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI' (an unknown source))
+[line 9]  def calculate_importance(text):
+Enter function calculate_importance: text='Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI'
+  [line 11]  word_count = len(text.split())
+  Call function len(text.split())
+  [line 12]  character_count = len(text)
+  Call function len(text='Machine learning algorithms require extensive data preprocessing, feature engineering, and model validation #AI,#DataScience,#ML,#AI' (parameter text))
+  [line 13]  importance = word_count * 0.6 + character_count * 0.1
+  Compute: word_count * 0.6 + character_count * 0.1, where word_count=13 (defined at [line 11]), character_count=132 (defined at [line 12]) = 21.0
+  [line 14]  return importance
+  Return: importance=21.0 (defined at [line 13])
+Function calculate_importance returns 21.0
+[line 45]  base_priority = importance + tag_count * 5
+Compute: importance + tag_count * 5, where importance=21.0 (defined at [line 13]) = 41.0
+[line 46]  weighted_priority = calculate_weight(base_priority, importance_base)
+Call function calculate_weight(base_priority=41.0 (defined at [line 45]), importance_base)
+[line 49]  adjusted_priority = weighted_priority * (factor / 2)
+Compute: weighted_priority * (factor / 2), where weighted_priority=35.0 (defined at [line 46]), factor=3 (an unknown source) = 52.5
+[line 52]  return round(adjusted_priority)
+Return: round(adjusted_priority)
+[line 58]  print(f"Result: {final_priority}")
+Output: f"Result: {final_priority}"
+
+Answer: final_priority = 52 (last updated on defined at [line 55])

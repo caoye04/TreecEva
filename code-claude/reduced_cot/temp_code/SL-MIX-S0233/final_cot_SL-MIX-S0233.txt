@@ -1,0 +1,27 @@
+Target: Find the value of variable unique_items after [line 30] executes
+
+[line 3]  def analyze_sensor_readings(readings, threshold):
+Enter function analyze_sensor_readings: readings=[12, 15, 14, 17, 19, ...], threshold=2
+  [line 8]  baseline = sum(readings[:3]) / 3
+  Compute: sum(readings[:3]) / 3, where readings=[12, 15, 14, 17, 19, ...] (parameter readings) = 13.666666666666666
+  [line 9]  adjusted = [r - baseline for r in readings]
+  Compute: [r - baseline for r in readings], where r=12 (an unknown source), baseline=13.666666666666666 (defined at [line 8]), readings=[12, 15, 14, 17, 19, ...] (parameter readings) = ?
+  [line 12]  outlier_filter = lambda x: abs(x) < threshold * 2
+  Compute: lambda x: abs(x) < threshold * 2, where threshold=2 (parameter threshold) = ?
+  [line 13]  preliminary = list(filter(outlier_filter, adjusted))
+  Call function list(filter(outlier_filter, adjusted))
+  [line 23]  pairs = list(itertools.pairwise(preliminary))
+  Call function list(itertools.pairwise(preliminary))
+  [line 24]  differences = [abs(b - a) for a, b in pairs]
+  Compute: [abs(b - a) for a, b in pairs], where b=1.333333333333334 (an unknown source), a=-1.666666666666666 (an unknown source), pairs=[(-1.666666666666666, 1.333333333333334), (1.333333333333334, 0.3333333333333339), (0.3333333333333339, 3.333333333333334), (3.333333333333334, 3.333333333333334)] (defined at [line 23]) = ?
+  [line 27]  filtered_data = [d for d in differences if d > threshold]
+  Compute: [d for d in differences if d > threshold], where d=3.0 (an unknown source), differences=[3.0, 1.0, 3.0, 0.0] (defined at [line 24]), threshold=2 (parameter threshold) = ?
+  [line 30]  unique_items = len(set(filtered_data))
+  Call function len(set(filtered_data))
+  [line 36]  print(f"Result: {unique_items}")
+  Output: f"Result: {unique_items}"
+  [line 37]  return unique_items
+  Return: unique_items=1 (defined at [line 30])
+Function analyze_sensor_readings returns 1
+
+Answer: unique_items = 1 (last updated on defined at [line 30])

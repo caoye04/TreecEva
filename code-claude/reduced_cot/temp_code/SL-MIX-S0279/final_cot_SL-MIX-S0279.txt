@@ -1,0 +1,45 @@
+Target: Find the value of variable final_signature after [line 52] executes
+
+[line 6]  noise_threshold = 42
+Assign: noise_threshold = 42
+[line 7]  security_constant = 0x5A3C
+Assign: security_constant = 23100
+[line 14]  accumulated_hash = 0
+Assign: accumulated_hash = 0
+[line 15]  for i, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 17]  src, dest, payload = packet
+(Missing param: 'result')
+[line 24]  noise_level = (dest * 17) % 256
+Compute: (dest * 17) % 256, where dest=8080 (an unknown source) = 144
+[line 25]  if noise_level > noise_threshold:
+Condition: True, entering 'if' block
+[line 15]  for i, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 17]  src, dest, payload = packet
+(Missing param: 'result')
+[line 24]  noise_level = (dest * 17) % 256
+Compute: (dest * 17) % 256, where dest=443 (an unknown source) = 107
+[line 25]  if noise_level > noise_threshold:
+Condition: True, entering 'if' block
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+[line 15]  for i, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 17]  src, dest, payload = packet
+(Missing param: 'result')
+[line 24]  noise_level = (dest * 17) % 256
+Compute: (dest * 17) % 256, where dest=8443 (an unknown source) = 171
+[line 25]  if noise_level > noise_threshold:
+Condition: True, entering 'if' block
+[line 15]  for i, packet in enumerate(packets):
+Loop End: Iteration finished
+[line 48]  mask = 0xFFFF >> (4 - security_level)  # Only lower bits based on security level
+Compute: 0xFFFF >> (4 - security_level)  # Only lower bits based on security level, where security_level=3 (an unknown source) = 32767
+[line 52]  final_signature = (accumulated_hash & mask) ^ security_constant
+Compute: (accumulated_hash & mask) ^ security_constant, where accumulated_hash=0 (defined at [line 14]), mask=32767 (defined at [line 48]), security_constant=23100 (defined at [line 7]) = 23100
+
+Answer: final_signature = 23100 (last updated on defined at [line 52])

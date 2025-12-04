@@ -1,0 +1,71 @@
+Target: Find the value of variable total_price after [line 57] executes
+
+[line 1]  def calculate_final_price(items, discounts, loyalty_points):
+Enter function calculate_final_price: items=[('Shirt', 25.99), ('Pants', 34.5), ('Shoes', 89.99)], discounts={SUMMER: {priority: 2, active: True, type: 'percentage', ...}, WELCOME: {priority: 1, active: True, type: 'fixed', ...}, CLEARANCE: {priority: 3, active: False, type: 'percentage', ...}}, loyalty_points=600
+  [line 3]  base_total = sum(price for item, price in items)
+  Call function sum(price for item, price in items)
+  [line 6]  sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  Call function sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  [line 6]  sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  Call function sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  [line 6]  sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  Call function sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  [line 6]  sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  Call function sorted(discounts.items(), key=lambda x: x[1]['priority'])
+  [line 10]  discount_amount = 0
+  Assign: discount_amount = 0
+  [line 13]  loyalty_discount = 0
+  Assign: loyalty_discount = 0
+  [line 14]  if loyalty_points > 500:
+  Condition: True, entering 'if' block
+  [line 15]  loyalty_discount = min(loyalty_points * 0.01, 50)  # Max $50 discount
+  Call function min(loyalty_points * 0.01, 50)
+  [line 19]  for discount_name, details in sorted_discounts:
+  (Missing param: 'iter_var')
+  [line 20]  if details['active'] and base_total >= details['min_purchase']:
+  Condition: True, entering 'if' block
+  [line 21]  if details['type'] == 'percentage':
+  Condition: True, entering 'if' block
+  [line 24]  current_discount = details['value']
+  Compute: details['value'], where details={priority: 1, active: True, type: 'fixed', ...} (an unknown source) = 10
+  [line 27]  if details.get('exclusive', False) and discount_amount > 0:
+  Condition: True, entering 'if' block
+  [line 30]  discount_amount += current_discount
+  Update: discount_amount changed from 0 (defined at defined at [line 10]) to 0+current_discount = 10
+  [line 34]  if discount_amount >= base_total * 0.5:  # Max 50% total discount
+  Condition: True, entering 'if' block
+  [line 19]  for discount_name, details in sorted_discounts:
+  (Missing param: 'iter_var')
+  [line 20]  if details['active'] and base_total >= details['min_purchase']:
+  Condition: True, entering 'if' block
+  [line 21]  if details['type'] == 'percentage':
+  Condition: True, entering 'if' block
+  [line 22]  current_discount = base_total * (details['value'] / 100)
+  Compute: base_total * (details['value'] / 100), where base_total=150.48 (defined at [line 3]), details={priority: 2, active: True, type: 'percentage', ...} (an unknown source) = 22.572
+  [line 27]  if details.get('exclusive', False) and discount_amount > 0:
+  Condition: True, entering 'if' block
+  [line 30]  discount_amount += current_discount
+  Update: discount_amount changed from 10 (defined at defined at [line 30]) to 10+current_discount = 32.572
+  [line 34]  if discount_amount >= base_total * 0.5:  # Max 50% total discount
+  Condition: True, entering 'if' block
+  [line 19]  for discount_name, details in sorted_discounts:
+  (Missing param: 'iter_var')
+  [line 20]  if details['active'] and base_total >= details['min_purchase']:
+  Condition: True, entering 'if' block
+  [line 19]  for discount_name, details in sorted_discounts:
+  Loop End: Iteration finished
+  [line 39]  subtotal = base_total - discount_amount
+  Compute: base_total - discount_amount, where base_total=150.48 (defined at [line 3]), discount_amount=32.572 (defined at [line 30]) = 117.90799999999999
+  [line 40]  shipping_cost = 0
+  Assign: shipping_cost = 0
+  [line 41]  if subtotal < 50:
+  Condition: True, entering 'if' block
+  [line 43]  elif subtotal < 100:
+  'elif' Condition: True, entering block
+  [line 57]  total_price = base_total - discount_amount - loyalty_discount + shipping_cost
+  Compute: base_total - discount_amount - loyalty_discount + shipping_cost, where base_total=150.48 (defined at [line 3]), discount_amount=32.572 (defined at [line 30]), loyalty_discount=6.0 (defined at [line 15]), shipping_cost=0 (defined at [line 40]) = 111.90799999999999
+  [line 64]  return round(total_price, 2)
+  Return: round(total_price, 2)
+Function calculate_final_price returns 111.91
+
+Answer: total_price = 111.90799999999999 (last updated on defined at [line 57])

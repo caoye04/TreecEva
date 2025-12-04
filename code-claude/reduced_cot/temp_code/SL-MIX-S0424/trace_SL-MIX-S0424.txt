@@ -1,0 +1,24 @@
+2 package_weight = 12.5  # Weight in kg
+2 ['package_weight'] [{'_type': 'float', '_value': 12.5}]
+3 weight_limit = 10.0   # Standard weight limit
+3 ['package_weight', 'weight_limit'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}]
+4 base_rate = 15.0      # Base shipping rate
+4 ['package_weight', 'weight_limit', 'base_rate'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}]
+7 express_delivery = True
+7 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}]
+8 premium_factor = 0.25  # 25% premium for express delivery
+8 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}]
+11 overweight = package_weight - weight_limit
+11 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}]
+12 weight_surcharge = overweight * 2.0 if overweight > 0 else 0
+12 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight', 'weight_surcharge'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}, {'_type': 'float', '_value': 5.0}]
+15 customer_tier = 'gold'
+15 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight', 'weight_surcharge', 'customer_tier'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}, {'_type': 'float', '_value': 5.0}, {'_type': 'str', '_value': 'gold'}]
+16 loyalty_discount = 2.0 if customer_tier == 'gold' else 0
+16 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight', 'weight_surcharge', 'customer_tier', 'loyalty_discount'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}, {'_type': 'float', '_value': 5.0}, {'_type': 'str', '_value': 'gold'}, {'_type': 'float', '_value': 2.0}]
+19 shipping_cost = base_rate * (1 + premium_factor if express_delivery else 0) + (weight_surcharge if package_weight > weight_limit else 0)
+19 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight', 'weight_surcharge', 'customer_tier', 'loyalty_discount', 'shipping_cost'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}, {'_type': 'float', '_value': 5.0}, {'_type': 'str', '_value': 'gold'}, {'_type': 'float', '_value': 2.0}, {'_type': 'float', '_value': 23.75}]
+22 final_cost = shipping_cost - loyalty_discount
+22 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight', 'weight_surcharge', 'customer_tier', 'loyalty_discount', 'shipping_cost', 'final_cost'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}, {'_type': 'float', '_value': 5.0}, {'_type': 'str', '_value': 'gold'}, {'_type': 'float', '_value': 2.0}, {'_type': 'float', '_value': 23.75}, {'_type': 'float', '_value': 21.75}]
+24 print(f"Shipping cost: {shipping_cost}")
+24 ['package_weight', 'weight_limit', 'base_rate', 'express_delivery', 'premium_factor', 'overweight', 'weight_surcharge', 'customer_tier', 'loyalty_discount', 'shipping_cost', 'final_cost'] [{'_type': 'float', '_value': 12.5}, {'_type': 'float', '_value': 10.0}, {'_type': 'float', '_value': 15.0}, {'_type': 'bool', '_value': True}, {'_type': 'float', '_value': 0.25}, {'_type': 'float', '_value': 2.5}, {'_type': 'float', '_value': 5.0}, {'_type': 'str', '_value': 'gold'}, {'_type': 'float', '_value': 2.0}, {'_type': 'float', '_value': 23.75}, {'_type': 'float', '_value': 21.75}]

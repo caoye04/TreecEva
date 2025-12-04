@@ -1,0 +1,123 @@
+Target: Find the value of variable priority_factor after [line 80] executes
+
+[line 44]  raw_wavelengths = [420, 532, 580, 632, 780, 455, 620, 590, 510, 700, 650]
+Compute: [420, 532, 580, 632, 780, 455, 620, 590, 510, 700, 650] = [420, 532, 580, 632, 780, ...]
+[line 52]  threshold_min = 500
+Assign: threshold_min = 500
+[line 53]  threshold_max = 700
+Assign: threshold_max = 700
+[line 54]  filtered_wavelengths = [w for w in raw_wavelengths if threshold_min <= w <= threshold_max]
+Compute: [w for w in raw_wavelengths if threshold_min <= w <= threshold_max], where w=420 (an unknown source), raw_wavelengths=[420, 532, 580, 632, 780, ...] (defined at [line 44]), threshold_min=500 (defined at [line 52]), threshold_max=700 (defined at [line 53]) = ?
+[line 1]  def calculate_spectrum_intensity(wavelengths, amplitudes):
+Enter function calculate_spectrum_intensity: wavelengths=[420, 532, 580, 632, 780, ...] (raw_wavelengths defined at [line 44]), amplitudes=[0.8, 1.2, 0.9, 1.5, 0.6, ...]
+  [line 3]  intensity = 0
+  Assign: intensity = 0
+  [line 4]  for w, a in zip(wavelengths, amplitudes):
+  (Missing param: 'iter_var')
+  [line 5]  if w > 700:  # Infrared region
+  Condition: True, entering 'if' block
+  [line 7]  elif w < 400:  # Ultraviolet region
+  'elif' Condition: True, entering block
+  [line 10]  intensity += a * 1.0
+  Update: intensity changed from 0 (defined at defined at [line 3]) to 0+a * 1.0 = 0.8
+  [line 4]  for w, a in zip(wavelengths, amplitudes):
+  (Missing param: 'iter_var')
+  [line 5]  if w > 700:  # Infrared region
+  Condition: True, entering 'if' block
+  [line 7]  elif w < 400:  # Ultraviolet region
+  'elif' Condition: True, entering block
+  [line 10]  intensity += a * 1.0
+  Update: intensity changed from 0.8 (defined at defined at [line 10]) to 0.8+a * 1.0 = 2.0
+... [Line 4] repeats 8 more times ...
+... [Line 4] repeats 8 more times ...
+... [Line 4] repeats 8 more times ...
+... [Line 4] repeats 8 more times ...
+  [line 4]  for w, a in zip(wavelengths, amplitudes):
+  (Missing param: 'iter_var')
+  [line 5]  if w > 700:  # Infrared region
+  Condition: True, entering 'if' block
+  [line 7]  elif w < 400:  # Ultraviolet region
+  'elif' Condition: True, entering block
+  [line 10]  intensity += a * 1.0
+  Update: intensity changed from 9.770000000000001 (defined at defined at [line 10]) to 9.770000000000001+a * 1.0 = 11.170000000000002
+  [line 4]  for w, a in zip(wavelengths, amplitudes):
+  Loop End: Iteration finished
+  [line 11]  return intensity
+  Return: intensity=11.170000000000002 (defined at [line 10])
+Function calculate_spectrum_intensity returns 11.170000000000002
+[line 13]  def analyze_noise_pattern(signal_data):
+Enter function analyze_noise_pattern: signal_data=[420, 532, 580, 632, 780, ...] (raw_wavelengths defined at [line 44])
+  [line 15]  noise_levels = set([round(x % 10, 2) for x in signal_data])
+  Call function set([round(x % 10, 2) for x in signal_data])
+  [line 16]  return sum(noise_levels) / len(noise_levels) if noise_levels else 0
+  Return: sum(noise_levels) / len(noise_levels) if noise_levels else 0
+Function analyze_noise_pattern returns 2.3333333333333335
+[line 62]  wavelength_groups = {}
+Compute: {} = {}
+[line 63]  for i, w in enumerate(raw_wavelengths):
+(Missing param: 'iter_var')
+[line 64]  group = w // 100
+Compute: w // 100, where w=420 (an unknown source) = 4
+[line 65]  if group not in wavelength_groups:
+Condition: True, entering 'if' block
+[line 66]  wavelength_groups[group] = []
+(Missing param: 'result')
+[line 63]  for i, w in enumerate(raw_wavelengths):
+(Missing param: 'iter_var')
+[line 64]  group = w // 100
+Compute: w // 100, where w=532 (an unknown source) = 5
+[line 65]  if group not in wavelength_groups:
+Condition: True, entering 'if' block
+[line 66]  wavelength_groups[group] = []
+(Missing param: 'result')
+... [Line 63] repeats 8 more times ...
+... [Line 63] repeats 8 more times ...
+... [Line 63] repeats 8 more times ...
+[line 63]  for i, w in enumerate(raw_wavelengths):
+(Missing param: 'iter_var')
+[line 64]  group = w // 100
+Compute: w // 100, where w=650 (an unknown source) = 6
+[line 65]  if group not in wavelength_groups:
+Condition: True, entering 'if' block
+[line 63]  for i, w in enumerate(raw_wavelengths):
+Loop End: Iteration finished
+[line 73]  priority_factor = calculate_priority(filtered_wavelengths)
+Call function calculate_priority(filtered_wavelengths=[532, 580, 632, 620, 590, ...] (defined at [line 54]))
+[line 20]  base_factor = 100
+Assign: base_factor = 100
+[line 21]  threshold = 550
+Assign: threshold = 550
+[line 24]  above_count = len([w for w in wavelengths if w > threshold])
+Call function len([w for w in wavelengths if w > threshold])
+[line 25]  below_count = len(wavelengths) - above_count
+Compute: len(wavelengths) - above_count, where wavelengths=[532, 580, 632, 620, 590, ...] (an unknown source), above_count=6 (defined at [line 24]) = 2
+[line 29]  weight_factor = 2.5
+Assign: weight_factor = 2.5
+[line 32]  potential_values = {450: 1.5, 500: 2.0, 600: 2.5, 650: 3.0}
+Compute: {450: 1.5, 500: 2.0, 600: 2.5, 650: 3.0} = {450: 1.5, 500: 2.0, 600: 2.5, ...}
+[line 33]  for val, multiplier in potential_values.items():
+(Missing param: 'iter_var')
+[line 34]  if val in wavelengths:
+Condition: True, entering 'if' block
+[line 33]  for val, multiplier in potential_values.items():
+(Missing param: 'iter_var')
+[line 34]  if val in wavelengths:
+Condition: True, entering 'if' block
+[line 33]  for val, multiplier in potential_values.items():
+(Missing param: 'iter_var')
+[line 34]  if val in wavelengths:
+Condition: True, entering 'if' block
+[line 33]  for val, multiplier in potential_values.items():
+(Missing param: 'iter_var')
+[line 34]  if val in wavelengths:
+Condition: True, entering 'if' block
+[line 33]  for val, multiplier in potential_values.items():
+Loop End: Iteration finished
+[line 38]  if above_count > below_count:
+Condition: True, entering 'if' block
+[line 39]  return base_factor + (above_count - below_count) * weight_factor
+Return: base_factor + (above_count - below_count) * weight_factor
+[line 80]  print(f"Result: {priority_factor}")
+Output: f"Result: {priority_factor}"
+
+Answer: priority_factor = 110.0 (last updated on defined at [line 73])

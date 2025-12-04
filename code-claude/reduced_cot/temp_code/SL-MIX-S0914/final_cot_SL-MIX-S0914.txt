@@ -1,0 +1,155 @@
+Target: Find the value of variable final_transmission_power after [line 103] executes
+
+[line 70]  signal_data = [128, 64, 256, 512, 32, 128, 64, 192]
+Compute: [128, 64, 256, 512, 32, 128, 64, 192] = [128, 64, 256, 512, 32, ...]
+[line 77]  frequency_bands = [((s & 0xFF) + (i * 10)) for i, s in enumerate(signal_data)]
+Compute: [((s & 0xFF) + (i * 10)) for i, s in enumerate(signal_data)], where s=128 (an unknown source), i=0 (an unknown source), signal_data=[128, 64, 256, 512, 32, ...] (defined at [line 70]) = ?
+[line 80]  noise_base = sum(signal_data) / len(signal_data)
+Compute: sum(signal_data) / len(signal_data), where signal_data=[128, 64, 256, 512, 32, ...] (defined at [line 70]) = 172.0
+[line 81]  noise_factors = [0.8, 1.2, 0.7, 1.5, 0.9]
+Compute: [0.8, 1.2, 0.7, 1.5, 0.9] = [0.8, 1.2, 0.7, 1.5, 0.9]
+[line 82]  noise_components = [noise_base * factor for factor in noise_factors]
+Compute: [noise_base * factor for factor in noise_factors], where noise_base=172.0 (defined at [line 80]), factor=0.8 (an unknown source), noise_factors=[0.8, 1.2, 0.7, 1.5, 0.9] (defined at [line 81]) = ?
+[line 83]  noise_threshold = int(sum(noise_components) / len(noise_components)) - 50
+Compute: int(sum(noise_components) / len(noise_components)) - 50, where noise_components=[137.6, 206.4, 120.39999999999999, 258.0, 154.8] (defined at [line 82]) = 125
+[line 86]  filtered_frequencies = filter_frequencies(frequency_bands, 100)
+Call function filter_frequencies(frequency_bands=[128, 74, 20, 30, 72, ...] (defined at [line 77]), 100)
+[line 26]  def filter_frequencies(frequencies, threshold):
+Enter function filter_frequencies: frequencies=[128, 74, 20, 30, 72, ...] (frequency_bands defined at [line 77]), threshold=100
+  [line 28]  result = [f for f in frequencies if f > threshold]
+  Compute: [f for f in frequencies if f > threshold], where f=128 (an unknown source), frequencies=[128, 74, 20, 30, 72, ...] (parameter frequencies defined at [line 77]), threshold=100 (parameter threshold) = ?
+  [line 31]  temp_result = result.copy()
+  (Missing param: 'func_name')
+  [line 32]  for i in range(len(temp_result)):
+  Loop Start: i takes its first value 0
+  [line 33]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 34]  temp_result[i] = temp_result[i] * 2
+  (Missing param: 'result')
+  [line 32]  for i in range(len(temp_result)):
+  Loop Iteration: i is now 1 (iteration 2)
+  [line 33]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 32]  for i in range(len(temp_result)):
+  Loop Iteration: i is now 2 (iteration 3)
+  [line 33]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 34]  temp_result[i] = temp_result[i] * 2
+  (Missing param: 'result')
+  [line 32]  for i in range(len(temp_result)):
+  Loop Iteration: i is now 3 (iteration 4)
+  [line 33]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 32]  for i in range(len(temp_result)):
+  Loop End: Iteration finished
+  [line 36]  return result
+  Return: result=[128, 178, 124, 262] (defined at [line 28])
+Function filter_frequencies returns [128, 178, 124, 262]
+[line 89]  strength_map = calculate_frequency_strength(filtered_frequencies)
+Call function calculate_frequency_strength(filtered_frequencies=[128, 178, 124, 262] (defined at [line 86]))
+[line 10]  def calculate_frequency_strength(frequency_bands):
+Enter function calculate_frequency_strength: frequency_bands=[128, 178, 124, 262] (filtered_frequencies defined at [line 86])
+  [line 12]  strength_map = {}
+  Compute: {} = {}
+  [line 13]  for band in frequency_bands:
+  Loop Start: band takes its first value 128
+  [line 18]  if band > 100:
+  Condition: True, entering 'if' block
+  [line 19]  strength = (band & 0x7F) + (band >> 3)
+  Compute: (band & 0x7F) + (band >> 3), where band=128 (defined at [line 13]) = 16
+  [line 23]  strength_map[band] = strength
+  (Missing param: 'result')
+  [line 13]  for band in frequency_bands:
+  Loop Iteration: band is now 178 (iteration 2)
+  [line 18]  if band > 100:
+  Condition: True, entering 'if' block
+  [line 19]  strength = (band & 0x7F) + (band >> 3)
+  Compute: (band & 0x7F) + (band >> 3), where band=178 (defined at [line 13]) = 72
+  [line 23]  strength_map[band] = strength
+  (Missing param: 'result')
+  [line 13]  for band in frequency_bands:
+  Loop Iteration: band is now 124 (iteration 3)
+  [line 18]  if band > 100:
+  Condition: True, entering 'if' block
+  [line 19]  strength = (band & 0x7F) + (band >> 3)
+  Compute: (band & 0x7F) + (band >> 3), where band=124 (defined at [line 13]) = 139
+  [line 23]  strength_map[band] = strength
+  (Missing param: 'result')
+  [line 13]  for band in frequency_bands:
+  Loop Iteration: band is now 262 (iteration 4)
+  [line 18]  if band > 100:
+  Condition: True, entering 'if' block
+  [line 19]  strength = (band & 0x7F) + (band >> 3)
+  Compute: (band & 0x7F) + (band >> 3), where band=262 (defined at [line 13]) = 38
+  [line 23]  strength_map[band] = strength
+  (Missing param: 'result')
+  [line 13]  for band in frequency_bands:
+  Loop End: Iteration finished
+  [line 24]  return strength_map
+  Return: strength_map={128: 16, 178: 72, 124: 139, ...} (defined at [line 12])
+Function calculate_frequency_strength returns {128: 16, 178: 72, 124: 139, ...}
+[line 94]  final_transmission_power = calculate_effective_signal(filtered_frequencies, noise_threshold)
+Call function calculate_effective_signal(filtered_frequencies=[128, 178, 124, 262] (defined at [line 86]), noise_threshold=125 (defined at [line 83]))
+[line 38]  def calculate_effective_signal(frequencies, noise_threshold):
+Enter function calculate_effective_signal: frequencies=[128, 178, 124, 262] (filtered_frequencies defined at [line 86]), noise_threshold=125 (noise_threshold defined at [line 83])
+  [line 40]  freq_counter = Counter(frequencies)
+  Call function Counter(frequencies=[128, 178, 124, 262] (parameter frequencies defined at [line 86]))
+  [line 43]  signal_power = defaultdict(int)
+  Call function defaultdict(int)
+  [line 46]  for freq, count in freq_counter.items():
+  (Missing param: 'iter_var')
+  [line 47]  harmonic_value = freq * count / 10
+  Compute: freq * count / 10, where freq=128 (an unknown source), count=1 (an unknown source) = 12.8
+  [line 48]  signal_power[freq] = harmonic_value
+  (Missing param: 'result')
+  [line 46]  for freq, count in freq_counter.items():
+  (Missing param: 'iter_var')
+  [line 47]  harmonic_value = freq * count / 10
+  Compute: freq * count / 10, where freq=178 (an unknown source), count=1 (an unknown source) = 17.8
+  [line 48]  signal_power[freq] = harmonic_value
+  (Missing param: 'result')
+  [line 46]  for freq, count in freq_counter.items():
+  (Missing param: 'iter_var')
+  [line 47]  harmonic_value = freq * count / 10
+  Compute: freq * count / 10, where freq=124 (an unknown source), count=1 (an unknown source) = 12.4
+  [line 48]  signal_power[freq] = harmonic_value
+  (Missing param: 'result')
+  [line 46]  for freq, count in freq_counter.items():
+  (Missing param: 'iter_var')
+  [line 47]  harmonic_value = freq * count / 10
+  Compute: freq * count / 10, where freq=262 (an unknown source), count=1 (an unknown source) = 26.2
+  [line 48]  signal_power[freq] = harmonic_value
+  (Missing param: 'result')
+  [line 46]  for freq, count in freq_counter.items():
+  Loop End: Iteration finished
+  [line 51]  base_power = sum(freq for freq in frequencies if freq > noise_threshold)
+  Call function sum(freq for freq in frequencies if freq > noise_threshold)
+  [line 55]  for i in range(1, len(frequencies)):
+  Loop Start: i takes its first value 1
+  [line 56]  if i % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 55]  for i in range(1, len(frequencies)):
+  Loop Iteration: i is now 2 (iteration 2)
+  [line 56]  if i % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 55]  for i in range(1, len(frequencies)):
+  Loop Iteration: i is now 3 (iteration 3)
+  [line 56]  if i % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 55]  for i in range(1, len(frequencies)):
+  Loop End: Iteration finished
+  [line 60]  effective_power = base_power - (sum(signal_power.values()) // 5)
+  Compute: base_power - (sum(signal_power.values()) // 5), where base_power=568 (defined at [line 51]), signal_power={128: 12.8, 178: 17.8, 124: 12.4, ...} (defined at [line 43]) = 555.0
+  [line 65]  return effective_power
+  Return: effective_power=555.0 (defined at [line 60])
+Function calculate_effective_signal returns 555.0
+[line 100]  print(f"Signal analysis complete")
+Output: f"Signal analysis complete"
+[line 101]  print(f"Noise threshold: {noise_threshold}")
+Output: f"Noise threshold: {noise_threshold}"
+[line 102]  print(f"Filtered frequencies: {filtered_frequencies}")
+Output: f"Filtered frequencies: {filtered_frequencies}"
+[line 103]  print(f"Result: {final_transmission_power}")
+Output: f"Result: {final_transmission_power}"
+
+Answer: final_transmission_power = 555.0 (last updated on defined at [line 94])

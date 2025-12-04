@@ -1,0 +1,355 @@
+Target: Find the value of variable valid_entries after [line 80] executes
+
+[line 75]  valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+Call function sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='08:30:00 [SERVER] System startup' (an unknown source) = '08:30:00'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='08:30:00' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='08:30:00' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 30600
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=30600 (defined at [line 10]), business_end=61200 (defined at [line 33]) = False
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 44]  elif 'INFO' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='08:30:00 [SERVER] System startup' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='09:15:22 [DATABASE] Connected successfully' (an unknown source) = '09:15:22'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='09:15:22' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='09:15:22' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 33322
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=33322 (defined at [line 10]), business_end=61200 (defined at [line 33]) = True
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 44]  elif 'INFO' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='09:15:22 [DATABASE] Connected successfully' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='10:45:16 [AUTH] WARNING: Failed login attempt' (an unknown source) = '10:45:16'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='10:45:16' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='10:45:16' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 38716
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=38716 (defined at [line 10]), business_end=61200 (defined at [line 33]) = True
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='10:45:16 [AUTH] WARNING: Failed login attempt' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='12:32:45 [API] Request processed' (an unknown source) = '12:32:45'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='12:32:45' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='12:32:45' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 45165
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=45165 (defined at [line 10]), business_end=61200 (defined at [line 33]) = True
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 44]  elif 'INFO' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='12:32:45 [API] Request processed' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='14:05:32 [NETWORK] ERROR: Connection timeout' (an unknown source) = '14:05:32'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='14:05:32' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='14:05:32' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 50732
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=50732 (defined at [line 10]), business_end=61200 (defined at [line 33]) = True
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='14:05:32 [NETWORK] ERROR: Connection timeout' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='15:45:00 [SERVER] INFO: Cache cleared' (an unknown source) = '15:45:00'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='15:45:00' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='15:45:00' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 56700
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=56700 (defined at [line 10]), business_end=61200 (defined at [line 33]) = True
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 44]  elif 'INFO' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='15:45:00 [SERVER] INFO: Cache cleared' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='17:05:18 [DATABASE] Backup completed' (an unknown source) = '17:05:18'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='17:05:18' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='17:05:18' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 61518
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=61518 (defined at [line 10]), business_end=61200 (defined at [line 33]) = False
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 44]  elif 'INFO' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='17:05:18 [DATABASE] Backup completed' (an unknown source) = True
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='11:23:XX [AUTH] User login' (an unknown source) = '11:23:XX'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='11:23:XX' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='11:23:XX' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 17]  return -1
+  Return: -1
+Function parse_log_timestamp returns -1
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 29]  return False
+Return: False
+[line 21]  if not entry or len(entry.strip()) < 10:
+Condition: True, entering 'if' block
+[line 25]  timestamp = entry[:8]
+Compute: entry[:8], where entry='13:40:30 SERVER: Status check' (an unknown source) = '13:40:30'
+[line 26]  seconds = parse_log_timestamp(timestamp)
+Call function parse_log_timestamp(timestamp='13:40:30' (defined at [line 25]))
+[line 1]  def parse_log_timestamp(timestamp):
+Enter function parse_log_timestamp: timestamp='13:40:30' (timestamp defined at [line 25])
+  [line 3]  parts = timestamp.split(':')
+  (Missing param: 'func_name')
+  [line 4]  if len(parts) != 3:
+  Condition: True, entering 'if' block
+  [line 8]  hours = int(parts[0])
+  Call function int(parts[0])
+  [line 9]  minutes = int(parts[1])
+  Call function int(parts[1])
+  [line 10]  seconds = int(parts[2])
+  Call function int(parts[2])
+  [line 13]  if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+  Condition: True, entering 'if' block
+  [line 14]  return hours * 3600 + minutes * 60 + seconds
+  Return: hours * 3600 + minutes * 60 + seconds
+Function parse_log_timestamp returns 49230
+[line 28]  if seconds == -1:
+Condition: True, entering 'if' block
+[line 32]  business_start = 9 * 3600
+Compute: 9 * 3600 = 32400
+[line 33]  business_end = 17 * 3600
+Compute: 17 * 3600 = 61200
+[line 36]  is_business_hours = business_start <= seconds < business_end
+Compute: business_start <= seconds < business_end, where business_start=32400 (defined at [line 32]), seconds=49230 (defined at [line 10]), business_end=61200 (defined at [line 33]) = True
+[line 40]  if 'ERROR' in entry:
+Condition: True, entering 'if' block
+[line 42]  elif 'WARNING' in entry:
+'elif' Condition: True, entering block
+[line 44]  elif 'INFO' in entry:
+'elif' Condition: True, entering block
+[line 48]  has_required_fields = '[' in entry and ']' in entry
+Compute: '[' in entry and ']' in entry, where entry='13:40:30 SERVER: Status check' (an unknown source) = False
+[line 50]  return is_business_hours and has_required_fields
+Return: is_business_hours and has_required_fields
+[line 80]  print(f"Result: {valid_entries}")
+Output: f"Result: {valid_entries}"
+
+Answer: valid_entries = 5 (last updated on defined at [line 75])

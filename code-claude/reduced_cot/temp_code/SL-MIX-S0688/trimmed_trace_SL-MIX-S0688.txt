@@ -1,0 +1,77 @@
+42
+total_priority
+---
+27 active_items = [item for item in inventory if item['active']]
+27 ['item'] ["{id: 101, name: 'Server Backup', value: 75, ...}"]
+27 active_items = [item for item in inventory if item['active']]
+27 ['item'] ["{id: 102, name: 'Data Encryption', value: 60, ...}"]
+27 active_items = [item for item in inventory if item['active']]
+27 ['item'] ["{id: 103, name: 'Network Monitor', value: 80, ...}"]
+27 active_items = [item for item in inventory if item['active']]
+27 ['item'] ["{id: 104, name: 'Firewall Config', value: 90, ...}"]
+27 active_items = [item for item in inventory if item['active']]
+27 ['item'] ["{id: 105, name: 'Password Manager', value: 45, ...}"]
+27 active_items = [item for item in inventory if item['active']]
+27 ['inventory', 'active_items'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 103, name: 'Network Monitor', value: 80, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}, {id: 105, name: 'Password Manager', value: 45, ...}]", "[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}, {id: 105, name: 'Password Manager', value: 45, ...}]"]
+35 filter_condition = lambda x: x['value'] > 50
+35 ['active_items'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}, {id: 105, name: 'Password Manager', value: 45, ...}]"]
+36 filtered_data = [item for item in active_items if filter_condition(item)]
+36 ['item'] ["{id: 101, name: 'Server Backup', value: 75, ...}"]
+35 filter_condition = lambda x: x['value'] > 50
+35 ['x'] ["{id: 101, name: 'Server Backup', value: 75, ...}"]
+36 filtered_data = [item for item in active_items if filter_condition(item)]
+36 ['item'] ["{id: 102, name: 'Data Encryption', value: 60, ...}"]
+35 filter_condition = lambda x: x['value'] > 50
+35 ['x'] ["{id: 102, name: 'Data Encryption', value: 60, ...}"]
+36 filtered_data = [item for item in active_items if filter_condition(item)]
+36 ['item'] ["{id: 104, name: 'Firewall Config', value: 90, ...}"]
+35 filter_condition = lambda x: x['value'] > 50
+35 ['x'] ["{id: 104, name: 'Firewall Config', value: 90, ...}"]
+36 filtered_data = [item for item in active_items if filter_condition(item)]
+36 ['item'] ["{id: 105, name: 'Password Manager', value: 45, ...}"]
+35 filter_condition = lambda x: x['value'] > 50
+35 ['x'] ["{id: 105, name: 'Password Manager', value: 45, ...}"]
+36 filtered_data = [item for item in active_items if filter_condition(item)]
+36 ['active_items', 'filtered_data'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}, {id: 105, name: 'Password Manager', value: 45, ...}]", "[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]"]
+42 total_priority = calculate_priority(filtered_data)
+42 ['filtered_data'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]"]
+PARAM_MAPPING {'items': {'actual_var': 'filtered_data', 'value': [{'id': 101, 'name': 'Server Backup', 'value': 75, 'active': True, 'category': 'critical'}, {'id': 102, 'name': 'Data Encryption', 'value': 60, 'active': True, 'category': 'standard'}, {'id': 104, 'name': 'Firewall Config', 'value': 90, 'active': True, 'category': 'critical'}]}}
+FUNCTION_ENTER 3 calculate_priority def calculate_priority(items):
+3 ['items'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 101}, 'name': {'_type': 'str', '_value': 'Server Backup'}, 'value': {'_type': 'int', '_value': 75}, 'active': {'_type': 'bool', '_value': True}, 'category': {'_type': 'str', '_value': 'critical'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 102}, 'name': {'_type': 'str', '_value': 'Data Encryption'}, 'value': {'_type': 'int', '_value': 60}, 'active': {'_type': 'bool', '_value': True}, 'category': {'_type': 'str', '_value': 'standard'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 104}, 'name': {'_type': 'str', '_value': 'Firewall Config'}, 'value': {'_type': 'int', '_value': 90}, 'active': {'_type': 'bool', '_value': True}, 'category': {'_type': 'str', '_value': 'critical'}}, '_len': 5}], '_len': 3}]
+5 result = 0
+5 ['items', 'result'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '0']
+6 for item in items:
+6 ['items', 'result', 'item'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '0', "{id: 101, name: 'Server Backup', value: 75, ...}"]
+7 item_value = item['value'] if item['active'] else 0
+7 ['items', 'result', 'item', 'item_value'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '0', "{id: 101, name: 'Server Backup', value: 75, ...}", '75']
+8 category_multiplier = 1.5 if item['category'] == 'critical' else 1.0
+8 ['items', 'result', 'item', 'item_value', 'category_multiplier'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '0', "{id: 101, name: 'Server Backup', value: 75, ...}", '75', '1.5']
+12 priority = item_value * category_multiplier
+12 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '0', "{id: 101, name: 'Server Backup', value: 75, ...}", '75', '1.5', '112.5']
+13 result += priority
+13 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '112.5', "{id: 101, name: 'Server Backup', value: 75, ...}", '75', '1.5', '112.5']
+6 for item in items:
+6 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '112.5', "{id: 102, name: 'Data Encryption', value: 60, ...}", '75', '1.5', '112.5']
+7 item_value = item['value'] if item['active'] else 0
+7 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '112.5', "{id: 102, name: 'Data Encryption', value: 60, ...}", '60', '1.5', '112.5']
+8 category_multiplier = 1.5 if item['category'] == 'critical' else 1.0
+8 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '112.5', "{id: 102, name: 'Data Encryption', value: 60, ...}", '60', '1.0', '112.5']
+12 priority = item_value * category_multiplier
+12 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '112.5', "{id: 102, name: 'Data Encryption', value: 60, ...}", '60', '1.0', '60.0']
+13 result += priority
+13 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '172.5', "{id: 102, name: 'Data Encryption', value: 60, ...}", '60', '1.0', '60.0']
+6 for item in items:
+6 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '172.5', "{id: 104, name: 'Firewall Config', value: 90, ...}", '60', '1.0', '60.0']
+7 item_value = item['value'] if item['active'] else 0
+7 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '172.5', "{id: 104, name: 'Firewall Config', value: 90, ...}", '90', '1.0', '60.0']
+8 category_multiplier = 1.5 if item['category'] == 'critical' else 1.0
+8 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '172.5', "{id: 104, name: 'Firewall Config', value: 90, ...}", '90', '1.5', '60.0']
+12 priority = item_value * category_multiplier
+12 ['items', 'result', 'item', 'item_value', 'category_multiplier', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '172.5', "{id: 104, name: 'Firewall Config', value: 90, ...}", '90', '1.5', '135.0']
+13 result += priority
+13 ['items', 'result', 'item', 'priority'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '307.5', "{id: 104, name: 'Firewall Config', value: 90, ...}", '135.0']
+6 for item in items:
+6 ['items', 'result', 'item'] ["[{id: 101, name: 'Server Backup', value: 75, ...}, {id: 102, name: 'Data Encryption', value: 60, ...}, {id: 104, name: 'Firewall Config', value: 90, ...}]", '307.5', "{id: 104, name: 'Firewall Config', value: 90, ...}"]
+15 return result
+15 ['result'] ['307.5']
+FUNCTION_RETURN 15 calculate_priority {'_type': 'float', '_value': 307.5}

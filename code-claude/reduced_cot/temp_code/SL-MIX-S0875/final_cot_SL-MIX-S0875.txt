@@ -1,0 +1,76 @@
+Target: Find the value of variable critical_measure after [line 91] executes
+
+[line 76]  pollution_threshold = 40
+Assign: pollution_threshold = 40
+[line 3]  quality_score = 0
+Assign: quality_score = 0
+[line 4]  mineral_content = sum([s['minerals'] for s in sample_data if 'minerals' in s])
+Call function sum([s['minerals'] for s in sample_data if 'minerals' in s])
+[line 6]  if analysis_mode == 'detailed':
+Condition: True, entering 'if' block
+[line 7]  quality_score = (mineral_content * 1.5) // 10
+Compute: (mineral_content * 1.5) // 10, where mineral_content=317 (defined at [line 4]) = 47.0
+[line 13]  return quality_score, mineral_content
+Return: quality_score, mineral_content
+[line 86]  critical_measure = calculate_adjusted_value(soil_samples, pollution_threshold)
+Call function calculate_adjusted_value(soil_samples=[{id: 0, value: 120, toxicity: 18, ...}, {id: 1, value: 85, toxicity: 8, ...}, {id: 2, value: 95, toxicity: 4, ...}, {id: 3, value: 110, toxicity: 16, ...}, {id: 4, value: 75, toxicity: 2, ...}, ...] (an unknown source), pollution_threshold=40 (defined at [line 76]))
+[line 17]  filtered_data = samples[2:7]  # Only samples 2-6 are relevant for this analysis
+Compute: samples[2:7]  # Only samples 2-6 are relevant for this analysis, where samples=[{id: 0, value: 120, toxicity: 18, ...}, {id: 1, value: 85, toxicity: 8, ...}, {id: 2, value: 95, toxicity: 4, ...}, {id: 3, value: 110, toxicity: 16, ...}, {id: 4, value: 75, toxicity: 2, ...}, ...] (an unknown source) = [{id: 2, value: 95, toxicity: 4, ...}, {id: 3, value: 110, toxicity: 16, ...}, {id: 4, value: 75, toxicity: 2, ...}, {id: 5, value: 130, toxicity: 32, ...}, {id: 6, value: 105, toxicity: 1, ...}]
+[line 20]  base_sum = sum(s['value'] for s in filtered_data)
+Call function sum(s['value'] for s in filtered_data)
+[line 21]  toxicity_factor = 0
+Assign: toxicity_factor = 0
+[line 24]  for sample in filtered_data:
+Loop Start: sample takes its first value {id: 2, value: 95, toxicity: 4, ...}
+[line 26]  if sample['id'] % 2 == 1:
+Condition: True, entering 'if' block
+[line 24]  for sample in filtered_data:
+Loop Iteration: sample is now {id: 3, value: 110, toxicity: 16, ...} (iteration 2)
+[line 26]  if sample['id'] % 2 == 1:
+Condition: True, entering 'if' block
+... [Line 24] repeats 2 more times ...
+... [Line 24] repeats 2 more times ...
+... [Line 24] repeats 2 more times ...
+[line 24]  for sample in filtered_data:
+Loop Iteration: sample is now {id: 6, value: 105, toxicity: 1, ...} (iteration 5)
+[line 26]  if sample['id'] % 2 == 1:
+Condition: True, entering 'if' block
+[line 24]  for sample in filtered_data:
+Loop End: Iteration finished
+[line 34]  for i, sample in enumerate(samples):
+(Missing param: 'iter_var')
+[line 35]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 34]  for i, sample in enumerate(samples):
+(Missing param: 'iter_var')
+[line 35]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 37]  elif i % 3 == 1:
+'elif' Condition: True, entering block
+... [Line 34] repeats 6 more times ...
+... [Line 34] repeats 6 more times ...
+... [Line 34] repeats 6 more times ...
+[line 34]  for i, sample in enumerate(samples):
+(Missing param: 'iter_var')
+[line 35]  if i % 3 == 0:
+Condition: True, entering 'if' block
+[line 37]  elif i % 3 == 1:
+'elif' Condition: True, entering block
+[line 34]  for i, sample in enumerate(samples):
+Loop End: Iteration finished
+[line 41]  correction = 1.0
+Assign: correction = 1.0
+[line 42]  if threshold > 50:
+Condition: True, entering 'if' block
+[line 44]  elif threshold > 30:
+'elif' Condition: True, entering block
+[line 45]  correction = 0.92
+Assign: correction = 0.92
+[line 54]  raw_value = base_sum - (toxicity_factor // 2)
+Compute: base_sum - (toxicity_factor // 2), where base_sum=515 (defined at [line 20]), toxicity_factor=48 (defined at [line 21]) = 491
+[line 60]  return int(raw_value * correction)
+Return: int(raw_value * correction)
+[line 91]  print(f"Result: {critical_measure}")
+Output: f"Result: {critical_measure}"
+
+Answer: critical_measure = 451 (last updated on defined at [line 86])

@@ -1,0 +1,66 @@
+Target: Find the value of variable actual_priority after [line 53] executes
+
+[line 10]  packet_types = Counter(packets)
+Call function Counter(packets=['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...] (an unknown source))
+[line 14]  interference_levels = []
+Compute: [] = []
+[line 18]  frequencies = [len(p) % 10 + 5 for p in packets[:4]]
+Compute: [len(p) % 10 + 5 for p in packets[:4]], where p='TCP' (an unknown source), packets=['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...] (an unknown source) = ?
+[line 3]  def calculate_signal_strength(frequencies, channel_width):
+Enter function calculate_signal_strength: frequencies=[8, 8, 9, 8] (frequencies defined at [line 18]), channel_width=5
+  [line 5]  strength = sum([f * 0.75 for f in frequencies])
+  Call function sum([f * 0.75 for f in frequencies])
+  [line 6]  return strength / (channel_width * 2)
+  Return: strength / (channel_width * 2)
+Function calculate_signal_strength returns 2.475
+[line 22]  for packet_type, count in packet_types.items():
+(Missing param: 'iter_var')
+[line 27]  if count > 3:
+Condition: True, entering 'if' block
+[line 22]  for packet_type, count in packet_types.items():
+(Missing param: 'iter_var')
+[line 27]  if count > 3:
+Condition: True, entering 'if' block
+... [Line 22] repeats 4 more times ...
+... [Line 22] repeats 4 more times ...
+[line 22]  for packet_type, count in packet_types.items():
+(Missing param: 'iter_var')
+[line 27]  if count > 3:
+Condition: True, entering 'if' block
+[line 22]  for packet_type, count in packet_types.items():
+Loop End: Iteration finished
+[line 38]  if len(packets) > 10:
+Condition: True, entering 'if' block
+[line 41]  distribution = packets
+Compute: packets, where packets=['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...] (an unknown source) = ['TCP', 'UDP', 'ICMP', 'TCP', 'DNS', ...]
+[line 44]  priority_scores = {}
+Compute: {} = {}
+[line 45]  for i, packet in enumerate(distribution):
+(Missing param: 'iter_var')
+[line 46]  if i % 3 == 0:  # Every third packet gets special priority
+Condition: True, entering 'if' block
+[line 47]  priority_scores[packet] = len(packet) * 2
+(Missing param: 'result')
+[line 45]  for i, packet in enumerate(distribution):
+(Missing param: 'iter_var')
+[line 46]  if i % 3 == 0:  # Every third packet gets special priority
+Condition: True, entering 'if' block
+[line 49]  priority_scores[packet] = len(packet)
+(Missing param: 'func_name')
+... [Line 45] repeats 6 more times ...
+... [Line 45] repeats 6 more times ...
+... [Line 45] repeats 6 more times ...
+[line 45]  for i, packet in enumerate(distribution):
+(Missing param: 'iter_var')
+[line 46]  if i % 3 == 0:  # Every third packet gets special priority
+Condition: True, entering 'if' block
+[line 49]  priority_scores[packet] = len(packet)
+(Missing param: 'func_name')
+[line 45]  for i, packet in enumerate(distribution):
+Loop End: Iteration finished
+[line 52]  noise_factor = len(interference_levels) * 5
+Compute: len(interference_levels) * 5, where interference_levels=[] (defined at [line 14]) = 0
+[line 53]  actual_priority = sum(priority_scores.values()) - noise_factor
+Compute: sum(priority_scores.values()) - noise_factor, where priority_scores={TCP: 3, UDP: 3, ICMP: 4, ...} (defined at [line 44]), noise_factor=0 (defined at [line 52]) = 27
+
+Answer: actual_priority = 27 (last updated on defined at [line 53])

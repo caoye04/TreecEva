@@ -1,0 +1,89 @@
+61
+optimal_load
+---
+PARAM_MAPPING {'servers': {'actual_var': 'servers', 'value': [{'id': 's1', 'type': 'web', 'load': 65, 'capacity': 100}, {'id': 's2', 'type': 'database', 'load': 78, 'capacity': 120}, {'id': 's3', 'type': 'cache', 'load': 45, 'capacity': 80}]}, 'connections': {'actual_var': 'connections', 'value': [{'source': 's1', 'destination': 's2', 'protocol': 'http'}, {'source': 's1', 'destination': 's3', 'protocol': 'tcp'}, {'source': 's2', 'destination': 's3', 'protocol': 'udp'}]}}
+FUNCTION_ENTER 3 calculate_network_metrics def calculate_network_metrics(servers, connections):
+3 ['servers', 'connections'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 's1'}, 'type': {'_type': 'str', '_value': 'web'}, 'load': {'_type': 'int', '_value': 65}, 'capacity': {'_type': 'int', '_value': 100}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 's2'}, 'type': {'_type': 'str', '_value': 'database'}, 'load': {'_type': 'int', '_value': 78}, 'capacity': {'_type': 'int', '_value': 120}}, '_len': 4}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 's3'}, 'type': {'_type': 'str', '_value': 'cache'}, 'load': {'_type': 'int', '_value': 45}, 'capacity': {'_type': 'int', '_value': 80}}, '_len': 4}], '_len': 3}, {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'source': {'_type': 'str', '_value': 's1'}, 'destination': {'_type': 'str', '_value': 's2'}, 'protocol': {'_type': 'str', '_value': 'http'}}, '_len': 3}, {'_type': 'dict', '_items': {'source': {'_type': 'str', '_value': 's1'}, 'destination': {'_type': 'str', '_value': 's3'}, 'protocol': {'_type': 'str', '_value': 'tcp'}}, '_len': 3}, {'_type': 'dict', '_items': {'source': {'_type': 'str', '_value': 's2'}, 'destination': {'_type': 'str', '_value': 's3'}, 'protocol': {'_type': 'str', '_value': 'udp'}}, '_len': 3}], '_len': 3}]
+9 for s in servers:
+9 ['servers', 'connections', 's'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", "{id: 's1', type: 'web', load: 65, ...}"]
+9 for s in servers:
+9 ['servers', 'connections', 's'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", "{id: 's2', type: 'database', load: 78, ...}"]
+9 for s in servers:
+9 ['servers', 'connections', 's'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", "{id: 's3', type: 'cache', load: 45, ...}"]
+9 for s in servers:
+9 ['servers', 'connections', 's'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", "{id: 's3', type: 'cache', load: 45, ...}"]
+16 power_usage = 7  # Critical value
+16 ['servers', 'connections', 'power_usage'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7']
+17 thermal_threshold = 85  # Distraction
+17 ['servers', 'connections', 'power_usage', 'thermal_threshold'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85']
+18 capacity_mask = 5  # Critical value
+18 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85', '5']
+19 redundancy_level = 3  # Critical value
+19 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85', '5', '3']
+23 for server in servers:
+23 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85', '5', '3', "{id: 's1', type: 'web', load: 65, ...}"]
+24 if server.get('load', 0) > 75:
+24 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85', '5', '3', "{id: 's1', type: 'web', load: 65, ...}"]
+23 for server in servers:
+23 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85', '5', '3', "{id: 's2', type: 'database', load: 78, ...}"]
+24 if server.get('load', 0) > 75:
+24 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '85', '5', '3', "{id: 's2', type: 'database', load: 78, ...}"]
+26 thermal_threshold -= 1  # Misleading modification
+26 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{id: 's2', type: 'database', load: 78, ...}"]
+23 for server in servers:
+23 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{id: 's3', type: 'cache', load: 45, ...}"]
+24 if server.get('load', 0) > 75:
+24 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{id: 's3', type: 'cache', load: 45, ...}"]
+23 for server in servers:
+23 ['servers', 'connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'server'] ["[{id: 's1', type: 'web', load: 65, ...}, {id: 's2', type: 'database', load: 78, ...}, {id: 's3', type: 'cache', load: 45, ...}]", "[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{id: 's3', type: 'cache', load: 45, ...}"]
+29 network_paths = {}
+29 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', '{}']
+30 for conn in connections:
+30 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', '{}', "{source: 's1', destination: 's2', protocol: 'http'}"]
+31 src, dst = conn['source'], conn['destination']
+31 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', '{}', "{source: 's1', destination: 's2', protocol: 'http'}", "'s1'"]
+32 if src not in network_paths:
+32 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', '{}', "{source: 's1', destination: 's2', protocol: 'http'}", "'s1'"]
+33 network_paths[src] = set()
+33 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', '{s1: set()}', "{source: 's1', destination: 's2', protocol: 'http'}", "'s1'"]
+30 for conn in connections:
+30 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s2'}}", "{source: 's1', destination: 's3', protocol: 'tcp'}", "'s1'"]
+31 src, dst = conn['source'], conn['destination']
+31 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s2'}}", "{source: 's1', destination: 's3', protocol: 'tcp'}", "'s1'"]
+32 if src not in network_paths:
+32 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s2'}}", "{source: 's1', destination: 's3', protocol: 'tcp'}", "'s1'"]
+30 for conn in connections:
+30 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s3', 's2'}}", "{source: 's2', destination: 's3', protocol: 'udp'}", "'s1'"]
+31 src, dst = conn['source'], conn['destination']
+31 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s3', 's2'}}", "{source: 's2', destination: 's3', protocol: 'udp'}", "'s2'"]
+32 if src not in network_paths:
+32 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn', 'src'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s3', 's2'}}", "{source: 's2', destination: 's3', protocol: 'udp'}", "'s2'"]
+33 network_paths[src] = set()
+33 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: set()}", "{source: 's2', destination: 's3', protocol: 'udp'}"]
+30 for conn in connections:
+30 ['connections', 'power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'conn'] ["[{source: 's1', destination: 's2', protocol: 'http'}, {source: 's1', destination: 's3', protocol: 'tcp'}, {source: 's2', destination: 's3', protocol: 'udp'}]", '7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", "{source: 's2', destination: 's3', protocol: 'udp'}"]
+37 redundancy_score = 0
+37 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'redundancy_score'] ['7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", '0']
+38 for node in network_paths:
+38 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'redundancy_score', 'node'] ['7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", '0', "'s1'"]
+39 redundancy_score += len(network_paths[node])
+39 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'redundancy_score', 'node'] ['7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", '2', "'s1'"]
+38 for node in network_paths:
+38 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'redundancy_score', 'node'] ['7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", '2', "'s2'"]
+39 redundancy_score += len(network_paths[node])
+39 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'redundancy_score', 'node'] ['7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", '3', "'s2'"]
+38 for node in network_paths:
+38 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'network_paths', 'redundancy_score', 'node'] ['7', '84', '5', '3', "{s1: {'s3', 's2'}, s2: {'s3'}}", '3', "'s2'"]
+46 balance_factors = (12, 18, 25, 30, 22, 16, 14, 28, 35, 42, 33, 19, 27, 31, 24, 20)
+46 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'redundancy_score', 'balance_factors'] ['7', '84', '5', '3', '3', '(12, 18, 25, 30, 22, ...)']
+53 if thermal_threshold < 80 and redundancy_score > 10:
+53 ['power_usage', 'thermal_threshold', 'capacity_mask', 'redundancy_level', 'redundancy_score', 'balance_factors'] ['7', '84', '5', '3', '3', '(12, 18, 25, 30, 22, ...)']
+58 cooling_required = False
+58 ['power_usage', 'capacity_mask', 'redundancy_level', 'balance_factors'] ['7', '5', '3', '(12, 18, 25, 30, 22, ...)']
+61 optimal_load = balance_factors[(power_usage & capacity_mask) | (redundancy_level << 2)]
+61 ['power_usage', 'capacity_mask', 'redundancy_level', 'balance_factors', 'optimal_load'] ['7', '5', '3', '(12, 18, 25, 30, 22, ...)', '31']
+64 if cooling_required:
+64 [] []
+79 return final_configuration
+79 [] []
+FUNCTION_RETURN 79 calculate_network_metrics {'_type': 'dict', '_items': {'primary': {'_type': 'int', '_value': 31}, 'secondary': {'_type': 'int', '_value': 28}, 'redundancy': {'_type': 'int', '_value': 3}}, '_len': 3}

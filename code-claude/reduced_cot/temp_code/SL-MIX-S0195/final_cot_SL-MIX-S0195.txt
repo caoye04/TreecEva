@@ -1,0 +1,28 @@
+Target: Find the value of variable filtered_bits after [line 12] executes
+
+[line 2]  source_data = [0b1101, 0b1010, 0b1100, 0b0101]
+Compute: [0b1101, 0b1010, 0b1100, 0b0101] = [13, 10, 12, 5]
+[line 3]  target_mask = 0b1010
+Assign: target_mask = 10
+[line 6]  match_condition = lambda x: (x & target_mask) == target_mask
+Compute: lambda x: (x & target_mask) == target_mask, where target_mask=10 (defined at [line 3]) = ?
+[line 7]  matched_packets = [p for p in source_data if match_condition(p)]
+Compute: [p for p in source_data if match_condition(p)], where p=13 (an unknown source), source_data=[13, 10, 12, 5] (defined at [line 2]) = ?
+[line 6]  match_condition = lambda x: (x & target_mask) == target_mask
+Compute: lambda x: (x & target_mask) == target_mask, where x=13 (an unknown source) = ?
+[line 6]  match_condition = lambda x: (x & target_mask) == target_mask
+Compute: lambda x: (x & target_mask) == target_mask, where x=10 (an unknown source) = ?
+[line 6]  match_condition = lambda x: (x & target_mask) == target_mask
+Compute: lambda x: (x & target_mask) == target_mask, where x=12 (an unknown source) = ?
+[line 6]  match_condition = lambda x: (x & target_mask) == target_mask
+Compute: lambda x: (x & target_mask) == target_mask, where x=5 (an unknown source) = ?
+[line 10]  get_second_bit = lambda x: (x >> 2) & 1
+Compute: lambda x: (x >> 2) & 1 = ?
+[line 11]  bits = [get_second_bit(packet) for packet in matched_packets]
+Compute: [get_second_bit(packet) for packet in matched_packets], where packet=10 (an unknown source), matched_packets=[10] (defined at [line 7]) = ?
+[line 10]  get_second_bit = lambda x: (x >> 2) & 1
+Compute: lambda x: (x >> 2) & 1, where x=10 (an unknown source) = ?
+[line 12]  filtered_bits = sum(bits)
+Call function sum(bits=[0] (defined at [line 11]))
+
+Answer: filtered_bits = 0 (last updated on defined at [line 12])

@@ -1,0 +1,43 @@
+48
+final_score
+---
+31 base_points = 75
+31 ['base_points'] ['75']
+32 time_bonus = 12
+32 ['base_points', 'time_bonus'] ['75', '12']
+33 accuracy_points = 8
+33 ['base_points', 'time_bonus', 'accuracy_points'] ['75', '12', '8']
+34 bonus_multiplier = 1.8
+34 ['base_points', 'time_bonus', 'accuracy_points', 'bonus_multiplier'] ['75', '12', '8', '1.8']
+35 raw_penalties = (3, 4, 2)
+35 ['base_points', 'time_bonus', 'accuracy_points', 'bonus_multiplier', 'raw_penalties'] ['75', '12', '8', '1.8', '(3, 4, 2)']
+38 total_points = base_points + (time_bonus if time_bonus < 15 else 15) + accuracy_points
+38 ['base_points', 'time_bonus', 'accuracy_points', 'bonus_multiplier', 'raw_penalties', 'total_points'] ['75', '12', '8', '1.8', '(3, 4, 2)', '95']
+41 penalties = sum(penalty for penalty in raw_penalties if penalty > 0)
+41 [] []
+41 penalties = sum(penalty for penalty in raw_penalties if penalty > 0)
+41 ['penalty'] ['3']
+41 penalties = sum(penalty for penalty in raw_penalties if penalty > 0)
+41 ['penalty'] ['4']
+41 penalties = sum(penalty for penalty in raw_penalties if penalty > 0)
+41 ['penalty'] ['2']
+41 penalties = sum(penalty for penalty in raw_penalties if penalty > 0)
+41 ['penalty'] ['2']
+48 final_score = calculate_adjusted_score(total_points, bonus_multiplier, penalties)
+48 ['bonus_multiplier', 'total_points', 'penalties'] ['1.8', '95', '9']
+PARAM_MAPPING {'points': {'actual_var': 'total_points', 'value': 95}, 'multiplier': {'actual_var': 'bonus_multiplier', 'value': 1.8}, 'penalties': {'actual_var': 'penalties', 'value': 9}}
+FUNCTION_ENTER 1 calculate_adjusted_score def calculate_adjusted_score(points, multiplier, penalties):
+1 ['points', 'multiplier', 'penalties'] [{'_type': 'int', '_value': 95}, {'_type': 'float', '_value': 1.8}, {'_type': 'int', '_value': 9}]
+3 preliminary_score = points * multiplier
+3 ['points', 'multiplier', 'penalties', 'preliminary_score'] ['95', '1.8', '9', '171.0']
+6 penalty_threshold = 5
+6 ['penalties', 'preliminary_score', 'penalty_threshold'] ['9', '171.0', '5']
+7 effective_penalties = penalties if penalties < penalty_threshold else penalty_threshold
+7 ['penalties', 'preliminary_score', 'penalty_threshold', 'effective_penalties'] ['9', '171.0', '5', '5']
+18 adjustment_factor = 1.5 if preliminary_score > 100 else 1.0
+18 ['preliminary_score', 'effective_penalties', 'adjustment_factor'] ['171.0', '5', '1.5']
+25 result = preliminary_score * adjustment_factor - effective_penalties * 3
+25 ['preliminary_score', 'effective_penalties', 'adjustment_factor', 'result'] ['171.0', '5', '1.5', '241.5']
+28 return round(result, 1)
+28 ['result'] ['241.5']
+FUNCTION_RETURN 28 calculate_adjusted_score {'_type': 'float', '_value': 241.5}

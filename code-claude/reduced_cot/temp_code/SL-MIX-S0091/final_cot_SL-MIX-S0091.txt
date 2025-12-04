@@ -1,0 +1,565 @@
+Target: Find the value of variable optimal_path_cost after [line 73] executes
+
+[line 26]  start_point = (0, 0)
+Compute: (0, 0) = (0, 0)
+[line 29]  potential_paths = ['ABCDE', 'ACDEB', 'BEDCA', 'EDCBA', 'CAEDB']
+Compute: ['ABCDE', 'ACDEB', 'BEDCA', 'EDCBA', 'CAEDB'] = ['ABCDE', 'ACDEB', 'BEDCA', 'EDCBA', 'CAEDB']
+[line 30]  path_costs = {}
+Compute: {} = {}
+[line 33]  base_energy_per_step = 1.5
+Assign: base_energy_per_step = 1.5
+[line 34]  weight_penalty = 0.2
+Assign: weight_penalty = 0.2
+[line 35]  temperature_factor = 0.9  # Warehouse temperature adjustment
+Assign: temperature_factor = 0.9
+[line 41]  for path in potential_paths:
+Loop Start: path takes its first value 'ABCDE'
+[line 42]  current_point = start_point
+Compute: start_point, where start_point=(0, 0) (defined at [line 26]) = (0, 0)
+[line 44]  energy_used = 0
+Assign: energy_used = 0
+[line 45]  cumulative_weight = 0
+Assign: cumulative_weight = 0
+[line 48]  for section in path:
+Loop Start: section takes its first value 'A'
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='A' (defined at [line 48]) = (1, 2)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(0, 0) (defined at [line 42]), next_point=(1, 2) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(0, 0) (current_point defined at [line 42]), point2=(1, 2) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 3
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=3 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=0 (defined at [line 45]), weight_penalty=0.2 (defined at [line 34]) = 4.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 0 (defined at defined at [line 44]) to 0+section_energy = 4.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 0 (defined at defined at [line 45]) to 0+items[section] = 5
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(1, 2) (defined at [line 49]) = (1, 2)
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 2)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='B' (defined at [line 48]) = (3, 5)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(1, 2) (defined at [line 59]), next_point=(3, 5) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(1, 2) (current_point defined at [line 59]), point2=(3, 5) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=5 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=5 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 12.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 4.5 (defined at defined at [line 55]) to 4.5+section_energy = 17.0
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 5 (defined at defined at [line 58]) to 5+items[section] = 7
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(3, 5) (defined at [line 49]) = (3, 5)
+... [Line 48] repeats 26 more times ...
+... [Line 48] repeats 26 more times ...
+... [Line 48] repeats 26 more times ...
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(3, 5) (current_point defined at [line 59]), point2=(6, 3) (next_point defined at [line 49])
+... [Line 48] repeats 26 more times ...
+Function calculate_distance returns 5
+... [Line 48] repeats 26 more times ...
+... [Line 48] repeats 26 more times ...
+... [Line 48] repeats 26 more times ...
+... [Line 48] repeats 26 more times ...
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(6, 3) (current_point defined at [line 59]), point2=(2, 8) (next_point defined at [line 49])
+Function calculate_distance returns 9
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(2, 8) (current_point defined at [line 59]), point2=(4, 1) (next_point defined at [line 49])
+Function calculate_distance returns 9
+[line 62]  final_distance = calculate_distance(current_point, start_point)
+Call function calculate_distance(current_point=(4, 1) (defined at [line 59]), start_point=(0, 0) (defined at [line 26]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(4, 1) (current_point defined at [line 59]), point2=(0, 0) (start_point defined at [line 26])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 64]  path_energy = final_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: final_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where final_distance=5 (defined at [line 62]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=22 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 29.5
+[line 65]  energy_used += path_energy
+Update: energy_used changed from 117.9 (defined at defined at [line 55]) to 117.9+path_energy = 147.4
+[line 68]  path_costs[path] = round(energy_used * temperature_factor, 2)
+(Missing param: 'func_name')
+[line 41]  for path in potential_paths:
+Loop Iteration: path is now 'ACDEB' (iteration 2)
+[line 42]  current_point = start_point
+Compute: start_point, where start_point=(0, 0) (defined at [line 26]) = (0, 0)
+[line 44]  energy_used = 0
+Assign: energy_used = 0
+[line 45]  cumulative_weight = 0
+Assign: cumulative_weight = 0
+[line 48]  for section in path:
+Loop Iteration: section is now 'A' (iteration 7)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='A' (defined at [line 48]) = (1, 2)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(0, 0) (defined at [line 42]), next_point=(1, 2) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(0, 0) (current_point defined at [line 42]), point2=(1, 2) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 3
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=3 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=0 (defined at [line 45]), weight_penalty=0.2 (defined at [line 34]) = 4.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 0 (defined at defined at [line 44]) to 0+section_energy = 4.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 0 (defined at defined at [line 45]) to 0+items[section] = 5
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(1, 2) (defined at [line 49]) = (1, 2)
+[line 48]  for section in path:
+Loop Iteration: section is now 'C' (iteration 8)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='C' (defined at [line 48]) = (6, 3)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(1, 2) (defined at [line 59]), next_point=(6, 3) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(1, 2) (current_point defined at [line 59]), point2=(6, 3) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 6
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=6 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=5 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 15.0
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 4.5 (defined at defined at [line 55]) to 4.5+section_energy = 19.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 5 (defined at defined at [line 58]) to 5+items[section] = 13
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(6, 3) (defined at [line 49]) = (6, 3)
+[line 48]  for section in path:
+Loop Iteration: section is now 'D' (iteration 9)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='D' (defined at [line 48]) = (2, 8)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(6, 3) (defined at [line 59]), next_point=(2, 8) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(6, 3) (current_point defined at [line 59]), point2=(2, 8) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=13 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 36.9
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 19.5 (defined at defined at [line 55]) to 19.5+section_energy = 56.4
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 13 (defined at defined at [line 58]) to 13+items[section] = 16
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(2, 8) (defined at [line 49]) = (2, 8)
+[line 48]  for section in path:
+Loop Iteration: section is now 'E' (iteration 10)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='E' (defined at [line 48]) = (4, 1)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(2, 8) (defined at [line 59]), next_point=(4, 1) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(2, 8) (current_point defined at [line 59]), point2=(4, 1) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=16 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 42.300000000000004
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 56.4 (defined at defined at [line 55]) to 56.4+section_energy = 98.7
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 16 (defined at defined at [line 58]) to 16+items[section] = 20
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(4, 1) (defined at [line 49]) = (4, 1)
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 11)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='B' (defined at [line 48]) = (3, 5)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(4, 1) (defined at [line 59]), next_point=(3, 5) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(4, 1) (current_point defined at [line 59]), point2=(3, 5) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=5 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=20 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 27.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 98.7 (defined at defined at [line 55]) to 98.7+section_energy = 126.2
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 20 (defined at defined at [line 58]) to 20+items[section] = 22
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(3, 5) (defined at [line 49]) = (3, 5)
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 12)
+[line 62]  final_distance = calculate_distance(current_point, start_point)
+Call function calculate_distance(current_point=(3, 5) (defined at [line 59]), start_point=(0, 0) (defined at [line 26]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(3, 5) (current_point defined at [line 59]), point2=(0, 0) (start_point defined at [line 26])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 8
+[line 64]  path_energy = final_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: final_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where final_distance=8 (defined at [line 62]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=22 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 47.2
+[line 65]  energy_used += path_energy
+Update: energy_used changed from 126.2 (defined at defined at [line 55]) to 126.2+path_energy = 173.4
+[line 68]  path_costs[path] = round(energy_used * temperature_factor, 2)
+(Missing param: 'func_name')
+[line 41]  for path in potential_paths:
+Loop Iteration: path is now 'BEDCA' (iteration 3)
+[line 42]  current_point = start_point
+Compute: start_point, where start_point=(0, 0) (defined at [line 26]) = (0, 0)
+[line 44]  energy_used = 0
+Assign: energy_used = 0
+[line 45]  cumulative_weight = 0
+Assign: cumulative_weight = 0
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 13)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='B' (defined at [line 48]) = (3, 5)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(0, 0) (defined at [line 42]), next_point=(3, 5) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(0, 0) (current_point defined at [line 42]), point2=(3, 5) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 8
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=8 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=0 (defined at [line 45]), weight_penalty=0.2 (defined at [line 34]) = 12.0
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 0 (defined at defined at [line 44]) to 0+section_energy = 12.0
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 0 (defined at defined at [line 45]) to 0+items[section] = 2
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(3, 5) (defined at [line 49]) = (3, 5)
+[line 48]  for section in path:
+Loop Iteration: section is now 'E' (iteration 14)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='E' (defined at [line 48]) = (4, 1)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(3, 5) (defined at [line 59]), next_point=(4, 1) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(3, 5) (current_point defined at [line 59]), point2=(4, 1) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=5 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=2 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 9.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 12.0 (defined at defined at [line 55]) to 12.0+section_energy = 21.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 2 (defined at defined at [line 58]) to 2+items[section] = 6
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(4, 1) (defined at [line 49]) = (4, 1)
+[line 48]  for section in path:
+Loop Iteration: section is now 'D' (iteration 15)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='D' (defined at [line 48]) = (2, 8)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(4, 1) (defined at [line 59]), next_point=(2, 8) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(4, 1) (current_point defined at [line 59]), point2=(2, 8) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=6 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 24.3
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 21.5 (defined at defined at [line 55]) to 21.5+section_energy = 45.8
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 6 (defined at defined at [line 58]) to 6+items[section] = 9
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(2, 8) (defined at [line 49]) = (2, 8)
+[line 48]  for section in path:
+Loop Iteration: section is now 'C' (iteration 16)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='C' (defined at [line 48]) = (6, 3)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(2, 8) (defined at [line 59]), next_point=(6, 3) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(2, 8) (current_point defined at [line 59]), point2=(6, 3) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=9 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 29.7
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 45.8 (defined at defined at [line 55]) to 45.8+section_energy = 75.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 9 (defined at defined at [line 58]) to 9+items[section] = 17
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(6, 3) (defined at [line 49]) = (6, 3)
+[line 48]  for section in path:
+Loop Iteration: section is now 'A' (iteration 17)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='A' (defined at [line 48]) = (1, 2)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(6, 3) (defined at [line 59]), next_point=(1, 2) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(6, 3) (current_point defined at [line 59]), point2=(1, 2) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 6
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=6 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=17 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 29.400000000000002
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 75.5 (defined at defined at [line 55]) to 75.5+section_energy = 104.9
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 17 (defined at defined at [line 58]) to 17+items[section] = 22
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(1, 2) (defined at [line 49]) = (1, 2)
+[line 48]  for section in path:
+Loop Iteration: section is now 'A' (iteration 18)
+[line 62]  final_distance = calculate_distance(current_point, start_point)
+Call function calculate_distance(current_point=(1, 2) (defined at [line 59]), start_point=(0, 0) (defined at [line 26]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(1, 2) (current_point defined at [line 59]), point2=(0, 0) (start_point defined at [line 26])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 3
+[line 64]  path_energy = final_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: final_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where final_distance=3 (defined at [line 62]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=22 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 17.700000000000003
+[line 65]  energy_used += path_energy
+Update: energy_used changed from 104.9 (defined at defined at [line 55]) to 104.9+path_energy = 122.60000000000001
+[line 68]  path_costs[path] = round(energy_used * temperature_factor, 2)
+(Missing param: 'func_name')
+[line 41]  for path in potential_paths:
+Loop Iteration: path is now 'EDCBA' (iteration 4)
+[line 42]  current_point = start_point
+Compute: start_point, where start_point=(0, 0) (defined at [line 26]) = (0, 0)
+[line 44]  energy_used = 0
+Assign: energy_used = 0
+[line 45]  cumulative_weight = 0
+Assign: cumulative_weight = 0
+[line 48]  for section in path:
+Loop Iteration: section is now 'E' (iteration 19)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='E' (defined at [line 48]) = (4, 1)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(0, 0) (defined at [line 42]), next_point=(4, 1) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(0, 0) (current_point defined at [line 42]), point2=(4, 1) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=5 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=0 (defined at [line 45]), weight_penalty=0.2 (defined at [line 34]) = 7.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 0 (defined at defined at [line 44]) to 0+section_energy = 7.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 0 (defined at defined at [line 45]) to 0+items[section] = 4
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(4, 1) (defined at [line 49]) = (4, 1)
+[line 48]  for section in path:
+Loop Iteration: section is now 'D' (iteration 20)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='D' (defined at [line 48]) = (2, 8)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(4, 1) (defined at [line 59]), next_point=(2, 8) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(4, 1) (current_point defined at [line 59]), point2=(2, 8) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=4 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 20.7
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 7.5 (defined at defined at [line 55]) to 7.5+section_energy = 28.2
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 4 (defined at defined at [line 58]) to 4+items[section] = 7
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(2, 8) (defined at [line 49]) = (2, 8)
+[line 48]  for section in path:
+Loop Iteration: section is now 'C' (iteration 21)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='C' (defined at [line 48]) = (6, 3)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(2, 8) (defined at [line 59]), next_point=(6, 3) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(2, 8) (current_point defined at [line 59]), point2=(6, 3) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=7 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 26.1
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 28.2 (defined at defined at [line 55]) to 28.2+section_energy = 54.3
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 7 (defined at defined at [line 58]) to 7+items[section] = 15
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(6, 3) (defined at [line 49]) = (6, 3)
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 22)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='B' (defined at [line 48]) = (3, 5)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(6, 3) (defined at [line 59]), next_point=(3, 5) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(6, 3) (current_point defined at [line 59]), point2=(3, 5) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=5 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=15 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 22.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 54.3 (defined at defined at [line 55]) to 54.3+section_energy = 76.8
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 15 (defined at defined at [line 58]) to 15+items[section] = 17
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(3, 5) (defined at [line 49]) = (3, 5)
+[line 48]  for section in path:
+Loop Iteration: section is now 'A' (iteration 23)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='A' (defined at [line 48]) = (1, 2)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(3, 5) (defined at [line 59]), next_point=(1, 2) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(3, 5) (current_point defined at [line 59]), point2=(1, 2) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 5
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=5 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=17 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 24.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 76.8 (defined at defined at [line 55]) to 76.8+section_energy = 101.3
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 17 (defined at defined at [line 58]) to 17+items[section] = 22
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(1, 2) (defined at [line 49]) = (1, 2)
+[line 48]  for section in path:
+Loop Iteration: section is now 'A' (iteration 24)
+[line 62]  final_distance = calculate_distance(current_point, start_point)
+Call function calculate_distance(current_point=(1, 2) (defined at [line 59]), start_point=(0, 0) (defined at [line 26]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(1, 2) (current_point defined at [line 59]), point2=(0, 0) (start_point defined at [line 26])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 3
+[line 64]  path_energy = final_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: final_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where final_distance=3 (defined at [line 62]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=22 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 17.700000000000003
+[line 65]  energy_used += path_energy
+Update: energy_used changed from 101.3 (defined at defined at [line 55]) to 101.3+path_energy = 119.0
+[line 68]  path_costs[path] = round(energy_used * temperature_factor, 2)
+(Missing param: 'func_name')
+[line 41]  for path in potential_paths:
+Loop Iteration: path is now 'CAEDB' (iteration 5)
+[line 42]  current_point = start_point
+Compute: start_point, where start_point=(0, 0) (defined at [line 26]) = (0, 0)
+[line 44]  energy_used = 0
+Assign: energy_used = 0
+[line 45]  cumulative_weight = 0
+Assign: cumulative_weight = 0
+[line 48]  for section in path:
+Loop Iteration: section is now 'C' (iteration 25)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='C' (defined at [line 48]) = (6, 3)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(0, 0) (defined at [line 42]), next_point=(6, 3) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(0, 0) (current_point defined at [line 42]), point2=(6, 3) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=0 (defined at [line 45]), weight_penalty=0.2 (defined at [line 34]) = 13.5
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 0 (defined at defined at [line 44]) to 0+section_energy = 13.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 0 (defined at defined at [line 45]) to 0+items[section] = 8
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(6, 3) (defined at [line 49]) = (6, 3)
+[line 48]  for section in path:
+Loop Iteration: section is now 'A' (iteration 26)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='A' (defined at [line 48]) = (1, 2)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(6, 3) (defined at [line 59]), next_point=(1, 2) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(6, 3) (current_point defined at [line 59]), point2=(1, 2) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 6
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=6 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=8 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 18.6
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 13.5 (defined at defined at [line 55]) to 13.5+section_energy = 32.1
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 8 (defined at defined at [line 58]) to 8+items[section] = 13
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(1, 2) (defined at [line 49]) = (1, 2)
+[line 48]  for section in path:
+Loop Iteration: section is now 'E' (iteration 27)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='E' (defined at [line 48]) = (4, 1)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(1, 2) (defined at [line 59]), next_point=(4, 1) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(1, 2) (current_point defined at [line 59]), point2=(4, 1) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 4
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=4 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=13 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 16.4
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 32.1 (defined at defined at [line 55]) to 32.1+section_energy = 48.5
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 13 (defined at defined at [line 58]) to 13+items[section] = 17
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(4, 1) (defined at [line 49]) = (4, 1)
+[line 48]  for section in path:
+Loop Iteration: section is now 'D' (iteration 28)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='D' (defined at [line 48]) = (2, 8)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(4, 1) (defined at [line 59]), next_point=(2, 8) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(4, 1) (current_point defined at [line 59]), point2=(2, 8) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 9
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=9 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=17 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 44.1
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 48.5 (defined at defined at [line 55]) to 48.5+section_energy = 92.6
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 17 (defined at defined at [line 58]) to 17+items[section] = 20
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(2, 8) (defined at [line 49]) = (2, 8)
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 29)
+[line 49]  next_point = sections[section]
+Compute: sections[section], where sections={A: (1, 2), B: (3, 5), C: (6, 3), ...} (an unknown source), section='B' (defined at [line 48]) = (3, 5)
+[line 50]  section_distance = calculate_distance(current_point, next_point)
+Call function calculate_distance(current_point=(2, 8) (defined at [line 59]), next_point=(3, 5) (defined at [line 49]))
+[line 3]  def calculate_distance(point1, point2):
+Enter function calculate_distance: point1=(2, 8) (current_point defined at [line 59]), point2=(3, 5) (next_point defined at [line 49])
+  [line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+  Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Function calculate_distance returns 4
+[line 54]  section_energy = section_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: section_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where section_distance=4 (defined at [line 50]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=20 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 22.0
+[line 55]  energy_used += section_energy
+Update: energy_used changed from 92.6 (defined at defined at [line 55]) to 92.6+section_energy = 114.6
+[line 58]  cumulative_weight += items[section]
+Update: cumulative_weight changed from 20 (defined at defined at [line 58]) to 20+items[section] = 22
+[line 59]  current_point = next_point
+Compute: next_point, where next_point=(3, 5) (defined at [line 49]) = (3, 5)
+[line 48]  for section in path:
+Loop Iteration: section is now 'B' (iteration 30)
+[line 62]  final_distance = calculate_distance(current_point, start_point)
+Call function calculate_distance(current_point=(3, 5) (defined at [line 59]), start_point=(0, 0) (defined at [line 26]))
+[line 5]  return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+Return: abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
+[line 64]  path_energy = final_distance * (base_energy_per_step + cumulative_weight * weight_penalty)
+Compute: final_distance * (base_energy_per_step + cumulative_weight * weight_penalty), where final_distance=8 (defined at [line 62]), base_energy_per_step=1.5 (defined at [line 33]), cumulative_weight=22 (defined at [line 58]), weight_penalty=0.2 (defined at [line 34]) = 47.2
+[line 65]  energy_used += path_energy
+Update: energy_used changed from 114.6 (defined at defined at [line 55]) to 114.6+path_energy = 161.8
+[line 68]  path_costs[path] = round(energy_used * temperature_factor, 2)
+(Missing param: 'func_name')
+[line 41]  for path in potential_paths:
+Loop End: Iteration finished
+[line 73]  optimal_path_cost = min(path_costs.values())
+Call function min(path_costs.values())
+
+Answer: optimal_path_cost = 107.1 (last updated on defined at [line 73])

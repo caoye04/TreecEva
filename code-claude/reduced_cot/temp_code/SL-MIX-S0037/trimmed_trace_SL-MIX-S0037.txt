@@ -1,0 +1,83 @@
+48
+final_hash
+---
+3 valid_packets = 0
+3 ['packets', 'filter_flag', 'valid_packets'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0']
+4 total_size = 0
+4 ['packets', 'filter_flag', 'valid_packets', 'total_size'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0']
+5 checksum = 0
+5 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0', '0']
+9 for i, packet in enumerate(packets):
+9 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0', '0', '0', "{id: 101, size: 64, type: 'DATA'}"]
+11 packet_id = packet['id']
+11 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101']
+12 packet_size = packet['size']
+12 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64']
+13 packet_type = packet['type']
+13 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64', "'DATA'"]
+19 if filter_flag and packet_type not in ['DATA', 'ACK']:
+19 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '0', '0', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64', "'DATA'"]
+24 valid_packets += 1
+24 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '0', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64', "'DATA'"]
+25 total_size += packet_size
+25 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64', "'DATA'"]
+28 if i % 2 == 0:
+28 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '0', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64', "'DATA'"]
+29 checksum = (checksum + packet_size) & 0xFF
+29 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '64', '0', "{id: 101, size: 64, type: 'DATA'}", '101', '64', "'DATA'"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '101', '64', "'DATA'"]
+11 packet_id = packet['id']
+11 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '64', "'DATA'"]
+12 packet_size = packet['size']
+12 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'DATA'"]
+13 packet_type = packet['type']
+13 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'ACK'"]
+19 if filter_flag and packet_type not in ['DATA', 'ACK']:
+19 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '1', '64', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'ACK'"]
+24 valid_packets += 1
+24 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '64', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'ACK'"]
+25 total_size += packet_size
+25 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'ACK'"]
+28 if i % 2 == 0:
+28 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '64', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'ACK'"]
+31 checksum = (checksum ^ packet_id) & 0xFF
+31 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '1', "{id: 102, size: 128, type: 'ACK'}", '102', '128', "'ACK'"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '2', "{id: 103, size: 32, type: 'SYN'}", '102', '128', "'ACK'"]
+11 packet_id = packet['id']
+11 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '2', "{id: 103, size: 32, type: 'SYN'}", '103', '128', "'ACK'"]
+12 packet_size = packet['size']
+12 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '2', "{id: 103, size: 32, type: 'SYN'}", '103', '32', "'ACK'"]
+13 packet_type = packet['type']
+13 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '2', "{id: 103, size: 32, type: 'SYN'}", '103', '32', "'SYN'"]
+19 if filter_flag and packet_type not in ['DATA', 'ACK']:
+19 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '2', "{id: 103, size: 32, type: 'SYN'}", '103', '32', "'SYN'"]
+21 continue
+21 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '2', "{id: 103, size: 32, type: 'SYN'}", '103', '32', "'SYN'"]
+9 for i, packet in enumerate(packets):
+9 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '103', '32', "'SYN'"]
+11 packet_id = packet['id']
+11 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104', '32', "'SYN'"]
+12 packet_size = packet['size']
+12 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104', '96', "'SYN'"]
+13 packet_type = packet['type']
+13 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104', '96', "'DATA'"]
+19 if filter_flag and packet_type not in ['DATA', 'ACK']:
+19 ['packets', 'filter_flag', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size', 'packet_type'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", 'True', '2', '192', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104', '96', "'DATA'"]
+24 valid_packets += 1
+24 ['packets', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", '3', '192', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104', '96']
+25 total_size += packet_size
+25 ['packets', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id', 'packet_size'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", '3', '288', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104', '96']
+28 if i % 2 == 0:
+28 ['packets', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", '3', '288', '38', '3', "{id: 104, size: 96, type: 'DATA'}", '104']
+31 checksum = (checksum ^ packet_id) & 0xFF
+31 ['packets', 'valid_packets', 'total_size', 'checksum', 'i', 'packet', 'packet_id'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", '3', '288', '78', '3', "{id: 104, size: 96, type: 'DATA'}", '104']
+9 for i, packet in enumerate(packets):
+9 ['packets', 'valid_packets', 'total_size', 'checksum', 'i', 'packet'] ["[{id: 101, size: 64, type: 'DATA'}, {id: 102, size: 128, type: 'ACK'}, {id: 103, size: 32, type: 'SYN'}, {id: 104, size: 96, type: 'DATA'}]", '3', '288', '78', '3', "{id: 104, size: 96, type: 'DATA'}"]
+44 base_hash = (valid_packets * 17) ^ total_size
+44 ['valid_packets', 'total_size', 'checksum', 'base_hash'] ['3', '288', '78', '275']
+45 packet_hash = (base_hash + checksum) | 0x40
+45 ['checksum', 'base_hash', 'packet_hash'] ['78', '275', '353']
+48 final_hash = (packet_hash & 0xFF) ^ checksum
+48 ['checksum', 'packet_hash', 'final_hash'] ['78', '353', '47']

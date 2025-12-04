@@ -1,0 +1,113 @@
+Target: Find the value of variable network_reliability after [line 88] executes
+
+[line 79]  raw_network_data = [82, 65, 91, 55, 73, 86, 69, 77, 88, 92]
+Compute: [82, 65, 91, 55, 73, 86, 69, 77, 88, 92] = [82, 65, 91, 55, 73, ...]
+[line 82]  filtered_data = analyze_network_packets(raw_network_data)
+Call function analyze_network_packets(raw_network_data=[82, 65, 91, 55, 73, ...] (defined at [line 79]))
+[line 7]  for i, packet in enumerate(raw_data):
+(Missing param: 'iter_var')
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 7]  for i, packet in enumerate(raw_data):
+Loop End: Iteration finished
+[line 12]  noise_levels = []
+Compute: [] = []
+[line 13]  for idx, val in enumerate(raw_data):
+(Missing param: 'iter_var')
+[line 14]  if idx % 3 == 0:
+Condition: True, entering 'if' block
+[line 15]  noise = val * 0.08
+Compute: val * 0.08, where val=82 (an unknown source) = 6.5600000000000005
+[line 13]  for idx, val in enumerate(raw_data):
+(Missing param: 'iter_var')
+[line 14]  if idx % 3 == 0:
+Condition: True, entering 'if' block
+[line 16]  elif idx % 3 == 1:
+'elif' Condition: True, entering block
+[line 17]  noise = val * 0.12
+Compute: val * 0.12, where val=65 (an unknown source) = 7.8
+... [Line 13] repeats 7 more times ...
+... [Line 13] repeats 7 more times ...
+... [Line 13] repeats 7 more times ...
+... [Line 13] repeats 7 more times ...
+[line 13]  for idx, val in enumerate(raw_data):
+(Missing param: 'iter_var')
+[line 14]  if idx % 3 == 0:
+Condition: True, entering 'if' block
+[line 15]  noise = val * 0.08
+Compute: val * 0.08, where val=92 (an unknown source) = 7.36
+[line 13]  for idx, val in enumerate(raw_data):
+Loop End: Iteration finished
+[line 23]  filtered_data = []
+Compute: [] = []
+[line 24]  for packet, noise in zip(raw_data, noise_levels):
+(Missing param: 'iter_var')
+[line 25]  quality = packet - noise
+Compute: packet - noise, where packet=82 (an unknown source), noise=6.5600000000000005 (defined at [line 15]) = 75.44
+[line 26]  if quality > filter_threshold:
+Condition: True, entering 'if' block
+[line 24]  for packet, noise in zip(raw_data, noise_levels):
+(Missing param: 'iter_var')
+[line 25]  quality = packet - noise
+Compute: packet - noise, where packet=65 (an unknown source), noise=7.8 (defined at [line 15]) = 57.2
+[line 26]  if quality > filter_threshold:
+Condition: True, entering 'if' block
+... [Line 24] repeats 7 more times ...
+... [Line 24] repeats 7 more times ...
+... [Line 24] repeats 7 more times ...
+[line 24]  for packet, noise in zip(raw_data, noise_levels):
+(Missing param: 'iter_var')
+[line 25]  quality = packet - noise
+Compute: packet - noise, where packet=92 (an unknown source), noise=7.36 (defined at [line 15]) = 84.64
+[line 26]  if quality > filter_threshold:
+Condition: True, entering 'if' block
+[line 24]  for packet, noise in zip(raw_data, noise_levels):
+Loop End: Iteration finished
+[line 35]  return filtered_data
+Return: filtered_data=[82, 91, 86, 88, 92] (defined at [line 23])
+[line 85]  network_reliability = calculate_reliability(filtered_data)
+Call function calculate_reliability(filtered_data=[82, 91, 86, 88, 92] (defined at [line 23]))
+[line 38]  if not packet_data:
+Condition: True, entering 'if' block
+[line 42]  total_packets = len(packet_data)
+Call function len(packet_data=[82, 91, 86, 88, 92] (an unknown source))
+[line 51]  weights = [0.15, 0.35, 0.5] if total_packets > 5 else [0.2, 0.8]
+Compute: [0.15, 0.35, 0.5] if total_packets > 5 else [0.2, 0.8], where total_packets=5 (defined at [line 42]) = [0.2, 0.8]
+[line 65]  if all(factor > 95 for factor in reliability_factors[:2]):
+Condition: True, entering 'if' block
+[line 69]  reliability = 0
+Assign: reliability = 0
+[line 70]  for i, (factor, weight) in enumerate(zip(reliability_factors, weights)):
+(Missing param: 'iter_var')
+[line 71]  reliability += factor * weight
+Update: reliability changed from 0 (defined at defined at [line 69]) to 0+factor * weight = 20.0
+[line 70]  for i, (factor, weight) in enumerate(zip(reliability_factors, weights)):
+(Missing param: 'iter_var')
+[line 71]  reliability += factor * weight
+Update: reliability changed from 20.0 (defined at defined at [line 71]) to 20.0+factor * weight = 66.82666666666667
+[line 70]  for i, (factor, weight) in enumerate(zip(reliability_factors, weights)):
+Loop End: Iteration finished
+[line 74]  correction = 1 - (0.05 if total_packets < 10 else 0)
+Compute: 1 - (0.05 if total_packets < 10 else 0), where total_packets=5 (defined at [line 42]) = 0.95
+[line 76]  return round(reliability * correction, 2)
+Return: round(reliability * correction, 2)
+[line 88]  print(f"Result: {network_reliability}")
+Output: f"Result: {network_reliability}"
+
+Answer: network_reliability = 63.49 (last updated on defined at [line 85])

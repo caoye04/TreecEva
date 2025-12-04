@@ -1,0 +1,26 @@
+Target: Find the value of variable priority_score after [line 26] executes
+
+[line 6]  is_urgent = True
+Assign: is_urgent = True
+[line 7]  waiting_time = 45  # minutes
+Assign: waiting_time = 45
+[line 10]  base_score = waiting_time // 10
+Compute: waiting_time // 10, where waiting_time=45 (defined at [line 7]) = 4
+[line 11]  if waiting_time % 10 >= 5:
+Condition: True, entering 'if' block
+[line 12]  base_score += 1
+Update: base_score changed from 4 (defined at defined at [line 10]) to 4+1 = 5
+[line 15]  urgency_factor = 0.5
+Assign: urgency_factor = 0.5
+[line 16]  penalty = 2
+Assign: penalty = 2
+[line 19]  subscription = "premium"
+Assign: subscription = 'premium'
+[line 20]  customer_tier = 2 if subscription == "premium" else 1
+Compute: 2 if subscription == "premium" else 1, where subscription='premium' (defined at [line 19]) = 2
+[line 23]  base_score = base_score + customer_tier
+Compute: base_score + customer_tier, where base_score=5 (defined at [line 12]), customer_tier=2 (defined at [line 20]) = 7
+[line 26]  priority_score = base_score * (1 + urgency_factor) if is_urgent else base_score - penalty
+Compute: base_score * (1 + urgency_factor) if is_urgent else base_score - penalty, where base_score=7 (defined at [line 23]), urgency_factor=0.5 (defined at [line 15]), is_urgent=True (defined at [line 6]), penalty=2 (defined at [line 16]) = 10.5
+
+Answer: priority_score = 10.5 (last updated on defined at [line 26])

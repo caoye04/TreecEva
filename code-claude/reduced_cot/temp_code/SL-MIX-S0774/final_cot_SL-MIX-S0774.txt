@@ -1,0 +1,16 @@
+Target: Find the value of variable transaction_result after [line 20] executes
+
+[line 4]  transaction_types = ['success', 'success', 'failed', 'success', 'cancelled', 'failed']
+Compute: ['success', 'success', 'failed', 'success', 'cancelled', 'failed'] = ['success', 'success', 'failed', 'success', 'cancelled', ...]
+[line 7]  transaction_counts = Counter(transaction_types)
+Call function Counter(transaction_types=['success', 'success', 'failed', 'success', 'cancelled', ...] (defined at [line 4]))
+[line 10]  successful_count = transaction_counts['success']
+Compute: transaction_counts['success'], where transaction_counts={success: 3, failed: 2, cancelled: 1} (defined at [line 7]) = 3
+[line 11]  failed = transaction_counts['failed']
+Compute: transaction_counts['failed'], where transaction_counts={success: 3, failed: 2, cancelled: 1} (defined at [line 7]) = 2
+[line 12]  cancelled = transaction_counts['cancelled']
+Compute: transaction_counts['cancelled'], where transaction_counts={success: 3, failed: 2, cancelled: 1} (defined at [line 7]) = 1
+[line 20]  transaction_result = successful_count - (failed & cancelled)
+Compute: successful_count - (failed & cancelled), where successful_count=3 (defined at [line 10]), failed=2 (defined at [line 11]), cancelled=1 (defined at [line 12]) = 3
+
+Answer: transaction_result = 3 (last updated on defined at [line 20])

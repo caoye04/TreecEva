@@ -1,0 +1,31 @@
+Target: Find the value of variable optimal_price after [line 53] executes
+
+[line 26]  total_cost = sum(item['cost'] * item['quantity'] for item in inventory_data.values())
+Call function sum(item['cost'] * item['quantity'] for item in inventory_data.values())
+[line 27]  avg_quality = sum(item['quality'] for item in inventory_data.values()) / len(inventory_data)
+Compute: sum(item['quality'] for item in inventory_data.values()) / len(inventory_data), where item={quantity: 120, cost: 0.65, quality: 0.95} (an unknown source) = ?
+[line 39]  promotion_fruit = max(demand_data, key=demand_data.get)
+Call function max(demand_data={apples: 8, oranges: 7, bananas: 9, ...} (an unknown source), key=demand_data.get)
+[line 40]  promotion_bonus = 0.5 if inventory_data[promotion_fruit]['quantity'] > 200 else 0.25
+Compute: 0.5 if inventory_data[promotion_fruit]['quantity'] > 200 else 0.25, where inventory_data={apples: {quantity: 250, cost: 0.35, quality: 0.8}, oranges: {quantity: 175, cost: 0.42, quality: 0.9}, bananas: {quantity: 300, cost: 0.29, quality: 0.7}, ...} (an unknown source), promotion_fruit='bananas' (defined at [line 39]) = 0.5
+[line 43]  base_price = (total_cost * 1.2 + avg_quality * 10) / 2
+Compute: (total_cost * 1.2 + avg_quality * 10) / 2, where total_cost=326.0 (defined at [line 26]), avg_quality=0.8375 (defined at [line 27]) = 199.7875
+[line 46]  demand_adjustment = sum(demand_data.values()) / 20
+Compute: sum(demand_data.values()) / 20, where demand_data={apples: 8, oranges: 7, bananas: 9, ...} (an unknown source) = 1.5
+[line 49]  loyalty_tier = 'silver' if base_price > 150 else 'bronze'
+Compute: 'silver' if base_price > 150 else 'bronze', where base_price=199.7875 (defined at [line 43]) = 'silver'
+[line 50]  loyalty_discount = calculate_discount(base_price, loyalty_tier)
+Call function calculate_discount(base_price=199.7875 (defined at [line 43]), loyalty_tier='silver' (defined at [line 49]))
+[line 1]  def calculate_discount(base_value, loyalty_tier):
+Enter function calculate_discount: base_value=199.7875 (base_price defined at [line 43]), loyalty_tier='silver' (loyalty_tier defined at [line 49])
+  [line 3]  discounts = {'bronze': 0.05, 'silver': 0.10, 'gold': 0.15, 'platinum': 0.20}
+  Compute: {'bronze': 0.05, 'silver': 0.10, 'gold': 0.15, 'platinum': 0.20} = {bronze: 0.05, silver: 0.1, gold: 0.15, ...}
+  [line 4]  seasonal_bonus = 0.02  # Special seasonal promotion
+  Assign: seasonal_bonus = 0.02
+  [line 7]  return base_value * (discounts.get(loyalty_tier, 0) + seasonal_bonus)
+  Return: base_value * (discounts.get(loyalty_tier, 0) + seasonal_bonus)
+Function calculate_discount returns 23.974500000000003
+[line 53]  optimal_price = base_price + demand_adjustment - loyalty_discount + promotion_bonus
+Compute: base_price + demand_adjustment - loyalty_discount + promotion_bonus, where base_price=199.7875 (defined at [line 43]), demand_adjustment=1.5 (defined at [line 46]), loyalty_discount=23.974500000000003 (defined at [line 50]), promotion_bonus=0.5 (defined at [line 40]) = 177.813
+
+Answer: optimal_price = 177.813 (last updated on defined at [line 53])

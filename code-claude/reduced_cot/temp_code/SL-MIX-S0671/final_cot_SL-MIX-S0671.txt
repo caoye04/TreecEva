@@ -1,0 +1,57 @@
+Target: Find the value of variable total_balance after [line 39] executes
+
+[line 34]  customer_transactions = [100, -20, 50, -30, 75]
+Compute: [100, -20, 50, -30, 75] = [100, -20, 50, -30, 75]
+[line 37]  total_balance = calculate_final_balance(customer_transactions)
+Call function calculate_final_balance(customer_transactions=[100, -20, 50, -30, 75] (defined at [line 34]))
+[line 7]  balance = 0
+Assign: balance = 0
+[line 10]  deposit_count = 0
+Assign: deposit_count = 0
+[line 11]  withdrawal_count = 0
+Assign: withdrawal_count = 0
+[line 14]  for i, transaction in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 15]  if transaction > 0:
+Condition: True, entering 'if' block
+[line 17]  balance += transaction
+Update: balance changed from 0 (defined at defined at [line 7]) to 0+transaction = 100
+[line 18]  deposit_count += 1
+Update: deposit_count changed from 0 (defined at defined at [line 10]) to 0+1 = 1
+[line 14]  for i, transaction in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 15]  if transaction > 0:
+Condition: True, entering 'if' block
+[line 21]  balance += transaction  # transaction is negative
+Update: balance changed from 100 (defined at defined at [line 17]) to 100+transaction  # transaction is negative = 80
+[line 22]  withdrawal_count += 1
+Update: withdrawal_count changed from 0 (defined at defined at [line 11]) to 0+1 = 1
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+[line 14]  for i, transaction in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 15]  if transaction > 0:
+Condition: True, entering 'if' block
+[line 17]  balance += transaction
+Update: balance changed from 100 (defined at defined at [line 21]) to 100+transaction = 175
+[line 18]  deposit_count += 1
+Update: deposit_count changed from 2 (defined at defined at [line 18]) to 2+1 = 3
+[line 14]  for i, transaction in enumerate(transactions):
+Loop End: Iteration finished
+[line 25]  interest = calculate_interest(balance)
+Call function calculate_interest(balance=175 (defined at [line 17]))
+[line 1]  def calculate_interest(amount):
+Enter function calculate_interest: amount=175 (balance defined at [line 17])
+  [line 3]  return amount * 0.05
+  Return: amount * 0.05
+Function calculate_interest returns 8.75
+[line 28]  bonus = 10 if deposit_count > withdrawal_count else 0
+Compute: 10 if deposit_count > withdrawal_count else 0, where deposit_count=3 (defined at [line 18]), withdrawal_count=2 (defined at [line 22]) = 10
+[line 31]  return balance + interest + bonus
+Return: balance + interest + bonus
+[line 39]  print(f"Result: {total_balance}")
+Output: f"Result: {total_balance}"
+
+Answer: total_balance = 193.75 (last updated on defined at [line 37])

@@ -1,0 +1,91 @@
+Target: Find the value of variable encryption_key after [line 34] executes
+
+[line 1]  def process_password(password):
+Enter function process_password: password='Secure!123'
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 3]  clean_pass = ''.join(c for c in password if c.isalnum())
+  (Missing param: 'func_name')
+  [line 6]  base_value = 0
+  Assign: base_value = 0
+  [line 7]  for i, char in enumerate(clean_pass):
+  (Missing param: 'iter_var')
+  [line 8]  base_value += (i + 1) * ord(char)
+  Update: base_value changed from 0 (defined at defined at [line 6]) to 0+(i + 1) * ord(char) = 83
+  [line 7]  for i, char in enumerate(clean_pass):
+  (Missing param: 'iter_var')
+  [line 8]  base_value += (i + 1) * ord(char)
+  Update: base_value changed from 83 (defined at defined at [line 8]) to 83+(i + 1) * ord(char) = 285
+... [Line 7] repeats 6 more times ...
+... [Line 7] repeats 6 more times ...
+  [line 7]  for i, char in enumerate(clean_pass):
+  (Missing param: 'iter_var')
+  [line 8]  base_value += (i + 1) * ord(char)
+  Update: base_value changed from 2969 (defined at defined at [line 8]) to 2969+(i + 1) * ord(char) = 3428
+  [line 7]  for i, char in enumerate(clean_pass):
+  Loop End: Iteration finished
+  [line 11]  binary_str = bin(base_value)[2:]
+  Compute: bin(base_value)[2:], where base_value=3428 (defined at [line 8]) = '110101100100'
+  [line 12]  padding_needed = 16 - (len(binary_str) % 16)
+  Compute: 16 - (len(binary_str) % 16), where binary_str='110101100100' (defined at [line 11]) = 4
+  [line 13]  if padding_needed < 16:
+  Condition: True, entering 'if' block
+  [line 14]  binary_str = '0' * padding_needed + binary_str
+  Compute: '0' * padding_needed + binary_str, where padding_needed=4 (defined at [line 12]), binary_str='110101100100' (defined at [line 11]) = '0000110101100100'
+  [line 17]  chunks = [binary_str[i:i+8] for i in range(0, len(binary_str), 8)]
+  Compute: [binary_str[i:i+8] for i in range(0, len(binary_str), 8)], where binary_str='0000110101100100' (defined at [line 14]), i=0 (an unknown source) = ?
+  [line 17]  chunks = [binary_str[i:i+8] for i in range(0, len(binary_str), 8)]
+  Compute: [binary_str[i:i+8] for i in range(0, len(binary_str), 8)], where binary_str='0000110101100100' (defined at [line 14]), i=8 (an unknown source) = ?
+  [line 17]  chunks = [binary_str[i:i+8] for i in range(0, len(binary_str), 8)]
+  Compute: [binary_str[i:i+8] for i in range(0, len(binary_str), 8)], where binary_str='0000110101100100' (defined at [line 14]), i=8 (an unknown source) = ['00001101', '01100100']
+  [line 20]  checksum = 0
+  Assign: checksum = 0
+  [line 21]  for chunk in chunks:
+  Loop Start: chunk takes its first value '00001101'
+  [line 22]  checksum += int(chunk, 2) % 256
+  Update: checksum changed from 0 (defined at defined at [line 20]) to 0+int(chunk, 2) % 256 = 13
+  [line 21]  for chunk in chunks:
+  Loop Iteration: chunk is now '01100100' (iteration 2)
+  [line 22]  checksum += int(chunk, 2) % 256
+  Update: checksum changed from 13 (defined at defined at [line 22]) to 13+int(chunk, 2) % 256 = 113
+  [line 21]  for chunk in chunks:
+  Loop End: Iteration finished
+  [line 25]  selected_chunk = chunks[1]  # Second chunk
+  Compute: chunks[1]  # Second chunk, where chunks=['00001101', '01100100'] (defined at [line 17]), chunk='01100100' (defined at [line 21]) = '01100100'
+  [line 26]  reversed_chunk = selected_chunk[::-1]  # Reverse it
+  Compute: selected_chunk[::-1]  # Reverse it, where selected_chunk='01100100' (defined at [line 25]) = '00100110'
+  [line 29]  noise_bits = '1010'
+  Assign: noise_bits = '1010'
+  [line 30]  binary_value = reversed_chunk + noise_bits
+  Compute: reversed_chunk + noise_bits, where reversed_chunk='00100110' (defined at [line 26]), noise_bits='1010' (defined at [line 29]) = '001001101010'
+  [line 31]  binary_value = binary_value[:-4]  # Remove the noise
+  Compute: binary_value[:-4]  # Remove the noise, where binary_value='001001101010' (defined at [line 30]) = '00100110'
+  [line 34]  encryption_key = int(binary_value, 2) ^ checksum
+  Compute: int(binary_value, 2) ^ checksum, where binary_value='00100110' (defined at [line 31]), checksum=113 (defined at [line 22]) = 87
+  [line 43]  print(f"Result: {encryption_key}")
+  Output: f"Result: {encryption_key}"
+  [line 45]  return encryption_key
+  Return: encryption_key=87 (defined at [line 34])
+Function process_password returns 87
+
+Answer: encryption_key = 87 (last updated on defined at [line 34])

@@ -1,0 +1,63 @@
+66
+target_frequency
+---
+15 frequency_bands = [0] * 8
+15 ['frequency_bands'] ['[0, 0, 0, 0, 0, ...]']
+16 frequency_bands[0] = 0x45  # VHF-Low
+16 ['frequency_bands'] ['[69, 0, 0, 0, 0, ...]']
+17 frequency_bands[1] = 0x89  # VHF-High
+17 ['frequency_bands'] ['[69, 137, 0, 0, 0, ...]']
+18 frequency_bands[2] = 0xCD  # UHF
+18 ['frequency_bands'] ['[69, 137, 205, 0, 0, ...]']
+19 frequency_bands[3] = 0xEF  # Satellite
+19 ['frequency_bands'] ['[69, 137, 205, 239, 0, ...]']
+20 frequency_bands[4] = 0x78  # FM
+20 ['frequency_bands'] ['[69, 137, 205, 239, 120, ...]']
+21 frequency_bands[5] = 0x12  # AM
+21 ['frequency_bands'] ['[69, 137, 205, 239, 120, ...]']
+22 frequency_bands[6] = 0x34  # Shortwave
+22 ['frequency_bands'] ['[69, 137, 205, 239, 120, ...]']
+23 frequency_bands[7] = 0xAB  # Emergency
+23 ['frequency_bands'] ['[69, 137, 205, 239, 120, ...]']
+33 raw_signal = [0x12, 0x34, 0x56, 0x78]
+33 ['frequency_bands', 'signal_quality', 'raw_signal'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '[18, 52, 86, 120]']
+34 signal_strength = compute_signal_strength(raw_signal)
+34 ['frequency_bands', 'signal_quality', 'raw_signal'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '[18, 52, 86, 120]']
+6 noise_factor = 3
+6 ['raw_input', 'noise_factor'] ['[18, 52, 86, 120]', '3']
+7 base_signal = sum([x & 0x0F for x in raw_input])
+7 ['raw_input', 'noise_factor', 'x'] ['[18, 52, 86, 120]', '3', '18']
+7 base_signal = sum([x & 0x0F for x in raw_input])
+7 ['raw_input', 'noise_factor', 'x'] ['[18, 52, 86, 120]', '3', '52']
+7 base_signal = sum([x & 0x0F for x in raw_input])
+7 ['raw_input', 'noise_factor', 'x'] ['[18, 52, 86, 120]', '3', '86']
+7 base_signal = sum([x & 0x0F for x in raw_input])
+7 ['raw_input', 'noise_factor', 'x'] ['[18, 52, 86, 120]', '3', '120']
+7 base_signal = sum([x & 0x0F for x in raw_input])
+7 ['raw_input', 'noise_factor', 'base_signal'] ['[18, 52, 86, 120]', '3', '20']
+8 return (base_signal * noise_factor) >> 2
+8 ['noise_factor', 'base_signal'] ['3', '20']
+37 temperature = 25
+37 ['frequency_bands', 'signal_quality', 'signal_strength', 'temperature'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '15', '25']
+38 humidity = 65
+38 ['frequency_bands', 'signal_quality', 'signal_strength', 'temperature', 'humidity'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '15', '25', '65']
+39 interference_level = (temperature > 30) * 5 + (humidity > 70) * 3
+39 ['frequency_bands', 'signal_quality', 'signal_strength', 'temperature', 'humidity', 'interference_level'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '15', '25', '65', '0']
+42 base_index = (signal_strength & 0x07)
+42 ['frequency_bands', 'signal_quality', 'signal_strength', 'interference_level', 'base_index'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '15', '0', '7']
+43 active_band = base_index
+43 ['frequency_bands', 'signal_quality', 'interference_level', 'base_index', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '0', '7', '7']
+44 if interference_level > 0:
+44 ['frequency_bands', 'signal_quality', 'interference_level', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '0', '7']
+51 if signal_quality["snr"] > 15:
+51 ['frequency_bands', 'signal_quality', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '7']
+53 if signal_quality["distortion"] < 0.05:
+53 ['frequency_bands', 'signal_quality', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '7']
+55 if signal_quality["bandwidth"] > 10000:
+55 ['frequency_bands', 'signal_quality', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '{snr: 18.5, distortion: 0.03, bandwidth: 15000}', '7']
+59 if processing_flags == 0x07:  # All flags set
+59 ['frequency_bands', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '7']
+62 if potential_band == len(frequency_bands):
+62 ['frequency_bands', 'active_band'] ['[69, 137, 205, 239, 120, ...]', '7']
+66 target_frequency = frequency_bands[active_band] & 0xFF
+66 ['frequency_bands', 'active_band', 'target_frequency'] ['[69, 137, 205, 239, 120, ...]', '7', '171']

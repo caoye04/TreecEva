@@ -1,0 +1,18 @@
+Target: Find the value of variable matching_count after [line 23] executes
+
+[line 6]  source_words = [word.strip('.,!?;:"()') for word in source_text.split()]
+Compute: [word.strip('.,!?;:"()') for word in source_text.split()], where word='The' (an unknown source), source_text='The quick brown fox jumps over the lazy dog' (an unknown source) = ?
+[line 7]  target_words = [word.strip('.,!?;:"()') for word in target_text.split()]
+Compute: [word.strip('.,!?;:"()') for word in target_text.split()], where word='The' (an unknown source), target_text='The quick brown fox jumped over the sleepy dog' (an unknown source) = ?
+[line 10]  filtered_words = [word for word in source_words if word]
+Compute: [word for word in source_words if word], where word='The' (an unknown source), source_words=['The', 'quick', 'brown', 'fox', 'jumps', ...] (defined at [line 6]) = ?
+[line 16]  compare_length = min(len(filtered_words), len(target_words))
+Call function min(len(filtered_words), len(target_words))
+[line 19]  filtered_words = filtered_words[:compare_length]
+Compute: filtered_words[:compare_length], where filtered_words=['The', 'quick', 'brown', 'fox', 'jumps', ...] (defined at [line 10]), compare_length=9 (defined at [line 16]) = ['The', 'quick', 'brown', 'fox', 'jumps', ...]
+[line 20]  target_words = target_words[:compare_length]
+Compute: target_words[:compare_length], where target_words=['The', 'quick', 'brown', 'fox', 'jumped', ...] (defined at [line 7]), compare_length=9 (defined at [line 16]) = ['The', 'quick', 'brown', 'fox', 'jumped', ...]
+[line 23]  matching_count = sum(1 for i, (word1, word2) in enumerate(zip(filtered_words, target_words)) if word1.lower() == word2.lower())
+Call function sum(1 for i, (word1, word2) in enumerate(zip(filtered_words, target_words)) if word1.lower() == word2.lower())
+
+Answer: matching_count = ? (last updated on defined at [line 23])

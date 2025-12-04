@@ -1,0 +1,177 @@
+45
+valid_combinations
+---
+PARAM_MAPPING {'readings': {'actual_var': 'readings', 'value': [(25, 30), (28, 25), (22, 40)]}}
+FUNCTION_ENTER 1 analyze_sensor_data def analyze_sensor_data(readings, baseline=100):
+1 ['readings', 'baseline'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 30}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 25}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 40}], '_len': 2}], '_len': 3}, {'_type': 'int', '_value': 100}]
+3 sensor_vals = []
+3 ['readings', 'baseline', 'sensor_vals'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[]']
+7 for i, reading in enumerate(readings):
+7 ['readings', 'baseline', 'sensor_vals', 'i', 'reading'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[]', '0', '(25, 30)']
+8 temp, humidity = reading
+8 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[]', '0', '(25, 30)', '25', '30']
+12 if temp > 30 or humidity < 20:
+12 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[]', '0', '(25, 30)', '25', '30']
+7 for i, reading in enumerate(readings):
+7 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60)]', '1', '(28, 25)', '25', '30']
+8 temp, humidity = reading
+8 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60)]', '1', '(28, 25)', '28', '25']
+12 if temp > 30 or humidity < 20:
+12 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60)]', '1', '(28, 25)', '28', '25']
+7 for i, reading in enumerate(readings):
+7 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60), (2.8, 50)]', '2', '(22, 40)', '28', '25']
+8 temp, humidity = reading
+8 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60), (2.8, 50)]', '2', '(22, 40)', '22', '40']
+12 if temp > 30 or humidity < 20:
+12 ['readings', 'baseline', 'sensor_vals', 'i', 'reading', 'temp', 'humidity'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60), (2.8, 50)]', '2', '(22, 40)', '22', '40']
+7 for i, reading in enumerate(readings):
+7 ['readings', 'baseline', 'sensor_vals', 'i', 'reading'] ['[(25, 30), (28, 25), (22, 40)]', '100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '(22, 40)']
+21 all_pairs = []
+21 ['baseline', 'sensor_vals', 'i', 'all_pairs'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[]']
+22 for i, s1 in enumerate(sensor_vals):
+22 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[]', '(2.5, 60)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[]', '(2.5, 60)', '0', '(2.5, 60)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[]', '(2.5, 60)', '0', '(2.5, 60)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[]', '(2.5, 60)', '1', '(2.8, 50)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[]', '(2.5, 60)', '1', '(2.8, 50)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[((...2 items), (...2 items))]', '(2.5, 60)', '2', '(2.2, 80)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[((...2 items), (...2 items))]', '(2.5, 60)', '2', '(2.2, 80)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '0', '[((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.5, 60)', '2', '(2.2, 80)']
+22 for i, s1 in enumerate(sensor_vals):
+22 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '2', '(2.2, 80)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '0', '(2.5, 60)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '0', '(2.5, 60)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '1', '(2.8, 50)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '1', '(2.8, 50)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '2', '(2.2, 80)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '2', '(2.2, 80)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '1', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.8, 50)', '2', '(2.2, 80)']
+22 for i, s1 in enumerate(sensor_vals):
+22 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.2, 80)', '2', '(2.2, 80)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.2, 80)', '0', '(2.5, 60)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.2, 80)', '0', '(2.5, 60)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.2, 80)', '1', '(2.8, 50)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items))]', '(2.2, 80)', '1', '(2.8, 50)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '2', '(2.2, 80)']
+24 if i != j:  # Don't pair a sensor with itself
+24 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '2', '(2.2, 80)']
+23 for j, s2 in enumerate(sensor_vals):
+23 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 'j', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '2', '(2.2, 80)']
+22 for i, s1 in enumerate(sensor_vals):
+22 ['baseline', 'sensor_vals', 'i', 'all_pairs', 's1', 's2'] ['100', '[(2.5, 60), (2.8, 50), (2.2, 80)]', '2', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.2, 80)']
+28 threshold = baseline / 10
+28 ['baseline', 'all_pairs', 's1', 's2', 'threshold'] ['100', '[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.2, 80)', '10.0']
+29 valid_pairs = []
+29 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.2, 80)', '10.0', '[]']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.2, 80)', '10.0', '[]', '0', '((2.5, 60), (2.8, 50))']
+33 s1, s2 = pair
+33 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.8, 50)', '10.0', '[]', '0', '((2.5, 60), (2.8, 50))']
+34 t1, h1 = s1
+34 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.8, 50)', '10.0', '[]', '0', '((2.5, 60), (2.8, 50))', '2.5', '60']
+35 t2, h2 = s2
+35 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.8, 50)', '10.0', '[]', '0', '((2.5, 60), (2.8, 50))', '2.5', '60', '2.8', '50']
+38 compatibility = (t1 * h2 + t2 * h1) / 2
+38 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.8, 50)', '10.0', '[]', '0', '((2.5, 60), (2.8, 50))', '2.5', '60', '2.8', '50', '146.5']
+41 if compatibility > threshold:
+41 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.8, 50)', '10.0', '[]', '0', '((2.5, 60), (2.8, 50))', '2.5', '60', '2.8', '50', '146.5']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.8, 50)', '10.0', '[(5.3, 110)]', '1', '((2.5, 60), (2.2, 80))', '2.5', '60', '2.8', '50', '146.5']
+33 s1, s2 = pair
+33 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.2, 80)', '10.0', '[(5.3, 110)]', '1', '((2.5, 60), (2.2, 80))', '2.5', '60', '2.8', '50', '146.5']
+34 t1, h1 = s1
+34 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.2, 80)', '10.0', '[(5.3, 110)]', '1', '((2.5, 60), (2.2, 80))', '2.5', '60', '2.8', '50', '146.5']
+35 t2, h2 = s2
+35 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.2, 80)', '10.0', '[(5.3, 110)]', '1', '((2.5, 60), (2.2, 80))', '2.5', '60', '2.2', '80', '146.5']
+38 compatibility = (t1 * h2 + t2 * h1) / 2
+38 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.2, 80)', '10.0', '[(5.3, 110)]', '1', '((2.5, 60), (2.2, 80))', '2.5', '60', '2.2', '80', '166.0']
+41 if compatibility > threshold:
+41 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.2, 80)', '10.0', '[(5.3, 110)]', '1', '((2.5, 60), (2.2, 80))', '2.5', '60', '2.2', '80', '166.0']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.5, 60)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140)]', '2', '((2.8, 50), (2.5, 60))', '2.5', '60', '2.2', '80', '166.0']
+33 s1, s2 = pair
+33 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140)]', '2', '((2.8, 50), (2.5, 60))', '2.5', '60', '2.2', '80', '166.0']
+34 t1, h1 = s1
+34 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140)]', '2', '((2.8, 50), (2.5, 60))', '2.8', '50', '2.2', '80', '166.0']
+35 t2, h2 = s2
+35 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140)]', '2', '((2.8, 50), (2.5, 60))', '2.8', '50', '2.5', '60', '166.0']
+38 compatibility = (t1 * h2 + t2 * h1) / 2
+38 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140)]', '2', '((2.8, 50), (2.5, 60))', '2.8', '50', '2.5', '60', '146.5']
+41 if compatibility > threshold:
+41 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140)]', '2', '((2.8, 50), (2.5, 60))', '2.8', '50', '2.5', '60', '146.5']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110)]', '3', '((2.8, 50), (2.2, 80))', '2.8', '50', '2.5', '60', '146.5']
+33 s1, s2 = pair
+33 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110)]', '3', '((2.8, 50), (2.2, 80))', '2.8', '50', '2.5', '60', '146.5']
+34 t1, h1 = s1
+34 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110)]', '3', '((2.8, 50), (2.2, 80))', '2.8', '50', '2.5', '60', '146.5']
+35 t2, h2 = s2
+35 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110)]', '3', '((2.8, 50), (2.2, 80))', '2.8', '50', '2.2', '80', '146.5']
+38 compatibility = (t1 * h2 + t2 * h1) / 2
+38 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110)]', '3', '((2.8, 50), (2.2, 80))', '2.8', '50', '2.2', '80', '167.0']
+41 if compatibility > threshold:
+41 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110)]', '3', '((2.8, 50), (2.2, 80))', '2.8', '50', '2.2', '80', '167.0']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '(2.2, 80)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130)]', '4', '((2.2, 80), (2.5, 60))', '2.8', '50', '2.2', '80', '167.0']
+33 s1, s2 = pair
+33 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130)]', '4', '((2.2, 80), (2.5, 60))', '2.8', '50', '2.2', '80', '167.0']
+34 t1, h1 = s1
+34 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130)]', '4', '((2.2, 80), (2.5, 60))', '2.2', '80', '2.2', '80', '167.0']
+35 t2, h2 = s2
+35 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130)]', '4', '((2.2, 80), (2.5, 60))', '2.2', '80', '2.5', '60', '167.0']
+38 compatibility = (t1 * h2 + t2 * h1) / 2
+38 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130)]', '4', '((2.2, 80), (2.5, 60))', '2.2', '80', '2.5', '60', '166.0']
+41 if compatibility > threshold:
+41 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130)]', '4', '((2.2, 80), (2.5, 60))', '2.2', '80', '2.5', '60', '166.0']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.5, 60)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140)]', '5', '((2.2, 80), (2.8, 50))', '2.2', '80', '2.5', '60', '166.0']
+33 s1, s2 = pair
+33 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.8, 50)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140)]', '5', '((2.2, 80), (2.8, 50))', '2.2', '80', '2.5', '60', '166.0']
+34 t1, h1 = s1
+34 ['all_pairs', 's1', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.2, 80)', '(2.8, 50)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140)]', '5', '((2.2, 80), (2.8, 50))', '2.2', '80', '2.5', '60', '166.0']
+35 t2, h2 = s2
+35 ['all_pairs', 's2', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '(2.8, 50)', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140)]', '5', '((2.2, 80), (2.8, 50))', '2.2', '80', '2.8', '50', '166.0']
+38 compatibility = (t1 * h2 + t2 * h1) / 2
+38 ['all_pairs', 'threshold', 'valid_pairs', 'idx', 'pair', 't1', 'h1', 't2', 'h2', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140)]', '5', '((2.2, 80), (2.8, 50))', '2.2', '80', '2.8', '50', '167.0']
+41 if compatibility > threshold:
+41 ['all_pairs', 'threshold', 'valid_pairs', 'idx', 'pair', 'compatibility'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140)]', '5', '((2.2, 80), (2.8, 50))', '167.0']
+32 for idx, pair in enumerate(all_pairs):
+32 ['all_pairs', 'threshold', 'valid_pairs', 'idx', 'pair'] ['[((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ((...2 items), (...2 items)), ...]', '10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '5', '((2.2, 80), (2.8, 50))']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '(5.3, 110)']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '(4.7, 140)']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '(5.3, 110)']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '(5.0, 130)']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '(4.7, 140)']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '(5.0, 130)']
+45 valid_combinations = len([pair for pair in valid_pairs if pair[0] + pair[1] > threshold])
+45 ['threshold', 'valid_pairs', 'pair', 'valid_combinations'] ['10.0', '[(5.3, 110), (4.7, 140), (5.3, 110), (5.0, 130), (4.7, 140), ...]', '((2.2, 80), (2.8, 50))', '6']
+50 print(f"Result: {valid_combinations}")
+50 ['valid_combinations'] ['6']
+51 return valid_combinations
+51 ['valid_combinations'] ['6']
+FUNCTION_RETURN 51 analyze_sensor_data {'_type': 'int', '_value': 6}

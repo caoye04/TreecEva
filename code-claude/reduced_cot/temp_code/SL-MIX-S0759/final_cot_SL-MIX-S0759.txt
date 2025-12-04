@@ -1,0 +1,14 @@
+Target: Find the value of variable valid_count after [line 27] executes
+
+[line 14]  min_temp = 30
+Assign: min_temp = 30
+[line 16]  excluded_cities = {'Phoenix', 'Dallas'}
+Compute: {'Phoenix', 'Dallas'} = {'Dallas', 'Phoenix'}
+[line 19]  warm_cities = {city for city, temp in temperature_data.items() if temp >= min_temp}
+Compute: {city for city, temp in temperature_data.items() if temp >= min_temp}, where city='New York' (an unknown source), temp=28 (an unknown source), temperature_data={New York: 28, Los Angeles: 32, Chicago: 26, ...} (an unknown source), min_temp=30 (defined at [line 14]) = ?
+[line 24]  qualified_cities = warm_cities - excluded_cities
+Compute: warm_cities - excluded_cities, where warm_cities={'Houston', 'Phoenix', 'San Antonio', 'Philadelphia', 'Los Angeles'} (defined at [line 19]), excluded_cities={'Dallas', 'Phoenix'} (defined at [line 16]) = {'San Antonio', 'Los Angeles', 'Philadelphia', 'Houston'}
+[line 27]  valid_count = len(qualified_cities)
+Call function len(qualified_cities={'San Antonio', 'Los Angeles', 'Philadelphia', 'Houston'} (defined at [line 24]))
+
+Answer: valid_count = 4 (last updated on defined at [line 27])

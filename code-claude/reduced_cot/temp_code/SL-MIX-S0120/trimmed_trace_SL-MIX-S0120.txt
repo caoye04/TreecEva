@@ -1,0 +1,593 @@
+118
+network_efficiency
+---
+PARAM_MAPPING {'data_streams': {'actual_var': 'data_streams', 'value': {'103': ['AB123', 'CD456', 'EF789', 'GH012'], '245': ['JK345', 'LM678', 'NO901', 'PQ234'], '307': ['RS567', 'TU890', 'VW123'], '421': ['XY456', 'ZA789', 'BC012', 'DE345', 'FG678'], '539': ['HI901', 'JK234', 'LM567'], '614': ['NO890', 'PQ123', 'RS456', 'TU789'], '728': ['VW012', 'XY345', 'ZA678', 'BC901']}}}
+FUNCTION_ENTER 43 calculate_network_efficiency def calculate_network_efficiency(data_streams):
+43 ['data_streams'] [{'_type': 'dict', '_items': {'103': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'AB123'}, {'_type': 'str', '_value': 'CD456'}, {'_type': 'str', '_value': 'EF789'}, {'_type': 'str', '_value': 'GH012'}], '_len': 4}, '245': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'JK345'}, {'_type': 'str', '_value': 'LM678'}, {'_type': 'str', '_value': 'NO901'}, {'_type': 'str', '_value': 'PQ234'}], '_len': 4}, '307': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'RS567'}, {'_type': 'str', '_value': 'TU890'}, {'_type': 'str', '_value': 'VW123'}], '_len': 3}, '421': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'XY456'}, {'_type': 'str', '_value': 'ZA789'}, {'_type': 'str', '_value': 'BC012'}, {'_type': 'str', '_value': 'DE345'}, {'_type': 'str', '_value': 'FG678'}], '_len': 5}, '539': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'HI901'}, {'_type': 'str', '_value': 'JK234'}, {'_type': 'str', '_value': 'LM567'}], '_len': 3}}, '_len': 7}]
+45 transmission_data = {}
+45 ['data_streams', 'transmission_data'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{}']
+46 routing_nodes = set()
+46 ['data_streams', 'transmission_data', 'routing_nodes'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{}', 'set()']
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{}', 'set()', "'103'", "['AB123', 'CD456', 'EF789', 'GH012']"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', 'set()', "'103'", "['AB123', 'CD456', 'EF789', 'GH012']"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', 'set()', "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'AB123'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', 'set()', "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'AB123'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'CD456'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'CD456'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'CD', 'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'EF789'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'CD', 'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'EF789'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'EF', 'CD', 'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'GH012'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'EF', 'CD', 'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'GH012'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'GH', 'EF', 'CD', 'AB'}", "'103'", "['AB123', 'CD456', 'EF789', 'GH012']", "'GH012'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: []}', "{'GH', 'EF', 'CD', 'AB'}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'GH012'"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'CD', 'AB'}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'GH012'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'CD', 'AB'}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'JK345'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'CD', 'AB'}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'JK345'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'CD', 'AB', 'JK'}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'LM678'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'CD', 'AB', 'JK'}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'LM678'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'LM', 'CD', 'AB', ...}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'NO901'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'LM', 'CD', 'AB', ...}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'NO901'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'PQ234'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'PQ234'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'245'", "['JK345', 'LM678', 'NO901', 'PQ234']", "'PQ234'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'PQ234'"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'PQ234'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'RS567'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'RS567'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'TU890'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'LM', 'NO', 'CD', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'TU890'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'TU', 'LM', 'NO', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'VW123'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'TU', 'LM', 'NO', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'VW123'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'307'", "['RS567', 'TU890', 'VW123']", "'VW123'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: []}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'VW123'"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'VW123'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'XY456'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'XY456'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'ZA789'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'VW', 'LM', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'ZA789'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'ZA', 'VW', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'BC012'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'ZA', 'VW', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'BC012'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'ZA', 'VW', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'DE345'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'TU', 'ZA', 'VW', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'DE345'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'FG678'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'FG678'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", "['XY456', 'ZA789', 'BC012', 'DE345', 'FG678']", "'FG678'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'FG678'"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'FG678'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'HI901'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'HI901'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'JK234'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'JK234'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'LM567'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'LM567'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", "['HI901', 'JK234', 'LM567']", "'LM567'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'LM567'"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'LM567'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'NO890'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'NO890'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'PQ123'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'PQ123'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'RS456'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'RS456'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'TU789'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'TU789'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", "['NO890', 'PQ123', 'RS456', 'TU789']", "'TU789'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'TU789'"]
+50 transmission_data[stream_id] = []
+50 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'TU789'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'VW012'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'VW012'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'XY345'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'XY345'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'ZA678'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'ZA678'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'BC901'"]
+53 if len(packet) % 2 == 0:
+53 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'BC901'"]
+51 for packet in packets:
+51 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets', 'packet'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", "'BC901'"]
+49 for stream_id, packets in data_streams.items():
+49 ['data_streams', 'transmission_data', 'routing_nodes', 'stream_id', 'packets'] ["{103: ['AB123', 'CD456', 'EF789', 'GH012'], 245: ['JK345', 'LM678', 'NO901', 'PQ234'], 307: ['RS567', 'TU890', 'VW123'], ...}", '{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']"]
+63 efficiency_scores = []
+63 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", "['VW012', 'XY345', 'ZA678', 'BC901']", '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'103'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'103'", '[]', '[]']
+72 if not packets:
+72 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'103'", '[]', '[]']
+73 continue
+73 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'103'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'245'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'245'", '[]', '[]']
+69 continue
+69 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'245'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'307'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'307'", '[]', '[]']
+72 if not packets:
+72 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'307'", '[]', '[]']
+73 continue
+73 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'307'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", '[]', '[]']
+72 if not packets:
+72 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", '[]', '[]']
+73 continue
+73 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'421'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", '[]', '[]']
+69 continue
+69 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'539'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", '[]', '[]']
+72 if not packets:
+72 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", '[]', '[]']
+73 continue
+73 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'614'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", '[]', '[]']
+68 if int(stream_id) % 7 == 0:
+68 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", '[]', '[]']
+69 continue
+69 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", '[]', '[]']
+66 for stream_id, packets in transmission_data.items():
+66 ['transmission_data', 'routing_nodes', 'stream_id', 'packets', 'efficiency_scores'] ['{103: [], 245: [], 307: [], ...}', "{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "'728'", '[]', '[]']
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'GH'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'EF'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'DE'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'TU'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'ZA'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'VW'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'LM'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'FG'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'NO'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'HI'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'CD'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'AB'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'BC'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'RS'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'JK'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'PQ'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'XY'"]
+97 for node in routing_nodes:
+97 ['routing_nodes', 'efficiency_scores', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '[]', "'XY'"]
+18 base_overhead = len(nodes) * 3.5
+18 ['nodes', 'connections', 'base_overhead'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5']
+19 connection_factor = len(connections) * 0.75
+19 ['nodes', 'connections', 'base_overhead', 'connection_factor'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75']
+21 redundancy_paths = 0
+21 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '0']
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '0', "'GH'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '0', "'GH'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '16', "'GH'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '16', "'EF'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '16', "'EF'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '32', "'EF'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '32', "'DE'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '32', "'DE'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '48', "'DE'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '48', "'TU'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '48', "'TU'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '64', "'TU'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '64', "'ZA'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '64', "'ZA'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '80', "'ZA'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '80', "'VW'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '80', "'VW'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '96', "'VW'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '96', "'LM'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '96', "'LM'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '112', "'LM'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '112', "'FG'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '112', "'FG'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '128', "'FG'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '128', "'NO'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '128', "'NO'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '144', "'NO'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '144', "'HI'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '144', "'HI'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '160', "'HI'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '160', "'CD'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '160', "'CD'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '176', "'CD'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '176', "'AB'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '176', "'AB'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '192', "'AB'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '192', "'BC'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '192', "'BC'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '208', "'BC'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '208', "'RS'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '208', "'RS'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '224', "'RS'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '224', "'JK'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '224', "'JK'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '240', "'JK'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '240', "'PQ'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '240', "'PQ'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '256', "'PQ'"]
+22 for node in nodes:
+22 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '256', "'XY'"]
+23 if node in connections:
+23 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '256', "'XY'"]
+24 redundancy_paths += len(connections[node])
+24 ['nodes', 'connections', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", "{GH: ['EF', 'DE', 'TU', 'ZA', 'VW', ...], EF: ['GH', 'DE', 'TU', 'ZA', 'VW', ...], DE: ['GH', 'EF', 'TU', 'ZA', 'VW', ...], ...}", '59.5', '12.75', '272', "'XY'"]
+22 for node in nodes:
+22 ['nodes', 'base_overhead', 'connection_factor', 'redundancy_paths', 'node'] ["{'GH', 'EF', 'DE', 'TU', 'ZA', ...}", '59.5', '12.75', '272', "'XY'"]
+26 return base_overhead + connection_factor + (redundancy_paths * 0.25)
+26 ['base_overhead', 'connection_factor', 'redundancy_paths'] ['59.5', '12.75', '272']
+30 if not data_points:
+30 ['data_points'] ['[5, 5, 5, 5, 5, ...]']
+33 patterns = {}
+33 ['data_points', 'patterns'] ['[5, 5, 5, 5, 5, ...]', '{}']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point'] ['[5, 5, 5, 5, 5, ...]', '{}', '5']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{}', '5', '0']
+39 patterns[key] = 1
+39 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 1}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 1}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 1}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 1}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 2}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 2}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 2}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 2}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 3}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 3}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 3}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 3}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 4}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 4}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 4}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 4}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 5}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 5}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 5}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 5}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 6}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 6}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 6}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 6}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 7}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 7}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 7}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 7}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 8}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 8}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 8}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 8}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 9}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 9}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 9}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 9}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 10}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 10}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 10}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 10}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 11}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 11}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 11}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 11}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 12}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 12}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 12}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 12}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 13}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 13}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 13}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 13}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 14}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 14}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 14}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 14}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 15}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 15}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 15}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 15}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 16}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 16}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 16}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 16}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 17}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 17}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 17}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 17}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 18}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 18}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 18}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 18}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 19}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 19}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 19}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 19}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 20}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 20}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 20}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 20}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 21}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 21}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 21}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 21}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 22}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 22}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 22}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 22}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 23}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 23}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 23}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 23}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 24}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 24}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 24}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 24}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 25}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 25}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 25}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 25}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 26}', '5', '0']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 26}', '5', '0']
+35 key = point % 5
+35 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 26}', '5', '0']
+36 if key in patterns:
+36 ['data_points', 'patterns', 'point', 'key'] ['[5, 5, 5, 5, 5, ...]', '{0: 26}', '5', '0']
+37 patterns[key] += 1
+37 ['data_points', 'patterns', 'point'] ['[5, 5, 5, 5, 5, ...]', '{0: 27}', '5']
+34 for point in data_points:
+34 ['data_points', 'patterns', 'point'] ['[5, 5, 5, 5, 5, ...]', '{0: 27}', '5']
+41 return max(patterns.values()) / len(data_points)
+41 ['data_points', 'patterns'] ['[5, 5, 5, 5, 5, ...]', '{0: 27}']
+107 if not efficiency_scores:
+107 ['efficiency_scores'] ['[]']
+108 return 0
+108 [] []
+FUNCTION_RETURN 108 calculate_network_efficiency {'_type': 'int', '_value': 0}

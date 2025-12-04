@@ -87,7 +87,7 @@ class CoTGenerator:
         
         client = openai.OpenAI(
             api_key= 'sk-gq8qRNNiNIjS0x8tzfMl8F9bscL4wopT7oA2qD2FU8xKTrnp',
-            base_url= 'https://api.ezai88.com/v1/chat/completions'
+            base_url= 'https://api.ezai88.com/v1'
         )
         
         # 使用传入的系统提示词,如果没有则使用默认的

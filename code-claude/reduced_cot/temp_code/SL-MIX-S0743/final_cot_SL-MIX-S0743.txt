@@ -1,0 +1,92 @@
+Target: Find the value of variable final_score after [line 70] executes
+
+[line 48]  raw_sensor_data = [12, 45, 67, 23, 89, 34, 56, 78, 15, 38]
+Compute: [12, 45, 67, 23, 89, 34, 56, 78, 15, 38] = [12, 45, 67, 23, 89, ...]
+[line 49]  weights = [0.5, 1.2, 0.8, 1.0, 0.7]
+Compute: [0.5, 1.2, 0.8, 1.0, 0.7] = [0.5, 1.2, 0.8, 1.0, 0.7]
+[line 52]  processed_data = preprocess_data(raw_sensor_data)
+Call function preprocess_data(raw_sensor_data=[12, 45, 67, 23, 89, ...] (defined at [line 48]))
+[line 5]  processed = []
+Compute: [] = []
+[line 6]  for value in raw_data:
+Loop Start: value takes its first value 12
+[line 7]  adjusted = value * 0.8 + 10
+Compute: value * 0.8 + 10, where value=12 (defined at [line 6]) = 19.6
+[line 8]  if 15 <= adjusted <= 85:
+Condition: True, entering 'if' block
+[line 6]  for value in raw_data:
+Loop Iteration: value is now 45 (iteration 2)
+[line 7]  adjusted = value * 0.8 + 10
+Compute: value * 0.8 + 10, where value=45 (defined at [line 6]) = 46.0
+[line 8]  if 15 <= adjusted <= 85:
+Condition: True, entering 'if' block
+... [Line 6] repeats 7 more times ...
+... [Line 6] repeats 7 more times ...
+... [Line 6] repeats 7 more times ...
+[line 6]  for value in raw_data:
+Loop Iteration: value is now 38 (iteration 10)
+[line 7]  adjusted = value * 0.8 + 10
+Compute: value * 0.8 + 10, where value=38 (defined at [line 6]) = 40.400000000000006
+[line 8]  if 15 <= adjusted <= 85:
+Condition: True, entering 'if' block
+[line 6]  for value in raw_data:
+Loop End: Iteration finished
+[line 10]  return processed
+Return: processed=[19.6, 46.0, 63.6, 28.400000000000002, 81.2, ...] (defined at [line 5])
+[line 62]  transformed_data = apply_transformations(processed_data)
+Call function apply_transformations(processed_data=[19.6, 46.0, 63.6, 28.400000000000002, 81.2, ...] (defined at [line 52]))
+[line 14]  transformed = []
+Compute: [] = []
+[line 15]  for i, val in enumerate(data):
+(Missing param: 'iter_var')
+[line 16]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 15]  for i, val in enumerate(data):
+(Missing param: 'iter_var')
+[line 16]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 15] repeats 7 more times ...
+... [Line 15] repeats 7 more times ...
+[line 15]  for i, val in enumerate(data):
+(Missing param: 'iter_var')
+[line 16]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 15]  for i, val in enumerate(data):
+Loop End: Iteration finished
+[line 23]  return transformed
+Return: transformed=[24.6, 43.0, 68.6, 25.400000000000002, 86.2, ...] (defined at [line 14])
+[line 65]  threshold = 50
+Assign: threshold = 50
+[line 66]  filtered_data = [x for x in transformed_data if x <= threshold]
+Compute: [x for x in transformed_data if x <= threshold], where x=24.6 (an unknown source), transformed_data=[24.6, 43.0, 68.6, 25.400000000000002, 86.2, ...] (defined at [line 62]), threshold=50 (defined at [line 65]) = ?
+[line 69]  final_score = calculate_final_score(filtered_data, weights)
+Call function calculate_final_score(filtered_data=[24.6, 43.0, 25.400000000000002, 34.2, 27.0, ...] (defined at [line 66]), weights=[0.5, 1.2, 0.8, 1.0, 0.7] (defined at [line 49]))
+[line 25]  def calculate_final_score(data, weights):
+Enter function calculate_final_score: data=[24.6, 43.0, 25.400000000000002, 34.2, 27.0, ...] (filtered_data defined at [line 66]), weights=[0.5, 1.2, 0.8, 1.0, 0.7] (weights defined at [line 49])
+  [line 27]  if not data or not weights:
+  Condition: True, entering 'if' block
+  [line 31]  relevant_data = data[1:6]
+  Compute: data[1:6], where data=[24.6, 43.0, 25.400000000000002, 34.2, 27.0, ...] (parameter data defined at [line 66]) = [43.0, 25.400000000000002, 34.2, 27.0, 37.400000000000006]
+  [line 34]  paired_values = list(itertools.zip_longest(relevant_data, weights, fillvalue=1))
+  Call function list(itertools.zip_longest(relevant_data, weights=[0.5, 1.2, 0.8, 1.0, 0.7] (parameter weights defined at [line 49]), fillvalue=1))
+  [line 35]  weighted_sum = sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  Call function sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  [line 35]  weighted_sum = sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  Call function sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  [line 35]  weighted_sum = sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  Call function sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  [line 35]  weighted_sum = sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  Call function sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  [line 35]  weighted_sum = sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  Call function sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  [line 35]  weighted_sum = sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  Call function sum(map(lambda pair: pair[0] * pair[1], paired_values))
+  [line 38]  result = weighted_sum / len(relevant_data)
+  Compute: weighted_sum / len(relevant_data), where weighted_sum=132.52 (defined at [line 35]), relevant_data=[43.0, 25.400000000000002, 34.2, 27.0, 37.400000000000006] (defined at [line 31]) = 26.504
+  [line 45]  return round(result, 2)
+  Return: round(result, 2)
+Function calculate_final_score returns 26.5
+[line 70]  print(f"Target result: {final_score}")
+Output: f"Target result: {final_score}"
+
+Answer: final_score = 26.5 (last updated on defined at [line 69])

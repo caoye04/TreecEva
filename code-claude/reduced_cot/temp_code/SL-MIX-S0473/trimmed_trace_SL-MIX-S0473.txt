@@ -1,0 +1,17 @@
+14
+discount_amount
+---
+2 base_price = 120
+2 ['base_price'] ['120']
+3 order_count = 7
+3 ['base_price', 'order_count'] ['120', '7']
+4 previous_returns = 1
+4 ['base_price', 'order_count', 'previous_returns'] ['120', '7', '1']
+7 loyalty_points = order_count * 15 - previous_returns * 5
+7 ['base_price', 'order_count', 'previous_returns', 'loyalty_points'] ['120', '7', '1', '100']
+8 points_threshold = 100
+8 ['base_price', 'order_count', 'loyalty_points', 'points_threshold'] ['120', '7', '100', '100']
+11 discount_rate = 0.15 if order_count > 5 else 0.10
+11 ['base_price', 'order_count', 'loyalty_points', 'points_threshold', 'discount_rate'] ['120', '7', '100', '100', '0.15']
+14 discount_amount = base_price * (discount_rate if loyalty_points >= points_threshold else discount_rate / 2)
+14 ['base_price', 'loyalty_points', 'points_threshold', 'discount_rate', 'discount_amount'] ['120', '100', '100', '0.15', '18.0']

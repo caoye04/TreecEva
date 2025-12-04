@@ -1,0 +1,58 @@
+Target: Find the value of variable final_score after [line 46] executes
+
+[line 25]  raw_scores = [15, 22, 0, 18, 24, 13, 0, 19]
+Compute: [15, 22, 0, 18, 24, 13, 0, 19] = [15, 22, 0, 18, 24, ...]
+[line 43]  valid_entries = [score for score in raw_scores if score > 0]
+Compute: [score for score in raw_scores if score > 0], where score=15 (an unknown source), raw_scores=[15, 22, 0, 18, 24, ...] (defined at [line 25]) = ?
+[line 46]  final_score = calculate_weighted_score(valid_entries)
+Call function calculate_weighted_score(valid_entries=[15, 22, 18, 24, 13, ...] (defined at [line 43]))
+[line 3]  def calculate_weighted_score(entries):
+Enter function calculate_weighted_score: entries=[15, 22, 18, 24, 13, ...] (valid_entries defined at [line 43])
+  [line 5]  weights = [0.8, 1.2, 0.9, 1.5, 1.0]
+  Compute: [0.8, 1.2, 0.9, 1.5, 1.0] = [0.8, 1.2, 0.9, 1.5, 1.0]
+  [line 10]  weighted_sum = 0
+  Assign: weighted_sum = 0
+  [line 11]  valid_count = 0
+  Assign: valid_count = 0
+  [line 13]  for idx, entry in enumerate(entries):
+  (Missing param: 'iter_var')
+  [line 15]  if entry > 0:
+  Condition: True, entering 'if' block
+  [line 17]  weight = weights[idx % len(weights)]
+  Compute: weights[idx % len(weights)], where weights=[0.8, 1.2, 0.9, 1.5, 1.0] (defined at [line 5]), idx=0 (an unknown source) = 0.8
+  [line 18]  weighted_sum += entry * weight
+  Update: weighted_sum changed from 0 (defined at defined at [line 10]) to 0+entry * weight = 12.0
+  [line 19]  valid_count += 1
+  Update: valid_count changed from 0 (defined at defined at [line 11]) to 0+1 = 1
+  [line 13]  for idx, entry in enumerate(entries):
+  (Missing param: 'iter_var')
+  [line 15]  if entry > 0:
+  Condition: True, entering 'if' block
+  [line 17]  weight = weights[idx % len(weights)]
+  Compute: weights[idx % len(weights)], where weights=[0.8, 1.2, 0.9, 1.5, 1.0] (defined at [line 5]), idx=1 (an unknown source) = 1.2
+  [line 18]  weighted_sum += entry * weight
+  Update: weighted_sum changed from 12.0 (defined at defined at [line 18]) to 12.0+entry * weight = 38.4
+  [line 19]  valid_count += 1
+  Update: valid_count changed from 1 (defined at defined at [line 19]) to 1+1 = 2
+... [Line 13] repeats 3 more times ...
+... [Line 13] repeats 3 more times ...
+... [Line 13] repeats 3 more times ...
+... [Line 13] repeats 3 more times ...
+... [Line 13] repeats 3 more times ...
+  [line 13]  for idx, entry in enumerate(entries):
+  (Missing param: 'iter_var')
+  [line 15]  if entry > 0:
+  Condition: True, entering 'if' block
+  [line 17]  weight = weights[idx % len(weights)]
+  Compute: weights[idx % len(weights)], where weights=[0.8, 1.2, 0.9, 1.5, 1.0] (defined at [line 5]), idx=5 (an unknown source) = 0.8
+  [line 18]  weighted_sum += entry * weight
+  Update: weighted_sum changed from 103.6 (defined at defined at [line 18]) to 103.6+entry * weight = 118.8
+  [line 19]  valid_count += 1
+  Update: valid_count changed from 5 (defined at defined at [line 19]) to 5+1 = 6
+  [line 13]  for idx, entry in enumerate(entries):
+  Loop End: Iteration finished
+  [line 22]  return weighted_sum / valid_count if valid_count > 0 else 0
+  Return: weighted_sum / valid_count if valid_count > 0 else 0
+Function calculate_weighted_score returns 19.8
+
+Answer: final_score = 19.8 (last updated on defined at [line 46])

@@ -1,0 +1,61 @@
+31
+total_discount
+---
+PARAM_MAPPING {'purchases': {'actual_var': 'purchases', 'value': ['regular_shirt', 'premium_jeans', 'sale_socks', 'sale_socks']}, 'loyalty_points': {'actual_var': 'loyalty_points', 'value': 250}}
+FUNCTION_ENTER 3 calculate_discounts def calculate_discounts(purchases, loyalty_points):
+3 ['purchases', 'loyalty_points'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'regular_shirt'}, {'_type': 'str', '_value': 'premium_jeans'}, {'_type': 'str', '_value': 'sale_socks'}, {'_type': 'str', '_value': 'sale_socks'}], '_len': 4}, {'_type': 'int', '_value': 250}]
+5 base_discount = 5
+5 ['purchases', 'loyalty_points', 'base_discount'] ["['regular_shirt', 'premium_jeans', 'sale_socks', 'sale_socks']", '250', '5']
+8 item_counts = Counter(purchases)
+8 ['purchases', 'loyalty_points', 'base_discount', 'item_counts'] ["['regular_shirt', 'premium_jeans', 'sale_socks', 'sale_socks']", '250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}']
+11 customer_discount = {}
+11 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{}']
+12 for item, count in item_counts.items():
+12 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{}', "'regular_shirt'", '1']
+14 if item.startswith('regular_'):
+14 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{}', "'regular_shirt'", '1']
+15 customer_discount[item] = base_discount
+15 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5}', "'regular_shirt'", '1']
+12 for item, count in item_counts.items():
+12 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5}', "'premium_jeans'", '1']
+14 if item.startswith('regular_'):
+14 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5}', "'premium_jeans'", '1']
+17 elif item.startswith('premium_'):
+17 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5}', "'premium_jeans'", '1']
+18 customer_discount[item] = base_discount * 1.5
+18 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5}', "'premium_jeans'", '1']
+12 for item, count in item_counts.items():
+12 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5}', "'sale_socks'", '2']
+14 if item.startswith('regular_'):
+14 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5}', "'sale_socks'", '2']
+17 elif item.startswith('premium_'):
+17 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5}', "'sale_socks'", '2']
+20 elif item.startswith('sale_'):
+20 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5}', "'sale_socks'", '2']
+21 customer_discount[item] = base_discount * 2 if count > 1 else base_discount
+21 ['loyalty_points', 'base_discount', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '5', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5, sale_socks: 10}', "'sale_socks'", '2']
+12 for item, count in item_counts.items():
+12 ['loyalty_points', 'item_counts', 'customer_discount', 'item', 'count'] ['250', '{regular_shirt: 1, premium_jeans: 1, sale_socks: 2}', '{regular_shirt: 5, premium_jeans: 7.5, sale_socks: 10}', "'sale_socks'", '2']
+24 loyalty_bonus = loyalty_points // 100 * 0.5
+24 ['loyalty_points', 'customer_discount', 'item', 'loyalty_bonus'] ['250', '{regular_shirt: 5, premium_jeans: 7.5, sale_socks: 10}', "'sale_socks'", '1.0']
+27 for item in customer_discount:
+27 ['customer_discount', 'item', 'loyalty_bonus'] ['{regular_shirt: 5, premium_jeans: 7.5, sale_socks: 10}', "'regular_shirt'", '1.0']
+28 customer_discount[item] += loyalty_bonus
+28 ['customer_discount', 'item', 'loyalty_bonus'] ['{regular_shirt: 6.0, premium_jeans: 7.5, sale_socks: 10}', "'regular_shirt'", '1.0']
+27 for item in customer_discount:
+27 ['customer_discount', 'item', 'loyalty_bonus'] ['{regular_shirt: 6.0, premium_jeans: 7.5, sale_socks: 10}', "'premium_jeans'", '1.0']
+28 customer_discount[item] += loyalty_bonus
+28 ['customer_discount', 'item', 'loyalty_bonus'] ['{regular_shirt: 6.0, premium_jeans: 8.5, sale_socks: 10}', "'premium_jeans'", '1.0']
+27 for item in customer_discount:
+27 ['customer_discount', 'item', 'loyalty_bonus'] ['{regular_shirt: 6.0, premium_jeans: 8.5, sale_socks: 10}', "'sale_socks'", '1.0']
+28 customer_discount[item] += loyalty_bonus
+28 ['customer_discount', 'item', 'loyalty_bonus'] ['{regular_shirt: 6.0, premium_jeans: 8.5, sale_socks: 11.0}', "'sale_socks'", '1.0']
+27 for item in customer_discount:
+27 ['customer_discount', 'item'] ['{regular_shirt: 6.0, premium_jeans: 8.5, sale_socks: 11.0}', "'sale_socks'"]
+31 total_discount = sum(customer_discount.values())
+31 ['customer_discount', 'total_discount'] ['{regular_shirt: 6.0, premium_jeans: 8.5, sale_socks: 11.0}', '25.5']
+33 print(f"Total discount: {total_discount}")
+33 ['total_discount'] ['25.5']
+34 return total_discount
+34 ['total_discount'] ['25.5']
+FUNCTION_RETURN 34 calculate_discounts {'_type': 'float', '_value': 25.5}

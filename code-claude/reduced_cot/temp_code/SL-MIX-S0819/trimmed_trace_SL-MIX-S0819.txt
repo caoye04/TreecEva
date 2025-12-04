@@ -1,0 +1,325 @@
+51
+encryption_strength
+---
+20 passwords = ["p@ssw0rd", "qwerty123", "secure!99", "admin123", "letmein"]
+20 ['passwords'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']"]
+23 unique_chars = set(''.join(passwords))
+23 ['passwords', 'unique_chars'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", "{'s', 'd', '!', '9', 'q', ...}"]
+24 char_combinations = list(itertools.combinations(unique_chars, 2))
+24 ['passwords', 'unique_chars', 'char_combinations'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", "{'s', 'd', '!', '9', 'q', ...}", "[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]"]
+27 most_common, least_common, unused_score = analyze_password_patterns(passwords)
+27 ['passwords', 'char_combinations'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", "[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]"]
+5 char_counts = {}
+5 ['passwords', 'char_counts'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{}']
+6 for password in passwords:
+6 ['passwords', 'char_counts', 'password'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{}', "'p@ssw0rd'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{}', "'p@ssw0rd'", "'p'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1}', "'p@ssw0rd'", "'p'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1}', "'p@ssw0rd'", "'@'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1}', "'p@ssw0rd'", "'@'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1}', "'p@ssw0rd'", "'s'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 1}', "'p@ssw0rd'", "'s'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 1}', "'p@ssw0rd'", "'s'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2}', "'p@ssw0rd'", "'s'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2}', "'p@ssw0rd'", "'w'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'w'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'0'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'0'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'r'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'r'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'d'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'d'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'p@ssw0rd'", "'d'"]
+6 for password in passwords:
+6 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'d'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'q'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'q'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'w'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'w'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'e'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'e'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'r'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'r'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'t'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'t'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'y'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'y'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'1'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'1'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'2'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'2'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'3'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'3'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'qwerty123'", "'3'"]
+6 for password in passwords:
+6 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'secure!99'", "'3'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 2, ...}', "'secure!99'", "'s'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'s'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'e'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'e'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'c'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'c'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'u'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'u'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'r'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'r'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'e'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'e'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'!'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'!'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'9'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'9'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'9'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'9'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'secure!99'", "'9'"]
+6 for password in passwords:
+6 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'9'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'a'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'a'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'d'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'d'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'m'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'m'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'i'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'i'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'n'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'n'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'1'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'1'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'2'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'2'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'3'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'3'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'admin123'", "'3'"]
+6 for password in passwords:
+6 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'3'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'l'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'l'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'e'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'e'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'t'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'t'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'m'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'m'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'e'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'e'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'i'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'i'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'n'"]
+8 char_counts[char] = char_counts.get(char, 0) + 1
+8 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'n'"]
+7 for char in password:
+7 ['passwords', 'char_counts', 'password', 'char'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'", "'n'"]
+6 for password in passwords:
+6 ['passwords', 'char_counts', 'password'] ["['p@ssw0rd', 'qwerty123', 'secure!99', 'admin123', 'letmein']", '{p: 1, @: 1, s: 3, ...}', "'letmein'"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['char_counts'] ['{p: 1, @: 1, s: 3, ...}']
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('p', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('@', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('s', 3)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('w', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('0', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('r', 3)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('d', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('q', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('e', 5)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('t', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('y', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('1', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('2', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('3', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('c', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('u', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('!', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('9', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('a', 1)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('m', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('i', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('n', 2)"]
+11 most_common = max(char_counts.items(), key=lambda x: x[1])[0]
+11 ['x'] ["('l', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['char_counts', 'most_common'] ['{p: 1, @: 1, s: 3, ...}', "'e'"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('p', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('@', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('s', 3)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('w', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('0', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('r', 3)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('d', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('q', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('e', 5)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('t', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('y', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('1', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('2', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('3', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('c', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('u', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('!', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('9', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('a', 1)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('m', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('i', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('n', 2)"]
+12 least_common = min(char_counts.items(), key=lambda x: x[1])[0]
+12 ['x'] ["('l', 1)"]
+15 baseline_score = sum(ord(c) for c in most_common + least_common)
+15 [] []
+15 baseline_score = sum(ord(c) for c in most_common + least_common)
+15 ['c'] ["'e'"]
+15 baseline_score = sum(ord(c) for c in most_common + least_common)
+15 ['c'] ["'p'"]
+15 baseline_score = sum(ord(c) for c in most_common + least_common)
+15 ['c'] ["'p'"]
+17 return most_common, least_common, baseline_score
+17 ['most_common', 'least_common', 'baseline_score'] ["'e'", "'p'", '213']
+34 result_factors = []
+34 ['char_combinations', 'result_factors'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[]']
+35 for i in range(3):
+35 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[]', '0']
+37 if i % 2 == 0:
+37 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[]', '0']
+35 for i in range(3):
+35 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[67]', '1']
+37 if i % 2 == 0:
+37 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[67]', '1']
+35 for i in range(3):
+35 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[67, -25]', '2']
+37 if i % 2 == 0:
+37 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[67, -25]', '2']
+35 for i in range(3):
+35 ['char_combinations', 'result_factors', 'i'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[67, -25, 67]', '2']
+48 result_sum = sum(result_factors) + len(char_combinations)
+48 ['char_combinations', 'result_factors', 'result_sum'] ["[('s', 'd'), ('s', '!'), ('s', '9'), ('s', 'q'), ('s', 'p'), ...]", '[67, -25, 67]', '362']
+51 encryption_strength = result_sum & 0xFF
+51 ['result_sum', 'encryption_strength'] ['362', '106']

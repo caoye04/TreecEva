@@ -1,0 +1,229 @@
+103
+final_inventory_value
+---
+95 for product in inventory_data:
+95 ['inventory_data', 'pricing_factors', 'product'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", "'A123'"]
+95 for product in inventory_data:
+95 ['inventory_data', 'pricing_factors', 'product'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", "'B456'"]
+95 for product in inventory_data:
+95 ['inventory_data', 'pricing_factors', 'product'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", "'C789'"]
+95 for product in inventory_data:
+95 ['inventory_data', 'pricing_factors', 'product'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", "'D012'"]
+95 for product in inventory_data:
+95 ['inventory_data', 'pricing_factors', 'product'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", "'D012'"]
+102 final_inventory_value = calculate_adjusted_value(inventory_data, pricing_factors)
+102 ['inventory_data', 'pricing_factors'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}"]
+PARAM_MAPPING {'inventory_data': {'actual_var': 'inventory_data', 'value': {'A123': 10, 'B456': 5, 'C789': 15, 'D012': 8}}, 'pricing_factors': {'actual_var': 'pricing_factors', 'value': {'season': 'winter', 'tax_rate': 0.08, 'market': 'domestic', 'promotion_code': 'SAVE20'}}}
+FUNCTION_ENTER 40 calculate_adjusted_value def calculate_adjusted_value(inventory_data, pricing_factors):
+40 ['inventory_data', 'pricing_factors'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 10}, 'B456': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 8}}, '_len': 4}, {'_type': 'dict', '_items': {'season': {'_type': 'str', '_value': 'winter'}, 'tax_rate': {'_type': 'float', '_value': 0.08}, 'market': {'_type': 'str', '_value': 'domestic'}, 'promotion_code': {'_type': 'str', '_value': 'SAVE20'}}, '_len': 4}]
+PARAM_MAPPING {'data': {'actual_var': 'inventory_data', 'value': {'A123': 10, 'B456': 5, 'C789': 15, 'D012': 8}}}
+FUNCTION_ENTER 28 process_inventory_data def process_inventory_data(data):
+28 ['data'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 10}, 'B456': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 8}}, '_len': 4}]
+30 transformed = defaultdict(list)
+30 ['data', 'transformed'] ['{A123: 10, B456: 5, C789: 15, ...}', '{}']
+31 for k, v in data.items():
+31 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{}', "'A123'", '10']
+32 if isinstance(v, list):
+32 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{}', "'A123'", '10']
+35 transformed[k] = v + 10
+35 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20}', "'A123'", '10']
+31 for k, v in data.items():
+31 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20}', "'B456'", '5']
+32 if isinstance(v, list):
+32 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20}', "'B456'", '5']
+35 transformed[k] = v + 10
+35 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15}', "'B456'", '5']
+31 for k, v in data.items():
+31 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15}', "'C789'", '15']
+32 if isinstance(v, list):
+32 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15}', "'C789'", '15']
+35 transformed[k] = v + 10
+35 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15, C789: 25}', "'C789'", '15']
+31 for k, v in data.items():
+31 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15, C789: 25}', "'D012'", '8']
+32 if isinstance(v, list):
+32 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15, C789: 25}', "'D012'", '8']
+35 transformed[k] = v + 10
+35 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15, C789: 25, ...}', "'D012'", '8']
+31 for k, v in data.items():
+31 ['data', 'transformed', 'k', 'v'] ['{A123: 10, B456: 5, C789: 15, ...}', '{A123: 20, B456: 15, C789: 25, ...}', "'D012'", '8']
+38 return transformed
+38 ['transformed'] ['{A123: 20, B456: 15, C789: 25, ...}']
+FUNCTION_RETURN 38 process_inventory_data {'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 20}, 'B456': {'_type': 'int', '_value': 15}, 'C789': {'_type': 'int', '_value': 25}, 'D012': {'_type': 'int', '_value': 18}}, '_len': 4}
+50 total_value = 0
+50 ['inventory_data', 'pricing_factors', 'total_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0']
+51 for product_id, quantity in inventory_data.items():
+51 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0', "'A123'", '10']
+52 base_price = calculate_base_price(product_id)
+52 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0', "'A123'", '10']
+PARAM_MAPPING {'product_code': {'actual_var': 'product_id', 'value': 'A123'}}
+FUNCTION_ENTER 3 calculate_base_price def calculate_base_price(product_code):
+3 ['product_code'] [{'_type': 'str', '_value': 'A123'}]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'A123'", "'A'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'A123'", "'1'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'A123'", "'2'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'A123'", "'3'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'digits'] ["'A123'", '[1, 2, 3]']
+6 if not digits:
+6 ['product_code', 'digits'] ["'A123'", '[1, 2, 3]']
+13 price = sum(digits) * 10
+13 ['product_code', 'digits', 'price'] ["'A123'", '[1, 2, 3]', '60']
+14 return price
+14 ['product_code', 'digits', 'price'] ["'A123'", '[1, 2, 3]', '60']
+FUNCTION_RETURN 14 calculate_base_price {'_type': 'int', '_value': 60}
+53 season = pricing_factors.get('season', 'spring')
+53 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0', "'A123'", '10', '60', "'winter'"]
+54 discounted_price = apply_seasonal_discount(base_price, season)
+54 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0', "'A123'", '10', '60', "'winter'"]
+PARAM_MAPPING {'price': {'actual_var': 'base_price', 'value': 60}, 'season': {'actual_var': 'season', 'value': 'winter'}}
+FUNCTION_ENTER 16 apply_seasonal_discount def apply_seasonal_discount(price, season):
+16 ['price', 'season'] [{'_type': 'int', '_value': 60}, {'_type': 'str', '_value': 'winter'}]
+22 if season.lower() == 'winter':
+22 ['price', 'season'] ['60', "'winter'"]
+23 return price * 0.8  # 20% winter discount
+23 ['price', 'season'] ['60', "'winter'"]
+FUNCTION_RETURN 23 apply_seasonal_discount {'_type': 'float', '_value': 48.0}
+57 if product_id.startswith('Z') and product_id.endswith('X'):
+57 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0', "'A123'", '10', '60', "'winter'", '48.0']
+63 item_value = discounted_price * quantity
+63 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '0', "'A123'", '10', '60', "'winter'", '48.0', '480.0']
+64 total_value += item_value
+64 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'A123'", '10', '60', "'winter'", '48.0', '480.0']
+51 for product_id, quantity in inventory_data.items():
+51 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'B456'", '5', '60', "'winter'", '48.0', '480.0']
+52 base_price = calculate_base_price(product_id)
+52 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'B456'", '5', '60', "'winter'", '48.0', '480.0']
+PARAM_MAPPING {'product_code': {'actual_var': 'product_id', 'value': 'B456'}}
+FUNCTION_ENTER 3 calculate_base_price def calculate_base_price(product_code):
+3 ['product_code'] [{'_type': 'str', '_value': 'B456'}]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'B456'", "'B'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'B456'", "'4'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'B456'", "'5'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'B456'", "'6'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'digits'] ["'B456'", '[4, 5, 6]']
+6 if not digits:
+6 ['product_code', 'digits'] ["'B456'", '[4, 5, 6]']
+13 price = sum(digits) * 10
+13 ['product_code', 'digits', 'price'] ["'B456'", '[4, 5, 6]', '150']
+14 return price
+14 ['product_code', 'digits', 'price'] ["'B456'", '[4, 5, 6]', '150']
+FUNCTION_RETURN 14 calculate_base_price {'_type': 'int', '_value': 150}
+53 season = pricing_factors.get('season', 'spring')
+53 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'B456'", '5', '150', "'winter'", '48.0', '480.0']
+54 discounted_price = apply_seasonal_discount(base_price, season)
+54 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'B456'", '5', '150', "'winter'", '48.0', '480.0']
+PARAM_MAPPING {'price': {'actual_var': 'base_price', 'value': 150}, 'season': {'actual_var': 'season', 'value': 'winter'}}
+FUNCTION_ENTER 16 apply_seasonal_discount def apply_seasonal_discount(price, season):
+16 ['price', 'season'] [{'_type': 'int', '_value': 150}, {'_type': 'str', '_value': 'winter'}]
+22 if season.lower() == 'winter':
+22 ['price', 'season'] ['150', "'winter'"]
+23 return price * 0.8  # 20% winter discount
+23 ['price', 'season'] ['150', "'winter'"]
+FUNCTION_RETURN 23 apply_seasonal_discount {'_type': 'float', '_value': 120.0}
+57 if product_id.startswith('Z') and product_id.endswith('X'):
+57 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'B456'", '5', '150', "'winter'", '120.0', '480.0']
+63 item_value = discounted_price * quantity
+63 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '480.0', "'B456'", '5', '150', "'winter'", '120.0', '600.0']
+64 total_value += item_value
+64 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'B456'", '5', '150', "'winter'", '120.0', '600.0']
+51 for product_id, quantity in inventory_data.items():
+51 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'C789'", '15', '150', "'winter'", '120.0', '600.0']
+52 base_price = calculate_base_price(product_id)
+52 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'C789'", '15', '150', "'winter'", '120.0', '600.0']
+PARAM_MAPPING {'product_code': {'actual_var': 'product_id', 'value': 'C789'}}
+FUNCTION_ENTER 3 calculate_base_price def calculate_base_price(product_code):
+3 ['product_code'] [{'_type': 'str', '_value': 'C789'}]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'C789'", "'C'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'C789'", "'7'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'C789'", "'8'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'C789'", "'9'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'digits'] ["'C789'", '[7, 8, 9]']
+6 if not digits:
+6 ['product_code', 'digits'] ["'C789'", '[7, 8, 9]']
+13 price = sum(digits) * 10
+13 ['product_code', 'digits', 'price'] ["'C789'", '[7, 8, 9]', '240']
+14 return price
+14 ['product_code', 'digits', 'price'] ["'C789'", '[7, 8, 9]', '240']
+FUNCTION_RETURN 14 calculate_base_price {'_type': 'int', '_value': 240}
+53 season = pricing_factors.get('season', 'spring')
+53 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'C789'", '15', '240', "'winter'", '120.0', '600.0']
+54 discounted_price = apply_seasonal_discount(base_price, season)
+54 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'C789'", '15', '240', "'winter'", '120.0', '600.0']
+PARAM_MAPPING {'price': {'actual_var': 'base_price', 'value': 240}, 'season': {'actual_var': 'season', 'value': 'winter'}}
+FUNCTION_ENTER 16 apply_seasonal_discount def apply_seasonal_discount(price, season):
+16 ['price', 'season'] [{'_type': 'int', '_value': 240}, {'_type': 'str', '_value': 'winter'}]
+22 if season.lower() == 'winter':
+22 ['price', 'season'] ['240', "'winter'"]
+23 return price * 0.8  # 20% winter discount
+23 ['price', 'season'] ['240', "'winter'"]
+FUNCTION_RETURN 23 apply_seasonal_discount {'_type': 'float', '_value': 192.0}
+57 if product_id.startswith('Z') and product_id.endswith('X'):
+57 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'C789'", '15', '240', "'winter'", '192.0', '600.0']
+63 item_value = discounted_price * quantity
+63 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '1080.0', "'C789'", '15', '240', "'winter'", '192.0', '2880.0']
+64 total_value += item_value
+64 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'C789'", '15', '240', "'winter'", '192.0', '2880.0']
+51 for product_id, quantity in inventory_data.items():
+51 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'D012'", '8', '240', "'winter'", '192.0', '2880.0']
+52 base_price = calculate_base_price(product_id)
+52 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'D012'", '8', '240', "'winter'", '192.0', '2880.0']
+PARAM_MAPPING {'product_code': {'actual_var': 'product_id', 'value': 'D012'}}
+FUNCTION_ENTER 3 calculate_base_price def calculate_base_price(product_code):
+3 ['product_code'] [{'_type': 'str', '_value': 'D012'}]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'D012'", "'D'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'D012'", "'0'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'D012'", "'1'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'd'] ["'D012'", "'2'"]
+5 digits = [int(d) for d in product_code if d.isdigit()]
+5 ['product_code', 'digits'] ["'D012'", '[0, 1, 2]']
+6 if not digits:
+6 ['digits'] ['[0, 1, 2]']
+13 price = sum(digits) * 10
+13 ['digits', 'price'] ['[0, 1, 2]', '30']
+14 return price
+14 ['price'] ['30']
+FUNCTION_RETURN 14 calculate_base_price {'_type': 'int', '_value': 30}
+53 season = pricing_factors.get('season', 'spring')
+53 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'D012'", '8', '30', "'winter'", '192.0', '2880.0']
+54 discounted_price = apply_seasonal_discount(base_price, season)
+54 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'base_price', 'season', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'D012'", '8', '30', "'winter'", '192.0', '2880.0']
+22 if season.lower() == 'winter':
+22 ['price'] ['30']
+23 return price * 0.8  # 20% winter discount
+23 ['price'] ['30']
+57 if product_id.startswith('Z') and product_id.endswith('X'):
+57 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'D012'", '8', '24.0', '2880.0']
+63 item_value = discounted_price * quantity
+63 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'discounted_price', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '3960.0', "'D012'", '8', '24.0', '192.0']
+64 total_value += item_value
+64 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity', 'item_value'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '4152.0', "'D012'", '8', '192.0']
+51 for product_id, quantity in inventory_data.items():
+51 ['inventory_data', 'pricing_factors', 'total_value', 'product_id', 'quantity'] ['{A123: 10, B456: 5, C789: 15, ...}', "{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '4152.0', "'D012'", '8']
+67 tax_rate = pricing_factors.get('tax_rate', 0.1)  # Default 10%
+67 ['pricing_factors', 'total_value', 'tax_rate'] ["{season: 'winter', tax_rate: 0.08, market: 'domestic', ...}", '4152.0', '0.08']
+68 final_value = total_value * (1 + tax_rate)
+68 ['total_value', 'tax_rate', 'final_value'] ['4152.0', '0.08', '4484.16']
+75 return round(final_value, 2)
+75 ['final_value'] ['4484.16']
+FUNCTION_RETURN 75 calculate_adjusted_value {'_type': 'float', '_value': 4484.16}
+103 print(f"Target result: {final_inventory_value}")
+103 ['final_inventory_value'] ['4484.16']

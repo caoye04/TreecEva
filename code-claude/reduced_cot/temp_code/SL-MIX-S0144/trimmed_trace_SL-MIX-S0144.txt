@@ -1,0 +1,109 @@
+46
+unique_overlap
+---
+4 food_inventory = ['tomato', 'lettuce', 'onion', 'tomato', 'cheese', 'bread', 'beef', 'chicken', 'onion']
+4 ['food_inventory'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]"]
+5 inventory_counter = Counter(food_inventory)
+5 ['food_inventory', 'inventory_counter'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}']
+8 order_items = ['burger', 'salad', 'fries', 'drink']
+8 ['food_inventory', 'inventory_counter', 'order_items'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']"]
+17 needed_ingredients = []
+17 ['food_inventory', 'inventory_counter', 'order_items', 'needed_ingredients'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']", '[]']
+18 for item in order_items:
+18 ['food_inventory', 'inventory_counter', 'order_items', 'needed_ingredients', 'item'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']", '[]', "'burger'"]
+18 for item in order_items:
+18 ['food_inventory', 'inventory_counter', 'order_items', 'needed_ingredients', 'item'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']", "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", "'salad'"]
+18 for item in order_items:
+18 ['food_inventory', 'inventory_counter', 'order_items', 'needed_ingredients', 'item'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']", "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", "'fries'"]
+18 for item in order_items:
+18 ['food_inventory', 'inventory_counter', 'order_items', 'needed_ingredients', 'item'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']", "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", "'drink'"]
+18 for item in order_items:
+18 ['food_inventory', 'inventory_counter', 'order_items', 'needed_ingredients', 'item'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['burger', 'salad', 'fries', 'drink']", "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", "'drink'"]
+23 ingredient_quantities = defaultdict(int)
+23 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{}']
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{}', "'beef'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1}', "'beef'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1}', "'lettuce'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1}', "'lettuce'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1}', "'tomato'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1}', "'tomato'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1}', "'cheese'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1, ...}', "'cheese'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1, ...}', "'bread'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1, ...}', "'bread'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1, ...}', "'onion'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1, ...}', "'onion'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 1, tomato: 1, ...}', "'lettuce'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 1, ...}', "'lettuce'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 1, ...}', "'tomato'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'tomato'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'onion'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'onion'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'potato'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'potato'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'soda'"]
+25 ingredient_quantities[ingredient] += 1
+25 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'soda'"]
+24 for ingredient in needed_ingredients:
+24 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'soda'"]
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'beef'", '1']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'beef'", '1']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'lettuce'", '2']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'lettuce'", '2']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'tomato'", '2']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'tomato'", '2']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'cheese'", '1']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'cheese'", '1']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'bread'", '1']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'bread'", '1']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'onion'", '2']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'onion'", '2']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'potato'", '1']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'potato'", '1']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'soda'", '1']
+30 if inventory_counter[ingredient] < quantity:
+30 ['food_inventory', 'inventory_counter', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", '{tomato: 2, lettuce: 1, onion: 2, ...}', "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'soda'", '1']
+29 for ingredient, quantity in ingredient_quantities.items():
+29 ['food_inventory', 'needed_ingredients', 'ingredient_quantities', 'ingredient', 'quantity'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", '{beef: 1, lettuce: 2, tomato: 2, ...}', "'soda'", '1']
+42 order_set = set(needed_ingredients)
+42 ['food_inventory', 'needed_ingredients', 'order_set'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", "['beef', 'lettuce', 'tomato', 'cheese', 'bread', ...]", "{'beef', 'cheese', 'bread', 'onion', 'soda', ...}"]
+43 inventory_set = set(food_inventory)
+43 ['food_inventory', 'order_set', 'inventory_set'] ["['tomato', 'lettuce', 'onion', 'tomato', 'cheese', ...]", "{'beef', 'cheese', 'bread', 'onion', 'soda', ...}", "{'beef', 'cheese', 'bread', 'onion', 'chicken', ...}"]
+46 unique_overlap = len(order_set.intersection(inventory_set))
+46 ['order_set', 'inventory_set', 'unique_overlap'] ["{'beef', 'cheese', 'bread', 'onion', 'soda', ...}", "{'beef', 'cheese', 'bread', 'onion', 'chicken', ...}", '6']

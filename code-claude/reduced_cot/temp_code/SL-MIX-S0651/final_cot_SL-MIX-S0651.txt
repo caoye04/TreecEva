@@ -1,0 +1,75 @@
+Target: Find the value of variable optimal_frequency after [line 70] executes
+
+[line 37]  def calculate_optimal_frequency(signal_data, interference_patterns):
+Enter function calculate_optimal_frequency: signal_data=[0.2, 0.7, 0.9, 0.4, 0.6, ...], interference_patterns=[12, 7, 25, 9, 14]
+  [line 39]  signal_quality, filtered_data = process_signal(signal_data, 0.3)
+  (Missing param: 'func_name')
+  [line 3]  filtered = [x * 0.8 for x in data if x > threshold]
+  Compute: [x * 0.8 for x in data if x > threshold], where x=0.2 (an unknown source), data=[0.2, 0.7, 0.9, 0.4, 0.6, ...] (an unknown source), threshold=0.3 (an unknown source) = ?
+  [line 4]  noise_reduction = sum(filtered) / len(filtered) if filtered else 0
+  Compute: sum(filtered) / len(filtered) if filtered else 0, where filtered=[0.5599999999999999, 0.7200000000000001, 0.32000000000000006, 0.48, 0.6400000000000001, ...] (defined at [line 3]) = 0.52
+  [line 5]  return noise_reduction, filtered
+  Return: noise_reduction, filtered
+  [line 49]  interference_strength, top_sources = analyze_interference(interference_patterns)
+  (Missing param: 'func_name')
+  [line 9]  strength = 0
+  Assign: strength = 0
+  [line 10]  priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+  Compute: [(i, p % 10) for i, p in enumerate(patterns)], where i=0 (an unknown source), p=12 (an unknown source), patterns=[12, 7, 25, 9, 14] (an unknown source) = ?
+  [line 13]  for idx, (pos, priority) in enumerate(priority_queue):
+  (Missing param: 'iter_var')
+  [line 14]  if idx < 3:  # Only consider top 3 interference sources
+  Condition: True, entering 'if' block
+  [line 15]  strength += priority * 1.5
+  Update: strength changed from 0 (defined at defined at [line 9]) to 0+priority * 1.5 = 13.5
+  [line 13]  for idx, (pos, priority) in enumerate(priority_queue):
+  (Missing param: 'iter_var')
+  [line 14]  if idx < 3:  # Only consider top 3 interference sources
+  Condition: True, entering 'if' block
+  [line 15]  strength += priority * 1.5
+  Update: strength changed from 13.5 (defined at defined at [line 15]) to 13.5+priority * 1.5 = 24.0
+  [line 13]  for idx, (pos, priority) in enumerate(priority_queue):
+  (Missing param: 'iter_var')
+  [line 14]  if idx < 3:  # Only consider top 3 interference sources
+  Condition: True, entering 'if' block
+  [line 15]  strength += priority * 1.5
+  Update: strength changed from 24.0 (defined at defined at [line 15]) to 24.0+priority * 1.5 = 31.5
+  [line 13]  for idx, (pos, priority) in enumerate(priority_queue):
+  (Missing param: 'iter_var')
+  [line 14]  if idx < 3:  # Only consider top 3 interference sources
+  Condition: True, entering 'if' block
+  [line 19]  return strength, priority_queue[:3]
+  Return: strength, priority_queue[:3]
+  [line 57]  frequency_bands, _ = calculate_frequency_bands(signal_quality * 10)
+  (Missing param: 'func_name')
+  [line 23]  bands = []
+  Compute: [] = []
+  [line 26]  for i in range(5):
+  Loop Start: i takes its first value 0
+  [line 26]  for i in range(5):
+  Loop End: Iteration finished
+  [line 26]  for i in range(5):
+  Loop End: Iteration finished
+  [line 26]  for i in range(5):
+  Loop End: Iteration finished
+  [line 26]  for i in range(5):
+  Loop End: Iteration finished
+  [line 26]  for i in range(5):
+  Loop End: Iteration finished
+  [line 32]  noise_bands = {b + 20 for b in bands if b % 2 == 0}
+  Compute: {b + 20 for b in bands if b % 2 == 0}, where b=110.4 (an unknown source), bands=[110.4, 210.4, 310.4, 410.4, 510.4] (defined at [line 23]) = ?
+  [line 35]  return bands, noise_bands
+  Return: bands, noise_bands
+  [line 60]  band_index = int(interference_strength) % len(frequency_bands)
+  Compute: int(interference_strength) % len(frequency_bands), where interference_strength=31.5 (an unknown source), frequency_bands=[110.4, 210.4, 310.4, 410.4, 510.4] (an unknown source) = 1
+  [line 61]  base_freq = frequency_bands[band_index]
+  Compute: frequency_bands[band_index], where frequency_bands=[110.4, 210.4, 310.4, 410.4, 510.4] (an unknown source), band_index=1 (defined at [line 60]) = 210.4
+  [line 64]  if signal_quality > 5:
+  Condition: True, entering 'if' block
+  [line 70]  optimal_frequency = base_freq - (interference_strength * 1.5)
+  Compute: base_freq - (interference_strength * 1.5), where base_freq=210.4 (defined at [line 61]), interference_strength=31.5 (an unknown source) = 163.15
+  [line 76]  return optimal_frequency
+  Return: optimal_frequency=163.15 (defined at [line 70])
+Function calculate_optimal_frequency returns 163.15
+
+Answer: optimal_frequency = 163.15 (last updated on defined at [line 70])

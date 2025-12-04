@@ -1,0 +1,151 @@
+Target: Find the value of variable cargo_value after [line 155] executes
+
+[line 3]  optimized = {}
+Compute: {} = {}
+[line 4]  for city, details in route_data.items():
+(Missing param: 'iter_var')
+[line 5]  distance = details['distance']
+Compute: details['distance'], where details={distance: 1200, traffic_index: 8} (an unknown source) = 1200
+[line 6]  traffic = details.get('traffic_index', 1.0)
+(Missing param: 'func_name')
+[line 8]  optimized[city] = distance * (2 - traffic/10)
+(Missing param: 'result')
+[line 4]  for city, details in route_data.items():
+(Missing param: 'iter_var')
+[line 5]  distance = details['distance']
+Compute: details['distance'], where details={distance: 2800, traffic_index: 6} (an unknown source), distance=1200 (defined at [line 5]) = 2800
+[line 6]  traffic = details.get('traffic_index', 1.0)
+(Missing param: 'func_name')
+[line 8]  optimized[city] = distance * (2 - traffic/10)
+(Missing param: 'result')
+[line 4]  for city, details in route_data.items():
+Loop End: Iteration finished
+[line 9]  return optimized
+Return: optimized={NYC: 1440.0, LAX: 3919.9999999999995} (defined at [line 3])
+[line 20]  return value * tax_rates.get(country_code, 0.15)
+Return: value * tax_rates.get(country_code, 0.15)
+[line 24]  total_quality = 0
+Assign: total_quality = 0
+[line 25]  quality_factors = {'A': 3, 'B': 2, 'C': 1, 'D': 0.5}
+Compute: {'A': 3, 'B': 2, 'C': 1, 'D': 0.5} = {A: 3, B: 2, C: 1, ...}
+[line 27]  for item, details in cargo_items.items():
+(Missing param: 'iter_var')
+[line 28]  grade = details.get('grade', 'C')
+(Missing param: 'func_name')
+[line 29]  weight = details.get('weight', 1)
+(Missing param: 'func_name')
+[line 30]  total_quality += quality_factors.get(grade, 0) * weight
+Update: total_quality changed from 0 (defined at defined at [line 24]) to 0+quality_factors.get(grade, 0) * weight = 6
+[line 27]  for item, details in cargo_items.items():
+(Missing param: 'iter_var')
+[line 28]  grade = details.get('grade', 'C')
+(Missing param: 'func_name')
+[line 29]  weight = details.get('weight', 1)
+(Missing param: 'func_name')
+[line 30]  total_quality += quality_factors.get(grade, 0) * weight
+Update: total_quality changed from 6 (defined at defined at [line 30]) to 6+quality_factors.get(grade, 0) * weight = 12
+[line 27]  for item, details in cargo_items.items():
+Loop End: Iteration finished
+[line 32]  return total_quality / max(1, len(cargo_items))
+Return: total_quality / max(1, len(cargo_items))
+[line 150]  cargo_value = calculate_final_cargo_value(manifest, routes)
+Call function calculate_final_cargo_value(manifest={primary_cargo: {id: 'C-1289', base_value: 45000, details: {...3 items}}, secondary_cargo: [{...2 items}, {...2 items}, {...2 items}], fragile: True, ...} (an unknown source), routes=[{id: 1, code: '723', distance: 1500, ...}, {id: 2, code: '845', distance: 2100, ...}, {id: 3, code: '512', distance: 980, ...}, {id: 4, code: '390', distance: 1700, ...}] (an unknown source))
+[line 34]  def calculate_final_cargo_value(manifest, routes):
+Enter function calculate_final_cargo_value: manifest={primary_cargo: {id: 'C-1289', base_value: 45000, details: {...3 items}}, secondary_cargo: [{...2 items}, {...2 items}, {...2 items}], fragile: True, ...}, routes=[{id: 1, code: '723', distance: 1500, ...}, {id: 2, code: '845', distance: 2100, ...}, {id: 3, code: '512', distance: 980, ...}, {id: 4, code: '390', distance: 1700, ...}]
+  [line 36]  primary_cargo = manifest['primary_cargo']
+  Compute: manifest['primary_cargo'], where manifest={primary_cargo: {id: 'C-1289', base_value: 45000, details: {...3 items}}, secondary_cargo: [{...2 items}, {...2 items}, {...2 items}], fragile: True, ...} (parameter manifest) = {id: 'C-1289', base_value: 45000, details: {A1: {...2 items}, B2: {...2 items}, C3: {...2 items}}}
+  [line 37]  base_value = primary_cargo['base_value']
+  Compute: primary_cargo['base_value'], where primary_cargo={id: 'C-1289', base_value: 45000, details: {A1: {...2 items}, B2: {...2 items}, C3: {...2 items}}} (defined at [line 36]) = 45000
+  [line 41]  for i, item in enumerate(manifest.get('secondary_cargo', [])):
+  (Missing param: 'iter_var')
+  [line 41]  for i, item in enumerate(manifest.get('secondary_cargo', [])):
+  Loop End: Iteration finished
+  [line 41]  for i, item in enumerate(manifest.get('secondary_cargo', [])):
+  Loop End: Iteration finished
+  [line 41]  for i, item in enumerate(manifest.get('secondary_cargo', [])):
+  Loop End: Iteration finished
+  [line 46]  route_efficiency = 1.0
+  Assign: route_efficiency = 1.0
+  [line 47]  active_routes = [r for r in routes if r.get('active', False)]
+  Compute: [r for r in routes if r.get('active', False)], where r={id: 1, code: '723', distance: 1500, ...} (an unknown source), routes=[{id: 1, code: '723', distance: 1500, ...}, {id: 2, code: '845', distance: 2100, ...}, {id: 3, code: '512', distance: 980, ...}, {id: 4, code: '390', distance: 1700, ...}] (parameter routes) = ?
+  [line 48]  if active_routes:
+  Condition: True, entering 'if' block
+  [line 54]  priority_routes = set([r['id'] for r in routes if r.get('priority', False)])
+  Call function set([r['id'] for r in routes if r.get('priority', False)])
+  [line 55]  normal_routes = set([r['id'] for r in routes]) - priority_routes
+  Compute: set([r['id'] for r in routes]) - priority_routes, where r={id: 1, code: '723', distance: 1500, ...} (an unknown source), routes=[{id: 1, code: '723', distance: 1500, ...}, {id: 2, code: '845', distance: 2100, ...}, {id: 3, code: '512', distance: 980, ...}, {id: 4, code: '390', distance: 1700, ...}] (parameter routes), priority_routes={1, 4} (defined at [line 54]) = ?
+  [line 58]  efficiency_factor = len(priority_routes) * 0.15 + len(normal_routes) * 0.05
+  Compute: len(priority_routes) * 0.15 + len(normal_routes) * 0.05, where priority_routes={1, 4} (defined at [line 54]), normal_routes={2, 3} (defined at [line 55]) = 0.4
+  [line 59]  route_efficiency = max(0.8, min(1.5, 1 + efficiency_factor))
+  Call function max(0.8, min(1.5, 1 + efficiency_factor))
+  [line 70]  for season, adjustment in seasonal_adjustments.items():
+  (Missing param: 'iter_var')
+  [line 71]  if manifest.get('season') == season:
+  Condition: True, entering 'if' block
+  [line 78]  insurance_rate = 0.05
+  Assign: insurance_rate = 0.05
+  [line 79]  if manifest.get('hazardous', False):
+  Condition: True, entering 'if' block
+  [line 81]  elif manifest.get('fragile', False):
+  'elif' Condition: True, entering block
+  [line 82]  insurance_rate = 0.08
+  Assign: insurance_rate = 0.08
+  [line 87]  cargo_details = primary_cargo.get('details', {})
+  (Missing param: 'func_name')
+  [line 88]  quality_items = {k: v for k, v in cargo_details.items() if k in ['A1', 'B2', 'C3']}
+  Compute: {k: v for k, v in cargo_details.items() if k in ['A1', 'B2', 'C3']}, where k='A1' (an unknown source), v={quality: 8, tags: ['premium']} (an unknown source), cargo_details={A1: {quality: 8, tags: [...1 items]}, B2: {quality: 7, tags: [...1 items]}, C3: {quality: 6, tags: [...1 items]}} (an unknown source) = ?
+  [line 91]  for item_name, specs in cargo_details.items():
+  (Missing param: 'iter_var')
+  [line 92]  if 'premium' in specs.get('tags', []):
+  Condition: True, entering 'if' block
+  [line 91]  for item_name, specs in cargo_details.items():
+  (Missing param: 'iter_var')
+  [line 92]  if 'premium' in specs.get('tags', []):
+  Condition: True, entering 'if' block
+  [line 91]  for item_name, specs in cargo_details.items():
+  (Missing param: 'iter_var')
+  [line 92]  if 'premium' in specs.get('tags', []):
+  Condition: True, entering 'if' block
+  [line 91]  for item_name, specs in cargo_details.items():
+  Loop End: Iteration finished
+  [line 96]  route_codes = [r.get('code', '000') for r in routes]
+  Compute: [r.get('code', '000') for r in routes], where r={id: 1, code: '723', distance: 1500, ...} (an unknown source), routes=[{id: 1, code: '723', distance: 1500, ...}, {id: 2, code: '845', distance: 2100, ...}, {id: 3, code: '512', distance: 980, ...}, {id: 4, code: '390', distance: 1700, ...}] (parameter routes) = ?
+  [line 97]  risk_factor = 0
+  Assign: risk_factor = 0
+  [line 98]  if route_codes:
+  Condition: True, entering 'if' block
+  [line 100]  risk_digits = [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes]
+  Compute: [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes], where code='723' (an unknown source), route_codes=['723', '845', '512', '390'] (defined at [line 96]) = ?
+  [line 100]  risk_digits = [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes]
+  Compute: [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes], where code='845' (an unknown source), route_codes=['723', '845', '512', '390'] (defined at [line 96]) = ?
+  [line 100]  risk_digits = [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes]
+  Compute: [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes], where code='512' (an unknown source), route_codes=['723', '845', '512', '390'] (defined at [line 96]) = ?
+  [line 100]  risk_digits = [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes]
+  Compute: [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes], where code='390' (an unknown source), route_codes=['723', '845', '512', '390'] (defined at [line 96]) = ?
+  [line 100]  risk_digits = [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes]
+  Compute: [int(code[:2]) if code[:2].isdigit() else 50 for code in route_codes], where code='390' (an unknown source), route_codes=['723', '845', '512', '390'] (defined at [line 96]) = [72, 84, 51, 39]
+  [line 101]  risk_factor = sum(risk_digits) / len(risk_digits) / 100
+  Compute: sum(risk_digits) / len(risk_digits) / 100, where risk_digits=[72, 84, 51, 39] (defined at [line 100]) = 0.615
+  [line 104]  quality_modifier = 1.0
+  Assign: quality_modifier = 1.0
+  [line 105]  if quality_items:
+  Condition: True, entering 'if' block
+  [line 106]  quality_values = [details.get('quality', 5) for details in quality_items.values()]
+  Compute: [details.get('quality', 5) for details in quality_items.values()], where details={quality: 8, tags: ['premium']} (an unknown source), quality_items={A1: {quality: 8, tags: [...1 items]}, B2: {quality: 7, tags: [...1 items]}, C3: {quality: 6, tags: [...1 items]}} (defined at [line 88]) = ?
+  [line 107]  quality_modifier = sum(quality_values) / len(quality_values) / 5
+  Compute: sum(quality_values) / len(quality_values) / 5, where quality_values=[8, 7, 6] (defined at [line 106]) = 1.4
+  [line 110]  final_value = base_value * route_efficiency * (1 - insurance_rate) * (1 + quality_modifier) * (1 - risk_factor)
+  Compute: base_value * route_efficiency * (1 - insurance_rate) * (1 + quality_modifier) * (1 - risk_factor), where base_value=45000 (defined at [line 37]), route_efficiency=1.4 (defined at [line 59]), insurance_rate=0.08 (defined at [line 82]), quality_modifier=1.4 (defined at [line 107]), risk_factor=0.615 (defined at [line 101]) = 53555.03999999999
+  [line 113]  return round(final_value, 2)
+  Return: round(final_value, 2)
+Function calculate_final_cargo_value returns 53555.04
+[line 152]  print(f"Route optimization: {distractor_routes}")
+Output: f"Route optimization: {distractor_routes}"
+[line 153]  print(f"Tax calculation: {distractor_tax}")
+Output: f"Tax calculation: {distractor_tax}"
+[line 154]  print(f"Quality analysis: {distractor_quality}")
+Output: f"Quality analysis: {distractor_quality}"
+[line 155]  print(f"Final cargo value: {cargo_value}")
+Output: f"Final cargo value: {cargo_value}"
+
+Answer: cargo_value = 53555.04 (last updated on defined at [line 150])

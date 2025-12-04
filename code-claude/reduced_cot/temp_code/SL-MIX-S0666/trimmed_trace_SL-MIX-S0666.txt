@@ -1,0 +1,79 @@
+57
+total_price
+---
+PARAM_MAPPING {'items': {'actual_var': 'cart_items', 'value': [('Shirt', 25.99), ('Pants', 34.5), ('Shoes', 89.99)]}, 'discounts': {'actual_var': 'discounts', 'value': {'SUMMER': {'priority': 2, 'active': True, 'type': 'percentage', 'value': 15, 'min_purchase': 100}, 'WELCOME': {'priority': 1, 'active': True, 'type': 'fixed', 'value': 10, 'min_purchase': 50, 'exclusive': True}, 'CLEARANCE': {'priority': 3, 'active': False, 'type': 'percentage', 'value': 25, 'min_purchase': 150}}}, 'loyalty_points': {'actual_var': 'loyalty_points', 'value': 600}}
+FUNCTION_ENTER 1 calculate_final_price def calculate_final_price(items, discounts, loyalty_points):
+1 ['items', 'discounts', 'loyalty_points'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Shirt'}, {'_type': 'float', '_value': 25.99}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Pants'}, {'_type': 'float', '_value': 34.5}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'Shoes'}, {'_type': 'float', '_value': 89.99}], '_len': 2}], '_len': 3}, {'_type': 'dict', '_items': {'SUMMER': {'_type': 'dict', '_items': {'priority': {'_type': 'int', '_value': 2}, 'active': {'_type': 'bool', '_value': True}, 'type': {'_type': 'str', '_value': 'percentage'}, 'value': {'_type': 'int', '_value': 15}, 'min_purchase': {'_type': 'int', '_value': 100}}, '_len': 5}, 'WELCOME': {'_type': 'dict', '_items': {'priority': {'_type': 'int', '_value': 1}, 'active': {'_type': 'bool', '_value': True}, 'type': {'_type': 'str', '_value': 'fixed'}, 'value': {'_type': 'int', '_value': 10}, 'min_purchase': {'_type': 'int', '_value': 50}}, '_len': 6}, 'CLEARANCE': {'_type': 'dict', '_items': {'priority': {'_type': 'int', '_value': 3}, 'active': {'_type': 'bool', '_value': False}, 'type': {'_type': 'str', '_value': 'percentage'}, 'value': {'_type': 'int', '_value': 25}, 'min_purchase': {'_type': 'int', '_value': 150}}, '_len': 5}}, '_len': 3}, {'_type': 'int', '_value': 600}]
+3 base_total = sum(price for item, price in items)
+3 [] []
+3 base_total = sum(price for item, price in items)
+3 ['item', 'price'] ["'Shirt'", '25.99']
+3 base_total = sum(price for item, price in items)
+3 ['item', 'price'] ["'Pants'", '34.5']
+3 base_total = sum(price for item, price in items)
+3 ['item', 'price'] ["'Shoes'", '89.99']
+3 base_total = sum(price for item, price in items)
+3 ['item', 'price'] ["'Shoes'", '89.99']
+6 sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+6 ['discounts', 'loyalty_points', 'base_total'] ["{SUMMER: {priority: 2, active: True, type: 'percentage', ...}, WELCOME: {priority: 1, active: True, type: 'fixed', ...}, CLEARANCE: {priority: 3, active: False, type: 'percentage', ...}}", '600', '150.48']
+6 sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+6 ['x'] ["('SUMMER', {priority: 2, active: True, type: 'percentage', ...})"]
+6 sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+6 ['x'] ["('WELCOME', {priority: 1, active: True, type: 'fixed', ...})"]
+6 sorted_discounts = sorted(discounts.items(), key=lambda x: x[1]['priority'])
+6 ['x'] ["('CLEARANCE', {priority: 3, active: False, type: 'percentage', ...})"]
+10 discount_amount = 0
+10 ['loyalty_points', 'base_total', 'sorted_discounts', 'discount_amount'] ['600', '150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0']
+13 loyalty_discount = 0
+13 ['loyalty_points', 'base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount'] ['600', '150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '0']
+14 if loyalty_points > 500:
+14 ['loyalty_points', 'base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount'] ['600', '150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '0']
+15 loyalty_discount = min(loyalty_points * 0.01, 50)  # Max $50 discount
+15 ['loyalty_points', 'base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount'] ['600', '150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '6.0']
+19 for discount_name, details in sorted_discounts:
+19 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}"]
+20 if details['active'] and base_total >= details['min_purchase']:
+20 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}"]
+21 if details['type'] == 'percentage':
+21 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}"]
+24 current_discount = details['value']
+24 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}", '10']
+27 if details.get('exclusive', False) and discount_amount > 0:
+27 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '0', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}", '10']
+30 discount_amount += current_discount
+30 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}", '10']
+34 if discount_amount >= base_total * 0.5:  # Max 50% total discount
+34 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'WELCOME'", "{priority: 1, active: True, type: 'fixed', ...}", '10']
+19 for discount_name, details in sorted_discounts:
+19 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}", '10']
+20 if details['active'] and base_total >= details['min_purchase']:
+20 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}", '10']
+21 if details['type'] == 'percentage':
+21 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}", '10']
+22 current_discount = base_total * (details['value'] / 100)
+22 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}", '22.572']
+27 if details.get('exclusive', False) and discount_amount > 0:
+27 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '10', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}", '22.572']
+30 discount_amount += current_discount
+30 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details', 'current_discount'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '32.572', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}", '22.572']
+34 if discount_amount >= base_total * 0.5:  # Max 50% total discount
+34 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '32.572', '6.0', "'SUMMER'", "{priority: 2, active: True, type: 'percentage', ...}"]
+19 for discount_name, details in sorted_discounts:
+19 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '32.572', '6.0', "'CLEARANCE'", "{priority: 3, active: False, type: 'percentage', ...}"]
+20 if details['active'] and base_total >= details['min_purchase']:
+20 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '32.572', '6.0', "'CLEARANCE'", "{priority: 3, active: False, type: 'percentage', ...}"]
+19 for discount_name, details in sorted_discounts:
+19 ['base_total', 'sorted_discounts', 'discount_amount', 'loyalty_discount', 'discount_name', 'details'] ['150.48', "[('WELCOME', {...6 items}), ('SUMMER', {...5 items}), ('CLEARANCE', {...5 items})]", '32.572', '6.0', "'CLEARANCE'", "{priority: 3, active: False, type: 'percentage', ...}"]
+39 subtotal = base_total - discount_amount
+39 ['base_total', 'discount_amount', 'loyalty_discount', 'subtotal'] ['150.48', '32.572', '6.0', '117.90799999999999']
+40 shipping_cost = 0
+40 ['base_total', 'discount_amount', 'loyalty_discount', 'subtotal', 'shipping_cost'] ['150.48', '32.572', '6.0', '117.90799999999999', '0']
+41 if subtotal < 50:
+41 ['base_total', 'discount_amount', 'loyalty_discount', 'subtotal', 'shipping_cost'] ['150.48', '32.572', '6.0', '117.90799999999999', '0']
+43 elif subtotal < 100:
+43 ['base_total', 'discount_amount', 'loyalty_discount', 'subtotal', 'shipping_cost'] ['150.48', '32.572', '6.0', '117.90799999999999', '0']
+57 total_price = base_total - discount_amount - loyalty_discount + shipping_cost
+57 ['base_total', 'discount_amount', 'loyalty_discount', 'shipping_cost', 'total_price'] ['150.48', '32.572', '6.0', '0', '111.90799999999999']
+64 return round(total_price, 2)
+64 ['total_price'] ['111.90799999999999']
+FUNCTION_RETURN 64 calculate_final_price {'_type': 'float', '_value': 111.91}

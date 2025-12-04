@@ -1,0 +1,55 @@
+Target: Find the value of variable final_score after [line 50] executes
+
+[line 28]  def calculate_final_score(encrypted_message):
+Enter function calculate_final_score: encrypted_message='Hello123!@#'
+  [line 30]  reversed_message, upper_count, lower_count = process_text(encrypted_message)
+  (Missing param: 'func_name')
+  [line 3]  reversed_text = text[::-1]
+  Compute: text[::-1], where text='Hello123!@#' (an unknown source) = '#@!321olleH'
+  [line 4]  uppercase_count = sum(1 for char in text if char.isupper())
+  Call function sum(1 for char in text if char.isupper())
+  [line 5]  lowercase_count = sum(1 for char in text if char.islower())
+  Call function sum(1 for char in text if char.islower())
+  [line 8]  if len(text) > 0:
+  Condition: True, entering 'if' block
+  [line 13]  return reversed_text, uppercase_count, lowercase_count
+  Return: reversed_text, uppercase_count, lowercase_count
+  [line 33]  base_score = len(encrypted_message) * 5
+  Compute: len(encrypted_message) * 5, where encrypted_message='Hello123!@#' (parameter encrypted_message) = ?
+  [line 34]  modifier = upper_count - lower_count
+  Compute: upper_count - lower_count, where upper_count=1 (an unknown source), lower_count=4 (an unknown source) = -3
+  [line 37]  checksum = calculate_checksum(encrypted_message)
+  Call function calculate_checksum(encrypted_message='Hello123!@#' (parameter encrypted_message))
+  [line 17]  checksum = 0
+  Assign: checksum = 0
+  [line 18]  for i, char in enumerate(text):
+  (Missing param: 'iter_var')
+  [line 20]  checksum = (checksum + ord(char) * (i % 5 + 1)) % 1000
+  Compute: (checksum + ord(char) * (i % 5 + 1)) % 1000, where checksum=0 (defined at [line 17]), char='H' (an unknown source), i=0 (an unknown source) = 72
+  [line 18]  for i, char in enumerate(text):
+  (Missing param: 'iter_var')
+  [line 20]  checksum = (checksum + ord(char) * (i % 5 + 1)) % 1000
+  Compute: (checksum + ord(char) * (i % 5 + 1)) % 1000, where checksum=72 (defined at [line 20]), char='e' (an unknown source), i=1 (an unknown source) = 274
+... [Line 18] repeats 8 more times ...
+... [Line 18] repeats 8 more times ...
+  [line 18]  for i, char in enumerate(text):
+  (Missing param: 'iter_var')
+  [line 20]  checksum = (checksum + ord(char) * (i % 5 + 1)) % 1000
+  Compute: (checksum + ord(char) * (i % 5 + 1)) % 1000, where checksum=339 (defined at [line 20]), char='#' (an unknown source), i=10 (an unknown source) = 374
+  [line 18]  for i, char in enumerate(text):
+  Loop End: Iteration finished
+  [line 23]  factor = len(text) % 10 + 1
+  Compute: len(text) % 10 + 1, where text='Hello123!@#' (an unknown source) = 2
+  [line 24]  checksum = (checksum * factor) % 1000
+  Compute: (checksum * factor) % 1000, where checksum=374 (defined at [line 20]), factor=2 (defined at [line 23]) = 748
+  [line 26]  return checksum
+  Return: checksum=748 (defined at [line 24])
+  [line 49]  if modifier > 0:
+  Condition: True, entering 'if' block
+  [line 52]  final_score = base_score + checksum - (abs(modifier) * 2)
+  Compute: base_score + checksum - (abs(modifier) * 2), where checksum=748 (defined at [line 24]), modifier=-3 (defined at [line 34]) = 797
+  [line 54]  return final_score
+  Return: final_score=797 (defined at [line 52])
+Function calculate_final_score returns 797
+
+Answer: final_score = 797 (last updated on defined at [line 52])

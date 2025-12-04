@@ -1,0 +1,203 @@
+113
+optimal_path_length
+---
+75 network_graph, signal_strengths, error_counts = process_network_data(raw_connections)
+75 ['raw_connections'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]"]
+5 network_graph = defaultdict(list)
+5 ['raw_connections', 'network_graph'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", '{}']
+6 signal_strengths = {}
+6 ['raw_connections', 'network_graph', 'signal_strengths'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", '{}', '{}']
+7 error_counts = Counter()
+7 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", '{}', '{}', '{}']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", '{}', '{}', '{}', "('A', 'B', 15)"]
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", '{}', '{}', '{}', "('A', 'B', 15)", '15']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B']}", "{('A', 'B'): 15}", '{}', "('A', 'B', 15)", '15']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B']}", "{('A', 'B'): 15}", '{}', "('A', 'B', 15)", '15']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B']}", "{('A', 'B'): 15}", '{}', "('A', 'C', 22)", '15']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B']}", "{('A', 'B'): 15}", '{}', "('A', 'C', 22)", '22']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C']}", "{('A', 'B'): 15, ('A', 'C'): 22}", '{}', "('A', 'C', 22)", '22']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C']}", "{('A', 'B'): 15, ('A', 'C'): 22}", '{}', "('A', 'C', 22)", '22']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C']}", "{('A', 'B'): 15, ('A', 'C'): 22}", '{}', "('B', 'D', 18)", '22']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C']}", "{('A', 'B'): 15, ('A', 'C'): 22}", '{}', "('B', 'D', 18)", '18']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18}", '{}', "('B', 'D', 18)", '18']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18}", '{}', "('B', 'D', 18)", '18']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18}", '{}', "('B', 'E', 9)", '18']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18}", '{}', "('B', 'E', 9)", '9']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{}', "('B', 'E', 9)", '9']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{}', "('B', 'E', 9)", '9']
+16 error_counts[source] += 1
+16 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('B', 'E', 9)", '9']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('C', 'F', 14)", '9']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('C', 'F', 14)", '14']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('C', 'F', 14)", '14']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('C', 'F', 14)", '14']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('D', 'G', 11)", '14']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F']}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('D', 'G', 11)", '11']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('D', 'G', 11)", '11']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('D', 'G', 11)", '11']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('E', 'G', 8)", '11']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('E', 'G', 8)", '8']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('E', 'G', 8)", '8']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1}', "('E', 'G', 8)", '8']
+16 error_counts[source] += 1
+16 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}', "('E', 'G', 8)", '8']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}', "('F', 'G', 20)", '8']
+10 source, target, strength = connection
+10 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}', "('F', 'G', 20)", '20']
+12 signal_strengths[(source, target)] = strength
+12 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}', "('F', 'G', 20)", '20']
+15 if strength < 10:
+15 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection', 'strength'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}', "('F', 'G', 20)", '20']
+9 for connection in raw_connections:
+9 ['raw_connections', 'network_graph', 'signal_strengths', 'error_counts', 'connection'] ["[('A', 'B', 15), ('A', 'C', 22), ('B', 'D', 18), ('B', 'E', 9), ('C', 'F', 14), ...]", "{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}', "('F', 'G', 20)"]
+18 return network_graph, signal_strengths, error_counts
+18 ['network_graph', 'signal_strengths', 'error_counts'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '{B: 1, E: 1}']
+78 reliability = analyze_network_redundancy(network_graph)
+78 ['network_graph', 'signal_strengths'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}"]
+22 redundancy_score = 0
+22 ['graph', 'redundancy_score'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '0']
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '0', "'A'"]
+24 if len(graph[node]) > 1:
+24 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '0', "'A'"]
+25 redundancy_score += len(graph[node])
+25 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '2', "'A'"]
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '2', "'B'"]
+24 if len(graph[node]) > 1:
+24 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '2', "'B'"]
+25 redundancy_score += len(graph[node])
+25 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'B'"]
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'C'"]
+24 if len(graph[node]) > 1:
+24 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'C'"]
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'D'"]
+24 if len(graph[node]) > 1:
+24 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'D'"]
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'E'"]
+24 if len(graph[node]) > 1:
+24 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'E'"]
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'F'"]
+24 if len(graph[node]) > 1:
+24 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'F'"]
+23 for node in graph:
+23 ['graph', 'redundancy_score', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'F'"]
+27 reliability_factor = redundancy_score * 0.15
+27 ['graph', 'redundancy_score', 'node', 'reliability_factor'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '4', "'F'", '0.6']
+28 return reliability_factor
+28 ['graph', 'node', 'reliability_factor'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "'F'", '0.6']
+79 optimal_power = optimize_transmission(signal_strengths)
+79 ['network_graph', 'signal_strengths', 'reliability'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '0.6']
+32 transmission_values = list(strengths.values())
+32 ['strengths', 'transmission_values'] ["{('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...}", '[15, 22, 18, 9, 14, ...]']
+33 if not transmission_values:
+33 ['transmission_values'] ['[15, 22, 18, 9, 14, ...]']
+36 optimal_power = sum(transmission_values) / len(transmission_values)
+36 ['transmission_values', 'optimal_power'] ['[15, 22, 18, 9, 14, ...]', '14.625']
+37 return optimal_power * 2
+37 ['optimal_power'] ['14.625']
+82 network_performance = reliability * optimal_power / 10
+82 ['network_graph', 'reliability', 'optimal_power', 'network_performance'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '0.6', '29.25', '1.7550000000000001']
+83 if network_performance > 50:
+83 ['network_graph', 'network_performance'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", '1.7550000000000001']
+92 visited_nodes = ['A', 'B', 'D']
+92 ['network_graph', 'visited_nodes'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'A'"]
+98 if node not in visited_nodes and len(network_graph[node]) > 0:
+98 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'A'"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'B'"]
+98 if node not in visited_nodes and len(network_graph[node]) > 0:
+98 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'B'"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'C'"]
+98 if node not in visited_nodes and len(network_graph[node]) > 0:
+98 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'C'"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'D'"]
+98 if node not in visited_nodes and len(network_graph[node]) > 0:
+98 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'D'"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'E'"]
+98 if node not in visited_nodes and len(network_graph[node]) > 0:
+98 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'E'"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'F'"]
+98 if node not in visited_nodes and len(network_graph[node]) > 0:
+98 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'F'"]
+97 for node in network_graph:
+97 ['network_graph', 'visited_nodes', 'node'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'F'"]
+105 optimal_path_length = calculate_optimal_route(network_graph, visited_nodes)
+105 ['network_graph', 'visited_nodes'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'n'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'A'"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'n'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'B'"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'n'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'C'"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'n'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'D'"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'n'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'E'"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'n'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'F'"]
+42 nodes = [n for n in graph if n not in visited]
+42 ['graph', 'visited', 'nodes'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "['C', 'E', 'F']"]
+45 base_value = sum([len(graph[n]) for n in nodes])
+45 ['graph', 'visited', 'n', 'nodes'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'C'", "['C', 'E', 'F']"]
+45 base_value = sum([len(graph[n]) for n in nodes])
+45 ['graph', 'visited', 'n', 'nodes'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'E'", "['C', 'E', 'F']"]
+45 base_value = sum([len(graph[n]) for n in nodes])
+45 ['graph', 'visited', 'n', 'nodes'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "'F'", "['C', 'E', 'F']"]
+45 base_value = sum([len(graph[n]) for n in nodes])
+45 ['graph', 'visited', 'nodes', 'base_value'] ["{A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...}", "['A', 'B', 'D']", "['C', 'E', 'F']", '3']
+48 path_metric = (base_value << 2) & 0b11111111
+48 ['visited', 'nodes', 'base_value', 'path_metric'] ["['A', 'B', 'D']", "['C', 'E', 'F']", '3', '12']
+51 adjustment = len(visited) * 3
+51 ['visited', 'nodes', 'path_metric', 'adjustment'] ["['A', 'B', 'D']", "['C', 'E', 'F']", '12', '9']
+52 if adjustment > 0:
+52 ['nodes', 'path_metric', 'adjustment'] ["['C', 'E', 'F']", '12', '9']
+53 path_metric = (path_metric - adjustment) | 0b1100
+53 ['nodes', 'path_metric', 'adjustment'] ["['C', 'E', 'F']", '15', '9']
+56 if not nodes:
+56 ['nodes', 'path_metric'] ["['C', 'E', 'F']", '15']
+60 return path_metric ^ 0b10101010
+60 ['path_metric'] ['15']
+108 if network_status == "optimal":
+108 ['optimal_path_length'] ['165']
+113 print(f"Result: {optimal_path_length}")
+113 ['optimal_path_length'] ['165']

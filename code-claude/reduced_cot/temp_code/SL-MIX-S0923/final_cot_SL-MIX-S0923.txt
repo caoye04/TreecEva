@@ -1,0 +1,54 @@
+Target: Find the value of variable priority_score after [line 71] executes
+
+[line 57]  default_segments = ['general', 'promotional']
+Compute: ['general', 'promotional'] = ['general', 'promotional']
+[line 58]  segments = default_segments + (['premium'] if sum(customer_data.get('purchases', [])) > 1500 else [])
+Compute: default_segments + (['premium'] if sum(customer_data.get('purchases', [])) > 1500 else []), where default_segments=['general', 'promotional'] (defined at [line 57]), customer_data={name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...} (an unknown source) = ['general', 'promotional']
+[line 61]  for i, segment in enumerate(segments):
+(Missing param: 'iter_var')
+[line 62]  print(f"Segment {i+1}: {segment}")
+Output: f"Segment {i+1}: {segment}"
+[line 61]  for i, segment in enumerate(segments):
+(Missing param: 'iter_var')
+[line 62]  print(f"Segment {i+1}: {segment}")
+Output: f"Segment {i+1}: {segment}"
+[line 61]  for i, segment in enumerate(segments):
+Loop End: Iteration finished
+[line 65]  priority_score = calculate_priority(customer_data)
+Call function calculate_priority(customer_data={name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...} (an unknown source))
+[line 3]  base_score = 100
+Assign: base_score = 100
+[line 4]  loyalty_years = customer.get('years', 0)
+(Missing param: 'func_name')
+[line 5]  purchase_history = customer.get('purchases', [])
+(Missing param: 'func_name')
+[line 6]  support_tickets = customer.get('tickets', 0)
+(Missing param: 'func_name')
+[line 9]  loyalty_bonus = min(loyalty_years * 15, 75)
+Call function min(loyalty_years * 15, 75)
+[line 12]  total_spent = sum(purchase_history)
+Call function sum(purchase_history=[120, 250, 180, 350, 90] (an unknown source))
+[line 13]  premium_purchases = len([p for p in purchase_history if p > 200])
+Call function len([p for p in purchase_history if p > 200])
+[line 14]  purchase_factor = total_spent / 1000 if total_spent > 0 else 0
+Compute: total_spent / 1000 if total_spent > 0 else 0, where total_spent=990 (defined at [line 12]) = 0.99
+[line 17]  ticket_penalty = support_tickets * 5
+Compute: support_tickets * 5, where support_tickets=2 (an unknown source) = 10
+[line 27]  raw_score = base_score + loyalty_bonus + (purchase_factor * 50)
+Compute: base_score + loyalty_bonus + (purchase_factor * 50), where base_score=100 (defined at [line 3]), loyalty_bonus=60 (defined at [line 9]), purchase_factor=0.99 (defined at [line 14]) = 209.5
+[line 30]  adjusted_score = raw_score - ticket_penalty
+Compute: raw_score - ticket_penalty, where raw_score=209.5 (defined at [line 27]), ticket_penalty=10 (defined at [line 17]) = 199.5
+[line 33]  premium_bonus = premium_purchases * 15
+Compute: premium_purchases * 15, where premium_purchases=2 (defined at [line 13]) = 30
+[line 36]  final_score = adjusted_score + premium_bonus
+Compute: adjusted_score + premium_bonus, where adjusted_score=199.5 (defined at [line 30]), premium_bonus=30 (defined at [line 33]) = 229.5
+[line 39]  if final_score < 0:
+Condition: True, entering 'if' block
+[line 41]  elif final_score > 500:
+'elif' Condition: True, entering block
+[line 44]  return round(final_score)
+Return: round(final_score)
+[line 71]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 230 (last updated on defined at [line 65])

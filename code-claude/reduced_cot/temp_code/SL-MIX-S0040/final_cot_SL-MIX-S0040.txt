@@ -1,0 +1,97 @@
+Target: Find the value of variable final_signal_strength after [line 94] executes
+
+[line 33]  raw_signal = [2.5, 3.1, -1.7, 4.2, -0.8, 3.3, 1.9, -2.2, 3.7, -1.5]
+Compute: [2.5, 3.1, -1.7, 4.2, -0.8, 3.3, 1.9, -2.2, 3.7, -1.5] = [2.5, 3.1, -1.7, 4.2, -0.8, ...]
+[line 44]  noise_floor = calculate_noise_floor(raw_signal)
+Call function calculate_noise_floor(raw_signal=[2.5, 3.1, -1.7, 4.2, -0.8, ...] (defined at [line 33]))
+[line 5]  def calculate_noise_floor(samples):
+Enter function calculate_noise_floor: samples=[2.5, 3.1, -1.7, 4.2, -0.8, ...] (raw_signal defined at [line 33])
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+  [line 7]  return sum(abs(x) for x in samples) / max(1, len(samples))
+  Return: sum(abs(x) for x in samples) / max(1, len(samples))
+Function calculate_noise_floor returns 2.4899999999999998
+[line 45]  signal_to_noise = 10 * math.log10(sum(x**2 for x in raw_signal) / (noise_floor**2 + 1e-10))
+Compute: 10 * math.log10(sum(x**2 for x in raw_signal) / (noise_floor**2 + 1e-10)), where x=-1.5 (an unknown source) = ?
+[line 9]  def apply_spectral_mask(signal, mask_pattern):
+Enter function apply_spectral_mask: signal=[2.5, 3.1, -1.7, 4.2, -0.8, ...] (raw_signal defined at [line 33]), mask_pattern=[0.8, 0.9, 1.0, 0.9, 0.8]
+  [line 11]  return [s * m for s, m in zip(signal, itertools.cycle(mask_pattern))]
+  Return: [s * m for s, m in zip(signal, itertools.cycle(mask_pattern))]
+Function apply_spectral_mask returns [2.0, 2.79, -1.7, 3.7800000000000002, -0.6400000000000001, ...]
+[line 64]  filtered_signal = [3.0, 4.0, 5.0]
+Compute: [3.0, 4.0, 5.0] = [3.0, 4.0, 5.0]
+[line 72]  harmonic_factor = 2
+Assign: harmonic_factor = 2
+[line 75]  strength_linear = sum(abs(x) for x in filtered_signal) / len(filtered_signal)
+Compute: sum(abs(x) for x in filtered_signal) / len(filtered_signal), where filtered_signal=[3.0, 4.0, 5.0] (defined at [line 64]) = ?
+[line 75]  strength_linear = sum(abs(x) for x in filtered_signal) / len(filtered_signal)
+Compute: sum(abs(x) for x in filtered_signal) / len(filtered_signal), where x=3.0 (an unknown source) = ?
+[line 75]  strength_linear = sum(abs(x) for x in filtered_signal) / len(filtered_signal)
+Compute: sum(abs(x) for x in filtered_signal) / len(filtered_signal), where x=4.0 (an unknown source) = ?
+[line 75]  strength_linear = sum(abs(x) for x in filtered_signal) / len(filtered_signal)
+Compute: sum(abs(x) for x in filtered_signal) / len(filtered_signal), where x=5.0 (an unknown source) = ?
+[line 75]  strength_linear = sum(abs(x) for x in filtered_signal) / len(filtered_signal)
+Compute: sum(abs(x) for x in filtered_signal) / len(filtered_signal), where x=5.0 (an unknown source) = ?
+[line 80]  if signal_to_noise < 10:
+Condition: True, entering 'if' block
+[line 85]  signal_queue = deque(maxlen=5)
+Call function deque(maxlen=5)
+[line 86]  for i in range(min(5, len(raw_signal))):
+Loop Start: i takes its first value 0
+[line 88]  if len(signal_queue) >= 3:
+Condition: True, entering 'if' block
+[line 86]  for i in range(min(5, len(raw_signal))):
+Loop Iteration: i is now 1 (iteration 2)
+[line 88]  if len(signal_queue) >= 3:
+Condition: True, entering 'if' block
+... [Line 86] repeats 2 more times ...
+... [Line 86] repeats 2 more times ...
+... [Line 86] repeats 2 more times ...
+... [Line 86] repeats 2 more times ...
+[line 86]  for i in range(min(5, len(raw_signal))):
+Loop Iteration: i is now 4 (iteration 5)
+[line 88]  if len(signal_queue) >= 3:
+Condition: True, entering 'if' block
+[line 89]  avg = sum(signal_queue) / len(signal_queue)
+Compute: sum(signal_queue) / len(signal_queue), where signal_queue=deque([2.5, 3.1, -1.7, 4.2, -0.8], maxlen=5) (defined at [line 85]) = 1.4600000000000002
+[line 90]  if avg > strength_linear:
+Condition: True, entering 'if' block
+[line 86]  for i in range(min(5, len(raw_signal))):
+Loop End: Iteration finished
+[line 94]  final_signal_strength = calculate_signal_power(filtered_signal, harmonic_factor)
+Call function calculate_signal_power(filtered_signal=[3.0, 4.0, 5.0] (defined at [line 64]), harmonic_factor=2 (defined at [line 72]))
+[line 13]  def calculate_signal_power(signal, harmonic):
+Enter function calculate_signal_power: signal=[3.0, 4.0, 5.0] (filtered_signal defined at [line 64]), harmonic=2 (harmonic_factor defined at [line 72])
+  [line 15]  if not signal:
+  Condition: True, entering 'if' block
+  [line 19]  base_power = sum(x**2 for x in signal) / len(signal)
+  Compute: sum(x**2 for x in signal) / len(signal), where signal=[3.0, 4.0, 5.0] (parameter signal defined at [line 64]) = ?
+  [line 22]  adjusted_power = base_power * (harmonic % 5 + 1)
+  Compute: base_power * (harmonic % 5 + 1), where base_power=16.666666666666668 (defined at [line 19]), harmonic=2 (parameter harmonic defined at [line 72]) = 50.0
+  [line 25]  if adjusted_power > 0:
+  Condition: True, entering 'if' block
+  [line 26]  return round(10 * math.log10(adjusted_power), 2)
+  Return: round(10 * math.log10(adjusted_power), 2)
+Function calculate_signal_power returns 16.99
+
+Answer: final_signal_strength = 16.99 (last updated on defined at [line 94])

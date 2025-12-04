@@ -1,0 +1,37 @@
+Target: Find the value of variable encrypted_message after [line 27] executes
+
+[line 1]  def process_message(message, key):
+Enter function process_message: message='Hello World!', key='secretkey'
+  [line 3]  message_bytes = [ord(c) for c in message]
+  Compute: [ord(c) for c in message], where c='H' (an unknown source), message='Hello World!' (parameter message) = ?
+  [line 4]  key_bytes = [ord(c) for c in key]
+  Compute: [ord(c) for c in key], where c='s' (an unknown source), key='secretkey' (parameter key) = ?
+  [line 19]  segment_b = message_bytes[2:8:2]  # Every other character from index 2 to 7
+  Compute: message_bytes[2:8:2]  # Every other character from index 2 to 7, where message_bytes=[72, 101, 108, 108, 111, ...] (defined at [line 3]) = [108, 111, 87]
+  [line 20]  segment_c = key_bytes[1:7:2]      # Every other character from index 1 to 6
+  Compute: key_bytes[1:7:2]      # Every other character from index 1 to 6, where key_bytes=[115, 101, 99, 114, 101, ...] (defined at [line 4]) = [101, 114, 116]
+  [line 27]  encrypted_message = segment_b[0] ^ segment_c[0]
+  Compute: segment_b[0] ^ segment_c[0], where segment_b=[108, 111, 87] (defined at [line 19]), segment_c=[101, 114, 116] (defined at [line 20]) = 9
+  [line 33]  encrypted_message = 0
+  Assign: encrypted_message = 0
+  [line 34]  for i in range(len(segment_b)):
+  Loop Start: i takes its first value ?
+  [line 35]  if i < len(segment_c):
+  Condition: True, entering 'if' block
+  [line 34]  for i in range(len(segment_b)):
+  Loop Iteration: i is now ? (iteration 2)
+  [line 35]  if i < len(segment_c):
+  Condition: True, entering 'if' block
+  [line 34]  for i in range(len(segment_b)):
+  Loop Iteration: i is now ? (iteration 3)
+  [line 35]  if i < len(segment_c):
+  Condition: True, entering 'if' block
+  [line 34]  for i in range(len(segment_b)):
+  Loop End: Iteration finished
+  [line 41]  print(f"Result: {encrypted_message}")
+  Output: f"Result: {encrypted_message}"
+  [line 42]  return encrypted_message
+  Return: encrypted_message=55 (defined at [line 33])
+Function process_message returns 55
+
+Answer: encrypted_message = 55 (last updated on defined at [line 33])

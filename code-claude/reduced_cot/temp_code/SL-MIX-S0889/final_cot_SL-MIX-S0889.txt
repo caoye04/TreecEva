@@ -1,0 +1,92 @@
+Target: Find the value of variable dominant_frequency after [line 47] executes
+
+[line 3]  processed_signal = []
+Compute: [] = []
+[line 4]  noise_threshold = 5  # Noise reduction parameter
+Assign: noise_threshold = 5
+[line 7]  for i in range(len(raw_signal)):
+Loop Start: i takes its first value 0
+[line 8]  if raw_signal[i] > noise_threshold:
+Condition: True, entering 'if' block
+[line 7]  for i in range(len(raw_signal)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 8]  if raw_signal[i] > noise_threshold:
+Condition: True, entering 'if' block
+... [Line 7] repeats 12 more times ...
+... [Line 7] repeats 12 more times ...
+[line 7]  for i in range(len(raw_signal)):
+Loop Iteration: i is now 14 (iteration 15)
+[line 8]  if raw_signal[i] > noise_threshold:
+Condition: True, entering 'if' block
+[line 7]  for i in range(len(raw_signal)):
+Loop End: Iteration finished
+[line 14]  segments = []
+Compute: [] = []
+[line 15]  for i in range(0, len(processed_signal), window_size):
+Loop Start: i takes its first value 0
+[line 16]  segment = processed_signal[i:i+window_size]
+Compute: processed_signal[i:i+window_size], where processed_signal=[5, 10, 6, 12, 7, ...] (defined at [line 3]), i=0 (defined at [line 15]), window_size=3 (an unknown source) = [5, 10, 6]
+[line 17]  if len(segment) == window_size:  # Only consider complete segments
+Condition: True, entering 'if' block
+[line 15]  for i in range(0, len(processed_signal), window_size):
+Loop Iteration: i is now 3 (iteration 2)
+[line 16]  segment = processed_signal[i:i+window_size]
+Compute: processed_signal[i:i+window_size], where processed_signal=[5, 10, 6, 12, 7, ...] (defined at [line 3]), i=3 (defined at [line 15]), window_size=3 (an unknown source) = [12, 7, 13]
+[line 17]  if len(segment) == window_size:  # Only consider complete segments
+Condition: True, entering 'if' block
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+[line 15]  for i in range(0, len(processed_signal), window_size):
+Loop Iteration: i is now 12 (iteration 5)
+[line 16]  segment = processed_signal[i:i+window_size]
+Compute: processed_signal[i:i+window_size], where processed_signal=[5, 10, 6, 12, 7, ...] (defined at [line 3]), i=12 (defined at [line 15]), window_size=3 (an unknown source) = [6, 12, 7]
+[line 17]  if len(segment) == window_size:  # Only consider complete segments
+Condition: True, entering 'if' block
+[line 15]  for i in range(0, len(processed_signal), window_size):
+Loop End: Iteration finished
+[line 21]  segment_averages = [sum(segment)/len(segment) for segment in segments]
+Compute: [sum(segment)/len(segment) for segment in segments], where segment=[5, 10, 6] (defined at [line 16]), segments=[[5, 10, 6], [12, 7, 13], [8, 12, 6], [11, 7, 13], [6, 12, 7]] (defined at [line 14]) = ?
+[line 25]  frequency_amplitudes = []
+Compute: [] = []
+[line 28]  for avg in segment_averages:
+Loop Start: avg takes its first value 7.0
+[line 28]  for avg in segment_averages:
+Loop End: Iteration finished
+[line 28]  for avg in segment_averages:
+Loop End: Iteration finished
+[line 28]  for avg in segment_averages:
+Loop End: Iteration finished
+[line 28]  for avg in segment_averages:
+Loop End: Iteration finished
+[line 28]  for avg in segment_averages:
+Loop End: Iteration finished
+[line 34]  frequency_data = {}
+Compute: {} = {}
+[line 35]  for amplitude in frequency_amplitudes:
+Loop Start: amplitude takes its first value 7
+[line 36]  if amplitude in frequency_data:
+Condition: True, entering 'if' block
+[line 39]  frequency_data[amplitude] = 1
+(Missing param: 'var')
+[line 35]  for amplitude in frequency_amplitudes:
+Loop Iteration: amplitude is now 11 (iteration 2)
+[line 36]  if amplitude in frequency_data:
+Condition: True, entering 'if' block
+[line 39]  frequency_data[amplitude] = 1
+(Missing param: 'var')
+... [Line 35] repeats 2 more times ...
+... [Line 35] repeats 2 more times ...
+... [Line 35] repeats 2 more times ...
+[line 35]  for amplitude in frequency_amplitudes:
+Loop Iteration: amplitude is now 8 (iteration 5)
+[line 36]  if amplitude in frequency_data:
+Condition: True, entering 'if' block
+[line 39]  frequency_data[amplitude] = 1
+(Missing param: 'var')
+[line 35]  for amplitude in frequency_amplitudes:
+Loop End: Iteration finished
+[line 47]  dominant_frequency = max(frequency_data, key=frequency_data.get)
+Call function max(frequency_data={7: 1, 11: 1, 9: 1, ...} (defined at [line 34]), key=frequency_data.get)
+
+Answer: dominant_frequency = 7 (last updated on defined at [line 47])

@@ -1,0 +1,45 @@
+Target: Find the value of variable target_frequency after [line 69] executes
+
+[line 50]  signal_raw = [18, -22, 15, -16, 20, -25, 17, -19, 21, -24, 16, -18]
+Compute: [18, -22, 15, -16, 20, -25, 17, -19, 21, -24, 16, -18] = [18, -22, 15, -16, 20, ...]
+[line 53]  background_noise = [5, -4, 6, -3, 4, -5, 3, -6]
+Compute: [5, -4, 6, -3, 4, -5, 3, -6] = [5, -4, 6, -3, 4, ...]
+[line 57]  if len(background_noise) > 10:
+Condition: True, entering 'if' block
+[line 66]  filtered_signals = process_signal(signal_raw)
+Call function process_signal(signal_raw=[18, -22, 15, -16, 20, ...] (defined at [line 50]))
+[line 3]  filtered = [x for x in signal_data if abs(x) > noise_threshold]
+Compute: [x for x in signal_data if abs(x) > noise_threshold], where x=18 (an unknown source), signal_data=[18, -22, 15, -16, 20, ...] (an unknown source), noise_threshold=15 (an unknown source) = ?
+[line 11]  return filtered
+Return: filtered=[18, -22, -16, 20, -25, ...] (defined at [line 3])
+[line 69]  target_frequency = calculate_frequency(filtered_signals)
+Call function calculate_frequency(filtered_signals=[18, -22, -16, 20, -25, ...] (defined at [line 66]))
+[line 19]  def calculate_frequency(signal_data):
+Enter function calculate_frequency: signal_data=[18, -22, -16, 20, -25, ...] (filtered_signals defined at [line 66])
+  [line 21]  if not signal_data:
+  Condition: True, entering 'if' block
+  [line 31]  base_frequency = sum(signal_data[::2]) - sum(signal_data[1::2])
+  Compute: sum(signal_data[::2]) - sum(signal_data[1::2]), where signal_data=[18, -22, -16, 20, -25, ...] (parameter signal_data defined at [line 66]) = -136
+  [line 13]  def calculate_amplitude(signal):
+  Enter function calculate_amplitude: signal=[18, -22, -16, 20, -25, ...]
+    [line 15]  if not signal:
+    Condition: True, entering 'if' block
+    [line 17]  return max(signal) - min(signal)
+    Return: max(signal) - min(signal)
+  Function calculate_amplitude returns 46
+  [line 38]  if len(signal_data) > 20:
+  Condition: True, entering 'if' block
+  [line 42]  elif len(signal_data) > 10:
+  'elif' Condition: True, entering block
+  [line 44]  return base_frequency / 2
+  Return: base_frequency / 2
+Function calculate_frequency returns -68.0
+[line 13]  def calculate_amplitude(signal):
+Enter function calculate_amplitude: signal=[18, -22, -16, 20, -25, ...] (filtered_signals defined at [line 66])
+  [line 15]  if not signal:
+  Condition: True, entering 'if' block
+  [line 17]  return max(signal) - min(signal)
+  Return: max(signal) - min(signal)
+Function calculate_amplitude returns 46
+
+Answer: target_frequency = 46 (last updated on defined at [line 69])

@@ -1,0 +1,78 @@
+Target: Find the value of variable active_sensors after [line 41] executes
+
+[line 16]  signal_strength = [82, 67, 91, 45, 88, 76, 59]
+Compute: [82, 67, 91, 45, 88, 76, 59] = [82, 67, 91, 45, 88, ...]
+[line 19]  sensor_status = [check_connection_quality(signal) for signal in signal_strength]
+Compute: [check_connection_quality(signal) for signal in signal_strength], where signal=82 (an unknown source), signal_strength=[82, 67, 91, 45, 88, ...] (defined at [line 16]) = ?
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=82 (an unknown source) = 1
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=67 (an unknown source) = 1
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=91 (an unknown source) = 1
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=45 (an unknown source) = 0
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=88 (an unknown source) = 1
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=76 (an unknown source) = 1
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 5]  noise_factor = signal % 3
+Compute: signal % 3, where signal=59 (an unknown source) = 2
+[line 6]  return signal > 75 - noise_factor
+Return: signal > 75 - noise_factor
+[line 22]  valid_readings = []
+Compute: [] = []
+[line 23]  for i, is_online in enumerate(sensor_status):
+(Missing param: 'iter_var')
+[line 25]  if is_online:
+Condition: True, entering 'if' block
+[line 23]  for i, is_online in enumerate(sensor_status):
+(Missing param: 'iter_var')
+[line 25]  if is_online:
+Condition: True, entering 'if' block
+... [Line 23] repeats 4 more times ...
+... [Line 23] repeats 4 more times ...
+[line 23]  for i, is_online in enumerate(sensor_status):
+(Missing param: 'iter_var')
+[line 25]  if is_online:
+Condition: True, entering 'if' block
+[line 23]  for i, is_online in enumerate(sensor_status):
+Loop End: Iteration finished
+[line 29]  threshold = 23.0
+Assign: threshold = 23.0
+[line 31]  for temp in valid_readings:
+Loop Start: temp takes its first value 22.7
+[line 32]  if temp > threshold:
+Condition: True, entering 'if' block
+[line 31]  for temp in valid_readings:
+Loop Iteration: temp is now 22.0 (iteration 2)
+[line 32]  if temp > threshold:
+Condition: True, entering 'if' block
+[line 31]  for temp in valid_readings:
+Loop Iteration: temp is now 22.9 (iteration 3)
+[line 32]  if temp > threshold:
+Condition: True, entering 'if' block
+[line 31]  for temp in valid_readings:
+Loop Iteration: temp is now 23.7 (iteration 4)
+[line 32]  if temp > threshold:
+Condition: True, entering 'if' block
+[line 31]  for temp in valid_readings:
+Loop End: Iteration finished
+[line 36]  active_sensors = sum(is_active for is_active in sensor_status if is_active)
+Call function sum(is_active for is_active in sensor_status if is_active)
+[line 41]  print(f"Result: {active_sensors}")
+Output: f"Result: {active_sensors}"
+
+Answer: active_sensors = 4 (last updated on defined at [line 36])

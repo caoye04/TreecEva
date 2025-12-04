@@ -1,0 +1,57 @@
+Target: Find the value of variable final_priority after [line 52] executes
+
+[line 3]  def process_ticket_queue(tickets, priority_levels):
+Enter function process_ticket_queue: tickets=[{id: 'T1', priority: 'high', severity: 8, ...}, {id: 'T2', priority: 'medium', severity: 5, ...}, {id: 'T3', priority: 'low', severity: 3, ...}, {id: 'T4', priority: 'high', severity: 7, ...}, {id: 'T5', priority: 'medium', severity: 4, ...}, ...], priority_levels=['high', 'medium', 'low']
+  [line 14]  priority_batches = {}
+  Compute: {} = {}
+  [line 15]  for level in priority_levels:
+  Loop Start: level takes its first value 'high'
+  [line 15]  for level in priority_levels:
+  Loop End: Iteration finished
+  [line 15]  for level in priority_levels:
+  Loop End: Iteration finished
+  [line 15]  for level in priority_levels:
+  Loop End: Iteration finished
+  [line 31]  priority_score = 0
+  Assign: priority_score = 0
+  [line 32]  for level, batch in priority_batches.items():
+  (Missing param: 'iter_var')
+  [line 34]  level_factor = priority_levels.index(level) + 1
+  Compute: priority_levels.index(level) + 1, where priority_levels=['high', 'medium', 'low'] (parameter priority_levels), level='high' (defined at [line 15]) = 1
+  [line 35]  severity_impact = batch['severity_sum'] * 0.5
+  Compute: batch['severity_sum'] * 0.5, where batch={count: 2, avg_response: 36.5, severity_sum: 17} (an unknown source) = 8.5
+  [line 36]  count_impact = batch['count'] * 2
+  Compute: batch['count'] * 2, where batch={count: 2, avg_response: 36.5, severity_sum: 17} (an unknown source) = 4
+  [line 39]  priority_score += (level_factor * (severity_impact + count_impact))
+  Update: priority_score changed from 0 (defined at defined at [line 31]) to 0+(level_factor * (severity_impact + count_impact)) = 12.5
+  [line 32]  for level, batch in priority_batches.items():
+  (Missing param: 'iter_var')
+  [line 34]  level_factor = priority_levels.index(level) + 1
+  Compute: priority_levels.index(level) + 1, where priority_levels=['high', 'medium', 'low'] (parameter priority_levels), level='medium' (defined at [line 15]) = 2
+  [line 35]  severity_impact = batch['severity_sum'] * 0.5
+  Compute: batch['severity_sum'] * 0.5, where batch={count: 2, avg_response: 32.5, severity_sum: 9} (an unknown source) = 4.5
+  [line 36]  count_impact = batch['count'] * 2
+  Compute: batch['count'] * 2, where batch={count: 2, avg_response: 32.5, severity_sum: 9} (an unknown source) = 4
+  [line 39]  priority_score += (level_factor * (severity_impact + count_impact))
+  Update: priority_score changed from 12.5 (defined at defined at [line 39]) to 12.5+(level_factor * (severity_impact + count_impact)) = 29.5
+  [line 32]  for level, batch in priority_batches.items():
+  (Missing param: 'iter_var')
+  [line 34]  level_factor = priority_levels.index(level) + 1
+  Compute: priority_levels.index(level) + 1, where priority_levels=['high', 'medium', 'low'] (parameter priority_levels), level='low' (defined at [line 15]) = 3
+  [line 35]  severity_impact = batch['severity_sum'] * 0.5
+  Compute: batch['severity_sum'] * 0.5, where batch={count: 1, avg_response: 32.0, severity_sum: 3} (an unknown source) = 1.5
+  [line 36]  count_impact = batch['count'] * 2
+  Compute: batch['count'] * 2, where batch={count: 1, avg_response: 32.0, severity_sum: 3} (an unknown source) = 2
+  [line 39]  priority_score += (level_factor * (severity_impact + count_impact))
+  Update: priority_score changed from 29.5 (defined at defined at [line 39]) to 29.5+(level_factor * (severity_impact + count_impact)) = 40.0
+  [line 32]  for level, batch in priority_batches.items():
+  Loop End: Iteration finished
+  [line 42]  normalized_score = int(priority_score / len(priority_levels))
+  Call function int(priority_score / len(priority_levels))
+  [line 52]  final_priority = normalized_score
+  Compute: normalized_score, where normalized_score=13 (defined at [line 42]) = 13
+  [line 54]  return final_priority
+  Return: final_priority=13 (defined at [line 52])
+Function process_ticket_queue returns 13
+
+Answer: final_priority = 13 (last updated on defined at [line 52])

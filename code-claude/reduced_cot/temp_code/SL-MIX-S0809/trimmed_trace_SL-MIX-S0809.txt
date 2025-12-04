@@ -1,0 +1,579 @@
+85
+crypto_value
+---
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['0']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['1']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['2']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['3']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['4']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['5']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['6']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['7']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['8']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['i'] ['9']
+16 blockchain_data = [(i * 7) % 23 for i in range(10)]
+16 ['blockchain_data'] ['[0, 7, 14, 21, 5, ...]']
+17 mining_difficulty = 65  # Higher means easier validation
+17 ['blockchain_data', 'mining_difficulty'] ['[0, 7, 14, 21, 5, ...]', '65']
+18 transaction_fees = [0.05, 0.12, 0.08, 0.21, 0.15, 0.03, 0.09, 0.14, 0.07, 0.11]
+18 ['blockchain_data', 'mining_difficulty', 'transaction_fees'] ['[0, 7, 14, 21, 5, ...]', '65', '[0.05, 0.12, 0.08, 0.21, 0.15, ...]']
+84 crypto_value = calculate_final_value(blockchain_data, mining_difficulty)
+84 ['blockchain_data', 'mining_difficulty', 'transaction_fees'] ['[0, 7, 14, 21, 5, ...]', '65', '[0.05, 0.12, 0.08, 0.21, 0.15, ...]']
+PARAM_MAPPING {'blockchain_data': {'actual_var': 'blockchain_data', 'value': [0, 7, 14, 21, 5, 12, 19, 3, 10, 17]}, 'difficulty': {'actual_var': 'mining_difficulty', 'value': 65}}
+FUNCTION_ENTER 43 calculate_final_value def calculate_final_value(blockchain_data, difficulty):
+43 ['blockchain_data', 'difficulty'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 17}], '_len': 10}, {'_type': 'int', '_value': 65}]
+44 base_value = sum(blockchain_data) // 3
+44 ['blockchain_data', 'difficulty', 'base_value'] ['[0, 7, 14, 21, 5, ...]', '65', '36']
+45 valid_blocks = 0
+45 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '0']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '0', '0']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '0', '0']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['0', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 0}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 0}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['0', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['0', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '0', '0', '48']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '0', '0', '48']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '48', '0', '48']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '48', '0', '48']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '48', '1', '48']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '48', '1', '48']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '384', '1', '48']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '432', '1', '48']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '432', '1', '48']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '432', '1', '48']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['0', '2', '432', '1', '48']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 432}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['0', '65', '432']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '1', '0']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '1', '7']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '1', '7']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['7', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 7}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['7', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['7', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '0', '0', '55']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '0', '0', '55']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '55', '0', '55']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '55', '0', '55']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '55', '1', '55']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '55', '1', '55']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '440', '1', '55']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '399', '1', '55']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '399', '1', '55']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '399', '1', '55']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['7', '2', '399', '1', '55']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 399}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['7', '65', '399']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '1', '14']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '1', '14']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['14', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 14}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 14}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['14', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['14', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '0', '0', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '0', '0', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '49', '0', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '49', '0', '52']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '392', '0', '52']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '444', '0', '52']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '444', '0', '52']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '444', '1', '52']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '444', '1', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '3552', '1', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '3537', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '3537', '1', '52']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '28296', '1', '52']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '28348', '1', '52']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '28348', '1', '52']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '28348', '1', '52']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['14', '2', '28348', '1', '52']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 28348}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['14', '65', '28348']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '2', '14']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '2', '21']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '2', '21']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['21', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 21}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['21', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['21', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '0', '0', '50']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '0', '0', '50']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '50', '0', '50']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '50', '0', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '400', '0', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '417', '0', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '417', '0', '49']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '417', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '417', '1', '50']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '3336', '1', '50']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '3386', '1', '50']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '3386', '1', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '27088', '1', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '27105', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '27105', '1', '49']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '27105', '1', '49']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['21', '2', '27105', '1', '49']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 27105}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['21', '65', '27105']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '3', '21']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '3', '5']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '3', '5']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['5', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 5}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['5', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['5', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '0', '0', '53']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '0', '0', '53']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '53', '0', '53']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '53', '0', '53']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '53', '1', '53']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '53', '1', '53']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '424', '1', '53']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '413', '1', '53']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '413', '1', '53']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '413', '1', '53']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['5', '2', '413', '1', '53']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 413}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['5', '65', '413']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '4', '5']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '4', '12']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '4', '12']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['12', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 12}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['12', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['12', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '0', '0', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '0', '0', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '49', '0', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '49', '0', '50']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '392', '0', '50']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '442', '0', '50']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '442', '0', '50']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '442', '1', '50']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '442', '1', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '3536', '1', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '3553', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '3553', '1', '50']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '28424', '1', '50']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '28474', '1', '50']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '28474', '1', '50']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '28474', '1', '50']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['12', '2', '28474', '1', '50']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 28474}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['12', '65', '28474']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '4', '19']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '4', '19']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['19', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 19}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['19', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['19', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '0', '0', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '0', '0', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '49', '0', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '49', '0', '57']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '392', '0', '57']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '433', '0', '57']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '433', '0', '57']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '433', '1', '57']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '433', '1', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '3464', '1', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '3513', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '3513', '1', '57']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '28104', '1', '57']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '28145', '1', '57']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '28145', '1', '57']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '28145', '1', '57']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['19', '2', '28145', '1', '57']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 28145}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['19', '65', '28145']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '5', '19']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '5', '3']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '5', '3']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['3', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 3}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['3', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['3', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '0', '0', '51']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '0', '0', '51']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '51', '0', '51']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '51', '0', '51']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '51', '1', '51']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '51', '1', '51']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '408', '1', '51']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '427', '1', '51']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '427', '1', '51']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '427', '1', '51']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['3', '2', '427', '1', '51']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 427}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['3', '65', '427']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '6', '3']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '6', '10']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '6', '10']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['10', '65']
+PARAM_MAPPING {'data': {'actual_var': 'block_data', 'value': 10}, 'iterations': {'actual_var': '2', 'value': '2'}}
+FUNCTION_ENTER 1 apply_hash_function def apply_hash_function(data, iterations=1):
+1 ['data', 'iterations'] [{'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 2}]
+3 result = 0
+3 ['data', 'iterations', 'result'] ['10', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['10', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '0', '0', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '0', '0', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '49', '0', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '49', '0', '48']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '392', '0', '48']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '440', '0', '48']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '440', '0', '48']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '440', '1', '48']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '440', '1', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '3520', '1', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '3569', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '3569', '1', '48']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '28552', '1', '48']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '28600', '1', '48']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '28600', '1', '48']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '28600', '1', '48']
+8 return result
+8 ['data', 'iterations', 'result', 'i', 'byte'] ['10', '2', '28600', '1', '48']
+FUNCTION_RETURN 8 apply_hash_function {'_type': 'int', '_value': 28600}
+13 return hash_value % 100 < threshold
+13 ['block_data', 'threshold', 'hash_value'] ['10', '65', '28600']
+50 valid_blocks += 1
+50 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '7', '10']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '7', '17']
+49 if validate_block(block, difficulty):
+49 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '7', '17']
+12 hash_value = apply_hash_function(block_data, 2)
+12 ['block_data', 'threshold'] ['17', '65']
+3 result = 0
+3 ['data', 'iterations', 'result'] ['17', '2', '0']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['17', '2', '0', '0']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '0', '0', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '0', '0', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '49', '0', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '49', '0', '55']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '392', '0', '55']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '447', '0', '55']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '447', '0', '55']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '447', '1', '55']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '447', '1', '49']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '3576', '1', '49']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '3529', '1', '49']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '3529', '1', '55']
+6 result = ((result << 3) | (result >> 29)) & 0xFFFFFFFF
+6 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '28232', '1', '55']
+7 result ^= byte
+7 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '28287', '1', '55']
+5 for byte in str(data).encode():
+5 ['data', 'iterations', 'result', 'i', 'byte'] ['17', '2', '28287', '1', '55']
+4 for i in range(iterations):
+4 ['data', 'iterations', 'result', 'i'] ['17', '2', '28287', '1']
+8 return result
+8 ['data', 'result', 'i'] ['17', '28287', '1']
+13 return hash_value % 100 < threshold
+13 ['threshold', 'hash_value'] ['65', '28287']
+48 for block in blockchain_data:
+48 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks', 'block'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '7', '17']
+53 transform = lambda x, y: (x * 2) + (y % 10)
+53 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '7']
+62 mining_reward = calculate_mining_reward(difficulty)
+62 ['blockchain_data', 'difficulty', 'base_value', 'valid_blocks'] ['[0, 7, 14, 21, 5, ...]', '65', '36', '7']
+PARAM_MAPPING {'difficulty': {'actual_var': 'difficulty', 'value': 65}}
+FUNCTION_ENTER 36 calculate_mining_reward def calculate_mining_reward(difficulty, base_reward=50):
+36 ['difficulty', 'base_reward'] [{'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 50}]
+37 halving_factor = 2 ** (difficulty // 20)
+37 ['difficulty', 'base_reward', 'halving_factor'] ['65', '50', '8']
+38 if halving_factor == 0:  # Distractor condition
+38 ['base_reward', 'halving_factor'] ['50', '8']
+40 return base_reward / halving_factor
+40 ['base_reward', 'halving_factor'] ['50', '8']
+FUNCTION_RETURN 40 calculate_mining_reward {'_type': 'float', '_value': 6.25}
+63 adjusted_value = base_value + (valid_blocks * mining_reward)
+63 ['blockchain_data', 'base_value', 'valid_blocks', 'mining_reward', 'adjusted_value'] ['[0, 7, 14, 21, 5, ...]', '36', '7', '6.25', '79.75']
+29 volatility = {}
+29 ['data', 'volatility'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}']
+30 for coin, prices in data.items():
+30 ['data', 'volatility', 'coin', 'prices'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]', '1']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]', '2']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]', '3']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]', '4']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]', '[266, 460, 750, 320]']
+32 volatility[coin] = sum(diffs) / len(diffs)
+32 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'BTC'", '[42156, 41890, 42350, 43100, 42780]', '[266, 460, 750, 320]']
+30 for coin, prices in data.items():
+30 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '[266, 460, 750, 320]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '1', '[266, 460, 750, 320]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '2', '[266, 460, 750, 320]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '3', '[266, 460, 750, 320]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '4', '[266, 460, 750, 320]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '[15, 35, 80, 30]']
+32 volatility[coin] = sum(diffs) / len(diffs)
+32 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'ETH'", '[2890, 2905, 2870, 2950, 2920]', '[15, 35, 80, 30]']
+30 for coin, prices in data.items():
+30 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'SOL'", '[103, 107, 105, 110, 108]', '[15, 35, 80, 30]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'SOL'", '[103, 107, 105, 110, 108]', '1', '[15, 35, 80, 30]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'SOL'", '[103, 107, 105, 110, 108]', '2', '[15, 35, 80, 30]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'SOL'", '[103, 107, 105, 110, 108]', '3', '[15, 35, 80, 30]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'i', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'SOL'", '[103, 107, 105, 110, 108]', '4', '[15, 35, 80, 30]']
+31 diffs = [abs(prices[i] - prices[i-1]) for i in range(1, len(prices))]
+31 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0}', "'SOL'", '[103, 107, 105, 110, 108]', '[4, 2, 5, 2]']
+32 volatility[coin] = sum(diffs) / len(diffs)
+32 ['data', 'volatility', 'coin', 'prices', 'diffs'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0, SOL: 3.25}', "'SOL'", '[103, 107, 105, 110, 108]', '[4, 2, 5, 2]']
+30 for coin, prices in data.items():
+30 ['data', 'volatility', 'coin', 'prices'] ['{BTC: [42156, 41890, 42350, 43100, 42780], ETH: [2890, 2905, 2870, 2950, 2920], SOL: [103, 107, 105, 110, 108]}', '{BTC: 449.0, ETH: 40.0, SOL: 3.25}', "'SOL'", '[103, 107, 105, 110, 108]']
+33 return volatility
+33 ['volatility'] ['{BTC: 449.0, ETH: 40.0, SOL: 3.25}']
+70 tx_revenue = sum(transaction_fees[:valid_blocks]) if valid_blocks > 0 else 0
+70 ['blockchain_data', 'valid_blocks', 'adjusted_value', 'tx_revenue'] ['[0, 7, 14, 21, 5, ...]', '7', '79.75', '0.73']
+73 security_coefficient = valid_blocks / len(blockchain_data)
+73 ['blockchain_data', 'valid_blocks', 'adjusted_value', 'tx_revenue', 'security_coefficient'] ['[0, 7, 14, 21, 5, ...]', '7', '79.75', '0.73', '0.7']
+74 final_value = transform(adjusted_value, valid_blocks) + tx_revenue
+74 ['valid_blocks', 'adjusted_value', 'tx_revenue', 'security_coefficient'] ['7', '79.75', '0.73', '0.7']
+76 if security_coefficient > 0.7:  # Distractor condition
+76 ['security_coefficient', 'final_value'] ['0.7', '167.23']
+81 return int(final_value)
+81 ['final_value'] ['167.23']
+FUNCTION_RETURN 81 calculate_final_value {'_type': 'int', '_value': 167}
+85 print(f"Target result: {crypto_value}")
+85 ['crypto_value'] ['167']

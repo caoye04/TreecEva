@@ -1,0 +1,51 @@
+55
+optimal_crop_yield
+---
+43 rainfall_data = [45, 52, 37, 41, 58, 63, 25]
+43 ['rainfall_data'] ['[45, 52, 37, 41, 58, ...]']
+44 soil_quality = 7
+44 ['rainfall_data', 'soil_quality'] ['[45, 52, 37, 41, 58, ...]', '7']
+52 optimal_crop_yield = calculate_yield(rainfall_data, soil_quality)
+52 ['rainfall_data', 'soil_quality'] ['[45, 52, 37, 41, 58, ...]', '7']
+11 initial_estimate = sum(rainfall) / len(rainfall)
+11 ['rainfall', 'quality', 'initial_estimate'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854']
+15 for i in range(0, len(rainfall), 3):
+15 ['rainfall', 'quality', 'initial_estimate', 'i'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '0']
+16 season_slice = rainfall[i:i+3]
+16 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '0', '[45, 52, 37]']
+17 if season_slice:
+17 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '0', '[45, 52, 37]']
+15 for i in range(0, len(rainfall), 3):
+15 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '3', '[45, 52, 37]']
+16 season_slice = rainfall[i:i+3]
+16 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '3', '[41, 58, 63]']
+17 if season_slice:
+17 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '3', '[41, 58, 63]']
+15 for i in range(0, len(rainfall), 3):
+15 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '6', '[41, 58, 63]']
+16 season_slice = rainfall[i:i+3]
+16 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '6', '[25]']
+17 if season_slice:
+17 ['rainfall', 'quality', 'initial_estimate', 'i', 'season_slice'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '6', '[25]']
+15 for i in range(0, len(rainfall), 3):
+15 ['rainfall', 'quality', 'initial_estimate', 'i'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '6']
+31 effective_rain = rainfall[1:6]
+31 ['rainfall', 'quality', 'initial_estimate', 'effective_rain'] ['[45, 52, 37, 41, 58, ...]', '7', '45.857142857142854', '[52, 37, 41, 58, 63]']
+32 growth_factor = calculate_growth_factor(sum(effective_rain) / len(effective_rain), quality)
+32 ['quality', 'initial_estimate', 'effective_rain'] ['7', '45.857142857142854', '[52, 37, 41, 58, 63]']
+PARAM_MAPPING {'rain': {'actual_var': 'sum(effective_rain) / len(effective_rain)', 'value': 'sum(effective_rain) / len(effective_rain)'}, 'quality': {'actual_var': 'quality', 'value': 7}}
+FUNCTION_ENTER 3 calculate_growth_factor def calculate_growth_factor(rain, quality):
+3 ['rain', 'quality'] [{'_type': 'float', '_value': 50.2}, {'_type': 'int', '_value': 7}]
+5 base_factor = min(rain * 0.5, 100) / 100
+5 ['rain', 'quality', 'base_factor'] ['50.2', '7', '0.251']
+6 quality_factor = quality / 10
+6 ['quality', 'base_factor', 'quality_factor'] ['7', '0.251', '0.7']
+7 return base_factor * quality_factor
+7 ['base_factor', 'quality_factor'] ['0.251', '0.7']
+FUNCTION_RETURN 7 calculate_growth_factor {'_type': 'float', '_value': 0.1757}
+39 base_yield = initial_estimate * growth_factor * 2.5
+39 ['initial_estimate', 'growth_factor', 'base_yield'] ['45.857142857142854', '0.1757', '20.142749999999996']
+40 return int(base_yield)
+40 ['base_yield'] ['20.142749999999996']
+55 print(f"Result: {optimal_crop_yield}")
+55 ['optimal_crop_yield'] ['20']

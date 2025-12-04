@@ -1,0 +1,67 @@
+Target: Find the value of variable priority_score after [line 54] executes
+
+[line 32]  def process_tasks(task_list):
+Enter function process_tasks: task_list=[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]
+  [line 34]  urgency_counts = {}
+  Compute: {} = {}
+  [line 35]  for task in task_list:
+  Loop Start: task takes its first value {id: 'T1', name: 'Database backup', urgency: 4, ...}
+  [line 36]  urgency = task['urgency']
+  Compute: task['urgency'], where task={id: 'T1', name: 'Database backup', urgency: 4, ...} (defined at [line 35]) = 4
+  [line 37]  if urgency in urgency_counts:
+  Condition: True, entering 'if' block
+  [line 40]  urgency_counts[urgency] = 1
+  (Missing param: 'var')
+  [line 35]  for task in task_list:
+  Loop Iteration: task is now {id: 'T2', name: 'Security audit', urgency: 5, ...} (iteration 2)
+  [line 36]  urgency = task['urgency']
+  Compute: task['urgency'], where task={id: 'T2', name: 'Security audit', urgency: 5, ...} (defined at [line 35]), urgency=4 (defined at [line 36]) = 5
+  [line 37]  if urgency in urgency_counts:
+  Condition: True, entering 'if' block
+  [line 40]  urgency_counts[urgency] = 1
+  (Missing param: 'var')
+... [Line 35] repeats 2 more times ...
+... [Line 35] repeats 2 more times ...
+... [Line 35] repeats 2 more times ...
+... [Line 35] repeats 2 more times ...
+  [line 35]  for task in task_list:
+  Loop Iteration: task is now {id: 'T5', name: 'Documentation', urgency: 1, ...} (iteration 5)
+  [line 36]  urgency = task['urgency']
+  Compute: task['urgency'], where task={id: 'T5', name: 'Documentation', urgency: 1, ...} (defined at [line 35]), urgency=2 (defined at [line 36]) = 1
+  [line 37]  if urgency in urgency_counts:
+  Condition: True, entering 'if' block
+  [line 35]  for task in task_list:
+  Loop End: Iteration finished
+  [line 47]  filtered_tasks = []
+  Compute: [] = []
+  [line 48]  for idx, task in enumerate(task_list):
+  (Missing param: 'iter_var')
+  [line 50]  if idx % 2 == 0 or task['complexity'] > 2:
+  Condition: True, entering 'if' block
+  [line 48]  for idx, task in enumerate(task_list):
+  (Missing param: 'iter_var')
+  [line 50]  if idx % 2 == 0 or task['complexity'] > 2:
+  Condition: True, entering 'if' block
+... [Line 48] repeats 2 more times ...
+... [Line 48] repeats 2 more times ...
+  [line 48]  for idx, task in enumerate(task_list):
+  (Missing param: 'iter_var')
+  [line 50]  if idx % 2 == 0 or task['complexity'] > 2:
+  Condition: True, entering 'if' block
+  [line 48]  for idx, task in enumerate(task_list):
+  Loop End: Iteration finished
+  [line 54]  priority_score = calculate_priority(filtered_tasks[2:])
+  Call function calculate_priority(filtered_tasks[2:])
+  [line 5]  if not tasks:
+  Condition: True, entering 'if' block
+  [line 10]  complexity = max(task['complexity'] for task in tasks)
+  Call function max(task['complexity'] for task in tasks)
+  [line 14]  max_complexity = complexity
+  Compute: complexity, where complexity=6 (defined at [line 10]) = 6
+  [line 20]  return max_complexity * 10
+  Return: max_complexity * 10
+  [line 56]  return priority_score
+  Return: priority_score=60 (defined at [line 54])
+Function process_tasks returns 60
+
+Answer: priority_score = 60 (last updated on defined at [line 54])

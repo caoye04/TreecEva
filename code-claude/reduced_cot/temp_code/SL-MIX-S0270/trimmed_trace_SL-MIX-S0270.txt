@@ -1,0 +1,39 @@
+22
+overlap
+---
+PARAM_MAPPING {'doc1': {'actual_var': 'doc1', 'value': 'The quick brown fox jumps over the lazy dog'}, 'doc2': {'actual_var': 'doc2', 'value': 'A quick brown dog jumps over the fence'}}
+FUNCTION_ENTER 4 analyze_document_similarity def analyze_document_similarity(doc1, doc2):
+4 ['doc1', 'doc2'] [{'_type': 'str', '_value': 'The quick brown fox jumps over the lazy dog'}, {'_type': 'str', '_value': 'A quick brown dog jumps over the fence'}]
+6 words1 = doc1.lower().split()
+6 ['doc1', 'doc2', 'words1'] ["'The quick brown fox jumps over the lazy dog'", "'A quick brown dog jumps over the fence'", "['the', 'quick', 'brown', 'fox', 'jumps', ...]"]
+7 words2 = doc2.lower().split()
+7 ['doc2', 'words1', 'words2'] ["'A quick brown dog jumps over the fence'", "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'brown', 'dog', 'jumps', ...]"]
+10 counter1 = Counter(words1)
+10 ['words1', 'words2', 'counter1'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'brown', 'dog', 'jumps', ...]", '{the: 2, quick: 1, brown: 1, ...}']
+11 counter2 = Counter(words2)
+11 ['words2', 'counter1', 'counter2'] ["['a', 'quick', 'brown', 'dog', 'jumps', ...]", '{the: 2, quick: 1, brown: 1, ...}', '{a: 1, quick: 1, brown: 1, ...}']
+14 unique_words1 = set(counter1.keys())
+14 ['counter1', 'counter2', 'unique_words1'] ['{the: 2, quick: 1, brown: 1, ...}', '{a: 1, quick: 1, brown: 1, ...}', "{'dog', 'over', 'quick', 'brown', 'fox', ...}"]
+15 unique_words2 = set(counter2.keys())
+15 ['counter2', 'unique_words1', 'unique_words2'] ['{a: 1, quick: 1, brown: 1, ...}', "{'dog', 'over', 'quick', 'brown', 'fox', ...}", "{'dog', 'over', 'a', 'fence', 'quick', ...}"]
+18 common_elements = unique_words1.intersection(unique_words2)
+18 ['unique_words1', 'unique_words2', 'common_elements'] ["{'dog', 'over', 'quick', 'brown', 'fox', ...}", "{'dog', 'over', 'a', 'fence', 'quick', ...}", "{'dog', 'over', 'quick', 'brown', 'the', ...}"]
+22 overlap = len(common_elements)
+22 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+29 for word in common_elements:
+29 ['common_elements', 'overlap'] ["{'dog', 'over', 'quick', 'brown', 'the', ...}", '6']
+40 return overlap
+40 ['overlap'] ['6']
+FUNCTION_RETURN 40 analyze_document_similarity {'_type': 'int', '_value': 6}

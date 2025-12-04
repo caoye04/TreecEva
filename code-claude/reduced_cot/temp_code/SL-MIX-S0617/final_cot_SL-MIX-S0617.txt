@@ -1,0 +1,130 @@
+Target: Find the value of variable priority_score after [line 102] executes
+
+[line 60]  text_corpus = "The QUICK brown FOX jumps OVER the lazy DOG and runs AWAY from hunters"
+Assign: text_corpus = 'The QUICK brown FOX jumps OVER the lazy DOG and runs AWAY from hunters'
+[line 63]  sentiment = analyze_sentiment(text_corpus)
+Call function analyze_sentiment(text_corpus='The QUICK brown FOX jumps OVER the lazy DOG and runs AWAY from hunters' (defined at [line 60]))
+[line 16]  def analyze_sentiment(text):
+Enter function analyze_sentiment: text='The QUICK brown FOX jumps OVER the lazy DOG and runs AWAY from hunters' (text_corpus defined at [line 60])
+  [line 18]  positive_words = {'good', 'great', 'excellent', 'best'}
+  Compute: {'good', 'great', 'excellent', 'best'} = {'great', 'excellent', 'best', 'good'}
+  [line 19]  negative_words = {'bad', 'worst', 'terrible', 'poor'}
+  Compute: {'bad', 'worst', 'terrible', 'poor'} = {'terrible', 'bad', 'poor', 'worst'}
+  [line 21]  words = text.lower().split()
+  (Missing param: 'func_name')
+  [line 22]  pos_count = sum(1 for word in words if word in positive_words)
+  Call function sum(1 for word in words if word in positive_words)
+  [line 23]  neg_count = sum(1 for word in words if word in negative_words)
+  Call function sum(1 for word in words if word in negative_words)
+  [line 25]  if pos_count > neg_count:
+  Condition: True, entering 'if' block
+  [line 27]  elif neg_count > pos_count:
+  'elif' Condition: True, entering block
+  [line 29]  return 0
+  Return: 0
+Function analyze_sentiment returns 0
+[line 7]  def process_keywords(text_data):
+Enter function process_keywords: text_data='The QUICK brown FOX jumps OVER the lazy DOG and runs AWAY from hunters' (text_corpus defined at [line 60])
+  [line 9]  words = text_data.split()
+  (Missing param: 'func_name')
+  [line 10]  processed = [w.strip('.,!?').lower() for w in words if len(w) > 2]
+  Compute: [w.strip('.,!?').lower() for w in words if len(w) > 2], where w='The' (an unknown source), words=['The', 'QUICK', 'brown', 'FOX', 'jumps', ...] (an unknown source) = ?
+  [line 11]  frequencies = {}
+  Compute: {} = {}
+  [line 12]  for word in processed:
+  Loop Start: word takes its first value 'the'
+  [line 13]  frequencies[word] = frequencies.get(word, 0) + 1
+  (Missing param: 'result')
+  [line 12]  for word in processed:
+  Loop Iteration: word is now 'quick' (iteration 2)
+  [line 13]  frequencies[word] = frequencies.get(word, 0) + 1
+  (Missing param: 'result')
+... [Line 12] repeats 11 more times ...
+... [Line 12] repeats 11 more times ...
+  [line 12]  for word in processed:
+  Loop Iteration: word is now 'hunters' (iteration 14)
+  [line 13]  frequencies[word] = frequencies.get(word, 0) + 1
+  (Missing param: 'result')
+  [line 12]  for word in processed:
+  Loop End: Iteration finished
+  [line 14]  return frequencies
+  Return: frequencies={the: 2, quick: 1, brown: 1, ...} (defined at [line 11])
+Function process_keywords returns {the: 2, quick: 1, brown: 1, ...}
+[line 3]  common_chars = set(s1.lower()) & set(s2.lower())
+Compute: set(s1.lower()) & set(s2.lower()), where s1='fox' (an unknown source), s2='box' (an unknown source) = {'x', 'o'}
+[line 4]  unique_chars = set(s1.lower()) | set(s2.lower())
+Compute: set(s1.lower()) | set(s2.lower()), where s1='fox' (an unknown source), s2='box' (an unknown source) = {'b', 'f', 'x', 'o'}
+[line 5]  return len(common_chars) / len(unique_chars) if unique_chars else 0
+Return: len(common_chars) / len(unique_chars) if unique_chars else 0
+[line 68]  total_chars = len(text_corpus)
+Call function len(text_corpus='The QUICK brown FOX jumps OVER the lazy DOG and runs AWAY from hunters' (defined at [line 60]))
+[line 69]  unique_chars = len(set(text_corpus.lower()))
+Call function len(set(text_corpus.lower()))
+[line 70]  char_ratio = unique_chars / total_chars if total_chars else 0
+Compute: unique_chars / total_chars if total_chars else 0, where unique_chars=27 (defined at [line 69]), total_chars=70 (defined at [line 68]) = 0.38571428571428573
+[line 73]  all_words = text_corpus.split()
+(Missing param: 'func_name')
+[line 74]  capitalized = [word for word in all_words if word[0].isupper()]
+Compute: [word for word in all_words if word[0].isupper()], where word='The' (defined at [line 12]), all_words=['The', 'QUICK', 'brown', 'FOX', 'jumps', ...] (an unknown source) = ?
+[line 89]  if sentiment > 0 and char_ratio > 0.5:
+Condition: True, entering 'if' block
+[line 94]  filtered_words = [word for word in all_words if word.lower() in importance_map or word.isupper()]
+Compute: [word for word in all_words if word.lower() in importance_map or word.isupper()], where word='The' (defined at [line 12]), all_words=['The', 'QUICK', 'brown', 'FOX', 'jumps', ...] (an unknown source), importance_map={quick: 15, brown: 7, fox: 20, ...} (an unknown source) = ?
+[line 97]  if len(capitalized) > len(filtered_words):
+Condition: True, entering 'if' block
+[line 102]  priority_score = calculate_final_priority(filtered_words, importance_map)
+Call function calculate_final_priority(filtered_words=['QUICK', 'brown', 'FOX', 'jumps', 'OVER', ...] (defined at [line 94]), importance_map={quick: 15, brown: 7, fox: 20, ...} (an unknown source))
+[line 31]  def calculate_final_priority(words, importance):
+Enter function calculate_final_priority: words=['QUICK', 'brown', 'FOX', 'jumps', 'OVER', ...] (filtered_words defined at [line 94]), importance={quick: 15, brown: 7, fox: 20, ...}
+  [line 33]  if not words:
+  Condition: True, entering 'if' block
+  [line 36]  total = 0
+  Assign: total = 0
+  [line 37]  multiplier = 1
+  Assign: multiplier = 1
+  [line 39]  for i, word in enumerate(words):
+  (Missing param: 'iter_var')
+  [line 41]  if word.isupper() and word.lower() in importance:
+  Condition: True, entering 'if' block
+  [line 42]  value = importance[word.lower()] * 2
+  Compute: importance[word.lower()] * 2, where importance={quick: 15, brown: 7, fox: 20, ...} (parameter importance), word='QUICK' (defined at [line 12]) = 30
+  [line 49]  if (i + 1) % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 52]  total += value * multiplier
+  Update: total changed from 0 (defined at defined at [line 36]) to 0+value * multiplier = 30
+  [line 39]  for i, word in enumerate(words):
+  (Missing param: 'iter_var')
+  [line 41]  if word.isupper() and word.lower() in importance:
+  Condition: True, entering 'if' block
+  [line 43]  elif word.lower() in importance:
+  'elif' Condition: True, entering block
+  [line 44]  value = importance[word.lower()]
+  Compute: importance[word.lower()], where importance={quick: 15, brown: 7, fox: 20, ...} (parameter importance), word='brown' (defined at [line 12]) = 7
+  [line 49]  if (i + 1) % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 52]  total += value * multiplier
+  Update: total changed from 30 (defined at defined at [line 52]) to 30+value * multiplier = 37
+... [Line 39] repeats 5 more times ...
+... [Line 39] repeats 5 more times ...
+... [Line 39] repeats 5 more times ...
+... [Line 39] repeats 5 more times ...
+... [Line 39] repeats 5 more times ...
+  [line 39]  for i, word in enumerate(words):
+  (Missing param: 'iter_var')
+  [line 41]  if word.isupper() and word.lower() in importance:
+  Condition: True, entering 'if' block
+  [line 42]  value = importance[word.lower()] * 2
+  Compute: importance[word.lower()] * 2, where importance={quick: 15, brown: 7, fox: 20, ...} (parameter importance), word='AWAY' (defined at [line 12]) = 20
+  [line 49]  if (i + 1) % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 52]  total += value * multiplier
+  Update: total changed from 357 (defined at defined at [line 52]) to 357+value * multiplier = 457
+  [line 39]  for i, word in enumerate(words):
+  Loop End: Iteration finished
+  [line 55]  bitwise_factor = (total & 15) + 1  # 15 is binary 1111
+  Compute: (total & 15) + 1  # 15 is binary 1111, where total=457 (defined at [line 52]) = 10
+  [line 57]  return (total // bitwise_factor) + (len(words) % 4)
+  Return: (total // bitwise_factor) + (len(words) % 4)
+Function calculate_final_priority returns 45
+
+Answer: priority_score = 45 (last updated on defined at [line 102])

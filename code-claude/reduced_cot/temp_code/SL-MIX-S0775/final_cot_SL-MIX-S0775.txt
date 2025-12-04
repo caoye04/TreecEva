@@ -1,0 +1,78 @@
+Target: Find the value of variable encryption_strength after [line 87] executes
+
+[line 43]  for idx, config in enumerate(configurations):
+(Missing param: 'iter_var')
+[line 6]  algorithm = input_params.get('algorithm', 'AES')
+(Missing param: 'func_name')
+[line 7]  key_size = input_params.get('key_size', 256)
+(Missing param: 'func_name')
+[line 8]  rounds = input_params.get('rounds', 14)
+(Missing param: 'func_name')
+[line 11]  theoretical_strength = key_size * rounds / 2
+Compute: key_size * rounds / 2, where key_size=2048 (an unknown source), rounds=1 (an unknown source) = 1024.0
+[line 22]  adjusted_strength = theoretical_strength * algorithm_factors.get(algorithm, 0.5)
+Compute: theoretical_strength * algorithm_factors.get(algorithm, 0.5), where theoretical_strength=1024.0 (defined at [line 11]), algorithm_factors={AES: 1.0, RSA: 0.75, ECC: 1.2, ...} (an unknown source), algorithm='RSA' (an unknown source) = 768.0
+[line 24]  return theoretical_strength, adjusted_strength
+Return: theoretical_strength, adjusted_strength
+[line 43]  for idx, config in enumerate(configurations):
+Loop End: Iteration finished
+[line 6]  algorithm = input_params.get('algorithm', 'AES')
+(Missing param: 'func_name')
+[line 7]  key_size = input_params.get('key_size', 256)
+(Missing param: 'func_name')
+[line 8]  rounds = input_params.get('rounds', 14)
+(Missing param: 'func_name')
+[line 11]  theoretical_strength = key_size * rounds / 2
+Compute: key_size * rounds / 2, where key_size=256 (an unknown source), rounds=14 (an unknown source) = 1792.0
+[line 22]  adjusted_strength = theoretical_strength * algorithm_factors.get(algorithm, 0.5)
+Compute: theoretical_strength * algorithm_factors.get(algorithm, 0.5), where theoretical_strength=1792.0 (defined at [line 11]), algorithm_factors={AES: 1.0, RSA: 0.75, ECC: 1.2, ...} (an unknown source), algorithm='AES' (an unknown source) = 1792.0
+[line 24]  return theoretical_strength, adjusted_strength
+Return: theoretical_strength, adjusted_strength
+[line 43]  for idx, config in enumerate(configurations):
+Loop End: Iteration finished
+[line 6]  algorithm = input_params.get('algorithm', 'AES')
+(Missing param: 'func_name')
+[line 7]  key_size = input_params.get('key_size', 256)
+(Missing param: 'func_name')
+[line 8]  rounds = input_params.get('rounds', 14)
+(Missing param: 'func_name')
+[line 11]  theoretical_strength = key_size * rounds / 2
+Compute: key_size * rounds / 2, where key_size=384 (an unknown source), rounds=2 (an unknown source) = 384.0
+[line 22]  adjusted_strength = theoretical_strength * algorithm_factors.get(algorithm, 0.5)
+Compute: theoretical_strength * algorithm_factors.get(algorithm, 0.5), where theoretical_strength=384.0 (defined at [line 11]), algorithm_factors={AES: 1.0, RSA: 0.75, ECC: 1.2, ...} (an unknown source), algorithm='ECC' (an unknown source) = 460.79999999999995
+[line 24]  return theoretical_strength, adjusted_strength
+Return: theoretical_strength, adjusted_strength
+[line 43]  for idx, config in enumerate(configurations):
+Loop End: Iteration finished
+[line 57]  advanced_features = ['anti_quantum', 'post_quantum', 'forward_secrecy']
+Compute: ['anti_quantum', 'post_quantum', 'forward_secrecy'] = ['anti_quantum', 'post_quantum', 'forward_secrecy']
+[line 58]  feature_bonuses = {'anti_quantum': 15, 'post_quantum': 25, 'forward_secrecy': 10}
+Compute: {'anti_quantum': 15, 'post_quantum': 25, 'forward_secrecy': 10} = {anti_quantum: 15, post_quantum: 25, forward_secrecy: 10}
+[line 61]  base_factor = 4
+Assign: base_factor = 4
+[line 62]  for feature in advanced_features:
+Loop Start: feature takes its first value 'anti_quantum'
+[line 63]  if feature == 'post_quantum':
+Condition: True, entering 'if' block
+[line 62]  for feature in advanced_features:
+Loop Iteration: feature is now 'post_quantum' (iteration 2)
+[line 63]  if feature == 'post_quantum':
+Condition: True, entering 'if' block
+[line 64]  base_factor += feature_bonuses[feature] // 5
+Update: base_factor changed from 4 (defined at defined at [line 61]) to 4+feature_bonuses[feature] // 5 = 9
+[line 62]  for feature in advanced_features:
+Loop Iteration: feature is now 'forward_secrecy' (iteration 3)
+[line 63]  if feature == 'post_quantum':
+Condition: True, entering 'if' block
+[line 62]  for feature in advanced_features:
+Loop End: Iteration finished
+[line 53]  return (bit_length ** 2) * complexity / 8.0
+Return: (bit_length ** 2) * complexity / 8.0
+[line 77]  if key_size_factor >= 2.0:
+Condition: True, entering 'if' block
+[line 78]  key_strength = 'very_strong'
+Assign: key_strength = 'very_strong'
+[line 87]  encryption_strength = cipher_dict.get(key_strength, 0) ^ (base_factor << 2)
+Compute: cipher_dict.get(key_strength, 0) ^ (base_factor << 2), where cipher_dict={weak: 10, medium: 20, strong: 30, ...} (an unknown source), key_strength='very_strong' (defined at [line 78]), base_factor=9 (defined at [line 64]) = 12
+
+Answer: encryption_strength = 12 (last updated on defined at [line 87])

@@ -1,0 +1,279 @@
+39
+final_hash
+---
+5 primary_hash = 0
+5 ['data_stream', 'window_size', 'primary_hash'] ['[42, 128, 255, 16, 32, ...]', '3', '0']
+6 secondary_hash = 0
+6 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0']
+7 tertiary_hash = 0  # Used for integrity checking, not part of final result
+7 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '42']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '128']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '255']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '0']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '0', '42']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '42', '42']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '42', '128']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '170', '128']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '170', '255']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '85', '255']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '0', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '85', '255']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '85', '255']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '0', '0', '(42, 128, 255)', '[42, 128, 255]', '85', '255', '169']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '0', '(42, 128, 255)', '[42, 128, 255]', '85', '255', '169']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(42, 128, 255)', '[42, 128, 255]', '85', '255', '169']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(42, 128, 255)', '[42, 128, 255]', '85', '255', '169']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[42, 128, 255]', '85', '255', '169']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '16', '[42, 128, 255]', '85', '255', '169']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '32', '[42, 128, 255]', '85', '255', '169']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '64', '[42, 128, 255]', '85', '255', '169']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '85', '255', '169']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '85', '255', '169']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '0', '255', '169']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '0', '16', '169']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '16', '16', '169']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '16', '32', '169']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '48', '32', '169']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '48', '64', '169']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '169']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '85', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '169']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '169']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '507', '510', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '112']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '510', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '112']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '112']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(16, 32, 64)', '[16, 32, 64]', '112', '64', '112']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[16, 32, 64]', '112', '64', '112']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '90', '[16, 32, 64]', '112', '64', '112']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '131', '[16, 32, 64]', '112', '64', '112']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '200', '[16, 32, 64]', '112', '64', '112']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '112', '64', '112']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '112', '64', '112']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '0', '64', '112']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '0', '90', '112']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '90', '90', '112']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '90', '131', '112']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '217', '131', '112']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '217', '200', '112']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '112']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '2747', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '112']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '112']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '843', '1020', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '165']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '1020', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '165']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '165']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(90, 131, 200)', '[90, 131, 200]', '17', '200', '165']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[90, 131, 200]', '17', '200', '165']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '45', '[90, 131, 200]', '17', '200', '165']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '78', '[90, 131, 200]', '17', '200', '165']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '12', '[90, 131, 200]', '17', '200', '165']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '17', '200', '165']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '17', '200', '165']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '0', '200', '165']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '0', '45', '165']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '45', '45', '165']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '45', '78', '165']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '99', '78', '165']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '99', '12', '165']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '165']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19638', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '165']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '165']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1338', '2040', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '135']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '2040', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '135']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '135']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(45, 78, 12)', '[45, 78, 12]', '111', '12', '135']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[45, 78, 12]', '111', '12', '135']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '39', '[45, 78, 12]', '111', '12', '135']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '250', '[45, 78, 12]', '111', '12', '135']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '84', '[45, 78, 12]', '111', '12', '135']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '111', '12', '135']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '111', '12', '135']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '0', '12', '135']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '0', '39', '135']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '39', '39', '135']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '39', '250', '135']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '221', '250', '135']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '221', '84', '135']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '135']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '19065', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '135']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '135']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '1743', '4092', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '117']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '4092', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '117']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '117']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(39, 250, 84)', '[39, 250, 84]', '137', '84', '117']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[39, 250, 84]', '137', '84', '117']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '23', '[39, 250, 84]', '137', '84', '117']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '177', '[39, 250, 84]', '137', '84', '117']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '99', '[39, 250, 84]', '137', '84', '117']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '137', '84', '117']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '137', '84', '117']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '0', '84', '117']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '0', '23', '117']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '23', '23', '117']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '23', '177', '117']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '166', '177', '117']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '166', '99', '117']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '117']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '1328', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '117']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '117']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2094', '8188', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '43']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '8188', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '43']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '43']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(23, 177, 99)', '[23, 177, 99]', '197', '99', '43']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[23, 177, 99]', '197', '99', '43']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '45', '[23, 177, 99]', '197', '99', '43']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '143', '[23, 177, 99]', '197', '99', '43']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'p', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', 'None', '[23, 177, 99]', '197', '99', '43']
+12 valid_packets = [p for p in window if p is not None]
+12 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '197', '99', '43']
+14 if not valid_packets:
+14 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '197', '99', '43']
+18 window_signature = 0
+18 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '0', '99', '43']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '0', '45', '43']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '45', '45', '43']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '45', '143', '43']
+20 window_signature ^= packet
+20 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '162', '143', '43']
+19 for packet in valid_packets:
+19 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'packet', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '41365', '2223', '16378', '(45, 143, None)', '[45, 143]', '162', '143', '43']
+23 primary_hash = (primary_hash * 31 + window_signature) & 0xFFFF
+23 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'window_signature', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '37293', '2223', '16378', '(45, 143, None)', '[45, 143]', '162', '43']
+26 alt_signature = sum(valid_packets) % 256
+26 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '37293', '2223', '16378', '(45, 143, None)', '[45, 143]', '188']
+27 secondary_hash = (secondary_hash + alt_signature * len(valid_packets)) & 0xFFFF
+27 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets', 'alt_signature'] ['[42, 128, 255, 16, 32, ...]', '3', '37293', '2599', '16378', '(45, 143, None)', '[45, 143]', '188']
+30 tertiary_hash = (tertiary_hash | (max(valid_packets) & 0xFF)) << 1
+30 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window', 'valid_packets'] ['[42, 128, 255, 16, 32, ...]', '3', '37293', '2599', '32766', '(45, 143, None)', '[45, 143]']
+31 if tertiary_hash > 0xFFFF:
+31 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'tertiary_hash', 'window'] ['[42, 128, 255, 16, 32, ...]', '3', '37293', '2599', '32766', '(45, 143, None)']
+10 for window in itertools.islice(itertools.zip_longest(*[iter(data_stream)] * window_size), 10):
+10 ['data_stream', 'window_size', 'primary_hash', 'secondary_hash', 'window'] ['[42, 128, 255, 16, 32, ...]', '3', '37293', '2599', '(45, 143, None)']
+35 primary_hash = (primary_hash * 17) % 65536
+35 ['primary_hash', 'secondary_hash'] ['44157', '2599']
+36 secondary_hash = (secondary_hash + 1000) % 65536
+36 ['primary_hash', 'secondary_hash'] ['44157', '3599']
+39 final_hash = (primary_hash ^ secondary_hash) % 10000
+39 ['primary_hash', 'secondary_hash', 'final_hash'] ['44157', '3599', '1586']

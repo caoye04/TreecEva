@@ -1,0 +1,55 @@
+48
+price_index
+---
+9 product_prices = [450, 65, 30, 25, 120]
+9 ['product_prices'] ['[450, 65, 30, 25, 120]']
+22 max_price = max(product_prices)
+22 ['product_prices', 'max_price'] ['[450, 65, 30, 25, 120]', '450']
+23 min_price = min(product_prices)
+23 ['product_prices', 'max_price', 'min_price'] ['[450, 65, 30, 25, 120]', '450', '25']
+24 price_range = max_price - min_price
+24 ['product_prices', 'max_price', 'min_price', 'price_range'] ['[450, 65, 30, 25, 120]', '450', '25', '425']
+27 raw_weights = [(p - min_price) / price_range for p in product_prices]
+27 ['p'] ['450']
+27 raw_weights = [(p - min_price) / price_range for p in product_prices]
+27 ['p'] ['65']
+27 raw_weights = [(p - min_price) / price_range for p in product_prices]
+27 ['p'] ['30']
+27 raw_weights = [(p - min_price) / price_range for p in product_prices]
+27 ['p'] ['25']
+27 raw_weights = [(p - min_price) / price_range for p in product_prices]
+27 ['p'] ['120']
+27 raw_weights = [(p - min_price) / price_range for p in product_prices]
+27 ['product_prices', 'min_price', 'price_range', 'raw_weights'] ['[450, 65, 30, 25, 120]', '25', '425', '[1.0, 0.09411764705882353, 0.011764705882352941, 0.0, 0.2235294117647059]']
+34 average_price = sum(product_prices) / len(product_prices)
+34 ['product_prices', 'raw_weights', 'average_price'] ['[450, 65, 30, 25, 120]', '[1.0, 0.09411764705882353, 0.011764705882352941, 0.0, 0.2235294117647059]', '138.0']
+35 expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+35 ['p', 'i'] ['450', '0']
+35 expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+35 ['p', 'i'] ['65', '1']
+35 expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+35 ['p', 'i'] ['30', '2']
+35 expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+35 ['p', 'i'] ['25', '3']
+35 expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+35 ['p', 'i'] ['120', '4']
+35 expensive_indices = [i for i, p in enumerate(product_prices) if p > average_price]
+35 ['product_prices', 'raw_weights', 'average_price', 'expensive_indices'] ['[450, 65, 30, 25, 120]', '[1.0, 0.09411764705882353, 0.011764705882352941, 0.0, 0.2235294117647059]', '138.0', '[0]']
+39 filtered_weights = [raw_weights[i] for i in expensive_indices]
+39 ['i'] ['0']
+39 filtered_weights = [raw_weights[i] for i in expensive_indices]
+39 ['product_prices', 'raw_weights', 'expensive_indices', 'filtered_weights'] ['[450, 65, 30, 25, 120]', '[1.0, 0.09411764705882353, 0.011764705882352941, 0.0, 0.2235294117647059]', '[0]', '[1.0]']
+46 price_index = calculate_price_index(product_prices, filtered_weights)
+46 ['product_prices', 'filtered_weights'] ['[450, 65, 30, 25, 120]', '[1.0]']
+3 total_weighted_price = sum(p * w for p, w in zip(prices, weights))
+3 [] []
+3 total_weighted_price = sum(p * w for p, w in zip(prices, weights))
+3 ['p', 'w'] ['450', '1.0']
+3 total_weighted_price = sum(p * w for p, w in zip(prices, weights))
+3 ['p', 'w'] ['450', '1.0']
+4 total_weight = sum(weights)
+4 ['weights', 'total_weighted_price', 'total_weight'] ['[1.0]', '450.0', '1.0']
+5 return total_weighted_price / total_weight if total_weight > 0 else 0
+5 ['total_weighted_price', 'total_weight'] ['450.0', '1.0']
+48 print(f"Result: {price_index}")
+48 ['price_index'] ['450.0']

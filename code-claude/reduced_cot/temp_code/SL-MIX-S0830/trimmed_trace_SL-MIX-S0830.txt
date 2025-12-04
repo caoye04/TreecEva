@@ -1,0 +1,271 @@
+81
+network_stability
+---
+71 packet_loss, jitter = analyze_packet_loss([-1, 5, 8, -2, 10, -3, 7])
+71 ['router_logs', 'packet_data'] ["[{id: 101, status: 'active', load: 78.3}, {id: 102, status: 'maintenance', load: 0}, {id: 103, status: 'active', load: 92.1}]", '[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]']
+5 dropped = sum(1 for p in packets if p < 0)
+5 [] []
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['-1']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['5']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['8']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['-2']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['10']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['-3']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['7']
+5 dropped = sum(1 for p in packets if p < 0)
+5 ['p'] ['7']
+6 total = len(packets)
+6 ['packets', 'dropped', 'total'] ['[-1, 5, 8, -2, 10, ...]', '3', '7']
+7 loss_rate = dropped / total if total > 0 else 0
+7 ['packets', 'dropped', 'total', 'loss_rate'] ['[-1, 5, 8, -2, 10, ...]', '3', '7', '0.42857142857142855']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['packets'] ['[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['1', '[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['2', '[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['3', '[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['4', '[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['5', '[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['6', '[-1, 5, 8, -2, 10, ...]']
+8 jitter = sum(abs(packets[i] - packets[i-1]) for i in range(1, len(packets)))
+8 ['i', 'packets'] ['6', '[-1, 5, 8, -2, 10, ...]']
+9 return (loss_rate * 100, jitter)
+9 ['loss_rate', 'jitter'] ['0.42857142857142855', '54']
+13 if traffic_weight > 100:
+13 ['nodes', 'traffic_weight'] ['[1, 2, 3, 4, 5]', '42.857142857142854']
+15 elif traffic_weight < 0:
+15 ['nodes', 'traffic_weight'] ['[1, 2, 3, 4, 5]', '42.857142857142854']
+17 return nodes[::2] + nodes[1::2]
+17 ['nodes'] ['[1, 2, 3, 4, 5]']
+75 route_combinations = list(itertools.combinations([r['id'] for r in router_logs if r['status'] == 'active'], 2))
+75 ['r'] ["{id: 101, status: 'active', load: 78.3}"]
+75 route_combinations = list(itertools.combinations([r['id'] for r in router_logs if r['status'] == 'active'], 2))
+75 ['r'] ["{id: 102, status: 'maintenance', load: 0}"]
+75 route_combinations = list(itertools.combinations([r['id'] for r in router_logs if r['status'] == 'active'], 2))
+75 ['r'] ["{id: 103, status: 'active', load: 92.1}"]
+75 route_combinations = list(itertools.combinations([r['id'] for r in router_logs if r['status'] == 'active'], 2))
+75 ['router_logs', 'packet_data', 'route_combinations'] ["[{id: 101, status: 'active', load: 78.3}, {id: 102, status: 'maintenance', load: 0}, {id: 103, status: 'active', load: 92.1}]", '[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '[(101, 103)]']
+77 for i, combo in enumerate(route_combinations):
+77 ['packet_data', 'route_combinations', 'i', 'combo'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '[(101, 103)]', '0', '(101, 103)']
+77 for i, combo in enumerate(route_combinations):
+77 ['packet_data', 'route_combinations', 'i', 'combo'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '[(101, 103)]', '0', '(101, 103)']
+81 network_stability = calculate_network_stability(packet_data)
+81 ['packet_data', 'i'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '0']
+PARAM_MAPPING {'packet_data': {'actual_var': 'packet_data', 'value': [{'seq': 1, 'latency': 30, 'errors': 0, 'flags': 5, 'hops': 3}, {'seq': 2, 'latency': 45, 'errors': 2, 'flags': 7, 'hops': 4}, {'seq': 3, 'latency': 25, 'errors': 1, 'flags': 3, 'hops': 2}, {'seq': 4, 'latency': 60, 'errors': 3, 'flags': 9, 'hops': 5}, {'seq': 5, 'latency': 20, 'errors': 0, 'flags': 1, 'hops': 2}, {'seq': 6, 'latency': 50, 'errors': 2, 'flags': 6, 'hops': 3}]}}
+FUNCTION_ENTER 19 calculate_network_stability def calculate_network_stability(packet_data):
+19 ['packet_data'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'seq': {'_type': 'int', '_value': 1}, 'latency': {'_type': 'int', '_value': 30}, 'errors': {'_type': 'int', '_value': 0}, 'flags': {'_type': 'int', '_value': 5}, 'hops': {'_type': 'int', '_value': 3}}, '_len': 5}, {'_type': 'dict', '_items': {'seq': {'_type': 'int', '_value': 2}, 'latency': {'_type': 'int', '_value': 45}, 'errors': {'_type': 'int', '_value': 2}, 'flags': {'_type': 'int', '_value': 7}, 'hops': {'_type': 'int', '_value': 4}}, '_len': 5}, {'_type': 'dict', '_items': {'seq': {'_type': 'int', '_value': 3}, 'latency': {'_type': 'int', '_value': 25}, 'errors': {'_type': 'int', '_value': 1}, 'flags': {'_type': 'int', '_value': 3}, 'hops': {'_type': 'int', '_value': 2}}, '_len': 5}, {'_type': 'dict', '_items': {'seq': {'_type': 'int', '_value': 4}, 'latency': {'_type': 'int', '_value': 60}, 'errors': {'_type': 'int', '_value': 3}, 'flags': {'_type': 'int', '_value': 9}, 'hops': {'_type': 'int', '_value': 5}}, '_len': 5}, {'_type': 'dict', '_items': {'seq': {'_type': 'int', '_value': 5}, 'latency': {'_type': 'int', '_value': 20}, 'errors': {'_type': 'int', '_value': 0}, 'flags': {'_type': 'int', '_value': 1}, 'hops': {'_type': 'int', '_value': 2}}, '_len': 5}, {'_type': 'dict', '_items': {'seq': {'_type': 'int', '_value': 6}, 'latency': {'_type': 'int', '_value': 50}, 'errors': {'_type': 'int', '_value': 2}, 'flags': {'_type': 'int', '_value': 6}, 'hops': {'_type': 'int', '_value': 3}}, '_len': 5}], '_len': 6}]
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'p'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 1, latency: 30, errors: 0, ...}']
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'p'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 2, latency: 45, errors: 2, ...}']
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'p'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 3, latency: 25, errors: 1, ...}']
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'p'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 4, latency: 60, errors: 3, ...}']
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'p'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 5, latency: 20, errors: 0, ...}']
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'p'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 6, latency: 50, errors: 2, ...}']
+21 latency_values = [p['latency'] for p in packet_data if 'latency' in p]
+21 ['packet_data', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'p', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 1, latency: 30, errors: 0, ...}', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'p', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 2, latency: 45, errors: 2, ...}', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'p', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 3, latency: 25, errors: 1, ...}', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'p', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 4, latency: 60, errors: 3, ...}', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'p', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 5, latency: 20, errors: 0, ...}', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'p', 'latency_values'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 6, latency: 50, errors: 2, ...}', '[30, 45, 25, 60, 20, ...]']
+22 error_counts = [p.get('errors', 0) for p in packet_data]
+22 ['packet_data', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'p', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 1, latency: 30, errors: 0, ...}', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'p', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 2, latency: 45, errors: 2, ...}', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'p', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 3, latency: 25, errors: 1, ...}', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'p', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 4, latency: 60, errors: 3, ...}', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'p', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 5, latency: 20, errors: 0, ...}', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'p', 'latency_values', 'error_counts'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '{seq: 6, latency: 50, errors: 2, ...}', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]']
+28 flags = [p.get('flags', 0) for p in packet_data]
+28 ['packet_data', 'latency_values', 'error_counts', 'flags'] ['[{seq: 1, latency: 30, errors: 0, ...}, {seq: 2, latency: 45, errors: 2, ...}, {seq: 3, latency: 25, errors: 1, ...}, {seq: 4, latency: 60, errors: 3, ...}, {seq: 5, latency: 20, errors: 0, ...}, ...]', '[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]']
+29 bit_count = 0
+29 ['latency_values', 'error_counts', 'flags', 'bit_count'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '0', '5']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '0', '5']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '1', '5']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '1', '2']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '1', '2']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '1', '2']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '1', '1']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '1', '1']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '2', '1']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '2', '0']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '2', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '2', '7']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '2', '7']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '3', '7']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '3', '3']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '3', '3']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '4', '3']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '4', '1']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '4', '1']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '5', '1']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '5', '0']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '5', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '5', '3']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '5', '3']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '6', '3']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '6', '1']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '6', '1']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '7', '1']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '7', '0']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '7', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '7', '9']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '7', '9']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '9']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '4']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '4']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '4']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '2']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '2']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '2']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '1']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '8', '1']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '9', '1']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '9', '0']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '9', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '9', '1']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '9', '1']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '1']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '0']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '6']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '6']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '6']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '3']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '10', '3']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '11', '3']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '11', '1']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '11', '1']
+33 bit_count += flag & 1
+33 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '12', '1']
+34 flag >>= 1
+34 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '12', '0']
+32 while flag:
+32 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '12', '0']
+30 for flag in flags:
+30 ['latency_values', 'error_counts', 'flags', 'bit_count', 'flag'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '[5, 7, 3, 9, 1, ...]', '12', '0']
+41 if sum(error_counts) > 100:
+41 ['latency_values', 'error_counts', 'bit_count'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12']
+45 stability = 0
+45 ['latency_values', 'error_counts', 'bit_count', 'stability'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '0']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '0', '0', '30', '0']
+47 if i % 3 == 0:  # Only process every third packet
+47 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '0', '0', '30', '0']
+48 stability += (latency - errors * 2)
+48 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '0', '30', '0']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '1', '45', '2']
+47 if i % 3 == 0:  # Only process every third packet
+47 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '1', '45', '2']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '2', '25', '1']
+47 if i % 3 == 0:  # Only process every third packet
+47 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '2', '25', '1']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '3', '60', '3']
+47 if i % 3 == 0:  # Only process every third packet
+47 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '30', '3', '60', '3']
+48 stability += (latency - errors * 2)
+48 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '84', '3', '60', '3']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '84', '4', '20', '0']
+47 if i % 3 == 0:  # Only process every third packet
+47 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '84', '4', '20', '0']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '84', '5', '50', '2']
+47 if i % 3 == 0:  # Only process every third packet
+47 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '84', '5', '50', '2']
+46 for i, (latency, errors) in enumerate(zip(latency_values, error_counts)):
+46 ['latency_values', 'error_counts', 'bit_count', 'stability', 'i', 'latency', 'errors'] ['[30, 45, 25, 60, 20, ...]', '[0, 2, 1, 3, 0, ...]', '12', '84', '5', '50', '2']
+51 return stability - bit_count * 5
+51 ['bit_count', 'stability'] ['12', '84']
+FUNCTION_RETURN 51 calculate_network_stability {'_type': 'int', '_value': 24}

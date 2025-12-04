@@ -1,0 +1,586 @@
+Target: Find the value of variable encryption_strength after [line 127] executes
+
+[line 101]  password = "P@ssw0rd123!"
+Assign: password = 'P@ssw0rd123!'
+[line 110]  if len(password) < 8:
+Condition: True, entering 'if' block
+[line 112]  elif len(password) < 10:
+'elif' Condition: True, entering block
+[line 114]  elif len(password) < 12:
+'elif' Condition: True, entering block
+[line 44]  has_lowercase = any(char.islower() for char in password)
+Call function any(char.islower() for char in password)
+[line 44]  has_lowercase = any(char.islower() for char in password)
+Call function any(char.islower() for char in password)
+[line 44]  has_lowercase = any(char.islower() for char in password)
+Call function any(char.islower() for char in password)
+[line 44]  has_lowercase = any(char.islower() for char in password)
+Call function any(char.islower() for char in password)
+[line 45]  has_uppercase = any(char.isupper() for char in password)
+Call function any(char.isupper() for char in password)
+[line 45]  has_uppercase = any(char.isupper() for char in password)
+Call function any(char.isupper() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 46]  has_digit = any(char.isdigit() for char in password)
+Call function any(char.isdigit() for char in password)
+[line 47]  has_special = count_special_chars(password) > 0
+Compute: count_special_chars(password) > 0, where password='P@ssw0rd123!' (defined at [line 101]) = ?
+[line 1]  def count_special_chars(text):
+Enter function count_special_chars: text='P@ssw0rd123!' (password defined at [line 101])
+  [line 3]  special_chars = "!@#$%^&*()_-+={}[]|:;<>,.?/~`"
+  Assign: special_chars = '!@#$%^&*()_-+={}[]|:;<>,.?/~`'
+  [line 4]  count = 0
+  Assign: count = 0
+  [line 5]  for char in text:
+  Loop Start: char takes its first value 'P'
+  [line 6]  if char in special_chars:
+  Condition: True, entering 'if' block
+  [line 5]  for char in text:
+  Loop Iteration: char is now '@' (iteration 2)
+  [line 6]  if char in special_chars:
+  Condition: True, entering 'if' block
+  [line 7]  count += 1
+  Update: count changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+... [Line 5] repeats 35 more times ...
+... [Line 5] repeats 35 more times ...
+  [line 8]  return count
+  Return: count=2 (defined at [line 7])
+Function count_special_chars returns 2
+[line 49]  complexity = 0
+Assign: complexity = 0
+[line 50]  if has_lowercase:
+Condition: True, entering 'if' block
+[line 51]  complexity += 10
+Update: complexity changed from 0 (defined at defined at [line 49]) to 0+10 = 10
+[line 52]  if has_uppercase:
+Condition: True, entering 'if' block
+[line 53]  complexity += 15
+Update: complexity changed from 10 (defined at defined at [line 51]) to 10+15 = 25
+[line 54]  if has_digit:
+Condition: True, entering 'if' block
+[line 55]  complexity += 12
+Update: complexity changed from 25 (defined at defined at [line 53]) to 25+12 = 37
+[line 56]  if has_special:
+Condition: True, entering 'if' block
+[line 57]  complexity += 18
+Update: complexity changed from 37 (defined at defined at [line 55]) to 37+18 = 55
+[line 60]  length_bonus = len(password) * 4
+Compute: len(password) * 4, where password='P@ssw0rd123!' (defined at [line 101]) = 48
+[line 64]  return complexity + length_bonus
+Return: complexity + length_bonus
+[line 28]  sequential_count = 0
+Assign: sequential_count = 0
+[line 29]  repeated_count = 0
+Assign: repeated_count = 0
+[line 31]  for i in range(len(password) - 1):
+Loop Start: i takes its first value 0
+[line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+Condition: True, entering 'if' block
+[line 36]  if password[i+1] == password[i]:
+Condition: True, entering 'if' block
+[line 31]  for i in range(len(password) - 1):
+Loop Iteration: i is now 1 (iteration 2)
+[line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+Condition: True, entering 'if' block
+[line 36]  if password[i+1] == password[i]:
+Condition: True, entering 'if' block
+... [Line 31] repeats 20 more times ...
+... [Line 31] repeats 20 more times ...
+... [Line 31] repeats 20 more times ...
+... [Line 31] repeats 20 more times ...
+[line 39]  pattern_penalty = sequential_count * 2 + repeated_count * 3
+Compute: sequential_count * 2 + repeated_count * 3, where sequential_count=2 (defined at [line 28]), repeated_count=1 (defined at [line 29]) = 7
+[line 40]  return pattern_penalty
+Return: pattern_penalty=7 (defined at [line 39])
+[line 10]  def calculate_entropy(text):
+Enter function calculate_entropy: text='P@ssw0rd123!' (password defined at [line 101])
+  [line 12]  char_freq = {}
+  Compute: {} = {}
+  [line 13]  for char in text:
+  Loop Start: char takes its first value 'P'
+  [line 14]  if char in char_freq:
+  Condition: True, entering 'if' block
+  [line 17]  char_freq[char] = 1
+  (Missing param: 'var')
+  [line 13]  for char in text:
+  Loop Iteration: char is now '@' (iteration 2)
+  [line 14]  if char in char_freq:
+  Condition: True, entering 'if' block
+  [line 17]  char_freq[char] = 1
+  (Missing param: 'var')
+... [Line 13] repeats 22 more times ...
+... [Line 13] repeats 22 more times ...
+... [Line 13] repeats 22 more times ...
+  [line 20]  entropy = 0
+  Assign: entropy = 0
+  [line 21]  for char, freq in char_freq.items():
+  (Missing param: 'iter_var')
+  [line 22]  probability = freq / len(text)
+  Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+  [line 23]  entropy -= probability * (freq / len(text))
+  Update: entropy changed from 0 (defined at defined at [line 20]) to 0-probability * (freq / len(text)) = -0.006944444444444444
+  [line 21]  for char, freq in char_freq.items():
+  (Missing param: 'iter_var')
+  [line 22]  probability = freq / len(text)
+  Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+  [line 23]  entropy -= probability * (freq / len(text))
+  Update: entropy changed from -0.006944444444444444 (defined at defined at [line 23]) to -0.006944444444444444-probability * (freq / len(text)) = -0.013888888888888888
+... [Line 21] repeats 20 more times ...
+... [Line 21] repeats 20 more times ...
+... [Line 21] repeats 20 more times ...
+  [line 24]  return entropy * 10
+  Return: entropy * 10
+Function calculate_entropy returns -0.9722222222222223
+[line 124]  encryption_strength = calculate_final_strength(password)
+Call function calculate_final_strength(password='P@ssw0rd123!' (defined at [line 101]))
+[line 66]  def calculate_final_strength(password):
+Enter function calculate_final_strength: password='P@ssw0rd123!' (password defined at [line 101])
+  [line 72]  character_diversity = len(set(password)) / len(password) if password else 0
+  Compute: len(set(password)) / len(password) if password else 0, where password='P@ssw0rd123!' (parameter password defined at [line 101]) = 0.9166666666666666
+  [line 76]  complexity = calculate_complexity(password)
+  Call function calculate_complexity(password='P@ssw0rd123!' (parameter password defined at [line 101]))
+  [line 42]  def calculate_complexity(password):
+  Enter function calculate_complexity: password='P@ssw0rd123!' (password defined at [line 101])
+    [line 44]  has_lowercase = any(char.islower() for char in password)
+    Call function any(char.islower() for char in password)
+    [line 44]  has_lowercase = any(char.islower() for char in password)
+    Call function any(char.islower() for char in password)
+    [line 44]  has_lowercase = any(char.islower() for char in password)
+    Call function any(char.islower() for char in password)
+    [line 44]  has_lowercase = any(char.islower() for char in password)
+    Call function any(char.islower() for char in password)
+    [line 45]  has_uppercase = any(char.isupper() for char in password)
+    Call function any(char.isupper() for char in password)
+    [line 45]  has_uppercase = any(char.isupper() for char in password)
+    Call function any(char.isupper() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 46]  has_digit = any(char.isdigit() for char in password)
+    Call function any(char.isdigit() for char in password)
+    [line 47]  has_special = count_special_chars(password) > 0
+    Compute: count_special_chars(password) > 0, where password='P@ssw0rd123!' (parameter password defined at [line 101]) = ?
+    [line 1]  def count_special_chars(text):
+    Enter function count_special_chars: text='P@ssw0rd123!' (password defined at [line 101])
+      [line 3]  special_chars = "!@#$%^&*()_-+={}[]|:;<>,.?/~`"
+      Assign: special_chars = '!@#$%^&*()_-+={}[]|:;<>,.?/~`'
+      [line 4]  count = 0
+      Assign: count = 0
+      [line 5]  for char in text:
+      Loop Iteration: char is now 'P' (iteration 14)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now '@' (iteration 15)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 7]  count += 1
+      Update: count changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+      [line 5]  for char in text:
+      Loop Iteration: char is now 's' (iteration 16)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now 's' (iteration 17)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now 'w' (iteration 18)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now '0' (iteration 19)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now 'r' (iteration 20)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now 'd' (iteration 21)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now '1' (iteration 22)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now '2' (iteration 23)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now '3' (iteration 24)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 5]  for char in text:
+      Loop Iteration: char is now '!' (iteration 25)
+      [line 6]  if char in special_chars:
+      Condition: True, entering 'if' block
+      [line 7]  count += 1
+      Update: count changed from 1 (defined at defined at [line 7]) to 1+1 = 2
+      [line 5]  for char in text:
+      Loop Iteration: char is now '!' (iteration 26)
+      [line 8]  return count
+      Return: count=2 (defined at [line 7])
+    Function count_special_chars returns 2
+    [line 49]  complexity = 0
+    Assign: complexity = 0
+    [line 50]  if has_lowercase:
+    Condition: True, entering 'if' block
+    [line 51]  complexity += 10
+    Update: complexity changed from 0 (defined at defined at [line 49]) to 0+10 = 10
+    [line 52]  if has_uppercase:
+    Condition: True, entering 'if' block
+    [line 53]  complexity += 15
+    Update: complexity changed from 10 (defined at defined at [line 51]) to 10+15 = 25
+    [line 54]  if has_digit:
+    Condition: True, entering 'if' block
+    [line 55]  complexity += 12
+    Update: complexity changed from 25 (defined at defined at [line 53]) to 25+12 = 37
+    [line 56]  if has_special:
+    Condition: True, entering 'if' block
+    [line 57]  complexity += 18
+    Update: complexity changed from 37 (defined at defined at [line 55]) to 37+18 = 55
+    [line 60]  length_bonus = len(password) * 4
+    Compute: len(password) * 4, where password='P@ssw0rd123!' (parameter password defined at [line 101]) = 48
+    [line 64]  return complexity + length_bonus
+    Return: complexity + length_bonus
+  Function calculate_complexity returns 103
+  [line 77]  special_char_count = count_special_chars(password)
+  Call function count_special_chars(password='P@ssw0rd123!' (parameter password defined at [line 101]))
+  [line 1]  def count_special_chars(text):
+  Enter function count_special_chars: text='P@ssw0rd123!' (password defined at [line 101])
+    [line 3]  special_chars = "!@#$%^&*()_-+={}[]|:;<>,.?/~`"
+    Assign: special_chars = '!@#$%^&*()_-+={}[]|:;<>,.?/~`'
+    [line 4]  count = 0
+    Assign: count = 0
+    [line 5]  for char in text:
+    Loop Iteration: char is now 'P' (iteration 27)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now '@' (iteration 28)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 7]  count += 1
+    Update: count changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+    [line 5]  for char in text:
+    Loop Iteration: char is now 's' (iteration 29)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now 's' (iteration 30)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now 'w' (iteration 31)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now '0' (iteration 32)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now 'r' (iteration 33)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now 'd' (iteration 34)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now '1' (iteration 35)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now '2' (iteration 36)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now '3' (iteration 37)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 5]  for char in text:
+    Loop Iteration: char is now '!' (iteration 38)
+    [line 6]  if char in special_chars:
+    Condition: True, entering 'if' block
+    [line 7]  count += 1
+    Update: count changed from 1 (defined at defined at [line 7]) to 1+1 = 2
+    [line 5]  for char in text:
+    Loop Iteration: char is now '!' (iteration 39)
+    [line 8]  return count
+    Return: count=2 (defined at [line 7])
+  Function count_special_chars returns 2
+  [line 80]  pattern_penalty = analyze_password_patterns(password)
+  Call function analyze_password_patterns(password='P@ssw0rd123!' (parameter password defined at [line 101]))
+  [line 26]  def analyze_password_patterns(password):
+  Enter function analyze_password_patterns: password='P@ssw0rd123!' (password defined at [line 101])
+    [line 28]  sequential_count = 0
+    Assign: sequential_count = 0
+    [line 29]  repeated_count = 0
+    Assign: repeated_count = 0
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 0 (iteration 13)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 1 (iteration 14)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 2 (iteration 15)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 37]  repeated_count += 1
+    Update: repeated_count changed from 0 (defined at defined at [line 29]) to 0+1 = 1
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 3 (iteration 16)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 4 (iteration 17)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 5 (iteration 18)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 6 (iteration 19)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 7 (iteration 20)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 8 (iteration 21)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 34]  sequential_count += 1
+    Update: sequential_count changed from 0 (defined at defined at [line 28]) to 0+1 = 1
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 9 (iteration 22)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 34]  sequential_count += 1
+    Update: sequential_count changed from 1 (defined at defined at [line 34]) to 1+1 = 2
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 10 (iteration 23)
+    [line 33]  if ord(password[i+1]) - ord(password[i]) == 1:
+    Condition: True, entering 'if' block
+    [line 36]  if password[i+1] == password[i]:
+    Condition: True, entering 'if' block
+    [line 31]  for i in range(len(password) - 1):
+    Loop Iteration: i is now 10 (iteration 24)
+    [line 39]  pattern_penalty = sequential_count * 2 + repeated_count * 3
+    Compute: sequential_count * 2 + repeated_count * 3, where sequential_count=2 (defined at [line 34]), repeated_count=1 (defined at [line 37]) = 7
+    [line 40]  return pattern_penalty
+    Return: pattern_penalty=7 (defined at [line 39])
+  Function analyze_password_patterns returns 7
+  [line 81]  entropy = calculate_entropy(password)
+  Call function calculate_entropy(password='P@ssw0rd123!' (parameter password defined at [line 101]))
+  [line 10]  def calculate_entropy(text):
+  Enter function calculate_entropy: text='P@ssw0rd123!' (password defined at [line 101])
+    [line 12]  char_freq = {}
+    Compute: {} = {}
+    [line 13]  for char in text:
+    Loop Iteration: char is now 'P' (iteration 14)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '@' (iteration 15)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now 's' (iteration 16)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now 's' (iteration 17)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 13]  for char in text:
+    Loop Iteration: char is now 'w' (iteration 18)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '0' (iteration 19)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now 'r' (iteration 20)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now 'd' (iteration 21)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '1' (iteration 22)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '2' (iteration 23)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '3' (iteration 24)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '!' (iteration 25)
+    [line 14]  if char in char_freq:
+    Condition: True, entering 'if' block
+    [line 17]  char_freq[char] = 1
+    (Missing param: 'var')
+    [line 13]  for char in text:
+    Loop Iteration: char is now '!' (iteration 26)
+    [line 20]  entropy = 0
+    Assign: entropy = 0
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from 0 (defined at defined at [line 20]) to 0-probability * (freq / len(text)) = -0.006944444444444444
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.006944444444444444 (defined at defined at [line 23]) to -0.006944444444444444-probability * (freq / len(text)) = -0.013888888888888888
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=2 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.16666666666666666
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.013888888888888888 (defined at defined at [line 23]) to -0.013888888888888888-probability * (freq / len(text)) = -0.041666666666666664
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.041666666666666664 (defined at defined at [line 23]) to -0.041666666666666664-probability * (freq / len(text)) = -0.048611111111111105
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.048611111111111105 (defined at defined at [line 23]) to -0.048611111111111105-probability * (freq / len(text)) = -0.05555555555555555
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.05555555555555555 (defined at defined at [line 23]) to -0.05555555555555555-probability * (freq / len(text)) = -0.0625
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.0625 (defined at defined at [line 23]) to -0.0625-probability * (freq / len(text)) = -0.06944444444444445
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.06944444444444445 (defined at defined at [line 23]) to -0.06944444444444445-probability * (freq / len(text)) = -0.0763888888888889
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.0763888888888889 (defined at defined at [line 23]) to -0.0763888888888889-probability * (freq / len(text)) = -0.08333333333333334
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.08333333333333334 (defined at defined at [line 23]) to -0.08333333333333334-probability * (freq / len(text)) = -0.09027777777777779
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 22]  probability = freq / len(text)
+    Compute: freq / len(text), where freq=1 (an unknown source), text='P@ssw0rd123!' (parameter text defined at [line 101]) = 0.08333333333333333
+    [line 23]  entropy -= probability * (freq / len(text))
+    Update: entropy changed from -0.09027777777777779 (defined at defined at [line 23]) to -0.09027777777777779-probability * (freq / len(text)) = -0.09722222222222224
+    [line 21]  for char, freq in char_freq.items():
+    (Missing param: 'iter_var')
+    [line 24]  return entropy * 10
+    Return: entropy * 10
+  Function calculate_entropy returns -0.9722222222222223
+  [line 85]  actual_strength = complexity + special_char_count * 6
+  Compute: complexity + special_char_count * 6, where complexity=103 (defined at [line 57]), special_char_count=2 (defined at [line 77]) = 115
+  [line 88]  if len(password) > 12:
+  Condition: True, entering 'if' block
+  [line 90]  if special_char_count > 3:
+  Condition: True, entering 'if' block
+  [line 94]  if character_diversity > 0.7 and special_char_count > 2:
+  Condition: True, entering 'if' block
+  [line 98]  return actual_strength
+  Return: actual_strength=115 (defined at [line 85])
+Function calculate_final_strength returns 115
+[line 127]  print(f"Result: {encryption_strength}")
+Output: f"Result: {encryption_strength}"
+
+Answer: encryption_strength = 115 (last updated on defined at [line 124])

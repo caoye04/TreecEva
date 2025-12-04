@@ -1,0 +1,197 @@
+82
+optimal_capacity
+---
+PARAM_MAPPING {'warehouse_data': {'actual_var': 'warehouse_data', 'value': {'A': {'area': 200, 'height': 4, 'temperature': 22}, 'B': {'area': 150, 'height': 3, 'temperature': 18}, 'C': {'area': 100, 'height': 5, 'temperature': 15}, 'D': {'area': 180, 'height': 4, 'temperature': 25}}}, 'product_weights': {'actual_var': 'product_weights', 'value': {'product1': 5, 'product2': 12, 'product3': 30, 'product4': 60, 'product5': 8, 'product6': 45, 'product7': 75}}}
+FUNCTION_ENTER 1 calculate_optimal_capacity def calculate_optimal_capacity(warehouse_data, product_weights):
+1 ['warehouse_data', 'product_weights'] [{'_type': 'dict', '_items': {'A': {'_type': 'dict', '_items': {'area': {'_type': 'int', '_value': 200}, 'height': {'_type': 'int', '_value': 4}, 'temperature': {'_type': 'int', '_value': 22}}, '_len': 3}, 'B': {'_type': 'dict', '_items': {'area': {'_type': 'int', '_value': 150}, 'height': {'_type': 'int', '_value': 3}, 'temperature': {'_type': 'int', '_value': 18}}, '_len': 3}, 'C': {'_type': 'dict', '_items': {'area': {'_type': 'int', '_value': 100}, 'height': {'_type': 'int', '_value': 5}, 'temperature': {'_type': 'int', '_value': 15}}, '_len': 3}, 'D': {'_type': 'dict', '_items': {'area': {'_type': 'int', '_value': 180}, 'height': {'_type': 'int', '_value': 4}, 'temperature': {'_type': 'int', '_value': 25}}, '_len': 3}}, '_len': 4}, {'_type': 'dict', '_items': {'product1': {'_type': 'int', '_value': 5}, 'product2': {'_type': 'int', '_value': 12}, 'product3': {'_type': 'int', '_value': 30}, 'product4': {'_type': 'int', '_value': 60}, 'product5': {'_type': 'int', '_value': 8}}, '_len': 7}]
+8 section_multipliers = {'A': 2, 'B': 1.5, 'C': 0.75, 'D': 1.25}
+8 ['warehouse_data', 'product_weights', 'section_multipliers'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}']
+9 section_offsets = {'A': 50, 'B': 30, 'C': 20, 'D': 40}
+9 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}']
+12 base_capacity = 0
+12 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0']
+13 for section, metrics in warehouse_data.items():
+13 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}']
+14 if section in section_multipliers:
+14 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}']
+16 area = metrics.get('area', 0)
+16 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200']
+17 height = metrics.get('height', 0)
+17 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4']
+18 temperature = metrics.get('temperature', 20)
+18 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22']
+22 if temperature < 5:
+22 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22']
+24 elif temperature > 30:
+24 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22']
+28 section_capacity = area * height * section_multipliers[section]
+28 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22', '1600']
+31 if section in ['A', 'C']:
+31 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22', '1600']
+32 section_capacity += section_offsets[section]
+32 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '0', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22', '1650']
+34 base_capacity += section_capacity
+34 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'A'", '{area: 200, height: 4, temperature: 22}', '200', '4', '22', '1650']
+13 for section, metrics in warehouse_data.items():
+13 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '200', '4', '22', '1650']
+14 if section in section_multipliers:
+14 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '200', '4', '22', '1650']
+16 area = metrics.get('area', 0)
+16 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '4', '22', '1650']
+17 height = metrics.get('height', 0)
+17 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '22', '1650']
+18 temperature = metrics.get('temperature', 20)
+18 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '18', '1650']
+22 if temperature < 5:
+22 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '18', '1650']
+24 elif temperature > 30:
+24 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '18', '1650']
+28 section_capacity = area * height * section_multipliers[section]
+28 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '18', '675.0']
+31 if section in ['A', 'C']:
+31 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '1650', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '18', '675.0']
+34 base_capacity += section_capacity
+34 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'B'", '{area: 150, height: 3, temperature: 18}', '150', '3', '18', '675.0']
+13 for section, metrics in warehouse_data.items():
+13 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '150', '3', '18', '675.0']
+14 if section in section_multipliers:
+14 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '150', '3', '18', '675.0']
+16 area = metrics.get('area', 0)
+16 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '3', '18', '675.0']
+17 height = metrics.get('height', 0)
+17 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '18', '675.0']
+18 temperature = metrics.get('temperature', 20)
+18 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '675.0']
+22 if temperature < 5:
+22 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '675.0']
+24 elif temperature > 30:
+24 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '675.0']
+28 section_capacity = area * height * section_multipliers[section]
+28 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '375.0']
+31 if section in ['A', 'C']:
+31 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '375.0']
+32 section_capacity += section_offsets[section]
+32 ['warehouse_data', 'product_weights', 'section_multipliers', 'section_offsets', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '{A: 50, B: 30, C: 20, ...}', '2325.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '395.0']
+34 base_capacity += section_capacity
+34 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'C'", '{area: 100, height: 5, temperature: 15}', '100', '5', '15', '395.0']
+13 for section, metrics in warehouse_data.items():
+13 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '100', '5', '15', '395.0']
+14 if section in section_multipliers:
+14 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '100', '5', '15', '395.0']
+16 area = metrics.get('area', 0)
+16 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '180', '5', '15', '395.0']
+17 height = metrics.get('height', 0)
+17 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '180', '4', '15', '395.0']
+18 temperature = metrics.get('temperature', 20)
+18 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '180', '4', '25', '395.0']
+22 if temperature < 5:
+22 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '180', '4', '25', '395.0']
+24 elif temperature > 30:
+24 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'temperature', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '180', '4', '25', '395.0']
+28 section_capacity = area * height * section_multipliers[section]
+28 ['warehouse_data', 'product_weights', 'section_multipliers', 'base_capacity', 'section', 'metrics', 'area', 'height', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '{A: 2, B: 1.5, C: 0.75, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '180', '4', '900.0']
+31 if section in ['A', 'C']:
+31 ['warehouse_data', 'product_weights', 'base_capacity', 'section', 'metrics', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '2720.0', "'D'", '{area: 180, height: 4, temperature: 25}', '900.0']
+34 base_capacity += section_capacity
+34 ['warehouse_data', 'product_weights', 'base_capacity', 'section', 'metrics', 'section_capacity'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '3620.0', "'D'", '{area: 180, height: 4, temperature: 25}', '900.0']
+13 for section, metrics in warehouse_data.items():
+13 ['warehouse_data', 'product_weights', 'base_capacity', 'section', 'metrics'] ['{A: {area: 200, height: 4, temperature: 22}, B: {area: 150, height: 3, temperature: 18}, C: {area: 100, height: 5, temperature: 15}, ...}', '{product1: 5, product2: 12, product3: 30, ...}', '3620.0', "'D'", '{area: 180, height: 4, temperature: 25}']
+38 for i in range(1, 6):
+38 ['product_weights', 'base_capacity', 'i'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '1']
+38 for i in range(1, 6):
+38 ['product_weights', 'base_capacity', 'i'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '2']
+38 for i in range(1, 6):
+38 ['product_weights', 'base_capacity', 'i'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '3']
+38 for i in range(1, 6):
+38 ['product_weights', 'base_capacity', 'i'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '4']
+38 for i in range(1, 6):
+38 ['product_weights', 'base_capacity', 'i'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5']
+38 for i in range(1, 6):
+38 ['product_weights', 'base_capacity', 'i'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5']
+44 weight_categories = {'light': 0, 'medium': 0, 'heavy': 0}
+44 ['product_weights', 'base_capacity', 'i', 'weight_categories'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 0, medium: 0, heavy: 0}']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 0, medium: 0, heavy: 0}', "'product1'", '5']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 0, medium: 0, heavy: 0}', "'product1'", '5']
+47 weight_categories['light'] += 1
+47 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 0, heavy: 0}', "'product1'", '5']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 0, heavy: 0}', "'product2'", '12']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 0, heavy: 0}', "'product2'", '12']
+48 elif weight < 50:
+48 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 0, heavy: 0}', "'product2'", '12']
+49 weight_categories['medium'] += 1
+49 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 1, heavy: 0}', "'product2'", '12']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 1, heavy: 0}', "'product3'", '30']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 1, heavy: 0}', "'product3'", '30']
+48 elif weight < 50:
+48 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 1, heavy: 0}', "'product3'", '30']
+49 weight_categories['medium'] += 1
+49 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 0}', "'product3'", '30']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 0}', "'product4'", '60']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 0}', "'product4'", '60']
+48 elif weight < 50:
+48 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 0}', "'product4'", '60']
+51 weight_categories['heavy'] += 1
+51 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 1}', "'product4'", '60']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 1}', "'product5'", '8']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 1, medium: 2, heavy: 1}', "'product5'", '8']
+47 weight_categories['light'] += 1
+47 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 2, heavy: 1}', "'product5'", '8']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 2, heavy: 1}', "'product6'", '45']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 2, heavy: 1}', "'product6'", '45']
+48 elif weight < 50:
+48 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 2, heavy: 1}', "'product6'", '45']
+49 weight_categories['medium'] += 1
+49 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 3, heavy: 1}', "'product6'", '45']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 3, heavy: 1}', "'product7'", '75']
+46 if weight < 10:
+46 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 3, heavy: 1}', "'product7'", '75']
+48 elif weight < 50:
+48 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 3, heavy: 1}', "'product7'", '75']
+51 weight_categories['heavy'] += 1
+51 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 3, heavy: 2}', "'product7'", '75']
+45 for product, weight in product_weights.items():
+45 ['product_weights', 'base_capacity', 'i', 'weight_categories', 'product', 'weight'] ['{product1: 5, product2: 12, product3: 30, ...}', '3620.0', '5', '{light: 2, medium: 3, heavy: 2}', "'product7'", '75']
+54 weight_adjustment = 0
+54 ['base_capacity', 'i', 'weight_categories', 'weight_adjustment'] ['3620.0', '5', '{light: 2, medium: 3, heavy: 2}', '0']
+55 if weight_categories['heavy'] > 0:
+55 ['base_capacity', 'i', 'weight_categories', 'weight_adjustment'] ['3620.0', '5', '{light: 2, medium: 3, heavy: 2}', '0']
+56 weight_adjustment = weight_categories['heavy'] * 5
+56 ['base_capacity', 'i', 'weight_categories', 'weight_adjustment'] ['3620.0', '5', '{light: 2, medium: 3, heavy: 2}', '10']
+57 if weight_categories['medium'] > weight_categories['light']:
+57 ['base_capacity', 'i', 'weight_categories', 'weight_adjustment'] ['3620.0', '5', '{light: 2, medium: 3, heavy: 2}', '10']
+58 weight_adjustment += 15
+58 ['base_capacity', 'i', 'weight_adjustment'] ['3620.0', '5', '25']
+77 for i in range(1, 4):
+77 ['base_capacity', 'i', 'weight_adjustment'] ['3620.0', '1', '25']
+77 for i in range(1, 4):
+77 ['base_capacity', 'i', 'weight_adjustment'] ['3620.0', '2', '25']
+77 for i in range(1, 4):
+77 ['base_capacity', 'i', 'weight_adjustment'] ['3620.0', '3', '25']
+77 for i in range(1, 4):
+77 ['base_capacity', 'i', 'weight_adjustment'] ['3620.0', '3', '25']
+82 optimal_capacity = base_capacity - weight_adjustment
+82 ['base_capacity', 'weight_adjustment', 'optimal_capacity'] ['3620.0', '25', '3595.0']
+85 bit_flags = 0b1010
+85 ['optimal_capacity'] ['3595.0']
+86 if bit_flags & 0b1000:
+86 ['optimal_capacity'] ['3595.0']
+87 bit_adjustment = bit_flags ^ 0b0110
+87 ['optimal_capacity'] ['3595.0']
+88 optimal_capacity = optimal_capacity + bit_adjustment
+88 ['optimal_capacity'] ['3607.0']
+90 return optimal_capacity
+90 ['optimal_capacity'] ['3607.0']
+FUNCTION_RETURN 90 calculate_optimal_capacity {'_type': 'float', '_value': 3607.0}

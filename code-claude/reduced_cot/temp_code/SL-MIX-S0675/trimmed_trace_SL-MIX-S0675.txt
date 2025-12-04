@@ -1,0 +1,165 @@
+64
+active_satellites
+---
+64 active_satellites = calculate_active_satellites(satellite_data)
+64 ['satellite_data'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]"]
+PARAM_MAPPING {'satellite_data': {'actual_var': 'satellite_data', 'value': [{'name': 'Sentinel-1A', 'status': 1, 'launch_year': 2014, 'orbit_type': 'LEO', 'altitude': 693}, {'name': 'Galileo-11', 'status': 1, 'launch_year': 2015, 'orbit_type': 'MEO', 'altitude': 23222}, {'name': 'Landsat-7', 'status': 0, 'launch_year': 1999, 'orbit_type': 'LEO', 'altitude': 705}, {'name': 'Intelsat-6', 'status': -1, 'launch_year': 1991, 'orbit_type': 'GEO', 'altitude': 35786}, {'name': 'NOAA-19', 'status': 1, 'launch_year': 2009, 'orbit_type': 'LEO', 'altitude': 870}, {'name': 'GOES-16', 'status': 1, 'launch_year': 2016, 'orbit_type': 'GEO', 'altitude': 35800}, {'name': 'Hubble', 'status': 1, 'launch_year': 1990, 'orbit_type': 'LEO', 'altitude': 540}]}}
+FUNCTION_ENTER 28 calculate_active_satellites def calculate_active_satellites(satellite_data):
+28 ['satellite_data'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Sentinel-1A'}, 'status': {'_type': 'int', '_value': 1}, 'launch_year': {'_type': 'int', '_value': 2014}, 'orbit_type': {'_type': 'str', '_value': 'LEO'}, 'altitude': {'_type': 'int', '_value': 693}}, '_len': 5}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Galileo-11'}, 'status': {'_type': 'int', '_value': 1}, 'launch_year': {'_type': 'int', '_value': 2015}, 'orbit_type': {'_type': 'str', '_value': 'MEO'}, 'altitude': {'_type': 'int', '_value': 23222}}, '_len': 5}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Landsat-7'}, 'status': {'_type': 'int', '_value': 0}, 'launch_year': {'_type': 'int', '_value': 1999}, 'orbit_type': {'_type': 'str', '_value': 'LEO'}, 'altitude': {'_type': 'int', '_value': 705}}, '_len': 5}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Intelsat-6'}, 'status': {'_type': 'int', '_value': -1}, 'launch_year': {'_type': 'int', '_value': 1991}, 'orbit_type': {'_type': 'str', '_value': 'GEO'}, 'altitude': {'_type': 'int', '_value': 35786}}, '_len': 5}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'NOAA-19'}, 'status': {'_type': 'int', '_value': 1}, 'launch_year': {'_type': 'int', '_value': 2009}, 'orbit_type': {'_type': 'str', '_value': 'LEO'}, 'altitude': {'_type': 'int', '_value': 870}}, '_len': 5}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'GOES-16'}, 'status': {'_type': 'int', '_value': 1}, 'launch_year': {'_type': 'int', '_value': 2016}, 'orbit_type': {'_type': 'str', '_value': 'GEO'}, 'altitude': {'_type': 'int', '_value': 35800}}, '_len': 5}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Hubble'}, 'status': {'_type': 'int', '_value': 1}, 'launch_year': {'_type': 'int', '_value': 1990}, 'orbit_type': {'_type': 'str', '_value': 'LEO'}, 'altitude': {'_type': 'int', '_value': 540}}, '_len': 5}], '_len': 7}]
+29 active_count = 0
+29 ['satellite_data', 'active_count'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '0']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '0', "{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}"]
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '0', "{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}", '1']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '0', "{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}", '1', '2014']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '693', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '693', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+22 altitude_factor = 1.0
+22 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '693', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '693', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '0', "{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}", '1', '2014']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['1', '2014']
+7 return status_code == 1
+7 ['status_code', 'launch_year'] ['1', '2014']
+45 active_count += 1
+45 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '1', "{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}", '1', '2014']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '1', "{name: 'Galileo-11', status: 1, launch_year: 2015, ...}", '1', '2014']
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '1', "{name: 'Galileo-11', status: 1, launch_year: 2015, ...}", '1', '2014']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '1', "{name: 'Galileo-11', status: 1, launch_year: 2015, ...}", '1', '2015']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'MEO'", '23222', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'MEO'", '23222', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+24 altitude_factor = 0.95
+24 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'MEO'", '23222', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '0.95']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'MEO'", '23222', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '0.95']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '1', "{name: 'Galileo-11', status: 1, launch_year: 2015, ...}", '1', '2015']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['1', '2015']
+7 return status_code == 1
+7 ['status_code', 'launch_year'] ['1', '2015']
+45 active_count += 1
+45 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Galileo-11', status: 1, launch_year: 2015, ...}", '1', '2015']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Landsat-7', status: 0, launch_year: 1999, ...}", '1', '2015']
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Landsat-7', status: 0, launch_year: 1999, ...}", '0', '2015']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Landsat-7', status: 0, launch_year: 1999, ...}", '0', '1999']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '705', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '705', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+22 altitude_factor = 1.0
+22 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '705', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '705', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Landsat-7', status: 0, launch_year: 1999, ...}", '0', '1999']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['0', '1999']
+5 return status_code > 0
+5 ['status_code', 'launch_year'] ['0', '1999']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Intelsat-6', status: -1, launch_year: 1991, ...}", '0', '1999']
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Intelsat-6', status: -1, launch_year: 1991, ...}", '-1', '1999']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Intelsat-6', status: -1, launch_year: 1991, ...}", '-1', '1991']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'GEO'", '35786', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'GEO'", '35786', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+24 altitude_factor = 0.95
+24 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'GEO'", '35786', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '0.95']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'GEO'", '35786', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '0.95']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'Intelsat-6', status: -1, launch_year: 1991, ...}", '-1', '1991']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['-1', '1991']
+5 return status_code > 0
+5 ['status_code', 'launch_year'] ['-1', '1991']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'NOAA-19', status: 1, launch_year: 2009, ...}", '-1', '1991']
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'NOAA-19', status: 1, launch_year: 2009, ...}", '1', '1991']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'NOAA-19', status: 1, launch_year: 2009, ...}", '1', '2009']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '870', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '870', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+22 altitude_factor = 1.0
+22 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '870', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '870', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '2', "{name: 'NOAA-19', status: 1, launch_year: 2009, ...}", '1', '2009']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['1', '2009']
+7 return status_code == 1
+7 ['status_code', 'launch_year'] ['1', '2009']
+45 active_count += 1
+45 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '3', "{name: 'NOAA-19', status: 1, launch_year: 2009, ...}", '1', '2009']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '3', "{name: 'GOES-16', status: 1, launch_year: 2016, ...}", '1', '2009']
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '3', "{name: 'GOES-16', status: 1, launch_year: 2016, ...}", '1', '2009']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '3', "{name: 'GOES-16', status: 1, launch_year: 2016, ...}", '1', '2016']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'GEO'", '35800', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'GEO'", '35800', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+24 altitude_factor = 0.95
+24 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'GEO'", '35800', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '0.95']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'altitude', 'efficiency_factors', 'altitude_factor'] ["'GEO'", '35800', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '0.95']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '3', "{name: 'GOES-16', status: 1, launch_year: 2016, ...}", '1', '2016']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['1', '2016']
+7 return status_code == 1
+7 ['status_code', 'launch_year'] ['1', '2016']
+45 active_count += 1
+45 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '4', "{name: 'GOES-16', status: 1, launch_year: 2016, ...}", '1', '2016']
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '4', "{name: 'Hubble', status: 1, launch_year: 1990, ...}", '1', '2016']
+34 status = satellite['status']
+34 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '4', "{name: 'Hubble', status: 1, launch_year: 1990, ...}", '1', '2016']
+35 year = satellite['launch_year']
+35 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '4', "{name: 'Hubble', status: 1, launch_year: 1990, ...}", '1', '1990']
+19 if altitude < 500:
+19 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '540', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+21 elif altitude < 2000:
+21 ['orbit_type', 'altitude', 'efficiency_factors'] ["'LEO'", '540', '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}']
+22 altitude_factor = 1.0
+22 ['orbit_type', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+26 return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+26 ['orbit_type', 'efficiency_factors', 'altitude_factor'] ["'LEO'", '{LEO: 0.85, MEO: 0.72, GEO: 0.95, ...}', '1.0']
+44 if is_operational(status, year):
+44 ['satellite_data', 'active_count', 'satellite', 'status', 'year'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '4', "{name: 'Hubble', status: 1, launch_year: 1990, ...}", '1', '1990']
+4 if launch_year < 2000:
+4 ['status_code', 'launch_year'] ['1', '1990']
+5 return status_code > 0
+5 ['status_code'] ['1']
+45 active_count += 1
+45 ['satellite_data', 'active_count', 'satellite'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '5', "{name: 'Hubble', status: 1, launch_year: 1990, ...}"]
+32 for satellite in satellite_data:
+32 ['satellite_data', 'active_count', 'satellite'] ["[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]", '5', "{name: 'Hubble', status: 1, launch_year: 1990, ...}"]
+50 return active_count
+50 ['active_count'] ['5']
+FUNCTION_RETURN 50 calculate_active_satellites {'_type': 'int', '_value': 5}

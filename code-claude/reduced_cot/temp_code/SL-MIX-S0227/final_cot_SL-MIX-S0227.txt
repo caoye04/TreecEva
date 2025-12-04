@@ -1,0 +1,96 @@
+Target: Find the value of variable final_score after [line 99] executes
+
+[line 3]  base_rating = (level << 2) | (gear_score >> 3)
+Compute: (level << 2) | (gear_score >> 3), where level=42 (an unknown source), gear_score=78 (an unknown source) = 169
+[line 4]  modifier = ~(level & 31) & 63
+Compute: ~(level & 31) & 63, where level=42 (an unknown source) = 53
+[line 5]  return (base_rating + modifier) % 100
+Return: (base_rating + modifier) % 100
+[line 86]  player_stats = apply_achievement_bonus(base_stats, achievements)
+Call function apply_achievement_bonus(base_stats={strength: 65, agility: 48, intelligence: 72, ...} (an unknown source), achievements=[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}] (an unknown source))
+[line 7]  def apply_achievement_bonus(stats, achievements):
+Enter function apply_achievement_bonus: stats={strength: 65, agility: 48, intelligence: 72, ...}, achievements=[{name: 'Dungeon Master', points: 30, unlocked: True}, {name: 'Legendary Warrior', points: 50, unlocked: False, ...}, {name: 'Speed Runner', points: 15, unlocked: True}]
+  [line 9]  potential_bonus = sum(a['points'] for a in achievements if a['unlocked'])
+  Call function sum(a['points'] for a in achievements if a['unlocked'])
+  [line 10]  actual_bonus = min(potential_bonus, 50)
+  Call function min(potential_bonus=45 (defined at [line 9]), 50)
+  [line 14]  for a in achievements:
+  Loop Start: a takes its first value {name: 'Dungeon Master', points: 30, unlocked: True}
+  [line 15]  if a.get('legendary', False) and a['unlocked']:
+  Condition: True, entering 'if' block
+  [line 14]  for a in achievements:
+  Loop Iteration: a is now {name: 'Legendary Warrior', points: 50, unlocked: False, ...} (iteration 2)
+  [line 15]  if a.get('legendary', False) and a['unlocked']:
+  Condition: True, entering 'if' block
+  [line 14]  for a in achievements:
+  Loop Iteration: a is now {name: 'Speed Runner', points: 15, unlocked: True} (iteration 3)
+  [line 15]  if a.get('legendary', False) and a['unlocked']:
+  Condition: True, entering 'if' block
+  [line 14]  for a in achievements:
+  Loop End: Iteration finished
+  [line 18]  return {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+  Return: {k: v + (v * actual_bonus / 500) for k, v in stats.items()}
+Function apply_achievement_bonus returns {strength: 70.85, agility: 52.32, intelligence: 78.48, ...}
+[line 94]  for i, (stat, value) in enumerate(player_stats.items()):
+(Missing param: 'iter_var')
+[line 95]  if i % 2 == 0:  # Only even indexed stats
+Condition: True, entering 'if' block
+[line 94]  for i, (stat, value) in enumerate(player_stats.items()):
+(Missing param: 'iter_var')
+[line 95]  if i % 2 == 0:  # Only even indexed stats
+Condition: True, entering 'if' block
+... [Line 94] repeats 6 more times ...
+... [Line 94] repeats 6 more times ...
+[line 94]  for i, (stat, value) in enumerate(player_stats.items()):
+(Missing param: 'iter_var')
+[line 95]  if i % 2 == 0:  # Only even indexed stats
+Condition: True, entering 'if' block
+[line 94]  for i, (stat, value) in enumerate(player_stats.items()):
+Loop End: Iteration finished
+[line 99]  final_score = calculate_normalized_score(player_stats)
+Call function calculate_normalized_score(player_stats={strength: 70.85, agility: 52.32, intelligence: 78.48, ...} (defined at [line 86]))
+[line 20]  def calculate_normalized_score(stats):
+Enter function calculate_normalized_score: stats={strength: 70.85, agility: 52.32, intelligence: 78.48, ...} (player_stats defined at [line 86])
+  [line 22]  strength_factor = stats.get('strength', 0) * 0.7
+  Compute: stats.get('strength', 0) * 0.7, where stats={strength: 70.85, agility: 52.32, intelligence: 78.48, ...} (parameter stats defined at [line 86]) = 49.59499999999999
+  [line 23]  agility_factor = stats.get('agility', 0) * 0.9
+  Compute: stats.get('agility', 0) * 0.9, where stats={strength: 70.85, agility: 52.32, intelligence: 78.48, ...} (parameter stats defined at [line 86]) = 47.088
+  [line 24]  intelligence_factor = stats.get('intelligence', 0) * 1.2
+  Compute: stats.get('intelligence', 0) * 1.2, where stats={strength: 70.85, agility: 52.32, intelligence: 78.48, ...} (parameter stats defined at [line 86]) = 94.176
+  [line 32]  base_score = (strength_factor + agility_factor + intelligence_factor) / 3
+  Compute: (strength_factor + agility_factor + intelligence_factor) / 3, where strength_factor=49.59499999999999 (defined at [line 22]), agility_factor=47.088 (defined at [line 23]), intelligence_factor=94.176 (defined at [line 24]) = 63.61966666666666
+  [line 35]  stat_modifiers = {name: idx for idx, name in enumerate(stats.keys())}
+  Compute: {name: idx for idx, name in enumerate(stats.keys())}, where name='strength' (an unknown source), idx=0 (an unknown source), stats={strength: 70.85, agility: 52.32, intelligence: 78.48, ...} (parameter stats defined at [line 86]) = ?
+  [line 38]  weighted_sum = 0
+  Assign: weighted_sum = 0
+  [line 39]  total_weight = 0
+  Assign: total_weight = 0
+  [line 40]  for stat, value in stats.items():
+  (Missing param: 'iter_var')
+  [line 41]  if stat in ['vitality', 'wisdom', 'dexterity']:
+  Condition: True, entering 'if' block
+  [line 40]  for stat, value in stats.items():
+  (Missing param: 'iter_var')
+  [line 41]  if stat in ['vitality', 'wisdom', 'dexterity']:
+  Condition: True, entering 'if' block
+... [Line 40] repeats 6 more times ...
+... [Line 40] repeats 6 more times ...
+  [line 40]  for stat, value in stats.items():
+  (Missing param: 'iter_var')
+  [line 41]  if stat in ['vitality', 'wisdom', 'dexterity']:
+  Condition: True, entering 'if' block
+  [line 40]  for stat, value in stats.items():
+  Loop End: Iteration finished
+  [line 47]  if 'legendary_factor' in stats and stats['legendary_factor'] > 100:
+  Condition: True, entering 'if' block
+  [line 51]  normalized = base_score
+  Compute: base_score, where base_score=63.61966666666666 (defined at [line 32]) = 63.61966666666666
+  [line 52]  if total_weight > 0:
+  Condition: True, entering 'if' block
+  [line 53]  normalized = (base_score * 0.8) + (weighted_sum / total_weight * 0.2)
+  Compute: (base_score * 0.8) + (weighted_sum / total_weight * 0.2), where base_score=63.61966666666666 (defined at [line 32]), weighted_sum=1013.7 (defined at [line 38]), total_weight=21 (defined at [line 39]) = 60.550019047619045
+  [line 56]  return round(normalized) % 1000
+  Return: round(normalized) % 1000
+Function calculate_normalized_score returns 61
+
+Answer: final_score = 61 (last updated on defined at [line 99])

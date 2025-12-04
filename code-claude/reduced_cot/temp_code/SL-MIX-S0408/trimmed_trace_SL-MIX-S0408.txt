@@ -1,0 +1,585 @@
+47
+optimal_score
+---
+10 math_scores = [85, 92, 78, 90, 88]
+10 ['math_scores'] ['[85, 92, 78, 90, 88]']
+11 science_scores = [79, 94, 81, 87, 90]
+11 ['math_scores', 'science_scores'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]']
+17 all_subject_combinations = list(itertools.combinations(range(5), 3))
+17 ['math_scores', 'science_scores', 'all_subject_combinations'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]']
+20 best_combination = None
+20 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', 'None']
+21 best_variance = float('inf')
+21 [] []
+25 for combo in all_subject_combinations:
+25 [] []
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['0']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['1']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['2']
+27 math_subset = [math_scores[i] for i in combo]
+27 [] []
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['0']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['1']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['2']
+28 science_subset = [science_scores[i] for i in combo]
+28 [] []
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 [] []
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[85, 92, 78]', '85.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['85.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['85', '85.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['92', '85.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '85.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '85.0']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[85, 92, 78]', '32.666666666666664', '85.0']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 [] []
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[79, 94, 81]', '84.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['84.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['79', '84.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['94', '84.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '84.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '84.66666666666667']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[79, 94, 81]', '44.22222222222223', '84.66666666666667']
+35 avg_variance = (math_var + science_var) / 2
+35 [] []
+38 if avg_variance < best_variance:
+38 [] []
+39 best_variance = avg_variance
+39 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', 'None', '38.44444444444444', '(0, 1, 2)', '[85, 92, 78]', '[79, 94, 81]', '32.666666666666664', '44.22222222222223', '38.44444444444444']
+40 best_combination = combo
+40 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 2)', '[85, 92, 78]', '[79, 94, 81]', '32.666666666666664', '44.22222222222223', '38.44444444444444']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 78]', '[79, 94, 81]', '32.666666666666664', '44.22222222222223', '38.44444444444444']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['0']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['1']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['3']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 81]', '32.666666666666664', '44.22222222222223', '38.44444444444444']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['0']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['1']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['3']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '32.666666666666664', '44.22222222222223', '38.44444444444444']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '32.666666666666664', '44.22222222222223', '38.44444444444444']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[85, 92, 90]', '89.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['89.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['85', '89.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['92', '89.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '89.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '89.0']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[85, 92, 90]', '8.666666666666666', '89.0']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '8.666666666666666', '44.22222222222223', '38.44444444444444']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[79, 94, 87]', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['79', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['94', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '86.66666666666667']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[79, 94, 87]', '37.55555555555556', '86.66666666666667']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '38.44444444444444', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+39 best_variance = avg_variance
+39 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 2)', '23.11111111111111', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+40 best_combination = combo
+40 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 3)', '[85, 92, 90]', '[79, 94, 87]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 90]', '[79, 94, 87]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['0']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['1']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['4']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 88]', '[79, 94, 87]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['0']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['1']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['4']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 88]', '[79, 94, 90]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 88]', '[79, 94, 90]', '8.666666666666666', '37.55555555555556', '23.11111111111111']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[85, 92, 88]', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['85', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['92', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '88.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[85, 92, 88]', '8.222222222222221', '88.33333333333333']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 88]', '[79, 94, 90]', '8.222222222222221', '37.55555555555556', '23.11111111111111']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[79, 94, 90]', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['79', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['94', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '87.66666666666667']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[79, 94, 90]', '40.22222222222222', '87.66666666666667']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 88]', '[79, 94, 90]', '8.222222222222221', '40.22222222222222', '24.22222222222222']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 1, 4)', '[85, 92, 88]', '[79, 94, 90]', '8.222222222222221', '40.22222222222222', '24.22222222222222']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 92, 88]', '[79, 94, 90]', '8.222222222222221', '40.22222222222222', '24.22222222222222']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['0']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['2']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['3']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 78, 90]', '[79, 94, 90]', '8.222222222222221', '40.22222222222222', '24.22222222222222']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['0']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['2']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['3']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '8.222222222222221', '40.22222222222222', '24.22222222222222']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '8.222222222222221', '40.22222222222222', '24.22222222222222']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[85, 78, 90]', '84.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['84.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['85', '84.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '84.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '84.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '84.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[85, 78, 90]', '24.222222222222225', '84.33333333333333']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '24.222222222222225', '40.22222222222222', '24.22222222222222']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[79, 81, 87]', '82.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['82.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['79', '82.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '82.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '82.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '82.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[79, 81, 87]', '11.555555555555555', '82.33333333333333']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '23.11111111111111', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+39 best_variance = avg_variance
+39 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 1, 3)', '17.88888888888889', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+40 best_combination = combo
+40 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 3)', '[85, 78, 90]', '[79, 81, 87]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 90]', '[79, 81, 87]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['0']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['2']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['4']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 88]', '[79, 81, 87]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['0']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['2']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['4']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 88]', '[79, 81, 90]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 88]', '[79, 81, 90]', '24.222222222222225', '11.555555555555555', '17.88888888888889']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[85, 78, 88]', '83.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['83.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['85', '83.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '83.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '83.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '83.66666666666667']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[85, 78, 88]', '17.555555555555554', '83.66666666666667']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 88]', '[79, 81, 90]', '17.555555555555554', '11.555555555555555', '17.88888888888889']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[79, 81, 90]', '83.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['83.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['79', '83.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '83.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '83.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '83.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[79, 81, 90]', '22.88888888888889', '83.33333333333333']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 88]', '[79, 81, 90]', '17.555555555555554', '22.88888888888889', '20.22222222222222']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 2, 4)', '[85, 78, 88]', '[79, 81, 90]', '17.555555555555554', '22.88888888888889', '20.22222222222222']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 78, 88]', '[79, 81, 90]', '17.555555555555554', '22.88888888888889', '20.22222222222222']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['0']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['3']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['4']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 81, 90]', '17.555555555555554', '22.88888888888889', '20.22222222222222']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['0']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['3']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['4']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '17.555555555555554', '22.88888888888889', '20.22222222222222']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '17.555555555555554', '22.88888888888889', '20.22222222222222']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[85, 90, 88]', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['85', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '87.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '87.66666666666667']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[85, 90, 88]', '4.222222222222222', '87.66666666666667']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '4.222222222222222', '22.88888888888889', '20.22222222222222']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[79, 87, 90]', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['79', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '85.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[79, 87, 90]', '21.555555555555557', '85.33333333333333']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '17.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+39 best_variance = avg_variance
+39 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 2, 3)', '12.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+40 best_combination = combo
+40 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(0, 3, 4)', '[85, 90, 88]', '[79, 87, 90]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[85, 90, 88]', '[79, 87, 90]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['1']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['2']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['3']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[92, 78, 90]', '[79, 87, 90]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['1']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['2']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['3']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[92, 78, 90]', '[94, 81, 87]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[92, 78, 90]', '[94, 81, 87]', '4.222222222222222', '21.555555555555557', '12.88888888888889']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[92, 78, 90]', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['92', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '86.66666666666667']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '86.66666666666667']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[92, 78, 90]', '38.22222222222222', '86.66666666666667']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[92, 78, 90]', '[94, 81, 87]', '38.22222222222222', '21.555555555555557', '12.88888888888889']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[94, 81, 87]', '87.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['87.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['94', '87.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '87.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '87.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '87.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[94, 81, 87]', '28.222222222222225', '87.33333333333333']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[92, 78, 90]', '[94, 81, 87]', '38.22222222222222', '28.222222222222225', '33.22222222222222']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 3)', '[92, 78, 90]', '[94, 81, 87]', '38.22222222222222', '28.222222222222225', '33.22222222222222']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 90]', '[94, 81, 87]', '38.22222222222222', '28.222222222222225', '33.22222222222222']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['1']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['2']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['4']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 88]', '[94, 81, 87]', '38.22222222222222', '28.222222222222225', '33.22222222222222']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['1']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['2']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['4']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 88]', '[94, 81, 90]', '38.22222222222222', '28.222222222222225', '33.22222222222222']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 88]', '[94, 81, 90]', '38.22222222222222', '28.222222222222225', '33.22222222222222']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[92, 78, 88]', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['92', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '86.0']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[92, 78, 88]', '34.666666666666664', '86.0']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 88]', '[94, 81, 90]', '34.666666666666664', '28.222222222222225', '33.22222222222222']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[94, 81, 90]', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['94', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '88.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '88.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[94, 81, 90]', '29.555555555555557', '88.33333333333333']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 88]', '[94, 81, 90]', '34.666666666666664', '29.555555555555557', '32.111111111111114']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 2, 4)', '[92, 78, 88]', '[94, 81, 90]', '34.666666666666664', '29.555555555555557', '32.111111111111114']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 78, 88]', '[94, 81, 90]', '34.666666666666664', '29.555555555555557', '32.111111111111114']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['1']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['3']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['4']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 90, 88]', '[94, 81, 90]', '34.666666666666664', '29.555555555555557', '32.111111111111114']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['1']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['3']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['4']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '34.666666666666664', '29.555555555555557', '32.111111111111114']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '34.666666666666664', '29.555555555555557', '32.111111111111114']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[92, 90, 88]', '90.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['90.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['92', '90.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '90.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '90.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '90.0']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[92, 90, 88]', '2.6666666666666665', '90.0']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '29.555555555555557', '32.111111111111114']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[94, 87, 90]', '90.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['90.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['94', '90.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '90.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '90.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '90.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[94, 87, 90]', '8.222222222222221', '90.33333333333333']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '12.88888888888889', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+39 best_variance = avg_variance
+39 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(0, 3, 4)', '5.444444444444444', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+40 best_combination = combo
+40 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(1, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '[92, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['2']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['3']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['i'] ['4']
+27 math_subset = [math_scores[i] for i in combo]
+27 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '[78, 90, 88]', '[94, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['2']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['3']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['i'] ['4']
+28 science_subset = [science_scores[i] for i in combo]
+28 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '[78, 90, 88]', '[81, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+31 math_mean, math_var = calculate_statistics(math_subset)
+31 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_subset', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '[78, 90, 88]', '[81, 87, 90]', '2.6666666666666665', '8.222222222222221', '5.444444444444444']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[78, 90, 88]', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['78', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '85.33333333333333']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['88', '85.33333333333333']
+7 return mean_score, variance
+7 ['scores', 'variance', 'mean_score'] ['[78, 90, 88]', '27.555555555555557', '85.33333333333333']
+32 science_mean, science_var = calculate_statistics(science_subset)
+32 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'science_subset', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '[81, 87, 90]', '27.555555555555557', '8.222222222222221', '5.444444444444444']
+5 mean_score = sum(scores) / len(scores)
+5 ['scores', 'mean_score'] ['[81, 87, 90]', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['mean_score'] ['86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['81', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['87', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '86.0']
+6 variance = sum((x - mean_score) ** 2 for x in scores) / len(scores)
+6 ['x', 'mean_score'] ['90', '86.0']
+7 return mean_score, variance
+7 ['variance', 'mean_score'] ['14.0', '86.0']
+35 avg_variance = (math_var + science_var) / 2
+35 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'math_var', 'science_var', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '27.555555555555557', '14.0', '20.77777777777778']
+38 if avg_variance < best_variance:
+38 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'best_variance', 'combo', 'avg_variance'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '5.444444444444444', '(2, 3, 4)', '20.77777777777778']
+25 for combo in all_subject_combinations:
+25 ['math_scores', 'science_scores', 'all_subject_combinations', 'best_combination', 'combo'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '[(0, 1, 2), (0, 1, 3), (0, 1, 4), (0, 2, 3), (0, 2, 4), ...]', '(1, 3, 4)', '(2, 3, 4)']
+44 scores_to_keep = [math_scores[i] + science_scores[i] for i in best_combination]
+44 ['i'] ['1']
+44 scores_to_keep = [math_scores[i] + science_scores[i] for i in best_combination]
+44 ['i'] ['3']
+44 scores_to_keep = [math_scores[i] + science_scores[i] for i in best_combination]
+44 ['i'] ['4']
+44 scores_to_keep = [math_scores[i] + science_scores[i] for i in best_combination]
+44 ['math_scores', 'science_scores', 'best_combination', 'scores_to_keep'] ['[85, 92, 78, 90, 88]', '[79, 94, 81, 87, 90]', '(1, 3, 4)', '[186, 177, 178]']
+47 optimal_score = sum(scores_to_keep)
+47 ['scores_to_keep', 'optimal_score'] ['[186, 177, 178]', '541']

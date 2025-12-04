@@ -1,0 +1,335 @@
+127
+priority_value
+---
+PARAM_MAPPING {'network_map': {'actual_var': 'network_map', 'value': {'server1': 10, 'server2': 25, 'server3': 40, 'client1': 5, 'client2': 15}}, 'source': {'actual_var': "'server1'", 'value': "'server1'"}, 'destination': {'actual_var': "'client2'", 'value': "'client2'"}}
+FUNCTION_ENTER 17 optimize_routing def optimize_routing(network_map, source, destination):
+17 ['network_map', 'source', 'destination'] [{'_type': 'dict', '_items': {'server1': {'_type': 'int', '_value': 10}, 'server2': {'_type': 'int', '_value': 25}, 'server3': {'_type': 'int', '_value': 40}, 'client1': {'_type': 'int', '_value': 5}, 'client2': {'_type': 'int', '_value': 15}}, '_len': 5}, {'_type': 'str', '_value': 'server1'}, {'_type': 'str', '_value': 'client2'}]
+19 if not network_map or source not in network_map or destination not in network_map:
+19 ['network_map', 'source', 'destination'] ['{server1: 10, server2: 25, server3: 40, ...}', "'server1'", "'client2'"]
+23 distance = abs(network_map[destination] - network_map[source])
+23 ['network_map', 'source', 'destination', 'distance'] ['{server1: 10, server2: 25, server3: 40, ...}', "'server1'", "'client2'", '5']
+24 return distance * 2
+24 ['distance'] ['5']
+FUNCTION_RETURN 24 optimize_routing {'_type': 'int', '_value': 10}
+PARAM_MAPPING {'traffic_history': {'actual_var': 'traffic_history', 'value': [[45, 67, 89, 102], [56, 78, 90, 110], [48, 70, 85, 95]]}}
+FUNCTION_ENTER 8 analyze_traffic_pattern def analyze_traffic_pattern(traffic_history):
+8 ['traffic_history'] [{'_type': 'list', '_items': [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 89}, {'_type': 'int', '_value': 102}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 56}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 90}, {'_type': 'int', '_value': 110}], '_len': 4}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 48}, {'_type': 'int', '_value': 70}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 95}], '_len': 4}], '_len': 3}]
+10 if not traffic_history:
+10 ['traffic_history'] ['[[45, 67, 89, 102], [56, 78, 90, 110], [48, 70, 85, 95]]']
+13 peak_values = [max(day) if day else 0 for day in traffic_history]
+13 ['traffic_history', 'day'] ['[[45, 67, 89, 102], [56, 78, 90, 110], [48, 70, 85, 95]]', '[45, 67, 89, 102]']
+13 peak_values = [max(day) if day else 0 for day in traffic_history]
+13 ['traffic_history', 'day'] ['[[45, 67, 89, 102], [56, 78, 90, 110], [48, 70, 85, 95]]', '[56, 78, 90, 110]']
+13 peak_values = [max(day) if day else 0 for day in traffic_history]
+13 ['traffic_history', 'day'] ['[[45, 67, 89, 102], [56, 78, 90, 110], [48, 70, 85, 95]]', '[48, 70, 85, 95]']
+13 peak_values = [max(day) if day else 0 for day in traffic_history]
+13 ['traffic_history', 'peak_values'] ['[[45, 67, 89, 102], [56, 78, 90, 110], [48, 70, 85, 95]]', '[102, 110, 95]']
+14 trend = sum(peak_values) / len(peak_values) if peak_values else 0
+14 ['peak_values', 'trend'] ['[102, 110, 95]', '102.33333333333333']
+15 return trend * 1.5
+15 ['trend'] ['102.33333333333333']
+FUNCTION_RETURN 15 analyze_traffic_pattern {'_type': 'float', '_value': 153.5}
+122 priority_value = process_network_packets(packets, priority_filters)
+122 ['packets', 'priority_filters'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}']
+PARAM_MAPPING {'packets': {'actual_var': 'packets', 'value': {'pkt001': {'priority': 'high', 'payload': [65, 66, 67], 'checksum': 198, 'protocol': 'TCP'}, 'pkt002': {'priority': 'medium', 'payload': [68, 69, 70], 'checksum': 207, 'protocol': 'UDP'}, 'pkt003': {'priority': 'low', 'payload': [71, 72, 73], 'checksum': 216, 'protocol': 'TCP'}, 'pkt004': {'priority': 'high', 'payload': [74, 75, 76], 'checksum': 225, 'protocol': 'ICMP'}, 'pkt005': {'priority': 'medium', 'payload': [77, 78, 79], 'checksum': 234, 'protocol': 'UDP'}, 'pkt006': {'priority': 'high', 'payload': [80, 81, 82], 'checksum': 999}}}, 'filters': {'actual_var': 'priority_filters', 'value': {'high': 3, 'medium': 2, 'low': 1}}}
+FUNCTION_ENTER 26 process_network_packets def process_network_packets(packets, filters):
+26 ['packets', 'filters'] [{'_type': 'dict', '_items': {'pkt001': {'_type': 'dict', '_items': {'priority': {'_type': 'str', '_value': 'high'}, 'payload': {'_type': 'list', '_items': [{'_type': 'int', '_value': 65}, {'_type': 'int', '_value': 66}, {'_type': 'int', '_value': 67}], '_len': 3}, 'checksum': {'_type': 'int', '_value': 198}, 'protocol': {'_type': 'str', '_value': 'TCP'}}, '_len': 4}, 'pkt002': {'_type': 'dict', '_items': {'priority': {'_type': 'str', '_value': 'medium'}, 'payload': {'_type': 'list', '_items': [{'_type': 'int', '_value': 68}, {'_type': 'int', '_value': 69}, {'_type': 'int', '_value': 70}], '_len': 3}, 'checksum': {'_type': 'int', '_value': 207}, 'protocol': {'_type': 'str', '_value': 'UDP'}}, '_len': 4}, 'pkt003': {'_type': 'dict', '_items': {'priority': {'_type': 'str', '_value': 'low'}, 'payload': {'_type': 'list', '_items': [{'_type': 'int', '_value': 71}, {'_type': 'int', '_value': 72}, {'_type': 'int', '_value': 73}], '_len': 3}, 'checksum': {'_type': 'int', '_value': 216}, 'protocol': {'_type': 'str', '_value': 'TCP'}}, '_len': 4}, 'pkt004': {'_type': 'dict', '_items': {'priority': {'_type': 'str', '_value': 'high'}, 'payload': {'_type': 'list', '_items': [{'_type': 'int', '_value': 74}, {'_type': 'int', '_value': 75}, {'_type': 'int', '_value': 76}], '_len': 3}, 'checksum': {'_type': 'int', '_value': 225}, 'protocol': {'_type': 'str', '_value': 'ICMP'}}, '_len': 4}, 'pkt005': {'_type': 'dict', '_items': {'priority': {'_type': 'str', '_value': 'medium'}, 'payload': {'_type': 'list', '_items': [{'_type': 'int', '_value': 77}, {'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 79}], '_len': 3}, 'checksum': {'_type': 'int', '_value': 234}, 'protocol': {'_type': 'str', '_value': 'UDP'}}, '_len': 4}}, '_len': 6}, {'_type': 'dict', '_items': {'high': {'_type': 'int', '_value': 3}, 'medium': {'_type': 'int', '_value': 2}, 'low': {'_type': 'int', '_value': 1}}, '_len': 3}]
+28 valid_packets = {}
+28 ['packets', 'filters', 'valid_packets'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', '{}']
+30 bandwidth_usage = []
+30 ['packets', 'filters', 'valid_packets', 'bandwidth_usage'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', '{}', '[]']
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', '{}', '[]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}"]
+34 if calculate_checksum(packet_data['payload']) != packet_data['checksum']:
+34 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', '{}', '[]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}"]
+3 checksum = 0
+3 ['data', 'checksum'] ['[65, 66, 67]', '0']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '0', '65']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '65', '65']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '65', '66']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '131', '66']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '131', '67']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '198', '67']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '198', '67']
+6 return checksum
+6 ['data', 'checksum', 'byte'] ['[65, 66, 67]', '198', '67']
+41 valid_packets[packet_id] = packet_data
+41 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}}", '[3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}"]
+42 priority = packet_data['priority']
+42 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}}", '[3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'high'"]
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}}", '[3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'high'"]
+34 if calculate_checksum(packet_data['payload']) != packet_data['checksum']:
+34 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}}", '[3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'high'"]
+3 checksum = 0
+3 ['data', 'checksum'] ['[68, 69, 70]', '0']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '0', '68']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '68', '68']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '68', '69']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '137', '69']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '137', '70']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '207', '70']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '207', '70']
+6 return checksum
+6 ['data', 'checksum', 'byte'] ['[68, 69, 70]', '207', '70']
+41 valid_packets[packet_id] = packet_data
+41 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}}", '[3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'high'"]
+42 priority = packet_data['priority']
+42 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}}", '[3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'medium'"]
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}}", '[3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'medium'"]
+34 if calculate_checksum(packet_data['payload']) != packet_data['checksum']:
+34 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}}", '[3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'medium'"]
+3 checksum = 0
+3 ['data', 'checksum'] ['[71, 72, 73]', '0']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '0', '71']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '71', '71']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '71', '72']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '143', '72']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '143', '73']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '216', '73']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '216', '73']
+6 return checksum
+6 ['data', 'checksum', 'byte'] ['[71, 72, 73]', '216', '73']
+41 valid_packets[packet_id] = packet_data
+41 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}}", '[3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'medium'"]
+42 priority = packet_data['priority']
+42 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}}", '[3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'low'"]
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}}", '[3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'low'"]
+34 if calculate_checksum(packet_data['payload']) != packet_data['checksum']:
+34 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}}", '[3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'low'"]
+3 checksum = 0
+3 ['data', 'checksum'] ['[74, 75, 76]', '0']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '0', '74']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '74', '74']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '74', '75']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '149', '75']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '149', '76']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '225', '76']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '225', '76']
+6 return checksum
+6 ['data', 'checksum', 'byte'] ['[74, 75, 76]', '225', '76']
+41 valid_packets[packet_id] = packet_data
+41 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'low'"]
+42 priority = packet_data['priority']
+42 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'high'"]
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'high'"]
+34 if calculate_checksum(packet_data['payload']) != packet_data['checksum']:
+34 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'high'"]
+3 checksum = 0
+3 ['data', 'checksum'] ['[77, 78, 79]', '0']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '0', '77']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '77', '77']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '77', '78']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '155', '78']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '155', '79']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '234', '79']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '234', '79']
+6 return checksum
+6 ['data', 'checksum', 'byte'] ['[77, 78, 79]', '234', '79']
+41 valid_packets[packet_id] = packet_data
+41 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'high'"]
+42 priority = packet_data['priority']
+42 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'medium'"]
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt006'", "{priority: 'high', payload: [80, 81, 82], checksum: 999}", "'medium'"]
+34 if calculate_checksum(packet_data['payload']) != packet_data['checksum']:
+34 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt006'", "{priority: 'high', payload: [80, 81, 82], checksum: 999}", "'medium'"]
+3 checksum = 0
+3 ['data', 'checksum'] ['[80, 81, 82]', '0']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '0', '80']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '80', '80']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '80', '81']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '161', '81']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '161', '82']
+5 checksum = (checksum + byte) % 256
+5 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '243', '82']
+4 for byte in data:
+4 ['data', 'checksum', 'byte'] ['[80, 81, 82]', '243', '82']
+6 return checksum
+6 ['checksum'] ['243']
+35 continue  # Invalid checksum, skip this packet
+35 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt006'", "{priority: 'high', payload: [80, 81, 82], checksum: 999}", "'medium'"]
+33 for packet_id, packet_data in packets.items():
+33 ['packets', 'filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt006'", "{priority: 'high', payload: [80, 81, 82], checksum: 999}", "'medium'"]
+46 priority_scores = {}
+46 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt006'", "{priority: 'high', payload: [80, 81, 82], checksum: 999}", "'medium'", '{}']
+47 for packet_id, packet_data in valid_packets.items():
+47 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'medium'", '{}']
+48 priority = packet_data['priority']
+48 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'high'", '{}']
+49 if priority in filters:
+49 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'high'", '{}']
+50 base_score = 10 if priority == 'high' else (5 if priority == 'medium' else 1)
+50 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'high'", '{}', '10']
+51 multiplier = filters[priority]
+51 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'high'", '{}', '10', '3']
+52 priority_scores[packet_id] = base_score * multiplier
+52 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt001'", "{priority: 'high', payload: [65, 66, 67], checksum: 198, ...}", "'high'", '{pkt001: 30}', '10', '3']
+47 for packet_id, packet_data in valid_packets.items():
+47 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'high'", '{pkt001: 30}', '10', '3']
+48 priority = packet_data['priority']
+48 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'medium'", '{pkt001: 30}', '10', '3']
+49 if priority in filters:
+49 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'medium'", '{pkt001: 30}', '10', '3']
+50 base_score = 10 if priority == 'high' else (5 if priority == 'medium' else 1)
+50 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'medium'", '{pkt001: 30}', '5', '3']
+51 multiplier = filters[priority]
+51 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'medium'", '{pkt001: 30}', '5', '2']
+52 priority_scores[packet_id] = base_score * multiplier
+52 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt002'", "{priority: 'medium', payload: [68, 69, 70], checksum: 207, ...}", "'medium'", '{pkt001: 30, pkt002: 10}', '5', '2']
+47 for packet_id, packet_data in valid_packets.items():
+47 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'medium'", '{pkt001: 30, pkt002: 10}', '5', '2']
+48 priority = packet_data['priority']
+48 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'low'", '{pkt001: 30, pkt002: 10}', '5', '2']
+49 if priority in filters:
+49 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'low'", '{pkt001: 30, pkt002: 10}', '5', '2']
+50 base_score = 10 if priority == 'high' else (5 if priority == 'medium' else 1)
+50 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'low'", '{pkt001: 30, pkt002: 10}', '1', '2']
+51 multiplier = filters[priority]
+51 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'low'", '{pkt001: 30, pkt002: 10}', '1', '1']
+52 priority_scores[packet_id] = base_score * multiplier
+52 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt003'", "{priority: 'low', payload: [71, 72, 73], checksum: 216, ...}", "'low'", '{pkt001: 30, pkt002: 10, pkt003: 1}', '1', '1']
+47 for packet_id, packet_data in valid_packets.items():
+47 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'low'", '{pkt001: 30, pkt002: 10, pkt003: 1}', '1', '1']
+48 priority = packet_data['priority']
+48 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'high'", '{pkt001: 30, pkt002: 10, pkt003: 1}', '1', '1']
+49 if priority in filters:
+49 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'high'", '{pkt001: 30, pkt002: 10, pkt003: 1}', '1', '1']
+50 base_score = 10 if priority == 'high' else (5 if priority == 'medium' else 1)
+50 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'high'", '{pkt001: 30, pkt002: 10, pkt003: 1}', '10', '1']
+51 multiplier = filters[priority]
+51 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'high'", '{pkt001: 30, pkt002: 10, pkt003: 1}', '10', '3']
+52 priority_scores[packet_id] = base_score * multiplier
+52 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt004'", "{priority: 'high', payload: [74, 75, 76], checksum: 225, ...}", "'high'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '10', '3']
+47 for packet_id, packet_data in valid_packets.items():
+47 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'high'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '10', '3']
+48 priority = packet_data['priority']
+48 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'medium'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '10', '3']
+49 if priority in filters:
+49 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'medium'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '10', '3']
+50 base_score = 10 if priority == 'high' else (5 if priority == 'medium' else 1)
+50 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'medium'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '5', '3']
+51 multiplier = filters[priority]
+51 ['filters', 'valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority', 'priority_scores', 'base_score', 'multiplier'] ['{high: 3, medium: 2, low: 1}', "{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", "'medium'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '5', '2']
+52 priority_scores[packet_id] = base_score * multiplier
+52 ['valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority_scores', 'base_score', 'multiplier'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '5', '2']
+47 for packet_id, packet_data in valid_packets.items():
+47 ['valid_packets', 'bandwidth_usage', 'packet_id', 'packet_data', 'priority_scores'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", "{priority: 'medium', payload: [77, 78, 79], checksum: 234, ...}", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}']
+55 congestion_factor = sum(bandwidth_usage) / 1000 if bandwidth_usage else 0
+55 ['valid_packets', 'bandwidth_usage', 'packet_id', 'priority_scores', 'congestion_factor'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '[3, 3, 3, 3, 3]', "'pkt005'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '0.015']
+58 protocol_weights = {'TCP': 1.2, 'UDP': 0.8, 'ICMP': 1.5}
+58 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}']
+59 for packet_id in list(priority_scores.keys()):
+59 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt001'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}']
+60 if 'protocol' in valid_packets[packet_id]:
+60 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt001'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}']
+61 protocol = valid_packets[packet_id]['protocol']
+61 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt001'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+62 if protocol in protocol_weights:
+62 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt001'", '{pkt001: 30, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+64 priority_scores[packet_id] *= protocol_weights[protocol]
+64 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt001'", '{pkt001: 36.0, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+59 for packet_id in list(priority_scores.keys()):
+59 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt002'", '{pkt001: 36.0, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+60 if 'protocol' in valid_packets[packet_id]:
+60 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt002'", '{pkt001: 36.0, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+61 protocol = valid_packets[packet_id]['protocol']
+61 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt002'", '{pkt001: 36.0, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+62 if protocol in protocol_weights:
+62 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt002'", '{pkt001: 36.0, pkt002: 10, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+64 priority_scores[packet_id] *= protocol_weights[protocol]
+64 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt002'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+59 for packet_id in list(priority_scores.keys()):
+59 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt003'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+60 if 'protocol' in valid_packets[packet_id]:
+60 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt003'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+61 protocol = valid_packets[packet_id]['protocol']
+61 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt003'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+62 if protocol in protocol_weights:
+62 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt003'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+64 priority_scores[packet_id] *= protocol_weights[protocol]
+64 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt003'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+59 for packet_id in list(priority_scores.keys()):
+59 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt004'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+60 if 'protocol' in valid_packets[packet_id]:
+60 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt004'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'TCP'"]
+61 protocol = valid_packets[packet_id]['protocol']
+61 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt004'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'ICMP'"]
+62 if protocol in protocol_weights:
+62 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt004'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'ICMP'"]
+64 priority_scores[packet_id] *= protocol_weights[protocol]
+64 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt004'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'ICMP'"]
+59 for packet_id in list(priority_scores.keys()):
+59 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'ICMP'"]
+60 if 'protocol' in valid_packets[packet_id]:
+60 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'ICMP'"]
+61 protocol = valid_packets[packet_id]['protocol']
+61 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+62 if protocol in protocol_weights:
+62 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+64 priority_scores[packet_id] *= protocol_weights[protocol]
+64 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor', 'protocol_weights', 'protocol'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '{TCP: 1.2, UDP: 0.8, ICMP: 1.5}', "'UDP'"]
+59 for packet_id in list(priority_scores.keys()):
+59 ['valid_packets', 'packet_id', 'priority_scores', 'congestion_factor'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", "'pkt005'", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015']
+67 packet_count = len(valid_packets)
+67 ['valid_packets', 'priority_scores', 'congestion_factor', 'packet_count'] ["{pkt001: {priority: 'high', payload: [...3 items], checksum: 198, ...}, pkt002: {priority: 'medium', payload: [...3 items], checksum: 207, ...}, pkt003: {priority: 'low', payload: [...3 items], checksum: 216, ...}, ...}", '{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '5']
+68 if packet_count == 0:
+68 ['priority_scores', 'congestion_factor', 'packet_count'] ['{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '5']
+72 total_score = sum(priority_scores.values())
+72 ['priority_scores', 'congestion_factor', 'packet_count', 'total_score'] ['{pkt001: 36.0, pkt002: 8.0, pkt003: 1.2, ...}', '0.015', '5', '98.2']
+73 weighted_priority = total_score / packet_count
+73 ['congestion_factor', 'packet_count', 'total_score', 'weighted_priority'] ['0.015', '5', '98.2', '19.64']
+76 if congestion_factor > 5:
+76 ['congestion_factor', 'weighted_priority'] ['0.015', '19.64']
+80 return int(weighted_priority * 10)
+80 ['weighted_priority'] ['19.64']
+FUNCTION_RETURN 80 process_network_packets {'_type': 'int', '_value': 196}
+125 print(f"Optimal route value: {optimal_route}")
+125 ['priority_value'] ['196']
+126 print(f"Traffic trend: {traffic_trend}")
+126 ['priority_value'] ['196']
+127 print(f"Priority value: {priority_value}")
+127 ['priority_value'] ['196']

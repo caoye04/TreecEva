@@ -1,0 +1,37 @@
+12
+filtered_bits
+---
+2 source_data = [0b1101, 0b1010, 0b1100, 0b0101]
+2 ['source_data'] ['[13, 10, 12, 5]']
+3 target_mask = 0b1010
+3 ['source_data', 'target_mask'] ['[13, 10, 12, 5]', '10']
+6 match_condition = lambda x: (x & target_mask) == target_mask
+6 ['source_data', 'target_mask'] ['[13, 10, 12, 5]', '10']
+7 matched_packets = [p for p in source_data if match_condition(p)]
+7 ['p'] ['13']
+6 match_condition = lambda x: (x & target_mask) == target_mask
+6 ['x'] ['13']
+7 matched_packets = [p for p in source_data if match_condition(p)]
+7 ['p'] ['10']
+6 match_condition = lambda x: (x & target_mask) == target_mask
+6 ['x'] ['10']
+7 matched_packets = [p for p in source_data if match_condition(p)]
+7 ['p'] ['12']
+6 match_condition = lambda x: (x & target_mask) == target_mask
+6 ['x'] ['12']
+7 matched_packets = [p for p in source_data if match_condition(p)]
+7 ['p'] ['5']
+6 match_condition = lambda x: (x & target_mask) == target_mask
+6 ['x'] ['5']
+7 matched_packets = [p for p in source_data if match_condition(p)]
+7 ['source_data', 'matched_packets'] ['[13, 10, 12, 5]', '[10]']
+10 get_second_bit = lambda x: (x >> 2) & 1
+10 ['matched_packets'] ['[10]']
+11 bits = [get_second_bit(packet) for packet in matched_packets]
+11 ['packet'] ['10']
+10 get_second_bit = lambda x: (x >> 2) & 1
+10 ['x'] ['10']
+11 bits = [get_second_bit(packet) for packet in matched_packets]
+11 ['matched_packets', 'bits'] ['[10]', '[0]']
+12 filtered_bits = sum(bits)
+12 ['bits', 'filtered_bits'] ['[0]', '0']

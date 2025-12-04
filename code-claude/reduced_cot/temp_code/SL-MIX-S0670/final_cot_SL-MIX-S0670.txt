@@ -1,0 +1,108 @@
+Target: Find the value of variable final_hash after [line 38] executes
+
+[line 3]  total_value = 0
+Assign: total_value = 0
+[line 4]  item_count = 0
+Assign: item_count = 0
+[line 5]  max_price = 0
+Assign: max_price = 0
+[line 6]  checksum = 0
+Assign: checksum = 0
+[line 9]  for item_id, details in items.items():
+(Missing param: 'iter_var')
+[line 11]  price = details['price']
+Compute: details['price'], where details={price: 150, quantity: 3, category: 'Electronics'} (an unknown source) = 150
+[line 12]  quantity = details.get('quantity', 0)
+(Missing param: 'func_name')
+[line 13]  category_code = ord(details['category'][0])
+Call function ord(details['category'][0])
+[line 16]  item_value = price * quantity
+Compute: price * quantity, where price=150 (defined at [line 11]), quantity=3 (an unknown source) = 450
+[line 17]  total_value += item_value
+Update: total_value changed from 0 (defined at defined at [line 3]) to 0+item_value = 450
+[line 18]  item_count += 1
+Update: item_count changed from 0 (defined at defined at [line 4]) to 0+1 = 1
+[line 19]  max_price = max(max_price, price)
+Call function max(max_price=150 (defined at [line 5]), price=150 (defined at [line 11]))
+[line 22]  if quantity > 0:
+Condition: True, entering 'if' block
+[line 23]  checksum += (price * category_code) & 0xFF
+Update: checksum changed from 0 (defined at defined at [line 6]) to 0+(price * category_code) & 0xFF = 110
+[line 26]  if 'discount' in details and quantity >= 5:
+Condition: True, entering 'if' block
+[line 9]  for item_id, details in items.items():
+(Missing param: 'iter_var')
+[line 11]  price = details['price']
+Compute: details['price'], where details={price: 75, quantity: 8, category: 'Books', ...} (an unknown source), price=150 (defined at [line 11]) = 75
+[line 12]  quantity = details.get('quantity', 0)
+(Missing param: 'func_name')
+[line 13]  category_code = ord(details['category'][0])
+Call function ord(details['category'][0])
+[line 16]  item_value = price * quantity
+Compute: price * quantity, where price=75 (defined at [line 11]), quantity=8 (an unknown source) = 600
+[line 17]  total_value += item_value
+Update: total_value changed from 450 (defined at defined at [line 17]) to 450+item_value = 1050
+[line 18]  item_count += 1
+Update: item_count changed from 1 (defined at defined at [line 18]) to 1+1 = 2
+[line 19]  max_price = max(max_price, price)
+Call function max(max_price=150 (defined at [line 19]), price=75 (defined at [line 11]))
+[line 22]  if quantity > 0:
+Condition: True, entering 'if' block
+[line 23]  checksum += (price * category_code) & 0xFF
+Update: checksum changed from 110 (defined at defined at [line 23]) to 110+(price * category_code) & 0xFF = 196
+[line 26]  if 'discount' in details and quantity >= 5:
+Condition: True, entering 'if' block
+[line 27]  total_value -= item_value * details['discount']
+Update: total_value changed from 1050 (defined at defined at [line 17]) to 1050-item_value * details['discount'] = 990.0
+[line 9]  for item_id, details in items.items():
+(Missing param: 'iter_var')
+[line 11]  price = details['price']
+Compute: details['price'], where details={price: 450, quantity: 2, category: 'Furniture'} (an unknown source), price=75 (defined at [line 11]) = 450
+[line 12]  quantity = details.get('quantity', 0)
+(Missing param: 'func_name')
+[line 13]  category_code = ord(details['category'][0])
+Call function ord(details['category'][0])
+[line 16]  item_value = price * quantity
+Compute: price * quantity, where price=450 (defined at [line 11]), quantity=2 (an unknown source) = 900
+[line 17]  total_value += item_value
+Update: total_value changed from 990.0 (defined at defined at [line 27]) to 990.0+item_value = 1890.0
+[line 18]  item_count += 1
+Update: item_count changed from 2 (defined at defined at [line 18]) to 2+1 = 3
+[line 19]  max_price = max(max_price, price)
+Call function max(max_price=450 (defined at [line 19]), price=450 (defined at [line 11]))
+[line 22]  if quantity > 0:
+Condition: True, entering 'if' block
+[line 23]  checksum += (price * category_code) & 0xFF
+Update: checksum changed from 196 (defined at defined at [line 23]) to 196+(price * category_code) & 0xFF = 208
+[line 26]  if 'discount' in details and quantity >= 5:
+Condition: True, entering 'if' block
+[line 9]  for item_id, details in items.items():
+(Missing param: 'iter_var')
+[line 11]  price = details['price']
+Compute: details['price'], where details={price: 25, quantity: 0, category: 'Stationery'} (an unknown source), price=450 (defined at [line 11]) = 25
+[line 12]  quantity = details.get('quantity', 0)
+(Missing param: 'func_name')
+[line 16]  item_value = price * quantity
+Compute: price * quantity, where price=25 (defined at [line 11]), quantity=0 (an unknown source) = 0
+[line 17]  total_value += item_value
+Update: total_value changed from 1890.0 (defined at defined at [line 17]) to 1890.0+item_value = 1890.0
+[line 18]  item_count += 1
+Update: item_count changed from 3 (defined at defined at [line 18]) to 3+1 = 4
+[line 19]  max_price = max(max_price, price)
+Call function max(max_price=450 (defined at [line 19]), price=25 (defined at [line 11]))
+[line 22]  if quantity > 0:
+Condition: True, entering 'if' block
+[line 26]  if 'discount' in details and quantity >= 5:
+Condition: True, entering 'if' block
+[line 9]  for item_id, details in items.items():
+Loop End: Iteration finished
+[line 33]  base_hash = (item_count * 17) ^ (int(total_value) & 0xFF)
+Compute: (item_count * 17) ^ (int(total_value) & 0xFF), where item_count=4 (defined at [line 18]), total_value=1890.0 (defined at [line 17]) = 38
+[line 34]  modifier = (max_price > 500) * 23
+Compute: (max_price > 500) * 23, where max_price=450 (defined at [line 19]) = 0
+[line 35]  current_hash = (base_hash + modifier) | (item_count << 2)
+Compute: (base_hash + modifier) | (item_count << 2), where base_hash=38 (defined at [line 33]), modifier=0 (defined at [line 34]), item_count=4 (defined at [line 18]) = 54
+[line 38]  final_hash = (current_hash ^ (checksum & 0xFF)) % 1000
+Compute: (current_hash ^ (checksum & 0xFF)) % 1000, where current_hash=54 (defined at [line 35]), checksum=208 (defined at [line 23]) = 230
+
+Answer: final_hash = 230 (last updated on defined at [line 38])

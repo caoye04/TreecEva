@@ -1,0 +1,14 @@
+Target: Find the value of variable filtered_sum after [line 16] executes
+
+[line 4]  sensor_readings = [22.5, 19.8, -5.2, 24.3, 18.5, 100.7, -10.6, 23.1]
+Compute: [22.5, 19.8, -5.2, 24.3, 18.5, 100.7, -10.6, 23.1] = [22.5, 19.8, -5.2, 24.3, 18.5, ...]
+[line 7]  calibration_offset = 0.5
+Assign: calibration_offset = 0.5
+[line 10]  calibrated_readings = [reading + calibration_offset for reading in sensor_readings]
+Compute: [reading + calibration_offset for reading in sensor_readings], where reading=22.5 (an unknown source), calibration_offset=0.5 (defined at [line 7]), sensor_readings=[22.5, 19.8, -5.2, 24.3, 18.5, ...] (defined at [line 4]) = ?
+[line 13]  filtered_readings = [reading for reading in calibrated_readings if -5 <= reading <= 40]
+Compute: [reading for reading in calibrated_readings if -5 <= reading <= 40], where reading=23.0 (an unknown source), calibrated_readings=[23.0, 20.3, -4.7, 24.8, 19.0, ...] (defined at [line 10]) = ?
+[line 16]  filtered_sum = sum(filtered_readings)
+Call function sum(filtered_readings=[23.0, 20.3, -4.7, 24.8, 19.0, ...] (defined at [line 13]))
+
+Answer: filtered_sum = 106.0 (last updated on defined at [line 16])

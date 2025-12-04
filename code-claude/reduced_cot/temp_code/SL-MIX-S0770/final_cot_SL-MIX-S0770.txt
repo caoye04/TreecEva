@@ -1,0 +1,432 @@
+Target: Find the value of variable final_score after [line 85] executes
+
+[line 57]  input_text = "puzzle"
+Assign: input_text = 'puzzle'
+[line 67]  processed_word = process_text(input_text)
+Call function process_text(input_text='puzzle' (defined at [line 57]))
+[line 3]  processed = text.lower().replace(' ', '')
+(Missing param: 'func_name')
+[line 5]  char_freq = {}
+Compute: {} = {}
+[line 6]  for char in processed:
+Loop Start: char takes its first value 'p'
+[line 7]  if char in char_freq:
+Condition: True, entering 'if' block
+[line 10]  char_freq[char] = 1
+(Missing param: 'var')
+[line 6]  for char in processed:
+Loop Iteration: char is now 'u' (iteration 2)
+[line 7]  if char in char_freq:
+Condition: True, entering 'if' block
+[line 10]  char_freq[char] = 1
+(Missing param: 'var')
+... [Line 6] repeats 3 more times ...
+... [Line 6] repeats 3 more times ...
+... [Line 6] repeats 3 more times ...
+[line 6]  for char in processed:
+Loop Iteration: char is now 'e' (iteration 6)
+[line 7]  if char in char_freq:
+Condition: True, entering 'if' block
+[line 10]  char_freq[char] = 1
+(Missing param: 'var')
+[line 6]  for char in processed:
+Loop End: Iteration finished
+[line 14]  max_freq = 0
+Assign: max_freq = 0
+[line 15]  for char, freq in char_freq.items():
+(Missing param: 'iter_var')
+[line 16]  if freq > max_freq:
+Condition: True, entering 'if' block
+[line 17]  max_freq = freq
+Compute: freq, where freq=1 (an unknown source) = 1
+[line 15]  for char, freq in char_freq.items():
+(Missing param: 'iter_var')
+[line 16]  if freq > max_freq:
+Condition: True, entering 'if' block
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+... [Line 15] repeats 2 more times ...
+[line 15]  for char, freq in char_freq.items():
+(Missing param: 'iter_var')
+[line 16]  if freq > max_freq:
+Condition: True, entering 'if' block
+[line 15]  for char, freq in char_freq.items():
+Loop End: Iteration finished
+[line 20]  return processed
+Return: processed='puzzle' (an unknown source)
+[line 68]  alternate_words = [processed_word[::-1], processed_word[1:] + processed_word[0]]
+Compute: [processed_word[::-1], processed_word[1:] + processed_word[0]], where processed_word='puzzle' (defined at [line 67]) = ['elzzup', 'uzzlep']
+[line 71]  main_score = calculate_word_value(processed_word, letter_values)
+Call function calculate_word_value(processed_word='puzzle' (defined at [line 67]), letter_values={a: 1, b: 3, c: 3, ...} (an unknown source))
+[line 22]  def calculate_word_value(word, value_dict):
+Enter function calculate_word_value: word='puzzle' (processed_word defined at [line 67]), value_dict={a: 1, b: 3, c: 3, ...}
+  [line 23]  total = 0
+  Assign: total = 0
+  [line 24]  bonus_multiplier = 1
+  Assign: bonus_multiplier = 1
+  [line 27]  prev_char = None
+  Assign: prev_char = None
+  [line 30]  for i, char in enumerate(word):
+  (Missing param: 'iter_var')
+  [line 32]  char_value = value_dict.get(char, 0)
+  (Missing param: 'func_name')
+  [line 35]  if i % 3 == 0:  # Every third position gets bonus
+  Condition: True, entering 'if' block
+  [line 36]  char_value *= 2
+  Update: char_value changed from 3 (defined at an unknown source) to 3*2 = 6
+  [line 39]  if char == prev_char:
+  Condition: True, entering 'if' block
+  [line 47]  if char in 'aeiou' and i >= len(word) // 2:
+  Condition: True, entering 'if' block
+  [line 50]  total += char_value
+  Update: total changed from 0 (defined at defined at [line 23]) to 0+char_value = 6
+  [line 51]  prev_char = char
+  Compute: char, where char='p' (defined at [line 6]) = 'p'
+  [line 30]  for i, char in enumerate(word):
+  (Missing param: 'iter_var')
+  [line 32]  char_value = value_dict.get(char, 0)
+  (Missing param: 'func_name')
+  [line 35]  if i % 3 == 0:  # Every third position gets bonus
+  Condition: True, entering 'if' block
+  [line 39]  if char == prev_char:
+  Condition: True, entering 'if' block
+  [line 47]  if char in 'aeiou' and i >= len(word) // 2:
+  Condition: True, entering 'if' block
+  [line 50]  total += char_value
+  Update: total changed from 6 (defined at defined at [line 50]) to 6+char_value = 7
+  [line 51]  prev_char = char
+  Compute: char, where char='u' (defined at [line 6]) = 'u'
+... [Line 30] repeats 24 more times ...
+... [Line 30] repeats 24 more times ...
+... [Line 30] repeats 24 more times ...
+... [Line 30] repeats 24 more times ...
+... [Line 30] repeats 24 more times ...
+... [Line 30] repeats 24 more times ...
+... [Line 30] repeats 24 more times ...
+  [line 54]  return int(total * bonus_multiplier)
+  Return: int(total * bonus_multiplier)
+Function calculate_word_value returns 44
+[line 72]  alternate_scores = [calculate_word_value(word, letter_values) for word in alternate_words]
+Compute: [calculate_word_value(word, letter_values) for word in alternate_words], where word='elzzup' (an unknown source) = ?
+[line 23]  total = 0
+Assign: total = 0
+[line 24]  bonus_multiplier = 1
+Assign: bonus_multiplier = 1
+[line 27]  prev_char = None
+Assign: prev_char = None
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 36]  char_value *= 2
+Update: char_value changed from 1 (defined at defined at [line 36]) to 1*2 = 2
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 0 (defined at defined at [line 23]) to 0+char_value = 2
+[line 51]  prev_char = char
+Compute: char, where char='e' (defined at [line 6]) = 'e'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 2 (defined at defined at [line 50]) to 2+char_value = 3
+[line 51]  prev_char = char
+Compute: char, where char='l' (defined at [line 6]) = 'l'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 3 (defined at defined at [line 50]) to 3+char_value = 13
+[line 51]  prev_char = char
+Compute: char, where char='z' (defined at [line 6]) = 'z'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 36]  char_value *= 2
+Update: char_value changed from 10 (defined at defined at [line 36]) to 10*2 = 20
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 41]  if streak >= 3:  # Triple consecutive letters trigger bonus
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 13 (defined at defined at [line 50]) to 13+char_value = 33
+[line 51]  prev_char = char
+Compute: char, where char='z' (defined at [line 6]) = 'z'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 48]  char_value += 5
+Update: char_value changed from 1 (defined at defined at [line 36]) to 1+5 = 6
+[line 50]  total += char_value
+Update: total changed from 33 (defined at defined at [line 50]) to 33+char_value = 39
+[line 51]  prev_char = char
+Compute: char, where char='u' (defined at [line 6]) = 'u'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 39 (defined at defined at [line 50]) to 39+char_value = 42
+[line 51]  prev_char = char
+Compute: char, where char='p' (defined at [line 6]) = 'p'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 54]  return int(total * bonus_multiplier)
+Return: int(total * bonus_multiplier)
+[line 23]  total = 0
+Assign: total = 0
+[line 24]  bonus_multiplier = 1
+Assign: bonus_multiplier = 1
+[line 27]  prev_char = None
+Assign: prev_char = None
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 36]  char_value *= 2
+Update: char_value changed from 1 (defined at defined at [line 48]) to 1*2 = 2
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 0 (defined at defined at [line 23]) to 0+char_value = 2
+[line 51]  prev_char = char
+Compute: char, where char='u' (defined at [line 6]) = 'u'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 2 (defined at defined at [line 50]) to 2+char_value = 12
+[line 51]  prev_char = char
+Compute: char, where char='z' (defined at [line 6]) = 'z'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 41]  if streak >= 3:  # Triple consecutive letters trigger bonus
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 12 (defined at defined at [line 50]) to 12+char_value = 22
+[line 51]  prev_char = char
+Compute: char, where char='z' (defined at [line 6]) = 'z'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 36]  char_value *= 2
+Update: char_value changed from 1 (defined at defined at [line 36]) to 1*2 = 2
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 22 (defined at defined at [line 50]) to 22+char_value = 24
+[line 51]  prev_char = char
+Compute: char, where char='l' (defined at [line 6]) = 'l'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 48]  char_value += 5
+Update: char_value changed from 1 (defined at defined at [line 36]) to 1+5 = 6
+[line 50]  total += char_value
+Update: total changed from 24 (defined at defined at [line 50]) to 24+char_value = 30
+[line 51]  prev_char = char
+Compute: char, where char='e' (defined at [line 6]) = 'e'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 30 (defined at defined at [line 50]) to 30+char_value = 33
+[line 51]  prev_char = char
+Compute: char, where char='p' (defined at [line 6]) = 'p'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 54]  return int(total * bonus_multiplier)
+Return: int(total * bonus_multiplier)
+[line 76]  best_score = main_score
+Compute: main_score, where main_score=44 (defined at [line 71]) = 44
+[line 77]  for i, score in enumerate(alternate_scores):
+(Missing param: 'iter_var')
+[line 78]  if score > best_score:
+Condition: True, entering 'if' block
+[line 77]  for i, score in enumerate(alternate_scores):
+(Missing param: 'iter_var')
+[line 78]  if score > best_score:
+Condition: True, entering 'if' block
+[line 77]  for i, score in enumerate(alternate_scores):
+Loop End: Iteration finished
+[line 83]  final_score = calculate_word_value(processed_word, letter_values)
+Call function calculate_word_value(processed_word='puzzle' (defined at [line 67]), letter_values={a: 1, b: 3, c: 3, ...} (an unknown source))
+[line 23]  total = 0
+Assign: total = 0
+[line 24]  bonus_multiplier = 1
+Assign: bonus_multiplier = 1
+[line 27]  prev_char = None
+Assign: prev_char = None
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 36]  char_value *= 2
+Update: char_value changed from 3 (defined at defined at [line 48]) to 3*2 = 6
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 0 (defined at defined at [line 23]) to 0+char_value = 6
+[line 51]  prev_char = char
+Compute: char, where char='p' (defined at [line 6]) = 'p'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 6 (defined at defined at [line 50]) to 6+char_value = 7
+[line 51]  prev_char = char
+Compute: char, where char='u' (defined at [line 6]) = 'u'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 7 (defined at defined at [line 50]) to 7+char_value = 17
+[line 51]  prev_char = char
+Compute: char, where char='z' (defined at [line 6]) = 'z'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 36]  char_value *= 2
+Update: char_value changed from 10 (defined at defined at [line 36]) to 10*2 = 20
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 41]  if streak >= 3:  # Triple consecutive letters trigger bonus
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 17 (defined at defined at [line 50]) to 17+char_value = 37
+[line 51]  prev_char = char
+Compute: char, where char='z' (defined at [line 6]) = 'z'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 50]  total += char_value
+Update: total changed from 37 (defined at defined at [line 50]) to 37+char_value = 38
+[line 51]  prev_char = char
+Compute: char, where char='l' (defined at [line 6]) = 'l'
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 32]  char_value = value_dict.get(char, 0)
+(Missing param: 'func_name')
+[line 35]  if i % 3 == 0:  # Every third position gets bonus
+Condition: True, entering 'if' block
+[line 39]  if char == prev_char:
+Condition: True, entering 'if' block
+[line 47]  if char in 'aeiou' and i >= len(word) // 2:
+Condition: True, entering 'if' block
+[line 48]  char_value += 5
+Update: char_value changed from 1 (defined at defined at [line 36]) to 1+5 = 6
+[line 50]  total += char_value
+Update: total changed from 38 (defined at defined at [line 50]) to 38+char_value = 44
+[line 30]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 54]  return int(total * bonus_multiplier)
+Return: int(total * bonus_multiplier)
+[line 85]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
+
+Answer: final_score = 44 (last updated on defined at [line 83])

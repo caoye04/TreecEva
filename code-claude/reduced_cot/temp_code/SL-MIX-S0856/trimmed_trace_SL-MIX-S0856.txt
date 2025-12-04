@@ -1,0 +1,129 @@
+112
+final_score
+---
+19 normalized = []
+19 ['grades', 'weights', 'normalized'] ['[82, 88, 91]', '[1, 1, 2]', '[]']
+23 for i, grade in enumerate(grades):
+23 ['grades', 'weights', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[1, 1, 2]', '[]', '0', '82']
+24 if i < len(weights):
+24 ['grades', 'weights', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[1, 1, 2]', '[]', '0', '82']
+23 for i, grade in enumerate(grades):
+23 ['grades', 'weights', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[1, 1, 2]', '[20.5]', '1', '88']
+24 if i < len(weights):
+24 ['grades', 'weights', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[1, 1, 2]', '[20.5]', '1', '88']
+23 for i, grade in enumerate(grades):
+23 ['grades', 'weights', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[1, 1, 2]', '[20.5, 22.0]', '2', '91']
+24 if i < len(weights):
+24 ['grades', 'weights', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[1, 1, 2]', '[20.5, 22.0]', '2', '91']
+23 for i, grade in enumerate(grades):
+23 ['grades', 'normalized', 'i', 'grade'] ['[82, 88, 91]', '[20.5, 22.0, 45.5]', '2', '91']
+30 return normalized
+30 ['normalized', 'i'] ['[20.5, 22.0, 45.5]', '2']
+109 final_score = calculate_final_score(student_data)
+109 ['student_data'] ['{exams: [82, 88, 91], assignments: [78, 85, 92, 88], attendance: 85, ...}']
+PARAM_MAPPING {'student_data': {'actual_var': 'student_data', 'value': {'exams': [82, 88, 91], 'assignments': [78, 85, 92, 88], 'attendance': 85, 'participation': 8, 'extra_credit': True}}}
+FUNCTION_ENTER 41 calculate_final_score def calculate_final_score(student_data):
+41 ['student_data'] [{'_type': 'dict', '_items': {'exams': {'_type': 'list', '_items': [{'_type': 'int', '_value': 82}, {'_type': 'int', '_value': 88}, {'_type': 'int', '_value': 91}], '_len': 3}, 'assignments': {'_type': 'list', '_items': [{'_type': 'int', '_value': 78}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 88}], '_len': 4}, 'attendance': {'_type': 'int', '_value': 85}, 'participation': {'_type': 'int', '_value': 8}, 'extra_credit': {'_type': 'bool', '_value': True}}, '_len': 5}]
+43 exam_scores = student_data.get('exams', [70, 85, 90])
+43 ['student_data', 'exam_scores'] ['{exams: [82, 88, 91], assignments: [78, 85, 92, 88], attendance: 85, ...}', '[82, 88, 91]']
+44 assignments = student_data.get('assignments', [75, 80, 85, 90])
+44 ['student_data', 'exam_scores', 'assignments'] ['{exams: [82, 88, 91], assignments: [78, 85, 92, 88], attendance: 85, ...}', '[82, 88, 91]', '[78, 85, 92, 88]']
+45 attendance = student_data.get('attendance', 80)
+45 ['student_data', 'exam_scores', 'assignments', 'attendance'] ['{exams: [82, 88, 91], assignments: [78, 85, 92, 88], attendance: 85, ...}', '[82, 88, 91]', '[78, 85, 92, 88]', '85']
+46 participation = student_data.get('participation', 7)
+46 ['student_data', 'exam_scores', 'assignments', 'attendance', 'participation'] ['{exams: [82, 88, 91], assignments: [78, 85, 92, 88], attendance: 85, ...}', '[82, 88, 91]', '[78, 85, 92, 88]', '85', '8']
+47 extra_credit = student_data.get('extra_credit', False)
+47 ['student_data', 'exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit'] ['{exams: [82, 88, 91], assignments: [78, 85, 92, 88], attendance: 85, ...}', '[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True']
+50 exam_weights = [0.2, 0.3, 0.5]  # Last exam worth more
+50 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]']
+51 weighted_exam_score = 0
+51 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '0']
+52 for i, score in enumerate(exam_scores):
+52 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '0', '0', '82']
+53 if i < len(exam_weights):
+53 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '0', '0', '82']
+54 weighted_exam_score += score * exam_weights[i]
+54 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '16.400000000000002', '0', '82']
+52 for i, score in enumerate(exam_scores):
+52 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '16.400000000000002', '1', '88']
+53 if i < len(exam_weights):
+53 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '16.400000000000002', '1', '88']
+54 weighted_exam_score += score * exam_weights[i]
+54 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '42.8', '1', '88']
+52 for i, score in enumerate(exam_scores):
+52 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '42.8', '2', '91']
+53 if i < len(exam_weights):
+53 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '42.8', '2', '91']
+54 weighted_exam_score += score * exam_weights[i]
+54 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'exam_weights', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '[0.2, 0.3, 0.5]', '88.3', '2', '91']
+52 for i, score in enumerate(exam_scores):
+52 ['exam_scores', 'assignments', 'attendance', 'participation', 'extra_credit', 'weighted_exam_score', 'i', 'score'] ['[82, 88, 91]', '[78, 85, 92, 88]', '85', '8', 'True', '88.3', '2', '91']
+57 assignment_score = sum(map(lambda x: min(x, 95), assignments)) / len(assignments)
+57 ['assignments', 'attendance', 'participation', 'extra_credit', 'weighted_exam_score', 'score'] ['[78, 85, 92, 88]', '85', '8', 'True', '88.3', '91']
+57 assignment_score = sum(map(lambda x: min(x, 95), assignments)) / len(assignments)
+57 ['x'] ['78']
+57 assignment_score = sum(map(lambda x: min(x, 95), assignments)) / len(assignments)
+57 ['x'] ['85']
+57 assignment_score = sum(map(lambda x: min(x, 95), assignments)) / len(assignments)
+57 ['x'] ['92']
+57 assignment_score = sum(map(lambda x: min(x, 95), assignments)) / len(assignments)
+57 ['x'] ['88']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['data_points', 'threshold'] ['[82, 88, 91, 78, 85, ...]', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['82', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['88', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['91', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['78', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['85', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['92', '75']
+3 filtered = list(filter(lambda x: x > threshold, data_points))
+3 ['x', 'threshold'] ['88', '75']
+4 if len(filtered) > len(data_points) / 2:
+4 ['data_points', 'filtered'] ['[82, 88, 91, 78, 85, ...]', '[82, 88, 91, 78, 85, ...]']
+5 return sum(filtered) / len(filtered) if filtered else 0
+5 ['filtered'] ['[82, 88, 91, 78, 85, ...]']
+64 if attendance < 70:
+64 ['attendance', 'participation', 'extra_credit', 'weighted_exam_score', 'score', 'assignment_score'] ['85', '8', 'True', '88.3', '91', '85.75']
+68 bonus = calculate_bonus_points(attendance, participation)
+68 ['attendance', 'participation', 'extra_credit', 'weighted_exam_score', 'score', 'assignment_score'] ['85', '8', 'True', '88.3', '91', '85.75']
+PARAM_MAPPING {'attendance': {'actual_var': 'attendance', 'value': 85}, 'participation': {'actual_var': 'participation', 'value': 8}}
+FUNCTION_ENTER 9 calculate_bonus_points def calculate_bonus_points(attendance, participation):
+9 ['attendance', 'participation'] [{'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 8}]
+11 potential_bonus = attendance * 0.5 + participation * 2
+11 ['attendance', 'participation', 'potential_bonus'] ['85', '8', '58.5']
+14 scaled_bonus = math.log(potential_bonus + 1) * 5 if potential_bonus > 0 else 0
+14 ['potential_bonus', 'scaled_bonus'] ['58.5', '20.42988156275792']
+15 return min(scaled_bonus, 15)  # Cap bonus at 15 points
+15 ['scaled_bonus'] ['20.42988156275792']
+FUNCTION_RETURN 15 calculate_bonus_points {'_type': 'int', '_value': 15}
+69 if extra_credit:
+69 ['extra_credit', 'weighted_exam_score', 'score', 'assignment_score', 'bonus'] ['True', '88.3', '91', '85.75', '15']
+70 bonus += 5
+70 ['weighted_exam_score', 'score', 'assignment_score', 'bonus'] ['88.3', '91', '85.75', '20']
+73 base_score = weighted_exam_score * 0.7 + assignment_score * 0.3
+73 ['weighted_exam_score', 'score', 'assignment_score', 'bonus', 'base_score'] ['88.3', '91', '85.75', '20', '87.535']
+79 result = base_score + bonus
+79 ['score', 'bonus', 'base_score', 'result'] ['91', '20', '87.535', '107.535']
+82 result = apply_curve(result)
+82 ['score', 'result'] ['91', '107.535']
+PARAM_MAPPING {'score': {'actual_var': 'result', 'value': 107.535}}
+FUNCTION_ENTER 32 apply_curve def apply_curve(score, curve_factor=1.1):
+32 ['score', 'curve_factor'] [{'_type': 'float', '_value': 107.535}, {'_type': 'float', '_value': 1.1}]
+34 if score < 60:
+34 ['score'] ['107.535']
+36 elif score < 70:
+36 ['score'] ['107.535']
+39 return score
+39 ['score'] ['107.535']
+FUNCTION_RETURN 39 apply_curve {'_type': 'float', '_value': 107.535}
+85 return min(round(result, 2), 100)
+85 ['result'] ['107.535']
+FUNCTION_RETURN 85 calculate_final_score {'_type': 'int', '_value': 100}
+112 print(f"Result: {final_score}")
+112 ['final_score'] ['100']

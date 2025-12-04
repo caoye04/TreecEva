@@ -1,0 +1,253 @@
+73
+total_valid_routes
+---
+39 grid_size = 4
+39 ['grid_size'] ['4']
+53 obstacles = {(1, 2), (2, 1), (3, 0)}
+53 ['grid_size', 'obstacles'] ['4', '{(1, 2), (2, 1), (3, 0)}']
+PARAM_MAPPING {'grid_dim': {'actual_var': 'grid_size', 'value': 4}}
+FUNCTION_ENTER 56 alternative_path_counter def alternative_path_counter(grid_dim):
+56 ['grid_dim'] [{'_type': 'int', '_value': 4}]
+60 return math.comb(2 * (grid_dim - 1), grid_dim - 1)
+60 ['grid_dim'] ['4']
+FUNCTION_RETURN 60 alternative_path_counter {'_type': 'int', '_value': 20}
+66 for ox, oy in obstacles:
+66 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '1', '2']
+67 if 0 <= ox < grid_size and 0 <= oy < grid_size:
+67 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '1', '2']
+66 for ox, oy in obstacles:
+66 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '2', '1']
+67 if 0 <= ox < grid_size and 0 <= oy < grid_size:
+67 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '2', '1']
+66 for ox, oy in obstacles:
+66 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '3', '0']
+67 if 0 <= ox < grid_size and 0 <= oy < grid_size:
+67 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '3', '0']
+66 for ox, oy in obstacles:
+66 ['grid_size', 'obstacles', 'ox', 'oy'] ['4', '{(1, 2), (2, 1), (3, 0)}', '3', '0']
+73 total_valid_routes = calculate_valid_paths(grid_size, obstacles)
+73 ['grid_size', 'obstacles'] ['4', '{(1, 2), (2, 1), (3, 0)}']
+PARAM_MAPPING {'size': {'actual_var': 'grid_size', 'value': 4}, 'obstacles': {'actual_var': 'obstacles', 'value': {(1, 2), (2, 1), (3, 0)}}}
+FUNCTION_ENTER 7 calculate_valid_paths def calculate_valid_paths(size, obstacles):
+7 ['size', 'obstacles'] [{'_type': 'int', '_value': 4}, {'_type': 'set', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 1}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 0}], '_len': 2}], '_len': 3}]
+9 cache = {}
+9 ['size', 'obstacles', 'cache'] ['4', '{(1, 2), (2, 1), (3, 0)}', '{}']
+36 return path_finder(0, 0)
+36 ['size', 'obstacles', 'cache'] ['4', '{(1, 2), (2, 1), (3, 0)}', '{}']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '0', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['1', '0', '4', '{(1, 2), (2, 1), (3, 0)}']
+25 paths += path_finder(x + 1, y)
+25 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['2', '0', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['2', '0', '4', '{(1, 2), (2, 1), (3, 0)}']
+25 paths += path_finder(x + 1, y)
+25 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['2', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['2', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['2', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['2', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['3', '0', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['3', '0', '4', '{(1, 2), (2, 1), (3, 0)}']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['2', '0', '0', '{}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['2', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['2', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+32 cache[(x, y)] = paths
+32 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['2', '0', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+33 return paths
+33 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['2', '0', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['1', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+29 paths += path_finder(x, y + 1)
+29 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '1', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '1', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '1', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '1', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['2', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['2', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '1', '0', '{(2, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '2', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['1', '2', '4', '{(1, 2), (2, 1), (3, 0)}']
+32 cache[(x, y)] = paths
+32 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '1', '0', '{(2, 0): 0, (1, 1): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+33 return paths
+33 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '1', '0', '{(2, 0): 0, (1, 1): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+32 cache[(x, y)] = paths
+32 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+33 return paths
+33 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '0', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '0', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['0', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['0', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+29 paths += path_finder(x, y + 1)
+29 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '0', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '1', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '1', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '1', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '1', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['1', '1', '4', '{(1, 2), (2, 1), (3, 0)}']
+25 paths += path_finder(x + 1, y)
+25 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '1', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '1', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '1', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+18 return cache[(x, y)]
+18 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '1', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '1', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['0', '2', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['0', '2', '4', '{(1, 2), (2, 1), (3, 0)}']
+29 paths += path_finder(x, y + 1)
+29 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '1', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '2', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '2', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '2', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '2', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '2', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['1', '2', '4', '{(1, 2), (2, 1), (3, 0)}']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '2', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['0', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['0', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+29 paths += path_finder(x, y + 1)
+29 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '2', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '3', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['0', '3', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '3', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '3', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['1', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+25 paths += path_finder(x + 1, y)
+25 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['0', '3', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '3', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['1', '3', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '3', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '3', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['2', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['2', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+25 paths += path_finder(x + 1, y)
+25 ['x', 'y', 'paths', 'cache', 'obstacles', 'size'] ['1', '3', '0', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'cache', 'obstacles', 'size'] ['2', '3', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+17 if (x, y) in cache:
+17 ['x', 'y', 'cache', 'obstacles', 'size'] ['2', '3', '{(2, 0): 0, (1, 1): 0, (1, 0): 0}', '{(1, 2), (2, 1), (3, 0)}', '4']
+21 paths = 0
+21 ['x', 'y', 'paths', 'obstacles', 'size'] ['2', '3', '0', '{(1, 2), (2, 1), (3, 0)}', '4']
+24 if is_valid_position(x + 1, y, size, obstacles):
+24 ['x', 'y', 'paths', 'obstacles', 'size'] ['2', '3', '0', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['3', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+4 return True
+4 ['x', 'y', 'size', 'obstacles'] ['3', '3', '4', '{(1, 2), (2, 1), (3, 0)}']
+25 paths += path_finder(x + 1, y)
+25 ['x', 'y', 'paths', 'obstacles', 'size'] ['2', '3', '0', '{(1, 2), (2, 1), (3, 0)}', '4']
+13 if x == size - 1 and y == size - 1:
+13 ['x', 'y', 'obstacles', 'size'] ['3', '3', '{(1, 2), (2, 1), (3, 0)}', '4']
+14 return 1
+14 ['x', 'y', 'obstacles', 'size'] ['3', '3', '{(1, 2), (2, 1), (3, 0)}', '4']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'obstacles', 'size'] ['2', '3', '1', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['2', '4', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['2', '4', '4', '{(1, 2), (2, 1), (3, 0)}']
+33 return paths
+33 ['x', 'y', 'paths', 'obstacles', 'size'] ['2', '3', '1', '{(1, 2), (2, 1), (3, 0)}', '4']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'obstacles', 'size'] ['1', '3', '1', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['1', '4', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 ['x', 'y', 'size', 'obstacles'] ['1', '4', '4', '{(1, 2), (2, 1), (3, 0)}']
+33 return paths
+33 ['x', 'y', 'paths', 'obstacles', 'size'] ['1', '3', '1', '{(1, 2), (2, 1), (3, 0)}', '4']
+28 if is_valid_position(x, y + 1, size, obstacles):
+28 ['x', 'y', 'paths', 'obstacles', 'size'] ['0', '3', '1', '{(1, 2), (2, 1), (3, 0)}', '4']
+3 if 0 <= x < size and 0 <= y < size and (x, y) not in obstacles:
+3 ['x', 'y', 'size', 'obstacles'] ['0', '4', '4', '{(1, 2), (2, 1), (3, 0)}']
+5 return False
+5 [] []
+33 return paths
+33 ['paths'] ['1']
+33 return paths
+33 ['paths'] ['1']
+33 return paths
+33 ['paths'] ['1']
+33 return paths
+33 ['paths'] ['1']
+FUNCTION_RETURN 36 calculate_valid_paths {'_type': 'int', '_value': 1}

@@ -1,0 +1,111 @@
+130
+priority_score
+---
+37 distances = {start_node: 0}
+37 ['network_map', 'start_node', 'distances'] ['{A: {B: 5, C: 10}, B: {D: 15, E: 20}, C: {E: 35, F: 30}, ...}', "'A'", '{A: 0}']
+39 nodes = list(network_map.keys())
+39 ['network_map', 'nodes', 'distances'] ['{A: {B: 5, C: 10}, B: {D: 15, E: 20}, C: {E: 35, F: 30}, ...}', "['A', 'B', 'C', 'D', 'E', ...]", '{A: 0}']
+40 for _ in range(len(nodes)):
+40 ['nodes', '_', 'distances'] ["['A', 'B', 'C', 'D', 'E', ...]", '0', '{A: 0}']
+43 if not current:
+43 ['current', 'distances'] ['None', '{A: 0}']
+44 break
+44 ['distances'] ['{A: 0}']
+51 return distances
+51 ['distances'] ['{A: 0}']
+129 priority_score = calculate_priority(network_data)
+129 ['network_data'] ['{latency: 40, bandwidth: 25, packet_loss: 0.02, ...}']
+PARAM_MAPPING {'network_data': {'actual_var': 'network_data', 'value': {'latency': 40, 'bandwidth': 25, 'packet_loss': 0.02, 'jitter': 5.2, 'packets': [{'protocol': 'tcp', 'size': 1024, 'encrypted': True}, {'protocol': 'tcp', 'size': 512, 'encrypted': True}, {'protocol': 'tcp', 'size': 768, 'encrypted': False}, {'protocol': 'udp', 'size': 256, 'encrypted': False}, {'protocol': 'udp', 'size': 128, 'malformed': True}], 'routes': {'A': 0}}}}
+FUNCTION_ENTER 53 calculate_priority def calculate_priority(network_data):
+53 ['network_data'] [{'_type': 'dict', '_items': {'latency': {'_type': 'int', '_value': 40}, 'bandwidth': {'_type': 'int', '_value': 25}, 'packet_loss': {'_type': 'float', '_value': 0.02}, 'jitter': {'_type': 'float', '_value': 5.2}, 'packets': {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'tcp'}, 'size': {'_type': 'int', '_value': 1024}, 'encrypted': {'_type': 'bool', '_value': True}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'tcp'}, 'size': {'_type': 'int', '_value': 512}, 'encrypted': {'_type': 'bool', '_value': True}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'tcp'}, 'size': {'_type': 'int', '_value': 768}, 'encrypted': {'_type': 'bool', '_value': False}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'udp'}, 'size': {'_type': 'int', '_value': 256}, 'encrypted': {'_type': 'bool', '_value': False}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'udp'}, 'size': {'_type': 'int', '_value': 128}, 'malformed': {'_type': 'bool', '_value': True}}, '_len': 3}], '_len': 5}}, '_len': 6}]
+55 latency = network_data.get('latency', 100)
+55 ['network_data', 'latency'] ['{latency: 40, bandwidth: 25, packet_loss: 0.02, ...}', '40']
+56 bandwidth = network_data.get('bandwidth', 10)
+56 ['network_data', 'latency', 'bandwidth'] ['{latency: 40, bandwidth: 25, packet_loss: 0.02, ...}', '40', '25']
+60 packets = network_data.get('packets', [])
+60 ['network_data', 'latency', 'bandwidth', 'packets'] ['{latency: 40, bandwidth: 25, packet_loss: 0.02, ...}', '40', '25', "[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]"]
+61 packet_analysis = analyze_network_packets(packets)
+61 ['latency', 'bandwidth', 'packets'] ['40', '25', "[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]"]
+PARAM_MAPPING {'packets': {'actual_var': 'packets', 'value': [{'protocol': 'tcp', 'size': 1024, 'encrypted': True}, {'protocol': 'tcp', 'size': 512, 'encrypted': True}, {'protocol': 'tcp', 'size': 768, 'encrypted': False}, {'protocol': 'udp', 'size': 256, 'encrypted': False}, {'protocol': 'udp', 'size': 128, 'malformed': True}]}}
+FUNCTION_ENTER 1 analyze_network_packets def analyze_network_packets(packets):
+1 ['packets'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'tcp'}, 'size': {'_type': 'int', '_value': 1024}, 'encrypted': {'_type': 'bool', '_value': True}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'tcp'}, 'size': {'_type': 'int', '_value': 512}, 'encrypted': {'_type': 'bool', '_value': True}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'tcp'}, 'size': {'_type': 'int', '_value': 768}, 'encrypted': {'_type': 'bool', '_value': False}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'udp'}, 'size': {'_type': 'int', '_value': 256}, 'encrypted': {'_type': 'bool', '_value': False}}, '_len': 3}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'udp'}, 'size': {'_type': 'int', '_value': 128}, 'malformed': {'_type': 'bool', '_value': True}}, '_len': 3}], '_len': 5}]
+7 for packet in packets:
+7 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 1024, encrypted: True}"]
+11 if packet.get('encrypted', False):
+11 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 1024, encrypted: True}"]
+18 if packet.get('malformed', False):
+18 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 1024, encrypted: True}"]
+7 for packet in packets:
+7 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 512, encrypted: True}"]
+11 if packet.get('encrypted', False):
+11 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 512, encrypted: True}"]
+18 if packet.get('malformed', False):
+18 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 512, encrypted: True}"]
+7 for packet in packets:
+7 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 768, encrypted: False}"]
+11 if packet.get('encrypted', False):
+11 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 768, encrypted: False}"]
+18 if packet.get('malformed', False):
+18 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'tcp', size: 768, encrypted: False}"]
+7 for packet in packets:
+7 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 256, encrypted: False}"]
+11 if packet.get('encrypted', False):
+11 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 256, encrypted: False}"]
+18 if packet.get('malformed', False):
+18 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 256, encrypted: False}"]
+7 for packet in packets:
+7 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 128, malformed: True}"]
+11 if packet.get('encrypted', False):
+11 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 128, malformed: True}"]
+18 if packet.get('malformed', False):
+18 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 128, malformed: True}"]
+7 for packet in packets:
+7 ['packets', 'packet'] ["[{protocol: 'tcp', size: 1024, encrypted: True}, {protocol: 'tcp', size: 512, encrypted: True}, {protocol: 'tcp', size: 768, encrypted: False}, {protocol: 'udp', size: 256, encrypted: False}, {protocol: 'udp', size: 128, malformed: True}]", "{protocol: 'udp', size: 128, malformed: True}"]
+21 return {
+21 [] []
+FUNCTION_RETURN 21 analyze_network_packets {'_type': 'dict', '_items': {'counts': {'_type': 'dict', '_items': {'tcp': {'_type': 'int', '_value': 3}, 'udp': {'_type': 'int', '_value': 2}}, '_len': 2}, 'total_size': {'_type': 'int', '_value': 2688}, 'security_flags': {'_type': 'set', '_items': [{'_type': 'str', '_value': 'malformed'}, {'_type': 'str', '_value': 'encrypted'}], '_len': 2}}, '_len': 3}
+64 latency_factor = 100 / (latency + 10)  # Lower latency is better
+64 ['latency', 'bandwidth', 'packet_analysis', 'latency_factor'] ['40', '25', "{counts: {tcp: 3, udp: 2}, total_size: 2688, security_flags: {'malformed', 'encrypted'}}", '2.0']
+65 bandwidth_factor = bandwidth / 10      # Higher bandwidth is better
+65 ['bandwidth', 'packet_analysis', 'latency_factor', 'bandwidth_factor'] ['25', "{counts: {tcp: 3, udp: 2}, total_size: 2688, security_flags: {'malformed', 'encrypted'}}", '2.0', '2.5']
+68 protocol_counts = packet_analysis['counts']
+68 ['packet_analysis', 'latency_factor', 'bandwidth_factor', 'protocol_counts'] ["{counts: {tcp: 3, udp: 2}, total_size: 2688, security_flags: {'malformed', 'encrypted'}}", '2.0', '2.5', '{tcp: 3, udp: 2}']
+69 tcp_count = protocol_counts.get('tcp', 0)
+69 ['packet_analysis', 'latency_factor', 'bandwidth_factor', 'protocol_counts', 'tcp_count'] ["{counts: {tcp: 3, udp: 2}, total_size: 2688, security_flags: {'malformed', 'encrypted'}}", '2.0', '2.5', '{tcp: 3, udp: 2}', '3']
+70 udp_count = protocol_counts.get('udp', 0)
+70 ['packet_analysis', 'latency_factor', 'bandwidth_factor', 'protocol_counts', 'tcp_count', 'udp_count'] ["{counts: {tcp: 3, udp: 2}, total_size: 2688, security_flags: {'malformed', 'encrypted'}}", '2.0', '2.5', '{tcp: 3, udp: 2}', '3', '2']
+73 security_level = len(packet_analysis['security_flags'])
+73 ['packet_analysis', 'latency_factor', 'bandwidth_factor', 'tcp_count', 'udp_count', 'security_level'] ["{counts: {tcp: 3, udp: 2}, total_size: 2688, security_flags: {'malformed', 'encrypted'}}", '2.0', '2.5', '3', '2', '2']
+74 security_modifier = 1.0 + (security_level * 0.1)
+74 ['latency_factor', 'bandwidth_factor', 'tcp_count', 'udp_count', 'security_level', 'security_modifier'] ['2.0', '2.5', '3', '2', '2', '1.2']
+29 checksum = 0
+29 ['data', 'checksum'] ['[40, 250, 98]', '0']
+30 for value in data:
+30 ['data', 'checksum', 'value'] ['[40, 250, 98]', '0', '40']
+31 checksum ^= value
+31 ['data', 'checksum', 'value'] ['[40, 250, 98]', '40', '40']
+30 for value in data:
+30 ['data', 'checksum', 'value'] ['[40, 250, 98]', '40', '250']
+31 checksum ^= value
+31 ['data', 'checksum', 'value'] ['[40, 250, 98]', '210', '250']
+30 for value in data:
+30 ['data', 'checksum', 'value'] ['[40, 250, 98]', '210', '98']
+31 checksum ^= value
+31 ['data', 'checksum', 'value'] ['[40, 250, 98]', '176', '98']
+30 for value in data:
+30 ['data', 'checksum', 'value'] ['[40, 250, 98]', '176', '98']
+32 return checksum
+32 ['checksum'] ['176']
+85 base_score = (latency_factor * 2) + (bandwidth_factor * 3)
+85 ['latency_factor', 'bandwidth_factor', 'tcp_count', 'udp_count', 'security_modifier', 'base_score'] ['2.0', '2.5', '3', '2', '1.2', '11.5']
+88 if tcp_count > udp_count:
+88 ['tcp_count', 'udp_count', 'security_modifier', 'base_score'] ['3', '2', '1.2', '11.5']
+89 protocol_bonus = tcp_count - udp_count
+89 ['tcp_count', 'udp_count', 'security_modifier', 'base_score', 'protocol_bonus'] ['3', '2', '1.2', '11.5', '1']
+94 priority = (base_score + protocol_bonus) * security_modifier
+94 ['security_modifier', 'base_score', 'protocol_bonus', 'priority'] ['1.2', '11.5', '1', '15.0']
+97 return round(priority)
+97 ['priority'] ['15.0']
+FUNCTION_RETURN 97 calculate_priority {'_type': 'int', '_value': 15}
+130 print(f"Network priority score: {priority_score}")
+130 ['priority_score'] ['15']

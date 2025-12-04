@@ -1,0 +1,70 @@
+Target: Find the value of variable total_revenue after [line 58] executes
+
+[line 57]  total_revenue = calculate_revenue(sales_data, price_adjustments)
+Call function calculate_revenue(sales_data={tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...} (an unknown source), price_adjustments={North: 110, South: 95, East: 105, ...} (an unknown source))
+[line 2]  base_revenue = 0
+Assign: base_revenue = 0
+[line 3]  discount_factor = 0.95  # 5% discount on all transactions
+Assign: discount_factor = 0.95
+[line 4]  loyalty_bonus = 50  # bonus for loyal customers
+Assign: loyalty_bonus = 50
+[line 7]  for category, (quantity, region) in sales.items():
+(Missing param: 'iter_var')
+[line 9]  base_price = price_adj.get(region, 100)  # default price 100
+(Missing param: 'func_name')
+[line 16]  if category.startswith('tech'):
+Condition: True, entering 'if' block
+[line 17]  item_revenue = quantity * base_price * 1.2  # tech premium
+Compute: quantity * base_price * 1.2  # tech premium, where quantity=120 (an unknown source), base_price=110 (an unknown source) = 15840.0
+[line 25]  base_revenue += item_revenue
+Update: base_revenue changed from 0 (defined at defined at [line 2]) to 0+item_revenue = 15840.0
+[line 7]  for category, (quantity, region) in sales.items():
+(Missing param: 'iter_var')
+[line 9]  base_price = price_adj.get(region, 100)  # default price 100
+(Missing param: 'func_name')
+[line 16]  if category.startswith('tech'):
+Condition: True, entering 'if' block
+[line 18]  elif category.endswith('food'):
+'elif' Condition: True, entering block
+[line 23]  item_revenue = quantity * base_price
+Compute: quantity * base_price, where quantity=85 (an unknown source), base_price=95 (an unknown source) = 8075
+[line 25]  base_revenue += item_revenue
+Update: base_revenue changed from 15840.0 (defined at defined at [line 25]) to 15840.0+item_revenue = 23915.0
+[line 7]  for category, (quantity, region) in sales.items():
+(Missing param: 'iter_var')
+[line 9]  base_price = price_adj.get(region, 100)  # default price 100
+(Missing param: 'func_name')
+[line 16]  if category.startswith('tech'):
+Condition: True, entering 'if' block
+[line 18]  elif category.endswith('food'):
+'elif' Condition: True, entering block
+[line 19]  item_revenue = quantity * base_price * 0.9  # food discount
+Compute: quantity * base_price * 0.9  # food discount, where quantity=45 (an unknown source), base_price=105 (an unknown source) = 4252.5
+[line 25]  base_revenue += item_revenue
+Update: base_revenue changed from 23915.0 (defined at defined at [line 25]) to 23915.0+item_revenue = 28167.5
+[line 7]  for category, (quantity, region) in sales.items():
+(Missing param: 'iter_var')
+[line 9]  base_price = price_adj.get(region, 100)  # default price 100
+(Missing param: 'func_name')
+[line 16]  if category.startswith('tech'):
+Condition: True, entering 'if' block
+[line 17]  item_revenue = quantity * base_price * 1.2  # tech premium
+Compute: quantity * base_price * 1.2  # tech premium, where quantity=60 (an unknown source), base_price=115 (an unknown source) = 8280.0
+[line 25]  base_revenue += item_revenue
+Update: base_revenue changed from 28167.5 (defined at defined at [line 25]) to 28167.5+item_revenue = 36447.5
+[line 7]  for category, (quantity, region) in sales.items():
+Loop End: Iteration finished
+[line 28]  qualified_for_bonus = base_revenue > 5000
+Compute: base_revenue > 5000, where base_revenue=36447.5 (defined at [line 25]) = True
+[line 29]  adjusted_revenue = base_revenue * discount_factor
+Compute: base_revenue * discount_factor, where base_revenue=36447.5 (defined at [line 25]), discount_factor=0.95 (defined at [line 3]) = 34625.125
+[line 35]  if qualified_for_bonus:
+Condition: True, entering 'if' block
+[line 36]  adjusted_revenue += loyalty_bonus
+Update: adjusted_revenue changed from 34625.125 (defined at defined at [line 29]) to 34625.125+loyalty_bonus = 34675.125
+[line 38]  return round(adjusted_revenue)
+Return: round(adjusted_revenue)
+[line 58]  print(f"Target result: {total_revenue}")
+Output: f"Target result: {total_revenue}"
+
+Answer: total_revenue = 34675 (last updated on defined at [line 57])

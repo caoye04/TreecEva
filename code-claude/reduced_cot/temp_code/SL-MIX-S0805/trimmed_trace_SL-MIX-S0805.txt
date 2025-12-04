@@ -1,0 +1,331 @@
+115
+optimal_path_length
+---
+89 start_node = 'A'
+89 ['network_map', 'start_node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'"]
+90 target_node = 'G'
+90 ['network_map', 'start_node', 'target_node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'"]
+93 node_count = len(network_map)
+93 ['network_map', 'start_node', 'target_node', 'node_count'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", '7']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 [] []
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{B: 4, C: 2}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{A: 4, D: 5, E: 3}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{A: 2, D: 1, F: 6}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{B: 5, C: 1, E: 7, ...}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{B: 3, D: 7, G: 8}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{C: 6, G: 4}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{D: 3, E: 8, F: 4}']
+94 edge_count = sum(len(connections) for connections in network_map.values())
+94 ['connections'] ['{D: 3, E: 8, F: 4}']
+95 avg_connections = edge_count / node_count if node_count > 0 else 0
+95 ['network_map', 'start_node', 'target_node', 'node_count', 'edge_count', 'avg_connections'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", '7', '20', '2.857142857142857']
+106 optimal_path_length = calculate_shortest_path(network_map, start_node, target_node)
+106 ['network_map', 'start_node', 'target_node', 'avg_connections'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", '2.857142857142857']
+PARAM_MAPPING {'network_map': {'actual_var': 'network_map', 'value': {'A': {'B': 4, 'C': 2}, 'B': {'A': 4, 'D': 5, 'E': 3}, 'C': {'A': 2, 'D': 1, 'F': 6}, 'D': {'B': 5, 'C': 1, 'E': 7, 'G': 3}, 'E': {'B': 3, 'D': 7, 'G': 8}, 'F': {'C': 6, 'G': 4}, 'G': {'D': 3, 'E': 8, 'F': 4}}}, 'start': {'actual_var': 'start_node', 'value': 'A'}, 'end': {'actual_var': 'target_node', 'value': 'G'}}
+FUNCTION_ENTER 1 calculate_shortest_path def calculate_shortest_path(network_map, start, end):
+1 ['network_map', 'start', 'end'] [{'_type': 'dict', '_items': {'A': {'_type': 'dict', '_items': {'B': {'_type': 'int', '_value': 4}, 'C': {'_type': 'int', '_value': 2}}, '_len': 2}, 'B': {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 4}, 'D': {'_type': 'int', '_value': 5}, 'E': {'_type': 'int', '_value': 3}}, '_len': 3}, 'C': {'_type': 'dict', '_items': {'A': {'_type': 'int', '_value': 2}, 'D': {'_type': 'int', '_value': 1}, 'F': {'_type': 'int', '_value': 6}}, '_len': 3}, 'D': {'_type': 'dict', '_items': {'B': {'_type': 'int', '_value': 5}, 'C': {'_type': 'int', '_value': 1}, 'E': {'_type': 'int', '_value': 7}, 'G': {'_type': 'int', '_value': 3}}, '_len': 4}, 'E': {'_type': 'dict', '_items': {'B': {'_type': 'int', '_value': 3}, 'D': {'_type': 'int', '_value': 7}, 'G': {'_type': 'int', '_value': 8}}, '_len': 3}}, '_len': 7}, {'_type': 'str', '_value': 'A'}, {'_type': 'str', '_value': 'G'}]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'A'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'B'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'C'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'D'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'E'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'F'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 ['network_map', 'start', 'end', 'node'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'A'", "'G'", "'G'"]
+3 distances = {node: float('infinity') for node in network_map}
+3 [] []
+4 distances[start] = 0
+4 [] []
+5 visited = set()
+5 [] []
+6 priority_queue = [(0, start)]
+6 [] []
+21 for i in range(3):
+21 [] []
+21 for i in range(3):
+21 [] []
+21 for i in range(3):
+21 [] []
+21 for i in range(3):
+21 [] []
+27 while priority_queue:
+27 [] []
+28 current_dist, current_node = min(priority_queue)
+28 [] []
+31 if current_node in visited:
+31 [] []
+36 if current_node == end:
+36 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+60 distances[neighbor] = distance
+60 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+60 distances[neighbor] = distance
+60 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+27 while priority_queue:
+27 [] []
+28 current_dist, current_node = min(priority_queue)
+28 [] []
+31 if current_node in visited:
+31 [] []
+36 if current_node == end:
+36 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+60 distances[neighbor] = distance
+60 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+60 distances[neighbor] = distance
+60 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+27 while priority_queue:
+27 [] []
+28 current_dist, current_node = min(priority_queue)
+28 [] []
+31 if current_node in visited:
+31 [] []
+36 if current_node == end:
+36 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+45 for neighbor, weight in network_map[current_node].items():
+45 [] []
+51 distance = distances[current_node] + weight
+51 [] []
+55 if optimization_attempts % 5 == 0:
+55 [] []
+59 if distance < distances[neighbor]:
+59 [] []
+60 distances[neighbor] = distance
+60 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F')]", "'D'", "'E'", '7', '10']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E')]", "'D'", "'G'", '3', '10']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E')]", "'D'", "'G'", '3', '6']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E')]", "'D'", "'G'", '3', '6']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E')]", "'D'", "'G'", '3', '6']
+60 distances[neighbor] = distance
+60 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E')]", "'D'", "'G'", '3', '6']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E'), (6, 'G')]", "'D'", "'G'", '3', '6']
+27 while priority_queue:
+27 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E'), (6, 'G')]", "'D'", "'G'", '3', '6']
+28 current_dist, current_node = min(priority_queue)
+28 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(4, 'B'), (8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'G'", '3', '6']
+31 if current_node in visited:
+31 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'G'", '3', '6']
+36 if current_node == end:
+36 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'G'", '3', '6']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'A'", '4', '6']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'A'", '4', '8']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'A'", '4', '8']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'A'", '4', '8']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'D'", '5', '8']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'D'", '5', '9']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'D'", '5', '9']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'D'", '5', '9']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'E'", '3', '9']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'E'", '3', '7']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'E'", '3', '7']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'E'", '3', '7']
+60 distances[neighbor] = distance
+60 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G')]", "'B'", "'E'", '3', '7']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G'), (7, 'E')]", "'B'", "'E'", '3', '7']
+27 while priority_queue:
+27 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G'), (7, 'E')]", "'B'", "'E'", '3', '7']
+28 current_dist, current_node = min(priority_queue)
+28 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (6, 'G'), (7, 'E')]", "'G'", "'E'", '3', '7']
+31 if current_node in visited:
+31 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'E'", '3', '7']
+36 if current_node == end:
+36 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'A', 'D', 'C'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'E'", '3', '7']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'D'", '3', '7']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'D'", '3', '9']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'D'", '3', '9']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'D'", '3', '9']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'E'", '8', '9']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'E'", '8', '14']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'E'", '8', '14']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'E'", '8', '14']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'F'", '4', '14']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'F'", '4', '10']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'F'", '4', '10']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'F'", '4', '10']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'F'", '4', '10']
+27 while priority_queue:
+27 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'G'", "'F'", '4', '10']
+28 current_dist, current_node = min(priority_queue)
+28 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E'), (7, 'E')]", "'E'", "'F'", '4', '10']
+31 if current_node in visited:
+31 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E')]", "'E'", "'F'", '4', '10']
+36 if current_node == end:
+36 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D'}", "[(8, 'F'), (10, 'E')]", "'E'", "'F'", '4', '10']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'B'", '3', '10']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'B'", '3', '10']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'B'", '3', '10']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'B'", '3', '10']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'D'", '7', '10']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'D'", '7', '14']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'D'", '7', '14']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'D'", '7', '14']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'G'", '8', '14']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'G'", '8', '15']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'G'", '8', '15']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'G'", '8', '15']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'G'", '8', '15']
+27 while priority_queue:
+27 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'E'", "'G'", '8', '15']
+28 current_dist, current_node = min(priority_queue)
+28 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(8, 'F'), (10, 'E')]", "'F'", "'G'", '8', '15']
+31 if current_node in visited:
+31 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '8', '15']
+36 if current_node == end:
+36 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '8', '15']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'C'", '6', '15']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'C'", '6', '14']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'C'", '6', '14']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'C'", '6', '14']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '4', '14']
+51 distance = distances[current_node] + weight
+51 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '4', '12']
+55 if optimization_attempts % 5 == 0:
+55 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '4', '12']
+59 if distance < distances[neighbor]:
+59 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight', 'distance'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '4', '12']
+45 for neighbor, weight in network_map[current_node].items():
+45 ['network_map', 'end', 'distances', 'visited', 'priority_queue', 'current_node', 'neighbor', 'weight'] ['{A: {B: 4, C: 2}, B: {A: 4, D: 5, E: 3}, C: {A: 2, D: 1, F: 6}, ...}', "'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'", "'G'", '4']
+27 while priority_queue:
+27 ['end', 'distances', 'visited', 'priority_queue', 'current_node'] ["'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'F'"]
+28 current_dist, current_node = min(priority_queue)
+28 ['end', 'distances', 'visited', 'priority_queue', 'current_node'] ["'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", "[(10, 'E')]", "'E'"]
+31 if current_node in visited:
+31 ['end', 'distances', 'visited', 'priority_queue', 'current_node'] ["'G'", '{A: 0, B: 4, C: 2, ...}', "{'B', 'G', 'A', 'C', 'D', ...}", '[]', "'E'"]
+33 continue
+33 ['end', 'distances', 'priority_queue'] ["'G'", '{A: 0, B: 4, C: 2, ...}', '[]']
+27 while priority_queue:
+27 ['end', 'distances', 'priority_queue'] ["'G'", '{A: 0, B: 4, C: 2, ...}', '[]']
+15 base_latency = sum(load_factors) / len(load_factors)
+15 ['load_factors', 'base_latency'] ['[5, 8, 3, 12, 7]', '7.0']
+16 jitter = (load_factors[0] ^ load_factors[-1]) % 3
+16 ['load_factors', 'base_latency', 'jitter'] ['[5, 8, 3, 12, 7]', '7.0', '2']
+17 return base_latency + jitter
+17 ['base_latency', 'jitter'] ['7.0', '2']
+67 return distances[end]
+67 ['end', 'distances'] ["'G'", '{A: 0, B: 4, C: 2, ...}']
+FUNCTION_RETURN 67 calculate_shortest_path {'_type': 'int', '_value': 6}
+110 if avg_connections > 2.5:
+110 ['avg_connections', 'optimal_path_length'] ['2.857142857142857', '6']
+115 print(f"Result: {optimal_path_length}")
+115 ['optimal_path_length'] ['6']

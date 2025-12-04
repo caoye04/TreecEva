@@ -1,0 +1,77 @@
+Target: Find the value of variable net_sales after [line 56] executes
+
+[line 56]  net_sales = calculate_net_sales(inventory, transactions)
+Call function calculate_net_sales(inventory={P001: {name: 'Laptop', price: 1200, quantity: 5}, P002: {name: 'Headphones', price: 80, quantity: 15}, P003: {name: 'Keyboard', price: 60, quantity: 10}, ...} (an unknown source), transactions=[{product_id: 'P001', quantity: 2, discount_code: 'SUMMER20'}, {product_id: 'P002', quantity: 3, discount_code: None}, {product_id: 'P003', quantity: 1, discount_code: 'SUMMER20'}, {product_id: 'P005', quantity: 2, discount_code: None}] (an unknown source))
+[line 1]  def calculate_net_sales(inventory, transactions):
+Enter function calculate_net_sales: inventory={P001: {name: 'Laptop', price: 1200, quantity: 5}, P002: {name: 'Headphones', price: 80, quantity: 15}, P003: {name: 'Keyboard', price: 60, quantity: 10}, ...}, transactions=[{product_id: 'P001', quantity: 2, discount_code: 'SUMMER20'}, {product_id: 'P002', quantity: 3, discount_code: None}, {product_id: 'P003', quantity: 1, discount_code: 'SUMMER20'}, {product_id: 'P005', quantity: 2, discount_code: None}]
+  [line 2]  total_revenue = 0
+  Assign: total_revenue = 0
+  [line 10]  for transaction in transactions:
+  Loop Start: transaction takes its first value {product_id: 'P001', quantity: 2, discount_code: 'SUMMER20'}
+  [line 11]  product_id = transaction['product_id']
+  Compute: transaction['product_id'], where transaction={product_id: 'P001', quantity: 2, discount_code: 'SUMMER20'} (defined at [line 10]) = 'P001'
+  [line 12]  quantity = transaction['quantity']
+  Compute: transaction['quantity'], where transaction={product_id: 'P001', quantity: 2, discount_code: 'SUMMER20'} (defined at [line 10]) = 2
+  [line 14]  if product_id in inventory and inventory[product_id]['quantity'] >= quantity:
+  Condition: True, entering 'if' block
+  [line 16]  price = inventory[product_id]['price']
+  Compute: inventory[product_id]['price'], where inventory={P001: {name: 'Laptop', price: 1200, quantity: 5}, P002: {name: 'Headphones', price: 80, quantity: 15}, P003: {name: 'Keyboard', price: 60, quantity: 10}, ...} (parameter inventory), product_id='P001' (defined at [line 11]) = 1200
+  [line 17]  subtotal = price * quantity
+  Compute: price * quantity, where price=1200 (defined at [line 16]), quantity=2 (defined at [line 12]) = 2400
+  [line 20]  if transaction.get('discount_code') == 'SUMMER20':
+  Condition: True, entering 'if' block
+  [line 21]  discount = subtotal * 0.20
+  Compute: subtotal * 0.20, where subtotal=2400 (defined at [line 17]) = 480.0
+  [line 23]  subtotal -= discount
+  Update: subtotal changed from 2400 (defined at defined at [line 17]) to 2400-discount = 1920.0
+  [line 27]  total_revenue += subtotal
+  Update: total_revenue changed from 0 (defined at defined at [line 2]) to 0+subtotal = 1920.0
+  [line 10]  for transaction in transactions:
+  Loop Iteration: transaction is now {product_id: 'P002', quantity: 3, discount_code: None} (iteration 2)
+  [line 11]  product_id = transaction['product_id']
+  Compute: transaction['product_id'], where transaction={product_id: 'P002', quantity: 3, discount_code: None} (defined at [line 10]), product_id='P001' (defined at [line 11]) = 'P002'
+  [line 12]  quantity = transaction['quantity']
+  Compute: transaction['quantity'], where transaction={product_id: 'P002', quantity: 3, discount_code: None} (defined at [line 10]), quantity=2 (defined at [line 12]) = 3
+  [line 14]  if product_id in inventory and inventory[product_id]['quantity'] >= quantity:
+  Condition: True, entering 'if' block
+  [line 16]  price = inventory[product_id]['price']
+  Compute: inventory[product_id]['price'], where inventory={P001: {name: 'Laptop', price: 1200, quantity: 3}, P002: {name: 'Headphones', price: 80, quantity: 15}, P003: {name: 'Keyboard', price: 60, quantity: 10}, ...} (parameter inventory), product_id='P002' (defined at [line 11]), price=1200 (defined at [line 16]) = 80
+  [line 17]  subtotal = price * quantity
+  Compute: price * quantity, where price=80 (defined at [line 16]), quantity=3 (defined at [line 12]) = 240
+  [line 20]  if transaction.get('discount_code') == 'SUMMER20':
+  Condition: True, entering 'if' block
+  [line 27]  total_revenue += subtotal
+  Update: total_revenue changed from 1920.0 (defined at defined at [line 27]) to 1920.0+subtotal = 2160.0
+  [line 10]  for transaction in transactions:
+  Loop Iteration: transaction is now {product_id: 'P003', quantity: 1, discount_code: 'SUMMER20'} (iteration 3)
+  [line 11]  product_id = transaction['product_id']
+  Compute: transaction['product_id'], where transaction={product_id: 'P003', quantity: 1, discount_code: 'SUMMER20'} (defined at [line 10]), product_id='P002' (defined at [line 11]) = 'P003'
+  [line 12]  quantity = transaction['quantity']
+  Compute: transaction['quantity'], where transaction={product_id: 'P003', quantity: 1, discount_code: 'SUMMER20'} (defined at [line 10]), quantity=3 (defined at [line 12]) = 1
+  [line 14]  if product_id in inventory and inventory[product_id]['quantity'] >= quantity:
+  Condition: True, entering 'if' block
+  [line 16]  price = inventory[product_id]['price']
+  Compute: inventory[product_id]['price'], where inventory={P001: {name: 'Laptop', price: 1200, quantity: 3}, P002: {name: 'Headphones', price: 80, quantity: 12}, P003: {name: 'Keyboard', price: 60, quantity: 10}, ...} (parameter inventory), product_id='P003' (defined at [line 11]), price=80 (defined at [line 16]) = 60
+  [line 17]  subtotal = price * quantity
+  Compute: price * quantity, where price=60 (defined at [line 16]), quantity=1 (defined at [line 12]) = 60
+  [line 20]  if transaction.get('discount_code') == 'SUMMER20':
+  Condition: True, entering 'if' block
+  [line 21]  discount = subtotal * 0.20
+  Compute: subtotal * 0.20, where subtotal=60 (defined at [line 17]) = 12.0
+  [line 23]  subtotal -= discount
+  Update: subtotal changed from 60 (defined at defined at [line 17]) to 60-discount = 48.0
+  [line 27]  total_revenue += subtotal
+  Update: total_revenue changed from 2160.0 (defined at defined at [line 27]) to 2160.0+subtotal = 2208.0
+  [line 10]  for transaction in transactions:
+  Loop End: Iteration finished
+  [line 12]  quantity = transaction['quantity']
+  Compute: transaction['quantity'], where transaction={product_id: 'P005', quantity: 2, discount_code: None} (defined at [line 10]), quantity=1 (defined at [line 12]) = 2
+  [line 14]  if product_id in inventory and inventory[product_id]['quantity'] >= quantity:
+  Condition: True, entering 'if' block
+  [line 10]  for transaction in transactions:
+  Loop End: Iteration finished
+  [line 38]  return total_revenue
+  Return: total_revenue=2208.0 (defined at [line 27])
+Function calculate_net_sales returns 2208.0
+
+Answer: net_sales = 2208.0 (last updated on defined at [line 56])

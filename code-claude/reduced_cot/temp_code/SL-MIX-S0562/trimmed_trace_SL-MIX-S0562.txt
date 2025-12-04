@@ -1,0 +1,53 @@
+34
+priority_score
+---
+11 keywords = ['urgent', 'important', 'critical']
+11 ['text', 'weight', 'keywords'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", '3', "['urgent', 'important', 'critical']"]
+12 secondary_keywords = ['review', 'process', 'approve']
+12 ['text', 'weight', 'keywords', 'secondary_keywords'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", '3', "['urgent', 'important', 'critical']", "['review', 'process', 'approve']"]
+15 word_count = len(text.split())
+15 ['text', 'weight', 'keywords', 'secondary_keywords', 'word_count'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", '3', "['urgent', 'important', 'critical']", "['review', 'process', 'approve']", '18']
+19 primary_relevance = calculate_relevance(text, keywords)
+19 ['text', 'weight', 'keywords', 'secondary_keywords', 'word_count'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", '3', "['urgent', 'important', 'critical']", "['review', 'process', 'approve']", '18']
+PARAM_MAPPING {'text': {'actual_var': 'text', 'value': 'This is an urgent document that requires critical review. Please process this important request as soon as possible.'}, 'keywords': {'actual_var': 'keywords', 'value': ['urgent', 'important', 'critical']}}
+FUNCTION_ENTER 3 calculate_relevance def calculate_relevance(text, keywords):
+3 ['text', 'keywords'] [{'_type': 'str', '_value': 'This is an urgent document that requires critical review. Please process this important request as soon as possible.'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'urgent'}, {'_type': 'str', '_value': 'important'}, {'_type': 'str', '_value': 'critical'}], '_len': 3}]
+5 word_count = Counter(text.lower().split())
+5 ['text', 'keywords', 'word_count'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", "['urgent', 'important', 'critical']", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['word_count'] ['{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'urgent'", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'important'", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'critical'", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'critical'", '{this: 2, is: 1, an: 1, ...}']
+7 return relevance
+7 ['text', 'keywords', 'relevance', 'word_count'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", "['urgent', 'important', 'critical']", '3', '{this: 2, is: 1, an: 1, ...}']
+FUNCTION_RETURN 7 calculate_relevance {'_type': 'int', '_value': 3}
+20 secondary_relevance = calculate_relevance(text, secondary_keywords)
+20 ['text', 'weight', 'keywords', 'secondary_keywords', 'word_count', 'primary_relevance'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", '3', "['urgent', 'important', 'critical']", "['review', 'process', 'approve']", '18', '3']
+PARAM_MAPPING {'text': {'actual_var': 'text', 'value': 'This is an urgent document that requires critical review. Please process this important request as soon as possible.'}, 'keywords': {'actual_var': 'secondary_keywords', 'value': ['review', 'process', 'approve']}}
+FUNCTION_ENTER 3 calculate_relevance def calculate_relevance(text, keywords):
+3 ['text', 'keywords'] [{'_type': 'str', '_value': 'This is an urgent document that requires critical review. Please process this important request as soon as possible.'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'review'}, {'_type': 'str', '_value': 'process'}, {'_type': 'str', '_value': 'approve'}], '_len': 3}]
+5 word_count = Counter(text.lower().split())
+5 ['text', 'keywords', 'word_count'] ["'This is an urgent document that requires critical review. Please process this important request as soon as possible.'", "['review', 'process', 'approve']", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['word_count'] ['{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'review'", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'process'", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'approve'", '{this: 2, is: 1, an: 1, ...}']
+6 relevance = sum(word_count[keyword.lower()] for keyword in keywords)
+6 ['keyword', 'word_count'] ["'approve'", '{this: 2, is: 1, an: 1, ...}']
+7 return relevance
+7 ['relevance'] ['1']
+FUNCTION_RETURN 7 calculate_relevance {'_type': 'int', '_value': 1}
+23 base_score = primary_relevance * 3 + secondary_relevance
+23 ['weight', 'primary_relevance', 'secondary_relevance', 'base_score'] ['3', '3', '1', '10']
+34 priority_score = int(base_score * weight)
+34 ['weight', 'base_score', 'priority_score'] ['3', '10', '30']

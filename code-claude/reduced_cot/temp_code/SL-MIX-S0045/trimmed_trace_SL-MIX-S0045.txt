@@ -1,0 +1,135 @@
+90
+actual_overlap
+---
+76 seq1 = [3, 7, 9, 12, 15]
+76 ['seq1'] ['[3, 7, 9, 12, 15]']
+77 seq2 = [4, 9, 10, 12, 20]
+77 ['seq1', 'seq2'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]']
+80 seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+80 ['a', 'b'] ['3', '4']
+80 seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+80 ['a', 'b'] ['7', '9']
+80 seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+80 ['a', 'b'] ['9', '10']
+80 seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+80 ['a', 'b'] ['12', '12']
+80 seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+80 ['a', 'b'] ['15', '20']
+80 seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+80 ['seq1', 'seq2', 'seq_product'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '[12, 63, 90, 144, 300]']
+81 seq_sum = sum(seq_product) if seq_product else 0
+81 ['seq1', 'seq2', 'seq_product', 'seq_sum'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '[12, 63, 90, 144, 300]', '609']
+84 if seq_sum > 1000:
+84 ['seq1', 'seq2', 'seq_sum'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '609']
+90 actual_overlap = calculate_overlap(seq1, seq2, use_optimization=True)
+90 ['seq1', 'seq2'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]']
+PARAM_MAPPING {'sequence1': {'actual_var': 'seq1', 'value': [3, 7, 9, 12, 15]}, 'sequence2': {'actual_var': 'seq2', 'value': [4, 9, 10, 12, 20]}, 'use_optimization': {'actual_var': 'use_optimization=True', 'value': 'use_optimization=True'}}
+FUNCTION_ENTER 3 calculate_overlap def calculate_overlap(sequence1, sequence2, use_optimization=False):
+3 ['sequence1', 'sequence2', 'use_optimization'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 15}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 20}], '_len': 5}, {'_type': 'bool', '_value': True}]
+13 noise = 0
+13 ['seq', 'noise'] ['[3, 7, 9, 12, 15]', '0']
+14 for i, val in enumerate(seq):
+14 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '0', '0', '3']
+15 if i % 3 == 0:
+15 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '0', '0', '3']
+16 noise += val * 2
+16 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '6', '0', '3']
+14 for i, val in enumerate(seq):
+14 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '6', '1', '7']
+15 if i % 3 == 0:
+15 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '6', '1', '7']
+17 elif i % 3 == 1:
+17 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '6', '1', '7']
+18 noise -= val // 2
+18 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '3', '1', '7']
+14 for i, val in enumerate(seq):
+14 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '3', '2', '9']
+15 if i % 3 == 0:
+15 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '3', '2', '9']
+17 elif i % 3 == 1:
+17 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '3', '2', '9']
+20 noise ^= val & 0x0F
+20 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '10', '2', '9']
+14 for i, val in enumerate(seq):
+14 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '10', '3', '12']
+15 if i % 3 == 0:
+15 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '10', '3', '12']
+16 noise += val * 2
+16 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '34', '3', '12']
+14 for i, val in enumerate(seq):
+14 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '34', '4', '15']
+15 if i % 3 == 0:
+15 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '34', '4', '15']
+17 elif i % 3 == 1:
+17 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '34', '4', '15']
+18 noise -= val // 2
+18 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '27', '4', '15']
+14 for i, val in enumerate(seq):
+14 ['seq', 'noise', 'i', 'val'] ['[3, 7, 9, 12, 15]', '27', '4', '15']
+21 return abs(noise) % 100
+21 ['noise'] ['27']
+25 if not use_optimization:
+25 ['sequence1', 'sequence2', 'use_optimization'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', 'True']
+32 s1_counter = {}
+32 ['sequence1', 'sequence2', 's1_counter'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{}']
+33 for item in sequence1:
+33 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{}', '3']
+34 s1_counter[item] = s1_counter.get(item, 0) + 1
+34 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1}', '3']
+33 for item in sequence1:
+33 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1}', '7']
+34 s1_counter[item] = s1_counter.get(item, 0) + 1
+34 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1}', '7']
+33 for item in sequence1:
+33 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1}', '9']
+34 s1_counter[item] = s1_counter.get(item, 0) + 1
+34 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1}', '9']
+33 for item in sequence1:
+33 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1}', '12']
+34 s1_counter[item] = s1_counter.get(item, 0) + 1
+34 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '12']
+33 for item in sequence1:
+33 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '15']
+34 s1_counter[item] = s1_counter.get(item, 0) + 1
+34 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '15']
+33 for item in sequence1:
+33 ['sequence1', 'sequence2', 's1_counter', 'item'] ['[3, 7, 9, 12, 15]', '[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '15']
+40 overlap_candidates = []
+40 ['sequence2', 's1_counter', 'item', 'overlap_candidates'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '15', '[]']
+43 overlap_count = 0
+43 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '15', '[]', '0']
+44 for item in sequence2:
+44 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '4', '[]', '0']
+45 if item in s1_counter and s1_counter[item] > 0:
+45 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '4', '[]', '0']
+44 for item in sequence2:
+44 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '9', '[]', '0']
+45 if item in s1_counter and s1_counter[item] > 0:
+45 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '9', '[]', '0']
+46 overlap_count += 1
+46 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 1, ...}', '9', '[]', '1']
+47 s1_counter[item] -= 1
+47 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '9', '[]', '1']
+44 for item in sequence2:
+44 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '10', '[9]', '1']
+45 if item in s1_counter and s1_counter[item] > 0:
+45 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '10', '[9]', '1']
+44 for item in sequence2:
+44 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '12', '[9]', '1']
+45 if item in s1_counter and s1_counter[item] > 0:
+45 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '12', '[9]', '1']
+46 overlap_count += 1
+46 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '12', '[9]', '2']
+47 s1_counter[item] -= 1
+47 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '12', '[9]', '2']
+44 for item in sequence2:
+44 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '20', '[9, 12]', '2']
+45 if item in s1_counter and s1_counter[item] > 0:
+45 ['sequence2', 's1_counter', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '{3: 1, 7: 1, 9: 0, ...}', '20', '[9, 12]', '2']
+44 for item in sequence2:
+44 ['sequence2', 'item', 'overlap_candidates', 'overlap_count'] ['[4, 9, 10, 12, 20]', '20', '[9, 12]', '2']
+52 if len(overlap_candidates) > 0:
+52 ['overlap_candidates', 'overlap_count'] ['[9, 12]', '2']
+64 return overlap_count
+64 ['overlap_count'] ['2']
+FUNCTION_RETURN 64 calculate_overlap {'_type': 'int', '_value': 2}

@@ -1,0 +1,63 @@
+Target: Find the value of variable final_pressure after [line 55] executes
+
+[line 48]  readings = [102.5, 103.1, 101.8, 104.2, 105.7, 103.4, 102.9, 101.5, 102.3]
+Compute: [102.5, 103.1, 101.8, 104.2, 105.7, 103.4, 102.9, 101.5, 102.3] = [102.5, 103.1, 101.8, 104.2, 105.7, ...]
+[line 51]  filter_threshold = 104.0
+Assign: filter_threshold = 104.0
+[line 54]  final_pressure = calculate_adjusted_pressure(readings, filter_threshold)
+Call function calculate_adjusted_pressure(readings=[102.5, 103.1, 101.8, 104.2, 105.7, ...] (defined at [line 48]), filter_threshold=104.0 (defined at [line 51]))
+[line 18]  def calculate_adjusted_pressure(readings, filter_threshold):
+Enter function calculate_adjusted_pressure: readings=[102.5, 103.1, 101.8, 104.2, 105.7, ...] (readings defined at [line 48]), filter_threshold=104.0 (filter_threshold defined at [line 51])
+  [line 20]  mid_start = len(readings) // 3
+  Compute: len(readings) // 3, where readings=[102.5, 103.1, 101.8, 104.2, 105.7, ...] (parameter readings defined at [line 48]) = 3
+  [line 21]  mid_end = 2 * len(readings) // 3
+  Compute: 2 * len(readings) // 3, where readings=[102.5, 103.1, 101.8, 104.2, 105.7, ...] (parameter readings defined at [line 48]) = 6
+  [line 22]  mid_section = readings[mid_start:mid_end]
+  Compute: readings[mid_start:mid_end], where readings=[102.5, 103.1, 101.8, 104.2, 105.7, ...] (parameter readings defined at [line 48]), mid_start=3 (defined at [line 20]), mid_end=6 (defined at [line 21]) = [104.2, 105.7, 103.4]
+  [line 25]  calibration = 0.95
+  Assign: calibration = 0.95
+  [line 26]  calibrated = [reading * calibration for reading in mid_section]
+  Compute: [reading * calibration for reading in mid_section], where reading=104.2 (an unknown source), calibration=0.95 (defined at [line 25]), mid_section=[104.2, 105.7, 103.4] (defined at [line 22]) = ?
+  [line 29]  filtered_readings, anomaly_count = filter_sequence(calibrated, filter_threshold)
+  (Missing param: 'func_name')
+  [line 3]  filtered = [x for x in data if x <= threshold]
+  Compute: [x for x in data if x <= threshold], where x=98.99 (an unknown source), data=[98.99, 100.41499999999999, 98.23] (an unknown source), threshold=104.0 (an unknown source) = ?
+  [line 5]  discarded = len(data) - len(filtered)
+  Compute: len(data) - len(filtered), where data=[98.99, 100.41499999999999, 98.23] (an unknown source), filtered=[98.99, 100.41499999999999, 98.23] (defined at [line 3]) = 0
+  [line 6]  return filtered, discarded
+  Return: filtered, discarded
+  [line 10]  if not values:
+  Condition: True, entering 'if' block
+  [line 12]  avg = sum(values) / len(values)
+  Compute: sum(values) / len(values), where values=[102.5, 103.1, 101.8] (an unknown source) = 102.46666666666665
+  [line 14]  max_val = max(values)
+  Call function max(values=[102.5, 103.1, 101.8] (an unknown source))
+  [line 15]  min_val = min(values)
+  Call function min(values=[102.5, 103.1, 101.8] (an unknown source))
+  [line 16]  return avg, min_val, max_val
+  Return: avg, min_val, max_val
+  [line 36]  if filtered_readings:
+  Condition: True, entering 'if' block
+  [line 37]  mean_pressure, _, _ = calculate_statistics(filtered_readings)
+  (Missing param: 'func_name')
+  [line 10]  if not values:
+  Condition: True, entering 'if' block
+  [line 12]  avg = sum(values) / len(values)
+  Compute: sum(values) / len(values), where values=[98.99, 100.41499999999999, 98.23] (an unknown source) = 99.21166666666666
+  [line 14]  max_val = max(values)
+  Call function max(values=[98.99, 100.41499999999999, 98.23] (an unknown source))
+  [line 15]  min_val = min(values)
+  Call function min(values=[98.99, 100.41499999999999, 98.23] (an unknown source))
+  [line 16]  return avg, min_val, max_val
+  Return: avg, min_val, max_val
+  [line 39]  compensation = 1.05
+  Assign: compensation = 1.05
+  [line 40]  result = mean_pressure * compensation
+  Compute: mean_pressure * compensation, where mean_pressure=99.21166666666666 (an unknown source), compensation=1.05 (defined at [line 39]) = 104.17224999999999
+  [line 45]  return round(result, 2)
+  Return: round(result, 2)
+Function calculate_adjusted_pressure returns 104.17
+[line 55]  print(f"Result: {final_pressure}")
+Output: f"Result: {final_pressure}"
+
+Answer: final_pressure = 104.17 (last updated on defined at [line 54])

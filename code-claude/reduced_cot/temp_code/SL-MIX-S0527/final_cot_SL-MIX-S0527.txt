@@ -1,0 +1,87 @@
+Target: Find the value of variable processed_score after [line 68] executes
+
+[line 52]  scores = [92, 78, 85, 90]
+Compute: [92, 78, 85, 90] = [92, 78, 85, 90]
+[line 53]  weights = [0.4, 0.2, 0.3, 0.1]
+Compute: [0.4, 0.2, 0.3, 0.1] = [0.4, 0.2, 0.3, 0.1]
+[line 65]  processed_score = calculate_adjusted_score(scores, weights)
+Call function calculate_adjusted_score(scores=[92, 78, 85, 90] (defined at [line 52]), weights=[0.4, 0.2, 0.3, 0.1] (defined at [line 53]))
+[line 5]  def calculate_adjusted_score(scores, weights):
+Enter function calculate_adjusted_score: scores=[92, 78, 85, 90] (scores defined at [line 52]), weights=[0.4, 0.2, 0.3, 0.1] (weights defined at [line 53])
+  [line 8]  base_factor = 0.85
+  Assign: base_factor = 0.85
+  [line 9]  scaling_factor = 1.25
+  Assign: scaling_factor = 1.25
+  [line 18]  weighted_sum = 0
+  Assign: weighted_sum = 0
+  [line 19]  total_weight = 0
+  Assign: total_weight = 0
+  [line 21]  for score, weight in zip(scores, weights):
+  (Missing param: 'iter_var')
+  [line 22]  weighted_sum += score * weight
+  Update: weighted_sum changed from 0 (defined at defined at [line 18]) to 0+score * weight = 36.800000000000004
+  [line 23]  total_weight += weight
+  Update: total_weight changed from 0 (defined at defined at [line 19]) to 0+weight = 0.4
+  [line 21]  for score, weight in zip(scores, weights):
+  (Missing param: 'iter_var')
+  [line 22]  weighted_sum += score * weight
+  Update: weighted_sum changed from 36.800000000000004 (defined at defined at [line 22]) to 36.800000000000004+score * weight = 52.400000000000006
+  [line 23]  total_weight += weight
+  Update: total_weight changed from 0.4 (defined at defined at [line 23]) to 0.4+weight = 0.6000000000000001
+  [line 21]  for score, weight in zip(scores, weights):
+  (Missing param: 'iter_var')
+  [line 22]  weighted_sum += score * weight
+  Update: weighted_sum changed from 52.400000000000006 (defined at defined at [line 22]) to 52.400000000000006+score * weight = 77.9
+  [line 23]  total_weight += weight
+  Update: total_weight changed from 0.6000000000000001 (defined at defined at [line 23]) to 0.6000000000000001+weight = 0.9000000000000001
+  [line 21]  for score, weight in zip(scores, weights):
+  (Missing param: 'iter_var')
+  [line 22]  weighted_sum += score * weight
+  Update: weighted_sum changed from 77.9 (defined at defined at [line 22]) to 77.9+score * weight = 86.9
+  [line 23]  total_weight += weight
+  Update: total_weight changed from 0.9000000000000001 (defined at defined at [line 23]) to 0.9000000000000001+weight = 1.0000000000000002
+  [line 21]  for score, weight in zip(scores, weights):
+  Loop End: Iteration finished
+  [line 26]  middle_scores = scores[1:-1]
+  Compute: scores[1:-1], where scores=[92, 78, 85, 90] (parameter scores defined at [line 52]) = [78, 85]
+  [line 27]  if len(middle_scores) > 0:
+  Condition: True, entering 'if' block
+  [line 28]  middle_avg = sum(middle_scores) / len(middle_scores)
+  Compute: sum(middle_scores) / len(middle_scores), where middle_scores=[78, 85] (defined at [line 26]) = 81.5
+  [line 30]  if middle_avg < 70:
+  Condition: True, entering 'if' block
+  [line 34]  raw_score = weighted_sum / total_weight if total_weight > 0 else 0
+  Compute: weighted_sum / total_weight if total_weight > 0 else 0, where weighted_sum=86.9 (defined at [line 22]), total_weight=1.0000000000000002 (defined at [line 23]) = 86.89999999999999
+  [line 37]  bonus_eligible = raw_score > 85
+  Compute: raw_score > 85, where raw_score=86.89999999999999 (defined at [line 34]) = True
+  [line 38]  bonus_factors = [1.05, 1.08, 1.12]
+  Compute: [1.05, 1.08, 1.12] = [1.05, 1.08, 1.12]
+  [line 39]  selected_bonus = bonus_factors[0] if bonus_eligible else 1.0
+  Compute: bonus_factors[0] if bonus_eligible else 1.0, where bonus_factors=[1.05, 1.08, 1.12] (defined at [line 38]), bonus_eligible=True (defined at [line 37]) = 1.05
+  [line 42]  normalized_weights = normalize_data(weights, offset=5)
+  Call function normalize_data(weights=[0.4, 0.2, 0.3, 0.1] (parameter weights defined at [line 53]), offset=5)
+  [line 3]  return [(x + offset) / 2 for x in values]
+  Return: [(x + offset) / 2 for x in values]
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  (Missing param: 'iter_var')
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  Loop End: Iteration finished
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  Loop End: Iteration finished
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  Loop End: Iteration finished
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  Loop End: Iteration finished
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  Loop End: Iteration finished
+  [line 44]  for w in normalized_weights) / len(normalized_weights)
+  Loop End: Iteration finished
+  [line 47]  adjusted_score = int((raw_score * base_factor * selected_bonus) * scaling_factor)
+  Call function int((raw_score * base_factor * selected_bonus) * scaling_factor)
+  [line 49]  return adjusted_score
+  Return: adjusted_score=96 (defined at [line 47])
+Function calculate_adjusted_score returns 96
+[line 68]  print(f"Result: {processed_score}")
+Output: f"Result: {processed_score}"
+
+Answer: processed_score = 96 (last updated on defined at [line 65])

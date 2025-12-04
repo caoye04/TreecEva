@@ -1,0 +1,110 @@
+Target: Find the value of variable actual_inventory after [line 111] executes
+
+[line 70]  min_price = 7.0
+Assign: min_price = 7.0
+[line 71]  max_quantity = 250
+Assign: max_quantity = 250
+[line 72]  filtered_products = [p for p in products_data if p['unit_price'] > min_price and p['quantity'] < max_quantity]
+Compute: [p for p in products_data if p['unit_price'] > min_price and p['quantity'] < max_quantity], where p={id: 'A101', name: 'Widget', quantity: 150, ...} (an unknown source), products_data=[{id: 'A101', name: 'Widget', quantity: 150, ...}, {id: 'B205', name: 'Gadget', quantity: 200, ...}, {id: 'C309', name: 'Tool', quantity: 75, ...}, {id: 'D413', name: 'Accessory', quantity: 100, ...}, {id: 'E517', name: 'Component', quantity: 300, ...}] (an unknown source), min_price=7.0 (defined at [line 70]), max_quantity=250 (defined at [line 71]) = ?
+[line 15]  base_rate = 5.0
+Assign: base_rate = 5.0
+[line 16]  weight_factor = 0.75 if weight < 10 else 1.25
+Compute: 0.75 if weight < 10 else 1.25, where weight=0.5 (an unknown source) = 0.75
+[line 17]  distance_factor = distance * 0.01
+Compute: distance * 0.01, where distance=100 (an unknown source) = 1.0
+[line 18]  return base_rate + (weight * weight_factor) + distance_factor
+Return: base_rate + (weight * weight_factor) + distance_factor
+[line 15]  base_rate = 5.0
+Assign: base_rate = 5.0
+[line 16]  weight_factor = 0.75 if weight < 10 else 1.25
+Compute: 0.75 if weight < 10 else 1.25, where weight=0.8 (an unknown source) = 0.75
+[line 17]  distance_factor = distance * 0.01
+Compute: distance * 0.01, where distance=150 (an unknown source) = 1.5
+[line 18]  return base_rate + (weight * weight_factor) + distance_factor
+Return: base_rate + (weight * weight_factor) + distance_factor
+[line 15]  base_rate = 5.0
+Assign: base_rate = 5.0
+[line 16]  weight_factor = 0.75 if weight < 10 else 1.25
+Compute: 0.75 if weight < 10 else 1.25, where weight=2.1 (an unknown source) = 0.75
+[line 17]  distance_factor = distance * 0.01
+Compute: distance * 0.01, where distance=75 (an unknown source) = 0.75
+[line 18]  return base_rate + (weight * weight_factor) + distance_factor
+Return: base_rate + (weight * weight_factor) + distance_factor
+[line 15]  base_rate = 5.0
+Assign: base_rate = 5.0
+[line 16]  weight_factor = 0.75 if weight < 10 else 1.25
+Compute: 0.75 if weight < 10 else 1.25, where weight=0.3 (an unknown source) = 0.75
+[line 17]  distance_factor = distance * 0.01
+Compute: distance * 0.01, where distance=200 (an unknown source) = 2.0
+[line 18]  return base_rate + (weight * weight_factor) + distance_factor
+Return: base_rate + (weight * weight_factor) + distance_factor
+[line 15]  base_rate = 5.0
+Assign: base_rate = 5.0
+[line 16]  weight_factor = 0.75 if weight < 10 else 1.25
+Compute: 0.75 if weight < 10 else 1.25, where weight=0.4 (an unknown source) = 0.75
+[line 17]  distance_factor = distance * 0.01
+Compute: distance * 0.01, where distance=125 (an unknown source) = 1.25
+[line 18]  return base_rate + (weight * weight_factor) + distance_factor
+Return: base_rate + (weight * weight_factor) + distance_factor
+[line 92]  price_adjustments = defaultdict(int)
+Call function defaultdict(int)
+[line 93]  price_adjustments['seasonal_discount'] = -500
+(Missing param: 'result')
+[line 94]  price_adjustments['tax_adjustment'] = 320
+(Missing param: 'var')
+[line 95]  price_adjustments['bulk_bonus'] = -150
+(Missing param: 'result')
+[line 96]  price_adjustments['shipping_offset'] = 75
+(Missing param: 'var')
+[line 97]  price_adjustments['invalid_extreme'] = 50000  # Should be filtered out
+(Missing param: 'var')
+[line 100]  discount_rates = {'A101': 0.10, 'C309': 0.15, 'E517': 0.05}
+Compute: {'A101': 0.10, 'C309': 0.15, 'E517': 0.05} = {A101: 0.1, C309: 0.15, E517: 0.05}
+[line 3]  def apply_discounts(prices, discount_rates):
+Enter function apply_discounts: prices={A101: 12.99, B205: 8.5, C309: 19.95, ...}, discount_rates={A101: 0.1, C309: 0.15, E517: 0.05} (discount_rates defined at [line 100])
+  [line 5]  discounted = {}
+  Compute: {} = {}
+  [line 6]  for item, price in prices.items():
+  (Missing param: 'iter_var')
+  [line 7]  if item in discount_rates:
+  Condition: True, entering 'if' block
+  [line 8]  discounted[item] = price * (1 - discount_rates[item])
+  (Missing param: 'result')
+  [line 6]  for item, price in prices.items():
+  (Missing param: 'iter_var')
+  [line 7]  if item in discount_rates:
+  Condition: True, entering 'if' block
+  [line 10]  discounted[item] = price
+  (Missing param: 'result')
+... [Line 6] repeats 2 more times ...
+... [Line 6] repeats 2 more times ...
+... [Line 6] repeats 2 more times ...
+  [line 6]  for item, price in prices.items():
+  (Missing param: 'iter_var')
+  [line 7]  if item in discount_rates:
+  Condition: True, entering 'if' block
+  [line 8]  discounted[item] = price * (1 - discount_rates[item])
+  (Missing param: 'result')
+  [line 6]  for item, price in prices.items():
+  Loop End: Iteration finished
+  [line 11]  return discounted
+  Return: discounted={A101: 11.691, B205: 8.5, C309: 16.9575, ...} (defined at [line 5])
+Function apply_discounts returns {A101: 11.691, B205: 8.5, C309: 16.9575, ...}
+[line 105]  actual_inventory = calculate_inventory_value(filtered_products, price_adjustments)
+Call function calculate_inventory_value(filtered_products=[{id: 'A101', name: 'Widget', quantity: 150, ...}, {id: 'B205', name: 'Gadget', quantity: 200, ...}, {id: 'C309', name: 'Tool', quantity: 75, ...}] (defined at [line 72]), price_adjustments={seasonal_discount: -500, tax_adjustment: 320, bulk_bonus: -150, ...} (defined at [line 92]))
+[line 26]  bit_flags = 0b1101  # Control flags for different adjustment types
+Assign: bit_flags = 13
+[line 28]  if bit_flags & 0b0001:  # Check if first bit is set
+Condition: True, entering 'if' block
+[line 31]  if bit_flags & 0b0010:  # Check if second bit is set
+Condition: True, entering 'if' block
+[line 34]  if bit_flags & 0b0100:  # Check if third bit is set
+Condition: True, entering 'if' block
+[line 37]  if bit_flags & 0b1000:  # Check if fourth bit is set
+Condition: True, entering 'if' block
+[line 51]  return int(actual_value)
+Return: int(actual_value)
+[line 111]  print(f"Result: {actual_inventory}")
+Output: f"Result: {actual_inventory}"
+
+Answer: actual_inventory = 4678 (last updated on defined at [line 105])

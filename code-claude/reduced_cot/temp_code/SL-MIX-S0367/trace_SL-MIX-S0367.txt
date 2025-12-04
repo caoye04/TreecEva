@@ -1,0 +1,36 @@
+2 prices = [120, 85, 200, 35]
+2 ['prices'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}]
+3 base_rate = 0.05
+3 ['prices', 'base_rate'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}]
+6 membership = "gold"
+6 ['prices', 'base_rate', 'membership'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}, {'_type': 'str', '_value': 'gold'}]
+9 calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['prices', 'base_rate', 'membership'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}, {'_type': 'str', '_value': 'gold'}]
+12 shipping = 10 if sum(prices) < 500 else 0
+12 ['prices', 'base_rate', 'membership', 'shipping'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}, {'_type': 'str', '_value': 'gold'}, {'_type': 'int', '_value': 10}]
+15 total_discount = sum(map(calculate_discount, prices))
+15 ['prices', 'base_rate', 'membership', 'shipping'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}, {'_type': 'str', '_value': 'gold'}, {'_type': 'int', '_value': 10}]
+FUNCTION_ENTER 9 <lambda> calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 120}]
+DEPTH_2 9 calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 120}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'float', '_value': 9.6}
+FUNCTION_ENTER 9 <lambda> calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 85}]
+DEPTH_2 9 calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 85}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'float', '_value': 6.8}
+FUNCTION_ENTER 9 <lambda> calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 200}]
+DEPTH_2 9 calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 200}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'float', '_value': 16.0}
+FUNCTION_ENTER 9 <lambda> calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 35}]
+DEPTH_2 9 calculate_discount = lambda price: price * (base_rate + (0.03 if membership == "gold" else 0.01))
+9 ['price'] [{'_type': 'int', '_value': 35}]
+FUNCTION_RETURN 9 <lambda> {'_type': 'float', '_value': 2.8000000000000003}
+18 final_price = sum(prices) - total_discount + shipping
+18 ['prices', 'base_rate', 'membership', 'shipping', 'total_discount', 'final_price'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}, {'_type': 'str', '_value': 'gold'}, {'_type': 'int', '_value': 10}, {'_type': 'float', '_value': 35.2}, {'_type': 'float', '_value': 414.8}]
+20 print(f"Total discount: {total_discount}")
+20 ['prices', 'base_rate', 'membership', 'shipping', 'total_discount', 'final_price'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 85}, {'_type': 'int', '_value': 200}, {'_type': 'int', '_value': 35}], '_len': 4}, {'_type': 'float', '_value': 0.05}, {'_type': 'str', '_value': 'gold'}, {'_type': 'int', '_value': 10}, {'_type': 'float', '_value': 35.2}, {'_type': 'float', '_value': 414.8}]

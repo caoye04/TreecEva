@@ -1,0 +1,82 @@
+Target: Find the value of variable encrypted_message after [line 58] executes
+
+[line 32]  total_packets = sum(device['packets'] for device in network_devices.values())
+Call function sum(device['packets'] for device in network_devices.values())
+[line 33]  error_rate = sum(device['errors'] for device in network_devices.values()) / total_packets if total_packets else 0
+Compute: sum(device['errors'] for device in network_devices.values()) / total_packets if total_packets else 0, where device={status: 'degraded', packets: 3400, errors: 45} (an unknown source) = ?
+[line 36]  message = "SECURE_TRANSMISSION"
+Assign: message = 'SECURE_TRANSMISSION'
+[line 37]  validation_set = set(message.lower())
+Call function set(message.lower())
+[line 38]  control_set = {'s', 'e', 'c', 'u', 'r', '_', 't', 'a', 'n', 'i', 'm', 'o'}
+Compute: {'s', 'e', 'c', 'u', 'r', '_', 't', 'a', 'n', 'i', 'm', 'o'} = {'u', 'm', 'c', 'a', 'r', ...}
+[line 41]  is_valid = validation_set.issubset(control_set)
+(Missing param: 'func_name')
+[line 45]  security_level = 3 if is_valid else 1
+Compute: 3 if is_valid else 1, where is_valid=True (an unknown source) = 3
+[line 46]  checksum = compute_checksum(message)
+Call function compute_checksum(message='SECURE_TRANSMISSION' (defined at [line 36]))
+[line 1]  def compute_checksum(text):
+Enter function compute_checksum: text='SECURE_TRANSMISSION' (message defined at [line 36])
+  [line 2]  checksum = 0
+  Assign: checksum = 0
+  [line 3]  for char in text:
+  Loop Start: char takes its first value 'S'
+  [line 4]  checksum = (checksum ^ ord(char)) & 0xFF
+  Compute: (checksum ^ ord(char)) & 0xFF, where checksum=0 (defined at [line 2]), char='S' (defined at [line 3]) = 83
+  [line 6]  checksum = ((checksum << 1) | (checksum >> 7)) & 0xFF
+  Compute: ((checksum << 1) | (checksum >> 7)) & 0xFF, where checksum=83 (defined at [line 4]) = 166
+  [line 3]  for char in text:
+  Loop Iteration: char is now 'E' (iteration 2)
+  [line 4]  checksum = (checksum ^ ord(char)) & 0xFF
+  Compute: (checksum ^ ord(char)) & 0xFF, where checksum=166 (defined at [line 6]), char='E' (defined at [line 3]) = 227
+  [line 6]  checksum = ((checksum << 1) | (checksum >> 7)) & 0xFF
+  Compute: ((checksum << 1) | (checksum >> 7)) & 0xFF, where checksum=227 (defined at [line 4]) = 199
+... [Line 3] repeats 16 more times ...
+... [Line 3] repeats 16 more times ...
+... [Line 3] repeats 16 more times ...
+  [line 3]  for char in text:
+  Loop Iteration: char is now 'N' (iteration 19)
+  [line 4]  checksum = (checksum ^ ord(char)) & 0xFF
+  Compute: (checksum ^ ord(char)) & 0xFF, where checksum=7 (defined at [line 6]), char='N' (defined at [line 3]) = 73
+  [line 6]  checksum = ((checksum << 1) | (checksum >> 7)) & 0xFF
+  Compute: ((checksum << 1) | (checksum >> 7)) & 0xFF, where checksum=73 (defined at [line 4]) = 146
+  [line 3]  for char in text:
+  Loop End: Iteration finished
+  [line 7]  return checksum
+  Return: checksum=146 (defined at [line 6])
+Function compute_checksum returns 146
+[line 49]  processing_mode = 'normal' if error_rate < 0.01 else 'enhanced'
+Compute: 'normal' if error_rate < 0.01 else 'enhanced', where error_rate=0.004525547445255474 (defined at [line 33]) = 'normal'
+[line 53]  base_value = len(message) * security_level
+Compute: len(message) * security_level, where message='SECURE_TRANSMISSION' (defined at [line 36]), security_level=3 (defined at [line 45]) = 57
+[line 54]  adjusted_value = base_value + (checksum if processing_mode == 'enhanced' else 0)
+Compute: base_value + (checksum if processing_mode == 'enhanced' else 0), where base_value=57 (defined at [line 53]), checksum=146 (defined at [line 6]), processing_mode='normal' (defined at [line 49]) = 57
+[line 55]  target_value = adjusted_value % 256
+Compute: adjusted_value % 256, where adjusted_value=57 (defined at [line 54]) = 57
+[line 58]  encrypted_message = encrypt_value(target_value)
+Call function encrypt_value(target_value=57 (defined at [line 55]))
+[line 9]  def encrypt_value(value):
+Enter function encrypt_value: value=57 (target_value defined at [line 55])
+  [line 11]  key = 42
+  Assign: key = 42
+  [line 12]  result = value ^ key
+  Compute: value ^ key, where value=57 (parameter value defined at [line 55]), key=42 (defined at [line 11]) = 19
+  [line 13]  result = ((result << 2) | (result >> 6)) & 0xFF
+  Compute: ((result << 2) | (result >> 6)) & 0xFF, where result=19 (defined at [line 12]) = 76
+  [line 14]  return result
+  Return: result=76 (defined at [line 13])
+Function encrypt_value returns 76
+[line 16]  def decrypt_value(value):
+Enter function decrypt_value: value=76 (encrypted_message defined at [line 58])
+  [line 18]  key = 42
+  Assign: key = 42
+  [line 19]  result = ((value >> 2) | (value << 6)) & 0xFF
+  Compute: ((value >> 2) | (value << 6)) & 0xFF, where value=76 (parameter value defined at [line 58]) = 19
+  [line 20]  result = result ^ key
+  Compute: result ^ key, where result=19 (defined at [line 19]), key=42 (defined at [line 18]) = 57
+  [line 21]  return result
+  Return: result=57 (defined at [line 20])
+Function decrypt_value returns 57
+
+Answer: encrypted_message = 76 (last updated on defined at [line 58])

@@ -1,0 +1,55 @@
+Target: Find the value of variable optimal_threshold after [line 68] executes
+
+[line 51]  sensor_data = [22.5, 22.7, 22.4, 22.6, 22.8, 22.5, 35.2, 22.6, 22.5, 22.7]
+Compute: [22.5, 22.7, 22.4, 22.6, 22.8, 22.5, 35.2, 22.6, 22.5, 22.7] = [22.5, 22.7, 22.4, 22.6, 22.8, ...]
+[line 3]  def calculate_noise_level(readings):
+Enter function calculate_noise_level: readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (sensor_data defined at [line 51])
+  [line 5]  if not readings:
+  Condition: True, entering 'if' block
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=1 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=2 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=3 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=4 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=5 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=6 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=7 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=8 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=9 (an unknown source) = ?
+  [line 7]  differences = [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))]
+  Compute: [abs(readings[i] - readings[i-1]) for i in range(1, len(readings))], where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (parameter readings defined at [line 51]), i=9 (an unknown source) = [0.1999999999999993, 0.3000000000000007, 0.20000000000000284, 0.1999999999999993, 0.3000000000000007, ...]
+  [line 8]  mean_diff = sum(differences) / max(1, len(differences))
+  Compute: sum(differences) / max(1, len(differences)), where differences=[0.1999999999999993, 0.3000000000000007, 0.20000000000000284, 0.1999999999999993, 0.3000000000000007, ...] (defined at [line 7]) = 2.9777777777777787
+  [line 10]  return mean_diff
+  Return: mean_diff=2.9777777777777787 (defined at [line 8])
+Function calculate_noise_level returns 2.9777777777777787
+[line 66]  optimal_threshold = calculate_optimal_threshold(sensor_data)
+Call function calculate_optimal_threshold(sensor_data=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (defined at [line 51]))
+[line 14]  if not readings:
+Condition: True, entering 'if' block
+[line 18]  avg_reading = sum(readings) / len(readings)
+Compute: sum(readings) / len(readings), where readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (an unknown source) = 23.85
+[line 23]  reading_counts = Counter(readings)
+Call function Counter(readings=[22.5, 22.7, 22.4, 22.6, 22.8, ...] (an unknown source))
+[line 24]  most_common = reading_counts.most_common(1)[0][0] if reading_counts else 0
+Compute: reading_counts.most_common(1)[0][0] if reading_counts else 0, where reading_counts={22.5: 3, 22.7: 2, 22.4: 1, ...} (defined at [line 23]) = 22.5
+[line 31]  base_threshold = (avg_reading + most_common) / 2
+Compute: (avg_reading + most_common) / 2, where avg_reading=23.85 (defined at [line 18]), most_common=22.5 (defined at [line 24]) = 23.175
+[line 41]  result = base_threshold * 0.75 + avg_reading * 0.25
+Compute: base_threshold * 0.75 + avg_reading * 0.25, where base_threshold=23.175 (defined at [line 31]), avg_reading=23.85 (defined at [line 18]) = 23.34375
+[line 45]  if avg_reading > 0:
+Condition: True, entering 'if' block
+[line 46]  return round(result, 2)
+Return: round(result, 2)
+[line 68]  print(f"Result: {optimal_threshold}")
+Output: f"Result: {optimal_threshold}"
+
+Answer: optimal_threshold = 23.34 (last updated on defined at [line 66])

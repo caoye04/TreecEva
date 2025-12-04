@@ -1,0 +1,116 @@
+Target: Find the value of variable signal_strength after [line 101] executes
+
+[line 73]  sensor_readings = [15, 7, 22, 9, 14, 18, 5, 11, 23, 16]
+Compute: [15, 7, 22, 9, 14, 18, 5, 11, 23, 16] = [15, 7, 22, 9, 14, ...]
+[line 3]  def process_noise_levels(readings):
+Enter function process_noise_levels: readings=[15, 7, 22, 9, 14, ...] (sensor_readings defined at [line 73])
+  [line 5]  processed = []
+  Compute: [] = []
+  [line 6]  for r in readings:
+  Loop Start: r takes its first value 15
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 6]  for r in readings:
+  Loop End: Iteration finished
+  [line 11]  return processed
+  Return: processed=[14.85, 7.0, 22.15, 8.7, 14.0, ...] (defined at [line 5])
+Function process_noise_levels returns [14.85, 7.0, 22.15, 8.7, 14.0, ...]
+[line 79]  metrics = calculate_signal_metrics(sensor_readings)
+Call function calculate_signal_metrics(sensor_readings=[15, 7, 22, 9, 14, ...] (defined at [line 73]))
+[line 13]  def calculate_signal_metrics(data):
+Enter function calculate_signal_metrics: data=[15, 7, 22, 9, 14, ...] (sensor_readings defined at [line 73])
+  [line 22]  harmonics = [x * 1.5 for x in data if x % 2 == 0]
+  Compute: [x * 1.5 for x in data if x % 2 == 0], where x=15 (an unknown source), data=[15, 7, 22, 9, 14, ...] (parameter data defined at [line 73]) = ?
+  [line 23]  metrics['harmonic_avg'] = sum(harmonics) / len(harmonics) if harmonics else 0
+  (Missing param: 'result')
+  [line 24]  return metrics
+  Return: metrics={peak: 23, minimum: 5, fluctuation: 18, ...} (defined at [line 79])
+Function calculate_signal_metrics returns {peak: 23, minimum: 5, fluctuation: 18, ...}
+[line 26]  def extract_signal_pattern(values):
+Enter function extract_signal_pattern: values=[15, 7, 22, 9, 14, ...] (sensor_readings defined at [line 73])
+  [line 28]  pattern_sum = 0
+  Assign: pattern_sum = 0
+  [line 29]  for i, v in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 30]  if i % 3 == 0 and v > 10:
+  Condition: True, entering 'if' block
+  [line 31]  pattern_sum += v * 0.1
+  Update: pattern_sum changed from 0 (defined at defined at [line 28]) to 0+v * 0.1 = 1.5
+  [line 29]  for i, v in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 30]  if i % 3 == 0 and v > 10:
+  Condition: True, entering 'if' block
+  [line 32]  elif i % 2 == 0:
+  'elif' Condition: True, entering block
+... [Line 29] repeats 7 more times ...
+... [Line 29] repeats 7 more times ...
+... [Line 29] repeats 7 more times ...
+... [Line 29] repeats 7 more times ...
+  [line 29]  for i, v in enumerate(values):
+  (Missing param: 'iter_var')
+  [line 30]  if i % 3 == 0 and v > 10:
+  Condition: True, entering 'if' block
+  [line 31]  pattern_sum += v * 0.1
+  Update: pattern_sum changed from -1.7000000000000002 (defined at defined at [line 31]) to -1.7000000000000002+v * 0.1 = -0.10000000000000009
+  [line 29]  for i, v in enumerate(values):
+  Loop End: Iteration finished
+  [line 34]  return pattern_sum
+  Return: pattern_sum=-0.10000000000000009 (defined at [line 31])
+Function extract_signal_pattern returns -0.10000000000000009
+[line 86]  filtered_readings = [r for r in sensor_readings if 5 <= r <= 25]
+Compute: [r for r in sensor_readings if 5 <= r <= 25], where r=15 (defined at [line 6]) = ?
+[line 92]  signal_strength = calculate_final_strength(filtered_readings)
+Call function calculate_final_strength(filtered_readings=[15, 7, 22, 9, 14, ...] (defined at [line 86]))
+[line 38]  if not readings:
+Condition: True, entering 'if' block
+[line 42]  key_readings = readings[::3]
+Compute: readings[::3], where readings=[15, 7, 22, 9, 14, ...] (an unknown source) = [15, 9, 5, 16]
+[line 45]  critical_segment = key_readings[1:4]
+Compute: key_readings[1:4], where key_readings=[15, 9, 5, 16] (defined at [line 42]) = [9, 5, 16]
+[line 53]  for r in readings:
+Loop Start: r takes its first value 15
+[line 54]  if r < 10:
+Condition: True, entering 'if' block
+[line 56]  elif r < 20:
+'elif' Condition: True, entering block
+[line 53]  for r in readings:
+Loop Iteration: r is now 7 (iteration 2)
+[line 54]  if r < 10:
+Condition: True, entering 'if' block
+... [Line 53] repeats 7 more times ...
+... [Line 53] repeats 7 more times ...
+... [Line 53] repeats 7 more times ...
+[line 53]  for r in readings:
+Loop Iteration: r is now 16 (iteration 10)
+[line 54]  if r < 10:
+Condition: True, entering 'if' block
+[line 56]  elif r < 20:
+'elif' Condition: True, entering block
+[line 53]  for r in readings:
+Loop End: Iteration finished
+[line 62]  base_value = sum(critical_segment)
+Call function sum(critical_segment=[9, 5, 16] (defined at [line 45]))
+[line 63]  multiplier = len([r for r in key_readings if r > 12])
+Call function len([r for r in key_readings if r > 12])
+[line 70]  return base_value * multiplier
+Return: base_value * multiplier
+[line 101]  print(f"Result: {signal_strength}")
+Output: f"Result: {signal_strength}"
+
+Answer: signal_strength = 60 (last updated on defined at [line 92])

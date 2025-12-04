@@ -1,0 +1,79 @@
+29
+overlap_size
+---
+PARAM_MAPPING {'primary_data': {'actual_var': 'primary_data', 'value': [(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), (12, 15)]}, 'secondary_data': {'actual_var': 'secondary_data', 'value': {(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', (6, 1): 'active', (8, 7): 'inactive', (10, 10): 'active'}}}
+FUNCTION_ENTER 3 calculate_region_metrics def calculate_region_metrics(primary_data, secondary_data):
+3 ['primary_data', 'secondary_data'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 6}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 3}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 9}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 12}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 15}], '_len': 2}], '_len': 6}, {'_type': 'dict', '_items': {'(0, 1)': {'_type': 'str', '_value': 'active'}, '(2, 1)': {'_type': 'str', '_value': 'inactive'}, '(4, 4)': {'_type': 'str', '_value': 'active'}, '(6, 1)': {'_type': 'str', '_value': 'active'}, '(8, 7)': {'_type': 'str', '_value': 'inactive'}}, '_len': 6}]
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'x', 'y'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '2', '3']
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'x', 'y'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '4', '6']
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'x', 'y'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '6', '3']
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'x', 'y'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '8', '9']
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'x', 'y'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '10', '12']
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'x', 'y'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '12', '15']
+5 primary_regions = {(x, y) for x, y in primary_data}
+5 ['primary_data', 'secondary_data', 'primary_regions'] ['[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...]', "{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}']
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'coord', 'status'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '(0, 1)', "'active'"]
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'coord', 'status'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '(2, 1)', "'inactive'"]
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'coord', 'status'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '(4, 4)', "'active'"]
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'coord', 'status'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '(6, 1)', "'active'"]
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'coord', 'status'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '(8, 7)', "'inactive'"]
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'coord', 'status'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '(10, 10)', "'active'"]
+8 active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+8 ['secondary_data', 'primary_regions', 'active_stations'] ["{(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}", '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(0, 1), (6, 1), (10, 10), (4, 4)}']
+12 active_regions = {(x+2, y+2) for x, y in active_stations}
+12 ['x', 'y', 'primary_regions', 'active_stations'] ['0', '1', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(0, 1), (6, 1), (10, 10), (4, 4)}']
+12 active_regions = {(x+2, y+2) for x, y in active_stations}
+12 ['x', 'y', 'primary_regions', 'active_stations'] ['6', '1', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(0, 1), (6, 1), (10, 10), (4, 4)}']
+12 active_regions = {(x+2, y+2) for x, y in active_stations}
+12 ['x', 'y', 'primary_regions', 'active_stations'] ['10', '10', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(0, 1), (6, 1), (10, 10), (4, 4)}']
+12 active_regions = {(x+2, y+2) for x, y in active_stations}
+12 ['x', 'y', 'primary_regions', 'active_stations'] ['4', '4', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(0, 1), (6, 1), (10, 10), (4, 4)}']
+12 active_regions = {(x+2, y+2) for x, y in active_stations}
+12 ['primary_regions', 'active_stations', 'active_regions'] ['{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(0, 1), (6, 1), (10, 10), (4, 4)}', '{(2, 3), (8, 3), (12, 12), (6, 6)}']
+15 candidate_regions = set()
+15 ['primary_regions', 'active_regions', 'candidate_regions'] ['{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', 'set()']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['4', '6', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', 'set()']
+17 if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+17 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['4', '6', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', 'set()']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['2', '3', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(4, 6)}']
+17 if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+17 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['2', '3', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(4, 6)}']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['8', '9', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(2, 3), (4, 6)}']
+17 if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+17 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['8', '9', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(2, 3), (4, 6)}']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['12', '15', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(2, 3), (8, 9), (4, 6)}']
+17 if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+17 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['12', '15', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(2, 3), (8, 9), (4, 6)}']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['6', '3', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(2, 3), (8, 9), (4, 6), (12, 15)}']
+17 if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+17 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['6', '3', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(2, 3), (8, 9), (4, 6), (12, 15)}']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['10', '12', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3)}']
+17 if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+17 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['10', '12', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3)}']
+16 for x, y in primary_regions:
+16 ['x', 'y', 'primary_regions', 'active_regions', 'candidate_regions'] ['10', '12', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}']
+29 overlap_size = len(active_regions.intersection(candidate_regions))
+29 ['active_regions', 'candidate_regions', 'overlap_size'] ['{(2, 3), (8, 3), (12, 12), (6, 6)}', '{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '1']
+32 if len(candidate_regions) > 0:
+32 ['candidate_regions', 'overlap_size'] ['{(4, 6), (2, 3), (8, 9), (12, 15), (6, 3), ...}', '1']
+37 return overlap_size
+37 ['overlap_size'] ['1']
+FUNCTION_RETURN 37 calculate_region_metrics {'_type': 'int', '_value': 1}

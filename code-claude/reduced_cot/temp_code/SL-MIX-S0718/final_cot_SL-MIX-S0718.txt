@@ -1,0 +1,47 @@
+Target: Find the value of variable market_share after [line 86] executes
+
+[line 78]  print(f"Total industry value: {industry_value}")
+Output: f"Total industry value: {industry_value}"
+[line 82]  print(f"Average competitors: {avg_competitors}")
+Output: f"Average competitors: {avg_competitors}"
+[line 85]  market_share = calculate_effective_share(company_data, "TechCorp")
+Call function calculate_effective_share(company_data={TechCorp: {revenue: 850000, competitors: 4, sector: 'software', ...}, RetailGiant: {revenue: 1200000, competitors: 7, sector: 'online', ...}, ManufacturerX: {revenue: 750000, competitors: 3, sector: 'hardware', ...}, ...} (an unknown source), "TechCorp")
+[line 11]  if company_name not in data_dict:
+Condition: True, entering 'if' block
+[line 14]  company_info = data_dict[company_name]
+Compute: data_dict[company_name], where data_dict={TechCorp: {revenue: 850000, competitors: 4, sector: 'software', ...}, RetailGiant: {revenue: 1200000, competitors: 7, sector: 'online', ...}, ManufacturerX: {revenue: 750000, competitors: 3, sector: 'hardware', ...}, ...} (an unknown source), company_name='TechCorp' (an unknown source) = {revenue: 850000, competitors: 4, sector: 'software', ...}
+[line 15]  revenue = company_info['revenue']
+Compute: company_info['revenue'], where company_info={revenue: 850000, competitors: 4, sector: 'software', ...} (defined at [line 14]) = 850000
+[line 16]  competitors = company_info['competitors']
+Compute: company_info['competitors'], where company_info={revenue: 850000, competitors: 4, sector: 'software', ...} (defined at [line 14]) = 4
+[line 19]  tech_sectors = ['software', 'hardware', 'cloud']
+Compute: ['software', 'hardware', 'cloud'] = ['software', 'hardware', 'cloud']
+[line 22]  sector = company_info['sector']
+Compute: company_info['sector'], where company_info={revenue: 850000, competitors: 4, sector: 'software', ...} (defined at [line 14]) = 'software'
+[line 26]  base_share = revenue / sum(d['revenue'] for d in data_dict.values())
+Compute: revenue / sum(d['revenue'] for d in data_dict.values()), where revenue=850000 (defined at [line 15]), data_dict={TechCorp: {revenue: 850000, competitors: 4, sector: 'software', ...}, RetailGiant: {revenue: 1200000, competitors: 7, sector: 'online', ...}, ManufacturerX: {revenue: 750000, competitors: 3, sector: 'hardware', ...}, ...} (an unknown source) = ?
+[line 29]  sector_modifier = 1.0
+Assign: sector_modifier = 1.0
+[line 30]  if sector in tech_sectors:
+Condition: True, entering 'if' block
+[line 31]  sector_modifier = 1.2
+Assign: sector_modifier = 1.2
+[line 36]  influence = calculate_market_influence(revenue, competitors)
+Call function calculate_market_influence(revenue=850000 (defined at [line 15]), competitors=4 (defined at [line 16]))
+[line 1]  def calculate_market_influence(revenue, competitors):
+Enter function calculate_market_influence: revenue=850000 (revenue defined at [line 15]), competitors=4 (competitors defined at [line 16])
+  [line 3]  base_factor = 2.5
+  Assign: base_factor = 2.5
+  [line 4]  market_factor = revenue / (competitors + 1)
+  Compute: revenue / (competitors + 1), where revenue=850000 (parameter revenue defined at [line 15]), competitors=4 (parameter competitors defined at [line 16]) = 170000.0
+  [line 7]  return market_factor * base_factor
+  Return: market_factor * base_factor
+Function calculate_market_influence returns 425000.0
+[line 44]  effective_share = base_share * sector_modifier + (influence / 1000)
+Compute: base_share * sector_modifier + (influence / 1000), where base_share=0.25757575757575757 (defined at [line 26]), sector_modifier=1.2 (defined at [line 31]), influence=425000.0 (defined at [line 36]) = 425.3090909090909
+[line 46]  return round(effective_share * 100, 2)
+Return: round(effective_share * 100, 2)
+[line 86]  print(f"Result: {market_share}")
+Output: f"Result: {market_share}"
+
+Answer: market_share = 42530.91 (last updated on defined at [line 85])

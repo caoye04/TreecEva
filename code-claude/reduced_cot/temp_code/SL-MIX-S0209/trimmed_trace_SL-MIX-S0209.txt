@@ -1,0 +1,39 @@
+55
+priority_score
+---
+54 priority_score = calculate_priority(customer_data, "Gold")
+54 ['customer_data'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}"]
+PARAM_MAPPING {'customer_data': {'actual_var': 'customer_data', 'value': {'customer_id': 'C12345', 'name': 'John Smith', 'purchases': 15, 'returns': 3, 'loyalty_years': 4, 'preferred_contact': 'email'}}, 'tier': {'actual_var': '"Gold"', 'value': '"Gold"'}}
+FUNCTION_ENTER 1 calculate_priority def calculate_priority(customer_data, tier):
+1 ['customer_data', 'tier'] [{'_type': 'dict', '_items': {'customer_id': {'_type': 'str', '_value': 'C12345'}, 'name': {'_type': 'str', '_value': 'John Smith'}, 'purchases': {'_type': 'int', '_value': 15}, 'returns': {'_type': 'int', '_value': 3}, 'loyalty_years': {'_type': 'int', '_value': 4}}, '_len': 6}, {'_type': 'str', '_value': 'Gold'}]
+2 base_points = 100
+2 ['customer_data', 'tier', 'base_points'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}", "'Gold'", '100']
+10 activity_score = 0
+10 ['customer_data', 'tier', 'base_points', 'tier_multipliers', 'activity_score'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}", "'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0']
+11 loyalty_bonus = 0
+11 ['customer_data', 'tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}", "'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0', '0']
+15 purchases = customer_data.get("purchases", 0)
+15 ['customer_data', 'tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'purchases'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}", "'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0', '0', '15']
+16 returns = customer_data.get("returns", 0)
+16 ['customer_data', 'tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'purchases', 'returns'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}", "'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0', '0', '15', '3']
+17 years = customer_data.get("loyalty_years", 0)
+17 ['customer_data', 'tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'purchases', 'returns', 'years'] ["{customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}", "'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0', '0', '15', '3', '4']
+20 if purchases > 0:
+20 ['tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'purchases', 'returns', 'years'] ["'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0', '0', '15', '3', '4']
+21 activity_ratio = max(0, (purchases - returns) / purchases)
+21 ['tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'purchases', 'returns', 'years', 'activity_ratio'] ["'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '0', '0', '15', '3', '4', '0.8']
+22 activity_score = int(purchases * activity_ratio)
+22 ['tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'purchases', 'years', 'activity_ratio'] ["'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '12', '0', '15', '4', '0.8']
+25 if years > 2:
+25 ['tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'years'] ["'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '12', '0', '4']
+26 loyalty_bonus = years * 5
+26 ['tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'years'] ["'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '12', '20', '4']
+34 tier_factor = tier_multipliers.get(tier, 1.0)
+34 ['tier', 'base_points', 'tier_multipliers', 'activity_score', 'loyalty_bonus', 'tier_factor'] ["'Gold'", '100', '{Bronze: 1.0, Silver: 1.5, Gold: 2.0, ...}', '12', '20', '2.0']
+35 potential_value = base_points * tier_factor + activity_score + loyalty_bonus
+35 ['base_points', 'activity_score', 'loyalty_bonus', 'tier_factor', 'potential_value'] ['100', '12', '20', '2.0', '232.0']
+41 return int(potential_value)
+41 ['potential_value'] ['232.0']
+FUNCTION_RETURN 41 calculate_priority {'_type': 'int', '_value': 232}
+55 print(f"Result: {priority_score}")
+55 ['priority_score'] ['232']

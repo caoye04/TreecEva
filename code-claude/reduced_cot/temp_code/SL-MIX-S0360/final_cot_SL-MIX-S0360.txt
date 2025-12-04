@@ -1,0 +1,33 @@
+Target: Find the value of variable total_power after [line 22] executes
+
+[line 1]  def calculate_device_metrics(readings):
+Enter function calculate_device_metrics: readings=[78, 92, 107, 65, 82]
+  [line 3]  base_values = [reading & 0xFF for reading in readings]
+  Compute: [reading & 0xFF for reading in readings], where reading=78 (an unknown source), readings=[78, 92, 107, 65, 82] (parameter readings) = ?
+  [line 4]  scaled_values = [val * 2 for val in base_values]
+  Compute: [val * 2 for val in base_values], where val=78 (an unknown source), base_values=[78, 92, 107, 65, 82] (defined at [line 3]) = ?
+  [line 11]  primary_values = [val | 0x10 for val in base_values[:3]]
+  Compute: [val | 0x10 for val in base_values[:3]], where val=78 (an unknown source), base_values=[78, 92, 107, 65, 82] (defined at [line 3]) = ?
+  [line 12]  secondary_values = [val & 0x3F for val in scaled_values[1:4]]
+  Compute: [val & 0x3F for val in scaled_values[1:4]], where val=184 (an unknown source), scaled_values=[156, 184, 214, 130, 164] (defined at [line 4]) = ?
+  [line 15]  unused_metric = sum(scaled_values) / len(scaled_values)
+  Compute: sum(scaled_values) / len(scaled_values), where scaled_values=[156, 184, 214, 130, 164] (defined at [line 4]) = ?
+  [line 19]  power_combinations = list(zip(primary_values, secondary_values))
+  Call function list(zip(primary_values, secondary_values))
+  [line 22]  total_power = sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  Call function sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  [line 22]  total_power = sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  Call function sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  [line 22]  total_power = sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  Call function sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  [line 22]  total_power = sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  Call function sum(map(lambda x: x[0] ^ x[1], power_combinations))
+  [line 25]  if unused_metric > 100:
+  Condition: True, entering 'if' block
+  [line 33]  print(f"Result: {total_power}")
+  Output: f"Result: {total_power}"
+  [line 34]  return total_power
+  Return: total_power=297 (defined at [line 22])
+Function calculate_device_metrics returns 297
+
+Answer: total_power = 297 (last updated on defined at [line 22])

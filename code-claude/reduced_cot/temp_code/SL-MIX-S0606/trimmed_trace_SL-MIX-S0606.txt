@@ -1,0 +1,147 @@
+80
+priority_value
+---
+41 readings = [12, 15, 9, 18, 14]
+41 ['readings'] ['[12, 15, 9, 18, 14]']
+44 processed_data, average, delta, var = analyze_sensor_readings(readings)
+44 ['readings'] ['[12, 15, 9, 18, 14]']
+3 processed = {}
+3 ['readings', 'processed'] ['[12, 15, 9, 18, 14]', '{}']
+4 noise_factor = 3.7
+4 ['readings', 'processed', 'noise_factor'] ['[12, 15, 9, 18, 14]', '{}', '3.7']
+5 for i, reading in enumerate(readings):
+5 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{}', '3.7', '0', '12']
+6 processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+6 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006}', '3.7', '0', '12']
+5 for i, reading in enumerate(readings):
+5 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006}', '3.7', '1', '15']
+6 processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+6 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5}', '3.7', '1', '15']
+5 for i, reading in enumerate(readings):
+5 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5}', '3.7', '2', '9']
+6 processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+6 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004}', '3.7', '2', '9']
+5 for i, reading in enumerate(readings):
+5 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004}', '3.7', '3', '18']
+6 processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+6 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '3.7', '3', '18']
+5 for i, reading in enumerate(readings):
+5 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '3.7', '4', '14']
+6 processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+6 ['readings', 'processed', 'noise_factor', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '3.7', '4', '14']
+5 for i, reading in enumerate(readings):
+5 ['readings', 'processed', 'i', 'reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '4', '14']
+9 avg_reading = sum(readings) / len(readings)
+9 ['readings', 'processed', 'avg_reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6']
+10 max_diff = max(readings) - min(readings)
+10 ['readings', 'processed', 'max_diff', 'avg_reading'] ['[12, 15, 9, 18, 14]', '{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '9', '13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['avg_reading'] ['13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['r', 'avg_reading'] ['12', '13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['r', 'avg_reading'] ['15', '13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['r', 'avg_reading'] ['9', '13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['r', 'avg_reading'] ['18', '13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['r', 'avg_reading'] ['14', '13.6']
+11 variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+11 ['r', 'avg_reading'] ['14', '13.6']
+13 return processed, avg_reading, max_diff, variance
+13 ['processed', 'max_diff', 'variance', 'avg_reading'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '9', '9.040000000000001', '13.6']
+54 filtered_data = {}
+54 ['processed_data', 'average', 'delta', 'filtered_data'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{}']
+55 threshold = 20
+55 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{}', '20']
+58 for sensor_id, value in processed_data.items():
+58 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{}', '20', "'sensor_0'", '44.400000000000006']
+68 if value > average + delta/2:
+68 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{}', '20', "'sensor_0'", '44.400000000000006']
+69 category = 'critical'
+69 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{}', '20', "'sensor_0'", '44.400000000000006', "'critical'"]
+76 if category in ['critical', 'warning'] or value > threshold - 5:
+76 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{}', '20', "'sensor_0'", '44.400000000000006', "'critical'"]
+77 filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+77 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4}', '20', "'sensor_0'", '44.400000000000006', "'critical'"]
+58 for sensor_id, value in processed_data.items():
+58 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4}', '20', "'sensor_1'", '54.5', "'critical'"]
+68 if value > average + delta/2:
+68 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4}', '20', "'sensor_1'", '54.5', "'critical'"]
+69 category = 'critical'
+69 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4}', '20', "'sensor_1'", '54.5', "'critical'"]
+76 if category in ['critical', 'warning'] or value > threshold - 5:
+76 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4}', '20', "'sensor_1'", '54.5', "'critical'"]
+77 filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+77 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5}', '20', "'sensor_1'", '54.5', "'critical'"]
+58 for sensor_id, value in processed_data.items():
+58 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5}', '20', "'sensor_2'", '31.300000000000004', "'critical'"]
+68 if value > average + delta/2:
+68 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5}', '20', "'sensor_2'", '31.300000000000004', "'critical'"]
+69 category = 'critical'
+69 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5}', '20', "'sensor_2'", '31.300000000000004', "'critical'"]
+76 if category in ['critical', 'warning'] or value > threshold - 5:
+76 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5}', '20', "'sensor_2'", '31.300000000000004', "'critical'"]
+77 filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+77 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3}', '20', "'sensor_2'", '31.300000000000004', "'critical'"]
+58 for sensor_id, value in processed_data.items():
+58 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3}', '20', "'sensor_3'", '66.60000000000001', "'critical'"]
+68 if value > average + delta/2:
+68 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3}', '20', "'sensor_3'", '66.60000000000001', "'critical'"]
+69 category = 'critical'
+69 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3}', '20', "'sensor_3'", '66.60000000000001', "'critical'"]
+76 if category in ['critical', 'warning'] or value > threshold - 5:
+76 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3}', '20', "'sensor_3'", '66.60000000000001', "'critical'"]
+77 filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+77 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_3'", '66.60000000000001', "'critical'"]
+58 for sensor_id, value in processed_data.items():
+58 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_4'", '50.800000000000004', "'critical'"]
+68 if value > average + delta/2:
+68 ['processed_data', 'average', 'delta', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '13.6', '9', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_4'", '50.800000000000004', "'critical'"]
+69 category = 'critical'
+69 ['processed_data', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_4'", '50.800000000000004', "'critical'"]
+76 if category in ['critical', 'warning'] or value > threshold - 5:
+76 ['processed_data', 'filtered_data', 'threshold', 'sensor_id', 'value', 'category'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_4'", '50.800000000000004', "'critical'"]
+77 filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+77 ['processed_data', 'filtered_data', 'threshold', 'sensor_id', 'value'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_4'", '50.800000000000004']
+58 for sensor_id, value in processed_data.items():
+58 ['processed_data', 'filtered_data', 'threshold', 'sensor_id', 'value'] ['{sensor_0: 44.400000000000006, sensor_1: 54.5, sensor_2: 31.300000000000004, ...}', '{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', "'sensor_4'", '50.800000000000004']
+80 priority_value = calculate_priority(filtered_data, threshold)
+80 ['filtered_data', 'threshold', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '50.800000000000004']
+PARAM_MAPPING {'data': {'actual_var': 'filtered_data', 'value': {'critical_sensor_0': 44.4, 'critical_sensor_1': 54.5, 'critical_sensor_2': 31.3, 'critical_sensor_3': 66.6, 'critical_sensor_4': 50.8}}, 'threshold': {'actual_var': 'threshold', 'value': 20}}
+FUNCTION_ENTER 15 calculate_priority def calculate_priority(data, threshold):
+15 ['data', 'threshold'] [{'_type': 'dict', '_items': {'critical_sensor_0': {'_type': 'float', '_value': 44.4}, 'critical_sensor_1': {'_type': 'float', '_value': 54.5}, 'critical_sensor_2': {'_type': 'float', '_value': 31.3}, 'critical_sensor_3': {'_type': 'float', '_value': 66.6}, 'critical_sensor_4': {'_type': 'float', '_value': 50.8}}, '_len': 5}, {'_type': 'int', '_value': 20}]
+17 if not data:
+17 ['data', 'threshold'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20']
+21 components = []
+21 ['data', 'threshold', 'components'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[]']
+22 for key, value in data.items():
+22 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[]', "'critical_sensor_0'", '44.4']
+23 if 'critical' in key:
+23 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[]', "'critical_sensor_0'", '44.4']
+22 for key, value in data.items():
+22 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0]', "'critical_sensor_1'", '54.5']
+23 if 'critical' in key:
+23 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0]', "'critical_sensor_1'", '54.5']
+22 for key, value in data.items():
+22 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25]', "'critical_sensor_2'", '31.3']
+23 if 'critical' in key:
+23 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25]', "'critical_sensor_2'", '31.3']
+22 for key, value in data.items():
+22 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25, 78.25]', "'critical_sensor_3'", '66.6']
+23 if 'critical' in key:
+23 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25, 78.25]', "'critical_sensor_3'", '66.6']
+22 for key, value in data.items():
+22 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25, 78.25, 166.5]', "'critical_sensor_4'", '50.8']
+23 if 'critical' in key:
+23 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25, 78.25, 166.5]', "'critical_sensor_4'", '50.8']
+22 for key, value in data.items():
+22 ['data', 'threshold', 'components', 'key', 'value'] ['{critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...}', '20', '[111.0, 136.25, 78.25, 166.5, 127.0]', "'critical_sensor_4'", '50.8']
+32 baseline = sum(components) / len(components)
+32 ['threshold', 'components', 'baseline'] ['20', '[111.0, 136.25, 78.25, 166.5, 127.0]', '123.8']
+35 if baseline > threshold:
+35 ['threshold', 'baseline'] ['20', '123.8']
+36 return int(baseline + (baseline - threshold) * 0.8)
+36 ['threshold', 'baseline'] ['20', '123.8']
+FUNCTION_RETURN 36 calculate_priority {'_type': 'int', '_value': 206}

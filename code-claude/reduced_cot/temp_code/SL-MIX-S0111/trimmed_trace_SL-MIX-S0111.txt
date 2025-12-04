@@ -1,0 +1,303 @@
+79
+priority_score
+---
+PARAM_MAPPING {'text': {'actual_var': 'document_text', 'value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}, 'sensitive_terms': {'actual_var': 'sensitive_terms', 'value': ['confidential', 'classified', 'security', 'sensitive']}}
+FUNCTION_ENTER 24 calculate_document_priority def calculate_document_priority(text, sensitive_terms):
+24 ['text', 'sensitive_terms'] [{'_type': 'str', '_value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'confidential'}, {'_type': 'str', '_value': 'classified'}, {'_type': 'str', '_value': 'security'}, {'_type': 'str', '_value': 'sensitive'}], '_len': 4}]
+26 word_count = len(text.split())
+26 ['text', 'sensitive_terms', 'word_count'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17']
+35 keywords = extract_keywords(text)
+35 ['text', 'sensitive_terms', 'word_count'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17']
+PARAM_MAPPING {'text': {'actual_var': 'text', 'value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}}
+FUNCTION_ENTER 4 extract_keywords def extract_keywords(text):
+4 ['text'] [{'_type': 'str', '_value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'This'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'confidential'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'document'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'contains'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'sensitive'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'financial'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'information.'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'Please'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'review'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'the'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'security'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'protocol'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'before'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'accessing'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'these'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'classified'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'word'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "'files.'"]
+6 words = [word.lower() for word in text.split() if len(word) > 3]
+6 ['text', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['this', 'confidential', 'document', 'contains', 'sensitive', ...]"]
+7 return Counter(words)
+7 ['text', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['this', 'confidential', 'document', 'contains', 'sensitive', ...]"]
+FUNCTION_RETURN 7 extract_keywords {'_type': 'dict', '_items': {'this': {'_type': 'int', '_value': 1}, 'confidential': {'_type': 'int', '_value': 1}, 'document': {'_type': 'int', '_value': 1}, 'contains': {'_type': 'int', '_value': 1}, 'sensitive': {'_type': 'int', '_value': 1}}, '_len': 16}
+36 total_keywords = sum(keywords.values())
+36 ['text', 'sensitive_terms', 'word_count'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17']
+PARAM_MAPPING {'text': {'actual_var': 'text', 'value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}}
+FUNCTION_ENTER 16 analyze_readability def analyze_readability(text):
+16 ['text'] [{'_type': 'str', '_value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}]
+18 sentences = text.count('.') + text.count('!') + text.count('?')
+18 ['text', 'sentences'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2']
+19 words = len(text.split())
+19 ['text', 'sentences', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2', '17']
+20 if sentences == 0:
+20 ['text', 'sentences', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2', '17']
+22 return 100 - min(100, 10 * (words / sentences))
+22 ['text', 'sentences', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2', '17']
+FUNCTION_RETURN 22 analyze_readability {'_type': 'float', '_value': 15.0}
+PARAM_MAPPING {'text': {'actual_var': 'text', 'value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}}
+FUNCTION_ENTER 9 calculate_sentiment def calculate_sentiment(text):
+9 ['text'] [{'_type': 'str', '_value': 'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'}]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 [] []
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'this'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'confidential'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'document'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'contains'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'sensitive'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'financial'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'information.'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'please'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'review'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'the'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'security'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'protocol'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'before'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'accessing'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'these'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'classified'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'files.'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'files.'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 [] []
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'this'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'confidential'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'document'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'contains'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'sensitive'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'financial'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'information.'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'please'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'review'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'the'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'security'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'protocol'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'before'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'accessing'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'these'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'classified'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'files.'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'files.'"]
+13 sentiment_score = positive - negative
+13 ['text', 'positive', 'negative', 'sentiment_score'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '0', '0', '0']
+14 return max(-5, min(5, sentiment_score))
+14 ['text', 'positive', 'negative', 'sentiment_score'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '0', '0', '0']
+FUNCTION_RETURN 14 calculate_sentiment {'_type': 'int', '_value': 0}
+47 sensitive_count = 0
+47 ['text', 'sensitive_terms', 'word_count', 'sensitive_count'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '0']
+48 for term in sensitive_terms:
+48 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '0', "'confidential'"]
+49 term_lower = term.lower()
+49 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '0', "'confidential'", "'confidential'"]
+50 if term_lower in text.lower():
+50 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '0', "'confidential'", "'confidential'"]
+51 sensitive_count += text.lower().count(term_lower)
+51 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '1', "'confidential'", "'confidential'"]
+53 if text.lower().startswith(term_lower):
+53 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '1', "'confidential'", "'confidential'"]
+48 for term in sensitive_terms:
+48 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '1', "'classified'", "'confidential'"]
+49 term_lower = term.lower()
+49 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '1', "'classified'", "'classified'"]
+50 if term_lower in text.lower():
+50 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '1', "'classified'", "'classified'"]
+51 sensitive_count += text.lower().count(term_lower)
+51 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '2', "'classified'", "'classified'"]
+53 if text.lower().startswith(term_lower):
+53 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '2', "'classified'", "'classified'"]
+48 for term in sensitive_terms:
+48 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '2', "'security'", "'classified'"]
+49 term_lower = term.lower()
+49 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '2', "'security'", "'security'"]
+50 if term_lower in text.lower():
+50 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '2', "'security'", "'security'"]
+51 sensitive_count += text.lower().count(term_lower)
+51 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '3', "'security'", "'security'"]
+53 if text.lower().startswith(term_lower):
+53 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '3', "'security'", "'security'"]
+48 for term in sensitive_terms:
+48 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '3', "'sensitive'", "'security'"]
+49 term_lower = term.lower()
+49 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '3', "'sensitive'", "'sensitive'"]
+50 if term_lower in text.lower():
+50 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '3', "'sensitive'", "'sensitive'"]
+51 sensitive_count += text.lower().count(term_lower)
+51 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '4', "'sensitive'", "'sensitive'"]
+53 if text.lower().startswith(term_lower):
+53 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term', 'term_lower'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '4', "'sensitive'", "'sensitive'"]
+48 for term in sensitive_terms:
+48 ['text', 'sensitive_terms', 'word_count', 'sensitive_count', 'term'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", "['confidential', 'classified', 'security', 'sensitive']", '17', '4', "'sensitive'"]
+62 base_priority = 10
+62 ['text', 'word_count', 'sensitive_count', 'base_priority'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '10']
+63 if sensitive_count > 0:
+63 ['text', 'word_count', 'sensitive_count', 'base_priority'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '10']
+65 base_priority = base_priority << 1
+65 ['text', 'word_count', 'sensitive_count', 'base_priority'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '20']
+66 if sensitive_count > 2:
+66 ['text', 'word_count', 'sensitive_count', 'base_priority'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '20']
+68 base_priority = base_priority << 1
+68 ['text', 'word_count', 'sensitive_count', 'base_priority'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '40']
+75 if word_count < 20:
+75 ['text', 'word_count', 'sensitive_count', 'base_priority'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '40']
+79 priority_score = (base_priority ^ 15) + sensitive_count * 5
+79 ['text', 'word_count', 'sensitive_count', 'base_priority', 'priority_score'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '4', '40', '59']
+82 keyword_density = total_keywords / max(1, word_count) * 100
+82 ['text', 'word_count', 'priority_score'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '17', '59']
+83 if keyword_density > 30:
+83 ['text', 'priority_score'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '59']
+86 return priority_score
+86 ['text', 'priority_score'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '59']
+FUNCTION_RETURN 86 calculate_document_priority {'_type': 'int', '_value': 59}
+18 sentences = text.count('.') + text.count('!') + text.count('?')
+18 ['text', 'sentences'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2']
+19 words = len(text.split())
+19 ['text', 'sentences', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2', '17']
+20 if sentences == 0:
+20 ['text', 'sentences', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2', '17']
+22 return 100 - min(100, 10 * (words / sentences))
+22 ['text', 'sentences', 'words'] ["'This confidential document contains sensitive financial information. Please review the security protocol before accessing these classified files.'", '2', '17']
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 [] []
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'this'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'confidential'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'document'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'contains'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'sensitive'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'financial'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'information.'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'please'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'review'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'the'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'security'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'protocol'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'before'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'accessing'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'these'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'classified'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'files.'"]
+11 positive = sum(1 for word in text.lower().split() if word in ['good', 'great', 'excellent'])
+11 ['word'] ["'files.'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 [] []
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'this'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'confidential'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'document'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'contains'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'sensitive'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'financial'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'information.'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'please'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'review'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'the'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'security'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'protocol'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'before'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'accessing'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'these'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'classified'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'files.'"]
+12 negative = sum(1 for word in text.lower().split() if word in ['bad', 'poor', 'terrible'])
+12 ['word'] ["'files.'"]
+13 sentiment_score = positive - negative
+13 ['positive', 'negative', 'sentiment_score'] ['0', '0', '0']
+14 return max(-5, min(5, sentiment_score))
+14 ['sentiment_score'] ['0']

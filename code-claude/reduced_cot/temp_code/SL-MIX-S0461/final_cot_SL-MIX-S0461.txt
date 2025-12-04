@@ -1,0 +1,233 @@
+Target: Find the value of variable network_strength after [line 48] executes
+
+[line 10]  def calculate_network_strength(nodes, connections):
+Enter function calculate_network_strength: nodes=[1, 2, 3, 4, 5], connections=[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]
+  [line 11]  if not nodes or len(nodes) < 2:
+  Condition: True, entering 'if' block
+  [line 18]  connection_density = len(connections) / (len(nodes) * (len(nodes) - 1) / 2)
+  Compute: len(connections) / (len(nodes) * (len(nodes) - 1) / 2), where connections=[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...] (parameter connections), nodes=[1, 2, 3, 4, 5] (parameter nodes) = 0.6
+  [line 21]  total_quality = 0
+  Assign: total_quality = 0
+  [line 22]  active_count = 0
+  Assign: active_count = 0
+  [line 26]  for connection in connections:
+  Loop Start: connection takes its first value (1, 2, 5, 2)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=5 (an unknown source), interference=2 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=5, interference=2
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=5 (parameter distance) = 75
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=2 (parameter interference) = 5.0
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 70.0
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 21]) to ?+quality = 70.0
+  [line 31]  active_count += 1
+  Update: active_count changed from 0 (defined at defined at [line 22]) to 0+1 = 1
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (1, 3, 8, 4) (iteration 2)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=8 (an unknown source), interference=4 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=8, interference=4
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=8 (parameter distance) = 60
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=4 (parameter interference) = 10.0
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 50.0
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 30]) to ?+quality = 120.0
+  [line 31]  active_count += 1
+  Update: active_count changed from 1 (defined at defined at [line 31]) to 1+1 = 2
+... [Line 26] repeats 10 more times ...
+... [Line 26] repeats 10 more times ...
+... [Line 26] repeats 10 more times ...
+... [Line 26] repeats 10 more times ...
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=6, interference=1
+... [Line 26] repeats 10 more times ...
+... [Line 26] repeats 10 more times ...
+... [Line 26] repeats 10 more times ...
+  Function calculate_signal_quality returns 67.5
+... [Line 26] repeats 10 more times ...
+... [Line 26] repeats 10 more times ...
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=10, interference=3
+  Function calculate_signal_quality returns 42.5
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=7, interference=5
+  Function calculate_signal_quality returns 52.5
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=4, interference=2
+  Function calculate_signal_quality returns 75.0
+  [line 36]  avg_quality = total_quality / active_count if active_count > 0 else 0
+  Compute: total_quality / active_count if active_count > 0 else 0, where total_quality=357.5 (defined at [line 30]), active_count=6 (defined at [line 31]) = 59.583333333333336
+  [line 45]  stability_factor = 0.8 + (0.2 * connection_density)
+  Compute: 0.8 + (0.2 * connection_density), where connection_density=0.6 (defined at [line 18]) = 0.92
+  [line 48]  network_strength = int(avg_quality * stability_factor)
+  Call function int(avg_quality * stability_factor)
+  [line 50]  return network_strength
+  Return: network_strength=54 (defined at [line 48])
+Function calculate_network_strength returns 54
+[line 10]  def calculate_network_strength(nodes, connections):
+Enter function calculate_network_strength: nodes=[1, 2, 3, 4, 5], connections=[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]
+  [line 11]  if not nodes or len(nodes) < 2:
+  Condition: True, entering 'if' block
+  [line 18]  connection_density = len(connections) / (len(nodes) * (len(nodes) - 1) / 2)
+  Compute: len(connections) / (len(nodes) * (len(nodes) - 1) / 2), where connections=[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...] (parameter connections), nodes=[1, 2, 3, 4, 5] (parameter nodes) = 0.6
+  [line 21]  total_quality = 0
+  Assign: total_quality = 0
+  [line 22]  active_count = 0
+  Assign: active_count = 0
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (1, 2, 4.0, 1.4) (iteration 8)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=4.0 (an unknown source), interference=1.4 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=4.0, interference=1.4
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=4.0 (parameter distance) = 80.0
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=1.4 (parameter interference) = 3.5
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 76.5
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 21]) to ?+quality = 76.5
+  [line 31]  active_count += 1
+  Update: active_count changed from 0 (defined at defined at [line 22]) to 0+1 = 1
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (1, 3, 6.4, 2.8) (iteration 9)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=6.4 (an unknown source), interference=2.8 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=6.4, interference=2.8
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=6.4 (parameter distance) = 68.0
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=2.8 (parameter interference) = 7.0
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 61.0
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 30]) to ?+quality = 137.5
+  [line 31]  active_count += 1
+  Update: active_count changed from 1 (defined at defined at [line 31]) to 1+1 = 2
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (2, 3, 4.800000000000001, 0.7) (iteration 10)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=4.800000000000001 (an unknown source), interference=0.7 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=4.800000000000001, interference=0.7
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=4.800000000000001 (parameter distance) = 76.0
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=0.7 (parameter interference) = 1.75
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 74.25
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 30]) to ?+quality = 211.75
+  [line 31]  active_count += 1
+  Update: active_count changed from 2 (defined at defined at [line 31]) to 2+1 = 3
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (2, 4, 8.0, 2.0999999999999996) (iteration 11)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=8.0 (an unknown source), interference=2.0999999999999996 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=8.0, interference=2.0999999999999996
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=8.0 (parameter distance) = 60.0
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=2.0999999999999996 (parameter interference) = 5.249999999999999
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 54.75
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 30]) to ?+quality = 266.5
+  [line 31]  active_count += 1
+  Update: active_count changed from 3 (defined at defined at [line 31]) to 3+1 = 4
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (3, 5, 5.6000000000000005, 3.5) (iteration 12)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=5.6000000000000005 (an unknown source), interference=3.5 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=5.6000000000000005, interference=3.5
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=5.6000000000000005 (parameter distance) = 72.0
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=3.5 (parameter interference) = 8.75
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 63.25
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 30]) to ?+quality = 329.75
+  [line 31]  active_count += 1
+  Update: active_count changed from 4 (defined at defined at [line 31]) to 4+1 = 5
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (4, 5, 3.2, 1.4) (iteration 13)
+  [line 27]  node1, node2, distance, interference = connection
+  (Missing param: 'result')
+  [line 28]  if node1 in nodes and node2 in nodes:
+  Condition: True, entering 'if' block
+  [line 29]  quality = calculate_signal_quality(distance, interference)
+  Call function calculate_signal_quality(distance=3.2 (an unknown source), interference=1.4 (an unknown source))
+  [line 3]  def calculate_signal_quality(distance, interference):
+  Enter function calculate_signal_quality: distance=3.2, interference=1.4
+    [line 5]  base_quality = 100 - (distance * 5)
+    Compute: 100 - (distance * 5), where distance=3.2 (parameter distance) = 84.0
+    [line 6]  noise_factor = interference * 2.5
+    Compute: interference * 2.5, where interference=1.4 (parameter interference) = 3.5
+    [line 8]  return max(0, base_quality - noise_factor)
+    Return: max(0, base_quality - noise_factor)
+  Function calculate_signal_quality returns 80.5
+  [line 30]  total_quality += quality
+  Update: total_quality changed from ? (defined at defined at [line 30]) to ?+quality = 410.25
+  [line 31]  active_count += 1
+  Update: active_count changed from 5 (defined at defined at [line 31]) to 5+1 = 6
+  [line 26]  for connection in connections:
+  Loop Iteration: connection is now (4, 5, 3.2, 1.4) (iteration 14)
+  [line 36]  avg_quality = total_quality / active_count if active_count > 0 else 0
+  Compute: total_quality / active_count if active_count > 0 else 0, where total_quality=410.25 (defined at [line 30]), active_count=6 (defined at [line 31]) = 68.375
+  [line 45]  stability_factor = 0.8 + (0.2 * connection_density)
+  Compute: 0.8 + (0.2 * connection_density), where connection_density=0.6 (defined at [line 18]) = 0.92
+  [line 48]  network_strength = int(avg_quality * stability_factor)
+  Call function int(avg_quality * stability_factor)
+  [line 50]  return network_strength
+  Return: network_strength=62 (defined at [line 48])
+Function calculate_network_strength returns 62
+
+Answer: network_strength = 62 (last updated on defined at [line 48])

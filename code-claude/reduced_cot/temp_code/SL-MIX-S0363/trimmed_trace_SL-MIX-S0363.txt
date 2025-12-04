@@ -1,0 +1,215 @@
+113
+priority_score
+---
+80 document = "The quick brown fox jumps over the lazy dog. This is a simple test document with keywords."
+80 ['document'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'"]
+83 word_count, avg_length, section_data = analyze_document(document)
+83 ['document'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'"]
+5 word_count = len(text.split())
+5 ['text', 'word_count'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'", '17']
+6 char_count = len(text)
+6 ['text', 'word_count', 'char_count'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'", '17', '90']
+7 avg_word_length = char_count / max(1, word_count)
+7 ['text', 'word_count', 'char_count', 'avg_word_length'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'", '17', '90', '5.294117647058823']
+10 sections = text.split('.')
+10 ['text', 'word_count', 'avg_word_length', 'sections'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'", '17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']"]
+11 section_metrics = []
+11 ['word_count', 'avg_word_length', 'sections', 'section_metrics'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[]']
+12 for section in sections:
+12 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[]', "'The quick brown fox jumps over the lazy dog'"]
+13 words = section.strip().split()
+13 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[]', "'The quick brown fox jumps over the lazy dog'", "['The', 'quick', 'brown', 'fox', 'jumps', ...]"]
+14 if len(words) > 0:
+14 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[]', "'The quick brown fox jumps over the lazy dog'", "['The', 'quick', 'brown', 'fox', 'jumps', ...]"]
+12 for section in sections:
+12 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}]', "' This is a simple test document with keywords'", "['The', 'quick', 'brown', 'fox', 'jumps', ...]"]
+13 words = section.strip().split()
+13 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}]', "' This is a simple test document with keywords'", "['This', 'is', 'a', 'simple', 'test', ...]"]
+14 if len(words) > 0:
+14 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}]', "' This is a simple test document with keywords'", "['This', 'is', 'a', 'simple', 'test', ...]"]
+12 for section in sections:
+12 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}, {length: 8, avg_word_len: 4.625}]', "''", "['This', 'is', 'a', 'simple', 'test', ...]"]
+13 words = section.strip().split()
+13 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}, {length: 8, avg_word_len: 4.625}]', "''", '[]']
+14 if len(words) > 0:
+14 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}, {length: 8, avg_word_len: 4.625}]', "''", '[]']
+12 for section in sections:
+12 ['word_count', 'avg_word_length', 'sections', 'section_metrics', 'section', 'words'] ['17', '5.294117647058823', "['The quick brown fox jumps over the lazy dog', ' This is a simple test document with keywords', '']", '[{length: 9, avg_word_len: 3.888888888888889}, {length: 8, avg_word_len: 4.625}]', "''", '[]']
+20 return word_count, avg_word_length, section_metrics
+20 ['word_count', 'avg_word_length', 'section_metrics', 'words'] ['17', '5.294117647058823', '[{length: 9, avg_word_len: 3.888888888888889}, {length: 8, avg_word_len: 4.625}]', '[]']
+24 base_score = metrics[0] * 0.3 + metrics[1] * 0.7
+24 ['metrics', 'base_score'] ['[17, 5.294117647058823]', '8.805882352941175']
+25 multiplier = 1.0
+25 ['metrics', 'base_score', 'multiplier'] ['[17, 5.294117647058823]', '8.805882352941175', '1.0']
+26 if metrics[0] > 100:
+26 ['metrics', 'base_score', 'multiplier'] ['[17, 5.294117647058823]', '8.805882352941175', '1.0']
+28 if metrics[1] > 5.0:
+28 ['metrics', 'base_score', 'multiplier'] ['[17, 5.294117647058823]', '8.805882352941175', '1.0']
+29 multiplier += 0.15
+29 ['base_score', 'multiplier'] ['8.805882352941175', '1.15']
+31 return base_score * multiplier
+31 ['base_score', 'multiplier'] ['8.805882352941175', '1.15']
+87 words = document.lower().replace('.', '').split()
+87 ['document', 'word_count', 'avg_length', 'words'] ["'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'", '17', '5.294117647058823', "['the', 'quick', 'brown', 'fox', 'jumps', ...]"]
+88 filtered_words = filter_keywords(words)
+88 ['word_count', 'avg_length', 'words'] ['17', '5.294117647058823', "['the', 'quick', 'brown', 'fox', 'jumps', ...]"]
+PARAM_MAPPING {'words': {'actual_var': 'words', 'value': ['the', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog', 'this', 'is', 'a', 'simple', 'test', 'document', 'with', 'keywords']}}
+FUNCTION_ENTER 33 filter_keywords def filter_keywords(words, min_length=4):
+33 ['words', 'min_length'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'the'}, {'_type': 'str', '_value': 'quick'}, {'_type': 'str', '_value': 'brown'}, {'_type': 'str', '_value': 'fox'}, {'_type': 'str', '_value': 'jumps'}, {'_type': 'str', '_value': 'over'}, {'_type': 'str', '_value': 'the'}, {'_type': 'str', '_value': 'lazy'}, {'_type': 'str', '_value': 'dog'}, {'_type': 'str', '_value': 'this'}], '_len': 17}, {'_type': 'int', '_value': 4}]
+35 filtered = []
+35 ['words', 'min_length', 'filtered'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', '[]']
+36 ignored = []
+36 ['words', 'min_length', 'filtered', 'ignored'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', '[]', '[]']
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', '[]', '[]', "'the'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', '[]', '[]', "'the'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', '[]', "['the']", "'quick'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', '[]', "['the']", "'quick'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick']", "['the']", "'brown'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick']", "['the']", "'brown'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown']", "['the']", "'fox'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown']", "['the']", "'fox'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown']", "['the', 'fox']", "'jumps'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown']", "['the', 'fox']", "'jumps'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps']", "['the', 'fox']", "'over'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps']", "['the', 'fox']", "'over'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over']", "['the', 'fox']", "'the'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over']", "['the', 'fox']", "'the'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over']", "['the', 'fox', 'the']", "'lazy'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over']", "['the', 'fox', 'the']", "'lazy'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy']", "['the', 'fox', 'the']", "'dog'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy']", "['the', 'fox', 'the']", "'dog'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy']", "['the', 'fox', 'the', 'dog']", "'this'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy']", "['the', 'fox', 'the', 'dog']", "'this'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog']", "'is'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog']", "'is'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is']", "'a'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is']", "'a'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'simple'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'simple'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'test'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'test'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'document'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'document'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'with'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'with'"]
+38 for word in words:
+38 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'keywords'"]
+39 if len(word) >= min_length and not word.isdigit():
+39 ['words', 'min_length', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", '4', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'keywords'"]
+38 for word in words:
+38 ['words', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'keywords'"]
+48 return filtered
+48 ['words', 'filtered', 'ignored', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", "['the', 'fox', 'the', 'dog', 'is', ...]", "'keywords'"]
+FUNCTION_RETURN 48 filter_keywords {'_type': 'list', '_items': [{'_type': 'str', '_value': 'quick'}, {'_type': 'str', '_value': 'brown'}, {'_type': 'str', '_value': 'jumps'}, {'_type': 'str', '_value': 'over'}, {'_type': 'str', '_value': 'lazy'}, {'_type': 'str', '_value': 'this'}, {'_type': 'str', '_value': 'simple'}, {'_type': 'str', '_value': 'test'}, {'_type': 'str', '_value': 'document'}, {'_type': 'str', '_value': 'with'}], '_len': 11}
+92 backup_weights = [1.8, 9, 0.5, 0.7]  # Distractor
+92 ['word_count', 'avg_length', 'words', 'filtered_words', 'backup_weights'] ['17', '5.294117647058823', "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]']
+95 if word_count > 20:
+95 ['word_count', 'avg_length', 'words', 'filtered_words', 'backup_weights'] ['17', '5.294117647058823', "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]']
+98 weights = backup_weights
+98 ['word_count', 'avg_length', 'words', 'filtered_words', 'backup_weights', 'weights'] ['17', '5.294117647058823', "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '[1.8, 9, 0.5, 0.7]']
+101 if avg_length > 10:  # This condition is false
+101 ['word_count', 'avg_length', 'words', 'filtered_words', 'weights'] ['17', '5.294117647058823', "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]']
+106 priority_score = calculate_priority(filtered_words, weights)
+106 ['word_count', 'words', 'filtered_words', 'weights'] ['17', "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]']
+PARAM_MAPPING {'words': {'actual_var': 'filtered_words', 'value': ['quick', 'brown', 'jumps', 'over', 'lazy', 'this', 'simple', 'test', 'document', 'with', 'keywords']}, 'weights': {'actual_var': 'weights', 'value': [1.8, 9, 0.5, 0.7]}}
+FUNCTION_ENTER 50 calculate_priority def calculate_priority(words, weights):
+50 ['words', 'weights'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'quick'}, {'_type': 'str', '_value': 'brown'}, {'_type': 'str', '_value': 'jumps'}, {'_type': 'str', '_value': 'over'}, {'_type': 'str', '_value': 'lazy'}, {'_type': 'str', '_value': 'this'}, {'_type': 'str', '_value': 'simple'}, {'_type': 'str', '_value': 'test'}, {'_type': 'str', '_value': 'document'}, {'_type': 'str', '_value': 'with'}], '_len': 11}, {'_type': 'list', '_items': [{'_type': 'float', '_value': 1.8}, {'_type': 'int', '_value': 9}, {'_type': 'float', '_value': 0.5}, {'_type': 'float', '_value': 0.7}], '_len': 4}]
+51 if not words or not weights:
+51 ['words', 'weights'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]']
+55 initial_score = 0
+55 ['words', 'weights', 'initial_score'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '0']
+56 for i, word in enumerate(words[:5]):  # Only first 5 words matter
+56 ['words', 'weights', 'initial_score', 'i', 'word'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '0', '0', "'quick'"]
+57 position_factor = 6 - i  # Position weight decreases
+57 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '0', '0', "'quick'", '6']
+58 length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+58 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '0', '0', "'quick'", '6', '2.5']
+59 initial_score += position_factor * length_factor
+59 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '15.0', '0', "'quick'", '6', '2.5']
+56 for i, word in enumerate(words[:5]):  # Only first 5 words matter
+56 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '15.0', '1', "'brown'", '6', '2.5']
+57 position_factor = 6 - i  # Position weight decreases
+57 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '15.0', '1', "'brown'", '5', '2.5']
+58 length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+58 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '15.0', '1', "'brown'", '5', '2.5']
+59 initial_score += position_factor * length_factor
+59 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '27.5', '1', "'brown'", '5', '2.5']
+56 for i, word in enumerate(words[:5]):  # Only first 5 words matter
+56 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '27.5', '2', "'jumps'", '5', '2.5']
+57 position_factor = 6 - i  # Position weight decreases
+57 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '27.5', '2', "'jumps'", '4', '2.5']
+58 length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+58 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '27.5', '2', "'jumps'", '4', '2.5']
+59 initial_score += position_factor * length_factor
+59 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '37.5', '2', "'jumps'", '4', '2.5']
+56 for i, word in enumerate(words[:5]):  # Only first 5 words matter
+56 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '37.5', '3', "'over'", '4', '2.5']
+57 position_factor = 6 - i  # Position weight decreases
+57 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '37.5', '3', "'over'", '3', '2.5']
+58 length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+58 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '37.5', '3', "'over'", '3', '2.0']
+59 initial_score += position_factor * length_factor
+59 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '43.5', '3', "'over'", '3', '2.0']
+56 for i, word in enumerate(words[:5]):  # Only first 5 words matter
+56 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '43.5', '4', "'lazy'", '3', '2.0']
+57 position_factor = 6 - i  # Position weight decreases
+57 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '43.5', '4', "'lazy'", '2', '2.0']
+58 length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+58 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '43.5', '4', "'lazy'", '2', '2.0']
+59 initial_score += position_factor * length_factor
+59 ['words', 'weights', 'initial_score', 'i', 'word', 'position_factor', 'length_factor'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '47.5', '4', "'lazy'", '2', '2.0']
+56 for i, word in enumerate(words[:5]):  # Only first 5 words matter
+56 ['words', 'weights', 'initial_score', 'i', 'word'] ["['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '[1.8, 9, 0.5, 0.7]', '47.5', '4', "'lazy'"]
+62 weighted_score = initial_score * weights[0]  # First weight is multiplicative
+62 ['weights', 'initial_score', 'weighted_score'] ['[1.8, 9, 0.5, 0.7]', '47.5', '85.5']
+63 weighted_score += weights[1]  # Second weight is additive
+63 ['weights', 'weighted_score'] ['[1.8, 9, 0.5, 0.7]', '94.5']
+67 for w in weights[2:]:  # These weights are ignored
+67 ['weights', 'weighted_score', 'w'] ['[1.8, 9, 0.5, 0.7]', '94.5', '0.5']
+67 for w in weights[2:]:  # These weights are ignored
+67 ['weights', 'weighted_score', 'w'] ['[1.8, 9, 0.5, 0.7]', '94.5', '0.7']
+67 for w in weights[2:]:  # These weights are ignored
+67 ['weights', 'weighted_score', 'w'] ['[1.8, 9, 0.5, 0.7]', '94.5', '0.7']
+75 final_score = int(weighted_score) // 3 * 3  # Integer division by 3, then multiply by 3
+75 ['weighted_score', 'final_score'] ['94.5', '93']
+77 return final_score
+77 ['final_score'] ['93']
+FUNCTION_RETURN 77 calculate_priority {'_type': 'int', '_value': 93}
+109 combined_metrics = word_count + len(filtered_words)
+109 ['word_count', 'filtered_words', 'priority_score', 'combined_metrics'] ['17', "['quick', 'brown', 'jumps', 'over', 'lazy', ...]", '93', '28']
+110 if combined_metrics > 50:  # This condition is false
+110 ['priority_score', 'combined_metrics'] ['93', '28']
+113 print(f"Result: {priority_score}")
+113 ['priority_score'] ['93']

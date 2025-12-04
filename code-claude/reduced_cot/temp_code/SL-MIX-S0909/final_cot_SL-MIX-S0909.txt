@@ -1,0 +1,59 @@
+Target: Find the value of variable final_hash after [line 43] executes
+
+[line 1]  def calculate_inventory_value(items):
+Enter function calculate_inventory_value: items={widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}
+  [line 2]  total = 0
+  Assign: total = 0
+  [line 4]  for item, details in items.items():
+  (Missing param: 'iter_var')
+  [line 5]  total += details['quantity'] * details['price']
+  Update: total changed from 0 (defined at defined at [line 2]) to 0+details['quantity'] * details['price'] = 675
+  [line 4]  for item, details in items.items():
+  (Missing param: 'iter_var')
+  [line 5]  total += details['quantity'] * details['price']
+  Update: total changed from 675 (defined at defined at [line 5]) to 675+details['quantity'] * details['price'] = 1425
+  [line 4]  for item, details in items.items():
+  (Missing param: 'iter_var')
+  [line 5]  total += details['quantity'] * details['price']
+  Update: total changed from 1425 (defined at defined at [line 5]) to 1425+details['quantity'] * details['price'] = 2075
+  [line 4]  for item, details in items.items():
+  Loop End: Iteration finished
+  [line 8]  discount_factor = 0.95 if total > 1000 else 1.0
+  Compute: 0.95 if total > 1000 else 1.0, where total=2075 (defined at [line 5]) = 0.95
+  [line 9]  return total * discount_factor
+  Return: total * discount_factor
+Function calculate_inventory_value returns 1971.25
+[line 24]  security_codes = ('admin', 'manager', 'staff')
+Compute: ('admin', 'manager', 'staff') = ('admin', 'manager', 'staff')
+[line 25]  user_type = security_codes[1]  # Current user is a manager
+Compute: security_codes[1]  # Current user is a manager, where security_codes=('admin', 'manager', 'staff') (defined at [line 24]) = 'manager'
+[line 28]  base_hash = 0
+Assign: base_hash = 0
+[line 29]  for item_name, details in inventory.items():
+(Missing param: 'iter_var')
+[line 30]  item_hash = details['quantity'] & 0xFF
+Compute: details['quantity'] & 0xFF, where details={quantity: 15, price: 45, location: 'Shelf A'} (an unknown source) = 15
+[line 31]  base_hash = (base_hash << 4) | item_hash
+Compute: (base_hash << 4) | item_hash, where base_hash=0 (defined at [line 28]), item_hash=15 (defined at [line 30]) = 15
+[line 29]  for item_name, details in inventory.items():
+(Missing param: 'iter_var')
+[line 30]  item_hash = details['quantity'] & 0xFF
+Compute: details['quantity'] & 0xFF, where details={quantity: 30, price: 25, location: 'Shelf B'} (an unknown source) = 30
+[line 31]  base_hash = (base_hash << 4) | item_hash
+Compute: (base_hash << 4) | item_hash, where base_hash=15 (defined at [line 31]), item_hash=30 (defined at [line 30]) = 254
+[line 29]  for item_name, details in inventory.items():
+(Missing param: 'iter_var')
+[line 30]  item_hash = details['quantity'] & 0xFF
+Compute: details['quantity'] & 0xFF, where details={quantity: 10, price: 65, location: 'Shelf C'} (an unknown source) = 10
+[line 31]  base_hash = (base_hash << 4) | item_hash
+Compute: (base_hash << 4) | item_hash, where base_hash=254 (defined at [line 31]), item_hash=10 (defined at [line 30]) = 4074
+[line 29]  for item_name, details in inventory.items():
+Loop End: Iteration finished
+[line 34]  inventory_hash = base_hash % 256
+Compute: base_hash % 256, where base_hash=4074 (defined at [line 31]) = 234
+[line 37]  access_level = security_codes.index(user_type) * 16
+Compute: security_codes.index(user_type) * 16, where security_codes=('admin', 'manager', 'staff') (defined at [line 24]), user_type='manager' (defined at [line 25]) = 16
+[line 43]  final_hash = inventory_hash ^ access_level
+Compute: inventory_hash ^ access_level, where inventory_hash=234 (defined at [line 34]), access_level=16 (defined at [line 37]) = 250
+
+Answer: final_hash = 250 (last updated on defined at [line 43])

@@ -1,0 +1,61 @@
+Target: Find the value of variable filtered_word_count after [line 42] executes
+
+[line 2]  text = "The quick brown fox jumps over the lazy dog. The fox was quick and the dog was lazy. Brown foxes are known to be quick."
+Assign: text = 'The quick brown fox jumps over the lazy dog. The fox was quick and the dog was lazy. Brown foxes are known to be quick.'
+[line 5]  text = text.lower()
+(Missing param: 'func_name')
+[line 8]  punctuation = ['.', ',', '!', '?', ';', ':']
+Compute: ['.', ',', '!', '?', ';', ':'] = ['.', ',', '!', '?', ';', ...]
+[line 9]  for p in punctuation:
+Loop Start: p takes its first value '.'
+[line 10]  text = text.replace(p, '')
+(Missing param: 'func_name')
+[line 9]  for p in punctuation:
+Loop Iteration: p is now ',' (iteration 2)
+[line 10]  text = text.replace(p, '')
+(Missing param: 'func_name')
+... [Line 9] repeats 3 more times ...
+... [Line 9] repeats 3 more times ...
+[line 9]  for p in punctuation:
+Loop Iteration: p is now ':' (iteration 6)
+[line 10]  text = text.replace(p, '')
+(Missing param: 'func_name')
+[line 9]  for p in punctuation:
+Loop End: Iteration finished
+[line 13]  words = text.split()
+(Missing param: 'func_name')
+[line 16]  word_frequencies = {}
+Compute: {} = {}
+[line 17]  for word in words:
+Loop Start: word takes its first value 'the'
+[line 18]  if word in word_frequencies:
+Condition: True, entering 'if' block
+[line 21]  word_frequencies[word] = 1
+(Missing param: 'var')
+[line 17]  for word in words:
+Loop Iteration: word is now 'quick' (iteration 2)
+[line 18]  if word in word_frequencies:
+Condition: True, entering 'if' block
+[line 21]  word_frequencies[word] = 1
+(Missing param: 'var')
+... [Line 17] repeats 22 more times ...
+... [Line 17] repeats 22 more times ...
+... [Line 17] repeats 22 more times ...
+[line 17]  for word in words:
+Loop Iteration: word is now 'quick' (iteration 25)
+[line 18]  if word in word_frequencies:
+Condition: True, entering 'if' block
+[line 17]  for word in words:
+Loop End: Iteration finished
+[line 24]  total_words = len(words)
+Call function len(words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source))
+[line 25]  unique_words = len(word_frequencies)
+Call function len(word_frequencies={the: 4, quick: 3, brown: 2, ...} (defined at [line 16]))
+[line 26]  average_frequency = total_words / unique_words if unique_words > 0 else 0
+Compute: total_words / unique_words if unique_words > 0 else 0, where total_words=25 (defined at [line 24]), unique_words=15 (defined at [line 25]) = 1.6666666666666667
+[line 35]  frequency_threshold = average_frequency * 0.8
+Compute: average_frequency * 0.8, where average_frequency=1.6666666666666667 (defined at [line 26]) = 1.3333333333333335
+[line 42]  filtered_word_count = len([w for w in word_frequencies if word_frequencies[w] > frequency_threshold])
+Call function len([w for w in word_frequencies if word_frequencies[w] > frequency_threshold])
+
+Answer: filtered_word_count = 7 (last updated on defined at [line 42])

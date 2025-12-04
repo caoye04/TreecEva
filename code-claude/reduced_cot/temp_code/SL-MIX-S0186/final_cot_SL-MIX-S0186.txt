@@ -1,0 +1,142 @@
+Target: Find the value of variable final_signal after [line 99] executes
+
+[line 51]  raw_data = [62, 97, 145, 86, 129, 42, 103, 114, 52, 74, 152, 139, 88, 104]
+Compute: [62, 97, 145, 86, 129, 42, 103, 114, 52, 74, 152, 139, 88, 104] = [62, 97, 145, 86, 129, ...]
+[line 55]  window_size = 4
+Assign: window_size = 4
+[line 60]  total_samples = len(raw_data)
+Call function len(raw_data=[62, 97, 145, 86, 129, ...] (defined at [line 51]))
+[line 65]  if filter_mode == "low_pass":
+Condition: True, entering 'if' block
+[line 70]  start_idx = 3
+Assign: start_idx = 3
+[line 71]  end_idx = 10
+Assign: end_idx = 10
+[line 72]  chunk_size = window_size - 1
+Compute: window_size - 1, where window_size=4 (defined at [line 55]) = 3
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop Start: i takes its first value 0
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop End: Iteration finished
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop End: Iteration finished
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop End: Iteration finished
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop End: Iteration finished
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop End: Iteration finished
+[line 75]  for i in range(0, total_samples - chunk_size + 1, 2):
+Loop End: Iteration finished
+[line 82]  test_filters = [(60, 0.8), (70, 0.9), (80, 1.0)]
+Compute: [(60, 0.8), (70, 0.9), (80, 1.0)] = [(60, 0.8), (70, 0.9), (80, 1.0)]
+[line 84]  for threshold, gain in test_filters:
+(Missing param: 'iter_var')
+[line 85]  filtered = [v if v < threshold else v * gain for v in raw_data]
+Compute: [v if v < threshold else v * gain for v in raw_data], where v=62 (an unknown source), threshold=60 (an unknown source), gain=0.8 (an unknown source), raw_data=[62, 97, 145, 86, 129, ...] (defined at [line 51]) = ?
+[line 84]  for threshold, gain in test_filters:
+(Missing param: 'iter_var')
+[line 84]  for threshold, gain in test_filters:
+(Missing param: 'iter_var')
+[line 84]  for threshold, gain in test_filters:
+Loop End: Iteration finished
+[line 89]  final_signal = process_signal(raw_data[start_idx:end_idx])
+Call function process_signal(raw_data[start_idx:end_idx])
+[line 25]  if not signal_chunk:
+Condition: True, entering 'if' block
+[line 29]  filtered_data = apply_filter(signal_chunk)
+Call function apply_filter(signal_chunk=[86, 129, 42, 103, 114, ...] (an unknown source))
+[line 3]  filtered = []
+Compute: [] = []
+[line 4]  for value in data:
+Loop Start: value takes its first value 86
+[line 5]  if value > threshold:
+Condition: True, entering 'if' block
+[line 4]  for value in data:
+Loop Iteration: value is now 129 (iteration 2)
+[line 5]  if value > threshold:
+Condition: True, entering 'if' block
+... [Line 4] repeats 4 more times ...
+... [Line 4] repeats 4 more times ...
+[line 4]  for value in data:
+Loop Iteration: value is now 74 (iteration 7)
+[line 5]  if value > threshold:
+Condition: True, entering 'if' block
+[line 4]  for value in data:
+Loop End: Iteration finished
+[line 9]  return filtered
+Return: filtered=[80, 120, 42, 100, 110, ...] (defined at [line 3])
+[line 32]  mean, peak, variance = calculate_metrics(filtered_data)
+(Missing param: 'func_name')
+[line 13]  if not values:
+Condition: True, entering 'if' block
+[line 16]  avg = sum(values) / len(values)
+Compute: sum(values) / len(values), where values=[80, 120, 42, 100, 110, ...] (an unknown source) = 82.57142857142857
+[line 17]  peak = max(values) if values else 0
+Compute: max(values) if values else 0, where values=[80, 120, 42, 100, 110, ...] (an unknown source) = 120
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where avg=82.57142857142857 (defined at [line 16]), values=[80, 120, 42, 100, 110, ...] (an unknown source) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=80 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=120 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=42 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=100 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=110 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=52 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=74 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 19]  variance = sum((x - avg) ** 2 for x in values) / len(values)
+Compute: sum((x - avg) ** 2 for x in values) / len(values), where x=74 (an unknown source), avg=82.57142857142857 (defined at [line 16]) = ?
+[line 21]  return avg, peak, variance
+Return: avg, peak, variance
+[line 35]  features = []
+Compute: [] = []
+[line 36]  for value in filtered_data:
+Loop Start: value takes its first value 80
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 36]  for value in filtered_data:
+Loop End: Iteration finished
+[line 42]  primary = sum(features) // len(features)
+Compute: sum(features) // len(features), where features=[5, 15, 10, 6, 14, ...] (defined at [line 35]) = 10
+[line 43]  secondary = peak - mean if peak > mean * 1.5 else mean - (mean % 10)
+Compute: peak - mean if peak > mean * 1.5 else mean - (mean % 10), where peak=120 (defined at [line 17]), mean=82.57142857142857 (an unknown source) = 80.0
+[line 46]  result = (primary ^ 0x3A) + int(secondary / 10)
+Compute: (primary ^ 0x3A) + int(secondary / 10), where primary=10 (defined at [line 42]), secondary=80.0 (defined at [line 43]) = 56
+[line 48]  return result
+Return: result=56 (defined at [line 46])
+[line 93]  for i, v in enumerate(raw_data[start_idx:end_idx]):
+(Missing param: 'iter_var')
+[line 94]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 93]  for i, v in enumerate(raw_data[start_idx:end_idx]):
+(Missing param: 'iter_var')
+[line 94]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 93] repeats 4 more times ...
+... [Line 93] repeats 4 more times ...
+[line 93]  for i, v in enumerate(raw_data[start_idx:end_idx]):
+(Missing param: 'iter_var')
+[line 94]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 93]  for i, v in enumerate(raw_data[start_idx:end_idx]):
+Loop End: Iteration finished
+[line 99]  print(f"Result: {final_signal}")
+Output: f"Result: {final_signal}"
+
+Answer: final_signal = 56 (last updated on defined at [line 89])

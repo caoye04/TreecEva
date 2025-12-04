@@ -1,0 +1,113 @@
+34
+encryption_key
+---
+PARAM_MAPPING {'password': {'actual_var': 'password', 'value': 'Secure!123'}}
+FUNCTION_ENTER 1 process_password def process_password(password):
+1 ['password'] [{'_type': 'str', '_value': 'Secure!123'}]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 [] []
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'S'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'e'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'c'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'u'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'r'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'e'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'!'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'1'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'2'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'3'"]
+3 clean_pass = ''.join(c for c in password if c.isalnum())
+3 ['c'] ["'3'"]
+6 base_value = 0
+6 ['clean_pass', 'base_value'] ["'Secure123'", '0']
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '0', '0', "'S'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '83', '0', "'S'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '83', '1', "'e'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '285', '1', "'e'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '285', '2', "'c'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '582', '2', "'c'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '582', '3', "'u'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '1050', '3', "'u'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '1050', '4', "'r'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '1620', '4', "'r'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '1620', '5', "'e'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '2226', '5', "'e'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '2226', '6', "'1'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '2569', '6', "'1'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '2569', '7', "'2'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '2969', '7', "'2'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '2969', '8', "'3'"]
+8 base_value += (i + 1) * ord(char)
+8 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '3428', '8', "'3'"]
+7 for i, char in enumerate(clean_pass):
+7 ['clean_pass', 'base_value', 'i', 'char'] ["'Secure123'", '3428', '8', "'3'"]
+11 binary_str = bin(base_value)[2:]
+11 ['base_value', 'i', 'binary_str'] ['3428', '8', "'110101100100'"]
+12 padding_needed = 16 - (len(binary_str) % 16)
+12 ['i', 'binary_str', 'padding_needed'] ['8', "'110101100100'", '4']
+13 if padding_needed < 16:
+13 ['i', 'binary_str', 'padding_needed'] ['8', "'110101100100'", '4']
+14 binary_str = '0' * padding_needed + binary_str
+14 ['i', 'binary_str', 'padding_needed'] ['8', "'0000110101100100'", '4']
+17 chunks = [binary_str[i:i+8] for i in range(0, len(binary_str), 8)]
+17 ['i', 'binary_str'] ['0', "'0000110101100100'"]
+17 chunks = [binary_str[i:i+8] for i in range(0, len(binary_str), 8)]
+17 ['i', 'binary_str'] ['8', "'0000110101100100'"]
+17 chunks = [binary_str[i:i+8] for i in range(0, len(binary_str), 8)]
+17 ['i', 'binary_str', 'chunks'] ['8', "'0000110101100100'", "['00001101', '01100100']"]
+20 checksum = 0
+20 ['chunks', 'checksum'] ["['00001101', '01100100']", '0']
+21 for chunk in chunks:
+21 ['chunks', 'checksum', 'chunk'] ["['00001101', '01100100']", '0', "'00001101'"]
+22 checksum += int(chunk, 2) % 256
+22 ['chunks', 'checksum', 'chunk'] ["['00001101', '01100100']", '13', "'00001101'"]
+21 for chunk in chunks:
+21 ['chunks', 'checksum', 'chunk'] ["['00001101', '01100100']", '13', "'01100100'"]
+22 checksum += int(chunk, 2) % 256
+22 ['chunks', 'checksum', 'chunk'] ["['00001101', '01100100']", '113', "'01100100'"]
+21 for chunk in chunks:
+21 ['chunks', 'checksum', 'chunk'] ["['00001101', '01100100']", '113', "'01100100'"]
+25 selected_chunk = chunks[1]  # Second chunk
+25 ['chunks', 'checksum', 'selected_chunk'] ["['00001101', '01100100']", '113', "'01100100'"]
+26 reversed_chunk = selected_chunk[::-1]  # Reverse it
+26 ['checksum', 'selected_chunk', 'reversed_chunk'] ['113', "'01100100'", "'00100110'"]
+29 noise_bits = '1010'
+29 ['checksum', 'reversed_chunk', 'noise_bits'] ['113', "'00100110'", "'1010'"]
+30 binary_value = reversed_chunk + noise_bits
+30 ['checksum', 'reversed_chunk', 'noise_bits', 'binary_value'] ['113', "'00100110'", "'1010'", "'001001101010'"]
+31 binary_value = binary_value[:-4]  # Remove the noise
+31 ['checksum', 'binary_value'] ['113', "'00100110'"]
+34 encryption_key = int(binary_value, 2) ^ checksum
+34 ['checksum', 'binary_value', 'encryption_key'] ['113', "'00100110'", '87']
+43 print(f"Result: {encryption_key}")
+43 ['encryption_key'] ['87']
+45 return encryption_key
+45 ['encryption_key'] ['87']
+FUNCTION_RETURN 45 process_password {'_type': 'int', '_value': 87}

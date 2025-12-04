@@ -1,0 +1,235 @@
+Target: Find the value of variable priority_score after [line 154] executes
+
+[line 130]  min_size=100,  # Exclude small packets
+Compute: 100,  # Exclude small packets = ?
+[line 131]  protocols=['TCP', 'UDP', 'ICMP'],  # Only include these protocols
+Compute: ['TCP', 'UDP', 'ICMP'],  # Only include these protocols = ?
+[line 132]  exclude_sources=['5.6.7.8']  # Exclude these sources
+Compute: ['5.6.7.8']  # Exclude these sources = ?
+[line 109]  result = []
+Compute: [] = []
+[line 110]  for p in packets:
+Loop Start: p takes its first value {protocol: 'TCP', size: 120, timestamp: '14:25:36', ...}
+[line 112]  if p['size'] < min_size:
+Condition: True, entering 'if' block
+[line 116]  if protocols and p['protocol'] not in protocols:
+Condition: True, entering 'if' block
+[line 120]  if exclude_sources and p['source'] in exclude_sources:
+Condition: True, entering 'if' block
+[line 110]  for p in packets:
+Loop Iteration: p is now {protocol: 'UDP', size: 80, timestamp: '14:25:40', ...} (iteration 2)
+[line 112]  if p['size'] < min_size:
+Condition: True, entering 'if' block
+... [Line 110] repeats 4 more times ...
+... [Line 110] repeats 4 more times ...
+... [Line 110] repeats 4 more times ...
+[line 110]  for p in packets:
+Loop Iteration: p is now {protocol: 'TCP', size: 768, timestamp: '14:28:01', ...} (iteration 7)
+[line 112]  if p['size'] < min_size:
+Condition: True, entering 'if' block
+[line 116]  if protocols and p['protocol'] not in protocols:
+Condition: True, entering 'if' block
+[line 120]  if exclude_sources and p['source'] in exclude_sources:
+Condition: True, entering 'if' block
+[line 110]  for p in packets:
+Loop End: Iteration finished
+[line 125]  return result
+Return: result=[{protocol: 'TCP', size: 120, timestamp: '14:25:36', ...}, {protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...}, {protocol: 'UDP', size: 512, timestamp: '14:27:18', ...}, {protocol: 'TCP', size: 768, timestamp: '14:28:01', ...}] (defined at [line 109])
+[line 136]  importance_ratings = [analyze_packet(p) for p in filtered_packets]
+Compute: [analyze_packet(p) for p in filtered_packets], where p={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (defined at [line 110]) = ?
+[line 7]  size = packet['size']
+Compute: packet['size'], where packet={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (an unknown source) = 120
+[line 8]  timestamp = packet['timestamp']
+Compute: packet['timestamp'], where packet={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (an unknown source) = '14:25:36'
+[line 9]  source = packet['source']
+Compute: packet['source'], where packet={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (an unknown source) = '192.168.1.5'
+[line 12]  if protocol == 'TCP':
+Condition: True, entering 'if' block
+[line 13]  importance = size * 0.5
+Compute: size * 0.5, where size=120 (defined at [line 7]) = 60.0
+[line 22]  if source.startswith('192.168'):
+Condition: True, entering 'if' block
+[line 23]  importance += 5
+Update: importance changed from 60.0 (defined at defined at [line 13]) to 60.0+5 = 65.0
+[line 28]  hour = int(timestamp.split(':')[0])
+Call function int(timestamp.split(':')[0])
+[line 29]  if hour > 23 or hour < 0:
+Condition: True, entering 'if' block
+[line 32]  return importance
+Return: importance=65.0 (defined at [line 23])
+[line 7]  size = packet['size']
+Compute: packet['size'], where packet={protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...} (an unknown source) = 1024
+[line 8]  timestamp = packet['timestamp']
+Compute: packet['timestamp'], where packet={protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...} (an unknown source) = '14:26:32'
+[line 9]  source = packet['source']
+Compute: packet['source'], where packet={protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...} (an unknown source) = '172.16.0.10'
+[line 12]  if protocol == 'TCP':
+Condition: True, entering 'if' block
+[line 13]  importance = size * 0.5
+Compute: size * 0.5, where size=1024 (defined at [line 7]) = 512.0
+[line 22]  if source.startswith('192.168'):
+Condition: True, entering 'if' block
+[line 24]  elif source.startswith('10.'):
+'elif' Condition: True, entering block
+[line 28]  hour = int(timestamp.split(':')[0])
+Call function int(timestamp.split(':')[0])
+[line 29]  if hour > 23 or hour < 0:
+Condition: True, entering 'if' block
+[line 32]  return importance
+Return: importance=512.0 (defined at [line 13])
+[line 7]  size = packet['size']
+Compute: packet['size'], where packet={protocol: 'UDP', size: 512, timestamp: '14:27:18', ...} (an unknown source) = 512
+[line 8]  timestamp = packet['timestamp']
+Compute: packet['timestamp'], where packet={protocol: 'UDP', size: 512, timestamp: '14:27:18', ...} (an unknown source) = '14:27:18'
+[line 9]  source = packet['source']
+Compute: packet['source'], where packet={protocol: 'UDP', size: 512, timestamp: '14:27:18', ...} (an unknown source) = '10.0.0.5'
+[line 12]  if protocol == 'TCP':
+Condition: True, entering 'if' block
+[line 14]  elif protocol == 'UDP':
+'elif' Condition: True, entering block
+[line 15]  importance = size * 0.3
+Compute: size * 0.3, where size=512 (defined at [line 7]) = 153.6
+[line 22]  if source.startswith('192.168'):
+Condition: True, entering 'if' block
+[line 24]  elif source.startswith('10.'):
+'elif' Condition: True, entering block
+[line 25]  importance -= 3
+Update: importance changed from 153.6 (defined at defined at [line 15]) to 153.6-3 = 150.6
+[line 28]  hour = int(timestamp.split(':')[0])
+Call function int(timestamp.split(':')[0])
+[line 29]  if hour > 23 or hour < 0:
+Condition: True, entering 'if' block
+[line 32]  return importance
+Return: importance=150.6 (defined at [line 25])
+[line 7]  size = packet['size']
+Compute: packet['size'], where packet={protocol: 'TCP', size: 768, timestamp: '14:28:01', ...} (an unknown source) = 768
+[line 8]  timestamp = packet['timestamp']
+Compute: packet['timestamp'], where packet={protocol: 'TCP', size: 768, timestamp: '14:28:01', ...} (an unknown source) = '14:28:01'
+[line 9]  source = packet['source']
+Compute: packet['source'], where packet={protocol: 'TCP', size: 768, timestamp: '14:28:01', ...} (an unknown source) = '1.2.3.4'
+[line 12]  if protocol == 'TCP':
+Condition: True, entering 'if' block
+[line 13]  importance = size * 0.5
+Compute: size * 0.5, where size=768 (defined at [line 7]) = 384.0
+[line 22]  if source.startswith('192.168'):
+Condition: True, entering 'if' block
+[line 24]  elif source.startswith('10.'):
+'elif' Condition: True, entering block
+[line 28]  hour = int(timestamp.split(':')[0])
+Call function int(timestamp.split(':')[0])
+[line 29]  if hour > 23 or hour < 0:
+Condition: True, entering 'if' block
+[line 32]  return importance
+Return: importance=384.0 (defined at [line 13])
+[line 139]  avg_importance = sum(importance_ratings) / len(importance_ratings) if importance_ratings else 0
+Compute: sum(importance_ratings) / len(importance_ratings) if importance_ratings else 0, where importance_ratings=[65.0, 512.0, 150.6, 384.0] (defined at [line 136]) = 277.9
+[line 145]  if importance_ratings[i] > avg_importance]
+Condition: True, entering 'if' block
+[line 145]  if importance_ratings[i] > avg_importance]
+Condition: True, entering 'if' block
+[line 145]  if importance_ratings[i] > avg_importance]
+Condition: True, entering 'if' block
+[line 145]  if importance_ratings[i] > avg_importance]
+Condition: True, entering 'if' block
+[line 148]  priority_score = calculate_priority(filtered_packets)
+Call function calculate_priority(filtered_packets=[{protocol: 'TCP', size: 120, timestamp: '14:25:36', ...}, {protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...}, {protocol: 'UDP', size: 512, timestamp: '14:27:18', ...}, {protocol: 'TCP', size: 768, timestamp: '14:28:01', ...}] (an unknown source))
+[line 38]  total_size = sum(p['size'] for p in packets)
+Call function sum(p['size'] for p in packets)
+[line 39]  protocol_counts = {'TCP': 0, 'UDP': 0, 'ICMP': 0, 'OTHER': 0}
+Compute: {'TCP': 0, 'UDP': 0, 'ICMP': 0, 'OTHER': 0} = {TCP: 0, UDP: 0, ICMP: 0, ...}
+[line 42]  max_size = 0
+Assign: max_size = 0
+[line 43]  min_timestamp = '23:59:59'
+Assign: min_timestamp = '23:59:59'
+[line 44]  suspicious_sources = []
+Compute: [] = []
+[line 47]  for packet in packets:
+Loop Start: packet takes its first value {protocol: 'TCP', size: 120, timestamp: '14:25:36', ...}
+[line 48]  proto = packet['protocol']
+Compute: packet['protocol'], where packet={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (defined at [line 47]) = 'TCP'
+[line 49]  if proto in protocol_counts:
+Condition: True, entering 'if' block
+[line 55]  if packet['size'] > max_size:
+Condition: True, entering 'if' block
+[line 56]  max_size = packet['size']
+Compute: packet['size'], where packet={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (defined at [line 47]) = 120
+[line 59]  if packet['timestamp'] < min_timestamp:
+Condition: True, entering 'if' block
+[line 60]  min_timestamp = packet['timestamp']
+Compute: packet['timestamp'], where packet={protocol: 'TCP', size: 120, timestamp: '14:25:36', ...} (defined at [line 47]) = '14:25:36'
+[line 63]  if packet['source'] in ['1.2.3.4', '5.6.7.8']:
+Condition: True, entering 'if' block
+[line 47]  for packet in packets:
+Loop Iteration: packet is now {protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...} (iteration 2)
+[line 48]  proto = packet['protocol']
+Compute: packet['protocol'], where packet={protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...} (defined at [line 47]) = 'TCP'
+[line 49]  if proto in protocol_counts:
+Condition: True, entering 'if' block
+[line 55]  if packet['size'] > max_size:
+Condition: True, entering 'if' block
+[line 56]  max_size = packet['size']
+Compute: packet['size'], where packet={protocol: 'TCP', size: 1024, timestamp: '14:26:32', ...} (defined at [line 47]) = 1024
+[line 59]  if packet['timestamp'] < min_timestamp:
+Condition: True, entering 'if' block
+[line 63]  if packet['source'] in ['1.2.3.4', '5.6.7.8']:
+Condition: True, entering 'if' block
+[line 47]  for packet in packets:
+Loop Iteration: packet is now {protocol: 'UDP', size: 512, timestamp: '14:27:18', ...} (iteration 3)
+[line 48]  proto = packet['protocol']
+Compute: packet['protocol'], where packet={protocol: 'UDP', size: 512, timestamp: '14:27:18', ...} (defined at [line 47]) = 'UDP'
+[line 49]  if proto in protocol_counts:
+Condition: True, entering 'if' block
+[line 55]  if packet['size'] > max_size:
+Condition: True, entering 'if' block
+[line 59]  if packet['timestamp'] < min_timestamp:
+Condition: True, entering 'if' block
+[line 63]  if packet['source'] in ['1.2.3.4', '5.6.7.8']:
+Condition: True, entering 'if' block
+[line 47]  for packet in packets:
+Loop Iteration: packet is now {protocol: 'TCP', size: 768, timestamp: '14:28:01', ...} (iteration 4)
+[line 48]  proto = packet['protocol']
+Compute: packet['protocol'], where packet={protocol: 'TCP', size: 768, timestamp: '14:28:01', ...} (defined at [line 47]) = 'TCP'
+[line 49]  if proto in protocol_counts:
+Condition: True, entering 'if' block
+[line 55]  if packet['size'] > max_size:
+Condition: True, entering 'if' block
+[line 59]  if packet['timestamp'] < min_timestamp:
+Condition: True, entering 'if' block
+[line 63]  if packet['source'] in ['1.2.3.4', '5.6.7.8']:
+Condition: True, entering 'if' block
+[line 47]  for packet in packets:
+Loop End: Iteration finished
+[line 67]  tcp_weight = protocol_counts['TCP'] * 3
+Compute: protocol_counts['TCP'] * 3, where protocol_counts={TCP: 3, UDP: 1, ICMP: 0, ...} (defined at [line 39]) = 9
+[line 68]  udp_weight = protocol_counts['UDP'] * 1
+Compute: protocol_counts['UDP'] * 1, where protocol_counts={TCP: 3, UDP: 1, ICMP: 0, ...} (defined at [line 39]) = 1
+[line 69]  icmp_weight = protocol_counts['ICMP'] * 5
+Compute: protocol_counts['ICMP'] * 5, where protocol_counts={TCP: 3, UDP: 1, ICMP: 0, ...} (defined at [line 39]) = 0
+[line 70]  other_weight = protocol_counts['OTHER'] * 2
+Compute: protocol_counts['OTHER'] * 2, where protocol_counts={TCP: 3, UDP: 1, ICMP: 0, ...} (defined at [line 39]) = 0
+[line 77]  for w in [tcp_weight, udp_weight, icmp_weight, other_weight]]
+(Missing param: 'iter_var')
+[line 77]  for w in [tcp_weight, udp_weight, icmp_weight, other_weight]]
+Loop End: Iteration finished
+[line 77]  for w in [tcp_weight, udp_weight, icmp_weight, other_weight]]
+Loop End: Iteration finished
+[line 77]  for w in [tcp_weight, udp_weight, icmp_weight, other_weight]]
+Loop End: Iteration finished
+[line 77]  for w in [tcp_weight, udp_weight, icmp_weight, other_weight]]
+Loop End: Iteration finished
+[line 77]  for w in [tcp_weight, udp_weight, icmp_weight, other_weight]]
+Loop End: Iteration finished
+[line 80]  priority_base = (tcp_weight + udp_weight + icmp_weight + other_weight) / 10
+Compute: (tcp_weight + udp_weight + icmp_weight + other_weight) / 10, where tcp_weight=9 (defined at [line 67]), udp_weight=1 (defined at [line 68]), icmp_weight=0 (defined at [line 69]), other_weight=0 (defined at [line 70]) = 1.0
+[line 86]  if len(suspicious_sources) > 0:
+Condition: True, entering 'if' block
+[line 87]  priority_base *= 1.5
+Update: priority_base changed from 1.0 (defined at defined at [line 80]) to 1.0*1.5 = 1.5
+[line 90]  size_factor = total_size / 1000 if total_size > 0 else 0
+Compute: total_size / 1000 if total_size > 0 else 0, where total_size=2424 (defined at [line 38]) = 2.424
+[line 93]  return int(priority_base + size_factor)
+Return: int(priority_base + size_factor)
+[line 154]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 3 (last updated on defined at [line 148])

@@ -1,0 +1,16 @@
+Target: Find the value of variable encryption_key after [line 40] executes
+
+[line 3]  header_size = 12
+Assign: header_size = 12
+[line 16]  total_size = header_size + data_length
+Compute: header_size + data_length, where header_size=12 (defined at [line 3]), data_length=48 (an unknown source) = 60
+[line 19]  base_value = 0xA3
+Assign: base_value = 163
+[line 20]  mask = (protocol_type * 7) | (total_size & 0x1F)
+Compute: (protocol_type * 7) | (total_size & 0x1F), where protocol_type=2 (an unknown source), total_size=60 (defined at [line 16]) = 30
+[line 21]  offset = sum([i for i in range(1, 6) if i % 2 == (total_size % 2)])
+Call function sum([i for i in range(1, 6) if i % 2 == (total_size % 2)])
+[line 40]  encryption_key = (base_value ^ (mask & 0xFF)) + offset
+Compute: (base_value ^ (mask & 0xFF)) + offset, where base_value=163 (defined at [line 19]), mask=30 (defined at [line 20]), offset=6 (defined at [line 21]) = 195
+
+Answer: encryption_key = 195 (last updated on defined at [line 40])

@@ -1,0 +1,26 @@
+Target: Find the value of variable optimal_capacity after [line 29] executes
+
+[line 3]  total_inventory = sum(inventory_levels)
+Call function sum(inventory_levels=[120, 85, 0, 210, 45] (an unknown source))
+[line 4]  avg_inventory = total_inventory / len(inventory_levels) if inventory_levels else 0
+Compute: total_inventory / len(inventory_levels) if inventory_levels else 0, where total_inventory=460 (defined at [line 3]), inventory_levels=[120, 85, 0, 210, 45] (an unknown source) = 92.0
+[line 7]  max_inventory = max(inventory_levels) if inventory_levels else 0
+Compute: max(inventory_levels) if inventory_levels else 0, where inventory_levels=[120, 85, 0, 210, 45] (an unknown source) = 210
+[line 11]  utilized_units = sum(1 for level in inventory_levels if level > 0)
+Call function sum(1 for level in inventory_levels if level > 0)
+[line 12]  efficiency_factor = utilized_units / storage_units if storage_units > 0 else 0
+Compute: utilized_units / storage_units if storage_units > 0 else 0, where utilized_units=4 (defined at [line 11]), storage_units=6 (an unknown source) = 0.6666666666666666
+[line 18]  base_multiplier = 1.5
+Assign: base_multiplier = 1.5
+[line 19]  min_capacity = int(total_inventory * base_multiplier)
+Call function int(total_inventory * base_multiplier)
+[line 22]  utilization_penalty = 100 if efficiency_factor < 0.5 else 0
+Compute: 100 if efficiency_factor < 0.5 else 0, where efficiency_factor=0.6666666666666666 (defined at [line 12]) = 0
+[line 23]  seasonal_adjustment = 50 if max_inventory > avg_inventory * 2 else 25
+Compute: 50 if max_inventory > avg_inventory * 2 else 25, where max_inventory=210 (defined at [line 7]), avg_inventory=92.0 (defined at [line 4]) = 50
+[line 26]  adjusted_capacity = int(total_inventory * (1 + efficiency_factor)) - utilization_penalty + seasonal_adjustment
+Compute: int(total_inventory * (1 + efficiency_factor)) - utilization_penalty + seasonal_adjustment, where total_inventory=460 (defined at [line 3]), efficiency_factor=0.6666666666666666 (defined at [line 12]), utilization_penalty=0 (defined at [line 22]), seasonal_adjustment=50 (defined at [line 23]) = 816
+[line 29]  optimal_capacity = max(min_capacity, adjusted_capacity) if efficiency_factor > 0.75 else min_capacity
+Compute: max(min_capacity, adjusted_capacity) if efficiency_factor > 0.75 else min_capacity, where min_capacity=690 (defined at [line 19]), adjusted_capacity=816 (defined at [line 26]), efficiency_factor=0.6666666666666666 (defined at [line 12]) = 690
+
+Answer: optimal_capacity = 690 (last updated on defined at [line 29])

@@ -1,0 +1,347 @@
+99
+target_frequency
+---
+10 sensor_a = [0b10110, 0b11100, 0b10101, 0b11001, 0b10111]
+10 ['sensor_a'] ['[22, 28, 21, 25, 23]']
+11 sensor_b = [0b11010, 0b10011, 0b11001, 0b10101, 0b11110]
+11 ['sensor_a', 'sensor_b'] ['[22, 28, 21, 25, 23]', '[26, 19, 25, 21, 30]']
+15 noise_floor = 0b10010
+15 ['sensor_a', 'sensor_b', 'noise_floor'] ['[22, 28, 21, 25, 23]', '[26, 19, 25, 21, 30]', '18']
+18 weights = {'alpha': 2, 'beta': 3, 'gamma': 1}
+18 ['sensor_a', 'sensor_b', 'noise_floor', 'weights'] ['[22, 28, 21, 25, 23]', '[26, 19, 25, 21, 30]', '18', '{alpha: 2, beta: 3, gamma: 1}']
+22 bit_positions = [0, 1, 2, 3, 4]
+22 ['sensor_a', 'sensor_b', 'noise_floor', 'weights', 'bit_positions'] ['[22, 28, 21, 25, 23]', '[26, 19, 25, 21, 30]', '18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]']
+PARAM_MAPPING {'raw_signals': {'actual_var': 'sensor_a', 'value': [22, 28, 21, 25, 23]}}
+FUNCTION_ENTER 5 process_signal_batch def process_signal_batch(raw_signals):
+5 ['raw_signals'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 23}], '_len': 5}]
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[22, 28, 21, 25, 23]', '22']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[22, 28, 21, 25, 23]', '28']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[22, 28, 21, 25, 23]', '21']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[22, 28, 21, 25, 23]', '25']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[22, 28, 21, 25, 23]', '23']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals'] ['[22, 28, 21, 25, 23]']
+FUNCTION_RETURN 7 process_signal_batch {'_type': 'list', '_items': [{'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 23}], '_len': 5}
+PARAM_MAPPING {'raw_signals': {'actual_var': 'sensor_b', 'value': [26, 19, 25, 21, 30]}}
+FUNCTION_ENTER 5 process_signal_batch def process_signal_batch(raw_signals):
+5 ['raw_signals'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 26}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 30}], '_len': 5}]
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[26, 19, 25, 21, 30]', '26']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[26, 19, 25, 21, 30]', '19']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[26, 19, 25, 21, 30]', '25']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[26, 19, 25, 21, 30]', '21']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[26, 19, 25, 21, 30]', '30']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals'] ['[26, 19, 25, 21, 30]']
+FUNCTION_RETURN 7 process_signal_batch {'_type': 'list', '_items': [{'_type': 'int', '_value': 26}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': 30}], '_len': 5}
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[21, 25, 22, 28, 23]', '21']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[21, 25, 22, 28, 23]', '25']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[21, 25, 22, 28, 23]', '22']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[21, 25, 22, 28, 23]', '28']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals', 's'] ['[21, 25, 22, 28, 23]', '23']
+7 return [s & 0xFF for s in raw_signals]
+7 ['raw_signals'] ['[21, 25, 22, 28, 23]']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['sensor_a', 'sensor_b', 'noise_floor', 'weights', 'bit_positions'] ['[22, 28, 21, 25, 23]', '[26, 19, 25, 21, 30]', '18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['22', '28']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['10', '21']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['31', '25']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['6', '23']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['17', '26']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['11', '19']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['24', '25']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['1', '21']
+45 signal_xor = reduce(lambda x, y: x ^ y, sensor_a + sensor_b)
+45 ['x', 'y'] ['20', '30']
+49 merged_signals = []
+49 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[]']
+50 for i in range(5):
+50 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[]', '0']
+50 for i in range(5):
+50 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23]', '1']
+50 for i in range(5):
+50 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23]', '2']
+50 for i in range(5):
+50 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23]', '3']
+50 for i in range(5):
+50 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23]', '4']
+50 for i in range(5):
+50 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '4']
+66 bit_frequencies = analyze_bit_frequencies(merged_signals)
+66 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '4']
+PARAM_MAPPING {'signals': {'actual_var': 'merged_signals', 'value': [23, 23, 23, 23, 26]}}
+FUNCTION_ENTER 25 analyze_bit_frequencies def analyze_bit_frequencies(signals):
+25 ['signals'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 26}], '_len': 5}]
+27 bit_counter = collections.defaultdict(int)
+27 ['signals', 'bit_counter'] ['[23, 23, 23, 23, 26]', '{}']
+30 for signal in signals:
+30 ['signals', 'bit_counter', 'signal'] ['[23, 23, 23, 23, 26]', '{}', '23']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position'] ['[23, 23, 23, 23, 26]', '{}', '23', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{}', '23', '0', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1}', '23', '0', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1}', '23', '1', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1}', '23', '1', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1}', '23', '1', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1}', '23', '2', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1}', '23', '2', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1}', '23', '2', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1}', '23', '3', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1}', '23', '3', '0']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '3', '0']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '4', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '4', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '4', '1']
+30 for signal in signals:
+30 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '0', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 1, 1: 1, 2: 1, ...}', '23', '0', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 1, 2: 1, ...}', '23', '0', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 1, 2: 1, ...}', '23', '1', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 1, 2: 1, ...}', '23', '1', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 1, ...}', '23', '1', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 1, ...}', '23', '2', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 1, ...}', '23', '2', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '2', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '3', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '3', '0']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '3', '0']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '4', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '4', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '4', '1']
+30 for signal in signals:
+30 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '0', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 2, 1: 2, 2: 2, ...}', '23', '0', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 2, 2: 2, ...}', '23', '0', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 2, 2: 2, ...}', '23', '1', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 2, 2: 2, ...}', '23', '1', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 2, ...}', '23', '1', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 2, ...}', '23', '2', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 2, ...}', '23', '2', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '2', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '3', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '3', '0']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '3', '0']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '4', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '4', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '4', '1']
+30 for signal in signals:
+30 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '0', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 3, 1: 3, 2: 3, ...}', '23', '0', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 3, 2: 3, ...}', '23', '0', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 3, 2: 3, ...}', '23', '1', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 3, 2: 3, ...}', '23', '1', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 3, ...}', '23', '1', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 3, ...}', '23', '2', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 3, ...}', '23', '2', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '2', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '3', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '3', '0']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '3', '0']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '4', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '4', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '23', '4', '1']
+30 for signal in signals:
+30 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '26', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '26', '0', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '26', '0', '0']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '26', '0', '0']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '26', '1', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 4, 2: 4, ...}', '26', '1', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '1', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '2', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '2', '0']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '2', '0']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '3', '0']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '3', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '3', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '4', '1']
+33 bit_value = (signal >> position) & 1
+33 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '4', '1']
+34 bit_counter[position] += bit_value
+34 ['signals', 'bit_counter', 'signal', 'position', 'bit_value'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '4', '1']
+32 for position in bit_positions:
+32 ['signals', 'bit_counter', 'signal', 'position'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '4']
+30 for signal in signals:
+30 ['signals', 'bit_counter', 'signal', 'position'] ['[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '26', '4']
+36 return bit_counter
+36 ['bit_counter', 'position'] ['{0: 4, 1: 5, 2: 4, ...}', '4']
+FUNCTION_RETURN 36 analyze_bit_frequencies {'_type': 'dict', '_items': {'0': {'_type': 'int', '_value': 4}, '1': {'_type': 'int', '_value': 5}, '2': {'_type': 'int', '_value': 4}, '3': {'_type': 'int', '_value': 1}, '4': {'_type': 'int', '_value': 5}}, '_len': 5}
+70 for i in range(5):
+70 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i', 'bit_frequencies'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '0', '{0: 4, 1: 5, 2: 4, ...}']
+70 for i in range(5):
+70 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i', 'bit_frequencies'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '1', '{0: 4, 1: 5, 2: 4, ...}']
+70 for i in range(5):
+70 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i', 'bit_frequencies'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '2', '{0: 4, 1: 5, 2: 4, ...}']
+70 for i in range(5):
+70 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i', 'bit_frequencies'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '3', '{0: 4, 1: 5, 2: 4, ...}']
+70 for i in range(5):
+70 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i', 'bit_frequencies'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '4', '{0: 4, 1: 5, 2: 4, ...}']
+70 for i in range(5):
+70 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'i', 'bit_frequencies'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '4', '{0: 4, 1: 5, 2: 4, ...}']
+74 final_analysis = {}
+74 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{}']
+75 for position, count in bit_frequencies.items():
+75 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{}', '0', '4']
+77 final_analysis[position] = count
+77 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4}', '0', '4']
+80 final_analysis[f"p{position}_norm"] = count / len(merged_signals)
+80 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8}', '0', '4']
+81 final_analysis[f"p{position}_weight"] = count * weights['alpha'] / 10
+81 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8}', '0', '4']
+75 for position, count in bit_frequencies.items():
+75 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8}', '1', '5']
+77 final_analysis[position] = count
+77 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '1', '5']
+80 final_analysis[f"p{position}_norm"] = count / len(merged_signals)
+80 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '1', '5']
+81 final_analysis[f"p{position}_weight"] = count * weights['alpha'] / 10
+81 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '1', '5']
+75 for position, count in bit_frequencies.items():
+75 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '2', '4']
+77 final_analysis[position] = count
+77 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '2', '4']
+80 final_analysis[f"p{position}_norm"] = count / len(merged_signals)
+80 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '2', '4']
+81 final_analysis[f"p{position}_weight"] = count * weights['alpha'] / 10
+81 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '2', '4']
+75 for position, count in bit_frequencies.items():
+75 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '3', '1']
+77 final_analysis[position] = count
+77 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '3', '1']
+80 final_analysis[f"p{position}_norm"] = count / len(merged_signals)
+80 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '3', '1']
+81 final_analysis[f"p{position}_weight"] = count * weights['alpha'] / 10
+81 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '3', '1']
+75 for position, count in bit_frequencies.items():
+75 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '4', '5']
+77 final_analysis[position] = count
+77 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '4', '5']
+80 final_analysis[f"p{position}_norm"] = count / len(merged_signals)
+80 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'merged_signals', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '[23, 23, 23, 23, 26]', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '4', '5']
+81 final_analysis[f"p{position}_weight"] = count * weights['alpha'] / 10
+81 ['noise_floor', 'weights', 'bit_positions', 'signal_xor', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '{alpha: 2, beta: 3, gamma: 1}', '[0, 1, 2, 3, 4]', '10', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '4', '5']
+75 for position, count in bit_frequencies.items():
+75 ['noise_floor', 'bit_positions', 'signal_xor', 'bit_frequencies', 'final_analysis', 'position', 'count'] ['18', '[0, 1, 2, 3, 4]', '10', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '4', '5']
+84 max_bit_key = max(bit_positions, key=lambda p: bit_frequencies[p])
+84 ['noise_floor', 'bit_positions', 'signal_xor', 'bit_frequencies', 'final_analysis'] ['18', '[0, 1, 2, 3, 4]', '10', '{0: 4, 1: 5, 2: 4, ...}', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}']
+84 max_bit_key = max(bit_positions, key=lambda p: bit_frequencies[p])
+84 ['p'] ['0']
+84 max_bit_key = max(bit_positions, key=lambda p: bit_frequencies[p])
+84 ['p'] ['1']
+84 max_bit_key = max(bit_positions, key=lambda p: bit_frequencies[p])
+84 ['p'] ['2']
+84 max_bit_key = max(bit_positions, key=lambda p: bit_frequencies[p])
+84 ['p'] ['3']
+84 max_bit_key = max(bit_positions, key=lambda p: bit_frequencies[p])
+84 ['p'] ['4']
+87 if max_bit_key > 2:
+87 ['noise_floor', 'signal_xor', 'final_analysis', 'max_bit_key'] ['18', '10', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '1']
+93 if signal_xor > noise_floor:
+93 ['noise_floor', 'signal_xor', 'final_analysis', 'max_bit_key'] ['18', '10', '{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '1']
+99 target_frequency = final_analysis[max_bit_key]
+99 ['final_analysis', 'max_bit_key', 'target_frequency'] ['{0: 4, p0_norm: 0.8, p0_weight: 0.8, ...}', '1', '5']

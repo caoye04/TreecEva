@@ -1,0 +1,270 @@
+Target: Find the value of variable decryption_key after [line 120] executes
+
+[line 69]  base_seed = 42
+Assign: base_seed = 42
+[line 70]  modifier_value = 3
+Assign: modifier_value = 3
+[line 71]  sequence_analyzer = SequenceAnalyzer(base_seed, modifier_value)
+Call function SequenceAnalyzer(base_seed=42 (defined at [line 69]), modifier_value=3 (defined at [line 70]))
+[line 5]  self.base = base_value
+(Missing param: 'result')
+[line 6]  self.modifier = modifier
+(Missing param: 'result')
+[line 7]  self.cache = {}
+(Missing param: 'result')
+[line 8]  self.operations_counter = 0
+(Missing param: 'var')
+[line 9]  self.debug_mode = False
+(Missing param: 'var')
+[line 10]  self.last_sequence = []
+(Missing param: 'result')
+[line 74]  potential_keys = [17, 23, 29, 31]
+Compute: [17, 23, 29, 31] = [17, 23, 29, 31]
+[line 75]  selected_key = potential_keys[2]  # Select the third key (29)
+Compute: potential_keys[2]  # Select the third key (29), where potential_keys=[17, 23, 29, 31] (defined at [line 74]) = 29
+[line 78]  verification_passed = False
+Assign: verification_passed = False
+[line 79]  for attempt in range(security_params["max_attempts"]):
+Loop Start: attempt takes its first value 0
+[line 81]  verification_value = (selected_key * security_params["encryption_level"]) % 100
+Compute: (selected_key * security_params["encryption_level"]) % 100, where selected_key=29 (defined at [line 75]), security_params={encryption_level: 3, key_rotation: True, verification_prime: 13, ...} (an unknown source) = 87
+[line 82]  if verification_value > 50:
+Condition: True, entering 'if' block
+[line 83]  verification_passed = True
+Assign: verification_passed = True
+[line 90]  if verification_passed:
+Condition: True, entering 'if' block
+[line 91]  target_prime = security_params["verification_prime"]
+Compute: security_params["verification_prime"], where security_params={encryption_level: 3, key_rotation: True, verification_prime: 13, ...} (an unknown source) = 13
+[line 97]  candidates = list(itertools.islice(range(1, 100, 2), 15))
+Call function list(itertools.islice(range(1, 100, 2), 15))
+[line 102]  for c in candidates[:5]:  # Only use first 5 candidates
+Loop Start: c takes its first value 1
+[line 103]  if c % 3 == 0:
+Condition: True, entering 'if' block
+[line 102]  for c in candidates[:5]:  # Only use first 5 candidates
+Loop Iteration: c is now 3 (iteration 2)
+[line 103]  if c % 3 == 0:
+Condition: True, entering 'if' block
+... [Line 102] repeats 2 more times ...
+... [Line 102] repeats 2 more times ...
+[line 102]  for c in candidates[:5]:  # Only use first 5 candidates
+Loop Iteration: c is now 9 (iteration 5)
+[line 103]  if c % 3 == 0:
+Condition: True, entering 'if' block
+[line 102]  for c in candidates[:5]:  # Only use first 5 candidates
+Loop End: Iteration finished
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 32]  sequence = []
+Compute: [] = []
+[line 36]  for i in range(10):
+Loop Start: i takes its first value 0
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=42 (an unknown source) = 173
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=173 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 176
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=176 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=176 (an unknown source) = 214
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=214 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 217
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=217 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=218 (an unknown source) = 115
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=115 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 118
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=118 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=120 (an unknown source) = 239
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=239 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 242
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=242 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=245 (an unknown source) = 202
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=202 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 205
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=205 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=209 (an unknown source) = 94
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=94 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 97
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=97 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=102 (an unknown source) = 148
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=148 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 151
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=151 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=157 (an unknown source) = 103
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=103 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 106
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=106 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=113 (an unknown source) = 202
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=202 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 205
+[line 27]  self.cache[value] = result
+(Missing param: 'result')
+[line 28]  return result
+Return: result=205 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 14]  if value in self.cache:
+Condition: True, entering 'if' block
+[line 17]  self.operations_counter += 1
+(Missing param: 'var')
+[line 18]  result = ((value << 2) & 0xFF) ^ (value >> 3)
+Compute: ((value << 2) & 0xFF) ^ (value >> 3), where value=213 (an unknown source) = 78
+[line 21]  if self.modifier > 0:
+Condition: True, entering 'if' block
+[line 22]  result = (result + self.modifier) % 256
+Compute: (result + self.modifier) % 256, where result=78 (defined at [line 18]), self=SequenceAnalyzer(modifier=3) (an unknown source) = 81
+[line 28]  return result
+Return: result=81 (defined at [line 22])
+[line 42]  if self.debug_mode:
+Condition: True, entering 'if' block
+[line 36]  for i in range(10):
+Loop End: Iteration finished
+[line 46]  return sequence
+Return: sequence=[176, 217, 118, 242, 205, ...] (defined at [line 32])
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 107]  decryption_key = sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+Call function sum(filter(lambda x: x % target_prime == 0, sequence_analyzer.generate()))
+[line 113]  if decryption_key > 100:
+Condition: True, entering 'if' block
+[line 115]  elif decryption_key > 50:
+'elif' Condition: True, entering block
+[line 120]  print(f"Result: {decryption_key}")
+Output: f"Result: {decryption_key}"
+
+Answer: decryption_key = 0 (last updated on defined at [line 107])

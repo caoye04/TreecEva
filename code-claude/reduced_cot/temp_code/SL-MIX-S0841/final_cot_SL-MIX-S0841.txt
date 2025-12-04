@@ -1,0 +1,73 @@
+Target: Find the value of variable final_water_level after [line 55] executes
+
+[line 45]  evaporation_factor = 0.4
+Assign: evaporation_factor = 0.4
+[line 48]  final_water_level = calculate_water_level(rainfall_data, evaporation_factor)
+Call function calculate_water_level(rainfall_data={Monday: 25, Tuesday: 0, Wednesday: 15, ...} (an unknown source), evaporation_factor=0.4 (defined at [line 45]))
+[line 3]  initial_level = 100  # Starting water level in reservoir
+Assign: initial_level = 100
+[line 4]  water_level = initial_level
+Compute: initial_level, where initial_level=100 (defined at [line 3]) = 100
+[line 6]  max_recorded = -float('inf')
+Compute: -float('inf') = ?
+[line 7]  min_recorded = float('inf')
+Call function float('inf')
+[line 10]  for day, amount in rainfall.items():
+(Missing param: 'iter_var')
+[line 12]  water_level += amount
+Update: water_level changed from ? (defined at ?) to ?+amount = ?
+[line 16]  max_recorded = max(max_recorded, water_level)
+Call function max(max_recorded, water_level)
+[line 17]  min_recorded = min(min_recorded, water_level)
+Call function min(min_recorded=125 (defined at [line 7]), water_level=125 (defined at [line 12]))
+[line 20]  daily_evaporation = amount * evaporation if amount > 0 else 5
+Compute: amount * evaporation if amount > 0 else 5, where amount=25 (an unknown source), evaporation=0.4 (an unknown source) = 10.0
+[line 21]  water_level -= daily_evaporation
+Update: water_level changed from 125 (defined at defined at [line 12]) to 125-daily_evaporation = 115.0
+[line 24]  water_level = max(0, water_level)
+Call function max(0, water_level=115.0 (defined at [line 21]))
+[line 10]  for day, amount in rainfall.items():
+(Missing param: 'iter_var')
+[line 12]  water_level += amount
+Update: water_level changed from 115.0 (defined at defined at [line 24]) to 115.0+amount = 115.0
+[line 16]  max_recorded = max(max_recorded, water_level)
+Call function max(max_recorded=125 (defined at [line 16]), water_level=115.0 (defined at [line 12]))
+[line 17]  min_recorded = min(min_recorded, water_level)
+Call function min(min_recorded=115.0 (defined at [line 17]), water_level=115.0 (defined at [line 12]))
+[line 20]  daily_evaporation = amount * evaporation if amount > 0 else 5
+Compute: amount * evaporation if amount > 0 else 5, where amount=0 (an unknown source), evaporation=0.4 (an unknown source) = 5
+[line 21]  water_level -= daily_evaporation
+Update: water_level changed from 115.0 (defined at defined at [line 12]) to 115.0-daily_evaporation = 110.0
+[line 24]  water_level = max(0, water_level)
+Call function max(0, water_level=110.0 (defined at [line 21]))
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+... [Line 10] repeats 2 more times ...
+[line 10]  for day, amount in rainfall.items():
+(Missing param: 'iter_var')
+[line 12]  water_level += amount
+Update: water_level changed from 137.0 (defined at defined at [line 24]) to 137.0+amount = 147.0
+[line 16]  max_recorded = max(max_recorded, water_level)
+Call function max(max_recorded=149.0 (defined at [line 16]), water_level=147.0 (defined at [line 12]))
+[line 17]  min_recorded = min(min_recorded, water_level)
+Call function min(min_recorded=115.0 (defined at [line 17]), water_level=147.0 (defined at [line 12]))
+[line 20]  daily_evaporation = amount * evaporation if amount > 0 else 5
+Compute: amount * evaporation if amount > 0 else 5, where amount=10 (an unknown source), evaporation=0.4 (an unknown source) = 4.0
+[line 21]  water_level -= daily_evaporation
+Update: water_level changed from 147.0 (defined at defined at [line 12]) to 147.0-daily_evaporation = 143.0
+[line 24]  water_level = max(0, water_level)
+Call function max(0, water_level=143.0 (defined at [line 21]))
+[line 10]  for day, amount in rainfall.items():
+Loop End: Iteration finished
+[line 30]  season_factor = 0.8 if min_recorded < 50 else 1.2
+Compute: 0.8 if min_recorded < 50 else 1.2, where min_recorded=115.0 (defined at [line 17]) = 1.2
+[line 33]  return water_level * (season_factor if max_recorded > 150 else 1.0)
+Return: water_level * (season_factor if max_recorded > 150 else 1.0)
+[line 55]  print(f"Result: {final_water_level}")
+Output: f"Result: {final_water_level}"
+
+Answer: final_water_level = 143.0 (last updated on defined at [line 48])

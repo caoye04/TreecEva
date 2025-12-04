@@ -1,0 +1,82 @@
+Target: Find the value of variable final_cipher_key after [line 85] executes
+
+[line 37]  base_key = 19
+Assign: base_key = 19
+[line 38]  data_stream = "TH15_15_4_S3CR3T_M3554G3"
+Assign: data_stream = 'TH15_15_4_S3CR3T_M3554G3'
+[line 41]  password_strength = analyze_password_strength("S3cur3P4s5w0rd!")
+Call function analyze_password_strength("S3cur3P4s5w0rd!")
+[line 34]  return complexity
+Return: complexity=60 (an unknown source)
+[line 42]  if password_strength > 50:
+Condition: True, entering 'if' block
+[line 43]  print(f"Password strength sufficient: {password_strength}")
+Output: f"Password strength sufficient: {password_strength}"
+[line 50]  security_rating = compute_security_metrics(data_stream)
+Call function compute_security_metrics(data_stream='TH15_15_4_S3CR3T_M3554G3' (defined at [line 38]))
+[line 11]  def compute_security_metrics(data_stream, hash_seed=42):
+Enter function compute_security_metrics: data_stream='TH15_15_4_S3CR3T_M3554G3' (data_stream defined at [line 38]), hash_seed=42
+  [line 13]  char_frequencies = {}
+  Compute: {} = {}
+  [line 14]  for char in data_stream:
+  Loop Start: char takes its first value 'T'
+  [line 15]  if char in char_frequencies:
+  Condition: True, entering 'if' block
+  [line 18]  char_frequencies[char] = 1
+  (Missing param: 'var')
+  [line 14]  for char in data_stream:
+  Loop Iteration: char is now 'H' (iteration 2)
+  [line 15]  if char in char_frequencies:
+  Condition: True, entering 'if' block
+  [line 18]  char_frequencies[char] = 1
+  (Missing param: 'var')
+... [Line 14] repeats 21 more times ...
+... [Line 14] repeats 21 more times ...
+... [Line 14] repeats 21 more times ...
+  [line 14]  for char in data_stream:
+  Loop Iteration: char is now '3' (iteration 24)
+  [line 15]  if char in char_frequencies:
+  Condition: True, entering 'if' block
+  [line 14]  for char in data_stream:
+  Loop End: Iteration finished
+  [line 21]  entropy_estimate = sum([freq * (i + 1) for i, freq in enumerate(char_frequencies.values())])
+  Call function sum([freq * (i + 1) for i, freq in enumerate(char_frequencies.values())])
+  [line 22]  security_level = (entropy_estimate * hash_seed) % 1000
+  Compute: (entropy_estimate * hash_seed) % 1000, where entropy_estimate=139 (defined at [line 21]), hash_seed=42 (an unknown source) = 838
+  [line 23]  return security_level // 10
+  Return: security_level // 10
+Function compute_security_metrics returns 83
+[line 53]  encryption_stages = encryption_stages_generator()
+Call function encryption_stages_generator()
+[line 3]  stage1 = lambda x: (x * 7 + 3) % modulus
+Compute: lambda x: (x * 7 + 3) % modulus, where modulus=97 (an unknown source) = ?
+[line 4]  stage2 = lambda x: (x ^ 42) % modulus
+Compute: lambda x: (x ^ 42) % modulus, where modulus=97 (an unknown source) = ?
+[line 5]  stage3 = lambda x: (x << 2) % modulus
+Compute: lambda x: (x << 2) % modulus, where modulus=97 (an unknown source) = ?
+[line 6]  stage4 = lambda x: (x // 2 + 11) % modulus
+Compute: lambda x: (x // 2 + 11) % modulus, where modulus=97 (an unknown source) = ?
+[line 7]  stage5 = lambda x: (pow(x, 2, modulus) + 1) % modulus
+Compute: lambda x: (pow(x, 2, modulus) + 1) % modulus, where modulus=97 (an unknown source) = ?
+[line 9]  return [stage1, stage2, stage3, stage4, stage5]
+Return: [stage1, stage2, stage3, stage4, stage5]
+[line 56]  if security_rating > 1000:
+Condition: True, entering 'if' block
+[line 61]  transformed_stream = [ord(c) % 64 for c in data_stream]
+Compute: [ord(c) % 64 for c in data_stream], where c='T' (an unknown source), data_stream='TH15_15_4_S3CR3T_M3554G3' (defined at [line 38]) = ?
+[line 62]  transform_sum = sum(transformed_stream) % 255
+Compute: sum(transformed_stream) % 255, where transformed_stream=[20, 8, 49, 53, 31, ...] (defined at [line 61]) = 85
+[line 65]  if transform_sum > 100:
+Condition: True, entering 'if' block
+[line 71]  for i in range(2):
+Loop Start: i takes its first value 0
+[line 71]  for i in range(2):
+Loop End: Iteration finished
+[line 71]  for i in range(2):
+Loop End: Iteration finished
+[line 82]  final_cipher_key = encryption_stages[-1](base_key)
+(Missing param: 'func_name')
+[line 85]  print(f"Result: {final_cipher_key}")
+Output: f"Result: {final_cipher_key}"
+
+Answer: final_cipher_key = 71 (last updated on an unknown source)

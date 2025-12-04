@@ -1,0 +1,147 @@
+111
+final_signal_strength
+---
+61 raw_frequencies = [45, 67, 32, 58, 72, 15, 92, 23, 45, 67, 33]
+61 ['raw_frequencies'] ['[45, 67, 32, 58, 72, ...]']
+72 frequency_analysis = analyze_frequency_band(raw_frequencies)
+72 ['raw_frequencies'] ['[45, 67, 32, 58, 72, ...]']
+PARAM_MAPPING {'frequencies': {'actual_var': 'raw_frequencies', 'value': [45, 67, 32, 58, 72, 15, 92, 23, 45, 67, 33]}}
+FUNCTION_ENTER 4 analyze_frequency_band def analyze_frequency_band(frequencies, noise_threshold=0.3):
+4 ['frequencies', 'noise_threshold'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 58}, {'_type': 'int', '_value': 72}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 92}, {'_type': 'int', '_value': 23}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 67}], '_len': 11}, {'_type': 'float', '_value': 0.3}]
+6 freq_counter = Counter(frequencies)
+6 ['frequencies', 'noise_threshold', 'freq_counter'] ['[45, 67, 32, 58, 72, ...]', '0.3', '{45: 2, 67: 2, 32: 1, ...}']
+7 dominant_freq = freq_counter.most_common(1)[0][0] if freq_counter else 0
+7 ['frequencies', 'noise_threshold', 'freq_counter', 'dominant_freq'] ['[45, 67, 32, 58, 72, ...]', '0.3', '{45: 2, 67: 2, 32: 1, ...}', '45']
+8 noise_level = sum(freq_counter.values()) / len(frequencies) if frequencies else 0
+8 ['frequencies', 'noise_threshold', 'freq_counter', 'dominant_freq', 'noise_level'] ['[45, 67, 32, 58, 72, ...]', '0.3', '{45: 2, 67: 2, 32: 1, ...}', '45', '1.0']
+9 return {'dominant': dominant_freq, 'noise': noise_level * noise_threshold}
+9 ['noise_threshold', 'dominant_freq', 'noise_level'] ['0.3', '45', '1.0']
+FUNCTION_RETURN 9 analyze_frequency_band {'_type': 'dict', '_items': {'dominant': {'_type': 'int', '_value': 45}, 'noise': {'_type': 'float', '_value': 0.3}}, '_len': 2}
+73 dominant_frequency = frequency_analysis['dominant']
+73 ['raw_frequencies', 'frequency_analysis', 'dominant_frequency'] ['[45, 67, 32, 58, 72, ...]', '{dominant: 45, noise: 0.3}', '45']
+13 if not power_levels or not distance_factors:
+13 ['power_levels', 'distance_factors'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]']
+16 efficiency_map = defaultdict(float)
+16 ['power_levels', 'distance_factors', 'efficiency_map'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{}']
+17 for p, d in zip(power_levels, distance_factors):
+17 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{}', '120', '2']
+19 efficiency_map[key] += (p / (d ** 2)) if d > 0 else p
+19 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0}', '120', '2']
+17 for p, d in zip(power_levels, distance_factors):
+17 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0}', '95', '4']
+19 efficiency_map[key] += (p / (d ** 2)) if d > 0 else p
+19 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375}', '95', '4']
+17 for p, d in zip(power_levels, distance_factors):
+17 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375}', '150', '3']
+19 efficiency_map[key] += (p / (d ** 2)) if d > 0 else p
+19 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375, 15: 16.666666666666668}', '150', '3']
+17 for p, d in zip(power_levels, distance_factors):
+17 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375, 15: 16.666666666666668}', '80', '5']
+19 efficiency_map[key] += (p / (d ** 2)) if d > 0 else p
+19 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375, 15: 16.666666666666668, ...}', '80', '5']
+17 for p, d in zip(power_levels, distance_factors):
+17 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375, 15: 16.666666666666668, ...}', '110', '1']
+19 efficiency_map[key] += (p / (d ** 2)) if d > 0 else p
+19 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375, 15: 16.666666666666668, ...}', '110', '1']
+17 for p, d in zip(power_levels, distance_factors):
+17 ['power_levels', 'distance_factors', 'efficiency_map', 'p', 'd'] ['[120, 95, 150, 80, 110]', '[2, 4, 3, 5, 1]', '{12: 30.0, 9: 5.9375, 15: 16.666666666666668, ...}', '110', '1']
+22 return max(efficiency_map.values()) if efficiency_map else 0.0
+22 ['efficiency_map'] ['{12: 30.0, 9: 5.9375, 15: 16.666666666666668, ...}']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['45']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['67']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['32']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['58']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['72']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['15']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['92']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['23']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['45']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['67']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['f'] ['33']
+80 filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+80 ['raw_frequencies', 'frequency_analysis', 'dominant_frequency', 'filtered_frequencies'] ['[45, 67, 32, 58, 72, ...]', '{dominant: 45, noise: 0.3}', '45', '[45, 67, 32, 58, 23, ...]']
+83 transmission_power = 100  # Default
+83 ['frequency_analysis', 'dominant_frequency', 'filtered_frequencies', 'transmission_power'] ['{dominant: 45, noise: 0.3}', '45', '[45, 67, 32, 58, 23, ...]', '100']
+84 if dominant_frequency > 60:
+84 ['frequency_analysis', 'dominant_frequency', 'filtered_frequencies', 'transmission_power'] ['{dominant: 45, noise: 0.3}', '45', '[45, 67, 32, 58, 23, ...]', '100']
+86 elif dominant_frequency < 40:
+86 ['frequency_analysis', 'dominant_frequency', 'filtered_frequencies', 'transmission_power'] ['{dominant: 45, noise: 0.3}', '45', '[45, 67, 32, 58, 23, ...]', '100']
+26 correction_factor = 1.0
+26 ['signal_value', 'humidity', 'correction_factor'] ['46.25', '0.7', '1.0']
+27 if humidity > 0.7:
+27 ['signal_value', 'humidity', 'correction_factor'] ['46.25', '0.7', '1.0']
+29 elif humidity < 0.3:
+29 ['signal_value', 'humidity', 'correction_factor'] ['46.25', '0.7', '1.0']
+35 return signal_value * correction_factor
+35 ['signal_value', 'correction_factor'] ['46.25', '1.0']
+104 final_signal_strength = calculate_signal_metric(filtered_frequencies, transmission_power)
+104 ['frequency_analysis', 'filtered_frequencies', 'transmission_power'] ['{dominant: 45, noise: 0.3}', '[45, 67, 32, 58, 23, ...]', '100']
+39 base_signal = 0
+39 ['frequency_data', 'power', 'base_signal'] ['[45, 67, 32, 58, 23, ...]', '100', '0']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 [] []
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['45']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['67']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['32']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['58']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['23']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['45']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['67']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['33']
+40 frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+40 ['f'] ['33']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '45']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '67']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '32']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '58']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '23']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '45']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '67']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'f'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '33']
+43 interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+43 ['frequency_data', 'power', 'base_signal', 'frequency_sum', 'interference_level'] ['[45, 67, 32, 58, 23, ...]', '100', '0', '347', '0']
+46 base_signal = frequency_sum * power / 100
+46 ['power', 'base_signal', 'frequency_sum', 'interference_level'] ['100', '347.0', '347', '0']
+52 adjusted_signal = base_signal - (interference_level * 1.5)
+52 ['power', 'base_signal', 'interference_level', 'adjusted_signal'] ['100', '347.0', '0', '347.0']
+55 bit_factor = power & 0x0F  # Get lower 4 bits
+55 ['power', 'adjusted_signal', 'bit_factor'] ['100', '347.0', '4']
+58 return max(0, adjusted_signal + (bit_factor / 2))
+58 ['adjusted_signal', 'bit_factor'] ['347.0', '4']
+107 print(f"Frequency Analysis: {frequency_analysis}")
+107 ['frequency_analysis', 'filtered_frequencies', 'transmission_power', 'final_signal_strength'] ['{dominant: 45, noise: 0.3}', '[45, 67, 32, 58, 23, ...]', '100', '349.0']
+108 print(f"Filtered Frequencies: {filtered_frequencies}")
+108 ['filtered_frequencies', 'transmission_power', 'final_signal_strength'] ['[45, 67, 32, 58, 23, ...]', '100', '349.0']
+109 print(f"Transmission Power: {transmission_power}")
+109 ['transmission_power', 'final_signal_strength'] ['100', '349.0']
+110 print(f"Potential Metrics: {potential_metrics}")
+110 ['final_signal_strength'] ['349.0']
+111 print(f"Result: {final_signal_strength}")
+111 ['final_signal_strength'] ['349.0']

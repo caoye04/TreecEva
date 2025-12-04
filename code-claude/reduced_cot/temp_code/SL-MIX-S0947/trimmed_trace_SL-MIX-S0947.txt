@@ -1,0 +1,53 @@
+23
+decrypted_value
+---
+17 encrypted_message = "CAB"
+17 ['encrypted_message'] ["'CAB'"]
+18 temporary_key = 7
+18 ['encrypted_message', 'temporary_key'] ["'CAB'", '7']
+19 cipher_key = temporary_key & 0xF  # Ensure key is 4-bits only
+19 ['encrypted_message', 'temporary_key', 'cipher_key'] ["'CAB'", '7', '7']
+22 decrypted_value = decrypt_message(encrypted_message, cipher_key)
+22 ['encrypted_message', 'cipher_key'] ["'CAB'", '7']
+3 result = 0
+3 ['message', 'key', 'result'] ["'CAB'", '7', '0']
+4 char_values = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6}
+4 ['message', 'key', 'result', 'char_values'] ["'CAB'", '7', '0', '{A: 1, B: 2, C: 3, ...}']
+5 position_multipliers = {0: 1, 1: 2, 2: 3}
+5 ['message', 'key', 'result', 'char_values', 'position_multipliers'] ["'CAB'", '7', '0', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}']
+7 for i, char in enumerate(message):
+7 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char'] ["'CAB'", '7', '0', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '0', "'C'"]
+8 if i < len(position_multipliers):
+8 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char'] ["'CAB'", '7', '0', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '0', "'C'"]
+10 char_value = char_values.get(char, 0)
+10 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value'] ["'CAB'", '7', '0', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '0', "'C'", '3']
+11 multiplier = position_multipliers[i]
+11 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '0', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '0', "'C'", '3', '1']
+12 result += (char_value * multiplier) ^ key
+12 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '4', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '0', "'C'", '3', '1']
+7 for i, char in enumerate(message):
+7 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '4', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '1', "'A'", '3', '1']
+8 if i < len(position_multipliers):
+8 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '4', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '1', "'A'", '3', '1']
+10 char_value = char_values.get(char, 0)
+10 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '4', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '1', "'A'", '1', '1']
+11 multiplier = position_multipliers[i]
+11 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '4', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '1', "'A'", '1', '2']
+12 result += (char_value * multiplier) ^ key
+12 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '9', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '1', "'A'", '1', '2']
+7 for i, char in enumerate(message):
+7 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '9', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '2', "'B'", '1', '2']
+8 if i < len(position_multipliers):
+8 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '9', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '2', "'B'", '1', '2']
+10 char_value = char_values.get(char, 0)
+10 ['message', 'key', 'result', 'char_values', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '9', '{A: 1, B: 2, C: 3, ...}', '{0: 1, 1: 2, 2: 3}', '2', "'B'", '2', '2']
+11 multiplier = position_multipliers[i]
+11 ['message', 'key', 'result', 'position_multipliers', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '9', '{0: 1, 1: 2, 2: 3}', '2', "'B'", '2', '3']
+12 result += (char_value * multiplier) ^ key
+12 ['message', 'key', 'result', 'i', 'char', 'char_value', 'multiplier'] ["'CAB'", '7', '10', '2', "'B'", '2', '3']
+7 for i, char in enumerate(message):
+7 ['message', 'result', 'i', 'char'] ["'CAB'", '10', '2', "'B'"]
+14 return result
+14 ['result'] ['10']
+23 print(f"Result: {decrypted_value}")
+23 ['decrypted_value'] ['10']

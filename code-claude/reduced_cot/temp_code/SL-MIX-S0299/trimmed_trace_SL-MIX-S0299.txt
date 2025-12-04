@@ -1,0 +1,165 @@
+86
+priority_score
+---
+51 signal_data = [18, 23, 45, 12, 23, 42, 18, 36]
+51 ['signal_data'] ['[18, 23, 45, 12, 23, ...]']
+53 processing_flags = {'normalize': True, 'filter_duplicates': False, 'enhance': True}
+53 ['signal_data', 'processing_flags'] ['[18, 23, 45, 12, 23, ...]', '{normalize: True, filter_duplicates: False, enhance: True}']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['18']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['23']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['45']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['12']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['23']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['42']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['18']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['s'] ['36']
+56 enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+56 ['signal_data', 'processing_flags', 'enhanced_signals'] ['[18, 23, 45, 12, 23, ...]', '{normalize: True, filter_duplicates: False, enhance: True}', '[36, 46, 90, 24, 46, ...]']
+57 if processing_flags['normalize']:
+57 ['signal_data', 'processing_flags', 'enhanced_signals'] ['[18, 23, 45, 12, 23, ...]', '{normalize: True, filter_duplicates: False, enhance: True}', '[36, 46, 90, 24, 46, ...]']
+58 max_signal = max(enhanced_signals)
+58 ['signal_data', 'processing_flags', 'enhanced_signals', 'max_signal'] ['[18, 23, 45, 12, 23, ...]', '{normalize: True, filter_duplicates: False, enhance: True}', '[36, 46, 90, 24, 46, ...]', '90']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['36']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['46']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['90']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['24']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['46']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['84']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['36']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['s'] ['72']
+59 normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+59 ['signal_data', 'processing_flags', 'enhanced_signals', 'max_signal', 'normalized_signals'] ['[18, 23, 45, 12, 23, ...]', '{normalize: True, filter_duplicates: False, enhance: True}', '[36, 46, 90, 24, 46, ...]', '90', '[40.0, 51.11111111111111, 100.0, 26.666666666666668, 51.11111111111111, ...]']
+64 if processing_flags['filter_duplicates']:
+64 ['signal_data', 'processing_flags', 'normalized_signals'] ['[18, 23, 45, 12, 23, ...]', '{normalize: True, filter_duplicates: False, enhance: True}', '[40.0, 51.11111111111111, 100.0, 26.666666666666668, 51.11111111111111, ...]']
+67 filtered_signals = signal_data.copy()
+67 ['signal_data', 'normalized_signals', 'filtered_signals'] ['[18, 23, 45, 12, 23, ...]', '[40.0, 51.11111111111111, 100.0, 26.666666666666668, 51.11111111111111, ...]', '[18, 23, 45, 12, 23, ...]']
+70 lambda_transform = lambda x: x**2 - x + 41
+70 ['normalized_signals', 'filtered_signals'] ['[40.0, 51.11111111111111, 100.0, 26.666666666666668, 51.11111111111111, ...]', '[18, 23, 45, 12, 23, ...]']
+71 transformed_signals = list(map(lambda_transform, normalized_signals))
+71 ['normalized_signals', 'filtered_signals'] ['[40.0, 51.11111111111111, 100.0, 26.666666666666668, 51.11111111111111, ...]', '[18, 23, 45, 12, 23, ...]']
+74 quality_index = sum(transformed_signals) / len(transformed_signals)
+74 ['filtered_signals', 'transformed_signals', 'quality_index'] ['[18, 23, 45, 12, 23, ...]', '[1601.0, 2602.234567901234, 9941.0, 725.4444444444446, 2602.234567901234, ...]', '4261.586419753086']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 [] []
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['1601.0']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['2602.234567901234']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['9941.0']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['725.4444444444446']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['2602.234567901234']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['8658.777777777776']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['1601.0']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['6361.0']
+75 variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+75 ['s'] ['6361.0']
+78 priority_score = calculate_priority(filtered_signals)
+78 ['filtered_signals', 'variance_metric'] ['[18, 23, 45, 12, 23, ...]', '11020900.654435297']
+21 if not signals:
+21 ['signals'] ['[18, 23, 45, 12, 23, ...]']
+25 base_value = sum(signals) // len(signals)
+25 ['signals', 'base_value'] ['[18, 23, 45, 12, 23, ...]', '27']
+32 unique_signals = set(signals)
+32 ['signals', 'unique_signals', 'base_value'] ['[18, 23, 45, 12, 23, ...]', '{36, 42, 12, 45, 18, ...}', '27']
+37 for s in signals[:3]:
+37 ['signals', 'unique_signals', 's', 'base_value'] ['[18, 23, 45, 12, 23, ...]', '{36, 42, 12, 45, 18, ...}', '18', '27']
+37 for s in signals[:3]:
+37 ['signals', 'unique_signals', 's', 'base_value'] ['[18, 23, 45, 12, 23, ...]', '{36, 42, 12, 45, 18, ...}', '23', '27']
+37 for s in signals[:3]:
+37 ['signals', 'unique_signals', 's', 'base_value'] ['[18, 23, 45, 12, 23, ...]', '{36, 42, 12, 45, 18, ...}', '45', '27']
+37 for s in signals[:3]:
+37 ['signals', 'unique_signals', 's', 'base_value'] ['[18, 23, 45, 12, 23, ...]', '{36, 42, 12, 45, 18, ...}', '45', '27']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '36', '27']
+3 binary = bin(signal)[2:]
+3 ['signal', 'binary'] ['36', "'100100'"]
+4 ones_count = binary.count('1')
+4 ['signal', 'binary', 'ones_count'] ['36', "'100100'", '2']
+5 zeros_count = binary.count('0')
+5 ['signal', 'binary', 'ones_count', 'zeros_count'] ['36', "'100100'", '2', '4']
+8 return ones_count - zeros_count
+8 ['signal', 'binary', 'ones_count', 'zeros_count'] ['36', "'100100'", '2', '4']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '42', '27']
+3 binary = bin(signal)[2:]
+3 ['signal', 'binary'] ['42', "'101010'"]
+4 ones_count = binary.count('1')
+4 ['signal', 'binary', 'ones_count'] ['42', "'101010'", '3']
+5 zeros_count = binary.count('0')
+5 ['signal', 'binary', 'ones_count', 'zeros_count'] ['42', "'101010'", '3', '3']
+8 return ones_count - zeros_count
+8 ['signal', 'binary', 'ones_count', 'zeros_count'] ['42', "'101010'", '3', '3']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '12', '27']
+3 binary = bin(signal)[2:]
+3 ['signal', 'binary'] ['12', "'1100'"]
+4 ones_count = binary.count('1')
+4 ['signal', 'binary', 'ones_count'] ['12', "'1100'", '2']
+5 zeros_count = binary.count('0')
+5 ['signal', 'binary', 'ones_count', 'zeros_count'] ['12', "'1100'", '2', '2']
+8 return ones_count - zeros_count
+8 ['signal', 'binary', 'ones_count', 'zeros_count'] ['12', "'1100'", '2', '2']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '45', '27']
+3 binary = bin(signal)[2:]
+3 ['signal', 'binary'] ['45', "'101101'"]
+4 ones_count = binary.count('1')
+4 ['signal', 'binary', 'ones_count'] ['45', "'101101'", '4']
+5 zeros_count = binary.count('0')
+5 ['signal', 'binary', 'ones_count', 'zeros_count'] ['45', "'101101'", '4', '2']
+8 return ones_count - zeros_count
+8 ['signal', 'binary', 'ones_count', 'zeros_count'] ['45', "'101101'", '4', '2']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '18', '27']
+3 binary = bin(signal)[2:]
+3 ['signal', 'binary'] ['18', "'10010'"]
+4 ones_count = binary.count('1')
+4 ['signal', 'binary', 'ones_count'] ['18', "'10010'", '2']
+5 zeros_count = binary.count('0')
+5 ['signal', 'binary', 'ones_count', 'zeros_count'] ['18', "'10010'", '2', '3']
+8 return ones_count - zeros_count
+8 ['signal', 'binary', 'ones_count', 'zeros_count'] ['18', "'10010'", '2', '3']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '23', '27']
+3 binary = bin(signal)[2:]
+3 ['signal', 'binary'] ['23', "'10111'"]
+4 ones_count = binary.count('1')
+4 ['binary', 'ones_count'] ["'10111'", '4']
+5 zeros_count = binary.count('0')
+5 ['binary', 'ones_count', 'zeros_count'] ["'10111'", '4', '1']
+8 return ones_count - zeros_count
+8 ['ones_count', 'zeros_count'] ['4', '1']
+41 bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+41 ['unique_signals', 's', 'bit_scores', 'base_value'] ['{36, 42, 12, 45, 18, ...}', '45', '[-2, 0, 0, 2, -1, ...]', '27']
+42 priority = base_value + sum(bit_scores)
+42 ['bit_scores', 'priority', 'base_value'] ['[-2, 0, 0, 2, -1, ...]', '29', '27']
+48 return priority
+48 ['priority'] ['29']
+81 if variance_metric > 1000:
+81 ['variance_metric', 'priority_score'] ['11020900.654435297', '29']
+82 priority_score += 10
+82 ['priority_score'] ['39']
+86 print(f"Result: {priority_score}")
+86 ['priority_score'] ['39']

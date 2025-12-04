@@ -1,0 +1,129 @@
+Target: Find the value of variable network_throughput after [line 128] executes
+
+[line 81]  primary_interfaces = ['eth0', 'eth1', 'wlan0']
+Compute: ['eth0', 'eth1', 'wlan0'] = ['eth0', 'eth1', 'wlan0']
+[line 82]  backup_interfaces = ['eth2', 'wlan1']
+Compute: ['eth2', 'wlan1'] = ['eth2', 'wlan1']
+[line 85]  all_interface_combinations = list(itertools.product(primary_interfaces, backup_interfaces))
+Call function list(itertools.product(primary_interfaces, backup_interfaces))
+[line 89]  for primary, backup in all_interface_combinations:
+(Missing param: 'iter_var')
+[line 89]  for primary, backup in all_interface_combinations:
+Loop End: Iteration finished
+[line 89]  for primary, backup in all_interface_combinations:
+Loop End: Iteration finished
+[line 89]  for primary, backup in all_interface_combinations:
+Loop End: Iteration finished
+[line 89]  for primary, backup in all_interface_combinations:
+Loop End: Iteration finished
+[line 89]  for primary, backup in all_interface_combinations:
+Loop End: Iteration finished
+[line 89]  for primary, backup in all_interface_combinations:
+Loop End: Iteration finished
+[line 5]  priority_levels = {'HIGH': 3, 'MEDIUM': 2, 'LOW': 1}
+Compute: {'HIGH': 3, 'MEDIUM': 2, 'LOW': 1} = {HIGH: 3, MEDIUM: 2, LOW: 1}
+[line 6]  total_priority = 0
+Assign: total_priority = 0
+[line 7]  for header in headers:
+Loop Start: header takes its first value {id: 1, priority: 'HIGH', encrypted: True}
+[line 8]  if 'priority' in header:
+Condition: True, entering 'if' block
+[line 9]  total_priority += priority_levels.get(header['priority'], 0)
+Update: total_priority changed from 0 (defined at defined at [line 6]) to 0+priority_levels.get(header['priority'], 0) = 3
+[line 10]  if 'encrypted' in header and header['encrypted']:
+Condition: True, entering 'if' block
+[line 11]  total_priority += 2
+Update: total_priority changed from 3 (defined at defined at [line 9]) to 3+2 = 5
+[line 7]  for header in headers:
+Loop Iteration: header is now {id: 2, priority: 'MEDIUM', encrypted: False} (iteration 2)
+[line 8]  if 'priority' in header:
+Condition: True, entering 'if' block
+[line 9]  total_priority += priority_levels.get(header['priority'], 0)
+Update: total_priority changed from 5 (defined at defined at [line 11]) to 5+priority_levels.get(header['priority'], 0) = 7
+[line 10]  if 'encrypted' in header and header['encrypted']:
+Condition: True, entering 'if' block
+[line 7]  for header in headers:
+Loop Iteration: header is now {id: 3, priority: 'LOW', encrypted: False} (iteration 3)
+[line 8]  if 'priority' in header:
+Condition: True, entering 'if' block
+[line 9]  total_priority += priority_levels.get(header['priority'], 0)
+Update: total_priority changed from 7 (defined at defined at [line 9]) to 7+priority_levels.get(header['priority'], 0) = 8
+[line 10]  if 'encrypted' in header and header['encrypted']:
+Condition: True, entering 'if' block
+[line 7]  for header in headers:
+Loop End: Iteration finished
+[line 12]  return total_priority * 0.75  # Scaling factor
+Return: total_priority * 0.75  # Scaling factor
+[line 116]  noise_factor = 4
+Assign: noise_factor = 4
+[line 119]  network_throughput = calculate_effective_throughput(packet_data, noise_factor)
+Call function calculate_effective_throughput(packet_data={payload_size: 1500, protocol: 'TCP', latency: 25, ...} (an unknown source), noise_factor=4 (defined at [line 116]))
+[line 26]  def calculate_effective_throughput(packet_data, noise_factor):
+Enter function calculate_effective_throughput: packet_data={payload_size: 1500, protocol: 'TCP', latency: 25, ...}, noise_factor=4 (noise_factor defined at [line 116])
+  [line 29]  raw_data = packet_data['payload_size']
+  Compute: packet_data['payload_size'], where packet_data={payload_size: 1500, protocol: 'TCP', latency: 25, ...} (parameter packet_data) = 1500
+  [line 30]  protocol = packet_data['protocol']
+  Compute: packet_data['protocol'], where packet_data={payload_size: 1500, protocol: 'TCP', latency: 25, ...} (parameter packet_data) = 'TCP'
+  [line 38]  for status in packet_data.get('transmission_status', ['OK', 'OK']):
+  Loop Start: status takes its first value 'OK'
+  [line 39]  if status != 'OK':
+  Condition: True, entering 'if' block
+  [line 38]  for status in packet_data.get('transmission_status', ['OK', 'OK']):
+  Loop Iteration: status is now 'OK' (iteration 2)
+  [line 39]  if status != 'OK':
+  Condition: True, entering 'if' block
+  [line 38]  for status in packet_data.get('transmission_status', ['OK', 'OK']):
+  Loop Iteration: status is now 'ERROR' (iteration 3)
+  [line 39]  if status != 'OK':
+  Condition: True, entering 'if' block
+  [line 38]  for status in packet_data.get('transmission_status', ['OK', 'OK']):
+  Loop Iteration: status is now 'OK' (iteration 4)
+  [line 39]  if status != 'OK':
+  Condition: True, entering 'if' block
+  [line 38]  for status in packet_data.get('transmission_status', ['OK', 'OK']):
+  Loop End: Iteration finished
+  [line 43]  base_throughput = raw_data * 8  # Convert bytes to bits
+  Compute: raw_data * 8  # Convert bytes to bits, where raw_data=1500 (defined at [line 29]) = 12000
+  [line 46]  if noise_factor > 5:
+  Condition: True, entering 'if' block
+  [line 51]  overhead = calculate_bandwidth_overhead(raw_data, protocol)
+  Call function calculate_bandwidth_overhead(raw_data=1500 (defined at [line 29]), protocol='TCP' (defined at [line 30]))
+  [line 23]  base_overhead = protocol_overhead.get(protocol_type, 0.1)
+  (Missing param: 'func_name')
+  [line 24]  return data_size * base_overhead
+  Return: data_size * base_overhead
+  [line 52]  effective_throughput = base_throughput - (overhead * 8)
+  Compute: base_throughput - (overhead * 8), where base_throughput=12000 (defined at [line 43]), overhead=180.0 (defined at [line 51]) = 10560.0
+  [line 55]  packet_loss = packet_data.get('packet_loss', 0.05)
+  (Missing param: 'func_name')
+  [line 56]  if packet_loss > 0.1:
+  Condition: True, entering 'if' block
+  [line 59]  effective_throughput *= (1 - packet_loss)
+  Update: effective_throughput changed from 10560.0 (defined at defined at [line 52]) to 10560.0*(1 - packet_loss) = 10243.199999999999
+  [line 62]  signal_strength = packet_data.get('signal_strength', -65)
+  (Missing param: 'func_name')
+  [line 63]  if signal_strength < -70:
+  Condition: True, entering 'if' block
+  [line 65]  elif signal_strength < -60:
+  'elif' Condition: True, entering block
+  [line 71]  noise_adjustment = 1.0
+  Assign: noise_adjustment = 1.0
+  [line 72]  if noise_factor < 3:
+  Condition: True, entering 'if' block
+  [line 74]  elif noise_factor < 5:
+  'elif' Condition: True, entering block
+  [line 75]  noise_adjustment = 0.9
+  Assign: noise_adjustment = 0.9
+  [line 78]  return round(effective_throughput * noise_adjustment, 2)
+  Return: round(effective_throughput * noise_adjustment, 2)
+Function calculate_effective_throughput returns 9218.88
+[line 125]  print(f"Interface pairs analyzed: {len(all_interface_combinations)}")
+Output: f"Interface pairs analyzed: {len(all_interface_combinations)}"
+[line 126]  print(f"Header priority score: {header_priority}")
+Output: f"Header priority score: {header_priority}"
+[line 127]  print(f"Packet efficiency: {packet_efficiency}")
+Output: f"Packet efficiency: {packet_efficiency}"
+[line 128]  print(f"Result: {network_throughput}")
+Output: f"Result: {network_throughput}"
+
+Answer: network_throughput = 9218.88 (last updated on defined at [line 119])

@@ -1,0 +1,163 @@
+85
+final_inventory
+---
+83 final_inventory = calculate_remaining_inventory(product_sales, initial_stock)
+83 ['initial_stock', 'product_sales'] ['{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}']
+8 remaining = {}
+8 ['sales_data', 'initial_inventory', 'remaining'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{}']
+11 for product, quantity in initial_inventory.items():
+11 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{}', "'electronics_laptop'", '15']
+12 sold = sales_data.get(product, 0)
+12 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{}', "'electronics_laptop'", '15', '10']
+13 remaining[product] = max(0, quantity - sold)
+13 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5}', "'electronics_laptop'", '15', '10']
+16 if product.startswith('electronics'):
+16 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5}', "'electronics_laptop'", '15', '10']
+26 if remaining[product] < 5:
+26 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5}', "'electronics_laptop'", '15', '10']
+11 for product, quantity in initial_inventory.items():
+11 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5}', "'electronics_phone'", '30', '10']
+12 sold = sales_data.get(product, 0)
+12 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5}', "'electronics_phone'", '30', '25']
+13 remaining[product] = max(0, quantity - sold)
+13 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5}', "'electronics_phone'", '30', '25']
+16 if product.startswith('electronics'):
+16 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5}', "'electronics_phone'", '30', '25']
+26 if remaining[product] < 5:
+26 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5}', "'electronics_phone'", '30', '25']
+11 for product, quantity in initial_inventory.items():
+11 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5}', "'clothing_shirt'", '45', '25']
+12 sold = sales_data.get(product, 0)
+12 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5}', "'clothing_shirt'", '45', '15']
+13 remaining[product] = max(0, quantity - sold)
+13 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30}', "'clothing_shirt'", '45', '15']
+16 if product.startswith('electronics'):
+16 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30}', "'clothing_shirt'", '45', '15']
+18 elif product.startswith('clothing'):
+18 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30}', "'clothing_shirt'", '45', '15']
+26 if remaining[product] < 5:
+26 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30}', "'clothing_shirt'", '45', '15']
+11 for product, quantity in initial_inventory.items():
+11 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30}', "'clothing_pants'", '25', '15']
+12 sold = sales_data.get(product, 0)
+12 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30}', "'clothing_pants'", '25', '10']
+13 remaining[product] = max(0, quantity - sold)
+13 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", '25', '10']
+16 if product.startswith('electronics'):
+16 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", '25', '10']
+18 elif product.startswith('clothing'):
+18 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", '25', '10']
+26 if remaining[product] < 5:
+26 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", '25', '10']
+11 for product, quantity in initial_inventory.items():
+11 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", '50', '10']
+12 sold = sales_data.get(product, 0)
+12 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", '50', '20']
+13 remaining[product] = max(0, quantity - sold)
+13 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", '50', '20']
+16 if product.startswith('electronics'):
+16 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", '50', '20']
+18 elif product.startswith('clothing'):
+18 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", '50', '20']
+26 if remaining[product] < 5:
+26 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", '50', '20']
+11 for product, quantity in initial_inventory.items():
+11 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35', '20']
+12 sold = sales_data.get(product, 0)
+12 ['sales_data', 'initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 10, electronics_phone: 25, clothing_shirt: 15, ...}', '{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35', '15']
+13 remaining[product] = max(0, quantity - sold)
+13 ['initial_inventory', 'remaining', 'product', 'quantity', 'sold'] ['{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35', '15']
+16 if product.startswith('electronics'):
+16 ['initial_inventory', 'remaining', 'product', 'quantity'] ['{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35']
+18 elif product.startswith('clothing'):
+18 ['initial_inventory', 'remaining', 'product', 'quantity'] ['{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35']
+26 if remaining[product] < 5:
+26 ['initial_inventory', 'remaining', 'product', 'quantity'] ['{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35']
+11 for product, quantity in initial_inventory.items():
+11 ['initial_inventory', 'remaining', 'product', 'quantity'] ['{electronics_laptop: 15, electronics_phone: 30, clothing_shirt: 45, ...}', '{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '35']
+30 categories = {}
+30 ['remaining', 'product', 'categories'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '{}']
+31 for product in remaining:
+31 ['remaining', 'product', 'categories'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{}']
+32 category = product.split('_')[0]
+32 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{}', "'electronics'"]
+33 if category not in categories:
+33 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{}', "'electronics'"]
+34 categories[category] = []
+34 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{electronics: []}', "'electronics'"]
+31 for product in remaining:
+31 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_phone'", "{electronics: ['electronics_laptop']}", "'electronics'"]
+32 category = product.split('_')[0]
+32 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_phone'", "{electronics: ['electronics_laptop']}", "'electronics'"]
+33 if category not in categories:
+33 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_phone'", "{electronics: ['electronics_laptop']}", "'electronics'"]
+31 for product in remaining:
+31 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{electronics: ['electronics_laptop', 'electronics_phone']}", "'electronics'"]
+32 category = product.split('_')[0]
+32 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{electronics: ['electronics_laptop', 'electronics_phone']}", "'clothing'"]
+33 if category not in categories:
+33 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{electronics: ['electronics_laptop', 'electronics_phone']}", "'clothing'"]
+34 categories[category] = []
+34 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: []}", "'clothing'"]
+31 for product in remaining:
+31 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt']}", "'clothing'"]
+32 category = product.split('_')[0]
+32 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt']}", "'clothing'"]
+33 if category not in categories:
+33 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt']}", "'clothing'"]
+31 for product in remaining:
+31 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants']}", "'clothing'"]
+32 category = product.split('_')[0]
+32 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants']}", "'books'"]
+33 if category not in categories:
+33 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants']}", "'books'"]
+34 categories[category] = []
+34 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants'], books: []}", "'books'"]
+31 for product in remaining:
+31 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants'], books: ['books_fiction']}", "'books'"]
+32 category = product.split('_')[0]
+32 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants'], books: ['books_fiction']}", "'books'"]
+33 if category not in categories:
+33 ['remaining', 'product', 'categories', 'category'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", "{electronics: ['electronics_laptop', 'electronics_phone'], clothing: ['clothing_shirt', 'clothing_pants'], books: ['books_fiction']}", "'books'"]
+31 for product in remaining:
+31 ['remaining', 'product'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'"]
+38 inventory_counts = {}
+38 ['remaining', 'product', 'inventory_counts'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '{}']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{}', '5']
+40 if count not in inventory_counts:
+40 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{}', '5']
+41 inventory_counts[count] = []
+41 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_laptop'", '{5: []}', '5']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_phone'", "{5: ['electronics_laptop']}", '5']
+40 if count not in inventory_counts:
+40 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'electronics_phone'", "{5: ['electronics_laptop']}", '5']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{5: ['electronics_laptop', 'electronics_phone']}", '30']
+40 if count not in inventory_counts:
+40 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{5: ['electronics_laptop', 'electronics_phone']}", '30']
+41 inventory_counts[count] = []
+41 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_shirt'", "{5: ['electronics_laptop', 'electronics_phone'], 30: []}", '30']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt']}", '15']
+40 if count not in inventory_counts:
+40 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt']}", '15']
+41 inventory_counts[count] = []
+41 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'clothing_pants'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt'], 15: []}", '15']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt'], 15: ['clothing_pants']}", '30']
+40 if count not in inventory_counts:
+40 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_fiction'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt'], 15: ['clothing_pants']}", '30']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt', 'books_fiction'], 15: ['clothing_pants']}", '20']
+40 if count not in inventory_counts:
+40 ['remaining', 'product', 'inventory_counts', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", "{5: ['electronics_laptop', 'electronics_phone'], 30: ['clothing_shirt', 'books_fiction'], 15: ['clothing_pants']}", '20']
+39 for product, count in remaining.items():
+39 ['remaining', 'product', 'count'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}', "'books_nonfiction'", '20']
+45 if remaining:
+45 ['remaining'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}']
+54 return sum(remaining.values())
+54 ['remaining'] ['{electronics_laptop: 5, electronics_phone: 5, clothing_shirt: 30, ...}']
+85 print(f"Result: {final_inventory}")
+85 ['final_inventory'] ['105']

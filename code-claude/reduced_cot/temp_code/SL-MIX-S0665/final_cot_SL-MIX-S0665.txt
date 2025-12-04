@@ -1,0 +1,216 @@
+Target: Find the value of variable profit_margin after [line 101] executes
+
+[line 48]  def calculate_margin(items, tax_rate):
+Enter function calculate_margin: items=[{id: 101, category: 'electronics', price: 799.99, ...}, {id: 102, category: 'accessories', price: 59.99, ...}, {id: 103, category: 'clothing', price: 129.99, ...}, {id: 104, category: 'clearance', price: 299.99, ...}, {id: 105, category: 'electronics', price: 1299.99, ...}, ...], tax_rate=0.21
+  [line 49]  total_cost = 0
+  Assign: total_cost = 0
+  [line 50]  total_revenue = 0
+  Assign: total_revenue = 0
+  [line 51]  promotion_active = False
+  Assign: promotion_active = False
+  [line 54]  category_items = defaultdict(list)
+  Call function defaultdict(list)
+  [line 55]  for item in items:
+  Loop Start: item takes its first value {id: 101, category: 'electronics', price: 799.99, ...}
+  [line 55]  for item in items:
+  Loop End: Iteration finished
+  [line 55]  for item in items:
+  Loop End: Iteration finished
+  [line 55]  for item in items:
+  Loop End: Iteration finished
+  [line 55]  for item in items:
+  Loop End: Iteration finished
+  [line 55]  for item in items:
+  Loop End: Iteration finished
+  [line 55]  for item in items:
+  Loop End: Iteration finished
+  [line 59]  bundle_categories = ['electronics', 'accessories']
+  Compute: ['electronics', 'accessories'] = ['electronics', 'accessories']
+  [line 60]  bundle_discount = 0
+  Assign: bundle_discount = 0
+  [line 61]  if all(len(category_items[cat]) > 0 for cat in bundle_categories):
+  Condition: True, entering 'if' block
+  [line 61]  if all(len(category_items[cat]) > 0 for cat in bundle_categories):
+  Condition: True, entering 'if' block
+  [line 61]  if all(len(category_items[cat]) > 0 for cat in bundle_categories):
+  Condition: True, entering 'if' block
+  [line 61]  if all(len(category_items[cat]) > 0 for cat in bundle_categories):
+  Condition: True, entering 'if' block
+  [line 62]  bundle_discount = 0.07
+  Assign: bundle_discount = 0.07
+  [line 63]  promotion_active = True
+  Assign: promotion_active = True
+  [line 66]  for item in items:
+  Loop Start: item takes its first value {id: 101, category: 'electronics', price: 799.99, ...}
+  [line 68]  supplier_discount = 0.05 if item['quantity'] > 20 else 0.02
+  Compute: 0.05 if item['quantity'] > 20 else 0.02, where item={id: 101, category: 'electronics', price: 799.99, ...} (defined at [line 66]) = 0.02
+  [line 69]  item_cost = item['cost'] * item['quantity'] * (1 - supplier_discount)
+  Compute: item['cost'] * item['quantity'] * (1 - supplier_discount), where item={id: 101, category: 'electronics', price: 799.99, ...} (defined at [line 66]), supplier_discount=0.02 (defined at [line 68]) = 8085.0
+  [line 76]  discount = calculate_discount(item['price'], item['category'], item['days_in_inventory'])
+  Call function calculate_discount(item['price'], item['category'], item['days_in_inventory'])
+  [line 5]  base_discount = 0.05
+  Assign: base_discount = 0.05
+  [line 6]  if category in ['electronics', 'appliances']:
+  Condition: True, entering 'if' block
+  [line 7]  base_discount = 0.10 if inventory_days > 90 else 0.07
+  Compute: 0.10 if inventory_days > 90 else 0.07, where inventory_days=45 (an unknown source) = 0.07
+  [line 14]  tier_discount = 0
+  Assign: tier_discount = 0
+  [line 15]  if price > 1000:
+  Condition: True, entering 'if' block
+  [line 17]  elif price > 500:
+  'elif' Condition: True, entering block
+  [line 18]  tier_discount = 0.03
+  Assign: tier_discount = 0.03
+  [line 22]  return min(base_discount + tier_discount, 0.30)  # Cap at 30%
+  Return: min(base_discount + tier_discount, 0.30)  # Cap at 30%
+  [line 77]  if promotion_active and item['category'] in bundle_categories:
+  Condition: True, entering 'if' block
+  [line 78]  discount = max(discount, bundle_discount)
+  Call function max(discount=0.1 (defined at [line 76]), bundle_discount=0.07 (defined at [line 62]))
+  [line 81]  item_revenue = item['price'] * item['quantity'] * (1 - discount)
+  Compute: item['price'] * item['quantity'] * (1 - discount), where item={id: 101, category: 'electronics', price: 799.99, ...} (defined at [line 66]), discount=0.1 (defined at [line 78]) = 10799.865
+  [line 84]  total_cost += item_cost  # Use actual cost, not adjusted_cost
+  Update: total_cost changed from 0 (defined at defined at [line 49]) to 0+item_cost  # Use actual cost, not adjusted_cost = 8085.0
+  [line 85]  total_revenue += item_revenue
+  Update: total_revenue changed from 0 (defined at defined at [line 50]) to 0+item_revenue = 10799.865
+  [line 66]  for item in items:
+  Loop Iteration: item is now {id: 102, category: 'accessories', price: 59.99, ...} (iteration 2)
+  [line 68]  supplier_discount = 0.05 if item['quantity'] > 20 else 0.02
+  Compute: 0.05 if item['quantity'] > 20 else 0.02, where item={id: 102, category: 'accessories', price: 59.99, ...} (defined at [line 66]) = 0.05
+  [line 69]  item_cost = item['cost'] * item['quantity'] * (1 - supplier_discount)
+  Compute: item['cost'] * item['quantity'] * (1 - supplier_discount), where item={id: 102, category: 'accessories', price: 59.99, ...} (defined at [line 66]), supplier_discount=0.05 (defined at [line 68]) = 712.5
+  [line 76]  discount = calculate_discount(item['price'], item['category'], item['days_in_inventory'])
+  Call function calculate_discount(item['price'], item['category'], item['days_in_inventory'])
+  [line 5]  base_discount = 0.05
+  Assign: base_discount = 0.05
+  [line 6]  if category in ['electronics', 'appliances']:
+  Condition: True, entering 'if' block
+  [line 8]  elif category in ['clothing', 'accessories']:
+  'elif' Condition: True, entering block
+  [line 9]  base_discount = 0.15 if inventory_days > 60 else 0.12
+  Compute: 0.15 if inventory_days > 60 else 0.12, where inventory_days=60 (an unknown source) = 0.12
+  [line 14]  tier_discount = 0
+  Assign: tier_discount = 0
+  [line 15]  if price > 1000:
+  Condition: True, entering 'if' block
+  [line 17]  elif price > 500:
+  'elif' Condition: True, entering block
+  [line 19]  elif price > 100:
+  'elif' Condition: True, entering block
+  [line 22]  return min(base_discount + tier_discount, 0.30)  # Cap at 30%
+  Return: min(base_discount + tier_discount, 0.30)  # Cap at 30%
+  [line 77]  if promotion_active and item['category'] in bundle_categories:
+  Condition: True, entering 'if' block
+  [line 78]  discount = max(discount, bundle_discount)
+  Call function max(discount=0.12 (defined at [line 76]), bundle_discount=0.07 (defined at [line 62]))
+  [line 81]  item_revenue = item['price'] * item['quantity'] * (1 - discount)
+  Compute: item['price'] * item['quantity'] * (1 - discount), where item={id: 102, category: 'accessories', price: 59.99, ...} (defined at [line 66]), discount=0.12 (defined at [line 78]) = 1583.736
+  [line 84]  total_cost += item_cost  # Use actual cost, not adjusted_cost
+  Update: total_cost changed from 8085.0 (defined at defined at [line 84]) to 8085.0+item_cost  # Use actual cost, not adjusted_cost = 8797.5
+  [line 85]  total_revenue += item_revenue
+  Update: total_revenue changed from 10799.865 (defined at defined at [line 85]) to 10799.865+item_revenue = 12383.601
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+  [line 66]  for item in items:
+  Loop Iteration: item is now {id: 106, category: 'appliances', price: 649.99, ...} (iteration 6)
+  [line 68]  supplier_discount = 0.05 if item['quantity'] > 20 else 0.02
+  Compute: 0.05 if item['quantity'] > 20 else 0.02, where item={id: 106, category: 'appliances', price: 649.99, ...} (defined at [line 66]) = 0.02
+  [line 69]  item_cost = item['cost'] * item['quantity'] * (1 - supplier_discount)
+  Compute: item['cost'] * item['quantity'] * (1 - supplier_discount), where item={id: 106, category: 'appliances', price: 649.99, ...} (defined at [line 66]), supplier_discount=0.02 (defined at [line 68]) = 5292.0
+  [line 76]  discount = calculate_discount(item['price'], item['category'], item['days_in_inventory'])
+  Call function calculate_discount(item['price'], item['category'], item['days_in_inventory'])
+  [line 5]  base_discount = 0.05
+  Assign: base_discount = 0.05
+  [line 6]  if category in ['electronics', 'appliances']:
+  Condition: True, entering 'if' block
+  [line 7]  base_discount = 0.10 if inventory_days > 90 else 0.07
+  Compute: 0.10 if inventory_days > 90 else 0.07, where inventory_days=95 (an unknown source) = 0.1
+  [line 14]  tier_discount = 0
+  Assign: tier_discount = 0
+  [line 15]  if price > 1000:
+  Condition: True, entering 'if' block
+  [line 17]  elif price > 500:
+  'elif' Condition: True, entering block
+  [line 18]  tier_discount = 0.03
+  Assign: tier_discount = 0.03
+  [line 22]  return min(base_discount + tier_discount, 0.30)  # Cap at 30%
+  Return: min(base_discount + tier_discount, 0.30)  # Cap at 30%
+  [line 77]  if promotion_active and item['category'] in bundle_categories:
+  Condition: True, entering 'if' block
+  [line 81]  item_revenue = item['price'] * item['quantity'] * (1 - discount)
+  Compute: item['price'] * item['quantity'] * (1 - discount), where item={id: 106, category: 'appliances', price: 649.99, ...} (defined at [line 66]), discount=0.13 (defined at [line 76]) = 6785.8956
+  [line 84]  total_cost += item_cost  # Use actual cost, not adjusted_cost
+  Update: total_cost changed from 18965.25 (defined at defined at [line 84]) to 18965.25+item_cost  # Use actual cost, not adjusted_cost = 24257.25
+  [line 85]  total_revenue += item_revenue
+  Update: total_revenue changed from 25327.7866 (defined at defined at [line 85]) to 25327.7866+item_revenue = 32113.6822
+  [line 66]  for item in items:
+  Loop End: Iteration finished
+  [line 26]  category_counts = Counter()
+  Call function Counter()
+  [line 30]  for product in products:
+  Loop Start: product takes its first value {id: 101, category: 'electronics', price: 799.99, ...}
+  [line 33]  if product['price'] > 500:
+  Condition: True, entering 'if' block
+  [line 30]  for product in products:
+  Loop Iteration: product is now {id: 102, category: 'accessories', price: 59.99, ...} (iteration 2)
+  [line 33]  if product['price'] > 500:
+  Condition: True, entering 'if' block
+... [Line 30] repeats 3 more times ...
+... [Line 30] repeats 3 more times ...
+... [Line 30] repeats 3 more times ...
+  [line 30]  for product in products:
+  Loop Iteration: product is now {id: 106, category: 'appliances', price: 649.99, ...} (iteration 6)
+  [line 33]  if product['price'] > 500:
+  Condition: True, entering 'if' block
+  [line 30]  for product in products:
+  Loop End: Iteration finished
+  [line 38]  for category, count in category_counts.items():
+  (Missing param: 'iter_var')
+  [line 39]  if count > 0:
+  Condition: True, entering 'if' block
+  [line 38]  for category, count in category_counts.items():
+  (Missing param: 'iter_var')
+  [line 39]  if count > 0:
+  Condition: True, entering 'if' block
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+  [line 38]  for category, count in category_counts.items():
+  (Missing param: 'iter_var')
+  [line 39]  if count > 0:
+  Condition: True, entering 'if' block
+  [line 38]  for category, count in category_counts.items():
+  Loop End: Iteration finished
+  [line 42]  return {
+  Return: {
+  [line 93]  profit_before_tax = total_revenue - total_cost
+  Compute: total_revenue - total_cost, where total_revenue=32113.6822 (defined at [line 85]), total_cost=24257.25 (defined at [line 84]) = 7856.432199999999
+  [line 96]  taxable_amount = profit_before_tax * 0.85  # Assuming 15% non-taxable expenses
+  Compute: profit_before_tax * 0.85  # Assuming 15% non-taxable expenses, where profit_before_tax=7856.432199999999 (defined at [line 93]) = 6677.967369999999
+  [line 97]  tax_amount = taxable_amount * tax_rate
+  Compute: taxable_amount * tax_rate, where taxable_amount=6677.967369999999 (defined at [line 96]), tax_rate=0.21 (parameter tax_rate) = 1402.3731477
+  [line 100]  profit_after_tax = profit_before_tax - tax_amount
+  Compute: profit_before_tax - tax_amount, where profit_before_tax=7856.432199999999 (defined at [line 93]), tax_amount=1402.3731477 (defined at [line 97]) = 6454.059052299999
+  [line 101]  profit_margin = (profit_after_tax / total_revenue) * 100 if total_revenue > 0 else 0
+  Compute: (profit_after_tax / total_revenue) * 100 if total_revenue > 0 else 0, where profit_after_tax=6454.059052299999 (defined at [line 100]), total_revenue=32113.6822 (defined at [line 85]) = 20.097536657755178
+  [line 104]  return round(profit_margin, 2)
+  Return: round(profit_margin, 2)
+Function calculate_margin returns 20.1
+
+Answer: profit_margin = 20.097536657755178 (last updated on defined at [line 101])

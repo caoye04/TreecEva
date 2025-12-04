@@ -1,0 +1,115 @@
+70
+effective_power
+---
+42 base_power = 100
+42 ['base_power'] ['100']
+PARAM_MAPPING {'base': {'actual_var': 'base_power', 'value': 100}, 'mods': {'actual_var': 'modifiers', 'value': [{'name': 'Boost', 'value': 25, 'active': True, 'special': True}, {'name': 'Penalty', 'value': -10, 'active': True, 'special': False}, {'name': 'Synergy', 'value': 15, 'active': False, 'special': True}, {'name': 'Catalyst', 'value': 30, 'active': True, 'special': True}]}, 'env': {'actual_var': 'alternative_env', 'value': {'weather': 'storm', 'type': 'competitive', 'altitude': 1000, 'spectators': 250}}}
+FUNCTION_ENTER 1 calculate_effective_power def calculate_effective_power(base, mods, env):
+1 ['base', 'mods', 'env'] [{'_type': 'int', '_value': 100}, {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Boost'}, 'value': {'_type': 'int', '_value': 25}, 'active': {'_type': 'bool', '_value': True}, 'special': {'_type': 'bool', '_value': True}}, '_len': 4}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Penalty'}, 'value': {'_type': 'int', '_value': -10}, 'active': {'_type': 'bool', '_value': True}, 'special': {'_type': 'bool', '_value': False}}, '_len': 4}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Synergy'}, 'value': {'_type': 'int', '_value': 15}, 'active': {'_type': 'bool', '_value': False}, 'special': {'_type': 'bool', '_value': True}}, '_len': 4}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Catalyst'}, 'value': {'_type': 'int', '_value': 30}, 'active': {'_type': 'bool', '_value': True}, 'special': {'_type': 'bool', '_value': True}}, '_len': 4}], '_len': 4}, {'_type': 'dict', '_items': {'weather': {'_type': 'str', '_value': 'storm'}, 'type': {'_type': 'str', '_value': 'competitive'}, 'altitude': {'_type': 'int', '_value': 1000}, 'spectators': {'_type': 'int', '_value': 250}}, '_len': 4}]
+3 env_factor = 1.0
+3 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.0']
+4 if env['weather'] == 'storm':
+4 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.0']
+5 env_factor = 0.8
+5 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8']
+10 adjusted_base = base
+10 ['base', 'mods', 'env_factor', 'adjusted_base'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100']
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 [] []
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Boost', value: 25, active: True, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Penalty', value: -10, active: True, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Synergy', value: 15, active: False, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Catalyst', value: 30, active: True, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Catalyst', value: 30, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '0', "{name: 'Boost', value: 25, active: True, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '0', "{name: 'Boost', value: 25, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '1', "{name: 'Penalty', value: -10, active: True, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '1', "{name: 'Penalty', value: -10, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '2', "{name: 'Synergy', value: 15, active: False, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '2', "{name: 'Synergy', value: 15, active: False, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}"]
+26 formula_b = adjusted_base * (1 + mod_sum / 100)
+26 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod', 'formula_b'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}", '145.0']
+29 if env['type'] == 'competitive':
+29 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod', 'formula_b'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}", '145.0']
+30 result = formula_b * env_factor
+30 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod', 'formula_b', 'result'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}", '145.0', '116.0']
+35 if special_bits & 3 == 3:  # If bits 0 and 1 are set
+35 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod', 'formula_b', 'result'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}", '145.0', '116.0']
+36 result *= 1.1
+36 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod', 'formula_b', 'result'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}", '145.0', '127.60000000000001']
+39 return round(result, 1)
+39 ['base', 'mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod', 'formula_b', 'result'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '0.8', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}", '145.0', '127.60000000000001']
+FUNCTION_RETURN 39 calculate_effective_power {'_type': 'float', '_value': 127.6}
+69 effective_power = calculate_effective_power(base_power, modifiers, environment)
+69 ['base_power', 'modifiers', 'environment'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", "{weather: 'clear', type: 'competitive', altitude: 1000, ...}"]
+3 env_factor = 1.0
+3 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.0']
+4 if env['weather'] == 'storm':
+4 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.0']
+6 elif env['weather'] == 'clear':
+6 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.0']
+7 env_factor = 1.2
+7 ['base', 'mods', 'env_factor'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2']
+10 adjusted_base = base
+10 ['base', 'mods', 'env_factor', 'adjusted_base'] ['100', "[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100']
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 [] []
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Boost', value: 25, active: True, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Penalty', value: -10, active: True, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Synergy', value: 15, active: False, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Catalyst', value: 30, active: True, ...}"]
+11 mod_sum = sum(m['value'] for m in mods if m['active'])
+11 ['m'] ["{name: 'Catalyst', value: 30, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '0', "{name: 'Boost', value: 25, active: True, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '0', "{name: 'Boost', value: 25, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '1', "{name: 'Penalty', value: -10, active: True, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '1', "{name: 'Penalty', value: -10, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '2', "{name: 'Synergy', value: 15, active: False, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '2', "{name: 'Synergy', value: 15, active: False, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}"]
+16 if mod['special'] and i % 2 == 0:
+16 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}"]
+15 for i, mod in enumerate(mods):
+15 ['mods', 'env_factor', 'adjusted_base', 'mod_sum', 'i', 'mod'] ["[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}]", '1.2', '100', '45', '3', "{name: 'Catalyst', value: 30, active: True, ...}"]
+26 formula_b = adjusted_base * (1 + mod_sum / 100)
+26 ['env_factor', 'adjusted_base', 'mod_sum', 'formula_b'] ['1.2', '100', '45', '145.0']
+29 if env['type'] == 'competitive':
+29 ['env_factor', 'formula_b'] ['1.2', '145.0']
+30 result = formula_b * env_factor
+30 ['env_factor', 'formula_b', 'result'] ['1.2', '145.0', '174.0']
+35 if special_bits & 3 == 3:  # If bits 0 and 1 are set
+35 ['result'] ['174.0']
+36 result *= 1.1
+36 ['result'] ['191.4']
+39 return round(result, 1)
+39 ['result'] ['191.4']
+70 print(f"Target result: {effective_power}")
+70 ['effective_power'] ['191.4']

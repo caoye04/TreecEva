@@ -1,0 +1,71 @@
+Target: Find the value of variable final_altitude after [line 52] executes
+
+[line 48]  flight_data = [3, 2, 0, -2, -1]
+Compute: [3, 2, 0, -2, -1] = [3, 2, 0, -2, -1]
+[line 49]  correction_factor = 15
+Assign: correction_factor = 15
+[line 52]  final_altitude = calculate_final_altitude(flight_data, correction_factor)
+Call function calculate_final_altitude(flight_data=[3, 2, 0, -2, -1] (defined at [line 48]), correction_factor=15 (defined at [line 49]))
+[line 1]  def calculate_final_altitude(flight_data, correction):
+Enter function calculate_final_altitude: flight_data=[3, 2, 0, -2, -1] (flight_data defined at [line 48]), correction=15 (correction_factor defined at [line 49])
+  [line 2]  base_altitude = 10000
+  Assign: base_altitude = 10000
+  [line 3]  weather_adjustments = [120, -80, 50, -30, 10]
+  Compute: [120, -80, 50, -30, 10] = [120, -80, 50, -30, 10]
+  [line 4]  traffic_density = {'low': 500, 'medium': 0, 'high': -500}
+  Compute: {'low': 500, 'medium': 0, 'high': -500} = {low: 500, medium: 0, high: -500}
+  [line 7]  adjusted_altitude = base_altitude
+  Compute: base_altitude, where base_altitude=10000 (defined at [line 2]) = 10000
+  [line 8]  for i, (segment, weather) in enumerate(zip(flight_data, weather_adjustments)):
+  (Missing param: 'iter_var')
+  [line 9]  if segment > 0:
+  Condition: True, entering 'if' block
+  [line 10]  adjusted_altitude += segment * 100
+  Update: adjusted_altitude changed from 10000 (defined at defined at [line 7]) to 10000+segment * 100 = 10300
+  [line 16]  if i in [0, 1, 3]:
+  Condition: True, entering 'if' block
+  [line 17]  adjusted_altitude += weather
+  Update: adjusted_altitude changed from 10300 (defined at defined at [line 10]) to 10300+weather = 10420
+  [line 8]  for i, (segment, weather) in enumerate(zip(flight_data, weather_adjustments)):
+  (Missing param: 'iter_var')
+  [line 9]  if segment > 0:
+  Condition: True, entering 'if' block
+  [line 10]  adjusted_altitude += segment * 100
+  Update: adjusted_altitude changed from 10420 (defined at defined at [line 17]) to 10420+segment * 100 = 10620
+  [line 16]  if i in [0, 1, 3]:
+  Condition: True, entering 'if' block
+  [line 17]  adjusted_altitude += weather
+  Update: adjusted_altitude changed from 10620 (defined at defined at [line 10]) to 10620+weather = 10540
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+  [line 8]  for i, (segment, weather) in enumerate(zip(flight_data, weather_adjustments)):
+  (Missing param: 'iter_var')
+  [line 9]  if segment > 0:
+  Condition: True, entering 'if' block
+  [line 13]  adjusted_altitude += segment * 110
+  Update: adjusted_altitude changed from 10290 (defined at defined at [line 17]) to 10290+segment * 110 = 10180
+  [line 16]  if i in [0, 1, 3]:
+  Condition: True, entering 'if' block
+  [line 8]  for i, (segment, weather) in enumerate(zip(flight_data, weather_adjustments)):
+  Loop End: Iteration finished
+  [line 23]  traffic_level = 'medium'
+  Assign: traffic_level = 'medium'
+  [line 24]  last_digit = adjusted_altitude % 10
+  Compute: adjusted_altitude % 10, where adjusted_altitude=10180 (defined at [line 13]) = 0
+  [line 25]  if last_digit > 7:
+  Condition: True, entering 'if' block
+  [line 27]  elif last_digit < 3:
+  'elif' Condition: True, entering block
+  [line 28]  traffic_level = 'low'
+  Assign: traffic_level = 'low'
+  [line 31]  adjusted_altitude += traffic_density[traffic_level]
+  Update: adjusted_altitude changed from 10180 (defined at defined at [line 13]) to 10180+traffic_density[traffic_level] = 10680
+  [line 39]  result = adjusted_altitude + (correction * 5)
+  Compute: adjusted_altitude + (correction * 5), where adjusted_altitude=10680 (defined at [line 31]), correction=15 (parameter correction defined at [line 49]) = 10755
+  [line 45]  return result
+  Return: result=10755 (defined at [line 39])
+Function calculate_final_altitude returns 10755
+
+Answer: final_altitude = 10755 (last updated on defined at [line 52])

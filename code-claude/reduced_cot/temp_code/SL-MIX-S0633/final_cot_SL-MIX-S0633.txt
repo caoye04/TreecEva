@@ -1,0 +1,22 @@
+Target: Find the value of variable priority_level after [line 23] executes
+
+[line 3]  urgency_markers = ['urgent', 'asap', 'immediately']
+Compute: ['urgent', 'asap', 'immediately'] = ['urgent', 'asap', 'immediately']
+[line 4]  importance_markers = ['critical', 'important', 'attention']
+Compute: ['critical', 'important', 'attention'] = ['critical', 'important', 'attention']
+[line 7]  text_lower = text.lower()
+(Missing param: 'func_name')
+[line 10]  urgency_score = sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+Call function sum(3 if marker in text_lower else 0 for marker in urgency_markers)
+[line 11]  importance_score = sum(2 if marker in text_lower else 0 for marker in importance_markers)
+Call function sum(2 if marker in text_lower else 0 for marker in importance_markers)
+[line 14]  base_priority = urgency_score + importance_score
+Compute: urgency_score + importance_score, where urgency_score=3 (defined at [line 10]), importance_score=2 (defined at [line 11]) = 5
+[line 17]  length_modifier = max(0, 5 - len(text) // 20)
+Call function max(0, 5 - len(text) // 20)
+[line 20]  raw_priority = base_priority + length_modifier
+Compute: base_priority + length_modifier, where base_priority=5 (defined at [line 14]), length_modifier=3 (defined at [line 17]) = 8
+[line 23]  priority_level = min(10, max(1, raw_priority))
+Call function min(10, max(1, raw_priority))
+
+Answer: priority_level = 8 (last updated on defined at [line 23])

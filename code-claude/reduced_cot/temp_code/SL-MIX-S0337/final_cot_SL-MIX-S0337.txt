@@ -1,0 +1,70 @@
+Target: Find the value of variable message_score after [line 55] executes
+
+[line 43]  encrypted_messages = ["H3llo", "W0rld", "Py7h0n", "C0d1ng"]
+Compute: ["H3llo", "W0rld", "Py7h0n", "C0d1ng"] = ['H3llo', 'W0rld', 'Py7h0n', 'C0d1ng']
+[line 44]  validation_keys = ["key1", "key2", "key3", "key4"]
+Compute: ["key1", "key2", "key3", "key4"] = ['key1', 'key2', 'key3', 'key4']
+[line 47]  message_score = calculate_final_score(encrypted_messages, validation_keys)
+Call function calculate_final_score(encrypted_messages=['H3llo', 'W0rld', 'Py7h0n', 'C0d1ng'] (defined at [line 43]), validation_keys=['key1', 'key2', 'key3', 'key4'] (defined at [line 44]))
+[line 3]  base_value = 120
+Assign: base_value = 120
+[line 4]  multiplier = 3
+Assign: multiplier = 3
+[line 5]  validation_count = 0
+Assign: validation_count = 0
+[line 6]  penalty = 0
+Assign: penalty = 0
+[line 9]  for idx, (msg, key) in enumerate(zip(messages, keys)):
+(Missing param: 'iter_var')
+[line 22]  if first_char_xor % 2 == 0:
+Condition: True, entering 'if' block
+[line 26]  if idx > 0 and idx % 2 == 1:
+Condition: True, entering 'if' block
+[line 9]  for idx, (msg, key) in enumerate(zip(messages, keys)):
+(Missing param: 'iter_var')
+[line 22]  if first_char_xor % 2 == 0:
+Condition: True, entering 'if' block
+[line 23]  validation_count += 1
+Update: validation_count changed from 0 (defined at defined at [line 5]) to 0+1 = 1
+[line 26]  if idx > 0 and idx % 2 == 1:
+Condition: True, entering 'if' block
+[line 27]  bit_count = bin(ord(key[-1])).count('1')
+Call function bin(ord(key[-1])).count('1')
+[line 28]  penalty += bit_count
+Update: penalty changed from 0 (defined at defined at [line 6]) to 0+bit_count = 3
+[line 9]  for idx, (msg, key) in enumerate(zip(messages, keys)):
+(Missing param: 'iter_var')
+[line 22]  if first_char_xor % 2 == 0:
+Condition: True, entering 'if' block
+[line 26]  if idx > 0 and idx % 2 == 1:
+Condition: True, entering 'if' block
+[line 9]  for idx, (msg, key) in enumerate(zip(messages, keys)):
+(Missing param: 'iter_var')
+[line 22]  if first_char_xor % 2 == 0:
+Condition: True, entering 'if' block
+[line 23]  validation_count += 1
+Update: validation_count changed from 1 (defined at defined at [line 23]) to 1+1 = 2
+[line 26]  if idx > 0 and idx % 2 == 1:
+Condition: True, entering 'if' block
+[line 27]  bit_count = bin(ord(key[-1])).count('1')
+Call function bin(ord(key[-1])).count('1')
+[line 28]  penalty += bit_count
+Update: penalty changed from 3 (defined at defined at [line 28]) to 3+bit_count = 6
+[line 9]  for idx, (msg, key) in enumerate(zip(messages, keys)):
+Loop End: Iteration finished
+[line 34]  raw_score = base_value + (validation_count * multiplier)
+Compute: base_value + (validation_count * multiplier), where base_value=120 (defined at [line 3]), validation_count=2 (defined at [line 23]), multiplier=3 (defined at [line 4]) = 126
+[line 35]  temp_score = raw_score - penalty
+Compute: raw_score - penalty, where raw_score=126 (defined at [line 34]), penalty=6 (defined at [line 28]) = 120
+[line 38]  final_score = temp_score & 0xFF
+Compute: temp_score & 0xFF, where temp_score=120 (defined at [line 35]) = 120
+[line 40]  return final_score
+Return: final_score=120 (defined at [line 38])
+[line 50]  debug_mode = False
+Assign: debug_mode = False
+[line 51]  if debug_mode:
+Condition: True, entering 'if' block
+[line 55]  print(f"Result: {message_score}")
+Output: f"Result: {message_score}"
+
+Answer: message_score = 120 (last updated on defined at [line 47])

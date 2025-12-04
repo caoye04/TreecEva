@@ -1,0 +1,130 @@
+Target: Find the value of variable priority_score after [line 75] executes
+
+[line 51]  sentiment = calculate_sentiment(text)
+Call function calculate_sentiment(text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (an unknown source))
+[line 3]  def calculate_sentiment(text):
+Enter function calculate_sentiment: text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.'
+  [line 4]  positive_words = {'good', 'great', 'excellent', 'best', 'amazing'}
+  Compute: {'good', 'great', 'excellent', 'best', 'amazing'} = {'excellent', 'great', 'good', 'best', 'amazing'}
+  [line 5]  negative_words = {'bad', 'worst', 'terrible', 'awful', 'poor'}
+  Compute: {'bad', 'worst', 'terrible', 'awful', 'poor'} = {'worst', 'poor', 'terrible', 'awful', 'bad'}
+  [line 7]  words = text.lower().split()
+  (Missing param: 'func_name')
+  [line 8]  pos_count = sum(1 for word in words if word in positive_words)
+  Call function sum(1 for word in words if word in positive_words)
+  [line 9]  neg_count = sum(1 for word in words if word in negative_words)
+  Call function sum(1 for word in words if word in negative_words)
+  [line 12]  return pos_count - neg_count
+  Return: pos_count - neg_count
+Function calculate_sentiment returns 3
+[line 52]  vowels, consonants, _ = analyze_character_distribution(text)
+(Missing param: 'func_name')
+[line 15]  char_counts = Counter(text.lower())
+Call function Counter(text.lower())
+[line 16]  vowels = {'a', 'e', 'i', 'o', 'u'}
+Compute: {'a', 'e', 'i', 'o', 'u'} = {'u', 'i', 'e', 'a', 'o'}
+[line 17]  consonants = {c for c in 'abcdefghijklmnopqrstuvwxyz' if c not in vowels}
+Compute: {c for c in 'abcdefghijklmnopqrstuvwxyz' if c not in vowels}, where c='a' (an unknown source), vowels={'u', 'i', 'e', 'a', 'o'} (defined at [line 16]) = ?
+[line 19]  vowel_count = sum(char_counts[v] for v in vowels)
+Call function sum(char_counts[v] for v in vowels)
+[line 20]  consonant_count = sum(char_counts[c] for c in consonants)
+Call function sum(char_counts[c] for c in consonants)
+[line 23]  ratio = vowel_count / max(consonant_count, 1)
+Compute: vowel_count / max(consonant_count, 1), where vowel_count=63 (defined at [line 19]), consonant_count=107 (defined at [line 20]) = 0.5887850467289719
+[line 24]  return vowel_count, consonant_count, ratio
+Return: vowel_count, consonant_count, ratio
+[line 55]  complexity_score = len(set(text.split())) / max(len(text.split()), 1)
+Compute: len(set(text.split())) / max(len(text.split()), 1), where text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (an unknown source) = 0.9642857142857143
+[line 56]  redundancy_factor = sum(1 for word in text.split() if len(word) > 5) / max(len(text.split()), 1)
+Compute: sum(1 for word in text.split() if len(word) > 5) / max(len(text.split()), 1), where text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (an unknown source) = ?
+[line 59]  impact = keyword_impact(text, keywords)
+Call function keyword_impact(text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (an unknown source), keywords=['excellent', 'important', 'climate', 'good'] (an unknown source))
+[line 26]  def keyword_impact(text, keywords):
+Enter function keyword_impact: text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.', keywords=['excellent', 'important', 'climate', 'good']
+  [line 28]  word_freq = defaultdict(int)
+  Call function defaultdict(int)
+  [line 29]  for word in text.lower().split():
+  Loop Start: word takes its first value 'the'
+  [line 29]  for word in text.lower().split():
+  Loop Iteration: word is now 'excellent' (iteration 2)
+... [Line 29] repeats 25 more times ...
+... [Line 29] repeats 25 more times ...
+  [line 29]  for word in text.lower().split():
+  Loop Iteration: word is now 'insights.' (iteration 28)
+  [line 29]  for word in text.lower().split():
+  Loop End: Iteration finished
+  [line 33]  impact = 0
+  Assign: impact = 0
+  [line 34]  for keyword in keywords:
+  Loop Start: keyword takes its first value 'excellent'
+  [line 35]  if keyword in word_freq:
+  Condition: True, entering 'if' block
+  [line 37]  position = text.lower().find(keyword)
+  (Missing param: 'func_name')
+  [line 38]  position_factor = 1.0 if position < 0 else max(0.5, 1 - position / len(text))
+  Compute: 1.0 if position < 0 else max(0.5, 1 - position / len(text)), where position=4 (an unknown source), text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (parameter text) = 0.98
+  [line 41]  freq_factor = min(3, word_freq[keyword])
+  Call function min(3, word_freq[keyword])
+  [line 44]  keyword_score = position_factor * freq_factor * len(keyword)
+  Compute: position_factor * freq_factor * len(keyword), where position_factor=0.98 (defined at [line 38]), freq_factor=1 (defined at [line 41]), keyword='excellent' (defined at [line 34]) = 8.82
+  [line 45]  impact += keyword_score
+  Update: impact changed from 0 (defined at defined at [line 33]) to 0+keyword_score = 8.82
+  [line 34]  for keyword in keywords:
+  Loop Iteration: keyword is now 'important' (iteration 2)
+  [line 35]  if keyword in word_freq:
+  Condition: True, entering 'if' block
+  [line 37]  position = text.lower().find(keyword)
+  (Missing param: 'func_name')
+  [line 38]  position_factor = 1.0 if position < 0 else max(0.5, 1 - position / len(text))
+  Compute: 1.0 if position < 0 else max(0.5, 1 - position / len(text)), where position=38 (an unknown source), text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (parameter text) = 0.81
+  [line 41]  freq_factor = min(3, word_freq[keyword])
+  Call function min(3, word_freq[keyword])
+  [line 44]  keyword_score = position_factor * freq_factor * len(keyword)
+  Compute: position_factor * freq_factor * len(keyword), where position_factor=0.81 (defined at [line 38]), freq_factor=1 (defined at [line 41]), keyword='important' (defined at [line 34]) = 7.290000000000001
+  [line 45]  impact += keyword_score
+  Update: impact changed from 8.82 (defined at defined at [line 45]) to 8.82+keyword_score = 16.11
+  [line 34]  for keyword in keywords:
+  Loop Iteration: keyword is now 'climate' (iteration 3)
+  [line 35]  if keyword in word_freq:
+  Condition: True, entering 'if' block
+  [line 37]  position = text.lower().find(keyword)
+  (Missing param: 'func_name')
+  [line 38]  position_factor = 1.0 if position < 0 else max(0.5, 1 - position / len(text))
+  Compute: 1.0 if position < 0 else max(0.5, 1 - position / len(text)), where position=63 (an unknown source), text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (parameter text) = 0.685
+  [line 41]  freq_factor = min(3, word_freq[keyword])
+  Call function min(3, word_freq[keyword])
+  [line 44]  keyword_score = position_factor * freq_factor * len(keyword)
+  Compute: position_factor * freq_factor * len(keyword), where position_factor=0.685 (defined at [line 38]), freq_factor=1 (defined at [line 41]), keyword='climate' (defined at [line 34]) = 4.795
+  [line 45]  impact += keyword_score
+  Update: impact changed from 16.11 (defined at defined at [line 45]) to 16.11+keyword_score = 20.905
+  [line 34]  for keyword in keywords:
+  Loop Iteration: keyword is now 'good' (iteration 4)
+  [line 35]  if keyword in word_freq:
+  Condition: True, entering 'if' block
+  [line 37]  position = text.lower().find(keyword)
+  (Missing param: 'func_name')
+  [line 38]  position_factor = 1.0 if position < 0 else max(0.5, 1 - position / len(text))
+  Compute: 1.0 if position < 0 else max(0.5, 1 - position / len(text)), where position=186 (an unknown source), text='The excellent research paper presents important findings about climate patterns. The analysis methods are great but some data sources might need verification. Overall this work provides good insights.' (parameter text) = 0.5
+  [line 41]  freq_factor = min(3, word_freq[keyword])
+  Call function min(3, word_freq[keyword])
+  [line 44]  keyword_score = position_factor * freq_factor * len(keyword)
+  Compute: position_factor * freq_factor * len(keyword), where position_factor=0.5 (defined at [line 38]), freq_factor=1 (defined at [line 41]), keyword='good' (defined at [line 34]) = 2.0
+  [line 45]  impact += keyword_score
+  Update: impact changed from 20.905 (defined at defined at [line 45]) to 20.905+keyword_score = 22.905
+  [line 34]  for keyword in keywords:
+  Loop End: Iteration finished
+  [line 47]  return impact
+  Return: impact=22.905 (defined at [line 45])
+Function keyword_impact returns 22.905
+[line 66]  if complexity_score > 0.9 and redundancy_factor < 0.2:
+Condition: True, entering 'if' block
+[line 70]  base_priority = 10 + sentiment * 2
+Compute: 10 + sentiment * 2, where sentiment=3 (defined at [line 51]) = 16
+[line 71]  keyword_modifier = min(15, impact / 2)
+Call function min(15, impact / 2)
+[line 72]  character_factor = min(5, vowels / 10)
+Call function min(5, vowels / 10)
+[line 75]  priority_score = base_priority + keyword_modifier + character_factor
+Compute: base_priority + keyword_modifier + character_factor, where base_priority=16 (defined at [line 70]), keyword_modifier=11.4525 (defined at [line 71]), character_factor=5 (defined at [line 72]) = 32.4525
+
+Answer: priority_score = 32.4525 (last updated on defined at [line 75])

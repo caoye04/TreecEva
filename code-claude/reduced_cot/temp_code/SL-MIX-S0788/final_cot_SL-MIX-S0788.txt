@@ -1,0 +1,78 @@
+Target: Find the value of variable valid_words after [line 37] executes
+
+[line 4]  text = "The quick brown fox jumps over the lazy dog. A quick movement of the enemy will jeopardize five gunboats."
+Assign: text = 'The quick brown fox jumps over the lazy dog. A quick movement of the enemy will jeopardize five gunboats.'
+[line 5]  text = text.lower().replace('.', ' ').replace(',', ' ')
+(Missing param: 'func_name')
+[line 8]  all_words = [word for word in text.split() if len(word) >= 3]
+Compute: [word for word in text.split() if len(word) >= 3], where word='the' (an unknown source), text='the quick brown fox jumps over the lazy dog  a quick movement of the enemy will jeopardize five gunboats ' (defined at [line 4]) = ?
+[line 14]  prefix_length = 2  # We'll look at the first 2 letters
+Assign: prefix_length = 2
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='the' (an unknown source), prefix_length=2 (defined at [line 14]), all_words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (defined at [line 8]) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='quick' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='brown' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='fox' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='jumps' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='over' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='the' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='lazy' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='dog' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='quick' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='movement' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='the' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='enemy' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='will' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='jeopardize' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='five' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='gunboats' (an unknown source) = ?
+[line 15]  prefixes = [word[:prefix_length] for word in all_words if len(word) >= prefix_length]
+Compute: [word[:prefix_length] for word in all_words if len(word) >= prefix_length], where word='gunboats' (an unknown source), prefix_length=2 (defined at [line 14]), all_words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (defined at [line 8]) = ['th', 'qu', 'br', 'fo', 'ju', ...]
+[line 18]  prefix_counter = Counter(prefixes)
+Call function Counter(prefixes=['th', 'qu', 'br', 'fo', 'ju', ...] (defined at [line 15]))
+[line 19]  most_common_prefix = prefix_counter.most_common(1)[0][0]
+Compute: prefix_counter.most_common(1)[0][0], where prefix_counter={th: 3, qu: 2, br: 1, ...} (defined at [line 18]) = 'th'
+[line 22]  min_length = 4
+Assign: min_length = 4
+[line 23]  max_length = 8
+Assign: max_length = 8
+[line 24]  length_filtered = [word for word in all_words if min_length <= len(word) <= max_length]
+Compute: [word for word in all_words if min_length <= len(word) <= max_length], where word='the' (an unknown source), all_words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (defined at [line 8]), min_length=4 (defined at [line 22]), max_length=8 (defined at [line 23]) = ?
+[line 28]  for word in all_words:
+Loop Start: word takes its first value 'the'
+[line 30]  if vowel_count >= 2:
+Condition: True, entering 'if' block
+[line 28]  for word in all_words:
+Loop Iteration: word is now 'quick' (iteration 2)
+[line 30]  if vowel_count >= 2:
+Condition: True, entering 'if' block
+... [Line 28] repeats 14 more times ...
+... [Line 28] repeats 14 more times ...
+[line 28]  for word in all_words:
+Loop Iteration: word is now 'gunboats' (iteration 17)
+[line 30]  if vowel_count >= 2:
+Condition: True, entering 'if' block
+[line 28]  for word in all_words:
+Loop End: Iteration finished
+[line 34]  filtered_words = list(set(length_filtered))
+Call function list(set(length_filtered))
+[line 37]  valid_words = len([word for word in filtered_words if word.startswith(most_common_prefix)])
+Call function len([word for word in filtered_words if word.startswith(most_common_prefix)])
+
+Answer: valid_words = 0 (last updated on defined at [line 37])

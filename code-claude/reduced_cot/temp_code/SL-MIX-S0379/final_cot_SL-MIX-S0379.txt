@@ -1,0 +1,40 @@
+Target: Find the value of variable common_elements after [line 42] executes
+
+[line 9]  primary = [3, 8, 5, 12, 9, 4, 7]
+Compute: [3, 8, 5, 12, 9, 4, 7] = [3, 8, 5, 12, 9, ...]
+[line 12]  secondary = [8, 5, 14, 4, 9, 2, 8]
+Compute: [8, 5, 14, 4, 9, 2, 8] = [8, 5, 14, 4, 9, ...]
+[line 15]  set_a = set(process_data(primary))
+Call function set(process_data(primary))
+[line 5]  processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+Compute: [x * 2 if x % 2 == 0 else x - 1 for x in data_list], where x=3 (an unknown source), data_list=[3, 8, 5, 12, 9, ...] (an unknown source) = ?
+[line 6]  return processed
+Return: processed=[2, 16, 4, 24, 8, ...] (defined at [line 5])
+[line 16]  set_b = set(secondary)
+Call function set(secondary=[8, 5, 14, 4, 9, ...] (defined at [line 12]))
+[line 19]  total_elements = len(set_a) + len(set_b)
+Compute: len(set_a) + len(set_b), where set_a={2, 4, 6, 8, 16, ...} (defined at [line 15]), set_b={2, 4, 5, 8, 9, ...} (defined at [line 16]) = 12
+[line 20]  unique_elements = len(set_a.union(set_b))
+Call function len(set_a.union(set_b))
+[line 23]  overlap = set_a.intersection(set_b)
+(Missing param: 'func_name')
+[line 26]  threshold = 3
+Assign: threshold = 3
+[line 27]  duplicate_factor = min(len(overlap), threshold)
+Call function min(len(overlap), threshold=3 (defined at [line 26]))
+[line 30]  correction = 1 if len(set_a) > len(set_b) else 0
+Compute: 1 if len(set_a) > len(set_b) else 0, where set_a={2, 4, 6, 8, 16, ...} (defined at [line 15]), set_b={2, 4, 5, 8, 9, ...} (defined at [line 16]) = 0
+[line 33]  distinct_factor = unique_elements - total_elements + len(overlap)
+Compute: unique_elements - total_elements + len(overlap), where unique_elements=9 (defined at [line 20]), total_elements=12 (defined at [line 19]), overlap={8, 2, 4} (an unknown source) = 0
+[line 34]  distinct_factor = max(0, distinct_factor)
+Call function max(0, distinct_factor=0 (defined at [line 33]))
+[line 35]  duplicate_count = duplicate_factor - distinct_factor
+Compute: duplicate_factor - distinct_factor, where duplicate_factor=3 (defined at [line 27]), distinct_factor=0 (defined at [line 34]) = 3
+[line 36]  duplicate_count = max(0, duplicate_count)
+Call function max(0, duplicate_count=3 (defined at [line 35]))
+[line 39]  duplicates = duplicate_count + correction
+Compute: duplicate_count + correction, where duplicate_count=3 (defined at [line 36]), correction=0 (defined at [line 30]) = 3
+[line 42]  common_elements = len(set_a.intersection(set_b)) - duplicates
+Compute: len(set_a.intersection(set_b)) - duplicates, where set_a={2, 4, 6, 8, 16, ...} (defined at [line 15]), set_b={2, 4, 5, 8, 9, ...} (defined at [line 16]), duplicates=3 (defined at [line 39]) = 0
+
+Answer: common_elements = 0 (last updated on defined at [line 42])

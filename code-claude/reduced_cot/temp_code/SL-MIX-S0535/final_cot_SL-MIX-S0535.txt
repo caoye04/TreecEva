@@ -1,0 +1,158 @@
+Target: Find the value of variable signal_strength after [line 105] executes
+
+[line 80]  raw_signal_data = [15, 22, 8, 31, 44, 12, 7, 25]
+Compute: [15, 22, 8, 31, 44, 12, 7, 25] = [15, 22, 8, 31, 44, ...]
+[line 81]  ambient_conditions = {'temperature': 22.5, 'humidity': 65, 'noise_floor': 3}
+Compute: {'temperature': 22.5, 'humidity': 65, 'noise_floor': 3} = {temperature: 22.5, humidity: 65, noise_floor: 3}
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=15 (an unknown source), ambient_conditions={temperature: 22.5, humidity: 65, noise_floor: 3} (defined at [line 81]), raw_signal_data=[15, 22, 8, 31, 44, ...] (defined at [line 80]) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=22 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=8 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=31 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=44 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=12 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=7 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=25 (an unknown source) = ?
+[line 84]  processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+Compute: [s + ambient_conditions['noise_floor'] for s in raw_signal_data], where s=25 (an unknown source), ambient_conditions={temperature: 22.5, humidity: 65, noise_floor: 3} (defined at [line 81]), raw_signal_data=[15, 22, 8, 31, 44, ...] (defined at [line 80]) = [18, 25, 11, 34, 47, ...]
+[line 3]  if ambient_noise == 0:
+Condition: True, entering 'if' block
+[line 5]  return sum(signal_peaks) / ambient_noise
+Return: sum(signal_peaks) / ambient_noise
+[line 93]  filtered_signals, avg_level, peak_level = apply_filters(processed_signals, 'bandpass')
+(Missing param: 'func_name')
+[line 9]  filtered = []
+Compute: [] = []
+[line 10]  if filter_type == 'lowpass':
+Condition: True, entering 'if' block
+[line 12]  elif filter_type == 'highpass':
+'elif' Condition: True, entering block
+[line 14]  elif filter_type == 'bandpass':
+'elif' Condition: True, entering block
+[line 15]  filtered = [s * 0.8 + 10 for s in raw_signals]
+Compute: [s * 0.8 + 10 for s in raw_signals], where s=18 (an unknown source), raw_signals=[18, 25, 11, 34, 47, ...] (an unknown source) = []
+[line 20]  avg = sum(filtered) / len(filtered) if filtered else 0
+Compute: sum(filtered) / len(filtered) if filtered else 0, where filtered=[24.4, 30.0, 18.8, 37.2, 47.6, ...] (defined at [line 15]) = 28.8
+[line 21]  peak = max(filtered) if filtered else 0
+Compute: max(filtered) if filtered else 0, where filtered=[24.4, 30.0, 18.8, 37.2, 47.6, ...] (defined at [line 15]) = 47.6
+[line 22]  return filtered, avg, peak
+Return: filtered, avg, peak
+[line 96]  noise_threshold = ambient_conditions['noise_floor'] * 3
+Compute: ambient_conditions['noise_floor'] * 3, where ambient_conditions={temperature: 22.5, humidity: 65, noise_floor: 3} (defined at [line 81]) = 9
+[line 105]  signal_strength = calculate_final_signal(filtered_signals, noise_threshold)
+Call function calculate_final_signal(filtered_signals=[24.4, 30.0, 18.8, 37.2, 47.6, ...] (an unknown source), noise_threshold=9 (defined at [line 96]))
+[line 24]  def calculate_final_signal(signals, threshold):
+Enter function calculate_final_signal: signals=[24.4, 30.0, 18.8, 37.2, 47.6, ...], threshold=9 (noise_threshold defined at [line 96])
+  [line 26]  primary_signals = []
+  Compute: [] = []
+  [line 31]  for i, signal in enumerate(signals):
+  (Missing param: 'iter_var')
+  [line 32]  if signal > threshold * 2:
+  Condition: True, entering 'if' block
+  [line 31]  for i, signal in enumerate(signals):
+  (Missing param: 'iter_var')
+  [line 32]  if signal > threshold * 2:
+  Condition: True, entering 'if' block
+... [Line 31] repeats 5 more times ...
+... [Line 31] repeats 5 more times ...
+  [line 31]  for i, signal in enumerate(signals):
+  (Missing param: 'iter_var')
+  [line 32]  if signal > threshold * 2:
+  Condition: True, entering 'if' block
+  [line 31]  for i, signal in enumerate(signals):
+  Loop End: Iteration finished
+  [line 40]  weighted_primary = 0
+  Assign: weighted_primary = 0
+  [line 41]  for i, signal in enumerate(primary_signals):
+  (Missing param: 'iter_var')
+  [line 42]  weighted_primary += signal * (i + 1)
+  Update: weighted_primary changed from 0 (defined at defined at [line 40]) to 0+signal * (i + 1) = 24.4
+  [line 41]  for i, signal in enumerate(primary_signals):
+  (Missing param: 'iter_var')
+  [line 42]  weighted_primary += signal * (i + 1)
+  Update: weighted_primary changed from 24.4 (defined at defined at [line 42]) to 24.4+signal * (i + 1) = 84.4
+... [Line 41] repeats 4 more times ...
+... [Line 41] repeats 4 more times ...
+  [line 41]  for i, signal in enumerate(primary_signals):
+  (Missing param: 'iter_var')
+  [line 42]  weighted_primary += signal * (i + 1)
+  Update: weighted_primary changed from 659.6 (defined at defined at [line 42]) to 659.6+signal * (i + 1) = 886.4000000000001
+  [line 41]  for i, signal in enumerate(primary_signals):
+  Loop End: Iteration finished
+  [line 49]  for i, j in zip(range(5), range(3, 8)):
+  (Missing param: 'iter_var')
+  [line 49]  for i, j in zip(range(5), range(3, 8)):
+  Loop End: Iteration finished
+  [line 49]  for i, j in zip(range(5), range(3, 8)):
+  Loop End: Iteration finished
+  [line 49]  for i, j in zip(range(5), range(3, 8)):
+  Loop End: Iteration finished
+  [line 49]  for i, j in zip(range(5), range(3, 8)):
+  Loop End: Iteration finished
+  [line 49]  for i, j in zip(range(5), range(3, 8)):
+  Loop End: Iteration finished
+  [line 53]  bit_modifier = 0
+  Assign: bit_modifier = 0
+  [line 54]  for i, signal in enumerate(primary_signals):
+  (Missing param: 'iter_var')
+  [line 55]  if i < 4:  # Only use up to 4 signals
+  Condition: True, entering 'if' block
+  [line 56]  bit_value = int(signal) & 0x0F  # Get lower 4 bits
+  Compute: int(signal) & 0x0F  # Get lower 4 bits, where signal=24.4 (an unknown source) = 8
+  [line 54]  for i, signal in enumerate(primary_signals):
+  (Missing param: 'iter_var')
+  [line 55]  if i < 4:  # Only use up to 4 signals
+  Condition: True, entering 'if' block
+  [line 56]  bit_value = int(signal) & 0x0F  # Get lower 4 bits
+  Compute: int(signal) & 0x0F  # Get lower 4 bits, where signal=30.0 (an unknown source) = 14
+... [Line 54] repeats 4 more times ...
+... [Line 54] repeats 4 more times ...
+... [Line 54] repeats 4 more times ...
+... [Line 54] repeats 4 more times ...
+  [line 54]  for i, signal in enumerate(primary_signals):
+  (Missing param: 'iter_var')
+  [line 55]  if i < 4:  # Only use up to 4 signals
+  Condition: True, entering 'if' block
+  [line 54]  for i, signal in enumerate(primary_signals):
+  Loop End: Iteration finished
+  [line 60]  adjustment = (bit_modifier & 0xFF) >> 2
+  Compute: (bit_modifier & 0xFF) >> 2, where bit_modifier=21224 (defined at [line 53]) = 58
+  [line 63]  coefficient = 1
+  Assign: coefficient = 1
+  [line 64]  for idx, val in enumerate(range(3, 8)):
+  (Missing param: 'iter_var')
+  [line 65]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 66]  coefficient *= val
+  Update: coefficient changed from 1 (defined at defined at [line 63]) to 1*val = 3
+  [line 64]  for idx, val in enumerate(range(3, 8)):
+  (Missing param: 'iter_var')
+  [line 65]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 68]  coefficient = coefficient // 2 if coefficient > 10 else coefficient + 1
+  Compute: coefficient // 2 if coefficient > 10 else coefficient + 1, where coefficient=3 (defined at [line 66]) = 4
+... [Line 64] repeats 2 more times ...
+... [Line 64] repeats 2 more times ...
+... [Line 64] repeats 2 more times ...
+  [line 64]  for idx, val in enumerate(range(3, 8)):
+  (Missing param: 'iter_var')
+  [line 65]  if idx % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 66]  coefficient *= val
+  Update: coefficient changed from 10 (defined at defined at [line 68]) to 10*val = 70
+  [line 64]  for idx, val in enumerate(range(3, 8)):
+  Loop End: Iteration finished
+  [line 71]  result = (weighted_primary // coefficient) + adjustment
+  Compute: (weighted_primary // coefficient) + adjustment, where weighted_primary=886.4000000000001 (defined at [line 42]), coefficient=70 (defined at [line 66]), adjustment=58 (defined at [line 60]) = 70.0
+  [line 77]  return result
+  Return: result=70.0 (defined at [line 71])
+Function calculate_final_signal returns 70.0
+
+Answer: signal_strength = 70.0 (last updated on defined at [line 105])

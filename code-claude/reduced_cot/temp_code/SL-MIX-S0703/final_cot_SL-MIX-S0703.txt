@@ -1,0 +1,104 @@
+Target: Find the value of variable target_frequency after [line 63] executes
+
+[line 3]  sampling_rate = 1000  # Hz
+Assign: sampling_rate = 1000
+[line 4]  nyquist = sampling_rate / 2
+Compute: sampling_rate / 2, where sampling_rate=1000 (defined at [line 3]) = 500.0
+[line 5]  noise_floor = 10
+Assign: noise_floor = 10
+[line 6]  signal_gain = 5
+Assign: signal_gain = 5
+[line 16]  harmonics = [i * 50 for i in range(1, 6)]
+Compute: [i * 50 for i in range(1, 6)], where i=1 (an unknown source) = ?
+[line 21]  frequency_bins = [0, 50, 100, 150, 200, 250, 300]
+Compute: [0, 50, 100, 150, 200, 250, 300] = [0, 50, 100, 150, 200, ...]
+[line 22]  frequency_powers = [noise_floor] * len(frequency_bins)
+Compute: [noise_floor] * len(frequency_bins), where noise_floor=10 (defined at [line 5]), frequency_bins=[0, 50, 100, 150, 200, ...] (defined at [line 21]) = [10, 10, 10, 10, 10, ...]
+[line 25]  for i, freq in enumerate(frequency_bins):
+(Missing param: 'iter_var')
+[line 26]  if freq == 0:  # DC component
+Condition: True, entering 'if' block
+[line 27]  frequency_powers[i] = noise_floor + 5
+(Missing param: 'result')
+[line 25]  for i, freq in enumerate(frequency_bins):
+(Missing param: 'iter_var')
+[line 26]  if freq == 0:  # DC component
+Condition: True, entering 'if' block
+[line 28]  elif freq == 100:  # Main signal
+'elif' Condition: True, entering block
+[line 30]  elif freq == 200:  # Harmonic
+'elif' Condition: True, entering block
+[line 32]  elif freq in harmonics:  # Other harmonics
+'elif' Condition: True, entering block
+[line 33]  frequency_powers[i] = noise_floor + signal_gain * 2
+(Missing param: 'result')
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+[line 25]  for i, freq in enumerate(frequency_bins):
+(Missing param: 'iter_var')
+[line 26]  if freq == 0:  # DC component
+Condition: True, entering 'if' block
+[line 28]  elif freq == 100:  # Main signal
+'elif' Condition: True, entering block
+[line 30]  elif freq == 200:  # Harmonic
+'elif' Condition: True, entering block
+[line 32]  elif freq in harmonics:  # Other harmonics
+'elif' Condition: True, entering block
+[line 25]  for i, freq in enumerate(frequency_bins):
+Loop End: Iteration finished
+[line 36]  frequency_analysis = dict(zip(frequency_bins, frequency_powers))
+Call function dict(zip(frequency_bins, frequency_powers))
+[line 39]  noise_mean = sum(v for k, v in frequency_analysis.items() if k not in [100, 200]) / (len(frequency_analysis) - 2)
+Compute: sum(v for k, v in frequency_analysis.items() if k not in [100, 200]) / (len(frequency_analysis) - 2), where frequency_analysis={0: 15, 50: 20, 100: 85, ...} (defined at [line 36]) = ?
+[line 40]  noise_threshold = noise_mean + 2 * noise_level
+Compute: noise_mean + 2 * noise_level, where noise_mean=17.0 (defined at [line 39]), noise_level=2 (an unknown source) = 21.0
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 45]  return f > 0 and f % 50 == 0 and f < nyquist
+Return: f > 0 and f % 50 == 0 and f < nyquist
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 49]  if p > noise_threshold and f != 100 and is_valid_freq(f)]
+Condition: True, entering 'if' block
+[line 54]  max_power = max(frequency_analysis.values())
+Call function max(frequency_analysis.values())
+[line 59]  if max_power > noise_threshold * 2:
+Condition: True, entering 'if' block
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+[line 45]  return f > 0 and f % 50 == 0 and f < nyquist
+Return: f > 0 and f % 50 == 0 and f < nyquist
+[line 63]  target_frequency = next((freq for freq, count in frequency_analysis.items()
+(Missing param: 'result')
+
+Answer: target_frequency = ? (last updated on an unknown source)

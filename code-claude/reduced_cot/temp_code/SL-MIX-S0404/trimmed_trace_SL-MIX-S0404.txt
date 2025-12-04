@@ -1,0 +1,195 @@
+46
+common_word_count
+---
+3 words1 = doc1.lower().split()
+3 ['doc1', 'doc2', 'words1'] ["'The quick brown fox jumps over the lazy dog'", "'A quick dog jumps higher than the brown fox'", "['the', 'quick', 'brown', 'fox', 'jumps', ...]"]
+4 words2 = doc2.lower().split()
+4 ['doc2', 'words1', 'words2'] ["'A quick dog jumps higher than the brown fox'", "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]"]
+7 unique_words1 = set(words1)
+7 ['words1', 'words2', 'unique_words1'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'over', 'quick', 'brown', 'fox', ...}"]
+8 unique_words2 = set(words2)
+8 ['words1', 'words2', 'unique_words1', 'unique_words2'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'over', 'quick', 'brown', 'fox', ...}", "{'than', 'higher', 'dog', 'a', 'quick', ...}"]
+11 common_words = unique_words1.intersection(unique_words2)
+11 ['words1', 'words2', 'unique_words1', 'unique_words2', 'common_words'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'over', 'quick', 'brown', 'fox', ...}", "{'than', 'higher', 'dog', 'a', 'quick', ...}", "{'dog', 'quick', 'brown', 'fox', 'the', ...}"]
+14 word_counts = {}
+14 ['words1', 'words2', 'common_words', 'word_counts'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{}']
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{}', '0', "'the'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{}', '0', "'the'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 0}', '0', "'the'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1}', '0', "'the'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1}', '1', "'quick'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1}', '1', "'quick'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 0}', '1', "'quick'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1}', '1', "'quick'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1}', '2', "'brown'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1}', '2', "'brown'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 0}', '2', "'brown'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1}', '2', "'brown'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1}', '3', "'fox'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1}', '3', "'fox'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '3', "'fox'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '3', "'fox'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '4', "'jumps'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '4', "'jumps'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '4', "'jumps'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '4', "'jumps'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '5', "'over'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '5', "'over'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '5', "'over'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '5', "'over'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '6', "'the'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 1, quick: 1, brown: 1, ...}', '6', "'the'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '6', "'the'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '7', "'lazy'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '7', "'lazy'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '7', "'lazy'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '7', "'lazy'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '8', "'dog'"]
+16 if word not in word_counts:
+16 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '8', "'dog'"]
+17 word_counts[word] = 0
+17 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '8', "'dog'"]
+18 word_counts[word] += 1
+18 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '8', "'dog'"]
+15 for i, word in enumerate(words1):
+15 ['words1', 'words2', 'common_words', 'word_counts', 'i', 'word'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', '8', "'dog'"]
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'the'", '2']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'the'", '2']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'quick'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'quick'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'brown'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'brown'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'fox'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'fox'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'jumps'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'jumps'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'over'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'over'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'lazy'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'lazy'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'dog'", '1']
+23 if count == 1:
+23 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'dog'", '1']
+22 for word, count in word_counts.items():
+22 ['words2', 'common_words', 'word_counts', 'word', 'count'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", '{the: 2, quick: 1, brown: 1, ...}', "'dog'", '1']
+27 doc2_counts = {}
+27 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'dog'", '{}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'a'", '{}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'a'", '{}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'a'", '{a: 0}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'a'", '{a: 1}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'quick'", '{a: 1}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'quick'", '{a: 1}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'quick'", '{a: 1, quick: 0}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'quick'", '{a: 1, quick: 1}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'dog'", '{a: 1, quick: 1}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'dog'", '{a: 1, quick: 1}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'dog'", '{a: 1, quick: 1, dog: 0}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'dog'", '{a: 1, quick: 1, dog: 1}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'jumps'", '{a: 1, quick: 1, dog: 1}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'jumps'", '{a: 1, quick: 1, dog: 1}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'jumps'", '{a: 1, quick: 1, dog: 1, ...}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'jumps'", '{a: 1, quick: 1, dog: 1, ...}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'higher'", '{a: 1, quick: 1, dog: 1, ...}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'higher'", '{a: 1, quick: 1, dog: 1, ...}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'higher'", '{a: 1, quick: 1, dog: 1, ...}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'higher'", '{a: 1, quick: 1, dog: 1, ...}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'than'", '{a: 1, quick: 1, dog: 1, ...}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'than'", '{a: 1, quick: 1, dog: 1, ...}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'than'", '{a: 1, quick: 1, dog: 1, ...}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'than'", '{a: 1, quick: 1, dog: 1, ...}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'the'", '{a: 1, quick: 1, dog: 1, ...}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'the'", '{a: 1, quick: 1, dog: 1, ...}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'the'", '{a: 1, quick: 1, dog: 1, ...}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'the'", '{a: 1, quick: 1, dog: 1, ...}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'brown'", '{a: 1, quick: 1, dog: 1, ...}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'brown'", '{a: 1, quick: 1, dog: 1, ...}']
+30 doc2_counts[word] = 0
+30 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'brown'", '{a: 1, quick: 1, dog: 1, ...}']
+31 doc2_counts[word] += 1
+31 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'brown'", '{a: 1, quick: 1, dog: 1, ...}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'fox'", '{a: 1, quick: 1, dog: 1, ...}']
+29 if word not in doc2_counts:
+29 ['words2', 'common_words', 'word', 'doc2_counts'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'fox'", '{a: 1, quick: 1, dog: 1, ...}']
+28 for word in words2:
+28 ['words2', 'common_words', 'word'] ["['a', 'quick', 'dog', 'jumps', 'higher', ...]", "{'dog', 'quick', 'brown', 'fox', 'the', ...}", "'fox'"]
+46 common_word_count = len(common_words)
+46 ['common_words', 'common_word_count'] ["{'dog', 'quick', 'brown', 'fox', 'the', ...}", '6']

@@ -1,0 +1,175 @@
+46
+active_signals
+---
+PARAM_MAPPING {'raw_data': {'actual_var': 'raw_data', 'value': [20, 45, 24, 32, 28, 50, 32, 10, 16, 5]}, 'frequency_bands': {'actual_var': 'frequency_bands', 'value': [25, 40, 50, 60, 75, 80, 100]}}
+FUNCTION_ENTER 1 signal_processing_analysis def signal_processing_analysis(raw_data, frequency_bands):
+1 ['raw_data', 'frequency_bands'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 24}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 28}, {'_type': 'int', '_value': 50}, {'_type': 'int', '_value': 32}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 16}, {'_type': 'int', '_value': 5}], '_len': 10}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 40}, {'_type': 'int', '_value': 50}, {'_type': 'int', '_value': 60}, {'_type': 'int', '_value': 75}, {'_type': 'int', '_value': 80}, {'_type': 'int', '_value': 100}], '_len': 7}]
+4 extracted_frequencies = set()
+4 ['raw_data', 'frequency_bands', 'extracted_frequencies'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', 'set()']
+5 noise_threshold = 15
+5 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', 'set()', '15']
+6 signal_strength = {}
+6 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', 'set()', '15', '{}']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', 'set()', '15', '{}', '0', '20']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', 'set()', '15', '{}', '0', '20']
+11 freq = amplitude * 2.5
+11 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', 'set()', '15', '{}', '0', '20', '50.0']
+13 signal_strength[round(freq)] = raw_data[i+1] if i+1 < len(raw_data) else 0
+13 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50}', '15', '{50: 45}', '0', '20', '50.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50}', '15', '{50: 45}', '1', '45', '50.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50}', '15', '{50: 45}', '1', '45', '50.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50}', '15', '{50: 45}', '2', '24', '50.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50}', '15', '{50: 45}', '2', '24', '50.0']
+11 freq = amplitude * 2.5
+11 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50}', '15', '{50: 45}', '2', '24', '60.0']
+13 signal_strength[round(freq)] = raw_data[i+1] if i+1 < len(raw_data) else 0
+13 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60}', '15', '{50: 45, 60: 32}', '2', '24', '60.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60}', '15', '{50: 45, 60: 32}', '3', '32', '60.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60}', '15', '{50: 45, 60: 32}', '3', '32', '60.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60}', '15', '{50: 45, 60: 32}', '4', '28', '60.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60}', '15', '{50: 45, 60: 32}', '4', '28', '60.0']
+11 freq = amplitude * 2.5
+11 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60}', '15', '{50: 45, 60: 32}', '4', '28', '70.0']
+13 signal_strength[round(freq)] = raw_data[i+1] if i+1 < len(raw_data) else 0
+13 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50}', '4', '28', '70.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50}', '5', '50', '70.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50}', '5', '50', '70.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50}', '6', '32', '70.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50}', '6', '32', '70.0']
+11 freq = amplitude * 2.5
+11 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50}', '6', '32', '80.0']
+13 signal_strength[round(freq)] = raw_data[i+1] if i+1 < len(raw_data) else 0
+13 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{80, 50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50, ...}', '6', '32', '80.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{80, 50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50, ...}', '7', '10', '80.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{80, 50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50, ...}', '7', '10', '80.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{80, 50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50, ...}', '8', '16', '80.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{80, 50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50, ...}', '8', '16', '80.0']
+11 freq = amplitude * 2.5
+11 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{80, 50, 60, 70}', '15', '{50: 45, 60: 32, 70: 50, ...}', '8', '16', '40.0']
+13 signal_strength[round(freq)] = raw_data[i+1] if i+1 < len(raw_data) else 0
+13 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '8', '16', '40.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '5', '40.0']
+10 if i % 2 == 0:  # Even indices represent frequency markers
+10 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '5', '40.0']
+9 for i, amplitude in enumerate(raw_data):
+9 ['raw_data', 'frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'amplitude', 'freq'] ['[20, 45, 24, 32, 28, ...]', '[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '5', '40.0']
+16 valid_frequencies = set()
+16 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '40.0', 'set()']
+17 for freq in extracted_frequencies:
+17 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '70', 'set()']
+19 snr = signal_strength.get(freq, 0) - noise_threshold
+19 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '70', 'set()', '35']
+20 if snr > 0:
+20 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '70', 'set()', '35']
+17 for freq in extracted_frequencies:
+17 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '40', '{70}', '35']
+19 snr = signal_strength.get(freq, 0) - noise_threshold
+19 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '40', '{70}', '-10']
+20 if snr > 0:
+20 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '40', '{70}', '-10']
+17 for freq in extracted_frequencies:
+17 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '80', '{70}', '-10']
+19 snr = signal_strength.get(freq, 0) - noise_threshold
+19 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '80', '{70}', '-5']
+20 if snr > 0:
+20 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '80', '{70}', '-5']
+17 for freq in extracted_frequencies:
+17 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '50', '{70}', '-5']
+19 snr = signal_strength.get(freq, 0) - noise_threshold
+19 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '50', '{70}', '30']
+20 if snr > 0:
+20 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '50', '{70}', '30']
+17 for freq in extracted_frequencies:
+17 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '60', '{50, 70}', '30']
+19 snr = signal_strength.get(freq, 0) - noise_threshold
+19 ['frequency_bands', 'extracted_frequencies', 'noise_threshold', 'signal_strength', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '15', '{50: 45, 60: 32, 70: 50, ...}', '9', '60', '{50, 70}', '17']
+20 if snr > 0:
+20 ['frequency_bands', 'extracted_frequencies', 'i', 'freq', 'valid_frequencies', 'snr'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '9', '60', '{50, 70}', '17']
+17 for freq in extracted_frequencies:
+17 ['frequency_bands', 'extracted_frequencies', 'i', 'freq', 'valid_frequencies'] ['[25, 40, 50, 60, 75, ...]', '{70, 40, 80, 50, 60}', '9', '60', '{50, 60, 70}']
+25 max_freq = max(valid_frequencies) if valid_frequencies else 0
+25 ['frequency_bands', 'i', 'valid_frequencies'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}']
+26 min_freq = min(valid_frequencies) if valid_frequencies else 0
+26 ['frequency_bands', 'i', 'valid_frequencies'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}']
+27 frequency_range = max_freq - min_freq if valid_frequencies else 0
+27 ['frequency_bands', 'i', 'valid_frequencies'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}']
+30 active_bands = set()
+30 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', 'set()']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', 'set()', '25']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', 'set()', '25']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{25}', '40']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{25}', '40']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 25}', '50']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 25}', '50']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 25, 50}', '60']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 25, 50}', '60']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 25, 50, 60}', '75']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 25, 50, 60}', '75']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 75, 50, 25, 60}', '80']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 75, 50, 25, 60}', '80']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 75, 80, 50, 25, ...}', '100']
+33 if band % 3 == 0 or band % 5 == 0:
+33 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{40, 75, 80, 50, 25, ...}', '100']
+31 for band in frequency_bands:
+31 ['frequency_bands', 'i', 'valid_frequencies', 'active_bands', 'band'] ['[25, 40, 50, 60, 75, ...]', '9', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}', '100']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['0', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['1', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['2', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['3', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['4', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['5', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['6', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['7', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['8', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['9', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+41 for i in range(10):
+41 ['i', 'valid_frequencies', 'active_bands'] ['9', '{50, 60, 70}', '{100, 40, 75, 80, 50, ...}']
+46 active_signals = len(valid_frequencies & active_bands)
+46 ['valid_frequencies', 'active_bands', 'active_signals'] ['{50, 60, 70}', '{100, 40, 75, 80, 50, ...}', '2']
+58 if frequency_range > 30:
+58 [] []
+71 return result
+71 [] []
+FUNCTION_RETURN 71 signal_processing_analysis {'_type': 'dict', '_items': {'active_signals': {'_type': 'int', '_value': 2}, 'potential_signals': {'_type': 'int', '_value': 8}, 'quality_metric': {'_type': 'float', '_value': 3.0}, 'corrected_signals': {'_type': 'int', '_value': 2}}, '_len': 4}

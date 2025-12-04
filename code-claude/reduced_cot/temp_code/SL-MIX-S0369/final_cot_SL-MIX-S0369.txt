@@ -1,0 +1,82 @@
+Target: Find the value of variable customer_points after [line 52] executes
+
+[line 7]  seasonal_bonus = 15
+Assign: seasonal_bonus = 15
+[line 8]  purchase_threshold = 50
+Assign: purchase_threshold = 50
+[line 11]  total_points = 0
+Assign: total_points = 0
+[line 13]  penalty_points = 0
+Assign: penalty_points = 0
+[line 14]  inactive_months = 3  # Customer was inactive for 3 months
+Assign: inactive_months = 3
+[line 17]  for idx, (amount, category, is_promo) in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 19]  basic_points = amount // 1  # Integer division
+Compute: amount // 1  # Integer division, where amount=120 (an unknown source) = 120
+[line 22]  if category == "electronics":
+Condition: True, entering 'if' block
+[line 23]  category_multiplier = 1.5
+Assign: category_multiplier = 1.5
+[line 30]  transaction_points = int(basic_points * category_multiplier)
+Call function int(basic_points * category_multiplier)
+[line 33]  if is_promo and amount > purchase_threshold:
+Condition: True, entering 'if' block
+[line 34]  transaction_points += seasonal_bonus
+Update: transaction_points changed from 180 (defined at defined at [line 30]) to 180+seasonal_bonus = 195
+[line 37]  if idx % 2 == 0:  # Every other transaction gets extra tracking (not used)
+Condition: True, entering 'if' block
+[line 42]  total_points += transaction_points
+Update: total_points changed from 0 (defined at defined at [line 11]) to 0+transaction_points = 195
+[line 17]  for idx, (amount, category, is_promo) in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 19]  basic_points = amount // 1  # Integer division
+Compute: amount // 1  # Integer division, where amount=45 (an unknown source) = 45
+[line 22]  if category == "electronics":
+Condition: True, entering 'if' block
+[line 24]  elif category == "grocery":
+'elif' Condition: True, entering block
+[line 25]  category_multiplier = 1.0
+Assign: category_multiplier = 1.0
+[line 30]  transaction_points = int(basic_points * category_multiplier)
+Call function int(basic_points * category_multiplier)
+[line 33]  if is_promo and amount > purchase_threshold:
+Condition: True, entering 'if' block
+[line 37]  if idx % 2 == 0:  # Every other transaction gets extra tracking (not used)
+Condition: True, entering 'if' block
+[line 42]  total_points += transaction_points
+Update: total_points changed from 195 (defined at defined at [line 42]) to 195+transaction_points = 240
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+[line 17]  for idx, (amount, category, is_promo) in enumerate(transactions):
+(Missing param: 'iter_var')
+[line 19]  basic_points = amount // 1  # Integer division
+Compute: amount // 1  # Integer division, where amount=200 (an unknown source) = 200
+[line 22]  if category == "electronics":
+Condition: True, entering 'if' block
+[line 23]  category_multiplier = 1.5
+Assign: category_multiplier = 1.5
+[line 30]  transaction_points = int(basic_points * category_multiplier)
+Call function int(basic_points * category_multiplier)
+[line 33]  if is_promo and amount > purchase_threshold:
+Condition: True, entering 'if' block
+[line 37]  if idx % 2 == 0:  # Every other transaction gets extra tracking (not used)
+Condition: True, entering 'if' block
+[line 42]  total_points += transaction_points
+Update: total_points changed from 381 (defined at defined at [line 42]) to 381+transaction_points = 681
+[line 17]  for idx, (amount, category, is_promo) in enumerate(transactions):
+Loop End: Iteration finished
+[line 45]  penalty_points = inactive_months * 5
+Compute: inactive_months * 5, where inactive_months=3 (defined at [line 14]) = 15
+[line 52]  customer_points = total_points - penalty_points
+Compute: total_points - penalty_points, where total_points=681 (defined at [line 42]), penalty_points=15 (defined at [line 45]) = 666
+
+Answer: customer_points = 666 (last updated on defined at [line 52])

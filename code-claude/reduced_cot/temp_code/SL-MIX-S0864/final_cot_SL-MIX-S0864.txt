@@ -1,0 +1,108 @@
+Target: Find the value of variable priority_score after [line 63] executes
+
+[line 44]  min_importance = 3
+Assign: min_importance = 3
+[line 45]  max_complexity = 4
+Assign: max_complexity = 4
+[line 53]  filtered_tasks = [task for task in tasks if task['importance'] >= min_importance and task['complexity'] <= max_complexity]
+Compute: [task for task in tasks if task['importance'] >= min_importance and task['complexity'] <= max_complexity], where task={id: 1, name: 'Fix login bug', deadline_days: 3, ...} (an unknown source), tasks=[{id: 1, name: 'Fix login bug', deadline_days: 3, ...}, {id: 2, name: 'Update documentation', deadline_days: 10, ...}, {id: 3, name: 'Refactor API', deadline_days: 5, ...}, {id: 4, name: 'Security audit', deadline_days: 7, ...}, {id: 5, name: 'Performance testing', deadline_days: 15, ...}] (an unknown source), min_importance=3 (defined at [line 44]), max_complexity=4 (defined at [line 45]) = ?
+[line 56]  priority_score = calculate_priority(filtered_tasks)
+Call function calculate_priority(filtered_tasks=[{id: 1, name: 'Fix login bug', deadline_days: 3, ...}, {id: 3, name: 'Refactor API', deadline_days: 5, ...}, {id: 4, name: 'Security audit', deadline_days: 7, ...}, {id: 5, name: 'Performance testing', deadline_days: 15, ...}] (defined at [line 53]))
+[line 3]  urgency_factor = 1.5
+Assign: urgency_factor = 1.5
+[line 7]  task_types = {}
+Compute: {} = {}
+[line 8]  for task in tasks:
+Loop Start: task takes its first value {id: 1, name: 'Fix login bug', deadline_days: 3, ...}
+[line 9]  category = task.get('category', 'general')
+(Missing param: 'func_name')
+[line 10]  if category in task_types:
+Condition: True, entering 'if' block
+[line 13]  task_types[category] = 1
+(Missing param: 'var')
+[line 8]  for task in tasks:
+Loop Iteration: task is now {id: 3, name: 'Refactor API', deadline_days: 5, ...} (iteration 2)
+[line 9]  category = task.get('category', 'general')
+(Missing param: 'func_name')
+[line 10]  if category in task_types:
+Condition: True, entering 'if' block
+[line 13]  task_types[category] = 1
+(Missing param: 'var')
+[line 8]  for task in tasks:
+Loop Iteration: task is now {id: 4, name: 'Security audit', deadline_days: 7, ...} (iteration 3)
+[line 9]  category = task.get('category', 'general')
+(Missing param: 'func_name')
+[line 10]  if category in task_types:
+Condition: True, entering 'if' block
+[line 13]  task_types[category] = 1
+(Missing param: 'var')
+[line 8]  for task in tasks:
+Loop Iteration: task is now {id: 5, name: 'Performance testing', deadline_days: 15, ...} (iteration 4)
+[line 9]  category = task.get('category', 'general')
+(Missing param: 'func_name')
+[line 10]  if category in task_types:
+Condition: True, entering 'if' block
+[line 8]  for task in tasks:
+Loop End: Iteration finished
+[line 16]  priority = 0
+Assign: priority = 0
+[line 17]  for task in tasks:
+Loop Start: task takes its first value {id: 1, name: 'Fix login bug', deadline_days: 3, ...}
+[line 18]  deadline_days = task.get('deadline_days', 30)
+(Missing param: 'func_name')
+[line 19]  importance = task.get('importance', 1)
+(Missing param: 'func_name')
+[line 20]  complexity = task.get('complexity', 1)
+(Missing param: 'func_name')
+[line 25]  if deadline_days < 7:
+Condition: True, entering 'if' block
+[line 26]  priority += (importance * 3) + complexity
+Update: priority changed from 0 (defined at defined at [line 16]) to 0+(importance * 3) + complexity = 15
+[line 17]  for task in tasks:
+Loop Iteration: task is now {id: 3, name: 'Refactor API', deadline_days: 5, ...} (iteration 2)
+[line 18]  deadline_days = task.get('deadline_days', 30)
+(Missing param: 'func_name')
+[line 19]  importance = task.get('importance', 1)
+(Missing param: 'func_name')
+[line 20]  complexity = task.get('complexity', 1)
+(Missing param: 'func_name')
+[line 25]  if deadline_days < 7:
+Condition: True, entering 'if' block
+[line 26]  priority += (importance * 3) + complexity
+Update: priority changed from 15 (defined at defined at [line 26]) to 15+(importance * 3) + complexity = 28
+[line 17]  for task in tasks:
+Loop Iteration: task is now {id: 4, name: 'Security audit', deadline_days: 7, ...} (iteration 3)
+[line 18]  deadline_days = task.get('deadline_days', 30)
+(Missing param: 'func_name')
+[line 19]  importance = task.get('importance', 1)
+(Missing param: 'func_name')
+[line 20]  complexity = task.get('complexity', 1)
+(Missing param: 'func_name')
+[line 25]  if deadline_days < 7:
+Condition: True, entering 'if' block
+[line 27]  elif deadline_days < 14:
+'elif' Condition: True, entering block
+[line 28]  priority += (importance * 2) + complexity
+Update: priority changed from 28 (defined at defined at [line 26]) to 28+(importance * 2) + complexity = 40
+[line 17]  for task in tasks:
+Loop Iteration: task is now {id: 5, name: 'Performance testing', deadline_days: 15, ...} (iteration 4)
+[line 18]  deadline_days = task.get('deadline_days', 30)
+(Missing param: 'func_name')
+[line 19]  importance = task.get('importance', 1)
+(Missing param: 'func_name')
+[line 20]  complexity = task.get('complexity', 1)
+(Missing param: 'func_name')
+[line 25]  if deadline_days < 7:
+Condition: True, entering 'if' block
+[line 27]  elif deadline_days < 14:
+'elif' Condition: True, entering block
+[line 30]  priority += importance + (complexity * 0.5)
+Update: priority changed from 40 (defined at defined at [line 28]) to 40+importance + (complexity * 0.5) = 44.5
+[line 17]  for task in tasks:
+Loop End: Iteration finished
+[line 32]  return int(priority * urgency_factor)
+Return: int(priority * urgency_factor)
+[line 63]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 66 (last updated on defined at [line 56])

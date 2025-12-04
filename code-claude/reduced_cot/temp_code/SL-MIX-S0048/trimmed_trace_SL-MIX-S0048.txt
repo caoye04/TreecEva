@@ -1,0 +1,285 @@
+78
+priority_value
+---
+50 packet_loss_rate = 0.05
+50 ['packet_loss_rate'] ['0.05']
+51 latency_ms = 120
+51 ['packet_loss_rate', 'latency_ms'] ['0.05', '120']
+55 packets = ["GET /index.html", "POST /api/data", "ACK 12345", "SYN", "FIN"]
+55 ['packet_loss_rate', 'latency_ms', 'packets'] ['0.05', '120', "['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']"]
+PARAM_MAPPING {'packets': {'actual_var': 'packets', 'value': ['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']}}
+FUNCTION_ENTER 1 analyze_network_traffic def analyze_network_traffic(packets, signal_strength=0.8):
+1 ['packets', 'signal_strength'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'GET /index.html'}, {'_type': 'str', '_value': 'POST /api/data'}, {'_type': 'str', '_value': 'ACK 12345'}, {'_type': 'str', '_value': 'SYN'}, {'_type': 'str', '_value': 'FIN'}], '_len': 5}, {'_type': 'float', '_value': 0.8}]
+2 noise_level = sum(len(p) for p in packets) % 17
+2 [] []
+2 noise_level = sum(len(p) for p in packets) % 17
+2 ['p'] ["'GET /index.html'"]
+2 noise_level = sum(len(p) for p in packets) % 17
+2 ['p'] ["'POST /api/data'"]
+2 noise_level = sum(len(p) for p in packets) % 17
+2 ['p'] ["'ACK 12345'"]
+2 noise_level = sum(len(p) for p in packets) % 17
+2 ['p'] ["'SYN'"]
+2 noise_level = sum(len(p) for p in packets) % 17
+2 ['p'] ["'FIN'"]
+2 noise_level = sum(len(p) for p in packets) % 17
+2 ['p'] ["'FIN'"]
+3 potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+3 ['packets', 'noise_level', 'i', 'p'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', '0', "'GET /index.html'"]
+3 potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+3 ['packets', 'noise_level', 'i', 'p'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', '1', "'POST /api/data'"]
+3 potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+3 ['packets', 'noise_level', 'i', 'p'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', '2', "'ACK 12345'"]
+3 potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+3 ['packets', 'noise_level', 'i', 'p'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', '3', "'SYN'"]
+3 potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+3 ['packets', 'noise_level', 'i', 'p'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', '4', "'FIN'"]
+3 potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+3 ['packets', 'noise_level', 'potential_threats'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]"]
+6 integrity_factor = 0
+6 ['packets', 'noise_level', 'potential_threats', 'integrity_factor'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '0']
+7 for idx, packet in enumerate(packets):
+7 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '0', '0', "'GET /index.html'"]
+8 if idx % 3 == 0:
+8 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '0', '0', "'GET /index.html'"]
+9 integrity_factor += len(packet) & 0x0F
+9 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '0', "'GET /index.html'"]
+7 for idx, packet in enumerate(packets):
+7 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '1', "'POST /api/data'"]
+8 if idx % 3 == 0:
+8 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '1', "'POST /api/data'"]
+10 elif idx % 3 == 1:
+10 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '1', "'POST /api/data'"]
+11 integrity_factor -= len(packet) >> 2
+11 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '12', '1', "'POST /api/data'"]
+7 for idx, packet in enumerate(packets):
+7 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '12', '2', "'ACK 12345'"]
+8 if idx % 3 == 0:
+8 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '12', '2', "'ACK 12345'"]
+10 elif idx % 3 == 1:
+10 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '12', '2', "'ACK 12345'"]
+13 integrity_factor += (len(packet) ^ 0xAA) % 10
+13 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '2', "'ACK 12345'"]
+7 for idx, packet in enumerate(packets):
+7 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '3', "'SYN'"]
+8 if idx % 3 == 0:
+8 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '15', '3', "'SYN'"]
+9 integrity_factor += len(packet) & 0x0F
+9 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18', '3', "'SYN'"]
+7 for idx, packet in enumerate(packets):
+7 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18', '4', "'FIN'"]
+8 if idx % 3 == 0:
+8 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18', '4', "'FIN'"]
+10 elif idx % 3 == 1:
+10 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18', '4', "'FIN'"]
+11 integrity_factor -= len(packet) >> 2
+11 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18', '4', "'FIN'"]
+7 for idx, packet in enumerate(packets):
+7 ['packets', 'noise_level', 'potential_threats', 'integrity_factor', 'idx', 'packet'] ["['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']", '10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18', '4', "'FIN'"]
+15 return noise_level, integrity_factor, potential_threats
+15 ['noise_level', 'potential_threats', 'integrity_factor'] ['10', "[(0, 'GET /index.html'), (1, 'POST /api/data')]", '18']
+FUNCTION_RETURN 15 analyze_network_traffic {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 18}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 0}, {'_type': 'str', '_value': 'GET /index.html'}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'str', '_value': 'POST /api/data'}], '_len': 2}], '_len': 2}], '_len': 3}
+62 packet_data = "DATA:PRIORITY:ANALYSIS"
+62 ['packet_loss_rate', 'latency_ms', 'packet_data'] ['0.05', '120', "'DATA:PRIORITY:ANALYSIS'"]
+63 error_threshold = 15
+63 ['packet_loss_rate', 'latency_ms', 'packet_data', 'error_threshold'] ['0.05', '120', "'DATA:PRIORITY:ANALYSIS'", '15']
+70 priority_value = get_data_priority(packet_data, error_threshold)
+70 ['packet_loss_rate', 'latency_ms', 'packet_data', 'error_threshold'] ['0.05', '120', "'DATA:PRIORITY:ANALYSIS'", '15']
+19 sequence_count = 0
+19 ['data', 'threshold', 'sequence_count'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0']
+20 anomaly_score = 0
+20 ['data', 'threshold', 'sequence_count', 'anomaly_score'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0']
+21 bit_patterns = []
+21 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[]']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[]', '0', "'D'"]
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[]', '0', "'D'"]
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[]', '0', "'D'", '68']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4]', '0', "'D'", '68']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4]', '1', "'A'", '68']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4]', '1', "'A'", '68']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4]', '1', "'A'", '65']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1]', '1', "'A'", '65']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1]', '2', "'T'", '65']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1]', '2', "'T'", '65']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1]', '2', "'T'", '84']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4]', '2', "'T'", '84']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4]', '3', "'A'", '84']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4]', '3', "'A'", '84']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4]', '3', "'A'", '65']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1]', '3', "'A'", '65']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1]', '4', "':'", '65']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1]', '4', "':'", '65']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1]', '4', "':'", '58']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10]', '4', "':'", '58']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10]', '5', "'P'", '58']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10]', '5', "'P'", '58']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10]', '5', "'P'", '80']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '5', "'P'", '80']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '6', "'R'", '80']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '6', "'R'", '80']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '6', "'R'", '82']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '6', "'R'", '82']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '7', "'I'", '82']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '7', "'I'", '82']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '7', "'I'", '73']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '7', "'I'", '73']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '8', "'O'", '73']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '8', "'O'", '73']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '8', "'O'", '79']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '8', "'O'", '79']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '9', "'R'", '79']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '9', "'R'", '79']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '9', "'R'", '82']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '9', "'R'", '82']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '10', "'I'", '82']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '10', "'I'", '82']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '10', "'I'", '73']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '10', "'I'", '73']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '11', "'T'", '73']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '11', "'T'", '73']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '11', "'T'", '84']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '11', "'T'", '84']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '12', "'Y'", '84']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '12', "'Y'", '84']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '12', "'Y'", '89']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '12', "'Y'", '89']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '13', "':'", '89']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '13', "':'", '89']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '13', "':'", '58']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '13', "':'", '58']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '14', "'A'", '58']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '14', "'A'", '58']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '14', "'A'", '65']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '14', "'A'", '65']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '15', "'N'", '65']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '15', "'N'", '65']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '15', "'N'", '78']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '15', "'N'", '78']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '16', "'A'", '78']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '16', "'A'", '78']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '16', "'A'", '65']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '16', "'A'", '65']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '17', "'L'", '65']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '17', "'L'", '65']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '17', "'L'", '76']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '17', "'L'", '76']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '18', "'Y'", '76']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '18', "'Y'", '76']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '18', "'Y'", '89']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '18', "'Y'", '89']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '19', "'S'", '89']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '19', "'S'", '89']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '19', "'S'", '83']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '19', "'S'", '83']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '20', "'I'", '83']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '20', "'I'", '83']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '20', "'I'", '73']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '20', "'I'", '73']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '21', "'S'", '73']
+26 if i > 0 and char == data[i-1]:
+26 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '21', "'S'", '73']
+30 char_value = ord(char)
+30 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '21', "'S'", '83']
+34 if char_value > 110:
+34 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char', 'char_value'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '21', "'S'", '83']
+24 for i, char in enumerate(data):
+24 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'i', 'char'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '21', "'S'"]
+38 raw_priority = (sum(bit_patterns) * 3) // len(data)
+38 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'bit_patterns', 'raw_priority'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '[4, 1, 4, 1, 10, ...]', '18']
+39 adjusted_priority = raw_priority
+39 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'raw_priority', 'adjusted_priority'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '18', '18']
+42 if anomaly_score > threshold:
+42 ['data', 'threshold', 'sequence_count', 'anomaly_score', 'adjusted_priority'] ["'DATA:PRIORITY:ANALYSIS'", '15', '0', '0', '18']
+44 elif sequence_count > len(data) // 4:
+44 ['data', 'sequence_count', 'adjusted_priority'] ["'DATA:PRIORITY:ANALYSIS'", '0', '18']
+47 return adjusted_priority
+47 ['adjusted_priority'] ['18']
+74 if packet_loss_rate < 0.1 and latency_ms < 200:
+74 ['packet_loss_rate', 'latency_ms', 'priority_value'] ['0.05', '120', '18']
+78 print(f"Result: {priority_value}")
+78 ['priority_value'] ['18']

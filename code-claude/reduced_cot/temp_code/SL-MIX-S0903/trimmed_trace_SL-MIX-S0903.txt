@@ -1,0 +1,123 @@
+116
+priority_value
+---
+87 active_protocols = ['HTTP', 'HTTPS', 'DNS', 'FTP']
+87 ['network_traffic', 'active_protocols'] ["[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}]", "['HTTP', 'HTTPS', 'DNS', 'FTP']"]
+3 risk_score = 0
+3 ['headers', 'filter_criteria', 'risk_score'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '0']
+4 suspicious_ports = {22: 'SSH', 23: 'Telnet', 3389: 'RDP', 445: 'SMB'}
+4 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '0', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}"]
+6 for header in headers:
+6 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '0', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 80, encrypted: False}']
+7 if header.get('port') in suspicious_ports:
+7 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '0', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 80, encrypted: False}']
+9 if header.get('encrypted') == False:
+9 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '0', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 80, encrypted: False}']
+10 risk_score += 15
+10 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '15', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 80, encrypted: False}']
+6 for header in headers:
+6 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '15', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 443, encrypted: True}']
+7 if header.get('port') in suspicious_ports:
+7 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '15', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 443, encrypted: True}']
+9 if header.get('encrypted') == False:
+9 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '15', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 443, encrypted: True}']
+6 for header in headers:
+6 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '15', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 22, encrypted: True}']
+7 if header.get('port') in suspicious_ports:
+7 ['headers', 'filter_criteria', 'risk_score', 'suspicious_ports', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '15', "{22: 'SSH', 23: 'Telnet', 3389: 'RDP', ...}", '{port: 22, encrypted: True}']
+8 risk_score += 10
+8 ['headers', 'filter_criteria', 'risk_score', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '25', '{port: 22, encrypted: True}']
+9 if header.get('encrypted') == False:
+9 ['headers', 'filter_criteria', 'risk_score', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '25', '{port: 22, encrypted: True}']
+6 for header in headers:
+6 ['headers', 'filter_criteria', 'risk_score', 'header'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '25', '{port: 22, encrypted: True}']
+13 if filter_criteria:
+13 ['headers', 'filter_criteria', 'risk_score'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', 'None', '25']
+17 return risk_score / max(1, len(headers))
+17 ['headers', 'risk_score'] ['[{port: 80, encrypted: False}, {port: 443, encrypted: True}, {port: 22, encrypted: True}]', '25']
+109 priority_value = calculate_priority(network_traffic, active_protocols)
+109 ['network_traffic', 'active_protocols'] ["[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}]", "['HTTP', 'HTTPS', 'DNS', 'FTP']"]
+34 base_value = 0
+34 ['traffic', 'protocols', 'base_value'] ["[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}]", "['HTTP', 'HTTPS', 'DNS', 'FTP']", '0']
+35 multiplier = 1
+35 ['traffic', 'protocols', 'base_value', 'multiplier'] ["[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}]", "['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '1']
+36 threshold = 75
+36 ['traffic', 'protocols', 'base_value', 'multiplier', 'threshold'] ["[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}]", "['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '1', '75']
+39 protocol_weights = {'HTTP': 1, 'HTTPS': 2, 'FTP': 3, 'DNS': 4, 'SMTP': 2}
+39 ['traffic', 'protocols', 'base_value', 'multiplier', 'threshold', 'protocol_weights'] ["[{packets: 1200, dropped: 60, protocol: 'HTTP'}, {packets: 800, dropped: 40, protocol: 'HTTPS'}, {packets: 400, dropped: 100, protocol: 'FTP'}]", "['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '1', '75', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+45 total_packets = sum(t.get('packets', 0) for t in traffic)
+45 [] []
+45 total_packets = sum(t.get('packets', 0) for t in traffic)
+45 ['t'] ["{packets: 1200, dropped: 60, protocol: 'HTTP'}"]
+45 total_packets = sum(t.get('packets', 0) for t in traffic)
+45 ['t'] ["{packets: 800, dropped: 40, protocol: 'HTTPS'}"]
+45 total_packets = sum(t.get('packets', 0) for t in traffic)
+45 ['t'] ["{packets: 400, dropped: 100, protocol: 'FTP'}"]
+45 total_packets = sum(t.get('packets', 0) for t in traffic)
+45 ['t'] ["{packets: 400, dropped: 100, protocol: 'FTP'}"]
+46 dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+46 [] []
+46 dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+46 ['t'] ["{packets: 1200, dropped: 60, protocol: 'HTTP'}"]
+46 dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+46 ['t'] ["{packets: 800, dropped: 40, protocol: 'HTTPS'}"]
+46 dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+46 ['t'] ["{packets: 400, dropped: 100, protocol: 'FTP'}"]
+46 dropped_packets = sum(t.get('dropped', 0) for t in traffic)
+46 ['t'] ["{packets: 400, dropped: 100, protocol: 'FTP'}"]
+49 packet_loss = (dropped_packets / total_packets * 100) if total_packets > 0 else 0
+49 ['protocols', 'base_value', 'multiplier', 'threshold', 'total_packets', 'dropped_packets', 'packet_loss', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '1', '75', '2400', '200', '8.333333333333332', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+55 if packet_loss > 5:
+55 ['protocols', 'base_value', 'multiplier', 'threshold', 'packet_loss', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '1', '75', '8.333333333333332', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+56 multiplier = 2
+56 ['protocols', 'base_value', 'multiplier', 'threshold', 'packet_loss', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '2', '75', '8.333333333333332', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+57 if packet_loss > 15:
+57 ['protocols', 'base_value', 'multiplier', 'threshold', 'packet_loss', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '2', '75', '8.333333333333332', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+61 for protocol in protocols:
+61 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '2', '75', "'HTTP'", '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+62 weight = protocol_weights.get(protocol, 1)
+62 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '0', '2', '75', "'HTTP'", '1', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+63 base_value += weight
+63 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '1', '2', '75', "'HTTP'", '1', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+66 if protocol == 'DNS':
+66 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '1', '2', '75', "'HTTP'", '1', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+61 for protocol in protocols:
+61 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '1', '2', '75', "'HTTPS'", '1', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+62 weight = protocol_weights.get(protocol, 1)
+62 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '1', '2', '75', "'HTTPS'", '2', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+63 base_value += weight
+63 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '3', '2', '75', "'HTTPS'", '2', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+66 if protocol == 'DNS':
+66 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '3', '2', '75', "'HTTPS'", '2', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+61 for protocol in protocols:
+61 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '3', '2', '75', "'DNS'", '2', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+62 weight = protocol_weights.get(protocol, 1)
+62 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '3', '2', '75', "'DNS'", '4', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+63 base_value += weight
+63 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '7', '2', '75', "'DNS'", '4', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+66 if protocol == 'DNS':
+66 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '7', '2', '75', "'DNS'", '4', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+67 base_value *= 2
+67 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '14', '2', '75', "'DNS'", '4', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+61 for protocol in protocols:
+61 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '14', '2', '75', "'FTP'", '4', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+62 weight = protocol_weights.get(protocol, 1)
+62 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight', 'protocol_weights'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '14', '2', '75', "'FTP'", '3', '{HTTP: 1, HTTPS: 2, FTP: 3, ...}']
+63 base_value += weight
+63 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol', 'weight'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '17', '2', '75', "'FTP'", '3']
+66 if protocol == 'DNS':
+66 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '17', '2', '75', "'FTP'"]
+61 for protocol in protocols:
+61 ['protocols', 'base_value', 'multiplier', 'threshold', 'protocol'] ["['HTTP', 'HTTPS', 'DNS', 'FTP']", '17', '2', '75', "'FTP'"]
+70 if base_value > threshold:
+70 ['base_value', 'multiplier', 'threshold'] ['17', '2', '75']
+74 result = base_value * multiplier
+74 ['base_value', 'multiplier', 'result'] ['17', '2', '34']
+77 return result % 100
+77 ['result'] ['34']
+114 print(f"Network reliability: {reliability:.2f}%")
+114 ['priority_value'] ['34']
+115 print(f"Security risk level: {risk_level:.2f}")
+115 ['priority_value'] ['34']
+116 print(f"Priority value: {priority_value}")
+116 ['priority_value'] ['34']

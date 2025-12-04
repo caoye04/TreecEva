@@ -1,0 +1,55 @@
+Target: Find the value of variable decryption_key after [line 58] executes
+
+[line 8]  filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+Compute: [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3, where p=18 (an unknown source), packets=[18, 24, 12, 42, 30, ...] (an unknown source) = ?
+[line 16]  security_level = 4
+Assign: security_level = 4
+[line 22]  for i, packet in enumerate(filtered_packets):
+(Missing param: 'iter_var')
+[line 23]  if i >= len(packets) - 2:
+Condition: True, entering 'if' block
+[line 27]  threat_level = (packet & 0x0F) + security_level
+Compute: (packet & 0x0F) + security_level, where packet=50 (an unknown source), security_level=4 (defined at [line 16]) = 6
+[line 28]  if threat_level > 10:
+Condition: True, entering 'if' block
+[line 22]  for i, packet in enumerate(filtered_packets):
+Loop End: Iteration finished
+[line 35]  hash_value = 0
+Assign: hash_value = 0
+[line 36]  for p in filtered_packets:
+Loop Start: p takes its first value 50
+[line 37]  hash_value = ((hash_value << 3) | (hash_value >> 29)) & 0xFFFFFFFF
+Compute: ((hash_value << 3) | (hash_value >> 29)) & 0xFFFFFFFF, where hash_value=0 (defined at [line 35]) = 0
+[line 36]  for p in filtered_packets:
+Loop End: Iteration finished
+[line 44]  key_parts = [0xA5, 0xF1, 0x3C, 0x77, 0xBE, 0x2D, 0x8F]
+Compute: [0xA5, 0xF1, 0x3C, 0x77, 0xBE, 0x2D, 0x8F] = [165, 241, 60, 119, 190, ...]
+[line 45]  valid_index = 0
+Assign: valid_index = 0
+[line 48]  for i, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 49]  if i < len(key_parts) and packet % 2 == 0:
+Condition: True, entering 'if' block
+[line 50]  valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+Compute: (valid_index + (packet & 0x07)) % len(key_parts), where valid_index=0 (defined at [line 45]), packet=18 (an unknown source), key_parts=[165, 241, 60, 119, 190, ...] (defined at [line 44]) = 2
+[line 48]  for i, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 49]  if i < len(key_parts) and packet % 2 == 0:
+Condition: True, entering 'if' block
+[line 50]  valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+Compute: (valid_index + (packet & 0x07)) % len(key_parts), where valid_index=2 (defined at [line 50]), packet=24 (an unknown source), key_parts=[165, 241, 60, 119, 190, ...] (defined at [line 44]) = 2
+... [Line 48] repeats 3 more times ...
+... [Line 48] repeats 3 more times ...
+... [Line 48] repeats 3 more times ...
+[line 48]  for i, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 49]  if i < len(key_parts) and packet % 2 == 0:
+Condition: True, entering 'if' block
+[line 50]  valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+Compute: (valid_index + (packet & 0x07)) % len(key_parts), where valid_index=0 (defined at [line 50]), packet=50 (an unknown source), key_parts=[165, 241, 60, 119, 190, ...] (defined at [line 44]) = 2
+[line 48]  for i, packet in enumerate(packets):
+Loop End: Iteration finished
+[line 58]  decryption_key = key_parts[valid_index] ^ (hash_value & 0xFF)
+Compute: key_parts[valid_index] ^ (hash_value & 0xFF), where key_parts=[165, 241, 60, 119, 190, ...] (defined at [line 44]), valid_index=2 (defined at [line 50]), hash_value=50 (defined at [line 37]) = 14
+
+Answer: decryption_key = 14 (last updated on defined at [line 58])

@@ -1,0 +1,85 @@
+Target: Find the value of variable password_strength after [line 71] executes
+
+[line 53]  password = "P@ssw0rd"
+Assign: password = 'P@ssw0rd'
+[line 61]  password_strength = calculate_score(password)
+Call function calculate_score(password='P@ssw0rd' (defined at [line 53]))
+[line 1]  def calculate_score(password):
+Enter function calculate_score: password='P@ssw0rd' (password defined at [line 53])
+  [line 3]  base_score = 0
+  Assign: base_score = 0
+  [line 4]  length_score = min(len(password) * 4, 40)
+  Call function min(len(password) * 4, 40)
+  [line 7]  has_lowercase = False
+  Assign: has_lowercase = False
+  [line 8]  has_uppercase = False
+  Assign: has_uppercase = False
+  [line 9]  has_digit = False
+  Assign: has_digit = False
+  [line 10]  has_special = False
+  Assign: has_special = False
+  [line 19]  for char in password:
+  Loop Start: char takes its first value 'P'
+  [line 20]  if char.islower():
+  Condition: True, entering 'if' block
+  [line 23]  elif char.isupper():
+  'elif' Condition: True, entering block
+  [line 25]  has_uppercase = True
+  Assign: has_uppercase = True
+  [line 19]  for char in password:
+  Loop Iteration: char is now '@' (iteration 2)
+  [line 20]  if char.islower():
+  Condition: True, entering 'if' block
+  [line 23]  elif char.isupper():
+  'elif' Condition: True, entering block
+  [line 26]  elif char.isdigit():
+  'elif' Condition: True, entering block
+  [line 31]  has_special = True
+  Assign: has_special = True
+... [Line 19] repeats 5 more times ...
+... [Line 19] repeats 5 more times ...
+... [Line 19] repeats 5 more times ...
+  [line 19]  for char in password:
+  Loop Iteration: char is now 'd' (iteration 8)
+  [line 20]  if char.islower():
+  Condition: True, entering 'if' block
+  [line 22]  has_lowercase = True
+  Assign: has_lowercase = True
+  [line 19]  for char in password:
+  Loop End: Iteration finished
+  [line 34]  type_count = sum([has_lowercase, has_uppercase, has_digit, has_special])
+  Call function sum([has_lowercase, has_uppercase=True (defined at [line 25]), has_digit=True (defined at [line 9]), has_special])
+  [line 35]  type_bonus = type_count * 10
+  Compute: type_count * 10, where type_count=4 (defined at [line 34]) = 40
+  [line 38]  repeated_chars = 0
+  Assign: repeated_chars = 0
+  [line 39]  for i in range(1, len(password)):
+  Loop Start: i takes its first value 1
+  [line 40]  if password[i] == password[i-1]:
+  Condition: True, entering 'if' block
+  [line 39]  for i in range(1, len(password)):
+  Loop Iteration: i is now 2 (iteration 2)
+  [line 40]  if password[i] == password[i-1]:
+  Condition: True, entering 'if' block
+... [Line 39] repeats 4 more times ...
+... [Line 39] repeats 4 more times ...
+... [Line 39] repeats 4 more times ...
+  [line 39]  for i in range(1, len(password)):
+  Loop Iteration: i is now 7 (iteration 7)
+  [line 40]  if password[i] == password[i-1]:
+  Condition: True, entering 'if' block
+  [line 39]  for i in range(1, len(password)):
+  Loop End: Iteration finished
+  [line 47]  final_score = base_score + length_score + type_bonus - repeated_chars * 3
+  Compute: base_score + length_score + type_bonus - repeated_chars * 3, where base_score=0 (defined at [line 3]), length_score=32 (defined at [line 4]), type_bonus=40 (defined at [line 35]), repeated_chars=1 (defined at [line 38]) = 69
+  [line 50]  return max(0, min(final_score, 100))
+  Return: max(0, min(final_score, 100))
+Function calculate_score returns 69
+[line 64]  common_passwords = {"password", "123456", "qwerty"}
+Compute: {"password", "123456", "qwerty"}, where password='P@ssw0rd' (defined at [line 53]) = {'123456', 'qwerty', 'password'}
+[line 65]  if password.lower() in common_passwords:
+Condition: True, entering 'if' block
+[line 71]  print(f"Result: {password_strength}")
+Output: f"Result: {password_strength}"
+
+Answer: password_strength = 69 (last updated on defined at [line 61])

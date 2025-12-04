@@ -1,0 +1,134 @@
+Target: Find the value of variable encryption_key after [line 98] executes
+
+[line 43]  def process_metadata(metadata):
+Enter function process_metadata: metadata={user: 'Security', id: 42, time: 1635724800, ...}
+  [line 44]  processed = {}
+  Compute: {} = {}
+  [line 45]  for key, value in metadata.items():
+  (Missing param: 'iter_var')
+  [line 46]  if isinstance(value, str):
+  Condition: True, entering 'if' block
+  [line 47]  processed[key] = value.upper()
+  (Missing param: 'func_name')
+  [line 45]  for key, value in metadata.items():
+  (Missing param: 'iter_var')
+  [line 46]  if isinstance(value, str):
+  Condition: True, entering 'if' block
+  [line 48]  elif isinstance(value, int):
+  'elif' Condition: True, entering block
+  [line 49]  processed[key] = value * 2
+  (Missing param: 'result')
+  [line 45]  for key, value in metadata.items():
+  (Missing param: 'iter_var')
+  [line 46]  if isinstance(value, str):
+  Condition: True, entering 'if' block
+  [line 48]  elif isinstance(value, int):
+  'elif' Condition: True, entering block
+  [line 49]  processed[key] = value * 2
+  (Missing param: 'result')
+  [line 45]  for key, value in metadata.items():
+  (Missing param: 'iter_var')
+  [line 46]  if isinstance(value, str):
+  Condition: True, entering 'if' block
+  [line 47]  processed[key] = value.upper()
+  (Missing param: 'func_name')
+  [line 45]  for key, value in metadata.items():
+  Loop End: Iteration finished
+  [line 52]  return processed
+  Return: processed={user: 'SECURITY', id: 84, time: 3271449600, ...} (defined at [line 44])
+Function process_metadata returns {user: 'SECURITY', id: 84, time: 3271449600, ...}
+[line 2]  result = text
+Compute: text, where text='Security' (an unknown source) = 'Security'
+[line 3]  for transform in transforms:
+Loop Start: transform takes its first value ?
+[line 4]  result = transform(result)
+Call function transform(result='Security' (defined at [line 2]))
+[line 3]  for transform in transforms:
+Loop Iteration: transform is now ? (iteration 2)
+[line 4]  result = transform(result)
+Call function transform(result='SECURITY' (defined at [line 4]))
+[line 3]  for transform in transforms:
+Loop End: Iteration finished
+[line 5]  return result
+Return: result='YTIRUCES' (defined at [line 4])
+[line 77]  hash_val = seed
+Compute: seed, where seed=800 (an unknown source) = 800
+[line 78]  for char in text:
+Loop Start: char takes its first value 'S'
+[line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=800 (defined at [line 77]), char='S' (defined at [line 78]) = 24883
+[line 78]  for char in text:
+Loop Iteration: char is now 'e' (iteration 2)
+[line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=24883 (defined at [line 79]), char='e' (defined at [line 78]) = 771474
+... [Line 78] repeats 11 more times ...
+... [Line 78] repeats 11 more times ...
+[line 80]  return hash_val % 10000
+Return: hash_val % 10000
+[line 86]  return f"{user_id}-{level:02x}"
+Return: f"{user_id}-{level:02x}"
+[line 91]  secret_data = "Crypto"
+Assign: secret_data = 'Crypto'
+[line 92]  encryption_key = bitwise_processor(secret_data)
+Call function bitwise_processor(secret_data='Crypto' (defined at [line 91]))
+[line 10]  for char in data:
+Loop Start: char takes its first value 'C'
+[line 10]  for char in data:
+Loop End: Iteration finished
+[line 10]  for char in data:
+Loop End: Iteration finished
+[line 10]  for char in data:
+Loop End: Iteration finished
+[line 10]  for char in data:
+Loop End: Iteration finished
+[line 10]  for char in data:
+Loop End: Iteration finished
+[line 10]  for char in data:
+Loop End: Iteration finished
+[line 20]  if len(data) >= 3:
+Condition: True, entering 'if' block
+[line 21]  first_char = ord(data[0])
+Call function ord(data[0])
+[line 22]  middle_char = ord(data[len(data) // 2])
+Call function ord(data[len(data) // 2])
+[line 23]  last_char = ord(data[-1])
+Call function ord(data[-1])
+[line 26]  key_base = first_char ^ last_char
+Compute: first_char ^ last_char, where first_char=67 (defined at [line 21]), last_char=111 (defined at [line 23]) = 44
+[line 27]  key_modifier = middle_char & 0x3F
+Compute: middle_char & 0x3F, where middle_char=112 (defined at [line 22]) = 48
+[line 29]  return key_base + key_modifier
+Return: key_base + key_modifier
+[line 76]  def calculate_hash(text, seed):
+Enter function calculate_hash: text='42-a5', seed=92 (encryption_key defined at [line 92])
+  [line 77]  hash_val = seed
+  Compute: seed, where seed=92 (parameter seed defined at [line 92]) = 92
+  [line 78]  for char in text:
+  Loop Iteration: char is now '4' (iteration 10)
+  [line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+  Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=92 (defined at [line 77]), char='4' (defined at [line 78]) = 2904
+  [line 78]  for char in text:
+  Loop Iteration: char is now '2' (iteration 11)
+  [line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+  Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=2904 (defined at [line 79]), char='2' (defined at [line 78]) = 90074
+  [line 78]  for char in text:
+  Loop Iteration: char is now '-' (iteration 12)
+  [line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+  Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=90074 (defined at [line 79]), char='-' (defined at [line 78]) = 2792339
+  [line 78]  for char in text:
+  Loop Iteration: char is now 'a' (iteration 13)
+  [line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+  Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=2792339 (defined at [line 79]), char='a' (defined at [line 78]) = 86562606
+  [line 78]  for char in text:
+  Loop Iteration: char is now '5' (iteration 14)
+  [line 79]  hash_val = (hash_val * 31 + ord(char)) & 0xFFFFFFFF
+  Compute: (hash_val * 31 + ord(char)) & 0xFFFFFFFF, where hash_val=86562606 (defined at [line 79]), char='5' (defined at [line 78]) = 2683440839
+  [line 78]  for char in text:
+  Loop Iteration: char is now '5' (iteration 15)
+  [line 80]  return hash_val % 10000
+  Return: hash_val % 10000
+Function calculate_hash returns 839
+[line 98]  print(f"Result: {encryption_key}")
+Output: f"Result: {encryption_key}"
+
+Answer: encryption_key = 92 (last updated on defined at [line 92])

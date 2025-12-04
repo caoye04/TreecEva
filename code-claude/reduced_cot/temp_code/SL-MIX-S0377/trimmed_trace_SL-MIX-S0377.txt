@@ -1,0 +1,77 @@
+27
+overlap_count
+---
+3 product_ids = [1001, 1002, 1003, 1004, 1005]
+3 ['product_ids'] ['[1001, 1002, 1003, 1004, 1005]']
+4 warehouse_a = [1001, 1003, 1005, 1007]
+4 ['product_ids', 'warehouse_a'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]']
+5 warehouse_b = [1002, 1003, 1004, 1008]
+5 ['product_ids', 'warehouse_a', 'warehouse_b'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]']
+6 warehouse_c = [1001, 1004, 1005, 1009]
+6 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]']
+9 overlap_positions = []
+9 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]']
+12 for product in product_ids:
+12 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]', '1001']
+13 locations = []
+13 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]', '1001', '[]']
+15 if product in warehouse_a:
+15 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]', '1001', '[]']
+17 if product in warehouse_b:
+17 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]', '1001', '[1]']
+19 if product in warehouse_c:
+19 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]', '1001', '[1]']
+23 if len(locations) > 1:
+23 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[]', '1001', '[1, 3]']
+12 for product in product_ids:
+12 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1002', '[1, 3]']
+13 locations = []
+13 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1002', '[]']
+15 if product in warehouse_a:
+15 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1002', '[]']
+17 if product in warehouse_b:
+17 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1002', '[]']
+19 if product in warehouse_c:
+19 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1002', '[2]']
+23 if len(locations) > 1:
+23 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1002', '[2]']
+12 for product in product_ids:
+12 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1003', '[2]']
+13 locations = []
+13 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1003', '[]']
+15 if product in warehouse_a:
+15 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1003', '[]']
+17 if product in warehouse_b:
+17 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1003', '[1]']
+19 if product in warehouse_c:
+19 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1003', '[1, 2]']
+23 if len(locations) > 1:
+23 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3]]', '1003', '[1, 2]']
+12 for product in product_ids:
+12 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2]]', '1004', '[1, 2]']
+13 locations = []
+13 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2]]', '1004', '[]']
+15 if product in warehouse_a:
+15 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2]]', '1004', '[]']
+17 if product in warehouse_b:
+17 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2]]', '1004', '[]']
+19 if product in warehouse_c:
+19 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2]]', '1004', '[2]']
+23 if len(locations) > 1:
+23 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2]]', '1004', '[2, 3]']
+12 for product in product_ids:
+12 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2], [2, 3]]', '1005', '[2, 3]']
+13 locations = []
+13 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2], [2, 3]]', '1005', '[]']
+15 if product in warehouse_a:
+15 ['product_ids', 'warehouse_a', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1003, 1005, 1007]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2], [2, 3]]', '1005', '[]']
+17 if product in warehouse_b:
+17 ['product_ids', 'warehouse_b', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1002, 1003, 1004, 1008]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2], [2, 3]]', '1005', '[1]']
+19 if product in warehouse_c:
+19 ['product_ids', 'warehouse_c', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[1001, 1004, 1005, 1009]', '[[1, 3], [1, 2], [2, 3]]', '1005', '[1]']
+23 if len(locations) > 1:
+23 ['product_ids', 'overlap_positions', 'product', 'locations'] ['[1001, 1002, 1003, 1004, 1005]', '[[1, 3], [1, 2], [2, 3]]', '1005', '[1, 3]']
+12 for product in product_ids:
+12 ['product_ids', 'overlap_positions', 'product'] ['[1001, 1002, 1003, 1004, 1005]', '[[1, 3], [1, 2], [2, 3], [1, 3]]', '1005']
+27 overlap_count = len(list(itertools.chain(*overlap_positions)))
+27 ['overlap_positions', 'overlap_count'] ['[[1, 3], [1, 2], [2, 3], [1, 3]]', '8']

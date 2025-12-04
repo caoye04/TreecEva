@@ -1,0 +1,143 @@
+Target: Find the value of variable network_reliability after [line 128] executes
+
+[line 105]  packet_data = [24, 18, 36, 42, 15, 63, 21, 49, 56, 30]
+Compute: [24, 18, 36, 42, 15, 63, 21, 49, 56, 30] = [24, 18, 36, 42, 15, ...]
+[line 106]  error_rates = [45, 120, -5, 52, 48, 62]
+Compute: [45, 120, -5, 52, 48, 62] = [45, 120, -5, 52, 48, ...]
+[line 113]  network_reliability = calculate_final_metric(packet_data, error_rates)
+Call function calculate_final_metric(packet_data=[24, 18, 36, 42, 15, ...] (defined at [line 105]), error_rates=[45, 120, -5, 52, 48, ...] (defined at [line 106]))
+[line 72]  def calculate_final_metric(packet_data, error_rates):
+Enter function calculate_final_metric: packet_data=[24, 18, 36, 42, 15, ...] (packet_data defined at [line 105]), error_rates=[45, 120, -5, 52, 48, ...] (error_rates defined at [line 106])
+  [line 74]  filtered_packets = process_network_data(packet_data)
+  Call function process_network_data(packet_data=[24, 18, 36, 42, 15, ...] (parameter packet_data defined at [line 105]))
+  [line 3]  processed = []
+  Compute: [] = []
+  [line 7]  if signal_strength:
+  Condition: True, entering 'if' block
+  [line 14]  for packet in raw_packets:
+  Loop Start: packet takes its first value 24
+  [line 15]  if packet % 3 == 0 and packet % 5 == 0:
+  Condition: True, entering 'if' block
+  [line 18]  elif packet % 7 == 0:
+  'elif' Condition: True, entering block
+  [line 14]  for packet in raw_packets:
+  Loop Iteration: packet is now 18 (iteration 2)
+  [line 15]  if packet % 3 == 0 and packet % 5 == 0:
+  Condition: True, entering 'if' block
+  [line 18]  elif packet % 7 == 0:
+  'elif' Condition: True, entering block
+... [Line 14] repeats 7 more times ...
+... [Line 14] repeats 7 more times ...
+... [Line 14] repeats 7 more times ...
+  [line 14]  for packet in raw_packets:
+  Loop Iteration: packet is now 30 (iteration 10)
+  [line 15]  if packet % 3 == 0 and packet % 5 == 0:
+  Condition: True, entering 'if' block
+  [line 14]  for packet in raw_packets:
+  Loop End: Iteration finished
+  [line 25]  return processed[::2]  # Return every other packet
+  Return: processed[::2]  # Return every other packet
+  [line 77]  efficiency = calculate_transmission_efficiency(filtered_packets)
+  Call function calculate_transmission_efficiency(filtered_packets=[24, 36, 30, 10, 28] (defined at [line 74]))
+  [line 27]  def calculate_transmission_efficiency(packets, window_size=4):
+  Enter function calculate_transmission_efficiency: packets=[24, 36, 30, 10, 28] (filtered_packets defined at [line 74]), window_size=4
+    [line 29]  if not packets:
+    Condition: True, entering 'if' block
+    [line 36]  for i in range(len(packets) - window_size + 1):
+    Loop Start: i takes its first value 0
+    [line 36]  for i in range(len(packets) - window_size + 1):
+    Loop End: Iteration finished
+    [line 36]  for i in range(len(packets) - window_size + 1):
+    Loop End: Iteration finished
+    [line 41]  base_efficiency = sum(packets) / len(packets)
+    Compute: sum(packets) / len(packets), where packets=[24, 36, 30, 10, 28] (parameter packets defined at [line 74]) = 25.6
+    [line 44]  congestion_factor = 1
+    Assign: congestion_factor = 1
+    [line 45]  for p in packets:
+    Loop Start: p takes its first value 24
+    [line 46]  if p & 0x0F > 8:  # Lower 4 bits
+    Condition: True, entering 'if' block
+    [line 48]  elif p & 0xF0 > 128:  # Upper 4 bits (distractor)
+    'elif' Condition: True, entering block
+    [line 45]  for p in packets:
+    Loop Iteration: p is now 36 (iteration 2)
+    [line 46]  if p & 0x0F > 8:  # Lower 4 bits
+    Condition: True, entering 'if' block
+    [line 48]  elif p & 0xF0 > 128:  # Upper 4 bits (distractor)
+    'elif' Condition: True, entering block
+... [Line 45] repeats 2 more times ...
+... [Line 45] repeats 2 more times ...
+... [Line 45] repeats 2 more times ...
+    [line 45]  for p in packets:
+    Loop Iteration: p is now 28 (iteration 5)
+    [line 46]  if p & 0x0F > 8:  # Lower 4 bits
+    Condition: True, entering 'if' block
+    [line 47]  congestion_factor = (congestion_factor * 0.95)
+    Compute: (congestion_factor * 0.95), where congestion_factor=0.9025 (defined at [line 44]) = 0.8573749999999999
+    [line 45]  for p in packets:
+    Loop End: Iteration finished
+    [line 52]  key_metric = (base_efficiency * congestion_factor) % 100
+    Compute: (base_efficiency * congestion_factor) % 100, where base_efficiency=25.6 (defined at [line 41]), congestion_factor=0.8573749999999999 (defined at [line 47]) = 21.9488
+    [line 53]  return key_metric
+    Return: key_metric=21.9488 (defined at [line 52])
+  Function calculate_transmission_efficiency returns 21.9488
+  [line 78]  error_impact = analyze_error_patterns(error_rates)
+  Call function analyze_error_patterns(error_rates=[45, 120, -5, 52, 48, ...] (parameter error_rates defined at [line 106]))
+  [line 57]  if not error_data:
+  Condition: True, entering 'if' block
+  [line 60]  error_types = {'timeout': 0, 'corruption': 0, 'loss': 0}
+  Compute: {'timeout': 0, 'corruption': 0, 'loss': 0} = {timeout: 0, corruption: 0, loss: 0}
+  [line 61]  for error in error_data:
+  Loop Start: error takes its first value 45
+  [line 62]  if error < 0:
+  Condition: True, entering 'if' block
+  [line 64]  elif error > 100:
+  'elif' Condition: True, entering block
+  [line 61]  for error in error_data:
+  Loop Iteration: error is now 120 (iteration 2)
+  [line 62]  if error < 0:
+  Condition: True, entering 'if' block
+  [line 64]  elif error > 100:
+  'elif' Condition: True, entering block
+... [Line 61] repeats 3 more times ...
+... [Line 61] repeats 3 more times ...
+... [Line 61] repeats 3 more times ...
+  [line 61]  for error in error_data:
+  Loop Iteration: error is now 62 (iteration 6)
+  [line 62]  if error < 0:
+  Condition: True, entering 'if' block
+  [line 64]  elif error > 100:
+  'elif' Condition: True, entering block
+  [line 61]  for error in error_data:
+  Loop End: Iteration finished
+  [line 70]  return error_types['loss']
+  Return: error_types['loss']
+  [line 82]  latency_estimate = min(filtered_packets) if filtered_packets else 0
+  Compute: min(filtered_packets) if filtered_packets else 0, where filtered_packets=[24, 36, 30, 10, 28] (defined at [line 74]) = 10
+  [line 83]  jitter = max(filtered_packets) - latency_estimate if filtered_packets else 0
+  Compute: max(filtered_packets) - latency_estimate if filtered_packets else 0, where filtered_packets=[24, 36, 30, 10, 28] (defined at [line 74]), latency_estimate=10 (defined at [line 82]) = 26
+  [line 87]  reliability_base = (efficiency - (error_impact * 0.01))
+  Compute: (efficiency - (error_impact * 0.01)), where efficiency=21.9488 (defined at [line 77]), error_impact=21 (defined at [line 78]) = 21.738799999999998
+  [line 94]  if jitter > 50:
+  Condition: True, entering 'if' block
+  [line 96]  elif latency_estimate < 20:
+  'elif' Condition: True, entering block
+  [line 102]  return round(reliability_base, 2)
+  Return: round(reliability_base, 2)
+Function calculate_final_metric returns 21.74
+[line 116]  if network_reliability > 80:
+Condition: True, entering 'if' block
+[line 118]  elif network_reliability > 60:
+'elif' Condition: True, entering block
+[line 120]  elif network_reliability > 40:
+'elif' Condition: True, entering block
+[line 125]  print(f"Network Analysis Complete")
+Output: f"Network Analysis Complete"
+[line 126]  print(f"Throughput: {throughput_estimate}")
+Output: f"Throughput: {throughput_estimate}"
+[line 127]  print(f"Packet Loss: {packet_loss_ratio:.2f}")
+Output: f"Packet Loss: {packet_loss_ratio:.2f}"
+[line 128]  print(f"Result: {network_reliability}")
+Output: f"Result: {network_reliability}"
+
+Answer: network_reliability = 21.74 (last updated on defined at [line 113])

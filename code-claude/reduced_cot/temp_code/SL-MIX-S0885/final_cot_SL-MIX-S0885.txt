@@ -1,0 +1,98 @@
+Target: Find the value of variable optimal_signal after [line 83] executes
+
+[line 47]  raw_signal = [23, 45, 67, 82, 91, 76, 65, 45, 30, 12]
+Compute: [23, 45, 67, 82, 91, 76, 65, 45, 30, 12] = [23, 45, 67, 82, 91, ...]
+[line 54]  processed_signal = process_signal(raw_signal, threshold=25, noise_factor=0.2)
+Call function process_signal(raw_signal=[23, 45, 67, 82, 91, ...] (defined at [line 47]), threshold=25, noise_factor=0.2)
+[line 3]  processed = []
+Compute: [] = []
+[line 7]  filtered_data = [x for x in raw_data if x > threshold]
+Compute: [x for x in raw_data if x > threshold], where x=23 (an unknown source), raw_data=[23, 45, 67, 82, 91, ...] (an unknown source), threshold=25 (an unknown source) = ?
+[line 10]  for i, value in enumerate(filtered_data):
+(Missing param: 'iter_var')
+[line 12]  if amplify and value > 0:
+Condition: True, entering 'if' block
+[line 21]  if i > 0 and i < len(filtered_data) - 1:
+Condition: True, entering 'if' block
+[line 10]  for i, value in enumerate(filtered_data):
+(Missing param: 'iter_var')
+[line 12]  if amplify and value > 0:
+Condition: True, entering 'if' block
+[line 21]  if i > 0 and i < len(filtered_data) - 1:
+Condition: True, entering 'if' block
+[line 22]  if filtered_data[i-1] < value > filtered_data[i+1]:
+Condition: True, entering 'if' block
+... [Line 10] repeats 5 more times ...
+... [Line 10] repeats 5 more times ...
+... [Line 10] repeats 5 more times ...
+... [Line 10] repeats 5 more times ...
+[line 10]  for i, value in enumerate(filtered_data):
+(Missing param: 'iter_var')
+[line 12]  if amplify and value > 0:
+Condition: True, entering 'if' block
+[line 21]  if i > 0 and i < len(filtered_data) - 1:
+Condition: True, entering 'if' block
+[line 10]  for i, value in enumerate(filtered_data):
+Loop End: Iteration finished
+[line 29]  return processed
+Return: processed=[45, 67, 82, 109.2, 76, ...] (defined at [line 3])
+[line 55]  filtered_signal = [x for i, x in enumerate(processed_signal) if i % 2 == 0]
+Compute: [x for i, x in enumerate(processed_signal) if i % 2 == 0], where x=45 (an unknown source), i=0 (an unknown source) = ?
+[line 34]  frequency_bins = {}
+Compute: {} = {}
+[line 35]  for i, amplitude in enumerate(signal_data):
+(Missing param: 'iter_var')
+[line 36]  bin_index = i % 5
+Compute: i % 5, where i=0 (an unknown source) = 0
+[line 37]  if bin_index in frequency_bins:
+Condition: True, entering 'if' block
+[line 40]  frequency_bins[bin_index] = amplitude
+(Missing param: 'result')
+[line 35]  for i, amplitude in enumerate(signal_data):
+(Missing param: 'iter_var')
+[line 36]  bin_index = i % 5
+Compute: i % 5, where i=1 (an unknown source) = 1
+[line 37]  if bin_index in frequency_bins:
+Condition: True, entering 'if' block
+[line 40]  frequency_bins[bin_index] = amplitude
+(Missing param: 'result')
+... [Line 35] repeats 5 more times ...
+... [Line 35] repeats 5 more times ...
+... [Line 35] repeats 5 more times ...
+... [Line 35] repeats 5 more times ...
+[line 35]  for i, amplitude in enumerate(signal_data):
+(Missing param: 'iter_var')
+[line 36]  bin_index = i % 5
+Compute: i % 5, where i=7 (an unknown source) = 2
+[line 37]  if bin_index in frequency_bins:
+Condition: True, entering 'if' block
+[line 35]  for i, amplitude in enumerate(signal_data):
+Loop End: Iteration finished
+[line 43]  max_bin = max(frequency_bins.items(), key=lambda x: x[1])
+Call function max(frequency_bins.items(), key=lambda x: x[1])
+[line 43]  max_bin = max(frequency_bins.items(), key=lambda x: x[1])
+Call function max(frequency_bins.items(), key=lambda x: x[1])
+[line 43]  max_bin = max(frequency_bins.items(), key=lambda x: x[1])
+Call function max(frequency_bins.items(), key=lambda x: x[1])
+[line 43]  max_bin = max(frequency_bins.items(), key=lambda x: x[1])
+Call function max(frequency_bins.items(), key=lambda x: x[1])
+[line 43]  max_bin = max(frequency_bins.items(), key=lambda x: x[1])
+Call function max(frequency_bins.items(), key=lambda x: x[1])
+[line 43]  max_bin = max(frequency_bins.items(), key=lambda x: x[1])
+Call function max(frequency_bins.items(), key=lambda x: x[1])
+[line 44]  return max_bin[0], frequency_bins
+Return: max_bin[0], frequency_bins
+[line 62]  signal_range = max(processed_signal) - min(processed_signal) if processed_signal else 0
+Compute: max(processed_signal) - min(processed_signal) if processed_signal else 0, where processed_signal=[45, 67, 82, 109.2, 76, ...] (defined at [line 54]) = 79.2
+[line 65]  max_value = max(processed_signal) if processed_signal else 0
+Compute: max(processed_signal) if processed_signal else 0, where processed_signal=[45, 67, 82, 109.2, 76, ...] (defined at [line 54]) = 109.2
+[line 66]  max_index = processed_signal.index(max_value) if max_value in processed_signal else -1
+Compute: processed_signal.index(max_value) if max_value in processed_signal else -1, where processed_signal=[45, 67, 82, 109.2, 76, ...] (defined at [line 54]), max_value=109.2 (defined at [line 65]) = 3
+[line 73]  default_value = 42
+Assign: default_value = 42
+[line 77]  if signal_range > 100:
+Condition: True, entering 'if' block
+[line 83]  optimal_signal = filtered_signal[max_index] if max_index < len(filtered_signal) else default_value
+Compute: filtered_signal[max_index] if max_index < len(filtered_signal) else default_value, where filtered_signal=[45, 82, 76, 45] (defined at [line 55]), max_index=3 (defined at [line 66]), default_value=42 (defined at [line 73]) = 45
+
+Answer: optimal_signal = 45 (last updated on defined at [line 83])

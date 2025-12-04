@@ -1,0 +1,73 @@
+Target: Find the value of variable crypto_hash after [line 102] executes
+
+[line 96]  filtered_passwords = filter_passwords(pwd_database)
+Call function filter_passwords(pwd_database=['p@ssw0rd', 'qwerty123', 'zX9#2aLm', 'abc', 'S3cure!Pass', ...] (an unknown source))
+[line 64]  def analyze_password_patterns(passwords):
+Enter function analyze_password_patterns: passwords=['p@ssw0rd', 'qwerty123', 'zX9#2aLm', 'abc', 'S3cure!Pass', ...]
+  [line 65]  patterns = {}
+  Compute: {} = {}
+  [line 66]  for pwd in passwords:
+  Loop Start: pwd takes its first value 'p@ssw0rd'
+  [line 68]  repeats = len(pwd) - len(set(pwd))
+  Compute: len(pwd) - len(set(pwd)), where pwd='p@ssw0rd' (defined at [line 66]) = 1
+  [line 70]  sequential = sum(1 for i in range(len(pwd)-1) if ord(pwd[i+1]) - ord(pwd[i]) == 1)
+  Call function sum(1 for i in range(len(pwd)-1) if ord(pwd[i+1]) - ord(pwd[i]) == 1)
+  [line 71]  patterns[pwd] = {'repeats': repeats, 'sequential': sequential}
+  (Missing param: 'result')
+  [line 66]  for pwd in passwords:
+  Loop Iteration: pwd is now 'qwerty123' (iteration 2)
+  [line 68]  repeats = len(pwd) - len(set(pwd))
+  Compute: len(pwd) - len(set(pwd)), where pwd='qwerty123' (defined at [line 66]) = 0
+  [line 71]  patterns[pwd] = {'repeats': repeats, 'sequential': sequential}
+  (Missing param: 'result')
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+... [Line 66] repeats 3 more times ...
+  [line 66]  for pwd in passwords:
+  Loop Iteration: pwd is now 'letmein' (iteration 6)
+  [line 68]  repeats = len(pwd) - len(set(pwd))
+  Compute: len(pwd) - len(set(pwd)), where pwd='letmein' (defined at [line 66]) = 1
+  [line 71]  patterns[pwd] = {'repeats': repeats, 'sequential': sequential}
+  (Missing param: 'result')
+  [line 66]  for pwd in passwords:
+  Loop End: Iteration finished
+  [line 72]  return patterns
+  Return: patterns={p@ssw0rd: {repeats: 1, sequential: 0}, qwerty123: {repeats: 0, sequential: 2}, zX9#2aLm: {repeats: 0, sequential: 0}, ...} (defined at [line 65])
+Function analyze_password_patterns returns {p@ssw0rd: {repeats: 1, sequential: 0}, qwerty123: {repeats: 0, sequential: 2}, zX9#2aLm: {repeats: 0, sequential: 0}, ...}
+[line 84]  length_check = lambda p: len(p) >= min_length
+Compute: lambda p: len(p) >= min_length, where min_length=4 (an unknown source) = ?
+[line 87]  filtered = list(filter(length_check, passwords))
+Call function list(filter(length_check, passwords))
+[line 88]  return filtered
+Return: filtered=['p@ssw0rd', 'qwerty123', 'zX9#2aLm', 'S3cure!Pass', 'letmein'] (defined at [line 87])
+[line 102]  crypto_hash = calculate_hash(filtered_passwords)
+Call function calculate_hash(filtered_passwords=['p@ssw0rd', 'qwerty123', 'zX9#2aLm', 'S3cure!Pass', 'letmein'] (defined at [line 96]))
+[line 4]  def calculate_hash(password_list):
+Enter function calculate_hash: password_list=['p@ssw0rd', 'qwerty123', 'zX9#2aLm', 'S3cure!Pass', 'letmein'] (filtered_passwords defined at [line 96])
+  [line 21]  processed = []
+  Compute: [] = []
+  [line 22]  for pwd in password_list:
+  Loop Start: pwd takes its first value 'p@ssw0rd'
+  [line 33]  if len(pwd) > 3:
+  Condition: True, entering 'if' block
+  [line 22]  for pwd in password_list:
+  Loop Iteration: pwd is now 'qwerty123' (iteration 2)
+  [line 33]  if len(pwd) > 3:
+  Condition: True, entering 'if' block
+... [Line 22] repeats 2 more times ...
+... [Line 22] repeats 2 more times ...
+  [line 22]  for pwd in password_list:
+  Loop Iteration: pwd is now 'letmein' (iteration 5)
+  [line 33]  if len(pwd) > 3:
+  Condition: True, entering 'if' block
+  [line 22]  for pwd in password_list:
+  Loop End: Iteration finished
+  [line 46]  if processed:
+  Condition: True, entering 'if' block
+  [line 48]  result = (sum(processed) * 17) % 10000
+  Compute: (sum(processed) * 17) % 10000, where processed=[787, 834, 634, 5, 750] (defined at [line 21]) = 1170
+  [line 49]  return result
+  Return: result=1170 (defined at [line 48])
+Function calculate_hash returns 1170
+
+Answer: crypto_hash = 1170 (last updated on defined at [line 102])

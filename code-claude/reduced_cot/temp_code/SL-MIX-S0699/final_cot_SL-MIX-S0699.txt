@@ -1,0 +1,89 @@
+Target: Find the value of variable total_score after [line 69] executes
+
+[line 68]  total_score = calculate_final_score(player_stats, game_history)
+Call function calculate_final_score(player_stats={kills: 24, deaths: 8, team_assists: 7, ...} (an unknown source), game_history={weapons_used: ['Rifle', 'Pistol', 'Rifle', 'Sniper', 'Rifle', ...], events: ['kill', 'kill', 'death', 'kill', 'kill', ...], special_events: 3} (an unknown source))
+[line 8]  base_score = stats['kills'] * 10 - stats['deaths'] * 5
+Compute: stats['kills'] * 10 - stats['deaths'] * 5, where stats={kills: 24, deaths: 8, team_assists: 7, ...} (an unknown source) = 200
+[line 11]  weapon_usage = {}
+Compute: {} = {}
+[line 12]  for weapon in history['weapons_used']:
+Loop Start: weapon takes its first value 'Rifle'
+[line 13]  weapon_usage[weapon] = weapon_usage.get(weapon, 0) + 1
+(Missing param: 'result')
+[line 12]  for weapon in history['weapons_used']:
+Loop Iteration: weapon is now 'Pistol' (iteration 2)
+[line 13]  weapon_usage[weapon] = weapon_usage.get(weapon, 0) + 1
+(Missing param: 'result')
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+[line 12]  for weapon in history['weapons_used']:
+Loop Iteration: weapon is now 'Knife' (iteration 6)
+[line 13]  weapon_usage[weapon] = weapon_usage.get(weapon, 0) + 1
+(Missing param: 'result')
+[line 12]  for weapon in history['weapons_used']:
+Loop End: Iteration finished
+[line 16]  if weapon_usage:
+Condition: True, entering 'if' block
+[line 17]  most_used = max(weapon_usage.items(), key=lambda x: x[1])[0]
+Compute: max(weapon_usage.items(), key=lambda x: x[1])[0], where weapon_usage={Rifle: 3, Pistol: 1, Sniper: 1, ...} (defined at [line 11]) = ?
+[line 17]  most_used = max(weapon_usage.items(), key=lambda x: x[1])[0]
+Compute: max(weapon_usage.items(), key=lambda x: x[1])[0], where weapon_usage={Rifle: 3, Pistol: 1, Sniper: 1, ...} (defined at [line 11]), x=('Rifle', 3) (an unknown source) = ?
+[line 17]  most_used = max(weapon_usage.items(), key=lambda x: x[1])[0]
+Compute: max(weapon_usage.items(), key=lambda x: x[1])[0], where x=('Pistol', 1) (an unknown source) = ?
+[line 17]  most_used = max(weapon_usage.items(), key=lambda x: x[1])[0]
+Compute: max(weapon_usage.items(), key=lambda x: x[1])[0], where x=('Sniper', 1) (an unknown source) = ?
+[line 17]  most_used = max(weapon_usage.items(), key=lambda x: x[1])[0]
+Compute: max(weapon_usage.items(), key=lambda x: x[1])[0], where x=('Knife', 1) (an unknown source) = ?
+[line 18]  weapon_bonus = len(most_used) # Just a small bonus based on weapon name length
+Call function len(most_used='Rifle' (defined at [line 17]))
+[line 23]  team_factor = 1.0
+Assign: team_factor = 1.0
+[line 24]  if stats['team_assists'] > 10:
+Condition: True, entering 'if' block
+[line 26]  elif stats['team_assists'] > 5:
+'elif' Condition: True, entering block
+[line 27]  team_factor = 1.1
+Assign: team_factor = 1.1
+[line 32]  for event in history['events']:
+Loop Start: event takes its first value 'kill'
+[line 33]  if event == 'kill':
+Condition: True, entering 'if' block
+[line 32]  for event in history['events']:
+Loop Iteration: event is now 'kill' (iteration 2)
+[line 33]  if event == 'kill':
+Condition: True, entering 'if' block
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+[line 32]  for event in history['events']:
+Loop Iteration: event is now 'kill' (iteration 7)
+[line 33]  if event == 'kill':
+Condition: True, entering 'if' block
+[line 32]  for event in history['events']:
+Loop End: Iteration finished
+[line 40]  achievement_bonus = calculate_bonus(stats['achievements'], stats['level'])
+Call function calculate_bonus(stats['achievements'], stats['level'])
+[line 2]  bonus_points = sum(len(a) for a in achievements)
+Call function sum(len(a) for a in achievements)
+[line 2]  bonus_points = sum(len(a) for a in achievements)
+Call function sum(len(a) for a in achievements)
+[line 2]  bonus_points = sum(len(a) for a in achievements)
+Call function sum(len(a) for a in achievements)
+[line 2]  bonus_points = sum(len(a) for a in achievements)
+Call function sum(len(a) for a in achievements)
+[line 2]  bonus_points = sum(len(a) for a in achievements)
+Call function sum(len(a) for a in achievements)
+[line 3]  level_multiplier = level * 0.5
+Compute: level * 0.5, where level=4 (an unknown source) = 2.0
+[line 4]  return int(bonus_points * level_multiplier)
+Return: int(bonus_points * level_multiplier)
+[line 46]  adjusted_score = (base_score + weapon_bonus) * team_factor
+Compute: (base_score + weapon_bonus) * team_factor, where base_score=200 (defined at [line 8]), weapon_bonus=5 (defined at [line 18]), team_factor=1.1 (defined at [line 27]) = 225.50000000000003
+[line 47]  final_score = adjusted_score + achievement_bonus
+Compute: adjusted_score + achievement_bonus, where adjusted_score=225.50000000000003 (defined at [line 46]), achievement_bonus=56 (defined at [line 40]) = 281.5
+[line 49]  return int(final_score)
+Return: int(final_score)
+[line 69]  print(f"Result: {total_score}")
+Output: f"Result: {total_score}"
+
+Answer: total_score = 281 (last updated on defined at [line 68])

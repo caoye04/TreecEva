@@ -1,0 +1,40 @@
+5     'A123': 45,  # Smartphones
+5 [] []
+6     'B456': 30,  # Headphones
+6 [] []
+7     'C789': 15,  # Chargers
+7 [] []
+8     'D012': 20   # Power banks
+8 [] []
+4 inventory = {
+4 ['inventory'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}]
+13     'B456': 12,  # Regular order
+13 ['inventory'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}]
+14     'E345': 5,   # Out of stock item
+14 ['inventory'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}]
+15     'C789': 3    # Special order
+15 ['inventory'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}]
+12 orders = {
+12 ['inventory', 'orders'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}]
+19 shipping_area = sum(inventory.values()) // 10
+19 ['inventory', 'orders', 'shipping_area'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}]
+22 product_id = 'C789'
+22 ['inventory', 'orders', 'shipping_area', 'product_id'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'C789'}]
+25 remaining_stock = inventory.get(product_id, 0) - sum(orders.values())
+25 ['inventory', 'orders', 'shipping_area', 'product_id', 'remaining_stock'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'C789'}, {'_type': 'int', '_value': -5}]
+28 min_stock_level = min(inventory.values()) - 5
+28 ['inventory', 'orders', 'shipping_area', 'product_id', 'remaining_stock', 'min_stock_level'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'C789'}, {'_type': 'int', '_value': -5}, {'_type': 'int', '_value': 10}]
+31 reorder_products = {k for k, v in inventory.items() if v < 20}
+31 ['k', 'v'] [{'_type': 'str', '_value': 'A123'}, {'_type': 'int', '_value': 45}]
+31 reorder_products = {k for k, v in inventory.items() if v < 20}
+31 ['k', 'v'] [{'_type': 'str', '_value': 'B456'}, {'_type': 'int', '_value': 30}]
+31 reorder_products = {k for k, v in inventory.items() if v < 20}
+31 ['k', 'v'] [{'_type': 'str', '_value': 'C789'}, {'_type': 'int', '_value': 15}]
+31 reorder_products = {k for k, v in inventory.items() if v < 20}
+31 ['k', 'v'] [{'_type': 'str', '_value': 'D012'}, {'_type': 'int', '_value': 20}]
+31 reorder_products = {k for k, v in inventory.items() if v < 20}
+31 ['inventory', 'orders', 'shipping_area', 'product_id', 'remaining_stock', 'min_stock_level', 'reorder_products'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'C789'}, {'_type': 'int', '_value': -5}, {'_type': 'int', '_value': 10}, {'_type': 'set', '_items': [{'_type': 'str', '_value': 'C789'}], '_len': 1}]
+34 inventory_value = sum(inventory.values()) * 10
+34 ['inventory', 'orders', 'shipping_area', 'product_id', 'remaining_stock', 'min_stock_level', 'reorder_products', 'inventory_value'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'C789'}, {'_type': 'int', '_value': -5}, {'_type': 'int', '_value': 10}, {'_type': 'set', '_items': [{'_type': 'str', '_value': 'C789'}], '_len': 1}, {'_type': 'int', '_value': 1100}]
+36 print(f"Result: {remaining_stock}")
+36 ['inventory', 'orders', 'shipping_area', 'product_id', 'remaining_stock', 'min_stock_level', 'reorder_products', 'inventory_value'] [{'_type': 'dict', '_items': {'A123': {'_type': 'int', '_value': 45}, 'B456': {'_type': 'int', '_value': 30}, 'C789': {'_type': 'int', '_value': 15}, 'D012': {'_type': 'int', '_value': 20}}, '_len': 4}, {'_type': 'dict', '_items': {'B456': {'_type': 'int', '_value': 12}, 'E345': {'_type': 'int', '_value': 5}, 'C789': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'int', '_value': 11}, {'_type': 'str', '_value': 'C789'}, {'_type': 'int', '_value': -5}, {'_type': 'int', '_value': 10}, {'_type': 'set', '_items': [{'_type': 'str', '_value': 'C789'}], '_len': 1}, {'_type': 'int', '_value': 1100}]

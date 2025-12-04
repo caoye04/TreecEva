@@ -1,0 +1,67 @@
+51
+optimal_days
+---
+29 current_weather = 1.2
+29 ['trail_options', 'current_weather'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '1.2']
+33 base_durations, adjusted_durations = calculate_trip_duration(trail_options, current_weather)
+33 ['trail_options', 'current_weather'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '1.2']
+5 base_durations = []
+5 ['trails', 'base_durations'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[]']
+6 adjusted_durations = []
+6 ['trails', 'base_durations', 'adjusted_durations'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[]', '[]']
+9 for trail_name, distance, elevation in trails:
+9 ['trails', 'base_durations', 'adjusted_durations', 'trail_name', 'distance', 'elevation'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[]', '[]', "'Eagle Ridge'", '45', '1200']
+9 for trail_name, distance, elevation in trails:
+9 ['trails', 'base_durations', 'adjusted_durations', 'trail_name', 'distance', 'elevation'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[6.9]', '[8.3]', "'Mountain Pass'", '35', '2000']
+9 for trail_name, distance, elevation in trails:
+9 ['trails', 'base_durations', 'adjusted_durations', 'trail_name', 'distance', 'elevation'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[6.9, 7.5]', '[8.3, 9.0]', "'Valley Route'", '60', '800']
+9 for trail_name, distance, elevation in trails:
+9 ['trails', 'base_durations', 'adjusted_durations', 'trail_name', 'distance', 'elevation'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[6.9, 7.5, 7.6]', '[8.3, 9.0, 9.1]', "'Highland Trek'", '50', '1500']
+9 for trail_name, distance, elevation in trails:
+9 ['trails', 'base_durations', 'adjusted_durations', 'trail_name', 'distance', 'elevation'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[6.9, 7.5, 7.6, 8.0]', '[8.3, 9.0, 9.1, 9.6]', "'Highland Trek'", '50', '1500']
+18 return base_durations, adjusted_durations
+18 ['base_durations', 'adjusted_durations'] ['[6.9, 7.5, 7.6, 8.0]', '[8.3, 9.0, 9.1, 9.6]']
+36 sorted_durations = sorted(adjusted_durations)
+36 ['trail_options', 'adjusted_durations', 'sorted_durations'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[8.3, 9.0, 9.1, 9.6]', '[8.3, 9.0, 9.1, 9.6]']
+39 max_allowed = 10
+39 ['trail_options', 'sorted_durations', 'max_allowed'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[8.3, 9.0, 9.1, 9.6]', '10']
+40 min_allowed = 4
+40 ['trail_options', 'sorted_durations', 'max_allowed', 'min_allowed'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[8.3, 9.0, 9.1, 9.6]', '10', '4']
+41 filtered_durations = [d for d in sorted_durations if min_allowed <= d <= max_allowed]
+41 ['d'] ['8.3']
+41 filtered_durations = [d for d in sorted_durations if min_allowed <= d <= max_allowed]
+41 ['d'] ['9.0']
+41 filtered_durations = [d for d in sorted_durations if min_allowed <= d <= max_allowed]
+41 ['d'] ['9.1']
+41 filtered_durations = [d for d in sorted_durations if min_allowed <= d <= max_allowed]
+41 ['d'] ['9.6']
+41 filtered_durations = [d for d in sorted_durations if min_allowed <= d <= max_allowed]
+41 ['trail_options', 'sorted_durations', 'max_allowed', 'min_allowed', 'filtered_durations'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[8.3, 9.0, 9.1, 9.6]', '10', '4', '[8.3, 9.0, 9.1, 9.6]']
+44 total_distance = sum(trail[1] for trail in trail_options)
+44 [] []
+44 total_distance = sum(trail[1] for trail in trail_options)
+44 ['trail'] ["('Eagle Ridge', 45, 1200)"]
+44 total_distance = sum(trail[1] for trail in trail_options)
+44 ['trail'] ["('Mountain Pass', 35, 2000)"]
+44 total_distance = sum(trail[1] for trail in trail_options)
+44 ['trail'] ["('Valley Route', 60, 800)"]
+44 total_distance = sum(trail[1] for trail in trail_options)
+44 ['trail'] ["('Highland Trek', 50, 1500)"]
+44 total_distance = sum(trail[1] for trail in trail_options)
+44 ['trail'] ["('Highland Trek', 50, 1500)"]
+45 average_elevation = sum(trail[2] for trail in trail_options) / len(trail_options)
+45 [] []
+45 average_elevation = sum(trail[2] for trail in trail_options) / len(trail_options)
+45 ['trail'] ["('Eagle Ridge', 45, 1200)"]
+45 average_elevation = sum(trail[2] for trail in trail_options) / len(trail_options)
+45 ['trail'] ["('Mountain Pass', 35, 2000)"]
+45 average_elevation = sum(trail[2] for trail in trail_options) / len(trail_options)
+45 ['trail'] ["('Valley Route', 60, 800)"]
+45 average_elevation = sum(trail[2] for trail in trail_options) / len(trail_options)
+45 ['trail'] ["('Highland Trek', 50, 1500)"]
+45 average_elevation = sum(trail[2] for trail in trail_options) / len(trail_options)
+45 ['trail'] ["('Highland Trek', 50, 1500)"]
+48 backup_duration = round((total_distance / (len(trail_options) * 10)) + (average_elevation / 1000), 1)
+48 ['trail_options', 'filtered_durations', 'total_distance', 'average_elevation', 'backup_duration'] ["[('Eagle Ridge', 45, 1200), ('Mountain Pass', 35, 2000), ('Valley Route', 60, 800), ('Highland Trek', 50, 1500)]", '[8.3, 9.0, 9.1, 9.6]', '190', '1375.0', '6.1']
+51 optimal_days = min(filtered_durations) if filtered_durations else backup_duration
+51 ['filtered_durations', 'backup_duration', 'optimal_days'] ['[8.3, 9.0, 9.1, 9.6]', '6.1', '8.3']

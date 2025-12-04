@@ -1,0 +1,99 @@
+80
+optimal_capacity
+---
+PARAM_MAPPING {'inventory': {'actual_var': 'inventory', 'value': [{'id': 'A1', 'volume': 50, 'priority': 3}, {'id': 'B2', 'volume': 30, 'priority': 1}, {'id': 'C3', 'volume': 80, 'priority': 4}, {'id': 'D4', 'volume': 20, 'priority': 2}, {'id': 'E5', 'volume': 60, 'priority': 3}]}, 'shipping_constraints': {'actual_var': 'shipping_constraints', 'value': {'weather_code': 10, 'transport_mode': 'train', 'fuel': 80, 'destinations': [{'name': 'Warehouse A', 'distance': 120, 'importance': 3}, {'name': 'Warehouse B', 'distance': 80, 'importance': 2}], 'dimensions': (20, 15, 10)}}}
+FUNCTION_ENTER 17 calculate_optimal_container_capacity def calculate_optimal_container_capacity(inventory, shipping_constraints):
+17 ['inventory', 'shipping_constraints'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'A1'}, 'volume': {'_type': 'int', '_value': 50}, 'priority': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'B2'}, 'volume': {'_type': 'int', '_value': 30}, 'priority': {'_type': 'int', '_value': 1}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'C3'}, 'volume': {'_type': 'int', '_value': 80}, 'priority': {'_type': 'int', '_value': 4}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'D4'}, 'volume': {'_type': 'int', '_value': 20}, 'priority': {'_type': 'int', '_value': 2}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'E5'}, 'volume': {'_type': 'int', '_value': 60}, 'priority': {'_type': 'int', '_value': 3}}, '_len': 3}], '_len': 5}, {'_type': 'dict', '_items': {'weather_code': {'_type': 'int', '_value': 10}, 'transport_mode': {'_type': 'str', '_value': 'train'}, 'fuel': {'_type': 'int', '_value': 80}, 'destinations': {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Warehouse A'}, 'distance': {'_type': 'int', '_value': 120}, 'importance': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Warehouse B'}, 'distance': {'_type': 'int', '_value': 80}, 'importance': {'_type': 'int', '_value': 2}}, '_len': 3}], '_len': 2}, 'dimensions': {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 20}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}], '_len': 3}}, '_len': 5}]
+19 base_capacity = 1000  # Standard container size
+19 ['inventory', 'shipping_constraints', 'base_capacity'] ["[{id: 'A1', volume: 50, priority: 3}, {id: 'B2', volume: 30, priority: 1}, {id: 'C3', volume: 80, priority: 4}, {id: 'D4', volume: 20, priority: 2}, {id: 'E5', volume: 60, priority: 3}]", "{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000']
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 [] []
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 ['item'] ["{id: 'A1', volume: 50, priority: 3}"]
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 ['item'] ["{id: 'B2', volume: 30, priority: 1}"]
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 ['item'] ["{id: 'C3', volume: 80, priority: 4}"]
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 ['item'] ["{id: 'D4', volume: 20, priority: 2}"]
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 ['item'] ["{id: 'E5', volume: 60, priority: 3}"]
+24 priority_items = sum(1 for item in inventory if isinstance(item, dict) and item.get('priority', 0) > 2)
+24 ['item'] ["{id: 'E5', volume: 60, priority: 3}"]
+27 potential_efficiency = calculate_packing_efficiency(inventory, base_capacity)
+27 ['inventory', 'shipping_constraints', 'base_capacity', 'priority_items'] ["[{id: 'A1', volume: 50, priority: 3}, {id: 'B2', volume: 30, priority: 1}, {id: 'C3', volume: 80, priority: 4}, {id: 'D4', volume: 20, priority: 2}, {id: 'E5', volume: 60, priority: 3}]", "{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3']
+PARAM_MAPPING {'items': {'actual_var': 'inventory', 'value': [{'id': 'A1', 'volume': 50, 'priority': 3}, {'id': 'B2', 'volume': 30, 'priority': 1}, {'id': 'C3', 'volume': 80, 'priority': 4}, {'id': 'D4', 'volume': 20, 'priority': 2}, {'id': 'E5', 'volume': 60, 'priority': 3}]}, 'container_size': {'actual_var': 'base_capacity', 'value': 1000}}
+FUNCTION_ENTER 1 calculate_packing_efficiency def calculate_packing_efficiency(items, container_size):
+1 ['items', 'container_size'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'A1'}, 'volume': {'_type': 'int', '_value': 50}, 'priority': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'B2'}, 'volume': {'_type': 'int', '_value': 30}, 'priority': {'_type': 'int', '_value': 1}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'C3'}, 'volume': {'_type': 'int', '_value': 80}, 'priority': {'_type': 'int', '_value': 4}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'D4'}, 'volume': {'_type': 'int', '_value': 20}, 'priority': {'_type': 'int', '_value': 2}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'E5'}, 'volume': {'_type': 'int', '_value': 60}, 'priority': {'_type': 'int', '_value': 3}}, '_len': 3}], '_len': 5}, {'_type': 'int', '_value': 1000}]
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 [] []
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 ['item'] ["{id: 'A1', volume: 50, priority: 3}"]
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 ['item'] ["{id: 'B2', volume: 30, priority: 1}"]
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 ['item'] ["{id: 'C3', volume: 80, priority: 4}"]
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 ['item'] ["{id: 'D4', volume: 20, priority: 2}"]
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 ['item'] ["{id: 'E5', volume: 60, priority: 3}"]
+3 volume_used = sum(item['volume'] for item in items if item['priority'] > 0)
+3 ['item'] ["{id: 'E5', volume: 60, priority: 3}"]
+4 return volume_used / container_size if container_size > 0 else 0
+4 ['container_size', 'volume_used'] ['1000', '240']
+FUNCTION_RETURN 4 calculate_packing_efficiency {'_type': 'float', '_value': 0.24}
+PARAM_MAPPING {'destinations': {'actual_var': "shipping_constraints.get('destinations'", 'value': "shipping_constraints.get('destinations'"}, 'fuel_capacity': {'actual_var': '[]', 'value': '[]'}}
+FUNCTION_ENTER 6 optimize_shipping_route def optimize_shipping_route(destinations, fuel_capacity):
+6 ['destinations', 'fuel_capacity'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Warehouse A'}, 'distance': {'_type': 'int', '_value': 120}, 'importance': {'_type': 'int', '_value': 3}}, '_len': 3}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'Warehouse B'}, 'distance': {'_type': 'int', '_value': 80}, 'importance': {'_type': 'int', '_value': 2}}, '_len': 3}], '_len': 2}, {'_type': 'int', '_value': 80}]
+8 route_efficiency = 0
+8 ['destinations', 'fuel_capacity', 'route_efficiency'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '0']
+9 for dest in destinations:
+9 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '0', "{name: 'Warehouse A', distance: 120, importance: 3}"]
+10 distance = dest.get('distance', 100)
+10 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '0', "{name: 'Warehouse A', distance: 120, importance: 3}", '120']
+11 importance = dest.get('importance', 1)
+11 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance', 'importance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '0', "{name: 'Warehouse A', distance: 120, importance: 3}", '120', '3']
+12 route_efficiency += (importance * 50) / (distance + 10)
+12 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance', 'importance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '1.1538461538461537', "{name: 'Warehouse A', distance: 120, importance: 3}", '120', '3']
+9 for dest in destinations:
+9 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance', 'importance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '1.1538461538461537', "{name: 'Warehouse B', distance: 80, importance: 2}", '120', '3']
+10 distance = dest.get('distance', 100)
+10 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance', 'importance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '1.1538461538461537', "{name: 'Warehouse B', distance: 80, importance: 2}", '80', '3']
+11 importance = dest.get('importance', 1)
+11 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance', 'importance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '1.1538461538461537', "{name: 'Warehouse B', distance: 80, importance: 2}", '80', '2']
+12 route_efficiency += (importance * 50) / (distance + 10)
+12 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest', 'distance', 'importance'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '2.264957264957265', "{name: 'Warehouse B', distance: 80, importance: 2}", '80', '2']
+9 for dest in destinations:
+9 ['destinations', 'fuel_capacity', 'route_efficiency', 'dest'] ["[{name: 'Warehouse A', distance: 120, importance: 3}, {name: 'Warehouse B', distance: 80, importance: 2}]", '80', '2.264957264957265', "{name: 'Warehouse B', distance: 80, importance: 2}"]
+15 return route_efficiency * (fuel_capacity / 100)
+15 ['fuel_capacity', 'route_efficiency'] ['80', '2.264957264957265']
+FUNCTION_RETURN 15 optimize_shipping_route {'_type': 'float', '_value': 1.811965811965812}
+32 if potential_efficiency > 0.8:
+32 ['shipping_constraints', 'base_capacity', 'priority_items', 'potential_efficiency', 'route_optimization'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3', '0.24', '1.811965811965812']
+34 elif potential_efficiency > 0.5:
+34 ['shipping_constraints', 'base_capacity', 'priority_items', 'potential_efficiency', 'route_optimization'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3', '0.24', '1.811965811965812']
+42 weather_impact = 0
+42 ['shipping_constraints', 'base_capacity', 'priority_items', 'route_optimization', 'weather_impact'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3', '1.811965811965812', '0']
+43 if weather_conditions & 0b1111 == 0b1010:  # Check specific weather pattern
+43 ['shipping_constraints', 'base_capacity', 'priority_items', 'route_optimization', 'weather_impact'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3', '1.811965811965812', '0']
+44 weather_impact = -200  # Bad weather reduces capacity
+44 ['shipping_constraints', 'base_capacity', 'priority_items', 'route_optimization', 'weather_impact'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3', '1.811965811965812', '-200']
+57 capacity = base_capacity + weather_impact + transport_factor
+57 ['shipping_constraints', 'base_capacity', 'priority_items', 'route_optimization', 'weather_impact', 'transport_factor', 'capacity'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '1000', '3', '1.811965811965812', '-200', '200', '1000']
+60 if route_optimization > 2.5:
+60 ['shipping_constraints', 'priority_items', 'route_optimization', 'capacity'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '3', '1.811965811965812', '1000']
+66 dimensions = shipping_constraints.get('dimensions', (0, 0, 0))
+66 ['shipping_constraints', 'priority_items', 'capacity', 'dimensions'] ["{weather_code: 10, transport_mode: 'train', fuel: 80, ...}", '3', '1000', '(20, 15, 10)']
+67 length, width, height = dimensions
+67 ['priority_items', 'capacity', 'dimensions', 'length', 'width', 'height'] ['3', '1000', '(20, 15, 10)', '20', '15', '10']
+68 volume_constraint = length * width * height
+68 ['priority_items', 'capacity', 'length', 'width', 'height', 'volume_constraint'] ['3', '1000', '20', '15', '10', '3000']
+71 if volume_constraint > 10000:
+71 ['priority_items', 'capacity', 'volume_constraint'] ['3', '1000', '3000']
+77 priority_adjustment = priority_items * 50
+77 ['priority_items', 'capacity', 'priority_adjustment'] ['3', '1000', '150']
+80 optimal_capacity = capacity + priority_adjustment
+80 ['capacity', 'priority_adjustment', 'optimal_capacity'] ['1000', '150', '1150']
+82 return optimal_capacity
+82 ['optimal_capacity'] ['1150']
+FUNCTION_RETURN 82 calculate_optimal_container_capacity {'_type': 'int', '_value': 1150}

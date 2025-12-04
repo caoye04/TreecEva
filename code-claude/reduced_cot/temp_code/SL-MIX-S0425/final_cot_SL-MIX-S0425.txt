@@ -1,0 +1,76 @@
+Target: Find the value of variable target_signal after [line 90] executes
+
+[line 55]  raw_data = [12, 9, 15, 18, 7, 13, 16, 10, 14, 8, 11, 17]
+Compute: [12, 9, 15, 18, 7, 13, 16, 10, 14, 8, 11, 17] = [12, 9, 15, 18, 7, ...]
+[line 3]  def normalize_values(data, factor=2.5):
+Enter function normalize_values: data=[12, 9, 15, 18, 7, ...] (raw_data defined at [line 55]), factor=2.5
+  [line 5]  return [x/factor for x in data]
+  Return: [x/factor for x in data]
+Function normalize_values returns [4.8, 3.6, 6.0, 7.2, 2.8, ...]
+[line 7]  def apply_filter(values, threshold=5):
+Enter function apply_filter: values=[12, 9, 15, 18, 7, ...] (raw_data defined at [line 55]), threshold=10
+  [line 9]  return [v for v in values if abs(v) > threshold]
+  Return: [v for v in values if abs(v) > threshold]
+Function apply_filter returns [12, 15, 18, 13, 16, ...]
+[line 70]  filtered_data = raw_data[2:10]  # Slice the data - this matters
+Compute: raw_data[2:10]  # Slice the data - this matters, where raw_data=[12, 9, 15, 18, 7, ...] (defined at [line 55]) = [15, 18, 7, 13, 16, ...]
+[line 78]  for val in filtered_data:
+Loop Start: val takes its first value 15
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 78]  for val in filtered_data:
+Loop End: Iteration finished
+[line 82]  target_signal = signal_processing(filtered_data)
+Call function signal_processing(filtered_data=[15, 18, 7, 13, 16, ...] (defined at [line 70]))
+[line 19]  if len(data) == 0:
+Condition: True, entering 'if' block
+[line 26]  sampled = data[::3]
+Compute: data[::3], where data=[15, 18, 7, 13, 16, ...] (an unknown source) = [15, 13, 14]
+[line 32]  pairs = list(zip(sampled, sampled[1:] + sampled[:1]))
+Call function list(zip(sampled, sampled[1:] + sampled[:1]))
+[line 38]  result = 0
+Assign: result = 0
+[line 39]  for idx, (a, b) in enumerate(pairs):
+(Missing param: 'iter_var')
+[line 40]  if idx % 2 == 0:  # Only use even indices
+Condition: True, entering 'if' block
+[line 41]  result += (a - b) ** 2
+Update: result changed from 0 (defined at defined at [line 38]) to 0+(a - b) ** 2 = 4
+[line 39]  for idx, (a, b) in enumerate(pairs):
+(Missing param: 'iter_var')
+[line 40]  if idx % 2 == 0:  # Only use even indices
+Condition: True, entering 'if' block
+[line 43]  result -= a * b * 0.01
+Update: result changed from 4 (defined at defined at [line 41]) to 4-a * b * 0.01 = 2.1799999999999997
+[line 39]  for idx, (a, b) in enumerate(pairs):
+(Missing param: 'iter_var')
+[line 40]  if idx % 2 == 0:  # Only use even indices
+Condition: True, entering 'if' block
+[line 41]  result += (a - b) ** 2
+Update: result changed from 2.1799999999999997 (defined at defined at [line 43]) to 2.1799999999999997+(a - b) ** 2 = 3.1799999999999997
+[line 39]  for idx, (a, b) in enumerate(pairs):
+Loop End: Iteration finished
+[line 50]  result = result * 2 if result > 50 else result / 2
+Compute: result * 2 if result > 50 else result / 2, where result=3.1799999999999997 (defined at [line 41]) = 1.5899999999999999
+[line 52]  return int(result)
+Return: int(result)
+[line 85]  if target_signal > 100:
+Condition: True, entering 'if' block
+[line 87]  elif target_signal < 0:
+'elif' Condition: True, entering block
+[line 90]  print(f"Result: {target_signal}")
+Output: f"Result: {target_signal}"
+
+Answer: target_signal = 1 (last updated on defined at [line 82])

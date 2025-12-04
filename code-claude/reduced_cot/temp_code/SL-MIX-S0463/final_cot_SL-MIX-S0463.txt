@@ -1,0 +1,99 @@
+Target: Find the value of variable final_score after [line 93] executes
+
+[line 3]  history_points = {}
+Compute: {} = {}
+[line 4]  for game_id, stats in player_history.items():
+(Missing param: 'iter_var')
+[line 5]  points = stats.get('points', 0) * 1.5 if stats.get('victory', False) else stats.get('points', 0)
+Compute: stats.get('points', 0) * 1.5 if stats.get('victory', False) else stats.get('points', 0), where stats={points: 85, victory: True} (an unknown source) = 127.5
+[line 6]  history_points[game_id] = points
+(Missing param: 'result')
+[line 4]  for game_id, stats in player_history.items():
+(Missing param: 'iter_var')
+[line 5]  points = stats.get('points', 0) * 1.5 if stats.get('victory', False) else stats.get('points', 0)
+Compute: stats.get('points', 0) * 1.5 if stats.get('victory', False) else stats.get('points', 0), where stats={points: 120, victory: False} (an unknown source), points=127.5 (defined at [line 5]) = 120
+[line 6]  history_points[game_id] = points
+(Missing param: 'result')
+[line 4]  for game_id, stats in player_history.items():
+Loop End: Iteration finished
+[line 9]  return sum(history_points.values()) / len(history_points) if history_points else 0
+Return: sum(history_points.values()) / len(history_points) if history_points else 0
+[line 57]  total = 0
+Assign: total = 0
+[line 58]  for achievement in achievements:
+Loop Start: achievement takes its first value 'first_win'
+[line 59]  if achievement in achievement_map:
+Condition: True, entering 'if' block
+[line 60]  total += achievement_map[achievement]
+Update: total changed from 0 (defined at defined at [line 57]) to 0+achievement_map[achievement] = 100
+[line 58]  for achievement in achievements:
+Loop Iteration: achievement is now 'ten_wins' (iteration 2)
+[line 59]  if achievement in achievement_map:
+Condition: True, entering 'if' block
+[line 60]  total += achievement_map[achievement]
+Update: total changed from 100 (defined at defined at [line 60]) to 100+achievement_map[achievement] = 600
+[line 58]  for achievement in achievements:
+Loop End: Iteration finished
+[line 61]  return total
+Return: total=600 (defined at [line 60])
+[line 63]  def calculate_player_score(player_data, player_name):
+Enter function calculate_player_score: player_data={ninja42: {base_points: 1200, penalties: 50, achievement_code: 12388, ...}, shadowhunter: {base_points: 980, penalties: 30, achievement_code: 8325, ...}}, player_name='ninja42'
+  [line 64]  if not player_data or player_name not in player_data:
+  Condition: True, entering 'if' block
+  [line 68]  player = player_data[player_name]
+  Compute: player_data[player_name], where player_data={ninja42: {base_points: 1200, penalties: 50, achievement_code: 12388, ...}, shadowhunter: {base_points: 980, penalties: 30, achievement_code: 8325, ...}} (parameter player_data), player_name='ninja42' (parameter player_name) = {base_points: 1200, penalties: 50, achievement_code: 12388, ...}
+  [line 69]  base_points = player.get('base_points', 0)
+  (Missing param: 'func_name')
+  [line 70]  penalty_points = player.get('penalties', 0)
+  (Missing param: 'func_name')
+  [line 71]  achievement_code = player.get('achievement_code', 0)
+  (Missing param: 'func_name')
+  [line 72]  level_info = player.get('level_info', {})
+  (Missing param: 'func_name')
+  [line 81]  achievement_points = decode_achievement_points(achievement_code)
+  Call function decode_achievement_points(achievement_code=12388 (an unknown source))
+  [line 29]  base = (encoded_value & 0xFF)
+  Compute: (encoded_value & 0xFF), where encoded_value=12388 (an unknown source) = 100
+  [line 30]  modifier = ((encoded_value >> 8) & 0xF)
+  Compute: ((encoded_value >> 8) & 0xF), where encoded_value=12388 (an unknown source) = 0
+  [line 34]  points = base
+  Compute: base, where base=100 (defined at [line 29]) = 100
+  [line 35]  if modifier > 0:
+  Condition: True, entering 'if' block
+  [line 39]  if category == 1:
+  Condition: True, entering 'if' block
+  [line 41]  elif category == 2:
+  'elif' Condition: True, entering block
+  [line 43]  elif category == 3:
+  'elif' Condition: True, entering block
+  [line 44]  points *= 1.5
+  Update: points changed from 100 (defined at defined at [line 34]) to 100*1.5 = 150.0
+  [line 46]  return points
+  Return: points=150.0 (defined at [line 44])
+  [line 84]  special_bonus = lambda x: x * 1.25 if player.get('premium_member', False) else x
+  Compute: lambda x: x * 1.25 if player.get('premium_member', False) else x, where player={base_points: 1200, penalties: 50, achievement_code: 12388, ...} (defined at [line 68]) = ?
+  [line 87]  raw_score = base_points - penalty_points + achievement_points
+  Compute: base_points - penalty_points + achievement_points, where base_points=1200 (an unknown source), penalty_points=50 (an unknown source), achievement_points=150.0 (defined at [line 81]) = 1300.0
+  [line 90]  adjusted_score = apply_bonus_multiplier(raw_score, level_info)
+  Call function apply_bonus_multiplier(raw_score=1300.0 (defined at [line 87]), level_info={experience: 5, equipment: 3, team_synergy: 2} (an unknown source))
+  [line 13]  experience_bonus = level_factors.get('experience', 1) * 0.05
+  Compute: level_factors.get('experience', 1) * 0.05, where level_factors={experience: 5, equipment: 3, team_synergy: 2} (an unknown source) = 0.25
+  [line 14]  equipment_bonus = level_factors.get('equipment', 0) * 0.1
+  Compute: level_factors.get('equipment', 0) * 0.1, where level_factors={experience: 5, equipment: 3, team_synergy: 2} (an unknown source) = 0.30000000000000004
+  [line 18]  result = base_value
+  Compute: base_value, where base_value=1300.0 (an unknown source) = 1300.0
+  [line 19]  result *= (1 + experience_bonus)
+  Update: result changed from 1300.0 (defined at defined at [line 18]) to 1300.0*(1 + experience_bonus) = 1625.0
+  [line 20]  result *= (1 + equipment_bonus)
+  Update: result changed from 1625.0 (defined at defined at [line 19]) to 1625.0*(1 + equipment_bonus) = 2112.5
+  [line 25]  return result
+  Return: result=2112.5 (defined at [line 20])
+  [line 93]  final_score = special_bonus(adjusted_score)
+  Call function special_bonus(adjusted_score=2112.5 (defined at [line 90]))
+  [line 84]  special_bonus = lambda x: x * 1.25 if player.get('premium_member', False) else x
+  Compute: lambda x: x * 1.25 if player.get('premium_member', False) else x, where x=2112.5 (an unknown source), player={base_points: 1200, penalties: 50, achievement_code: 12388, ...} (defined at [line 68]) = ?
+  [line 95]  return int(final_score)
+  Return: int(final_score)
+Function calculate_player_score returns 2640
+
+Answer: final_score = 2640 (last updated on defined at [line 93])

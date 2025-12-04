@@ -1,0 +1,85 @@
+Target: Find the value of variable effective_power after [line 70] executes
+
+[line 42]  base_power = 100
+Assign: base_power = 100
+[line 1]  def calculate_effective_power(base, mods, env):
+Enter function calculate_effective_power: base=100 (base_power defined at [line 42]), mods=[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}], env={weather: 'storm', type: 'competitive', altitude: 1000, ...}
+  [line 3]  env_factor = 1.0
+  Assign: env_factor = 1.0
+  [line 4]  if env['weather'] == 'storm':
+  Condition: True, entering 'if' block
+  [line 5]  env_factor = 0.8
+  Assign: env_factor = 0.8
+  [line 10]  adjusted_base = base
+  Compute: base, where base=100 (parameter base defined at [line 42]) = 100
+  [line 11]  mod_sum = sum(m['value'] for m in mods if m['active'])
+  Call function sum(m['value'] for m in mods if m['active'])
+  [line 15]  for i, mod in enumerate(mods):
+  (Missing param: 'iter_var')
+  [line 16]  if mod['special'] and i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 15]  for i, mod in enumerate(mods):
+  (Missing param: 'iter_var')
+  [line 16]  if mod['special'] and i % 2 == 0:
+  Condition: True, entering 'if' block
+... [Line 15] repeats 6 more times ...
+... [Line 15] repeats 6 more times ...
+  [line 26]  formula_b = adjusted_base * (1 + mod_sum / 100)
+  Compute: adjusted_base * (1 + mod_sum / 100), where adjusted_base=100 (defined at [line 10]), mod_sum=45 (defined at [line 11]) = 145.0
+  [line 29]  if env['type'] == 'competitive':
+  Condition: True, entering 'if' block
+  [line 30]  result = formula_b * env_factor
+  Compute: formula_b * env_factor, where formula_b=145.0 (defined at [line 26]), env_factor=0.8 (defined at [line 5]) = 116.0
+  [line 35]  if special_bits & 3 == 3:  # If bits 0 and 1 are set
+  Condition: True, entering 'if' block
+  [line 36]  result *= 1.1
+  Update: result changed from 116.0 (defined at defined at [line 30]) to 116.0*1.1 = 127.60000000000001
+  [line 39]  return round(result, 1)
+  Return: round(result, 1)
+Function calculate_effective_power returns 127.6
+[line 69]  effective_power = calculate_effective_power(base_power, modifiers, environment)
+Call function calculate_effective_power(base_power=100 (defined at [line 42]), modifiers=[{name: 'Boost', value: 25, active: True, ...}, {name: 'Penalty', value: -10, active: True, ...}, {name: 'Synergy', value: 15, active: False, ...}, {name: 'Catalyst', value: 30, active: True, ...}] (an unknown source), environment={weather: 'clear', type: 'competitive', altitude: 1000, ...} (an unknown source))
+[line 3]  env_factor = 1.0
+Assign: env_factor = 1.0
+[line 4]  if env['weather'] == 'storm':
+Condition: True, entering 'if' block
+[line 6]  elif env['weather'] == 'clear':
+'elif' Condition: True, entering block
+[line 7]  env_factor = 1.2
+Assign: env_factor = 1.2
+[line 10]  adjusted_base = base
+Compute: base, where base=100 (an unknown source) = 100
+[line 15]  for i, mod in enumerate(mods):
+(Missing param: 'iter_var')
+[line 16]  if mod['special'] and i % 2 == 0:
+Condition: True, entering 'if' block
+[line 15]  for i, mod in enumerate(mods):
+(Missing param: 'iter_var')
+[line 16]  if mod['special'] and i % 2 == 0:
+Condition: True, entering 'if' block
+[line 15]  for i, mod in enumerate(mods):
+(Missing param: 'iter_var')
+[line 16]  if mod['special'] and i % 2 == 0:
+Condition: True, entering 'if' block
+[line 15]  for i, mod in enumerate(mods):
+(Missing param: 'iter_var')
+[line 16]  if mod['special'] and i % 2 == 0:
+Condition: True, entering 'if' block
+[line 15]  for i, mod in enumerate(mods):
+(Missing param: 'iter_var')
+[line 26]  formula_b = adjusted_base * (1 + mod_sum / 100)
+Compute: adjusted_base * (1 + mod_sum / 100), where adjusted_base=100 (defined at [line 10]), mod_sum=45 (defined at [line 11]) = 145.0
+[line 29]  if env['type'] == 'competitive':
+Condition: True, entering 'if' block
+[line 30]  result = formula_b * env_factor
+Compute: formula_b * env_factor, where formula_b=145.0 (defined at [line 26]), env_factor=1.2 (defined at [line 7]) = 174.0
+[line 35]  if special_bits & 3 == 3:  # If bits 0 and 1 are set
+Condition: True, entering 'if' block
+[line 36]  result *= 1.1
+Update: result changed from 174.0 (defined at defined at [line 30]) to 174.0*1.1 = 191.4
+[line 39]  return round(result, 1)
+Return: round(result, 1)
+[line 70]  print(f"Target result: {effective_power}")
+Output: f"Target result: {effective_power}"
+
+Answer: effective_power = 191.4 (last updated on defined at [line 69])

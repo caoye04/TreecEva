@@ -1,0 +1,43 @@
+62
+final_score
+---
+61 final_score = calculate_weighted_score(player_stats, weights)
+61 ['player_stats', 'weights'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '{accuracy: 2.5, speed: 1.8, strength: 1.2, ...}']
+PARAM_MAPPING {'stats': {'actual_var': 'player_stats', 'value': {'accuracy': 82, 'speed': 88, 'strength': 75, 'consistency': 78, 'endurance': 65}}, 'weights': {'actual_var': 'weights', 'value': {'accuracy': 2.5, 'speed': 1.8, 'strength': 1.2, 'consistency': 1.5, 'endurance': 1.0}}}
+FUNCTION_ENTER 3 calculate_weighted_score def calculate_weighted_score(stats, weights):
+3 ['stats', 'weights'] [{'_type': 'dict', '_items': {'accuracy': {'_type': 'int', '_value': 82}, 'speed': {'_type': 'int', '_value': 88}, 'strength': {'_type': 'int', '_value': 75}, 'consistency': {'_type': 'int', '_value': 78}, 'endurance': {'_type': 'int', '_value': 65}}, '_len': 5}, {'_type': 'dict', '_items': {'accuracy': {'_type': 'float', '_value': 2.5}, 'speed': {'_type': 'float', '_value': 1.8}, 'strength': {'_type': 'float', '_value': 1.2}, 'consistency': {'_type': 'float', '_value': 1.5}, 'endurance': {'_type': 'float', '_value': 1.0}}, '_len': 5}]
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 [] []
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 ['stat', 'weight'] ['82', '2.5']
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 ['stat', 'weight'] ['88', '1.8']
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 ['stat', 'weight'] ['75', '1.2']
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 ['stat', 'weight'] ['78', '1.5']
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 ['stat', 'weight'] ['65', '1.0']
+5 base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+5 ['stat', 'weight'] ['65', '1.0']
+8 bonus_factor = 0
+8 ['stats', 'base_points', 'bonus_factor'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '0']
+12 if stats['accuracy'] > 75:
+12 ['stats', 'base_points', 'bonus_factor'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '0']
+13 bonus_factor += 1.5
+13 ['stats', 'base_points', 'bonus_factor'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '1.5']
+14 if stats['speed'] > 85:
+14 ['stats', 'base_points', 'bonus_factor'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '1.5']
+15 bonus_factor += 2.0
+15 ['stats', 'base_points', 'bonus_factor'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '3.5']
+18 if stats['endurance'] < 70:
+18 ['stats', 'base_points', 'bonus_factor'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '3.5']
+22 tier_code = stats['accuracy'] & stats['consistency']
+22 ['stats', 'base_points', 'bonus_factor', 'tier_code'] ['{accuracy: 82, speed: 88, strength: 75, ...}', '635.4', '3.5', '66']
+23 tier_multiplier = 1.0 + (tier_code % 10) / 100
+23 ['base_points', 'bonus_factor', 'tier_code', 'tier_multiplier'] ['635.4', '3.5', '66', '1.06']
+40 return int(base_points * tier_multiplier + bonus_factor * 10)
+40 ['base_points', 'bonus_factor', 'tier_multiplier'] ['635.4', '3.5', '1.06']
+FUNCTION_RETURN 40 calculate_weighted_score {'_type': 'int', '_value': 708}
+62 print(f"Result: {final_score}")
+62 ['final_score'] ['708']

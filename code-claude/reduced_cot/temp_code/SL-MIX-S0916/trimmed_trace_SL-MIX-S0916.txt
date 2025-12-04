@@ -1,0 +1,61 @@
+22
+common_words
+---
+3 text_a = "The quick brown fox jumps over the lazy dog"
+3 ['text_a'] ["'The quick brown fox jumps over the lazy dog'"]
+4 text_b = "A quick dog barks at the fox in the yard"
+4 ['text_a', 'text_b'] ["'The quick brown fox jumps over the lazy dog'", "'A quick dog barks at the fox in the yard'"]
+7 text_a = text_a.lower()
+7 ['text_a', 'text_b'] ["'the quick brown fox jumps over the lazy dog'", "'A quick dog barks at the fox in the yard'"]
+8 text_b = text_b.lower()
+8 ['text_a', 'text_b'] ["'the quick brown fox jumps over the lazy dog'", "'a quick dog barks at the fox in the yard'"]
+11 words_a = text_a.split()
+11 ['text_a', 'text_b', 'words_a'] ["'the quick brown fox jumps over the lazy dog'", "'a quick dog barks at the fox in the yard'", "['the', 'quick', 'brown', 'fox', 'jumps', ...]"]
+12 words_b = text_b.split()
+12 ['text_b', 'words_a', 'words_b'] ["'a quick dog barks at the fox in the yard'", "['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'barks', 'at', ...]"]
+15 stop_words = {'the', 'a', 'at', 'in'}
+15 ['words_a', 'words_b', 'stop_words'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'barks', 'at', ...]", "{'at', 'in', 'the', 'a'}"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'the'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'quick'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'brown'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'fox'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'jumps'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'over'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'the'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'lazy'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['word'] ["'dog'"]
+18 filtered_words_a = [word for word in words_a if word not in stop_words]
+18 ['words_a', 'words_b', 'stop_words', 'filtered_words_a'] ["['the', 'quick', 'brown', 'fox', 'jumps', ...]", "['a', 'quick', 'dog', 'barks', 'at', ...]", "{'at', 'in', 'the', 'a'}", "['quick', 'brown', 'fox', 'jumps', 'over', ...]"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'a'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'quick'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'dog'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'barks'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'at'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'the'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'fox'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'in'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'the'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['word'] ["'yard'"]
+19 filtered_words_b = [word for word in words_b if word not in stop_words]
+19 ['words_b', 'stop_words', 'filtered_words_a', 'filtered_words_b'] ["['a', 'quick', 'dog', 'barks', 'at', ...]", "{'at', 'in', 'the', 'a'}", "['quick', 'brown', 'fox', 'jumps', 'over', ...]", "['quick', 'dog', 'barks', 'fox', 'yard']"]
+22 common_words = set(filtered_words_a) & set(filtered_words_b)
+22 ['filtered_words_a', 'filtered_words_b', 'common_words'] ["['quick', 'brown', 'fox', 'jumps', 'over', ...]", "['quick', 'dog', 'barks', 'fox', 'yard']", "{'dog', 'fox', 'quick'}"]

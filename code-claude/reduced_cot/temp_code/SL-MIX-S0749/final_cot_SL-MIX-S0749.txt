@@ -1,0 +1,44 @@
+Target: Find the value of variable network_flow after [line 43] executes
+
+[line 6]  packet_counter = Counter(packet_ids)
+Call function Counter(packet_ids=[5, 2, 8, 5, 2, ...] (an unknown source))
+[line 9]  priority_map = defaultdict(int)
+Call function defaultdict(int)
+[line 10]  for pid, priority in zip(packet_ids, packet_priorities):
+(Missing param: 'iter_var')
+[line 12]  priority_map[pid] = max(priority_map[pid], priority)
+(Missing param: 'func_name')
+[line 10]  for pid, priority in zip(packet_ids, packet_priorities):
+(Missing param: 'iter_var')
+[line 12]  priority_map[pid] = max(priority_map[pid], priority)
+(Missing param: 'func_name')
+... [Line 10] repeats 6 more times ...
+... [Line 10] repeats 6 more times ...
+[line 10]  for pid, priority in zip(packet_ids, packet_priorities):
+(Missing param: 'iter_var')
+[line 12]  priority_map[pid] = max(priority_map[pid], priority)
+(Missing param: 'func_name')
+[line 10]  for pid, priority in zip(packet_ids, packet_priorities):
+Loop End: Iteration finished
+[line 15]  unique_packets = len(packet_counter)
+Call function len(packet_counter={5: 3, 2: 2, 8: 2, ...} (defined at [line 6]))
+[line 16]  total_packets = sum(packet_counter.values())
+Call function sum(packet_counter.values())
+[line 19]  base_flow = total_packets & 0xFF  # Bitwise AND with 255
+Compute: total_packets & 0xFF  # Bitwise AND with 255, where total_packets=9 (defined at [line 16]) = 9
+[line 20]  priority_flow = sum(priority_map.values()) % 100  # Modulo to keep manageable
+Compute: sum(priority_map.values()) % 100  # Modulo to keep manageable, where priority_map={5: 3, 2: 5, 8: 4, ...} (defined at [line 9]) = 20
+[line 23]  potential_flow = (base_flow ^ priority_flow)  # Bitwise XOR
+Compute: (base_flow ^ priority_flow)  # Bitwise XOR, where base_flow=9 (defined at [line 19]), priority_flow=20 (defined at [line 20]) = 29
+[line 30]  actual_flow = potential_flow | unique_packets  # Bitwise OR
+Compute: potential_flow | unique_packets  # Bitwise OR, where potential_flow=29 (defined at [line 23]), unique_packets=5 (defined at [line 15]) = 29
+[line 33]  blocked_packets = [pid for pid, count in packet_counter.items() if count > 2]
+Compute: [pid for pid, count in packet_counter.items() if count > 2], where pid=5 (an unknown source), count=3 (an unknown source), packet_counter={5: 3, 2: 2, 8: 2, ...} (defined at [line 6]) = ?
+[line 34]  blocked_count = len(blocked_packets)
+Call function len(blocked_packets=[5] (defined at [line 33]))
+[line 40]  blocked_flow = blocked_count * 3
+Compute: blocked_count * 3, where blocked_count=1 (defined at [line 34]) = 3
+[line 43]  network_flow = actual_flow - blocked_flow
+Compute: actual_flow - blocked_flow, where actual_flow=29 (defined at [line 30]), blocked_flow=3 (defined at [line 40]) = 26
+
+Answer: network_flow = 26 (last updated on defined at [line 43])

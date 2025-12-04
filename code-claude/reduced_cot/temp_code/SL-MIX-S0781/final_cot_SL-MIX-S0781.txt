@@ -1,0 +1,98 @@
+Target: Find the value of variable popularity_score after [line 70] executes
+
+[line 57]  raw_text = "The conference was fantastic! Many great speakers and excellent topics."
+Assign: raw_text = 'The conference was fantastic! Many great speakers and excellent topics.'
+[line 58]  processed_text = process_text(raw_text)
+Call function process_text(raw_text='The conference was fantastic! Many great speakers and excellent topics.' (defined at [line 57]))
+[line 18]  def process_text(raw_text):
+Enter function process_text: raw_text='The conference was fantastic! Many great speakers and excellent topics.' (raw_text defined at [line 57])
+  [line 20]  cleaned = ''
+  Assign: cleaned = ''
+  [line 21]  for char in raw_text:
+  Loop Start: char takes its first value 'T'
+  [line 22]  if char.isalnum() or char.isspace():
+  Condition: True, entering 'if' block
+  [line 23]  cleaned += char.lower()
+  Update: cleaned changed from '' (defined at defined at [line 20]) to ''+char.lower() = 't'
+  [line 21]  for char in raw_text:
+  Loop Iteration: char is now 'h' (iteration 2)
+  [line 22]  if char.isalnum() or char.isspace():
+  Condition: True, entering 'if' block
+  [line 23]  cleaned += char.lower()
+  Update: cleaned changed from 't' (defined at defined at [line 23]) to 't'+char.lower() = 'th'
+... [Line 21] repeats 68 more times ...
+... [Line 21] repeats 68 more times ...
+... [Line 21] repeats 68 more times ...
+  [line 21]  for char in raw_text:
+  Loop Iteration: char is now '.' (iteration 71)
+  [line 22]  if char.isalnum() or char.isspace():
+  Condition: True, entering 'if' block
+  [line 21]  for char in raw_text:
+  Loop End: Iteration finished
+  [line 29]  return cleaned
+  Return: cleaned='the conference was fantastic many great speakers and excellent topics' (defined at [line 23])
+Function process_text returns 'the conference was fantastic many great speakers and excellent topics'
+[line 3]  def calculate_sentiment(text):
+Enter function calculate_sentiment: text='the conference was fantastic many great speakers and excellent topics' (processed_text defined at [line 58])
+  [line 4]  positive_words = ['good', 'great', 'excellent', 'amazing', 'fantastic']
+  Compute: ['good', 'great', 'excellent', 'amazing', 'fantastic'] = ['good', 'great', 'excellent', 'amazing', 'fantastic']
+  [line 5]  negative_words = ['bad', 'poor', 'terrible', 'awful', 'horrible']
+  Compute: ['bad', 'poor', 'terrible', 'awful', 'horrible'] = ['bad', 'poor', 'terrible', 'awful', 'horrible']
+  [line 7]  words = text.lower().split()
+  (Missing param: 'func_name')
+  [line 8]  sentiment_value = 0
+  Assign: sentiment_value = 0
+  [line 10]  for word in words:
+  Loop Start: word takes its first value 'the'
+  [line 11]  if word in positive_words:
+  Condition: True, entering 'if' block
+  [line 13]  elif word in negative_words:
+  'elif' Condition: True, entering block
+  [line 10]  for word in words:
+  Loop Iteration: word is now 'conference' (iteration 2)
+  [line 11]  if word in positive_words:
+  Condition: True, entering 'if' block
+  [line 13]  elif word in negative_words:
+  'elif' Condition: True, entering block
+... [Line 10] repeats 7 more times ...
+... [Line 10] repeats 7 more times ...
+... [Line 10] repeats 7 more times ...
+  [line 10]  for word in words:
+  Loop Iteration: word is now 'topics' (iteration 10)
+  [line 11]  if word in positive_words:
+  Condition: True, entering 'if' block
+  [line 13]  elif word in negative_words:
+  'elif' Condition: True, entering block
+  [line 10]  for word in words:
+  Loop End: Iteration finished
+  [line 16]  return sentiment_value
+  Return: sentiment_value=3 (defined at [line 8])
+Function calculate_sentiment returns 3
+[line 64]  popularity_score = calculate_popularity(processed_text)
+Call function calculate_popularity(processed_text='the conference was fantastic many great speakers and excellent topics' (defined at [line 58]))
+[line 32]  words = text.split()
+(Missing param: 'func_name')
+[line 33]  word_count = len(words)
+Call function len(words=['the', 'conference', 'was', 'fantastic', 'many', ...] (an unknown source))
+[line 36]  word_freq = Counter(words)
+Call function Counter(words=['the', 'conference', 'was', 'fantastic', 'many', ...] (an unknown source))
+[line 37]  unique_words = len(word_freq)
+Call function len(word_freq={the: 1, conference: 1, was: 1, ...} (defined at [line 36]))
+[line 43]  common_words = word_freq.most_common(3)
+(Missing param: 'func_name')
+[line 44]  most_common_count = common_words[0][1] if common_words else 0
+Compute: common_words[0][1] if common_words else 0, where common_words=[('the', 1), ('conference', 1), ('was', 1)] (an unknown source) = 1
+[line 47]  engagement_factor = most_common_count * 2
+Compute: most_common_count * 2, where most_common_count=1 (defined at [line 44]) = 2
+[line 48]  diversity_score = (unique_words / word_count) * 10 if word_count > 0 else 0
+Compute: (unique_words / word_count) * 10 if word_count > 0 else 0, where unique_words=10 (defined at [line 37]), word_count=10 (defined at [line 33]) = 10.0
+[line 51]  base_score = unique_words * 5
+Compute: unique_words * 5, where unique_words=10 (defined at [line 37]) = 50
+[line 52]  adjustment = engagement_factor - diversity_score
+Compute: engagement_factor - diversity_score, where engagement_factor=2 (defined at [line 47]), diversity_score=10.0 (defined at [line 48]) = -8.0
+[line 54]  return base_score + adjustment
+Return: base_score + adjustment
+[line 70]  print(f"Result: {popularity_score}")
+Output: f"Result: {popularity_score}"
+
+Answer: popularity_score = 42.0 (last updated on defined at [line 64])

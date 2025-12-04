@@ -1,0 +1,80 @@
+Target: Find the value of variable final_altitude after [line 103] executes
+
+[line 90]  altitude_readings = [4267, 4256, 4289, 4302, 9876, 4275]
+Compute: [4267, 4256, 4289, 4302, 9876, 4275] = [4267, 4256, 4289, 4302, 9876, ...]
+[line 103]  final_altitude = calculate_effective_altitude(altitude_readings, sensor_status)
+Call function calculate_effective_altitude(altitude_readings=[4267, 4256, 4289, 4302, 9876, ...] (defined at [line 90]), sensor_status={barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...} (an unknown source))
+[line 33]  def calculate_effective_altitude(readings, sensor_status):
+Enter function calculate_effective_altitude: readings=[4267, 4256, 4289, 4302, 9876, ...] (altitude_readings defined at [line 90]), sensor_status={barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}
+  [line 40]  magnetic_interference = sensor_status['magnetic_interference']
+  Compute: sensor_status['magnetic_interference'], where sensor_status={barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...} (parameter sensor_status) = 3
+  [line 43]  filtered_readings = preprocess_data(readings, 9500)
+  Call function preprocess_data(readings=[4267, 4256, 4289, 4302, 9876, ...] (parameter readings defined at [line 90]), 9500)
+  [line 3]  processed = [v for v in values if v < threshold]
+  Compute: [v for v in values if v < threshold], where v=4267 (an unknown source), values=[4267, 4256, 4289, 4302, 9876, ...] (an unknown source), threshold=9500 (an unknown source) = ?
+  [line 4]  return processed if processed else [0]
+  Return: processed if processed else [0]
+  [line 46]  avg_reading = sum(filtered_readings) / len(filtered_readings)
+  Compute: sum(filtered_readings) / len(filtered_readings), where filtered_readings=[4267, 4256, 4289, 4302, 4275] (defined at [line 43]) = 4277.8
+  [line 49]  barometric_factor = 0
+  Assign: barometric_factor = 0
+  [line 50]  if sensor_status['barometer_active']:
+  Condition: True, entering 'if' block
+  [line 60]  mag_adjustment = 0
+  Assign: mag_adjustment = 0
+  [line 61]  if magnetic_interference > 0:
+  Condition: True, entering 'if' block
+  [line 62]  mag_adjustment = -15 if magnetic_interference > 2 else -7
+  Compute: -15 if magnetic_interference > 2 else -7, where magnetic_interference=3 (defined at [line 40]) = -15
+  [line 65]  drift_percent = calculate_drift_compensation(sensor_status['health'])
+  Call function calculate_drift_compensation(sensor_status['health'])
+  [line 19]  drift = 0
+  Assign: drift = 0
+  [line 20]  if sensor_health['calibration_age'] > 30:
+  Condition: True, entering 'if' block
+  [line 21]  drift -= sensor_health['calibration_age'] // 10
+  Update: drift changed from 0 (defined at defined at [line 19]) to 0-sensor_health['calibration_age'] // 10 = -4
+  [line 23]  if sensor_health['error_count'] > 0:
+  Condition: True, entering 'if' block
+  [line 24]  drift -= sensor_health['error_count'] * 2
+  Update: drift changed from -4 (defined at defined at [line 21]) to -4-sensor_health['error_count'] * 2 = -8
+  [line 26]  if sensor_health['temperature'] > 85:
+  Condition: True, entering 'if' block
+  [line 27]  drift -= (sensor_health['temperature'] - 85) * 1.5
+  Update: drift changed from -8 (defined at defined at [line 24]) to -8-(sensor_health['temperature'] - 85) * 1.5 = -15.5
+  [line 31]  return max(-25, drift)  # Cap at -25% drift
+  Return: max(-25, drift)  # Cap at -25% drift
+  [line 68]  correction_factors = [drift_percent, mag_adjustment / 100]
+  Compute: [drift_percent, mag_adjustment / 100], where drift_percent=-15.5 (defined at [line 65]), mag_adjustment=-15 (defined at [line 62]) = [-15.5, -0.15]
+  [line 75]  if sensor_status['use_legacy_algorithm']:
+  Condition: True, entering 'if' block
+  [line 81]  adjusted_reading = apply_atmospheric_correction(avg_reading, correction_factors)
+  Call function apply_atmospheric_correction(avg_reading=4277.8 (defined at [line 46]), correction_factors=[-15.5, -0.15] (defined at [line 68]))
+  [line 6]  def apply_atmospheric_correction(value, correction_factors):
+  Enter function apply_atmospheric_correction: value=4277.8 (avg_reading defined at [line 46]), correction_factors=[-15.5, -0.15] (correction_factors defined at [line 68])
+    [line 8]  base = value
+    Compute: value, where value=4277.8 (parameter value defined at [line 46]) = 4277.8
+    [line 9]  for factor in correction_factors:
+    Loop Start: factor takes its first value -15.5
+    [line 10]  if factor > 0:
+    Condition: True, entering 'if' block
+    [line 14]  base = base * (1 - abs(factor)/50)
+    Compute: base * (1 - abs(factor)/50), where base=4277.8 (defined at [line 8]), factor=-15.5 (defined at [line 9]) = 2951.682
+    [line 9]  for factor in correction_factors:
+    Loop Iteration: factor is now -0.15 (iteration 2)
+    [line 10]  if factor > 0:
+    Condition: True, entering 'if' block
+    [line 14]  base = base * (1 - abs(factor)/50)
+    Compute: base * (1 - abs(factor)/50), where base=2951.682 (defined at [line 14]), factor=-0.15 (defined at [line 9]) = 2942.8269539999997
+    [line 9]  for factor in correction_factors:
+    Loop End: Iteration finished
+    [line 15]  return base
+    Return: base=2942.8269539999997 (defined at [line 14])
+  Function apply_atmospheric_correction returns 2942.8269539999997
+  [line 84]  if sensor_status['barometer_active'] and barometric_factor > 0:
+  Condition: True, entering 'if' block
+  [line 87]  return int(adjusted_reading)
+  Return: int(adjusted_reading)
+Function calculate_effective_altitude returns 2942
+
+Answer: final_altitude = ? (last updated on defined at [line 103])

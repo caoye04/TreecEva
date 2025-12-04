@@ -1,0 +1,165 @@
+103
+optimal_inventory
+---
+PARAM_MAPPING {'sales_data': {'actual_var': 'sales_data', 'value': [{'date': '2023-01-01', 'units': 120, 'price': 25.99}, {'date': '2023-01-02', 'units': 145, 'price': 25.99}, {'date': '2023-01-03', 'units': 135, 'price': 25.99}, {'date': '2023-01-04', 'units': 160, 'price': 25.99}, {'date': '2023-01-05', 'units': 175, 'price': 25.99}, {'date': '2023-01-06', 'units': 150, 'price': 25.99}, {'date': '2023-01-07', 'units': 140, 'price': 25.99}]}, 'seasonal_factors': {'actual_var': 'seasonal_factors', 'value': [{'name': 'holiday', 'impact': 'high'}, {'name': 'weather', 'impact': 'medium'}, {'name': 'promotion', 'impact': 'low'}]}}
+FUNCTION_ENTER 52 calculate_optimal_inventory def calculate_optimal_inventory(sales_data, seasonal_factors):
+52 ['sales_data', 'seasonal_factors'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-01'}, 'units': {'_type': 'int', '_value': 120}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}, {'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-02'}, 'units': {'_type': 'int', '_value': 145}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}, {'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-03'}, 'units': {'_type': 'int', '_value': 135}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}, {'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-04'}, 'units': {'_type': 'int', '_value': 160}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}, {'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-05'}, 'units': {'_type': 'int', '_value': 175}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}, {'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-06'}, 'units': {'_type': 'int', '_value': 150}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}, {'_type': 'dict', '_items': {'date': {'_type': 'str', '_value': '2023-01-07'}, 'units': {'_type': 'int', '_value': 140}, 'price': {'_type': 'float', '_value': 25.99}}, '_len': 3}], '_len': 7}, {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'holiday'}, 'impact': {'_type': 'str', '_value': 'high'}}, '_len': 2}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'weather'}, 'impact': {'_type': 'str', '_value': 'medium'}}, '_len': 2}, {'_type': 'dict', '_items': {'name': {'_type': 'str', '_value': 'promotion'}, 'impact': {'_type': 'str', '_value': 'low'}}, '_len': 2}], '_len': 3}]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-01', units: 120, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-02', units: 145, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-03', units: 135, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-04', units: 160, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-05', units: 175, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-06', units: 150, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'day'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", "{date: '2023-01-07', units: 140, price: 25.99}"]
+54 daily_sales = [day['units'] for day in sales_data]
+54 ['sales_data', 'seasonal_factors', 'daily_sales'] ["[{date: '2023-01-01', units: 120, price: 25.99}, {date: '2023-01-02', units: 145, price: 25.99}, {date: '2023-01-03', units: 135, price: 25.99}, {date: '2023-01-04', units: 160, price: 25.99}, {date: '2023-01-05', units: 175, price: 25.99}, ...]", "[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]']
+57 avg_daily_sales = sum(daily_sales) / len(daily_sales) if daily_sales else 0
+57 ['seasonal_factors', 'daily_sales', 'avg_daily_sales'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142']
+67 supplier_combos = list(itertools.combinations(supplier_options, 2))
+67 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'supplier_options', 'supplier_combos'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', "[{name: 'SupplierA', lead_time: 3, cost_per_unit: 12.5}, {name: 'SupplierB', lead_time: 2, cost_per_unit: 14.0}, {name: 'SupplierC', lead_time: 5, cost_per_unit: 10.0}]", '[({...3 items}, {...3 items}), ({...3 items}, {...3 items}), ({...3 items}, {...3 items})]']
+69 for i, combo in enumerate(supplier_combos):
+69 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'supplier_combos', 'i', 'combo'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '[({...3 items}, {...3 items}), ({...3 items}, {...3 items}), ({...3 items}, {...3 items})]', '0', "({name: 'SupplierA', lead_time: 3, cost_per_unit: 12.5}, {name: 'SupplierB', lead_time: 2, cost_per_unit: 14.0})"]
+69 for i, combo in enumerate(supplier_combos):
+69 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'supplier_combos', 'i', 'combo'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '[({...3 items}, {...3 items}), ({...3 items}, {...3 items}), ({...3 items}, {...3 items})]', '1', "({name: 'SupplierA', lead_time: 3, cost_per_unit: 12.5}, {name: 'SupplierC', lead_time: 5, cost_per_unit: 10.0})"]
+69 for i, combo in enumerate(supplier_combos):
+69 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'supplier_combos', 'i', 'combo'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '[({...3 items}, {...3 items}), ({...3 items}, {...3 items}), ({...3 items}, {...3 items})]', '2', "({name: 'SupplierB', lead_time: 2, cost_per_unit: 14.0}, {name: 'SupplierC', lead_time: 5, cost_per_unit: 10.0})"]
+69 for i, combo in enumerate(supplier_combos):
+69 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'supplier_combos', 'i', 'combo'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '[({...3 items}, {...3 items}), ({...3 items}, {...3 items}), ({...3 items}, {...3 items})]', '2', "({name: 'SupplierB', lead_time: 2, cost_per_unit: 14.0}, {name: 'SupplierC', lead_time: 5, cost_per_unit: 10.0})"]
+73 safety_factor = 1.5
+73 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5']
+74 base_lead_time = 4  # Standard lead time
+74 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 [] []
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['120', '145']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['145', '135']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['135', '160']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['160', '175']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['175', '150']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['150', '140']
+16 upward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y > x)
+16 ['x', 'y'] ['150', '140']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 [] []
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['120', '145']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['145', '135']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['135', '160']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['160', '175']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['175', '150']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['150', '140']
+17 downward_trend = sum(1 for x, y in zip(historical_data, historical_data[1:]) if y < x)
+17 ['x', 'y'] ['150', '140']
+20 market_index = (upward_trend * 2) - downward_trend
+20 ['historical_data', 'upward_trend', 'downward_trend', 'market_index'] ['[120, 145, 135, 160, 175, ...]', '3', '3', '3']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 [] []
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['120', '145']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['145', '135']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['135', '160']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['160', '175']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['175', '150']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['150', '140']
+21 volatility = sum(abs(x - y) for x, y in zip(historical_data, historical_data[1:]))
+21 ['x', 'y'] ['150', '140']
+24 return (market_index, volatility / len(historical_data) if historical_data else 0)
+24 ['historical_data', 'market_index', 'volatility'] ['[120, 145, 135, 160, 175, ...]', '3', '110']
+46 return optimal_layout
+46 ['optimal_layout'] ['{units_per_shelf: 3333, shelves_needed: 1, space_utilization: 0.03}']
+87 seasonal_multiplier = 1.0
+87 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.0']
+88 for factor in seasonal_factors:
+88 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.0', "{name: 'holiday', impact: 'high'}"]
+89 if factor['impact'] == 'high':
+89 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.0', "{name: 'holiday', impact: 'high'}"]
+90 seasonal_multiplier *= 1.3
+90 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.3', "{name: 'holiday', impact: 'high'}"]
+88 for factor in seasonal_factors:
+88 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.3', "{name: 'weather', impact: 'medium'}"]
+89 if factor['impact'] == 'high':
+89 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.3', "{name: 'weather', impact: 'medium'}"]
+91 elif factor['impact'] == 'medium':
+91 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.3', "{name: 'weather', impact: 'medium'}"]
+92 seasonal_multiplier *= 1.15
+92 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.4949999999999999', "{name: 'weather', impact: 'medium'}"]
+88 for factor in seasonal_factors:
+88 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.4949999999999999', "{name: 'promotion', impact: 'low'}"]
+89 if factor['impact'] == 'high':
+89 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.4949999999999999', "{name: 'promotion', impact: 'low'}"]
+91 elif factor['impact'] == 'medium':
+91 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.4949999999999999', "{name: 'promotion', impact: 'low'}"]
+94 seasonal_multiplier *= 1.05
+94 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.56975', "{name: 'promotion', impact: 'low'}"]
+88 for factor in seasonal_factors:
+88 ['seasonal_factors', 'daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'factor'] ["[{name: 'holiday', impact: 'high'}, {name: 'weather', impact: 'medium'}, {name: 'promotion', impact: 'low'}]", '[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.56975', "{name: 'promotion', impact: 'low'}"]
+97 safety_stock = avg_daily_sales * safety_factor * seasonal_multiplier
+97 ['daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'safety_stock'] ['[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.56975', '344.78437499999995']
+100 supply_days = base_lead_time + safety_factor
+100 ['daily_sales', 'avg_daily_sales', 'safety_factor', 'base_lead_time', 'seasonal_multiplier', 'safety_stock', 'supply_days'] ['[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.5', '4', '1.56975', '344.78437499999995', '5.5']
+103 optimal_inventory = int(avg_daily_sales * supply_days * seasonal_multiplier)
+103 ['daily_sales', 'avg_daily_sales', 'seasonal_multiplier', 'safety_stock', 'supply_days', 'optimal_inventory'] ['[120, 145, 135, 160, 175, ...]', '146.42857142857142', '1.56975', '344.78437499999995', '5.5', '1264']
+6 base_time = math.log(distance + 1) * 2
+6 ['distance', 'base_time'] ['500', '12.433212202169729']
+7 if transport_type == 'air':
+7 ['distance', 'base_time'] ['500', '12.433212202169729']
+9 elif transport_type == 'sea':
+9 ['distance', 'base_time'] ['500', '12.433212202169729']
+12 return max(2, int(base_time))
+12 ['distance', 'base_time'] ['500', '12.433212202169729']
+6 base_time = math.log(distance + 1) * 2
+6 ['distance', 'base_time'] ['800', '13.37172189413672']
+7 if transport_type == 'air':
+7 ['distance', 'base_time'] ['800', '13.37172189413672']
+8 return max(1, int(base_time / 3))
+8 ['distance', 'base_time'] ['800', '13.37172189413672']
+6 base_time = math.log(distance + 1) * 2
+6 ['distance', 'base_time'] ['300', '11.41422052949775']
+7 if transport_type == 'air':
+7 ['base_time'] ['11.41422052949775']
+8 return max(1, int(base_time / 3))
+8 ['base_time'] ['11.41422052949775']
+PARAM_MAPPING {'sales_history': {'actual_var': 'daily_sales', 'value': [120, 145, 135, 160, 175, 150, 140]}, 'market_factors': {'actual_var': 'market_analysis', 'value': (3, 15.714285714285714)}}
+FUNCTION_ENTER 26 forecast_demand def forecast_demand(sales_history, market_factors):
+26 ['sales_history', 'market_factors'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 145}, {'_type': 'int', '_value': 135}, {'_type': 'int', '_value': 160}, {'_type': 'int', '_value': 175}, {'_type': 'int', '_value': 150}, {'_type': 'int', '_value': 140}], '_len': 7}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 15.714285714285714}], '_len': 2}]
+28 base_demand = sum(sales_history) / len(sales_history) if sales_history else 0
+28 ['sales_history', 'market_factors', 'base_demand'] ['[120, 145, 135, 160, 175, ...]', '(3, 15.714285714285714)', '146.42857142857142']
+29 market_coefficient = 1 + (market_factors[0] * 0.01)
+29 ['market_factors', 'base_demand', 'market_coefficient'] ['(3, 15.714285714285714)', '146.42857142857142', '1.03']
+30 seasonal_adjustment = market_factors[1] * 1.5
+30 ['market_factors', 'base_demand', 'market_coefficient', 'seasonal_adjustment'] ['(3, 15.714285714285714)', '146.42857142857142', '1.03', '23.57142857142857']
+32 return base_demand * market_coefficient * seasonal_adjustment
+32 ['base_demand', 'market_coefficient', 'seasonal_adjustment'] ['146.42857142857142', '1.03', '23.57142857142857']
+FUNCTION_RETURN 32 forecast_demand {'_type': 'float', '_value': 3555.0765306122444}
+PARAM_MAPPING {'lead_time': {'actual_var': 'base_lead_time', 'value': 4}, 'daily_sales': {'actual_var': 'avg_daily_sales', 'value': 146.42857142857142}, 'safety_stock': {'actual_var': 'safety_stock', 'value': 344.78437499999995}}
+FUNCTION_ENTER 48 calculate_reorder_point def calculate_reorder_point(lead_time, daily_sales, safety_stock):
+48 ['lead_time', 'daily_sales', 'safety_stock'] [{'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 146.42857142857142}, {'_type': 'float', '_value': 344.78437499999995}]
+50 return (lead_time * daily_sales) + safety_stock
+50 ['lead_time', 'daily_sales', 'safety_stock'] ['4', '146.42857142857142', '344.78437499999995']
+FUNCTION_RETURN 50 calculate_reorder_point {'_type': 'float', '_value': 930.4986607142856}
+118 return optimal_inventory
+118 ['optimal_inventory'] ['1264']
+FUNCTION_RETURN 118 calculate_optimal_inventory {'_type': 'int', '_value': 1264}

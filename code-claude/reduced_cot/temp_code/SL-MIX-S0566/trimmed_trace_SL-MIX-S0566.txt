@@ -1,0 +1,69 @@
+58
+total_revenue
+---
+57 total_revenue = calculate_revenue(sales_data, price_adjustments)
+57 ['sales_data', 'price_adjustments'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}']
+2 base_revenue = 0
+2 ['sales', 'price_adj', 'base_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0']
+3 discount_factor = 0.95  # 5% discount on all transactions
+3 ['sales', 'price_adj', 'base_revenue', 'discount_factor'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0', '0.95']
+4 loyalty_bonus = 50  # bonus for loyal customers
+4 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0', '0.95', '50']
+7 for category, (quantity, region) in sales.items():
+7 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0', '0.95', '50', "'tech_gadgets'", '120', "'North'"]
+9 base_price = price_adj.get(region, 100)  # default price 100
+9 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0', '0.95', '50', "'tech_gadgets'", '120', "'North'", '110']
+16 if category.startswith('tech'):
+16 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0', '0.95', '50', "'tech_gadgets'", '120', "'North'", '110']
+17 item_revenue = quantity * base_price * 1.2  # tech premium
+17 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '0', '0.95', '50', "'tech_gadgets'", '120', "'North'", '110', '15840.0']
+25 base_revenue += item_revenue
+25 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '15840.0', '0.95', '50', "'tech_gadgets'", '120', "'North'", '110', '15840.0']
+7 for category, (quantity, region) in sales.items():
+7 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '15840.0', '0.95', '50', "'office_supplies'", '85', "'South'", '110', '15840.0']
+9 base_price = price_adj.get(region, 100)  # default price 100
+9 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '15840.0', '0.95', '50', "'office_supplies'", '85', "'South'", '95', '15840.0']
+16 if category.startswith('tech'):
+16 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '15840.0', '0.95', '50', "'office_supplies'", '85', "'South'", '95', '15840.0']
+18 elif category.endswith('food'):
+18 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '15840.0', '0.95', '50', "'office_supplies'", '85', "'South'", '95', '15840.0']
+23 item_revenue = quantity * base_price
+23 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '15840.0', '0.95', '50', "'office_supplies'", '85', "'South'", '95', '8075']
+25 base_revenue += item_revenue
+25 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '23915.0', '0.95', '50', "'office_supplies'", '85', "'South'", '95', '8075']
+7 for category, (quantity, region) in sales.items():
+7 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '23915.0', '0.95', '50', "'fresh_food'", '45', "'East'", '95', '8075']
+9 base_price = price_adj.get(region, 100)  # default price 100
+9 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '23915.0', '0.95', '50', "'fresh_food'", '45', "'East'", '105', '8075']
+16 if category.startswith('tech'):
+16 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '23915.0', '0.95', '50', "'fresh_food'", '45', "'East'", '105', '8075']
+18 elif category.endswith('food'):
+18 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '23915.0', '0.95', '50', "'fresh_food'", '45', "'East'", '105', '8075']
+19 item_revenue = quantity * base_price * 0.9  # food discount
+19 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '23915.0', '0.95', '50', "'fresh_food'", '45', "'East'", '105', '4252.5']
+25 base_revenue += item_revenue
+25 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '28167.5', '0.95', '50', "'fresh_food'", '45', "'East'", '105', '4252.5']
+7 for category, (quantity, region) in sales.items():
+7 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '28167.5', '0.95', '50', "'tech_accessories'", '60', "'West'", '105', '4252.5']
+9 base_price = price_adj.get(region, 100)  # default price 100
+9 ['sales', 'price_adj', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '{North: 110, South: 95, East: 105, ...}', '28167.5', '0.95', '50', "'tech_accessories'", '60', "'West'", '115', '4252.5']
+16 if category.startswith('tech'):
+16 ['sales', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '28167.5', '0.95', '50', "'tech_accessories'", '60', "'West'", '115', '4252.5']
+17 item_revenue = quantity * base_price * 1.2  # tech premium
+17 ['sales', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'base_price', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '28167.5', '0.95', '50', "'tech_accessories'", '60', "'West'", '115', '8280.0']
+25 base_revenue += item_revenue
+25 ['sales', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region', 'item_revenue'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '36447.5', '0.95', '50', "'tech_accessories'", '60', "'West'", '8280.0']
+7 for category, (quantity, region) in sales.items():
+7 ['sales', 'base_revenue', 'discount_factor', 'loyalty_bonus', 'category', 'quantity', 'region'] ["{tech_gadgets: (120, 'North'), office_supplies: (85, 'South'), fresh_food: (45, 'East'), ...}", '36447.5', '0.95', '50', "'tech_accessories'", '60', "'West'"]
+28 qualified_for_bonus = base_revenue > 5000
+28 ['base_revenue', 'discount_factor', 'loyalty_bonus', 'qualified_for_bonus'] ['36447.5', '0.95', '50', 'True']
+29 adjusted_revenue = base_revenue * discount_factor
+29 ['base_revenue', 'discount_factor', 'loyalty_bonus', 'qualified_for_bonus', 'adjusted_revenue'] ['36447.5', '0.95', '50', 'True', '34625.125']
+35 if qualified_for_bonus:
+35 ['loyalty_bonus', 'qualified_for_bonus', 'adjusted_revenue'] ['50', 'True', '34625.125']
+36 adjusted_revenue += loyalty_bonus
+36 ['loyalty_bonus', 'adjusted_revenue'] ['50', '34675.125']
+38 return round(adjusted_revenue)
+38 ['adjusted_revenue'] ['34675.125']
+58 print(f"Target result: {total_revenue}")
+58 ['total_revenue'] ['34675']

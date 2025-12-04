@@ -1,0 +1,97 @@
+115
+shipping_cost
+---
+63 EXPRESS_SHIPPING = 0b0001
+63 ['EXPRESS_SHIPPING'] ['1']
+64 INSURED_SHIPPING = 0b0010
+64 ['EXPRESS_SHIPPING', 'INSURED_SHIPPING'] ['1', '2']
+65 TRACKED_SHIPPING = 0b0100
+65 ['EXPRESS_SHIPPING', 'INSURED_SHIPPING', 'TRACKED_SHIPPING'] ['1', '2', '4']
+66 SIGNATURE_REQUIRED = 0b1000
+66 ['EXPRESS_SHIPPING', 'INSURED_SHIPPING', 'TRACKED_SHIPPING', 'SIGNATURE_REQUIRED'] ['1', '2', '4', '8']
+59 item_prices = {'book': 12.99, 'glass': 8.50, 'laptop': 899.99}
+59 ['items', 'item_prices'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item_prices'] ['{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'book'", '{weight: 0.5, quantity: 3, fragile: False}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'glass'", '{weight: 0.3, quantity: 2, fragile: True}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'laptop'", '{weight: 2.1, quantity: 1, fragile: True}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'laptop'", '{weight: 2.1, quantity: 1, fragile: True}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+PARAM_MAPPING {'items': {'actual_var': 'order_items', 'value': {'book': {'weight': 0.5, 'quantity': 3, 'fragile': False}, 'glass': {'weight': 0.3, 'quantity': 2, 'fragile': True}, 'laptop': {'weight': 2.1, 'quantity': 1, 'fragile': True}}}, 'rules': {'actual_var': 'shipping_rules', 'value': {'base_rate': 5.0, 'weight_factor': 2.5, 'fragile_surcharge': 3.75, 'discount_threshold': 50.0, 'bulk_discount': 0.15, 'priority_multiplier': 1.5}}, 'customer_tier': {'actual_var': 'customer_tier', 'value': 'gold'}}
+FUNCTION_ENTER 78 calculate_shipping_cost def calculate_shipping_cost(items, rules, customer_tier):
+78 ['items', 'rules', 'customer_tier'] [{'_type': 'dict', '_items': {'book': {'_type': 'dict', '_items': {'weight': {'_type': 'float', '_value': 0.5}, 'quantity': {'_type': 'int', '_value': 3}, 'fragile': {'_type': 'bool', '_value': False}}, '_len': 3}, 'glass': {'_type': 'dict', '_items': {'weight': {'_type': 'float', '_value': 0.3}, 'quantity': {'_type': 'int', '_value': 2}, 'fragile': {'_type': 'bool', '_value': True}}, '_len': 3}, 'laptop': {'_type': 'dict', '_items': {'weight': {'_type': 'float', '_value': 2.1}, 'quantity': {'_type': 'int', '_value': 1}, 'fragile': {'_type': 'bool', '_value': True}}, '_len': 3}}, '_len': 3}, {'_type': 'dict', '_items': {'base_rate': {'_type': 'float', '_value': 5.0}, 'weight_factor': {'_type': 'float', '_value': 2.5}, 'fragile_surcharge': {'_type': 'float', '_value': 3.75}, 'discount_threshold': {'_type': 'float', '_value': 50.0}, 'bulk_discount': {'_type': 'float', '_value': 0.15}}, '_len': 6}, {'_type': 'str', '_value': 'gold'}]
+80 total_weight = sum(item['weight'] * item['quantity'] for item in items.values())
+80 [] []
+80 total_weight = sum(item['weight'] * item['quantity'] for item in items.values())
+80 ['item'] ['{weight: 0.5, quantity: 3, fragile: False}']
+80 total_weight = sum(item['weight'] * item['quantity'] for item in items.values())
+80 ['item'] ['{weight: 0.3, quantity: 2, fragile: True}']
+80 total_weight = sum(item['weight'] * item['quantity'] for item in items.values())
+80 ['item'] ['{weight: 2.1, quantity: 1, fragile: True}']
+80 total_weight = sum(item['weight'] * item['quantity'] for item in items.values())
+80 ['item'] ['{weight: 2.1, quantity: 1, fragile: True}']
+81 has_fragile = any(item['fragile'] for item in items.values())
+81 [] []
+81 has_fragile = any(item['fragile'] for item in items.values())
+81 ['item'] ['{weight: 0.5, quantity: 3, fragile: False}']
+81 has_fragile = any(item['fragile'] for item in items.values())
+81 ['item'] ['{weight: 0.3, quantity: 2, fragile: True}']
+84 base_cost = rules['base_rate'] + (total_weight * rules['weight_factor'])
+84 ['items', 'rules', 'customer_tier', 'total_weight', 'has_fragile', 'base_cost'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', '{base_rate: 5.0, weight_factor: 2.5, fragile_surcharge: 3.75, ...}', "'gold'", '4.2', 'True', '15.5']
+87 if has_fragile:
+87 ['items', 'rules', 'customer_tier', 'has_fragile', 'base_cost'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', '{base_rate: 5.0, weight_factor: 2.5, fragile_surcharge: 3.75, ...}', "'gold'", 'True', '15.5']
+88 base_cost += rules['fragile_surcharge']
+88 ['items', 'rules', 'customer_tier', 'base_cost'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', '{base_rate: 5.0, weight_factor: 2.5, fragile_surcharge: 3.75, ...}', "'gold'", '19.25']
+91 item_count = sum(item['quantity'] for item in items.values())
+91 [] []
+91 item_count = sum(item['quantity'] for item in items.values())
+91 ['item'] ['{weight: 0.5, quantity: 3, fragile: False}']
+91 item_count = sum(item['quantity'] for item in items.values())
+91 ['item'] ['{weight: 0.3, quantity: 2, fragile: True}']
+91 item_count = sum(item['quantity'] for item in items.values())
+91 ['item'] ['{weight: 2.1, quantity: 1, fragile: True}']
+91 item_count = sum(item['quantity'] for item in items.values())
+91 ['item'] ['{weight: 2.1, quantity: 1, fragile: True}']
+95 if item_count > 5:
+95 ['items', 'customer_tier', 'base_cost', 'item_count'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', "'gold'", '19.25', '6']
+99 tier_discounts = {'bronze': 0.00, 'silver': 0.05, 'gold': 0.10, 'platinum': 0.15}
+99 ['items', 'customer_tier', 'base_cost', 'tier_discounts'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', "'gold'", '19.25', '{bronze: 0.0, silver: 0.05, gold: 0.1, ...}']
+100 tier_discount = tier_discounts.get(customer_tier, 0.00)
+100 ['items', 'customer_tier', 'base_cost', 'tier_discounts', 'tier_discount'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', "'gold'", '19.25', '{bronze: 0.0, silver: 0.05, gold: 0.1, ...}', '0.1']
+PARAM_MAPPING {'items': {'actual_var': 'items', 'value': {'book': {'weight': 0.5, 'quantity': 3, 'fragile': False}, 'glass': {'weight': 0.3, 'quantity': 2, 'fragile': True}, 'laptop': {'weight': 2.1, 'quantity': 1, 'fragile': True}}}}
+FUNCTION_ENTER 58 calculate_item_value def calculate_item_value(items):
+58 ['items'] [{'_type': 'dict', '_items': {'book': {'_type': 'dict', '_items': {'weight': {'_type': 'float', '_value': 0.5}, 'quantity': {'_type': 'int', '_value': 3}, 'fragile': {'_type': 'bool', '_value': False}}, '_len': 3}, 'glass': {'_type': 'dict', '_items': {'weight': {'_type': 'float', '_value': 0.3}, 'quantity': {'_type': 'int', '_value': 2}, 'fragile': {'_type': 'bool', '_value': True}}, '_len': 3}, 'laptop': {'_type': 'dict', '_items': {'weight': {'_type': 'float', '_value': 2.1}, 'quantity': {'_type': 'int', '_value': 1}, 'fragile': {'_type': 'bool', '_value': True}}, '_len': 3}}, '_len': 3}]
+59 item_prices = {'book': 12.99, 'glass': 8.50, 'laptop': 899.99}
+59 ['items', 'item_prices'] ['{book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item_prices'] ['{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'book'", '{weight: 0.5, quantity: 3, fragile: False}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'glass'", '{weight: 0.3, quantity: 2, fragile: True}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'laptop'", '{weight: 2.1, quantity: 1, fragile: True}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+60 return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+60 ['item', 'details', 'item_prices'] ["'laptop'", '{weight: 2.1, quantity: 1, fragile: True}', '{book: 12.99, glass: 8.5, laptop: 899.99}']
+FUNCTION_RETURN 60 calculate_item_value {'_type': 'float', '_value': 955.96}
+70 options = 0
+70 ['options'] ['0']
+71 if express: options |= EXPRESS_SHIPPING
+71 ['options'] ['0']
+72 if insured: options |= INSURED_SHIPPING
+72 ['options'] ['0']
+73 if tracked: options |= TRACKED_SHIPPING
+73 ['options'] ['4']
+74 if signature: options |= SIGNATURE_REQUIRED
+74 ['options'] ['4']
+75 return options
+75 ['options'] ['4']
+115 shipping_cost = base_cost * (1 - tier_discount)
+115 ['base_cost', 'tier_discount', 'shipping_cost'] ['19.25', '0.1', '17.325']
+118 return round(shipping_cost, 2)
+118 ['shipping_cost'] ['17.325']
+FUNCTION_RETURN 118 calculate_shipping_cost {'_type': 'float', '_value': 17.32}

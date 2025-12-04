@@ -1,0 +1,58 @@
+Target: Find the value of variable final_hash after [line 32] executes
+
+[line 1]  def process_message(message):
+Enter function process_message: message='code123'
+  [line 4]  multiplier = 17
+  Assign: multiplier = 17
+  [line 8]  for char in message:
+  Loop Start: char takes its first value 'c'
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 8]  for char in message:
+  Loop End: Iteration finished
+  [line 12]  ascii_values = [ord(c) for c in message]
+  Compute: [ord(c) for c in message], where c='c' (an unknown source), message='code123' (parameter message) = ?
+  [line 19]  hash_value = 0
+  Assign: hash_value = 0
+  [line 20]  for i, val in enumerate(ascii_values):
+  (Missing param: 'iter_var')
+  [line 22]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 23]  hash_value = (hash_value + val * multiplier) % 10000
+  Compute: (hash_value + val * multiplier) % 10000, where hash_value=0 (defined at [line 19]), val=99 (an unknown source), multiplier=17 (defined at [line 4]) = 1683
+  [line 20]  for i, val in enumerate(ascii_values):
+  (Missing param: 'iter_var')
+  [line 22]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+... [Line 20] repeats 4 more times ...
+... [Line 20] repeats 4 more times ...
+... [Line 20] repeats 4 more times ...
+  [line 20]  for i, val in enumerate(ascii_values):
+  (Missing param: 'iter_var')
+  [line 22]  if i % 2 == 0:
+  Condition: True, entering 'if' block
+  [line 23]  hash_value = (hash_value + val * multiplier) % 10000
+  Compute: (hash_value + val * multiplier) % 10000, where hash_value=4216 (defined at [line 23]), val=51 (an unknown source), multiplier=17 (defined at [line 4]) = 5083
+  [line 20]  for i, val in enumerate(ascii_values):
+  Loop End: Iteration finished
+  [line 26]  checksum = sum(val for i, val in enumerate(ascii_values) if i % 3 == 1)
+  Call function sum(val for i, val in enumerate(ascii_values) if i % 3 == 1)
+  [line 29]  mask = (1 << (len(message) % 16)) - 1
+  Compute: (1 << (len(message) % 16)) - 1, where message='code123' (parameter message) = 127
+  [line 32]  final_hash = (hash_value & mask) ^ (checksum * multiplier)
+  Compute: (hash_value & mask) ^ (checksum * multiplier), where hash_value=5083 (defined at [line 23]), mask=127 (defined at [line 29]), checksum=160 (defined at [line 26]), multiplier=17 (defined at [line 4]) = 2811
+  [line 38]  return final_hash
+  Return: final_hash=2811 (defined at [line 32])
+Function process_message returns 2811
+
+Answer: final_hash = 2811 (last updated on defined at [line 32])

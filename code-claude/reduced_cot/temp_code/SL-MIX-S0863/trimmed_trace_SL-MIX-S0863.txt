@@ -1,0 +1,73 @@
+57
+final_balance
+---
+16 deposit_bonus = 25
+16 ['account_history', 'deposit_bonus'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '25']
+17 processed_deposits = sum(account_history['deposits']) + deposit_bonus
+17 ['account_history', 'deposit_bonus', 'processed_deposits'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '25', '2525']
+20 account_age = 15
+20 ['account_history', 'processed_deposits', 'account_age'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '2525', '15']
+21 loyalty_multiplier = 1.0 + (account_age / 100)
+21 ['account_history', 'processed_deposits', 'account_age', 'loyalty_multiplier'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '2525', '15', '1.15']
+22 bonus_adjusted_deposits = processed_deposits * loyalty_multiplier
+22 ['account_history', 'processed_deposits', 'loyalty_multiplier', 'bonus_adjusted_deposits'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '2525', '1.15', '2903.75']
+25 withdrawal_charges = calculate_fees(sum(account_history['withdrawals']), 'standard')
+25 ['account_history', 'bonus_adjusted_deposits'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '2903.75']
+2 base_fees = {'premium': 0.01, 'standard': 0.02, 'basic': 0.03}
+2 ['amount', 'tier', 'base_fees'] ['600', "'standard'", '{premium: 0.01, standard: 0.02, basic: 0.03}']
+3 discount_factor = 0.95 if amount > 1000 else 1.0
+3 ['amount', 'tier', 'base_fees', 'discount_factor'] ['600', "'standard'", '{premium: 0.01, standard: 0.02, basic: 0.03}', '1.0']
+6 return amount * base_fees.get(tier, 0.03) * discount_factor
+6 ['amount', 'tier', 'base_fees', 'discount_factor'] ['600', "'standard'", '{premium: 0.01, standard: 0.02, basic: 0.03}', '1.0']
+26 total_withdrawals = sum(account_history['withdrawals']) + withdrawal_charges
+26 ['account_history', 'bonus_adjusted_deposits', 'withdrawal_charges', 'total_withdrawals'] ['{deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0}', '2903.75', '12.0', '612.0']
+30 active_transactions = {}
+30 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions'] ['2903.75', '612.0', '{}']
+31 transaction_ids = [105, 106, 107, 108]
+31 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids'] ['2903.75', '612.0', '{}', '[105, 106, 107, 108]']
+32 interest_rates = [0.02, 0.03, 0.025, 0.015]
+32 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates'] ['2903.75', '612.0', '{}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]']
+35 for i, tx_id in enumerate(transaction_ids[:-1]):
+35 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id'] ['2903.75', '612.0', '{}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '0', '105']
+37 tx_amount = bonus_adjusted_deposits - total_withdrawals
+37 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount'] ['2903.75', '612.0', '{}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '0', '105', '2291.75']
+38 interest = tx_amount * interest_rates[i]
+38 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '0', '105', '2291.75', '45.835']
+41 active_transactions[tx_id] = tx_amount + interest
+41 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '0', '105', '2291.75', '45.835']
+35 for i, tx_id in enumerate(transaction_ids[:-1]):
+35 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '1', '106', '2291.75', '45.835']
+37 tx_amount = bonus_adjusted_deposits - total_withdrawals
+37 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '1', '106', '2291.75', '45.835']
+38 interest = tx_amount * interest_rates[i]
+38 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '1', '106', '2291.75', '68.7525']
+41 active_transactions[tx_id] = tx_amount + interest
+41 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '1', '106', '2291.75', '68.7525']
+35 for i, tx_id in enumerate(transaction_ids[:-1]):
+35 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '2', '107', '2291.75', '68.7525']
+37 tx_amount = bonus_adjusted_deposits - total_withdrawals
+37 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '2', '107', '2291.75', '68.7525']
+38 interest = tx_amount * interest_rates[i]
+38 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'interest_rates', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025}', '[105, 106, 107, 108]', '[0.02, 0.03, 0.025, 0.015]', '2', '107', '2291.75', '57.29375']
+41 active_transactions[tx_id] = tx_amount + interest
+41 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'i', 'tx_id', 'tx_amount', 'interest'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025, 107: 2349.04375}', '[105, 106, 107, 108]', '2', '107', '2291.75', '57.29375']
+35 for i, tx_id in enumerate(transaction_ids[:-1]):
+35 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions', 'transaction_ids', 'i', 'tx_id'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025, 107: 2349.04375}', '[105, 106, 107, 108]', '2', '107']
+48 active_transactions[transaction_ids[-1]] = bonus_adjusted_deposits - total_withdrawals
+48 ['bonus_adjusted_deposits', 'total_withdrawals', 'active_transactions'] ['2903.75', '612.0', '{105: 2337.585, 106: 2360.5025, 107: 2349.04375, ...}']
+51 final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+51 ['active_transactions'] ['{105: 2337.585, 106: 2360.5025, 107: 2349.04375, ...}']
+51 final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+51 ['k'] ['105']
+51 final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+51 ['k'] ['106']
+51 final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+51 ['k'] ['107']
+51 final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+51 ['k'] ['108']
+54 rounding_precision = 2
+54 ['final_balance', 'rounding_precision'] ['2360.5025', '2']
+55 final_balance = round(final_balance, rounding_precision)
+55 ['final_balance', 'rounding_precision'] ['2360.5', '2']
+57 print(f"Result: {final_balance}")
+57 ['final_balance'] ['2360.5']

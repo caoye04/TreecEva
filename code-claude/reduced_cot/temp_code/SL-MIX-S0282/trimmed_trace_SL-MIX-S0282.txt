@@ -1,0 +1,243 @@
+103
+encryption_strength
+---
+74 password = "P@ssw0rd!"
+74 ['password'] ["'P@ssw0rd!'"]
+93 iterations = 12
+93 ['password', 'iterations'] ["'P@ssw0rd!'", '12']
+97 encryption_strength = calculate_final_strength(password, iterations)
+97 ['password', 'iterations'] ["'P@ssw0rd!'", '12']
+PARAM_MAPPING {'password': {'actual_var': 'password', 'value': 'P@ssw0rd!'}, 'iterations': {'actual_var': 'iterations', 'value': 12}}
+FUNCTION_ENTER 41 calculate_final_strength def calculate_final_strength(password, iterations):
+41 ['password', 'iterations'] [{'_type': 'str', '_value': 'P@ssw0rd!'}, {'_type': 'int', '_value': 12}]
+43 historical_passwords = ["123456", "password", "qwerty", "admin"]
+43 ['password', 'iterations', 'historical_passwords'] ["'P@ssw0rd!'", '12', "['123456', 'password', 'qwerty', 'admin']"]
+45 if password.lower() in [p.lower() for p in historical_passwords]:
+45 ['password', 'iterations', 'historical_passwords', 'p'] ["'P@ssw0rd!'", '12', "['123456', 'password', 'qwerty', 'admin']", "'123456'"]
+45 if password.lower() in [p.lower() for p in historical_passwords]:
+45 ['password', 'iterations', 'historical_passwords', 'p'] ["'P@ssw0rd!'", '12', "['123456', 'password', 'qwerty', 'admin']", "'password'"]
+45 if password.lower() in [p.lower() for p in historical_passwords]:
+45 ['password', 'iterations', 'historical_passwords', 'p'] ["'P@ssw0rd!'", '12', "['123456', 'password', 'qwerty', 'admin']", "'qwerty'"]
+45 if password.lower() in [p.lower() for p in historical_passwords]:
+45 ['password', 'iterations', 'historical_passwords', 'p'] ["'P@ssw0rd!'", '12', "['123456', 'password', 'qwerty', 'admin']", "'admin'"]
+45 if password.lower() in [p.lower() for p in historical_passwords]:
+45 ['password', 'iterations', 'historical_passwords'] ["'P@ssw0rd!'", '12', "['123456', 'password', 'qwerty', 'admin']"]
+PARAM_MAPPING {'password': {'actual_var': 'password', 'value': 'P@ssw0rd!'}}
+FUNCTION_ENTER 19 calculate_complexity def calculate_complexity(password):
+19 ['password'] [{'_type': 'str', '_value': 'P@ssw0rd!'}]
+21 has_upper = any(c.isupper() for c in password)
+21 [] []
+21 has_upper = any(c.isupper() for c in password)
+21 ['c'] ["'P'"]
+22 has_lower = any(c.islower() for c in password)
+22 [] []
+22 has_lower = any(c.islower() for c in password)
+22 ['c'] ["'P'"]
+22 has_lower = any(c.islower() for c in password)
+22 ['c'] ["'@'"]
+22 has_lower = any(c.islower() for c in password)
+22 ['c'] ["'s'"]
+23 has_digit = any(c.isdigit() for c in password)
+23 [] []
+23 has_digit = any(c.isdigit() for c in password)
+23 ['c'] ["'P'"]
+23 has_digit = any(c.isdigit() for c in password)
+23 ['c'] ["'@'"]
+23 has_digit = any(c.isdigit() for c in password)
+23 ['c'] ["'s'"]
+23 has_digit = any(c.isdigit() for c in password)
+23 ['c'] ["'s'"]
+23 has_digit = any(c.isdigit() for c in password)
+23 ['c'] ["'w'"]
+23 has_digit = any(c.isdigit() for c in password)
+23 ['c'] ["'0'"]
+24 has_special = any(not c.isalnum() for c in password)
+24 [] []
+24 has_special = any(not c.isalnum() for c in password)
+24 ['c'] ["'P'"]
+24 has_special = any(not c.isalnum() for c in password)
+24 ['c'] ["'@'"]
+27 char_type_score = sum([has_upper, has_lower, has_digit, has_special])
+27 ['password', 'has_upper', 'has_lower', 'has_digit', 'has_special', 'char_type_score'] ["'P@ssw0rd!'", 'True', 'True', 'True', 'True', '4']
+30 length_score = min(len(password) * 0.5, 10)
+30 ['password', 'char_type_score', 'length_score'] ["'P@ssw0rd!'", '4', '4.5']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '1']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '1']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '2']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '2']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '3']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '3']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '4']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '4']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '5']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '5']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '6']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '6']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '7']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '7']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '8']
+35 if password[i] == password[i-1]:
+35 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '8']
+34 for i in range(1, len(password)):
+34 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '8']
+39 return char_type_score * 2.5 + length_score
+39 ['password', 'char_type_score', 'length_score', 'i'] ["'P@ssw0rd!'", '4', '4.5', '8']
+FUNCTION_RETURN 39 calculate_complexity {'_type': 'float', '_value': 14.5}
+52 entropy = calculate_entropy(password)
+52 ['password', 'iterations'] ["'P@ssw0rd!'", '12']
+4 prob = {}
+4 ['text', 'prob'] ["'P@ssw0rd!'", '{}']
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{}', "'P'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{}', "'P'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1}', "'P'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1}', "'@'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1}', "'@'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1}', "'@'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1}', "'s'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1}', "'s'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 1}', "'s'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 1}', "'s'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 1}', "'s'"]
+7 prob[c] += 1
+7 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2}', "'s'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2}', "'w'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2}', "'w'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'w'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'0'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'0'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'0'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'r'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'r'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'r'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'d'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'d'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'d'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'"]
+6 if c in prob:
+6 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'"]
+9 prob[c] = 1
+9 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'"]
+5 for c in text:
+5 ['text', 'prob', 'c'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'"]
+11 entropy = 0
+11 ['text', 'prob', 'c', 'entropy'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'", '0']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'P'", '0']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'P'", '0', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'P'", '0.3522138890491458', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'@'", '0.3522138890491458', '0.1111111111111111']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'@'", '0.3522138890491458', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'@'", '0.7044277780982916', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'s'", '0.7044277780982916', '0.1111111111111111']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'s'", '0.7044277780982916', '0.2222222222222222']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'s'", '1.186633333974361', '0.2222222222222222']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'w'", '1.186633333974361', '0.2222222222222222']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'w'", '1.186633333974361', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'w'", '1.5388472230235068', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'0'", '1.5388472230235068', '0.1111111111111111']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'0'", '1.5388472230235068', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'0'", '1.8910611120726526', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'r'", '1.8910611120726526', '0.1111111111111111']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'r'", '1.8910611120726526', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'r'", '2.2432750011217983', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'d'", '2.2432750011217983', '0.1111111111111111']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'d'", '2.2432750011217983', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'d'", '2.595488890170944', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'", '2.595488890170944', '0.1111111111111111']
+13 p = prob[c] / len(text)
+13 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'", '2.595488890170944', '0.1111111111111111']
+14 entropy -= p * math.log2(p)
+14 ['text', 'prob', 'c', 'entropy', 'p'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'", '2.94770277922009', '0.1111111111111111']
+12 for c in prob:
+12 ['text', 'prob', 'c', 'entropy'] ["'P@ssw0rd!'", '{P: 1, @: 1, s: 2, ...}', "'!'", '2.94770277922009']
+17 return entropy * len(text) / 8
+17 ['text', 'entropy'] ["'P@ssw0rd!'", '2.94770277922009']
+58 for i in range(min(iterations, 5)):
+58 ['iterations', 'i'] ['12', '0']
+59 if i % 2 == 0:
+59 ['iterations', 'i'] ['12', '0']
+58 for i in range(min(iterations, 5)):
+58 ['iterations', 'i'] ['12', '1']
+59 if i % 2 == 0:
+59 ['iterations', 'i'] ['12', '1']
+58 for i in range(min(iterations, 5)):
+58 ['iterations', 'i'] ['12', '2']
+59 if i % 2 == 0:
+59 ['iterations', 'i'] ['12', '2']
+58 for i in range(min(iterations, 5)):
+58 ['iterations', 'i'] ['12', '3']
+59 if i % 2 == 0:
+59 ['iterations', 'i'] ['12', '3']
+58 for i in range(min(iterations, 5)):
+58 ['iterations', 'i'] ['12', '4']
+59 if i % 2 == 0:
+59 ['iterations', 'i'] ['12', '4']
+58 for i in range(min(iterations, 5)):
+58 ['iterations', 'i'] ['12', '4']
+68 if len(password) >= 8 and iterations >= 10:
+68 ['iterations'] ['12']
+69 return 42
+69 [] []
+FUNCTION_RETURN 69 calculate_final_strength {'_type': 'int', '_value': 42}
+103 print(f"Result: {encryption_strength}")
+103 ['encryption_strength'] ['42']

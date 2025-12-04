@@ -8,14 +8,14 @@ from pathlib import Path
 from dataset_processor import DatasetProcessor
 
 # API配置
-API_KEY = "sk-tT9Ddv4cOCl5BXW4kivhRQ"
-BASE_URL = "https://llmapi.paratera.com/v1"
+API_KEY = "sk-gq8qRNNiNIjS0x8tzfMl8F9bscL4wopT7oA2qD2FU8xKTrnp"
+BASE_URL = "https://api.ezai88.com/v1"
 
 AI_APIS = {
-    "DeepSeek-V3.2-Exp": {
+    "claude-3-7-sonnet-20250219": {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "DeepSeek-V3.2-Exp"
+        "model": "claude-3-7-sonnet-20250219"
     }
 }
 
@@ -97,7 +97,7 @@ def main():
     
     parser.add_argument(
         '--model',
-        default='DeepSeek-V3.2-Exp',
+        default='claude-3-7-sonnet-20250219',
         choices=list(AI_APIS.keys()),
         help='使用的AI模型'
     )

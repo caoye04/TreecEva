@@ -1,0 +1,81 @@
+Target: Find the value of variable priority_factor after [line 80] executes
+
+[line 32]  raw_metrics = [75, 42, 18, 30, 65, 90, 23, 81, 45, 60]
+Compute: [75, 42, 18, 30, 65, 90, 23, 81, 45, 60] = [75, 42, 18, 30, 65, ...]
+[line 33]  filtered_metrics = []
+Compute: [] = []
+[line 18]  def analyze_network_traffic(packets):
+Enter function analyze_network_traffic: packets=[{id: 'pkt001', size: 1280, latency: 45}, {id: 'pkt002', size: 512, latency: 32}, {id: 'pkt003', size: 2048, latency: 60}]
+  [line 20]  total_bytes = sum(p.get('size', 0) for p in packets)
+  Call function sum(p.get('size', 0) for p in packets)
+  [line 20]  total_bytes = sum(p.get('size', 0) for p in packets)
+  Call function sum(p.get('size', 0) for p in packets)
+  [line 20]  total_bytes = sum(p.get('size', 0) for p in packets)
+  Call function sum(p.get('size', 0) for p in packets)
+  [line 20]  total_bytes = sum(p.get('size', 0) for p in packets)
+  Call function sum(p.get('size', 0) for p in packets)
+  [line 20]  total_bytes = sum(p.get('size', 0) for p in packets)
+  Call function sum(p.get('size', 0) for p in packets)
+  [line 21]  avg_latency = sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0
+  Compute: sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0, where p={id: 'pkt003', size: 2048, latency: 60} (an unknown source) = ?
+  [line 21]  avg_latency = sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0
+  Compute: sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0, where p={id: 'pkt001', size: 1280, latency: 45} (an unknown source) = ?
+  [line 21]  avg_latency = sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0
+  Compute: sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0, where p={id: 'pkt002', size: 512, latency: 32} (an unknown source) = ?
+  [line 21]  avg_latency = sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0
+  Compute: sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0, where p={id: 'pkt003', size: 2048, latency: 60} (an unknown source) = ?
+  [line 21]  avg_latency = sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0
+  Compute: sum(p.get('latency', 0) for p in packets) / len(packets) if packets else 0, where p={id: 'pkt003', size: 2048, latency: 60} (an unknown source) = ?
+  [line 22]  return {'bytes': total_bytes, 'latency': avg_latency}
+  Return: {'bytes': total_bytes, 'latency': avg_latency}
+Function analyze_network_traffic returns {bytes: 3840, latency: 45.666666666666664}
+[line 44]  status_code = "NETWORK_STATUS_OPTIMAL"
+Assign: status_code = 'NETWORK_STATUS_OPTIMAL'
+[line 45]  if "OPTIMAL" in status_code:
+Condition: True, entering 'if' block
+[line 46]  optimization_factor = len([c for c in status_code if c.isupper()])
+Call function len([c for c in status_code if c.isupper()])
+[line 51]  if status_code.startswith("NETWORK"):
+Condition: True, entering 'if' block
+[line 53]  priority_threshold = 40
+Assign: priority_threshold = 40
+[line 56]  for metric in raw_metrics:
+Loop Start: metric takes its first value 75
+[line 57]  if metric > priority_threshold:
+Condition: True, entering 'if' block
+[line 56]  for metric in raw_metrics:
+Loop Iteration: metric is now 42 (iteration 2)
+[line 57]  if metric > priority_threshold:
+Condition: True, entering 'if' block
+... [Line 56] repeats 7 more times ...
+... [Line 56] repeats 7 more times ...
+... [Line 56] repeats 7 more times ...
+... [Line 56] repeats 7 more times ...
+... [Line 56] repeats 7 more times ...
+[line 56]  for metric in raw_metrics:
+Loop Iteration: metric is now 60 (iteration 10)
+[line 57]  if metric > priority_threshold:
+Condition: True, entering 'if' block
+[line 56]  for metric in raw_metrics:
+Loop End: Iteration finished
+[line 74]  intermediate_result = optimization_factor * 3
+Compute: optimization_factor * 3, where optimization_factor=20 (defined at [line 46]) = 60
+[line 75]  if intermediate_result > 30:
+Condition: True, entering 'if' block
+[line 77]  filtered_metrics = [30, 60, 90]
+Compute: [30, 60, 90] = [30, 60, 90]
+[line 80]  priority_factor = calculate_priority(filtered_metrics)
+Call function calculate_priority(filtered_metrics=[30, 60, 90] (defined at [line 77]))
+[line 3]  def calculate_priority(metrics):
+Enter function calculate_priority: metrics=[30, 60, 90] (filtered_metrics defined at [line 77])
+  [line 5]  if not metrics:
+  Condition: True, entering 'if' block
+  [line 9]  relevant = [m for m in metrics if m % 3 == 0 or m % 5 == 0]
+  Compute: [m for m in metrics if m % 3 == 0 or m % 5 == 0], where m=30 (an unknown source), metrics=[30, 60, 90] (parameter metrics defined at [line 77]) = ?
+  [line 12]  if not relevant:
+  Condition: True, entering 'if' block
+  [line 16]  return max(relevant) - min(relevant)
+  Return: max(relevant) - min(relevant)
+Function calculate_priority returns 60
+
+Answer: priority_factor = 60 (last updated on defined at [line 80])

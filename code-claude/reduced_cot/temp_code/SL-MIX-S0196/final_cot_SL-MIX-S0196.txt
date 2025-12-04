@@ -1,0 +1,103 @@
+Target: Find the value of variable network_efficiency after [line 92] executes
+
+[line 49]  active_nodes = [20, 30, 40, 30, 20]
+Compute: [20, 30, 40, 30, 20] = [20, 30, 40, 30, 20]
+[line 54]  connection_strength = 8
+Assign: connection_strength = 8
+[line 57]  traffic_samples = [45, 62, 78, 55, 91, 32]
+Compute: [45, 62, 78, 55, 91, 32] = [45, 62, 78, 55, 91, ...]
+[line 58]  processed_traffic = process_packet_data(traffic_samples)
+Call function process_packet_data(traffic_samples=[45, 62, 78, 55, 91, ...] (defined at [line 57]))
+[line 3]  processed = []
+Compute: [] = []
+[line 4]  for packet in raw_data:
+Loop Start: packet takes its first value 45
+[line 5]  if protocol_type == "TCP":
+Condition: True, entering 'if' block
+[line 4]  for packet in raw_data:
+Loop Iteration: packet is now 62 (iteration 2)
+[line 5]  if protocol_type == "TCP":
+Condition: True, entering 'if' block
+... [Line 4] repeats 3 more times ...
+... [Line 4] repeats 3 more times ...
+[line 4]  for packet in raw_data:
+Loop Iteration: packet is now 32 (iteration 6)
+[line 5]  if protocol_type == "TCP":
+Condition: True, entering 'if' block
+[line 4]  for packet in raw_data:
+Loop End: Iteration finished
+[line 11]  return processed
+Return: processed=[89, 123, 155, 109, 181, ...] (defined at [line 3])
+[line 59]  total_traffic, anomalies = analyze_network_traffic(processed_traffic)
+(Missing param: 'func_name')
+[line 15]  anomaly_count = 0
+Assign: anomaly_count = 0
+[line 16]  total_traffic = sum(packets)
+Call function sum(packets=[89, 123, 155, 109, 181, ...] (an unknown source))
+[line 17]  for p in packets:
+Loop Start: p takes its first value 89
+[line 18]  if p > threshold:
+Condition: True, entering 'if' block
+[line 19]  anomaly_count += 1
+Update: anomaly_count changed from 0 (defined at defined at [line 15]) to 0+1 = 1
+[line 17]  for p in packets:
+Loop Iteration: p is now 123 (iteration 2)
+[line 18]  if p > threshold:
+Condition: True, entering 'if' block
+[line 19]  anomaly_count += 1
+Update: anomaly_count changed from 1 (defined at defined at [line 19]) to 1+1 = 2
+... [Line 17] repeats 3 more times ...
+... [Line 17] repeats 3 more times ...
+... [Line 17] repeats 3 more times ...
+[line 17]  for p in packets:
+Loop Iteration: p is now 63 (iteration 6)
+[line 18]  if p > threshold:
+Condition: True, entering 'if' block
+[line 17]  for p in packets:
+Loop End: Iteration finished
+[line 20]  return total_traffic, anomaly_count
+Return: total_traffic, anomaly_count
+[line 24]  distance = abs(destination - source)
+Call function abs(destination - source)
+[line 25]  overhead = hops * 2
+Compute: hops * 2, where hops=3 (an unknown source) = 6
+[line 26]  latency = distance + overhead
+Compute: distance + overhead, where distance=43 (defined at [line 24]), overhead=6 (defined at [line 25]) = 49
+[line 27]  return latency if latency > 0 else 0
+Return: latency if latency > 0 else 0
+[line 68]  packet_loss_rate = 0.05
+Assign: packet_loss_rate = 0.05
+[line 69]  reliability_score = int(100 - (packet_loss_rate * 1000))
+Call function int(100 - (packet_loss_rate * 1000))
+[line 70]  if reliability_score < 0:
+Condition: True, entering 'if' block
+[line 83]  network_efficiency = calculate_network_efficiency(active_nodes, connection_strength)
+Call function calculate_network_efficiency(active_nodes=[20, 30, 40, 30, 20] (defined at [line 49]), connection_strength=8 (defined at [line 54]))
+[line 31]  if not nodes or connection_quality <= 0:
+Condition: True, entering 'if' block
+[line 35]  active_set = set(nodes[:3]) & set(nodes[-2:])
+Compute: set(nodes[:3]) & set(nodes[-2:]), where nodes=[20, 30, 40, 30, 20] (an unknown source) = {20, 30}
+[line 36]  node_count = len(active_set)
+Call function len(active_set={20, 30} (defined at [line 35]))
+[line 39]  base_efficiency = node_count * connection_quality
+Compute: node_count * connection_quality, where node_count=2 (defined at [line 36]), connection_quality=8 (an unknown source) = 16
+[line 42]  adjustment = 10 if node_count > 1 else 0
+Compute: 10 if node_count > 1 else 0, where node_count=2 (defined at [line 36]) = 10
+[line 45]  return base_efficiency + adjustment
+Return: base_efficiency + adjustment
+[line 31]  if not nodes or connection_quality <= 0:
+Condition: True, entering 'if' block
+[line 35]  active_set = set(nodes[:3]) & set(nodes[-2:])
+Compute: set(nodes[:3]) & set(nodes[-2:]), where nodes=[15, 25, 35, 45] (an unknown source) = {35}
+[line 36]  node_count = len(active_set)
+Call function len(active_set={35} (defined at [line 35]))
+[line 39]  base_efficiency = node_count * connection_quality
+Compute: node_count * connection_quality, where node_count=1 (defined at [line 36]), connection_quality=6.4 (an unknown source) = 6.4
+[line 42]  adjustment = 10 if node_count > 1 else 0
+Compute: 10 if node_count > 1 else 0, where node_count=1 (defined at [line 36]) = 0
+[line 45]  return base_efficiency + adjustment
+Return: base_efficiency + adjustment
+[line 92]  print(f"Result: {network_efficiency}")
+Output: f"Result: {network_efficiency}"
+
+Answer: network_efficiency = 26 (last updated on defined at [line 83])

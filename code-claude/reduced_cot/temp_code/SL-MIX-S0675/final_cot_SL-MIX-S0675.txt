@@ -1,0 +1,91 @@
+Target: Find the value of variable active_satellites after [line 64] executes
+
+[line 64]  active_satellites = calculate_active_satellites(satellite_data)
+Call function calculate_active_satellites(satellite_data=[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...] (an unknown source))
+[line 28]  def calculate_active_satellites(satellite_data):
+Enter function calculate_active_satellites: satellite_data=[{name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}, {name: 'Galileo-11', status: 1, launch_year: 2015, ...}, {name: 'Landsat-7', status: 0, launch_year: 1999, ...}, {name: 'Intelsat-6', status: -1, launch_year: 1991, ...}, {name: 'NOAA-19', status: 1, launch_year: 2009, ...}, ...]
+  [line 29]  active_count = 0
+  Assign: active_count = 0
+  [line 32]  for satellite in satellite_data:
+  Loop Start: satellite takes its first value {name: 'Sentinel-1A', status: 1, launch_year: 2014, ...}
+  [line 34]  status = satellite['status']
+  Compute: satellite['status'], where satellite={name: 'Sentinel-1A', status: 1, launch_year: 2014, ...} (defined at [line 32]) = 1
+  [line 35]  year = satellite['launch_year']
+  Compute: satellite['launch_year'], where satellite={name: 'Sentinel-1A', status: 1, launch_year: 2014, ...} (defined at [line 32]) = 2014
+  [line 19]  if altitude < 500:
+  Condition: True, entering 'if' block
+  [line 21]  elif altitude < 2000:
+  'elif' Condition: True, entering block
+  [line 22]  altitude_factor = 1.0
+  Assign: altitude_factor = 1.0
+  [line 26]  return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+  Return: efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+  [line 44]  if is_operational(status, year):
+  Condition: True, entering 'if' block
+  [line 4]  if launch_year < 2000:
+  Condition: True, entering 'if' block
+  [line 7]  return status_code == 1
+  Return: status_code == 1
+  [line 45]  active_count += 1
+  Update: active_count changed from ? (defined at defined at [line 29]) to ?+1 = 1
+  [line 32]  for satellite in satellite_data:
+  Loop Iteration: satellite is now {name: 'Galileo-11', status: 1, launch_year: 2015, ...} (iteration 2)
+  [line 34]  status = satellite['status']
+  Compute: satellite['status'], where satellite={name: 'Galileo-11', status: 1, launch_year: 2015, ...} (defined at [line 32]), status=1 (defined at [line 34]) = 1
+  [line 35]  year = satellite['launch_year']
+  Compute: satellite['launch_year'], where satellite={name: 'Galileo-11', status: 1, launch_year: 2015, ...} (defined at [line 32]) = 2015
+  [line 19]  if altitude < 500:
+  Condition: True, entering 'if' block
+  [line 21]  elif altitude < 2000:
+  'elif' Condition: True, entering block
+  [line 24]  altitude_factor = 0.95
+  Assign: altitude_factor = 0.95
+  [line 26]  return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+  Return: efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+  [line 44]  if is_operational(status, year):
+  Condition: True, entering 'if' block
+  [line 4]  if launch_year < 2000:
+  Condition: True, entering 'if' block
+  [line 7]  return status_code == 1
+  Return: status_code == 1
+  [line 45]  active_count += 1
+  Update: active_count changed from ? (defined at defined at [line 45]) to ?+1 = 2
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+... [Line 32] repeats 4 more times ...
+  [line 32]  for satellite in satellite_data:
+  Loop Iteration: satellite is now {name: 'Hubble', status: 1, launch_year: 1990, ...} (iteration 7)
+  [line 34]  status = satellite['status']
+  Compute: satellite['status'], where satellite={name: 'Hubble', status: 1, launch_year: 1990, ...} (defined at [line 32]), status=1 (defined at [line 34]) = 1
+  [line 35]  year = satellite['launch_year']
+  Compute: satellite['launch_year'], where satellite={name: 'Hubble', status: 1, launch_year: 1990, ...} (defined at [line 32]) = 1990
+  [line 19]  if altitude < 500:
+  Condition: True, entering 'if' block
+  [line 21]  elif altitude < 2000:
+  'elif' Condition: True, entering block
+  [line 22]  altitude_factor = 1.0
+  Assign: altitude_factor = 1.0
+  [line 26]  return efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+  Return: efficiency_factors.get(orbit_type, 0.5) * altitude_factor
+  [line 44]  if is_operational(status, year):
+  Condition: True, entering 'if' block
+  [line 4]  if launch_year < 2000:
+  Condition: True, entering 'if' block
+  [line 5]  return status_code > 0
+  Return: status_code > 0
+  [line 45]  active_count += 1
+  Update: active_count changed from ? (defined at defined at [line 45]) to ?+1 = 5
+  [line 32]  for satellite in satellite_data:
+  Loop End: Iteration finished
+  [line 50]  return active_count
+  Return: active_count=5 (defined at [line 45])
+Function calculate_active_satellites returns 5
+
+Answer: active_satellites = 5 (last updated on defined at [line 64])

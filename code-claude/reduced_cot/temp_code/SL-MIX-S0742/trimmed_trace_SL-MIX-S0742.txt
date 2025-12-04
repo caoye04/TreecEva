@@ -1,0 +1,151 @@
+116
+optimal_path_length
+---
+84 nodes = ["A", "B", "C", "D", "E"]
+84 ['nodes'] ["['A', 'B', 'C', 'D', 'E']"]
+100 metrics, efficiency = calculate_network_metrics(nodes, connections, traffic_patterns)
+100 ['nodes', 'connections', 'traffic_patterns'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]"]
+6 network = defaultdict(list)
+6 ['nodes', 'connections', 'traffic_patterns', 'network'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{}']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{}', "'A'", "'B'", '10']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items)], B: [(...2 items)]}', "'B'", "'C'", '15']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items)], B: [(...2 items), (...2 items)], C: [(...2 items)]}', "'C'", "'D'", '20']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items)], B: [(...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'D'", "'E'", '25']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items)], B: [(...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", "'A'", '30']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'B'", "'E'", '35']
+7 for src, dest, bandwidth in connections:
+7 ['nodes', 'connections', 'traffic_patterns', 'network', 'src', 'dest', 'bandwidth'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'B'", "'E'", '35']
+13 for node in nodes:
+13 ['nodes', 'connections', 'traffic_patterns', 'network', 'node'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'A'"]
+13 for node in nodes:
+13 ['nodes', 'connections', 'traffic_patterns', 'network', 'node'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'B'"]
+13 for node in nodes:
+13 ['nodes', 'connections', 'traffic_patterns', 'network', 'node'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'C'"]
+13 for node in nodes:
+13 ['nodes', 'connections', 'traffic_patterns', 'network', 'node'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'D'"]
+13 for node in nodes:
+13 ['nodes', 'connections', 'traffic_patterns', 'network', 'node'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'"]
+13 for node in nodes:
+13 ['nodes', 'connections', 'traffic_patterns', 'network', 'node'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'"]
+19 congestion = Counter()
+19 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{}']
+20 for pattern in traffic_patterns:
+20 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{}', "('A', 'C', 5)"]
+21 source, destination, volume = pattern
+21 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{}', "('A', 'C', 5)", '5']
+23 congestion[source] += volume
+23 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5}', "('A', 'C', 5)", '5']
+24 congestion[destination] += volume
+24 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5}', "('A', 'C', 5)", '5']
+20 for pattern in traffic_patterns:
+20 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5}', "('B', 'D', 8)", '5']
+21 source, destination, volume = pattern
+21 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5}', "('B', 'D', 8)", '8']
+23 congestion[source] += volume
+23 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 8}', "('B', 'D', 8)", '8']
+24 congestion[destination] += volume
+24 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 8, ...}', "('B', 'D', 8)", '8']
+20 for pattern in traffic_patterns:
+20 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 8, ...}', "('E', 'B', 12)", '8']
+21 source, destination, volume = pattern
+21 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 8, ...}', "('E', 'B', 12)", '12']
+23 congestion[source] += volume
+23 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 8, ...}', "('E', 'B', 12)", '12']
+24 congestion[destination] += volume
+24 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern', 'volume'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', "('E', 'B', 12)", '12']
+20 for pattern in traffic_patterns:
+20 ['nodes', 'connections', 'traffic_patterns', 'network', 'node', 'congestion', 'pattern'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "[('A', 'C', 5), ('B', 'D', 8), ('E', 'B', 12)]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', "('E', 'B', 12)"]
+34 routing_metrics = {}
+34 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 [] []
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'B'", '10']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'C'", '15']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'D'", '20']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'E'", '25']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'A'", '30']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'E'", '35']
+37 theoretical_max = sum(b for _, _, b in connections)
+37 ['_', 'b'] ["'E'", '35']
+42 scaling_coefficient = 2.5 if len(nodes) > 5 else 1.8
+42 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8']
+56 node_degrees = {n: len(network[n]) for n in nodes}
+56 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'n'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', "'A'"]
+56 node_degrees = {n: len(network[n]) for n in nodes}
+56 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'n'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', "'B'"]
+56 node_degrees = {n: len(network[n]) for n in nodes}
+56 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'n'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', "'C'"]
+56 node_degrees = {n: len(network[n]) for n in nodes}
+56 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'n'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', "'D'"]
+56 node_degrees = {n: len(network[n]) for n in nodes}
+56 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'n'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', "'E'"]
+56 node_degrees = {n: len(network[n]) for n in nodes}
+56 ['nodes', 'connections', 'network', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees'] ["['A', 'B', 'C', 'D', 'E']", "[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", '{A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...}', "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}']
+57 if sum(node_degrees.values()) > 0:
+57 ['connections', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees'] ["[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}']
+58 connectivity_index = len(connections) / sum(node_degrees.values())
+58 ['connections', 'node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees', 'connectivity_index'] ["[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...]", "'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}', '0.5']
+60 essential_path_metric = int(42 * connectivity_index)
+60 ['node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees', 'connectivity_index', 'essential_path_metric'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}', '0.5', '21']
+63 routing_metrics["connectivity"] = connectivity_index
+63 ['node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees', 'connectivity_index', 'essential_path_metric'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}', '0.5', '21']
+64 routing_metrics["essential"] = essential_path_metric
+64 ['node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees', 'essential_path_metric'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}', '21']
+65 routing_metrics["theoretical"] = theoretical_max
+65 ['node', 'congestion', 'routing_metrics', 'theoretical_max', 'scaling_coefficient', 'node_degrees'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '135', '1.8', '{A: 2, B: 3, C: 2, ...}']
+73 efficiency_score = 0
+73 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '0']
+74 for node, degree in node_degrees.items():
+74 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'A'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '0', '2']
+75 if degree > 0 and node in congestion:
+75 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'A'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '0', '2']
+76 efficiency_score += (congestion[node] / degree)
+76 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'A'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '2.5', '2']
+74 for node, degree in node_degrees.items():
+74 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'B'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '2.5', '3']
+75 if degree > 0 and node in congestion:
+75 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'B'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '2.5', '3']
+76 efficiency_score += (congestion[node] / degree)
+76 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'B'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '9.166666666666668', '3']
+74 for node, degree in node_degrees.items():
+74 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'C'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '9.166666666666668', '2']
+75 if degree > 0 and node in congestion:
+75 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'C'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '9.166666666666668', '2']
+76 efficiency_score += (congestion[node] / degree)
+76 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'C'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '11.666666666666668', '2']
+74 for node, degree in node_degrees.items():
+74 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'D'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '11.666666666666668', '2']
+75 if degree > 0 and node in congestion:
+75 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'D'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '11.666666666666668', '2']
+76 efficiency_score += (congestion[node] / degree)
+76 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'D'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '15.666666666666668', '2']
+74 for node, degree in node_degrees.items():
+74 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '15.666666666666668', '3']
+75 if degree > 0 and node in congestion:
+75 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '15.666666666666668', '3']
+76 efficiency_score += (congestion[node] / degree)
+76 ['node', 'congestion', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'E'", '{A: 5, C: 5, B: 20, ...}', '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '19.666666666666668', '3']
+74 for node, degree in node_degrees.items():
+74 ['node', 'routing_metrics', 'scaling_coefficient', 'node_degrees', 'efficiency_score', 'degree'] ["'E'", '{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '{A: 2, B: 3, C: 2, ...}', '19.666666666666668', '3']
+79 normalized_efficiency = min(100, int(efficiency_score * scaling_coefficient))
+79 ['routing_metrics', 'scaling_coefficient', 'efficiency_score', 'normalized_efficiency'] ['{connectivity: 0.5, essential: 21, theoretical: 135}', '1.8', '19.666666666666668', '35']
+81 return routing_metrics, normalized_efficiency
+81 ['routing_metrics', 'normalized_efficiency'] ['{connectivity: 0.5, essential: 21, theoretical: 135}', '35']
+103 if efficiency > 50:
+103 ['efficiency'] ['35']
+107 routing_metrics = {"essential": 21}
+107 ['routing_metrics'] ['{essential: 21}']
+116 optimal_path_length = routing_metrics["essential"]
+116 ['routing_metrics', 'optimal_path_length'] ['{essential: 21}', '21']

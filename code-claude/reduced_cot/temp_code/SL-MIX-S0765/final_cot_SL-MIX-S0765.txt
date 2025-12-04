@@ -1,0 +1,40 @@
+Target: Find the value of variable optimal_discount after [line 41] executes
+
+[line 12]  cart_total = sum(cart.values())
+Call function sum(cart.values())
+[line 15]  volume_discount = 0.05 if cart_total > 150 else 0
+Compute: 0.05 if cart_total > 150 else 0, where cart_total=240.5 (defined at [line 12]) = 0.05
+[line 22]  season_code = 'SUMMER'
+Assign: season_code = 'SUMMER'
+[line 23]  season_multiplier = sum([ord(c) % 5 for c in season_code]) / 10
+Compute: sum([ord(c) % 5 for c in season_code]) / 10, where c='S' (an unknown source), season_code='SUMMER' (defined at [line 22]) = ?
+[line 29]  tier_threshold = [100, 200, 300]
+Compute: [100, 200, 300] = [100, 200, 300]
+[line 30]  tier_rates = [0.02, 0.05, 0.08]
+Compute: [0.02, 0.05, 0.08] = [0.02, 0.05, 0.08]
+[line 32]  tier_discount = 0
+Assign: tier_discount = 0
+[line 33]  for threshold, rate in zip(tier_threshold, tier_rates):
+(Missing param: 'iter_var')
+[line 34]  if cart_total > threshold:
+Condition: True, entering 'if' block
+[line 35]  tier_discount = rate
+Compute: rate, where rate=0.02 (an unknown source) = 0.02
+[line 33]  for threshold, rate in zip(tier_threshold, tier_rates):
+(Missing param: 'iter_var')
+[line 34]  if cart_total > threshold:
+Condition: True, entering 'if' block
+[line 35]  tier_discount = rate
+Compute: rate, where rate=0.05 (an unknown source) = 0.05
+[line 33]  for threshold, rate in zip(tier_threshold, tier_rates):
+(Missing param: 'iter_var')
+[line 34]  if cart_total > threshold:
+Condition: True, entering 'if' block
+[line 33]  for threshold, rate in zip(tier_threshold, tier_rates):
+Loop End: Iteration finished
+[line 38]  tier_discount = tier_discount * season_multiplier
+Compute: tier_discount * season_multiplier, where tier_discount=0.05 (defined at [line 35]), season_multiplier=1.3 (defined at [line 23]) = 0.065
+[line 41]  optimal_discount = max(volume_discount, tier_discount) * 100
+Compute: max(volume_discount, tier_discount) * 100, where volume_discount=0.05 (defined at [line 15]), tier_discount=0.065 (defined at [line 38]) = 6.5
+
+Answer: optimal_discount = 6.5 (last updated on defined at [line 41])

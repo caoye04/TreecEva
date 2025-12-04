@@ -1,0 +1,401 @@
+80
+valid_entries
+---
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 [] []
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['0']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'08:30:00 [SERVER] System startup'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '08:30:00'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '08:30:00'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'08:30:00'", "['08', '30', '00']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'08:30:00'", "['08', '30', '00']"]
+7 try:
+7 ['timestamp', 'parts'] ["'08:30:00'", "['08', '30', '00']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'08:30:00'", "['08', '30', '00']", '8']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'08:30:00'", "['08', '30', '00']", '8', '30']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'08:30:00'", "['08', '30', '00']", '8', '30', '0']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'08:30:00'", "['08', '30', '00']", '8', '30', '0']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'08:30:00'", "['08', '30', '00']", '8', '30', '0']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 30600}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200', 'False']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200', 'False']
+42 elif 'WARNING' in entry:
+42 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200', 'False']
+44 elif 'INFO' in entry:
+44 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200', 'False']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200', 'False', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'08:30:00 [SERVER] System startup'", "'08:30:00'", '30600', '32400', '61200', 'False', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['1']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'09:15:22 [DATABASE] Connected successfully'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '09:15:22'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '09:15:22'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'09:15:22'", "['09', '15', '22']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'09:15:22'", "['09', '15', '22']"]
+7 try:
+7 ['timestamp', 'parts'] ["'09:15:22'", "['09', '15', '22']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'09:15:22'", "['09', '15', '22']", '9']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'09:15:22'", "['09', '15', '22']", '9', '15']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'09:15:22'", "['09', '15', '22']", '9', '15', '22']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'09:15:22'", "['09', '15', '22']", '9', '15', '22']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'09:15:22'", "['09', '15', '22']", '9', '15', '22']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 33322}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200', 'True']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200', 'True']
+42 elif 'WARNING' in entry:
+42 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200', 'True']
+44 elif 'INFO' in entry:
+44 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200', 'True']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200', 'True', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'09:15:22 [DATABASE] Connected successfully'", "'09:15:22'", '33322', '32400', '61200', 'True', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['2']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '10:45:16'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '10:45:16'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'10:45:16'", "['10', '45', '16']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'10:45:16'", "['10', '45', '16']"]
+7 try:
+7 ['timestamp', 'parts'] ["'10:45:16'", "['10', '45', '16']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'10:45:16'", "['10', '45', '16']", '10']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'10:45:16'", "['10', '45', '16']", '10', '45']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'10:45:16'", "['10', '45', '16']", '10', '45', '16']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'10:45:16'", "['10', '45', '16']", '10', '45', '16']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'10:45:16'", "['10', '45', '16']", '10', '45', '16']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 38716}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400', '61200', 'True']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400', '61200', 'True']
+42 elif 'WARNING' in entry:
+42 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400', '61200', 'True']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400', '61200', 'True', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'10:45:16 [AUTH] WARNING: Failed login attempt'", "'10:45:16'", '38716', '32400', '61200', 'True', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['3']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'12:32:45 [API] Request processed'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'12:32:45 [API] Request processed'", "'12:32:45'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'12:32:45 [API] Request processed'", "'12:32:45'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '12:32:45'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '12:32:45'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'12:32:45'", "['12', '32', '45']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'12:32:45'", "['12', '32', '45']"]
+7 try:
+7 ['timestamp', 'parts'] ["'12:32:45'", "['12', '32', '45']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'12:32:45'", "['12', '32', '45']", '12']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'12:32:45'", "['12', '32', '45']", '12', '32']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'12:32:45'", "['12', '32', '45']", '12', '32', '45']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'12:32:45'", "['12', '32', '45']", '12', '32', '45']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'12:32:45'", "['12', '32', '45']", '12', '32', '45']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 45165}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200', 'True']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200', 'True']
+42 elif 'WARNING' in entry:
+42 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200', 'True']
+44 elif 'INFO' in entry:
+44 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200', 'True']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200', 'True', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'12:32:45 [API] Request processed'", "'12:32:45'", '45165', '32400', '61200', 'True', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['4']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '14:05:32'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '14:05:32'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'14:05:32'", "['14', '05', '32']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'14:05:32'", "['14', '05', '32']"]
+7 try:
+7 ['timestamp', 'parts'] ["'14:05:32'", "['14', '05', '32']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'14:05:32'", "['14', '05', '32']", '14']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'14:05:32'", "['14', '05', '32']", '14', '5']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'14:05:32'", "['14', '05', '32']", '14', '5', '32']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'14:05:32'", "['14', '05', '32']", '14', '5', '32']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'14:05:32'", "['14', '05', '32']", '14', '5', '32']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 50732}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732', '32400', '61200', 'True']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732', '32400', '61200', 'True']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732', '32400', '61200', 'True', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'14:05:32 [NETWORK] ERROR: Connection timeout'", "'14:05:32'", '50732', '32400', '61200', 'True', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['5']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'15:45:00 [SERVER] INFO: Cache cleared'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '15:45:00'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '15:45:00'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'15:45:00'", "['15', '45', '00']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'15:45:00'", "['15', '45', '00']"]
+7 try:
+7 ['timestamp', 'parts'] ["'15:45:00'", "['15', '45', '00']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'15:45:00'", "['15', '45', '00']", '15']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'15:45:00'", "['15', '45', '00']", '15', '45']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'15:45:00'", "['15', '45', '00']", '15', '45', '0']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'15:45:00'", "['15', '45', '00']", '15', '45', '0']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'15:45:00'", "['15', '45', '00']", '15', '45', '0']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 56700}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200', 'True']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200', 'True']
+42 elif 'WARNING' in entry:
+42 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200', 'True']
+44 elif 'INFO' in entry:
+44 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200', 'True']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200', 'True', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'15:45:00 [SERVER] INFO: Cache cleared'", "'15:45:00'", '56700', '32400', '61200', 'True', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['6']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'17:05:18 [DATABASE] Backup completed'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '17:05:18'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '17:05:18'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'17:05:18'", "['17', '05', '18']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'17:05:18'", "['17', '05', '18']"]
+7 try:
+7 ['timestamp', 'parts'] ["'17:05:18'", "['17', '05', '18']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'17:05:18'", "['17', '05', '18']", '17']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'17:05:18'", "['17', '05', '18']", '17', '5']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'17:05:18'", "['17', '05', '18']", '17', '5', '18']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'17:05:18'", "['17', '05', '18']", '17', '5', '18']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['timestamp', 'parts', 'hours', 'minutes', 'seconds'] ["'17:05:18'", "['17', '05', '18']", '17', '5', '18']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 61518}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518']
+32 business_start = 9 * 3600
+32 ['entry', 'timestamp', 'seconds', 'business_start'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200', 'False']
+40 if 'ERROR' in entry:
+40 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200', 'False']
+42 elif 'WARNING' in entry:
+42 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200', 'False']
+44 elif 'INFO' in entry:
+44 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200', 'False']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200', 'False', 'True']
+50 return is_business_hours and has_required_fields
+50 ['entry', 'timestamp', 'seconds', 'business_start', 'business_end', 'is_business_hours', 'has_required_fields'] ["'17:05:18 [DATABASE] Backup completed'", "'17:05:18'", '61518', '32400', '61200', 'False', 'True']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['7']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'11:23:XX [AUTH] User login'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'11:23:XX [AUTH] User login'", "'11:23:XX'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'11:23:XX [AUTH] User login'", "'11:23:XX'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '11:23:XX'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '11:23:XX'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'11:23:XX'", "['11', '23', 'XX']"]
+4 if len(parts) != 3:
+4 ['timestamp', 'parts'] ["'11:23:XX'", "['11', '23', 'XX']"]
+7 try:
+7 ['timestamp', 'parts'] ["'11:23:XX'", "['11', '23', 'XX']"]
+8 hours = int(parts[0])
+8 ['timestamp', 'parts', 'hours'] ["'11:23:XX'", "['11', '23', 'XX']", '11']
+9 minutes = int(parts[1])
+9 ['timestamp', 'parts', 'hours', 'minutes'] ["'11:23:XX'", "['11', '23', 'XX']", '11', '23']
+10 seconds = int(parts[2])
+10 ['timestamp', 'parts', 'hours', 'minutes'] ["'11:23:XX'", "['11', '23', 'XX']", '11', '23']
+17 return -1
+17 ['timestamp', 'parts', 'hours', 'minutes'] ["'11:23:XX'", "['11', '23', 'XX']", '11', '23']
+FUNCTION_RETURN 17 parse_log_timestamp {'_type': 'int', '_value': -1}
+28 if seconds == -1:
+28 ['entry', 'timestamp', 'seconds'] ["'11:23:XX [AUTH] User login'", "'11:23:XX'", '-1']
+29 return False
+29 ['entry', 'timestamp', 'seconds'] ["'11:23:XX [AUTH] User login'", "'11:23:XX'", '-1']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['8']
+21 if not entry or len(entry.strip()) < 10:
+21 ['entry'] ["'13:40:30 SERVER: Status check'"]
+25 timestamp = entry[:8]
+25 ['entry', 'timestamp'] ["'13:40:30 SERVER: Status check'", "'13:40:30'"]
+26 seconds = parse_log_timestamp(timestamp)
+26 ['entry', 'timestamp'] ["'13:40:30 SERVER: Status check'", "'13:40:30'"]
+PARAM_MAPPING {'timestamp': {'actual_var': 'timestamp', 'value': '13:40:30'}}
+FUNCTION_ENTER 1 parse_log_timestamp def parse_log_timestamp(timestamp):
+1 ['timestamp'] [{'_type': 'str', '_value': '13:40:30'}]
+3 parts = timestamp.split(':')
+3 ['timestamp', 'parts'] ["'13:40:30'", "['13', '40', '30']"]
+4 if len(parts) != 3:
+4 ['parts'] ["['13', '40', '30']"]
+7 try:
+7 ['parts'] ["['13', '40', '30']"]
+8 hours = int(parts[0])
+8 ['parts', 'hours'] ["['13', '40', '30']", '13']
+9 minutes = int(parts[1])
+9 ['parts', 'hours', 'minutes'] ["['13', '40', '30']", '13', '40']
+10 seconds = int(parts[2])
+10 ['parts', 'hours', 'minutes', 'seconds'] ["['13', '40', '30']", '13', '40', '30']
+13 if 0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60:
+13 ['hours', 'minutes', 'seconds'] ['13', '40', '30']
+14 return hours * 3600 + minutes * 60 + seconds
+14 ['hours', 'minutes', 'seconds'] ['13', '40', '30']
+FUNCTION_RETURN 14 parse_log_timestamp {'_type': 'int', '_value': 49230}
+28 if seconds == -1:
+28 ['entry', 'seconds'] ["'13:40:30 SERVER: Status check'", '49230']
+32 business_start = 9 * 3600
+32 ['entry', 'seconds', 'business_start'] ["'13:40:30 SERVER: Status check'", '49230', '32400']
+33 business_end = 17 * 3600
+33 ['entry', 'seconds', 'business_start', 'business_end'] ["'13:40:30 SERVER: Status check'", '49230', '32400', '61200']
+36 is_business_hours = business_start <= seconds < business_end
+36 ['entry', 'seconds', 'business_start', 'business_end', 'is_business_hours'] ["'13:40:30 SERVER: Status check'", '49230', '32400', '61200', 'True']
+40 if 'ERROR' in entry:
+40 ['entry', 'is_business_hours'] ["'13:40:30 SERVER: Status check'", 'True']
+42 elif 'WARNING' in entry:
+42 ['entry', 'is_business_hours'] ["'13:40:30 SERVER: Status check'", 'True']
+44 elif 'INFO' in entry:
+44 ['entry', 'is_business_hours'] ["'13:40:30 SERVER: Status check'", 'True']
+48 has_required_fields = '[' in entry and ']' in entry
+48 ['entry', 'is_business_hours', 'has_required_fields'] ["'13:40:30 SERVER: Status check'", 'True', 'False']
+50 return is_business_hours and has_required_fields
+50 ['is_business_hours', 'has_required_fields'] ['True', 'False']
+75 valid_entries = sum(1 for i in range(len(log_entries)) if is_valid_entry(log_entries[i]))
+75 ['i'] ['8']
+80 print(f"Result: {valid_entries}")
+80 ['valid_entries'] ['5']

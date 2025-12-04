@@ -1,0 +1,106 @@
+Target: Find the value of variable network_reliability after [line 94] executes
+
+[line 49]  nodes = 8
+Assign: nodes = 8
+[line 50]  edges = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (0, 7)]
+Compute: [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (0, 7)] = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), ...]
+[line 53]  density, centrality = analyze_network_topology(nodes, edges)
+(Missing param: 'func_name')
+[line 3]  total_connections = len(edges)
+Call function len(edges=[(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), ...] (defined at [line 50]))
+[line 4]  density = total_connections / (nodes * (nodes - 1)) if nodes > 1 else 0
+Compute: total_connections / (nodes * (nodes - 1)) if nodes > 1 else 0, where total_connections=8 (defined at [line 3]), nodes=8 (defined at [line 49]) = 0.14285714285714285
+[line 5]  centrality = {i: 0 for i in range(nodes)}
+Compute: {i: 0 for i in range(nodes)}, where i=0 (an unknown source), nodes=8 (defined at [line 49]) = ?
+[line 7]  for edge in edges:
+Loop Start: edge takes its first value (0, 1)
+[line 7]  for edge in edges:
+Loop Iteration: edge is now (1, 2) (iteration 2)
+... [Line 7] repeats 5 more times ...
+... [Line 7] repeats 5 more times ...
+... [Line 7] repeats 5 more times ...
+[line 7]  for edge in edges:
+Loop Iteration: edge is now (0, 7) (iteration 8)
+[line 7]  for edge in edges:
+Loop End: Iteration finished
+[line 12]  return density, centrality
+Return: density, centrality
+[line 70]  active_nodes = [node for node in node_statuses if node[1] == "active"]
+Compute: [node for node in node_statuses if node[1] == "active"], where node=(0, 'active', 99.5) (an unknown source) = ?
+[line 14]  def calculate_redundancy_index(paths):
+Enter function calculate_redundancy_index: paths=[[0, 1, 2, 3], [3, 4, 5, 6], [0, 7, 6], [2, 3, 4], [4, 5, 6, 7]]
+  [line 16]  redundancy = 0
+  Assign: redundancy = 0
+  [line 17]  visited = set()
+  Call function set()
+  [line 20]  for path in paths:
+  Loop Start: path takes its first value [0, 1, 2, 3]
+  [line 21]  path_hash = sum([(p*17) ^ (p*13) for p in path])
+  Call function sum([(p*17) ^ (p*13) for p in path])
+  [line 22]  if path_hash not in visited:
+  Condition: True, entering 'if' block
+  [line 24]  redundancy += len(path) * 0.5
+  Update: redundancy changed from 0 (defined at defined at [line 16]) to 0+len(path) * 0.5 = 2.0
+  [line 20]  for path in paths:
+  Loop Iteration: path is now [3, 4, 5, 6] (iteration 2)
+  [line 22]  if path_hash not in visited:
+  Condition: True, entering 'if' block
+  [line 24]  redundancy += len(path) * 0.5
+  Update: redundancy changed from 2.0 (defined at defined at [line 24]) to 2.0+len(path) * 0.5 = 4.0
+... [Line 20] repeats 2 more times ...
+... [Line 20] repeats 2 more times ...
+... [Line 20] repeats 2 more times ...
+  [line 20]  for path in paths:
+  Loop Iteration: path is now [4, 5, 6, 7] (iteration 5)
+  [line 22]  if path_hash not in visited:
+  Condition: True, entering 'if' block
+  [line 24]  redundancy += len(path) * 0.5
+  Update: redundancy changed from 7.0 (defined at defined at [line 24]) to 7.0+len(path) * 0.5 = 9.0
+  [line 20]  for path in paths:
+  Loop End: Iteration finished
+  [line 28]  return redundancy / max(1, len(paths))
+  Return: redundancy / max(1, len(paths))
+Function calculate_redundancy_index returns 1.8
+[line 87]  critical_paths = [path for path in all_paths if len(path) <= 4]
+Compute: [path for path in all_paths if len(path) <= 4], where path=[0, 1, 2, 3] (defined at [line 20]) = ?
+[line 94]  network_reliability = calculate_network_reliability(active_nodes, critical_paths)
+Call function calculate_network_reliability(active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (defined at [line 70]), critical_paths=[[0, 1, 2, 3], [3, 4, 5, 6], [0, 7, 6], [2, 3, 4], [4, 5, 6, 7]] (defined at [line 87]))
+[line 30]  def calculate_network_reliability(active_nodes, critical_paths):
+Enter function calculate_network_reliability: active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (active_nodes defined at [line 70]), critical_paths=[[0, 1, 2, 3], [3, 4, 5, 6], [0, 7, 6], [2, 3, 4], [4, 5, 6, 7]] (critical_paths defined at [line 87])
+  [line 32]  if not active_nodes or not critical_paths:
+  Condition: True, entering 'if' block
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(0, 'active', 99.5) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = ?
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(1, 'active', 87.3) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = ?
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(3, 'active', 92.8) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = ?
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(4, 'active', 88.1) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = ?
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(6, 'active', 95.6) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = ?
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(7, 'active', 91.2) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = ?
+  [line 36]  active_ids = [node[0] for node in active_nodes]
+  Compute: [node[0] for node in active_nodes], where node=(7, 'active', 91.2) (an unknown source), active_nodes=[(0, 'active', 99.5), (1, 'active', 87.3), (3, 'active', 92.8), (4, 'active', 88.1), (6, 'active', 95.6), ...] (parameter active_nodes defined at [line 70]) = [0, 1, 3, 4, 6, ...]
+  [line 39]  covered_paths = 0
+  Assign: covered_paths = 0
+  [line 40]  for path in critical_paths:
+  Loop Start: path takes its first value [0, 1, 2, 3]
+  [line 41]  if all(node in active_ids for node in path):
+  Condition: True, entering 'if' block
+  [line 40]  for path in critical_paths:
+  Loop Iteration: path is now [3, 4, 5, 6] (iteration 2)
+... [Line 40] repeats 2 more times ...
+... [Line 40] repeats 2 more times ...
+  [line 40]  for path in critical_paths:
+  Loop Iteration: path is now [4, 5, 6, 7] (iteration 5)
+  [line 40]  for path in critical_paths:
+  Loop End: Iteration finished
+  [line 45]  reliability = covered_paths / len(critical_paths)
+  Compute: covered_paths / len(critical_paths), where covered_paths=1 (defined at [line 39]), critical_paths=[[0, 1, 2, 3], [3, 4, 5, 6], [0, 7, 6], [2, 3, 4], [4, 5, 6, 7]] (parameter critical_paths defined at [line 87]) = 0.2
+  [line 46]  return reliability * 100  # Convert to percentage
+  Return: reliability * 100  # Convert to percentage
+Function calculate_network_reliability returns 20.0
+
+Answer: network_reliability = 20.0 (last updated on defined at [line 94])

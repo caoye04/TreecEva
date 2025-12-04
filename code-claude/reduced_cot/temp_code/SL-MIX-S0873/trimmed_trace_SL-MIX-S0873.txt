@@ -1,0 +1,15 @@
+14
+total_cost
+---
+3 customer_tier = 'gold'
+3 ['customer_tier'] ["'gold'"]
+4 discounts = {'bronze': 0.05, 'silver': 0.10, 'gold': 0.15, 'platinum': 0.20}
+4 ['customer_tier', 'discounts'] ["'gold'", '{bronze: 0.05, silver: 0.1, gold: 0.15, ...}']
+7 base_price = 89.99
+7 ['customer_tier', 'discounts', 'base_price'] ["'gold'", '{bronze: 0.05, silver: 0.1, gold: 0.15, ...}', '89.99']
+10 shipping_method = 'standard'
+10 ['customer_tier', 'discounts', 'base_price', 'shipping_method'] ["'gold'", '{bronze: 0.05, silver: 0.1, gold: 0.15, ...}', '89.99', "'standard'"]
+11 shipping_fees = {'express': 12.50, 'standard': 4.99, 'economy': 2.50}
+11 ['customer_tier', 'discounts', 'base_price', 'shipping_method', 'shipping_fees'] ["'gold'", '{bronze: 0.05, silver: 0.1, gold: 0.15, ...}', '89.99', "'standard'", '{express: 12.5, standard: 4.99, economy: 2.5}']
+14 total_cost = round(base_price * (1 - discounts.get(customer_tier, 0)) + shipping_fees[shipping_method])
+14 ['customer_tier', 'discounts', 'base_price', 'shipping_method', 'shipping_fees', 'total_cost'] ["'gold'", '{bronze: 0.05, silver: 0.1, gold: 0.15, ...}', '89.99', "'standard'", '{express: 12.5, standard: 4.99, economy: 2.5}', '81']

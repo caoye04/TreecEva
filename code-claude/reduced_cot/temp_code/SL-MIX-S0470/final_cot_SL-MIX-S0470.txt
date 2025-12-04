@@ -1,0 +1,76 @@
+Target: Find the value of variable shipping_cost after [line 115] executes
+
+[line 63]  EXPRESS_SHIPPING = 0b0001
+Assign: EXPRESS_SHIPPING = 1
+[line 64]  INSURED_SHIPPING = 0b0010
+Assign: INSURED_SHIPPING = 2
+[line 65]  TRACKED_SHIPPING = 0b0100
+Assign: TRACKED_SHIPPING = 4
+[line 66]  SIGNATURE_REQUIRED = 0b1000
+Assign: SIGNATURE_REQUIRED = 8
+[line 59]  item_prices = {'book': 12.99, 'glass': 8.50, 'laptop': 899.99}
+Compute: {'book': 12.99, 'glass': 8.50, 'laptop': 899.99} = {book: 12.99, glass: 8.5, laptop: 899.99}
+[line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+[line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+[line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+[line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+[line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+[line 78]  def calculate_shipping_cost(items, rules, customer_tier):
+Enter function calculate_shipping_cost: items={book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}, rules={base_rate: 5.0, weight_factor: 2.5, fragile_surcharge: 3.75, ...}, customer_tier='gold'
+  [line 80]  total_weight = sum(item['weight'] * item['quantity'] for item in items.values())
+  Call function sum(item['weight'] * item['quantity'] for item in items.values())
+  [line 81]  has_fragile = any(item['fragile'] for item in items.values())
+  Call function any(item['fragile'] for item in items.values())
+  [line 84]  base_cost = rules['base_rate'] + (total_weight * rules['weight_factor'])
+  Compute: rules['base_rate'] + (total_weight * rules['weight_factor']), where rules={base_rate: 5.0, weight_factor: 2.5, fragile_surcharge: 3.75, ...} (parameter rules), total_weight=4.2 (defined at [line 80]) = 15.5
+  [line 87]  if has_fragile:
+  Condition: True, entering 'if' block
+  [line 88]  base_cost += rules['fragile_surcharge']
+  Update: base_cost changed from 15.5 (defined at defined at [line 84]) to 15.5+rules['fragile_surcharge'] = 19.25
+  [line 91]  item_count = sum(item['quantity'] for item in items.values())
+  Call function sum(item['quantity'] for item in items.values())
+  [line 95]  if item_count > 5:
+  Condition: True, entering 'if' block
+  [line 99]  tier_discounts = {'bronze': 0.00, 'silver': 0.05, 'gold': 0.10, 'platinum': 0.15}
+  Compute: {'bronze': 0.00, 'silver': 0.05, 'gold': 0.10, 'platinum': 0.15} = {bronze: 0.0, silver: 0.05, gold: 0.1, ...}
+  [line 100]  tier_discount = tier_discounts.get(customer_tier, 0.00)
+  (Missing param: 'func_name')
+  [line 58]  def calculate_item_value(items):
+  Enter function calculate_item_value: items={book: {weight: 0.5, quantity: 3, fragile: False}, glass: {weight: 0.3, quantity: 2, fragile: True}, laptop: {weight: 2.1, quantity: 1, fragile: True}}
+    [line 59]  item_prices = {'book': 12.99, 'glass': 8.50, 'laptop': 899.99}
+    Compute: {'book': 12.99, 'glass': 8.50, 'laptop': 899.99} = {book: 12.99, glass: 8.5, laptop: 899.99}
+    [line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    [line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    [line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    [line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    [line 60]  return sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+    Return: sum(item_prices.get(item, 0) * details['quantity'] for item, details in items.items())
+  Function calculate_item_value returns 955.96
+  [line 70]  options = 0
+  Assign: options = 0
+  [line 71]  if express: options |= EXPRESS_SHIPPING
+  Condition: True, entering 'if' block
+  [line 72]  if insured: options |= INSURED_SHIPPING
+  Condition: True, entering 'if' block
+  [line 73]  if tracked: options |= TRACKED_SHIPPING
+  Condition: True, entering 'if' block
+  [line 74]  if signature: options |= SIGNATURE_REQUIRED
+  Condition: True, entering 'if' block
+  [line 75]  return options
+  Return: options=4 (defined at [line 70])
+  [line 115]  shipping_cost = base_cost * (1 - tier_discount)
+  Compute: base_cost * (1 - tier_discount), where base_cost=19.25 (defined at [line 88]), tier_discount=0.1 (an unknown source) = 17.325
+  [line 118]  return round(shipping_cost, 2)
+  Return: round(shipping_cost, 2)
+Function calculate_shipping_cost returns 17.32
+
+Answer: shipping_cost = 17.325 (last updated on defined at [line 115])

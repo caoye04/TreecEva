@@ -1,0 +1,76 @@
+Target: Find the value of variable checksum after [line 53] executes
+
+[line 30]  raw_packets = [65, 66, 67, 68, 69, 70]
+Compute: [65, 66, 67, 68, 69, 70] = [65, 66, 67, 68, 69, ...]
+[line 33]  packets = []
+Compute: [] = []
+[line 35]  for i, p in enumerate(raw_packets):
+(Missing param: 'iter_var')
+[line 36]  if i >= 2:  # Skip first two elements for our actual processing
+Condition: True, entering 'if' block
+[line 35]  for i, p in enumerate(raw_packets):
+(Missing param: 'iter_var')
+[line 36]  if i >= 2:  # Skip first two elements for our actual processing
+Condition: True, entering 'if' block
+... [Line 35] repeats 3 more times ...
+... [Line 35] repeats 3 more times ...
+[line 35]  for i, p in enumerate(raw_packets):
+(Missing param: 'iter_var')
+[line 36]  if i >= 2:  # Skip first two elements for our actual processing
+Condition: True, entering 'if' block
+[line 35]  for i, p in enumerate(raw_packets):
+Loop End: Iteration finished
+[line 42]  sequenced_packets = list(zip(range(len(packets)), packets))
+Call function list(zip(range(len(packets)), packets))
+[line 46]  for seq, p in sequenced_packets:
+(Missing param: 'iter_var')
+[line 46]  for seq, p in sequenced_packets:
+Loop End: Iteration finished
+[line 46]  for seq, p in sequenced_packets:
+Loop End: Iteration finished
+[line 46]  for seq, p in sequenced_packets:
+Loop End: Iteration finished
+[line 46]  for seq, p in sequenced_packets:
+Loop End: Iteration finished
+[line 12]  def analyze_network_traffic(packets):
+Enter function analyze_network_traffic: packets=[71, 68, 73, 70] (packets defined at [line 33])
+  [line 27]  return statistics
+  Return: statistics={total: 282, max: 73, min: 68, ...} (an unknown source)
+Function analyze_network_traffic returns {total: 282, max: 73, min: 68, ...}
+[line 53]  checksum = calculate_network_checksum(packets)
+Call function calculate_network_checksum(packets=[71, 68, 73, 70] (defined at [line 33]))
+[line 1]  def calculate_network_checksum(data):
+Enter function calculate_network_checksum: data=[71, 68, 73, 70] (packets defined at [line 33])
+  [line 3]  result = 0
+  Assign: result = 0
+  [line 4]  for i, packet in enumerate(data):
+  (Missing param: 'iter_var')
+  [line 6]  packet_value = packet & 0xFF  # Extract lower 8 bits
+  Compute: packet & 0xFF  # Extract lower 8 bits, where packet=71 (an unknown source) = 71
+  [line 7]  position_factor = (i % 4) + 1  # Position weighting (1-4)
+  Compute: (i % 4) + 1  # Position weighting (1-4), where i=0 (an unknown source) = 1
+  [line 4]  for i, packet in enumerate(data):
+  (Missing param: 'iter_var')
+  [line 6]  packet_value = packet & 0xFF  # Extract lower 8 bits
+  Compute: packet & 0xFF  # Extract lower 8 bits, where packet=68 (an unknown source) = 68
+  [line 7]  position_factor = (i % 4) + 1  # Position weighting (1-4)
+  Compute: (i % 4) + 1  # Position weighting (1-4), where i=1 (an unknown source) = 2
+  [line 4]  for i, packet in enumerate(data):
+  (Missing param: 'iter_var')
+  [line 6]  packet_value = packet & 0xFF  # Extract lower 8 bits
+  Compute: packet & 0xFF  # Extract lower 8 bits, where packet=73 (an unknown source) = 73
+  [line 7]  position_factor = (i % 4) + 1  # Position weighting (1-4)
+  Compute: (i % 4) + 1  # Position weighting (1-4), where i=2 (an unknown source) = 3
+  [line 4]  for i, packet in enumerate(data):
+  (Missing param: 'iter_var')
+  [line 6]  packet_value = packet & 0xFF  # Extract lower 8 bits
+  Compute: packet & 0xFF  # Extract lower 8 bits, where packet=70 (an unknown source) = 70
+  [line 7]  position_factor = (i % 4) + 1  # Position weighting (1-4)
+  Compute: (i % 4) + 1  # Position weighting (1-4), where i=3 (an unknown source) = 4
+  [line 4]  for i, packet in enumerate(data):
+  Loop End: Iteration finished
+  [line 10]  return result
+  Return: result=268 (defined at [line 3])
+Function calculate_network_checksum returns 268
+
+Answer: checksum = 268 (last updated on defined at [line 53])

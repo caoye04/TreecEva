@@ -1,0 +1,193 @@
+Target: Find the value of variable final_priority after [line 88] executes
+
+[line 38]  def calculate_priority(packets, target_protocols):
+Enter function calculate_priority: packets=[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...], target_protocols=['TCP', 'UDP', 'ICMP']
+  [line 40]  valid_packets = []
+  Compute: [] = []
+  [line 41]  invalid_checksum = 0
+  Assign: invalid_checksum = 0
+  [line 44]  for packet in packets:
+  Loop Start: packet takes its first value {protocol: 'TCP', data: 'HELLO', checksum: 500, ...}
+  [line 46]  if packet['size'] < 10 or packet['ttl'] <= 0:
+  Condition: True, entering 'if' block
+  [line 49]  if validate_packet(packet, target_protocols):
+  Condition: True, entering 'if' block
+  [line 9]  if packet['protocol'] not in protocols:
+  Condition: True, entering 'if' block
+  [line 11]  checksum = calculate_checksum(packet)
+  Call function calculate_checksum(packet={protocol: 'TCP', data: 'HELLO', checksum: 500, ...} (defined at [line 44]))
+  [line 1]  def calculate_checksum(packet):
+  Enter function calculate_checksum: packet={protocol: 'TCP', data: 'HELLO', checksum: 500, ...} (packet defined at [line 44])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 4]  multiplier = len(packet['data']) % 4 + 1
+    Compute: len(packet['data']) % 4 + 1, where packet={protocol: 'TCP', data: 'HELLO', checksum: 500, ...} (parameter packet defined at [line 44]) = 2
+    [line 5]  return (base * multiplier) % 256
+    Return: (base * multiplier) % 256
+  Function calculate_checksum returns 232
+  [line 12]  return packet['checksum'] == checksum
+  Return: packet['checksum'] == checksum
+  [line 52]  invalid_checksum += 1
+  Update: invalid_checksum changed from ? (defined at defined at [line 41]) to ?+1 = 1
+  [line 44]  for packet in packets:
+  Loop Iteration: packet is now {protocol: 'UDP', data: 'WORLD', checksum: 25, ...} (iteration 2)
+  [line 46]  if packet['size'] < 10 or packet['ttl'] <= 0:
+  Condition: True, entering 'if' block
+  [line 49]  if validate_packet(packet, target_protocols):
+  Condition: True, entering 'if' block
+  [line 9]  if packet['protocol'] not in protocols:
+  Condition: True, entering 'if' block
+  [line 11]  checksum = calculate_checksum(packet)
+  Call function calculate_checksum(packet={protocol: 'UDP', data: 'WORLD', checksum: 25, ...} (defined at [line 44]))
+  [line 1]  def calculate_checksum(packet):
+  Enter function calculate_checksum: packet={protocol: 'UDP', data: 'WORLD', checksum: 25, ...} (packet defined at [line 44])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 4]  multiplier = len(packet['data']) % 4 + 1
+    Compute: len(packet['data']) % 4 + 1, where packet={protocol: 'UDP', data: 'WORLD', checksum: 25, ...} (parameter packet defined at [line 44]) = 2
+    [line 5]  return (base * multiplier) % 256
+    Return: (base * multiplier) % 256
+  Function calculate_checksum returns 16
+  [line 12]  return packet['checksum'] == checksum
+  Return: packet['checksum'] == checksum
+  [line 52]  invalid_checksum += 1
+  Update: invalid_checksum changed from ? (defined at defined at [line 52]) to ?+1 = 2
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+  [line 1]  def calculate_checksum(packet):
+  Enter function calculate_checksum: packet={protocol: 'ICMP', data: 'PING!', checksum: 125, ...} (packet defined at [line 44])
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+  Function calculate_checksum returns 158
+... [Line 44] repeats 3 more times ...
+... [Line 44] repeats 3 more times ...
+  [line 1]  def calculate_checksum(packet):
+  Enter function calculate_checksum: packet={protocol: 'TCP', data: 'TEST1', checksum: 20, ...} (packet defined at [line 44])
+  Function calculate_checksum returns 226
+  [line 44]  for packet in packets:
+  Loop Iteration: packet is now {protocol: 'UDP', data: 'DATA!', checksum: 125, ...} (iteration 6)
+  [line 46]  if packet['size'] < 10 or packet['ttl'] <= 0:
+  Condition: True, entering 'if' block
+  [line 49]  if validate_packet(packet, target_protocols):
+  Condition: True, entering 'if' block
+  [line 9]  if packet['protocol'] not in protocols:
+  Condition: True, entering 'if' block
+  [line 11]  checksum = calculate_checksum(packet)
+  Call function calculate_checksum(packet={protocol: 'UDP', data: 'DATA!', checksum: 125, ...} (defined at [line 44]))
+  [line 1]  def calculate_checksum(packet):
+  Enter function calculate_checksum: packet={protocol: 'UDP', data: 'DATA!', checksum: 125, ...} (packet defined at [line 44])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 3]  base = sum(ord(c) for c in packet['data'][:5])
+    Call function sum(ord(c) for c in packet['data'][:5])
+    [line 4]  multiplier = len(packet['data']) % 4 + 1
+    Compute: len(packet['data']) % 4 + 1, where packet={protocol: 'UDP', data: 'DATA!', checksum: 125, ...} (parameter packet defined at [line 44]) = 2
+    [line 5]  return (base * multiplier) % 256
+    Return: (base * multiplier) % 256
+  Function calculate_checksum returns 118
+  [line 12]  return packet['checksum'] == checksum
+  Return: packet['checksum'] == checksum
+  [line 52]  invalid_checksum += 1
+  Update: invalid_checksum changed from ? (defined at defined at [line 52]) to ?+1 = 6
+  [line 44]  for packet in packets:
+  Loop End: Iteration finished
+  [line 55]  protocol_counts, _ = analyze_traffic(valid_packets, target_protocols)
+  (Missing param: 'func_name')
+  [line 16]  protocol_counts = {p: 0 for p in target_protocols}
+  Compute: {p: 0 for p in target_protocols}, where p='TCP' (an unknown source), target_protocols=['TCP', 'UDP', 'ICMP'] (parameter target_protocols) = ?
+  [line 17]  total_size = 0
+  Assign: total_size = 0
+  [line 18]  for packet in packets:
+  Loop Start: packet takes its first value ?
+  [line 24]  traffic_density = total_size / max(1, sum(protocol_counts.values()))
+  Compute: total_size / max(1, sum(protocol_counts.values())), where total_size=0 (defined at [line 17]), protocol_counts={TCP: 0, UDP: 0, ICMP: 0} (defined at [line 16]) = 0.0
+  [line 25]  return protocol_counts, traffic_density
+  Return: protocol_counts, traffic_density
+  [line 56]  priorities = extract_priorities(valid_packets)
+  Call function extract_priorities(valid_packets=[] (defined at [line 40]))
+  [line 27]  def extract_priorities(packets, valid_only=True):
+  Enter function extract_priorities: packets=[] (valid_packets defined at [line 40]), valid_only=True
+    [line 29]  priorities = []
+    Compute: [] = []
+    [line 30]  for packet in packets:
+    Loop Start: packet takes its first value ?
+    [line 36]  return priorities
+    Return: priorities=[] (defined at [line 29])
+  Function extract_priorities returns []
+  [line 59]  weights = {'TCP': 2, 'UDP': 1, 'ICMP': 3}
+  Compute: {'TCP': 2, 'UDP': 1, 'ICMP': 3} = {TCP: 2, UDP: 1, ICMP: 3}
+  [line 60]  protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  Call function sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  [line 60]  protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  Call function sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  [line 60]  protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  Call function sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  [line 60]  protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  Call function sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  [line 60]  protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  Call function sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+  [line 63]  if priorities:
+  Condition: True, entering 'if' block
+  [line 68]  avg_priority = 0
+  Assign: avg_priority = 0
+  [line 76]  base_score = protocol_score * 5
+  Compute: protocol_score * 5, where protocol_score=0 (defined at [line 60]) = 0
+  [line 77]  priority_factor = max(1, avg_priority / 10)
+  Call function max(1, avg_priority / 10)
+  [line 78]  security_adjustment = min(invalid_checksum, 5) * 3
+  Compute: min(invalid_checksum, 5) * 3, where invalid_checksum=6 (defined at [line 52]) = 15
+  [line 81]  ttl_values = [p['ttl'] for p in valid_packets]
+  Compute: [p['ttl'] for p in valid_packets], where valid_packets=[] (defined at [line 40]) = []
+  [line 82]  if ttl_values:
+  Condition: True, entering 'if' block
+  [line 88]  final_priority = int(base_score * priority_factor) - security_adjustment
+  Compute: int(base_score * priority_factor) - security_adjustment, where base_score=0 (defined at [line 76]), priority_factor=1 (defined at [line 77]), security_adjustment=15 (defined at [line 78]) = -15
+  [line 90]  return final_priority
+  Return: final_priority=-15 (defined at [line 88])
+Function calculate_priority returns -15
+
+Answer: final_priority = -15 (last updated on defined at [line 88])

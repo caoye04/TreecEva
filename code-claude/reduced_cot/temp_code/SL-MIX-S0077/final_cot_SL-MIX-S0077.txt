@@ -1,0 +1,128 @@
+Target: Find the value of variable active_mutations after [line 59] executes
+
+[line 3]  mutation_map = {}
+Compute: {} = {}
+[line 4]  potential_sites = {i for i in range(len(sequence)) if sequence[i] in 'ACTG'}
+Compute: {i for i in range(len(sequence)) if sequence[i] in 'ACTG'}, where i=0 (an unknown source), sequence='ACGTACGTACGTACGTACGT' (an unknown source) = ?
+[line 5]  decoy_sites = {i for i in range(len(sequence)) if i % 7 == 0}
+Compute: {i for i in range(len(sequence)) if i % 7 == 0}, where i=0 (an unknown source), sequence='ACGTACGTACGTACGTACGT' (an unknown source) = ?
+[line 9]  for i in potential_sites:
+Loop Start: i takes its first value 0
+[line 10]  base_score = (i * 3) % 10 / 10
+Compute: (i * 3) % 10 / 10, where i=0 (defined at [line 9]) = 0.0
+[line 11]  if i in decoy_sites:
+Condition: True, entering 'if' block
+[line 13]  mutation_map[i] = base_score * 1.5
+(Missing param: 'result')
+[line 14]  if base_score > 0.7:
+Condition: True, entering 'if' block
+[line 9]  for i in potential_sites:
+Loop Iteration: i is now 1 (iteration 2)
+[line 10]  base_score = (i * 3) % 10 / 10
+Compute: (i * 3) % 10 / 10, where i=1 (defined at [line 9]) = 0.3
+[line 11]  if i in decoy_sites:
+Condition: True, entering 'if' block
+[line 17]  mutation_map[i] = base_score
+(Missing param: 'result')
+[line 18]  if base_score > threshold:
+Condition: True, entering 'if' block
+... [Line 9] repeats 17 more times ...
+... [Line 9] repeats 17 more times ...
+... [Line 9] repeats 17 more times ...
+... [Line 9] repeats 17 more times ...
+... [Line 9] repeats 17 more times ...
+[line 9]  for i in potential_sites:
+Loop Iteration: i is now 19 (iteration 20)
+[line 10]  base_score = (i * 3) % 10 / 10
+Compute: (i * 3) % 10 / 10, where i=19 (defined at [line 9]) = 0.7
+[line 11]  if i in decoy_sites:
+Condition: True, entering 'if' block
+[line 17]  mutation_map[i] = base_score
+(Missing param: 'result')
+[line 18]  if base_score > threshold:
+Condition: True, entering 'if' block
+[line 9]  for i in potential_sites:
+Loop End: Iteration finished
+[line 23]  if depth > 2 or not scores:
+Condition: True, entering 'if' block
+[line 25]  if sum(scores) / len(scores) < 0.6:
+Condition: True, entering 'if' block
+[line 27]  return apply_recursive_filter(scores, depth + 1)
+Return: apply_recursive_filter(scores, depth + 1)
+[line 23]  if depth > 2 or not scores:
+Condition: True, entering 'if' block
+[line 25]  if sum(scores) / len(scores) < 0.6:
+Condition: True, entering 'if' block
+[line 27]  return apply_recursive_filter(scores, depth + 1)
+Return: apply_recursive_filter(scores, depth + 1)
+[line 23]  if depth > 2 or not scores:
+Condition: True, entering 'if' block
+[line 25]  if sum(scores) / len(scores) < 0.6:
+Condition: True, entering 'if' block
+[line 27]  return apply_recursive_filter(scores, depth + 1)
+Return: apply_recursive_filter(scores, depth + 1)
+[line 23]  if depth > 2 or not scores:
+Condition: True, entering 'if' block
+[line 24]  return scores
+Return: scores=[0.6, 0.9, 0.5, 0.8, 0.4, ...] (an unknown source)
+[line 32]  valid_mutation_sites = set()
+Call function set()
+[line 33]  for site, score in mutation_map.items():
+(Missing param: 'iter_var')
+[line 35]  if site % 3 == 0 and score > 0.4:
+Condition: True, entering 'if' block
+[line 37]  elif site % 5 == 0 and score < 0.8:
+'elif' Condition: True, entering block
+[line 33]  for site, score in mutation_map.items():
+(Missing param: 'iter_var')
+[line 35]  if site % 3 == 0 and score > 0.4:
+Condition: True, entering 'if' block
+[line 37]  elif site % 5 == 0 and score < 0.8:
+'elif' Condition: True, entering block
+... [Line 33] repeats 17 more times ...
+... [Line 33] repeats 17 more times ...
+... [Line 33] repeats 17 more times ...
+[line 33]  for site, score in mutation_map.items():
+(Missing param: 'iter_var')
+[line 35]  if site % 3 == 0 and score > 0.4:
+Condition: True, entering 'if' block
+[line 37]  elif site % 5 == 0 and score < 0.8:
+'elif' Condition: True, entering block
+[line 33]  for site, score in mutation_map.items():
+Loop End: Iteration finished
+[line 46]  viable_mutations = set()
+Call function set()
+[line 47]  for site in valid_mutation_sites:
+Loop Start: site takes its first value 0
+[line 49]  if site < len(sequence) - 2:
+Condition: True, entering 'if' block
+[line 50]  sub_seq = sequence[site:site+3]
+Compute: sequence[site:site+3], where sequence='ACGTACGTACGTACGTACGT' (an unknown source), site=0 (defined at [line 47]) = 'ACG'
+[line 51]  if 'A' in sub_seq or 'T' in sub_seq:
+Condition: True, entering 'if' block
+[line 47]  for site in valid_mutation_sites:
+Loop Iteration: site is now 3 (iteration 2)
+[line 49]  if site < len(sequence) - 2:
+Condition: True, entering 'if' block
+[line 50]  sub_seq = sequence[site:site+3]
+Compute: sequence[site:site+3], where sequence='ACGTACGTACGTACGTACGT' (an unknown source), site=3 (defined at [line 47]) = 'TAC'
+[line 51]  if 'A' in sub_seq or 'T' in sub_seq:
+Condition: True, entering 'if' block
+... [Line 47] repeats 5 more times ...
+... [Line 47] repeats 5 more times ...
+... [Line 47] repeats 5 more times ...
+... [Line 47] repeats 5 more times ...
+[line 47]  for site in valid_mutation_sites:
+Loop Iteration: site is now 15 (iteration 8)
+[line 49]  if site < len(sequence) - 2:
+Condition: True, entering 'if' block
+[line 50]  sub_seq = sequence[site:site+3]
+Compute: sequence[site:site+3], where sequence='ACGTACGTACGTACGTACGT' (an unknown source), site=15 (defined at [line 47]) = 'TAC'
+[line 51]  if 'A' in sub_seq or 'T' in sub_seq:
+Condition: True, entering 'if' block
+[line 47]  for site in valid_mutation_sites:
+Loop End: Iteration finished
+[line 59]  active_mutations = len(viable_mutations)
+Call function len(viable_mutations={0, 3, 5, 6, 9, ...} (defined at [line 46]))
+
+Answer: active_mutations = 8 (last updated on defined at [line 59])

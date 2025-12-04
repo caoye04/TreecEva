@@ -1,0 +1,49 @@
+63
+priority_score
+---
+PARAM_MAPPING {'text': {'actual_var': 'document_text', 'value': "The artificial intelligence revolution has transformed multiple industries. Companies are investing in machine learning solutions to improve efficiency. Data science expertise is increasingly valuable in today's job market."}, 'keywords': {'actual_var': 'keyword_weights.keys()', 'value': 'keyword_weights.keys()'}}
+FUNCTION_ENTER 3 analyze_document def analyze_document(text, keywords):
+3 ['text', 'keywords'] [{'_type': 'str', '_value': "The artificial intelligence revolution has transformed multiple industries. Companies are investing in machine learning solutions to improve efficiency. Data science expertise is increasingly valuable in today's job market."}, {'_type': 'unknown', '_repr': "dict_keys(['artificial', 'intelligence', 'machine', 'learning', 'data', 'science', 'algorithms', 'neural', 'networks'])"}]
+30 return stats
+30 ['stats'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}']
+FUNCTION_RETURN 30 analyze_document {'_type': 'dict', '_items': {'char_count': {'_type': 'int', '_value': 223}, 'word_count': {'_type': 'int', '_value': 28}, 'unique_words': {'_type': 'int', '_value': 27}, 'keyword_matches': {'_type': 'dict', '_items': {'artificial': {'_type': 'int', '_value': 1}, 'intelligence': {'_type': 'int', '_value': 1}, 'machine': {'_type': 'int', '_value': 1}, 'learning': {'_type': 'int', '_value': 1}, 'data': {'_type': 'int', '_value': 1}}, '_len': 9}, 'avg_word_len': {'_type': 'float', '_value': 7.0}}, '_len': 7}
+40 return 85.75
+40 ['doc_stats'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}']
+PARAM_MAPPING {'doc_stats': {'actual_var': 'document_stats', 'value': {'char_count': 223, 'word_count': 28, 'unique_words': 27, 'keyword_matches': {'artificial': 1, 'intelligence': 1, 'machine': 1, 'learning': 1, 'data': 1, 'science': 1, 'algorithms': 0, 'neural': 0, 'networks': 0}, 'avg_word_len': 7.0, 'sentence_count': 3, 'complexity_factor': 0.21}}, 'keyword_weights': {'actual_var': 'keyword_weights', 'value': {'artificial': 3.5, 'intelligence': 4.0, 'machine': 2.5, 'learning': 3.0, 'data': 3.5, 'science': 2.0, 'algorithms': 2.5, 'neural': 4.5, 'networks': 3.0}}}
+FUNCTION_ENTER 42 calculate_priority def calculate_priority(doc_stats, keyword_weights):
+42 ['doc_stats', 'keyword_weights'] [{'_type': 'dict', '_items': {'char_count': {'_type': 'int', '_value': 223}, 'word_count': {'_type': 'int', '_value': 28}, 'unique_words': {'_type': 'int', '_value': 27}, 'keyword_matches': {'_type': 'dict', '_items': {'artificial': {'_type': 'int', '_value': 1}, 'intelligence': {'_type': 'int', '_value': 1}, 'machine': {'_type': 'int', '_value': 1}, 'learning': {'_type': 'int', '_value': 1}, 'data': {'_type': 'int', '_value': 1}}, '_len': 9}, 'avg_word_len': {'_type': 'float', '_value': 7.0}}, '_len': 7}, {'_type': 'dict', '_items': {'artificial': {'_type': 'float', '_value': 3.5}, 'intelligence': {'_type': 'float', '_value': 4.0}, 'machine': {'_type': 'float', '_value': 2.5}, 'learning': {'_type': 'float', '_value': 3.0}, 'data': {'_type': 'float', '_value': 3.5}}, '_len': 9}]
+44 matches = doc_stats['keyword_matches']
+44 ['doc_stats', 'keyword_weights', 'matches'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}', '{artificial: 3.5, intelligence: 4.0, machine: 2.5, ...}', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+47 base_priority = 50
+47 ['doc_stats', 'keyword_weights', 'base_priority', 'matches'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}', '{artificial: 3.5, intelligence: 4.0, machine: 2.5, ...}', '50', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['matches'] ['{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'artificial'", '3.5', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'intelligence'", '4.0', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'machine'", '2.5', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'learning'", '3.0', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'data'", '3.5', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'science'", '2.0', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'algorithms'", '2.5', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'neural'", '4.5', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'networks'", '3.0', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+50 weighted_matches = sum(matches.get(kw, 0) * weight for kw, weight in keyword_weights.items())
+50 ['kw', 'weight', 'matches'] ["'networks'", '3.0', '{artificial: 1, intelligence: 1, machine: 1, ...}']
+53 normalization_factor = 1000 / max(100, doc_stats['char_count'])
+53 ['doc_stats', 'base_priority', 'weighted_matches', 'normalization_factor'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}', '50', '18.5', '4.484304932735426']
+63 priority_score = base_priority + (weighted_matches * normalization_factor)
+63 ['doc_stats', 'base_priority', 'weighted_matches', 'normalization_factor', 'priority_score'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}', '50', '18.5', '4.484304932735426', '132.9596412556054']
+66 if doc_stats['unique_words'] > 100:
+66 ['doc_stats', 'priority_score'] ['{char_count: 223, word_count: 28, unique_words: 27, ...}', '132.9596412556054']
+77 return round(priority_score, 2)
+77 ['priority_score'] ['132.9596412556054']
+FUNCTION_RETURN 77 calculate_priority {'_type': 'float', '_value': 132.96}

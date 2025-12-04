@@ -1,0 +1,129 @@
+65
+result
+---
+10 student_scores = {'quiz': 85, 'midterm': 72, 'project': 95, 'participation': 88, 'final': 79}
+10 ['student_scores'] ['{quiz: 85, midterm: 72, project: 95, ...}']
+13 weights = {'quiz': 0.15, 'midterm': 0.25, 'project': 0.2, 'participation': 0.1, 'final': 0.3}
+13 ['student_scores', 'weights'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}']
+16 extra_credit = {'quiz': 2, 'midterm': 0, 'project': 5, 'participation': 0, 'final': 3}
+16 ['student_scores', 'weights', 'extra_credit'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '{quiz: 2, midterm: 0, project: 5, ...}']
+20 process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+20 ['student_scores', 'weights', 'extra_credit'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '{quiz: 2, midterm: 0, project: 5, ...}']
+21 adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+21 ['student_scores', 'weights', 'extra_credit'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '{quiz: 2, midterm: 0, project: 5, ...}']
+64 result = calculate_final_score(student_scores, weights)
+64 ['student_scores', 'weights', 'extra_credit'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '{quiz: 2, midterm: 0, project: 5, ...}']
+PARAM_MAPPING {'scores': {'actual_var': 'student_scores', 'value': {'quiz': 85, 'midterm': 72, 'project': 95, 'participation': 88, 'final': 79}}, 'weights': {'actual_var': 'weights', 'value': {'quiz': 0.15, 'midterm': 0.25, 'project': 0.2, 'participation': 0.1, 'final': 0.3}}}
+FUNCTION_ENTER 23 calculate_final_score def calculate_final_score(scores, weights):
+23 ['scores', 'weights'] [{'_type': 'dict', '_items': {'quiz': {'_type': 'int', '_value': 85}, 'midterm': {'_type': 'int', '_value': 72}, 'project': {'_type': 'int', '_value': 95}, 'participation': {'_type': 'int', '_value': 88}, 'final': {'_type': 'int', '_value': 79}}, '_len': 5}, {'_type': 'dict', '_items': {'quiz': {'_type': 'float', '_value': 0.15}, 'midterm': {'_type': 'float', '_value': 0.25}, 'project': {'_type': 'float', '_value': 0.2}, 'participation': {'_type': 'float', '_value': 0.1}, 'final': {'_type': 'float', '_value': 0.3}}, '_len': 5}]
+25 weighted_sum = 0
+25 ['scores', 'weights', 'weighted_sum'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0']
+26 weight_total = 0
+26 ['scores', 'weights', 'weighted_sum', 'weight_total'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0', '0']
+33 for component in scores:
+33 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0', '0', "'quiz'"]
+35 processed_score = process_score(scores[component], component)
+35 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0', '0', "'quiz'"]
+20 process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+20 ['score', 'component'] ['85', "'quiz'"]
+38 norm_weight = normalize_weight(weights[component])
+38 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0', '0', "'quiz'", '85']
+7 return max(0, min(1, weight))
+7 ['weight'] ['0.15']
+41 adjusted_weight = adjust_weight(norm_weight, component)
+41 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0', '0', "'quiz'", '85', '0.15']
+21 adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+21 ['w', 'component'] ['0.15', "'quiz'"]
+44 if component in extra_credit:
+44 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '0', '0', "'quiz'", '85', '0.15', '0.15']
+48 weighted_sum += processed_score * adjusted_weight
+48 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0', "'quiz'", '85', '0.15', '0.15']
+49 weight_total += adjusted_weight
+49 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0.15', "'quiz'", '85', '0.15', '0.15']
+33 for component in scores:
+33 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0.15', "'midterm'", '85', '0.15', '0.15']
+35 processed_score = process_score(scores[component], component)
+35 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0.15', "'midterm'", '85', '0.15', '0.15']
+20 process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+20 ['score', 'component'] ['72', "'midterm'"]
+38 norm_weight = normalize_weight(weights[component])
+38 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0.15', "'midterm'", '72', '0.15', '0.15']
+7 return max(0, min(1, weight))
+7 ['weight'] ['0.25']
+41 adjusted_weight = adjust_weight(norm_weight, component)
+41 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0.15', "'midterm'", '72', '0.25', '0.15']
+21 adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+21 ['w', 'component'] ['0.25', "'midterm'"]
+44 if component in extra_credit:
+44 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '12.75', '0.15', "'midterm'", '72', '0.25', '0.25']
+48 weighted_sum += processed_score * adjusted_weight
+48 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.15', "'midterm'", '72', '0.25', '0.25']
+49 weight_total += adjusted_weight
+49 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.4', "'midterm'", '72', '0.25', '0.25']
+33 for component in scores:
+33 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.4', "'project'", '72', '0.25', '0.25']
+35 processed_score = process_score(scores[component], component)
+35 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.4', "'project'", '72', '0.25', '0.25']
+20 process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+20 ['score', 'component'] ['95', "'project'"]
+38 norm_weight = normalize_weight(weights[component])
+38 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.4', "'project'", '95', '0.25', '0.25']
+7 return max(0, min(1, weight))
+7 ['weight'] ['0.2']
+41 adjusted_weight = adjust_weight(norm_weight, component)
+41 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.4', "'project'", '95', '0.2', '0.25']
+21 adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+21 ['w', 'component'] ['0.2', "'project'"]
+44 if component in extra_credit:
+44 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '30.75', '0.4', "'project'", '95', '0.2', '0.2']
+48 weighted_sum += processed_score * adjusted_weight
+48 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.4', "'project'", '95', '0.2', '0.2']
+49 weight_total += adjusted_weight
+49 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.6000000000000001', "'project'", '95', '0.2', '0.2']
+33 for component in scores:
+33 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.6000000000000001', "'participation'", '95', '0.2', '0.2']
+35 processed_score = process_score(scores[component], component)
+35 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.6000000000000001', "'participation'", '95', '0.2', '0.2']
+20 process_score = lambda score, component: score if component != 'participation' else min(score, 100)
+20 ['score', 'component'] ['88', "'participation'"]
+38 norm_weight = normalize_weight(weights[component])
+38 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.6000000000000001', "'participation'", '88', '0.2', '0.2']
+7 return max(0, min(1, weight))
+7 ['weight'] ['0.1']
+41 adjusted_weight = adjust_weight(norm_weight, component)
+41 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.6000000000000001', "'participation'", '88', '0.1', '0.2']
+21 adjust_weight = lambda w, component: w * 1.05 if component == 'final' else w
+21 ['w', 'component'] ['0.1', "'participation'"]
+44 if component in extra_credit:
+44 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '49.75', '0.6000000000000001', "'participation'", '88', '0.1', '0.1']
+48 weighted_sum += processed_score * adjusted_weight
+48 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '58.55', '0.6000000000000001', "'participation'", '88', '0.1', '0.1']
+49 weight_total += adjusted_weight
+49 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '58.55', '0.7000000000000001', "'participation'", '88', '0.1', '0.1']
+33 for component in scores:
+33 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '58.55', '0.7000000000000001', "'final'", '88', '0.1', '0.1']
+35 processed_score = process_score(scores[component], component)
+35 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '58.55', '0.7000000000000001', "'final'", '88', '0.1', '0.1']
+38 norm_weight = normalize_weight(weights[component])
+38 ['scores', 'weights', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '{quiz: 0.15, midterm: 0.25, project: 0.2, ...}', '58.55', '0.7000000000000001', "'final'", '79', '0.1', '0.1']
+7 return max(0, min(1, weight))
+7 ['weight'] ['0.3']
+41 adjusted_weight = adjust_weight(norm_weight, component)
+41 ['scores', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'norm_weight', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '58.55', '0.7000000000000001', "'final'", '79', '0.3', '0.1']
+44 if component in extra_credit:
+44 ['scores', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '58.55', '0.7000000000000001', "'final'", '79', '0.315']
+48 weighted_sum += processed_score * adjusted_weight
+48 ['scores', 'weighted_sum', 'weight_total', 'component', 'processed_score', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '83.435', '0.7000000000000001', "'final'", '79', '0.315']
+49 weight_total += adjusted_weight
+49 ['scores', 'weighted_sum', 'weight_total', 'component', 'adjusted_weight'] ['{quiz: 85, midterm: 72, project: 95, ...}', '83.435', '1.0150000000000001', "'final'", '0.315']
+33 for component in scores:
+33 ['scores', 'weighted_sum', 'weight_total', 'component'] ['{quiz: 85, midterm: 72, project: 95, ...}', '83.435', '1.0150000000000001', "'final'"]
+55 if weight_total > 0:
+55 ['weighted_sum', 'weight_total'] ['83.435', '1.0150000000000001']
+56 final_score = weighted_sum / weight_total
+56 ['weighted_sum', 'weight_total', 'final_score'] ['83.435', '1.0150000000000001', '82.20197044334975']
+61 return round(final_score, 1)
+61 ['final_score'] ['82.20197044334975']
+FUNCTION_RETURN 61 calculate_final_score {'_type': 'float', '_value': 82.2}
+65 print(f"Result: {result}")
+65 ['result'] ['82.2']

@@ -1,0 +1,63 @@
+71
+priority_score
+---
+57 default_segments = ['general', 'promotional']
+57 ['customer_data', 'default_segments'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']"]
+58 segments = default_segments + (['premium'] if sum(customer_data.get('purchases', [])) > 1500 else [])
+58 ['customer_data', 'default_segments', 'segments'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']", "['general', 'promotional']"]
+61 for i, segment in enumerate(segments):
+61 ['customer_data', 'segments', 'i', 'segment'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']", '0', "'general'"]
+62 print(f"Segment {i+1}: {segment}")
+62 ['customer_data', 'segments', 'i', 'segment'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']", '0', "'general'"]
+61 for i, segment in enumerate(segments):
+61 ['customer_data', 'segments', 'i', 'segment'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']", '1', "'promotional'"]
+62 print(f"Segment {i+1}: {segment}")
+62 ['customer_data', 'segments', 'i', 'segment'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']", '1', "'promotional'"]
+61 for i, segment in enumerate(segments):
+61 ['customer_data', 'segments', 'i', 'segment'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", "['general', 'promotional']", '1', "'promotional'"]
+65 priority_score = calculate_priority(customer_data)
+65 ['customer_data'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}"]
+3 base_score = 100
+3 ['customer', 'base_score'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", '100']
+4 loyalty_years = customer.get('years', 0)
+4 ['customer', 'base_score', 'loyalty_years'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", '100', '4']
+5 purchase_history = customer.get('purchases', [])
+5 ['customer', 'base_score', 'loyalty_years', 'purchase_history'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", '100', '4', '[120, 250, 180, 350, 90]']
+6 support_tickets = customer.get('tickets', 0)
+6 ['customer', 'base_score', 'loyalty_years', 'purchase_history', 'support_tickets'] ["{name: 'Alex Johnson', years: 4, purchases: [120, 250, 180, 350, 90], ...}", '100', '4', '[120, 250, 180, 350, 90]', '2']
+9 loyalty_bonus = min(loyalty_years * 15, 75)
+9 ['base_score', 'loyalty_years', 'purchase_history', 'support_tickets', 'loyalty_bonus'] ['100', '4', '[120, 250, 180, 350, 90]', '2', '60']
+12 total_spent = sum(purchase_history)
+12 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990']
+13 premium_purchases = len([p for p in purchase_history if p > 200])
+13 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent', 'p'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990', '120']
+13 premium_purchases = len([p for p in purchase_history if p > 200])
+13 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent', 'p'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990', '250']
+13 premium_purchases = len([p for p in purchase_history if p > 200])
+13 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent', 'p'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990', '180']
+13 premium_purchases = len([p for p in purchase_history if p > 200])
+13 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent', 'p'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990', '350']
+13 premium_purchases = len([p for p in purchase_history if p > 200])
+13 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent', 'p'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990', '90']
+13 premium_purchases = len([p for p in purchase_history if p > 200])
+13 ['base_score', 'purchase_history', 'support_tickets', 'loyalty_bonus', 'total_spent', 'premium_purchases'] ['100', '[120, 250, 180, 350, 90]', '2', '60', '990', '2']
+14 purchase_factor = total_spent / 1000 if total_spent > 0 else 0
+14 ['base_score', 'support_tickets', 'loyalty_bonus', 'total_spent', 'premium_purchases', 'purchase_factor'] ['100', '2', '60', '990', '2', '0.99']
+17 ticket_penalty = support_tickets * 5
+17 ['base_score', 'support_tickets', 'loyalty_bonus', 'premium_purchases', 'purchase_factor', 'ticket_penalty'] ['100', '2', '60', '2', '0.99', '10']
+27 raw_score = base_score + loyalty_bonus + (purchase_factor * 50)
+27 ['base_score', 'loyalty_bonus', 'premium_purchases', 'purchase_factor', 'ticket_penalty', 'raw_score'] ['100', '60', '2', '0.99', '10', '209.5']
+30 adjusted_score = raw_score - ticket_penalty
+30 ['premium_purchases', 'ticket_penalty', 'raw_score', 'adjusted_score'] ['2', '10', '209.5', '199.5']
+33 premium_bonus = premium_purchases * 15
+33 ['premium_purchases', 'adjusted_score', 'premium_bonus'] ['2', '199.5', '30']
+36 final_score = adjusted_score + premium_bonus
+36 ['adjusted_score', 'premium_bonus', 'final_score'] ['199.5', '30', '229.5']
+39 if final_score < 0:
+39 ['final_score'] ['229.5']
+41 elif final_score > 500:
+41 ['final_score'] ['229.5']
+44 return round(final_score)
+44 ['final_score'] ['229.5']
+71 print(f"Result: {priority_score}")
+71 ['priority_score'] ['230']

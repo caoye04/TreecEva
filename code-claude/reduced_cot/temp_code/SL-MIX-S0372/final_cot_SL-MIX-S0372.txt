@@ -1,0 +1,56 @@
+Target: Find the value of variable target_frequency after [line 66] executes
+
+[line 15]  frequency_bands = [0] * 8
+Compute: [0] * 8 = [0, 0, 0, 0, 0, ...]
+[line 16]  frequency_bands[0] = 0x45  # VHF-Low
+(Missing param: 'var')
+[line 17]  frequency_bands[1] = 0x89  # VHF-High
+(Missing param: 'var')
+[line 18]  frequency_bands[2] = 0xCD  # UHF
+(Missing param: 'var')
+[line 19]  frequency_bands[3] = 0xEF  # Satellite
+(Missing param: 'var')
+[line 20]  frequency_bands[4] = 0x78  # FM
+(Missing param: 'var')
+[line 21]  frequency_bands[5] = 0x12  # AM
+(Missing param: 'var')
+[line 22]  frequency_bands[6] = 0x34  # Shortwave
+(Missing param: 'var')
+[line 23]  frequency_bands[7] = 0xAB  # Emergency
+(Missing param: 'var')
+[line 33]  raw_signal = [0x12, 0x34, 0x56, 0x78]
+Compute: [0x12, 0x34, 0x56, 0x78] = [18, 52, 86, 120]
+[line 34]  signal_strength = compute_signal_strength(raw_signal)
+Call function compute_signal_strength(raw_signal=[18, 52, 86, 120] (defined at [line 33]))
+[line 6]  noise_factor = 3
+Assign: noise_factor = 3
+[line 7]  base_signal = sum([x & 0x0F for x in raw_input])
+Call function sum([x & 0x0F for x in raw_input])
+[line 8]  return (base_signal * noise_factor) >> 2
+Return: (base_signal * noise_factor) >> 2
+[line 37]  temperature = 25
+Assign: temperature = 25
+[line 38]  humidity = 65
+Assign: humidity = 65
+[line 39]  interference_level = (temperature > 30) * 5 + (humidity > 70) * 3
+Compute: (temperature > 30) * 5 + (humidity > 70) * 3, where temperature=25 (defined at [line 37]), humidity=65 (defined at [line 38]) = 0
+[line 42]  base_index = (signal_strength & 0x07)
+Compute: (signal_strength & 0x07), where signal_strength=15 (defined at [line 34]) = 7
+[line 43]  active_band = base_index
+Compute: base_index, where base_index=7 (defined at [line 42]) = 7
+[line 44]  if interference_level > 0:
+Condition: True, entering 'if' block
+[line 51]  if signal_quality["snr"] > 15:
+Condition: True, entering 'if' block
+[line 53]  if signal_quality["distortion"] < 0.05:
+Condition: True, entering 'if' block
+[line 55]  if signal_quality["bandwidth"] > 10000:
+Condition: True, entering 'if' block
+[line 59]  if processing_flags == 0x07:  # All flags set
+Condition: True, entering 'if' block
+[line 62]  if potential_band == len(frequency_bands):
+Condition: True, entering 'if' block
+[line 66]  target_frequency = frequency_bands[active_band] & 0xFF
+Compute: frequency_bands[active_band] & 0xFF, where frequency_bands=[69, 137, 205, 239, 120, ...] (defined at [line 15]), active_band=7 (defined at [line 43]) = 171
+
+Answer: target_frequency = 171 (last updated on defined at [line 66])

@@ -1,0 +1,47 @@
+Target: Find the value of variable total_discount after [line 71] executes
+
+[line 58]  original_price = 250
+Assign: original_price = 250
+[line 59]  loyalty_tier = 'Gold'
+Assign: loyalty_tier = 'Gold'
+[line 60]  years_member = 8
+Assign: years_member = 8
+[line 66]  total_discount = calculate_discount(original_price, loyalty_tier, years_member)
+Call function calculate_discount(original_price=250 (defined at [line 58]), loyalty_tier='Gold' (defined at [line 59]), years_member=8 (defined at [line 60]))
+[line 32]  base_discount = tier_discounts.get(tier.lower(), 0)
+(Missing param: 'func_name')
+[line 35]  loyalty_bonus = min(years * 0.5, 10)  # Cap at 10%
+Call function min(years * 0.5, 10)
+[line 3]  winter_months = [11, 12, 1, 2]
+Compute: [11, 12, 1, 2] = [11, 12, 1, 2]
+[line 4]  summer_months = [6, 7, 8]
+Compute: [6, 7, 8] = [6, 7, 8]
+[line 6]  if month in winter_months:
+Condition: True, entering 'if' block
+[line 8]  elif month in summer_months:
+'elif' Condition: True, entering block
+[line 11]  return 1.0
+Return: 1.0
+[line 13]  def calculate_base_points(price):
+Enter function calculate_base_points: price=250
+  [line 15]  if price < 50:
+  Condition: True, entering 'if' block
+  [line 17]  elif price < 100:
+  'elif' Condition: True, entering block
+  [line 20]  return price * 1.0
+  Return: price * 1.0
+Function calculate_base_points returns 250.0
+[line 48]  total_percentage = base_discount + loyalty_bonus
+Compute: base_discount + loyalty_bonus, where base_discount=15 (an unknown source), loyalty_bonus=4.0 (defined at [line 35]) = 19.0
+[line 49]  discount_amount = price * (total_percentage / 100)
+Compute: price * (total_percentage / 100), where price=250 (an unknown source), total_percentage=19.0 (defined at [line 48]) = 47.5
+[line 52]  max_discount = price * 0.3
+Compute: price * 0.3, where price=250 (an unknown source) = 75.0
+[line 53]  final_discount = discount_amount if discount_amount <= max_discount else max_discount
+Compute: discount_amount if discount_amount <= max_discount else max_discount, where discount_amount=47.5 (defined at [line 49]), max_discount=75.0 (defined at [line 52]) = 47.5
+[line 55]  return round(final_discount, 2)
+Return: round(final_discount, 2)
+[line 71]  print(f"Result: {total_discount}")
+Output: f"Result: {total_discount}"
+
+Answer: total_discount = 47.5 (last updated on defined at [line 66])

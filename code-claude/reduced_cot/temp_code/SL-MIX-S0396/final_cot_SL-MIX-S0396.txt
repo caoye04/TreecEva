@@ -1,0 +1,42 @@
+Target: Find the value of variable encrypted_value after [line 52] executes
+
+[line 26]  message = "Hello, World! This is a test message with 123 numbers."
+Assign: message = 'Hello, World! This is a test message with 123 numbers.'
+[line 29]  vowel_count, consonant_count, special_count, digit_count = process_text(message)
+(Missing param: 'func_name')
+[line 5]  char_freq = Counter(text.lower())
+Call function Counter(text.lower())
+[line 8]  vowels = 'aeiou'
+Assign: vowels = 'aeiou'
+[line 9]  consonants = 'bcdfghjklmnpqrstvwxyz'
+Assign: consonants = 'bcdfghjklmnpqrstvwxyz'
+[line 12]  vowel_sum = sum(char_freq[v] for v in vowels)
+Call function sum(char_freq[v] for v in vowels)
+[line 13]  consonant_sum = sum(char_freq[c] for c in consonants)
+Call function sum(char_freq[c] for c in consonants)
+[line 16]  special_chars = sum(1 for c in text if not c.isalnum())
+Call function sum(1 for c in text if not c.isalnum())
+[line 17]  digit_count = sum(1 for c in text if c.isdigit())
+Call function sum(1 for c in text if c.isdigit())
+[line 23]  return vowel_sum, consonant_sum, special_chars, digit_count
+Return: vowel_sum, consonant_sum, special_chars, digit_count
+[line 32]  base_value = vowel_count * 16 + consonant_count
+Compute: vowel_count * 16 + consonant_count, where vowel_count=13 (an unknown source), consonant_count=26 (an unknown source) = 234
+[line 35]  distractor_value = special_count * digit_count
+Compute: special_count * digit_count, where special_count=12 (an unknown source), digit_count=3 (defined at [line 17]) = 36
+[line 36]  if distractor_value > 20:
+Condition: True, entering 'if' block
+[line 42]  key = 0xA5  # Hexadecimal value (equals 165 in decimal)
+Assign: key = 165
+[line 43]  mask = 0xFF  # Hexadecimal value (equals 255 in decimal)
+Assign: mask = 255
+[line 46]  shift_amount = (special_count % 4) + 1
+Compute: (special_count % 4) + 1, where special_count=12 (an unknown source) = 1
+[line 47]  temp_shifted = base_value << shift_amount
+Compute: base_value << shift_amount, where base_value=234 (defined at [line 32]), shift_amount=1 (defined at [line 46]) = 468
+[line 48]  if temp_shifted > 1000:
+Condition: True, entering 'if' block
+[line 52]  encrypted_value = (base_value ^ key) & mask
+Compute: (base_value ^ key) & mask, where base_value=234 (defined at [line 32]), key=165 (defined at [line 42]), mask=255 (defined at [line 43]) = 79
+
+Answer: encrypted_value = 79 (last updated on defined at [line 52])

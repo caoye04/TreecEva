@@ -1,0 +1,51 @@
+Target: Find the value of variable target_temperature after [line 58] executes
+
+[line 42]  sensor_readings = [22.5, 23.1, 21.8, 24.2, 22.7, -15.0, 23.5]
+Compute: [22.5, 23.1, 21.8, 24.2, 22.7, -15.0, 23.5] = [22.5, 23.1, 21.8, 24.2, 22.7, ...]
+[line 45]  processed_data, ambient_adjustment, diagnostics = process_temperature_data(sensor_readings)
+(Missing param: 'func_name')
+[line 9]  filtered_data = []
+Compute: [] = []
+[line 15]  for i, reading in enumerate(sensor_data):
+(Missing param: 'iter_var')
+[line 17]  adjusted = reading - calibration_offset
+Compute: reading - calibration_offset = ?
+[line 24]  if -10 <= adjusted <= 45:
+Condition: True, entering 'if' block
+[line 15]  for i, reading in enumerate(sensor_data):
+(Missing param: 'iter_var')
+[line 17]  adjusted = reading - calibration_offset
+Compute: reading - calibration_offset, where reading=23.1 (an unknown source), calibration_offset=1.5 (an unknown source) = 21.6
+[line 24]  if -10 <= adjusted <= 45:
+Condition: True, entering 'if' block
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+... [Line 15] repeats 4 more times ...
+[line 15]  for i, reading in enumerate(sensor_data):
+(Missing param: 'iter_var')
+[line 17]  adjusted = reading - calibration_offset
+Compute: reading - calibration_offset, where reading=23.5 (an unknown source), calibration_offset=1.5 (an unknown source) = 22.0
+[line 24]  if -10 <= adjusted <= 45:
+Condition: True, entering 'if' block
+[line 15]  for i, reading in enumerate(sensor_data):
+Loop End: Iteration finished
+[line 30]  ambient_factor = calculate_ambient_adjustment(filtered_data[-3:] if len(filtered_data) >= 3 else filtered_data)
+Call function calculate_ambient_adjustment(filtered_data[-3:] if len(filtered_data) >= 3 else filtered_data)
+[line 3]  if len(readings) > 0:
+Condition: True, entering 'if' block
+[line 4]  return sum(readings) / len(readings)
+Return: sum(readings) / len(readings)
+[line 39]  return filtered_data, ambient_factor, diagnostic
+Return: filtered_data, ambient_factor, diagnostic
+[line 48]  baseline = sum(processed_data[:3]) / 3 if len(processed_data) >= 3 else 0
+Compute: sum(processed_data[:3]) / 3 if len(processed_data) >= 3 else 0, where processed_data=[21.0, 21.6, 20.3, 22.7, 21.2, ...] (an unknown source) = 20.96666666666667
+[line 51]  primary_factor = ambient_adjustment * 0.8
+Compute: ambient_adjustment * 0.8, where ambient_adjustment=21.96666666666667 (an unknown source) = 17.573333333333334
+[line 52]  secondary_factor = (max(processed_data) - min(processed_data)) / 2 if processed_data else 0
+Compute: (max(processed_data) - min(processed_data)) / 2 if processed_data else 0, where processed_data=[21.0, 21.6, 20.3, 22.7, 21.2, ...] (an unknown source) = 1.1999999999999993
+[line 55]  correction_factor = primary_factor - secondary_factor
+Compute: primary_factor - secondary_factor, where primary_factor=17.573333333333334 (defined at [line 51]), secondary_factor=1.1999999999999993 (defined at [line 52]) = 16.373333333333335
+[line 58]  target_temperature = baseline + correction_factor
+Compute: baseline + correction_factor, where baseline=20.96666666666667 (defined at [line 48]), correction_factor=16.373333333333335 (defined at [line 55]) = 37.34
+
+Answer: target_temperature = 37.34 (last updated on defined at [line 58])

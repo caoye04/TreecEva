@@ -1,0 +1,53 @@
+42
+common_elements
+---
+9 primary = [3, 8, 5, 12, 9, 4, 7]
+9 ['primary'] ['[3, 8, 5, 12, 9, ...]']
+12 secondary = [8, 5, 14, 4, 9, 2, 8]
+12 ['primary', 'secondary'] ['[3, 8, 5, 12, 9, ...]', '[8, 5, 14, 4, 9, ...]']
+15 set_a = set(process_data(primary))
+15 ['primary', 'secondary'] ['[3, 8, 5, 12, 9, ...]', '[8, 5, 14, 4, 9, ...]']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '3']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '8']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '5']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '12']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '9']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '4']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'x'] ['[3, 8, 5, 12, 9, ...]', '7']
+5 processed = [x * 2 if x % 2 == 0 else x - 1 for x in data_list]
+5 ['data_list', 'processed'] ['[3, 8, 5, 12, 9, ...]', '[2, 16, 4, 24, 8, ...]']
+6 return processed
+6 ['processed'] ['[2, 16, 4, 24, 8, ...]']
+16 set_b = set(secondary)
+16 ['secondary', 'set_a', 'set_b'] ['[8, 5, 14, 4, 9, ...]', '{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}']
+19 total_elements = len(set_a) + len(set_b)
+19 ['set_a', 'set_b', 'total_elements'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12']
+20 unique_elements = len(set_a.union(set_b))
+20 ['set_a', 'set_b', 'total_elements', 'unique_elements'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12', '9']
+23 overlap = set_a.intersection(set_b)
+23 ['set_a', 'set_b', 'total_elements', 'unique_elements', 'overlap'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12', '9', '{8, 2, 4}']
+26 threshold = 3
+26 ['set_a', 'set_b', 'total_elements', 'unique_elements', 'overlap', 'threshold'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12', '9', '{8, 2, 4}', '3']
+27 duplicate_factor = min(len(overlap), threshold)
+27 ['set_a', 'set_b', 'total_elements', 'unique_elements', 'overlap', 'threshold', 'duplicate_factor'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12', '9', '{8, 2, 4}', '3', '3']
+30 correction = 1 if len(set_a) > len(set_b) else 0
+30 ['set_a', 'set_b', 'total_elements', 'unique_elements', 'overlap', 'duplicate_factor', 'correction'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12', '9', '{8, 2, 4}', '3', '0']
+33 distinct_factor = unique_elements - total_elements + len(overlap)
+33 ['set_a', 'set_b', 'total_elements', 'unique_elements', 'overlap', 'duplicate_factor', 'correction', 'distinct_factor'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '12', '9', '{8, 2, 4}', '3', '0', '0']
+34 distinct_factor = max(0, distinct_factor)
+34 ['set_a', 'set_b', 'duplicate_factor', 'correction', 'distinct_factor'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '3', '0', '0']
+35 duplicate_count = duplicate_factor - distinct_factor
+35 ['set_a', 'set_b', 'duplicate_factor', 'correction', 'distinct_factor', 'duplicate_count'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '3', '0', '0', '3']
+36 duplicate_count = max(0, duplicate_count)
+36 ['set_a', 'set_b', 'correction', 'duplicate_count'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '0', '3']
+39 duplicates = duplicate_count + correction
+39 ['set_a', 'set_b', 'correction', 'duplicate_count', 'duplicates'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '0', '3', '3']
+42 common_elements = len(set_a.intersection(set_b)) - duplicates
+42 ['set_a', 'set_b', 'duplicates', 'common_elements'] ['{2, 4, 6, 8, 16, ...}', '{2, 4, 5, 8, 9, ...}', '3', '0']

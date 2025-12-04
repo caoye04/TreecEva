@@ -1,0 +1,37 @@
+29
+optimal_capacity
+---
+3 total_inventory = sum(inventory_levels)
+3 ['inventory_levels', 'storage_units', 'total_inventory'] ['[120, 85, 0, 210, 45]', '6', '460']
+4 avg_inventory = total_inventory / len(inventory_levels) if inventory_levels else 0
+4 ['inventory_levels', 'storage_units', 'total_inventory', 'avg_inventory'] ['[120, 85, 0, 210, 45]', '6', '460', '92.0']
+7 max_inventory = max(inventory_levels) if inventory_levels else 0
+7 ['inventory_levels', 'storage_units', 'total_inventory', 'avg_inventory', 'max_inventory'] ['[120, 85, 0, 210, 45]', '6', '460', '92.0', '210']
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 [] []
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 ['level'] ['120']
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 ['level'] ['85']
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 ['level'] ['0']
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 ['level'] ['210']
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 ['level'] ['45']
+11 utilized_units = sum(1 for level in inventory_levels if level > 0)
+11 ['level'] ['45']
+12 efficiency_factor = utilized_units / storage_units if storage_units > 0 else 0
+12 ['storage_units', 'total_inventory', 'avg_inventory', 'max_inventory', 'utilized_units', 'efficiency_factor'] ['6', '460', '92.0', '210', '4', '0.6666666666666666']
+18 base_multiplier = 1.5
+18 ['total_inventory', 'avg_inventory', 'max_inventory', 'efficiency_factor', 'base_multiplier'] ['460', '92.0', '210', '0.6666666666666666', '1.5']
+19 min_capacity = int(total_inventory * base_multiplier)
+19 ['total_inventory', 'avg_inventory', 'max_inventory', 'efficiency_factor', 'base_multiplier', 'min_capacity'] ['460', '92.0', '210', '0.6666666666666666', '1.5', '690']
+22 utilization_penalty = 100 if efficiency_factor < 0.5 else 0
+22 ['total_inventory', 'avg_inventory', 'max_inventory', 'efficiency_factor', 'min_capacity', 'utilization_penalty'] ['460', '92.0', '210', '0.6666666666666666', '690', '0']
+23 seasonal_adjustment = 50 if max_inventory > avg_inventory * 2 else 25
+23 ['total_inventory', 'avg_inventory', 'max_inventory', 'efficiency_factor', 'min_capacity', 'utilization_penalty', 'seasonal_adjustment'] ['460', '92.0', '210', '0.6666666666666666', '690', '0', '50']
+26 adjusted_capacity = int(total_inventory * (1 + efficiency_factor)) - utilization_penalty + seasonal_adjustment
+26 ['total_inventory', 'efficiency_factor', 'min_capacity', 'utilization_penalty', 'seasonal_adjustment', 'adjusted_capacity'] ['460', '0.6666666666666666', '690', '0', '50', '816']
+29 optimal_capacity = max(min_capacity, adjusted_capacity) if efficiency_factor > 0.75 else min_capacity
+29 ['efficiency_factor', 'min_capacity', 'adjusted_capacity', 'optimal_capacity'] ['0.6666666666666666', '690', '816', '690']

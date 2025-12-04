@@ -1,0 +1,100 @@
+Target: Find the value of variable priority_score after [line 75] executes
+
+[line 29]  def calculate_priority(customer_data, is_premium):
+Enter function calculate_priority: customer_data={purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}, is_premium=True
+  [line 31]  purchase_history = customer_data.get('purchase_history', [])
+  (Missing param: 'func_name')
+  [line 32]  browsing_history = customer_data.get('browsing_history', [])
+  (Missing param: 'func_name')
+  [line 34]  current_month = customer_data.get('current_month', 6)
+  (Missing param: 'func_name')
+  [line 37]  total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+  Call function sum(purchase.get('amount', 0) for purchase in purchase_history)
+  [line 37]  total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+  Call function sum(purchase.get('amount', 0) for purchase in purchase_history)
+  [line 37]  total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+  Call function sum(purchase.get('amount', 0) for purchase in purchase_history)
+  [line 37]  total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+  Call function sum(purchase.get('amount', 0) for purchase in purchase_history)
+  [line 37]  total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+  Call function sum(purchase.get('amount', 0) for purchase in purchase_history)
+  [line 37]  total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+  Call function sum(purchase.get('amount', 0) for purchase in purchase_history)
+  [line 41]  engagement_score = calculate_engagement(browsing_history)
+  Call function calculate_engagement(browsing_history=[{clicks: 15, purchased: True, cart_abandoned: False}, {clicks: 8, purchased: False, cart_abandoned: True}, {clicks: 22, purchased: True, cart_abandoned: False}] (an unknown source))
+  [line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+  Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)) = ?
+  [line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+  Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 15, purchased: True, cart_abandoned: False} (an unknown source) = ?
+  [line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+  Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 8, purchased: False, cart_abandoned: True} (an unknown source) = ?
+  [line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+  Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 22, purchased: True, cart_abandoned: False} (an unknown source) = ?
+  [line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+  Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 22, purchased: True, cart_abandoned: False} (an unknown source) = ?
+  [line 4]  conversion = sum(1 for h in history if h.get('purchased', False))
+  Call function sum(1 for h in history if h.get('purchased', False))
+  [line 5]  abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+  Call function sum(1 for h in history if h.get('cart_abandoned', False))
+  [line 8]  engagement = (click_rate * 100) + (conversion * 50) - (abandoned * 15)
+  Compute: (click_rate * 100) + (conversion * 50) - (abandoned * 15), where click_rate=15.0 (defined at [line 3]), conversion=2 (defined at [line 4]), abandoned=1 (defined at [line 5]) = 1585.0
+  [line 9]  return engagement
+  Return: engagement=1585.0 (defined at [line 8])
+  [line 43]  seasonal_engagement = apply_seasonal_boost(engagement_score, current_month)
+  Call function apply_seasonal_boost(engagement_score=1585.0 (defined at [line 41]), current_month=7 (an unknown source))
+  [line 11]  def apply_seasonal_boost(base_value, month):
+  Enter function apply_seasonal_boost: base_value=1585.0 (engagement_score defined at [line 41]), month=7
+    [line 27]  return base_value * seasonal_factors.get(month, 1.0)
+    Return: base_value * seasonal_factors.get(month, 1.0)
+  Function apply_seasonal_boost returns 1981.25
+  [line 46]  spending_weight = lambda x: 0.6 if x > 1000 else 0.4
+  Compute: lambda x: 0.6 if x > 1000 else 0.4 = ?
+  [line 47]  premium_multiplier = lambda status: 1.5 if status else 1.0
+  Compute: lambda status: 1.5 if status else 1.0 = ?
+  [line 48]  loyalty_factor = lambda years: min(years * 0.1, 0.5)
+  Compute: lambda years: min(years * 0.1, 0.5) = ?
+  [line 52]  loyalty_years = customer_data.get('years_active', 0)
+  (Missing param: 'func_name')
+  [line 55]  if engagement_score > 500 and seasonal_engagement > 600:
+  Condition: True, entering 'if' block
+  [line 63]  base_score = 50
+  Assign: base_score = 50
+  [line 64]  if len(recent_purchases) >= 3:
+  Condition: True, entering 'if' block
+  [line 65]  base_score += 15
+  Update: base_score changed from 50 (defined at defined at [line 63]) to 50+15 = 65
+  [line 67]  if total_spent > 500:
+  Condition: True, entering 'if' block
+  [line 68]  base_score += 10
+  Update: base_score changed from 65 (defined at defined at [line 65]) to 65+10 = 75
+  [line 71]  weighted_score = base_score * spending_weight(total_spent)
+  Compute: base_score * spending_weight(total_spent), where base_score=75 (defined at [line 68]), total_spent=565 (defined at [line 37]) = ?
+  [line 72]  loyalty_bonus = loyalty_factor(loyalty_years) * 100
+  Compute: loyalty_factor(loyalty_years) * 100, where loyalty_years=3 (an unknown source) = ?
+  [line 75]  priority_score = int(weighted_score + loyalty_bonus * premium_multiplier(is_premium))
+  Call function int(weighted_score + loyalty_bonus * premium_multiplier(is_premium))
+  [line 47]  premium_multiplier = lambda status: 1.5 if status else 1.0
+  Compute: lambda status: 1.5 if status else 1.0, where status=True (an unknown source) = ?
+  [line 27]  return base_value * seasonal_factors.get(month, 1.0)
+  Return: base_value * seasonal_factors.get(month, 1.0)
+  [line 81]  return priority_score
+  Return: priority_score=75 (defined at [line 75])
+Function calculate_priority returns 75
+[line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)) = ?
+[line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 15, purchased: True, cart_abandoned: False} (an unknown source) = ?
+[line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 8, purchased: False, cart_abandoned: True} (an unknown source) = ?
+[line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 22, purchased: True, cart_abandoned: False} (an unknown source) = ?
+[line 3]  click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+Compute: sum(h.get('clicks', 0) for h in history) / max(1, len(history)), where h={clicks: 22, purchased: True, cart_abandoned: False} (an unknown source) = ?
+[line 8]  engagement = (click_rate * 100) + (conversion * 50) - (abandoned * 15)
+Compute: (click_rate * 100) + (conversion * 50) - (abandoned * 15), where click_rate=15.0 (defined at [line 3]), conversion=2 (defined at [line 4]), abandoned=1 (defined at [line 5]) = 1585.0
+[line 9]  return engagement
+Return: engagement=1585.0 (defined at [line 8])
+[line 27]  return base_value * seasonal_factors.get(month, 1.0)
+Return: base_value * seasonal_factors.get(month, 1.0)
+
+Answer: priority_score = 75 (last updated on defined at [line 75])

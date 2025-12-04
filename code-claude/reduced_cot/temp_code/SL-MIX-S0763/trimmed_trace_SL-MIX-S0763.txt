@@ -1,0 +1,137 @@
+75
+priority_score
+---
+PARAM_MAPPING {'customer_data': {'actual_var': 'customer_data', 'value': {'purchase_history': [{'amount': 120, 'days_ago': 5}, {'amount': 85, 'days_ago': 12}, {'amount': 210, 'days_ago': 25}, {'amount': 150, 'days_ago': 45}], 'browsing_history': [{'clicks': 15, 'purchased': True, 'cart_abandoned': False}, {'clicks': 8, 'purchased': False, 'cart_abandoned': True}, {'clicks': 22, 'purchased': True, 'cart_abandoned': False}], 'support_tickets': [{'type': 'delivery', 'resolved': True}, {'type': 'product', 'resolved': False}], 'years_active': 3, 'current_month': 7}}, 'is_premium': {'actual_var': 'is_premium', 'value': True}}
+FUNCTION_ENTER 29 calculate_priority def calculate_priority(customer_data, is_premium):
+29 ['customer_data', 'is_premium'] [{'_type': 'dict', '_items': {'purchase_history': {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 120}, 'days_ago': {'_type': 'int', '_value': 5}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 85}, 'days_ago': {'_type': 'int', '_value': 12}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 210}, 'days_ago': {'_type': 'int', '_value': 25}}, '_len': 2}, {'_type': 'dict', '_items': {'amount': {'_type': 'int', '_value': 150}, 'days_ago': {'_type': 'int', '_value': 45}}, '_len': 2}], '_len': 4}, 'browsing_history': {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'clicks': {'_type': 'int', '_value': 15}, 'purchased': {'_type': 'bool', '_value': True}, 'cart_abandoned': {'_type': 'bool', '_value': False}}, '_len': 3}, {'_type': 'dict', '_items': {'clicks': {'_type': 'int', '_value': 8}, 'purchased': {'_type': 'bool', '_value': False}, 'cart_abandoned': {'_type': 'bool', '_value': True}}, '_len': 3}, {'_type': 'dict', '_items': {'clicks': {'_type': 'int', '_value': 22}, 'purchased': {'_type': 'bool', '_value': True}, 'cart_abandoned': {'_type': 'bool', '_value': False}}, '_len': 3}], '_len': 3}, 'support_tickets': {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'delivery'}, 'resolved': {'_type': 'bool', '_value': True}}, '_len': 2}, {'_type': 'dict', '_items': {'type': {'_type': 'str', '_value': 'product'}, 'resolved': {'_type': 'bool', '_value': False}}, '_len': 2}], '_len': 2}, 'years_active': {'_type': 'int', '_value': 3}, 'current_month': {'_type': 'int', '_value': 7}}, '_len': 5}, {'_type': 'bool', '_value': True}]
+31 purchase_history = customer_data.get('purchase_history', [])
+31 ['customer_data', 'is_premium', 'purchase_history'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '[{amount: 120, days_ago: 5}, {amount: 85, days_ago: 12}, {amount: 210, days_ago: 25}, {amount: 150, days_ago: 45}]']
+32 browsing_history = customer_data.get('browsing_history', [])
+32 ['customer_data', 'is_premium', 'purchase_history', 'browsing_history'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '[{amount: 120, days_ago: 5}, {amount: 85, days_ago: 12}, {amount: 210, days_ago: 25}, {amount: 150, days_ago: 45}]', '[{clicks: 15, purchased: True, cart_abandoned: False}, {clicks: 8, purchased: False, cart_abandoned: True}, {clicks: 22, purchased: True, cart_abandoned: False}]']
+34 current_month = customer_data.get('current_month', 6)
+34 ['customer_data', 'is_premium', 'purchase_history', 'browsing_history', 'current_month'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '[{amount: 120, days_ago: 5}, {amount: 85, days_ago: 12}, {amount: 210, days_ago: 25}, {amount: 150, days_ago: 45}]', '[{clicks: 15, purchased: True, cart_abandoned: False}, {clicks: 8, purchased: False, cart_abandoned: True}, {clicks: 22, purchased: True, cart_abandoned: False}]', '7']
+37 total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+37 [] []
+37 total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+37 ['purchase'] ['{amount: 120, days_ago: 5}']
+37 total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+37 ['purchase'] ['{amount: 85, days_ago: 12}']
+37 total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+37 ['purchase'] ['{amount: 210, days_ago: 25}']
+37 total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+37 ['purchase'] ['{amount: 150, days_ago: 45}']
+37 total_spent = sum(purchase.get('amount', 0) for purchase in purchase_history)
+37 ['purchase'] ['{amount: 150, days_ago: 45}']
+41 engagement_score = calculate_engagement(browsing_history)
+41 ['customer_data', 'is_premium', 'browsing_history', 'current_month', 'total_spent'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '[{clicks: 15, purchased: True, cart_abandoned: False}, {clicks: 8, purchased: False, cart_abandoned: True}, {clicks: 22, purchased: True, cart_abandoned: False}]', '7', '565']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 [] []
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 15, purchased: True, cart_abandoned: False}']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 8, purchased: False, cart_abandoned: True}']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 [] []
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 15, purchased: True, cart_abandoned: False}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 8, purchased: False, cart_abandoned: True}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 [] []
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 15, purchased: True, cart_abandoned: False}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 8, purchased: False, cart_abandoned: True}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+8 engagement = (click_rate * 100) + (conversion * 50) - (abandoned * 15)
+8 ['history', 'click_rate', 'conversion', 'abandoned', 'engagement'] ['[{clicks: 15, purchased: True, cart_abandoned: False}, {clicks: 8, purchased: False, cart_abandoned: True}, {clicks: 22, purchased: True, cart_abandoned: False}]', '15.0', '2', '1', '1585.0']
+9 return engagement
+9 ['history', 'click_rate', 'conversion', 'abandoned', 'engagement'] ['[{clicks: 15, purchased: True, cart_abandoned: False}, {clicks: 8, purchased: False, cart_abandoned: True}, {clicks: 22, purchased: True, cart_abandoned: False}]', '15.0', '2', '1', '1585.0']
+43 seasonal_engagement = apply_seasonal_boost(engagement_score, current_month)
+43 ['customer_data', 'is_premium', 'current_month', 'total_spent', 'engagement_score'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '7', '565', '1585.0']
+PARAM_MAPPING {'base_value': {'actual_var': 'engagement_score', 'value': 1585.0}, 'month': {'actual_var': 'current_month', 'value': 7}}
+FUNCTION_ENTER 11 apply_seasonal_boost def apply_seasonal_boost(base_value, month):
+11 ['base_value', 'month'] [{'_type': 'float', '_value': 1585.0}, {'_type': 'int', '_value': 7}]
+27 return base_value * seasonal_factors.get(month, 1.0)
+27 ['base_value', 'month', 'seasonal_factors'] ['1585.0', '7', '{1: 1.1, 2: 0.9, 3: 1.05, ...}']
+FUNCTION_RETURN 27 apply_seasonal_boost {'_type': 'float', '_value': 1981.25}
+46 spending_weight = lambda x: 0.6 if x > 1000 else 0.4
+46 ['customer_data', 'is_premium', 'total_spent', 'engagement_score', 'seasonal_engagement'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '565', '1585.0', '1981.25']
+47 premium_multiplier = lambda status: 1.5 if status else 1.0
+47 ['customer_data', 'is_premium', 'total_spent', 'engagement_score', 'seasonal_engagement'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '565', '1585.0', '1981.25']
+48 loyalty_factor = lambda years: min(years * 0.1, 0.5)
+48 ['customer_data', 'is_premium', 'total_spent', 'engagement_score', 'seasonal_engagement'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '565', '1585.0', '1981.25']
+52 loyalty_years = customer_data.get('years_active', 0)
+52 ['customer_data', 'is_premium', 'total_spent', 'engagement_score', 'seasonal_engagement', 'loyalty_years'] ['{purchase_history: [{...2 items}, {...2 items}, {...2 items}, {...2 items}], browsing_history: [{...3 items}, {...3 items}, {...3 items}], support_tickets: [{...2 items}, {...2 items}], ...}', 'True', '565', '1585.0', '1981.25', '3']
+55 if engagement_score > 500 and seasonal_engagement > 600:
+55 ['is_premium', 'total_spent', 'engagement_score', 'seasonal_engagement', 'loyalty_years'] ['True', '565', '1585.0', '1981.25', '3']
+63 base_score = 50
+63 ['is_premium', 'total_spent', 'loyalty_years', 'base_score'] ['True', '565', '3', '50']
+64 if len(recent_purchases) >= 3:
+64 ['is_premium', 'total_spent', 'loyalty_years', 'base_score'] ['True', '565', '3', '50']
+65 base_score += 15
+65 ['is_premium', 'total_spent', 'loyalty_years', 'base_score'] ['True', '565', '3', '65']
+67 if total_spent > 500:
+67 ['is_premium', 'total_spent', 'loyalty_years', 'base_score'] ['True', '565', '3', '65']
+68 base_score += 10
+68 ['is_premium', 'total_spent', 'loyalty_years', 'base_score'] ['True', '565', '3', '75']
+71 weighted_score = base_score * spending_weight(total_spent)
+71 ['is_premium', 'total_spent', 'loyalty_years', 'base_score'] ['True', '565', '3', '75']
+72 loyalty_bonus = loyalty_factor(loyalty_years) * 100
+72 ['is_premium', 'loyalty_years', 'weighted_score'] ['True', '3', '30.0']
+75 priority_score = int(weighted_score + loyalty_bonus * premium_multiplier(is_premium))
+75 ['is_premium', 'weighted_score', 'loyalty_bonus'] ['True', '30.0', '30.000000000000004']
+47 premium_multiplier = lambda status: 1.5 if status else 1.0
+47 ['status'] ['True']
+27 return base_value * seasonal_factors.get(month, 1.0)
+27 ['base_value', 'month', 'seasonal_factors'] ['101.7', '7', '{1: 1.1, 2: 0.9, 3: 1.05, ...}']
+81 return priority_score
+81 ['priority_score'] ['75']
+FUNCTION_RETURN 81 calculate_priority {'_type': 'int', '_value': 75}
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 [] []
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 15, purchased: True, cart_abandoned: False}']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 8, purchased: False, cart_abandoned: True}']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+3 click_rate = sum(h.get('clicks', 0) for h in history) / max(1, len(history))
+3 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 [] []
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 15, purchased: True, cart_abandoned: False}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 8, purchased: False, cart_abandoned: True}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+4 conversion = sum(1 for h in history if h.get('purchased', False))
+4 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 [] []
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 15, purchased: True, cart_abandoned: False}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 8, purchased: False, cart_abandoned: True}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+5 abandoned = sum(1 for h in history if h.get('cart_abandoned', False))
+5 ['h'] ['{clicks: 22, purchased: True, cart_abandoned: False}']
+8 engagement = (click_rate * 100) + (conversion * 50) - (abandoned * 15)
+8 ['click_rate', 'conversion', 'abandoned', 'engagement'] ['15.0', '2', '1', '1585.0']
+9 return engagement
+9 ['engagement'] ['1585.0']
+27 return base_value * seasonal_factors.get(month, 1.0)
+27 ['base_value', 'month', 'seasonal_factors'] ['100', '7', '{1: 1.1, 2: 0.9, 3: 1.05, ...}']

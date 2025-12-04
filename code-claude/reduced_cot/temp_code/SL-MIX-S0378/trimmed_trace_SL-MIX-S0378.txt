@@ -1,0 +1,63 @@
+57
+priority_score
+---
+42 minimum_urgency = 4
+42 ['task_list', 'minimum_urgency'] ["[(5, 8, 'Update documentation'), (7, 3, 'Fix minor bugs'), (9, 9, 'Resolve security issue'), (2, 4, 'Refactor old code'), (6, 7, 'Add new feature'), ...]", '4']
+43 minimum_importance = 6
+43 ['task_list', 'minimum_urgency', 'minimum_importance'] ["[(5, 8, 'Update documentation'), (7, 3, 'Fix minor bugs'), (9, 9, 'Resolve security issue'), (2, 4, 'Refactor old code'), (6, 7, 'Add new feature'), ...]", '4', '6']
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['u', 'i', '_'] ['5', '8', "'Update documentation'"]
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['u', 'i', '_'] ['7', '3', "'Fix minor bugs'"]
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['u', 'i', '_'] ['9', '9', "'Resolve security issue'"]
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['u', 'i', '_'] ['2', '4', "'Refactor old code'"]
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['u', 'i', '_'] ['6', '7', "'Add new feature'"]
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['u', 'i', '_'] ['8', '2', "'Optimize database queries'"]
+44 filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+44 ['task_list', 'minimum_urgency', 'minimum_importance', 'filtered_tasks'] ["[(5, 8, 'Update documentation'), (7, 3, 'Fix minor bugs'), (9, 9, 'Resolve security issue'), (2, 4, 'Refactor old code'), (6, 7, 'Add new feature'), ...]", '4', '6', '[(5, 8), (9, 9), (6, 7)]']
+51 priority_score = calculate_priority(filtered_tasks)
+51 ['filtered_tasks'] ['[(5, 8), (9, 9), (6, 7)]']
+5 if not tasks:
+5 ['tasks'] ['[(5, 8), (9, 9), (6, 7)]']
+9 urgencies = [t[0] for t in tasks]
+9 ['tasks', 't'] ['[(5, 8), (9, 9), (6, 7)]', '(5, 8)']
+9 urgencies = [t[0] for t in tasks]
+9 ['tasks', 't'] ['[(5, 8), (9, 9), (6, 7)]', '(9, 9)']
+9 urgencies = [t[0] for t in tasks]
+9 ['tasks', 't'] ['[(5, 8), (9, 9), (6, 7)]', '(6, 7)']
+9 urgencies = [t[0] for t in tasks]
+9 ['tasks', 'urgencies'] ['[(5, 8), (9, 9), (6, 7)]', '[5, 9, 6]']
+10 importances = [t[1] for t in tasks]
+10 ['tasks', 't', 'urgencies'] ['[(5, 8), (9, 9), (6, 7)]', '(5, 8)', '[5, 9, 6]']
+10 importances = [t[1] for t in tasks]
+10 ['tasks', 't', 'urgencies'] ['[(5, 8), (9, 9), (6, 7)]', '(9, 9)', '[5, 9, 6]']
+10 importances = [t[1] for t in tasks]
+10 ['tasks', 't', 'urgencies'] ['[(5, 8), (9, 9), (6, 7)]', '(6, 7)', '[5, 9, 6]']
+10 importances = [t[1] for t in tasks]
+10 ['tasks', 'urgencies', 'importances'] ['[(5, 8), (9, 9), (6, 7)]', '[5, 9, 6]', '[8, 9, 7]']
+18 for u, i in zip(urgencies, importances):
+18 ['tasks', 'urgencies', 'importances', 'u', 'i'] ['[(5, 8), (9, 9), (6, 7)]', '[5, 9, 6]', '[8, 9, 7]', '5', '8']
+18 for u, i in zip(urgencies, importances):
+18 ['tasks', 'urgencies', 'importances', 'u', 'i'] ['[(5, 8), (9, 9), (6, 7)]', '[5, 9, 6]', '[8, 9, 7]', '9', '9']
+18 for u, i in zip(urgencies, importances):
+18 ['tasks', 'urgencies', 'importances', 'u', 'i'] ['[(5, 8), (9, 9), (6, 7)]', '[5, 9, 6]', '[8, 9, 7]', '6', '7']
+18 for u, i in zip(urgencies, importances):
+18 ['tasks', 'urgencies', 'importances', 'u', 'i'] ['[(5, 8), (9, 9), (6, 7)]', '[5, 9, 6]', '[8, 9, 7]', '6', '7']
+22 weighted_sum = sum(u * i for u, i in zip(urgencies, importances))
+22 [] []
+22 weighted_sum = sum(u * i for u, i in zip(urgencies, importances))
+22 ['u', 'i'] ['5', '8']
+22 weighted_sum = sum(u * i for u, i in zip(urgencies, importances))
+22 ['u', 'i'] ['9', '9']
+22 weighted_sum = sum(u * i for u, i in zip(urgencies, importances))
+22 ['u', 'i'] ['6', '7']
+22 weighted_sum = sum(u * i for u, i in zip(urgencies, importances))
+22 ['u', 'i'] ['6', '7']
+23 return weighted_sum // len(tasks)
+23 ['tasks', 'weighted_sum'] ['[(5, 8), (9, 9), (6, 7)]', '163']
+57 print(f"Result: {priority_score}")
+57 ['priority_score'] ['54']

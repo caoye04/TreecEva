@@ -1,0 +1,93 @@
+54
+priority_score
+---
+PARAM_MAPPING {'task_list': {'actual_var': 'tasks', 'value': [{'id': 'T1', 'name': 'Database backup', 'urgency': 4, 'complexity': 3, 'dependencies': ['T5']}, {'id': 'T2', 'name': 'Security audit', 'urgency': 5, 'complexity': 8, 'dependencies': []}, {'id': 'T3', 'name': 'Code review', 'urgency': 3, 'complexity': 5, 'dependencies': ['T4']}, {'id': 'T4', 'name': 'API testing', 'urgency': 2, 'complexity': 6, 'dependencies': []}, {'id': 'T5', 'name': 'Documentation', 'urgency': 1, 'complexity': 2, 'dependencies': []}]}}
+FUNCTION_ENTER 32 process_tasks def process_tasks(task_list):
+32 ['task_list'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'T1'}, 'name': {'_type': 'str', '_value': 'Database backup'}, 'urgency': {'_type': 'int', '_value': 4}, 'complexity': {'_type': 'int', '_value': 3}, 'dependencies': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'T5'}], '_len': 1}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'T2'}, 'name': {'_type': 'str', '_value': 'Security audit'}, 'urgency': {'_type': 'int', '_value': 5}, 'complexity': {'_type': 'int', '_value': 8}, 'dependencies': {'_type': 'list', '_items': [], '_len': 0}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'T3'}, 'name': {'_type': 'str', '_value': 'Code review'}, 'urgency': {'_type': 'int', '_value': 3}, 'complexity': {'_type': 'int', '_value': 5}, 'dependencies': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'T4'}], '_len': 1}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'T4'}, 'name': {'_type': 'str', '_value': 'API testing'}, 'urgency': {'_type': 'int', '_value': 2}, 'complexity': {'_type': 'int', '_value': 6}, 'dependencies': {'_type': 'list', '_items': [], '_len': 0}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'T5'}, 'name': {'_type': 'str', '_value': 'Documentation'}, 'urgency': {'_type': 'int', '_value': 1}, 'complexity': {'_type': 'int', '_value': 2}, 'dependencies': {'_type': 'list', '_items': [], '_len': 0}}, '_len': 5}], '_len': 5}]
+34 urgency_counts = {}
+34 ['task_list', 'urgency_counts'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{}']
+35 for task in task_list:
+35 ['task_list', 'urgency_counts', 'task'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{}', "{id: 'T1', name: 'Database backup', urgency: 4, ...}"]
+36 urgency = task['urgency']
+36 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{}', "{id: 'T1', name: 'Database backup', urgency: 4, ...}", '4']
+37 if urgency in urgency_counts:
+37 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{}', "{id: 'T1', name: 'Database backup', urgency: 4, ...}", '4']
+40 urgency_counts[urgency] = 1
+40 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1}', "{id: 'T1', name: 'Database backup', urgency: 4, ...}", '4']
+35 for task in task_list:
+35 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1}', "{id: 'T2', name: 'Security audit', urgency: 5, ...}", '4']
+36 urgency = task['urgency']
+36 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1}', "{id: 'T2', name: 'Security audit', urgency: 5, ...}", '5']
+37 if urgency in urgency_counts:
+37 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1}', "{id: 'T2', name: 'Security audit', urgency: 5, ...}", '5']
+40 urgency_counts[urgency] = 1
+40 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1}', "{id: 'T2', name: 'Security audit', urgency: 5, ...}", '5']
+35 for task in task_list:
+35 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1}', "{id: 'T3', name: 'Code review', urgency: 3, ...}", '5']
+36 urgency = task['urgency']
+36 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1}', "{id: 'T3', name: 'Code review', urgency: 3, ...}", '3']
+37 if urgency in urgency_counts:
+37 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1}', "{id: 'T3', name: 'Code review', urgency: 3, ...}", '3']
+40 urgency_counts[urgency] = 1
+40 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1}', "{id: 'T3', name: 'Code review', urgency: 3, ...}", '3']
+35 for task in task_list:
+35 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1}', "{id: 'T4', name: 'API testing', urgency: 2, ...}", '3']
+36 urgency = task['urgency']
+36 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1}', "{id: 'T4', name: 'API testing', urgency: 2, ...}", '2']
+37 if urgency in urgency_counts:
+37 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1}', "{id: 'T4', name: 'API testing', urgency: 2, ...}", '2']
+40 urgency_counts[urgency] = 1
+40 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1, ...}', "{id: 'T4', name: 'API testing', urgency: 2, ...}", '2']
+35 for task in task_list:
+35 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1, ...}', "{id: 'T5', name: 'Documentation', urgency: 1, ...}", '2']
+36 urgency = task['urgency']
+36 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1, ...}', "{id: 'T5', name: 'Documentation', urgency: 1, ...}", '1']
+37 if urgency in urgency_counts:
+37 ['task_list', 'urgency_counts', 'task', 'urgency'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '{4: 1, 5: 1, 3: 1, ...}', "{id: 'T5', name: 'Documentation', urgency: 1, ...}", '1']
+35 for task in task_list:
+35 ['task_list', 'task'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T5', name: 'Documentation', urgency: 1, ...}"]
+47 filtered_tasks = []
+47 ['task_list', 'task', 'filtered_tasks'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T5', name: 'Documentation', urgency: 1, ...}", '[]']
+48 for idx, task in enumerate(task_list):
+48 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T1', name: 'Database backup', urgency: 4, ...}", '[]', '0']
+50 if idx % 2 == 0 or task['complexity'] > 2:
+50 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T1', name: 'Database backup', urgency: 4, ...}", '[]', '0']
+48 for idx, task in enumerate(task_list):
+48 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T2', name: 'Security audit', urgency: 5, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}]", '1']
+50 if idx % 2 == 0 or task['complexity'] > 2:
+50 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T2', name: 'Security audit', urgency: 5, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}]", '1']
+48 for idx, task in enumerate(task_list):
+48 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T3', name: 'Code review', urgency: 3, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}]", '2']
+50 if idx % 2 == 0 or task['complexity'] > 2:
+50 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T3', name: 'Code review', urgency: 3, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}]", '2']
+48 for idx, task in enumerate(task_list):
+48 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T4', name: 'API testing', urgency: 2, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}]", '3']
+50 if idx % 2 == 0 or task['complexity'] > 2:
+50 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T4', name: 'API testing', urgency: 2, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}]", '3']
+48 for idx, task in enumerate(task_list):
+48 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T5', name: 'Documentation', urgency: 1, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}]", '4']
+50 if idx % 2 == 0 or task['complexity'] > 2:
+50 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T5', name: 'Documentation', urgency: 1, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}]", '4']
+48 for idx, task in enumerate(task_list):
+48 ['task_list', 'task', 'filtered_tasks', 'idx'] ["[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", "{id: 'T5', name: 'Documentation', urgency: 1, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]", '4']
+54 priority_score = calculate_priority(filtered_tasks[2:])
+54 ['task', 'filtered_tasks'] ["{id: 'T5', name: 'Documentation', urgency: 1, ...}", "[{id: 'T1', name: 'Database backup', urgency: 4, ...}, {id: 'T2', name: 'Security audit', urgency: 5, ...}, {id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]"]
+5 if not tasks:
+5 ['tasks'] ["[{id: 'T3', name: 'Code review', urgency: 3, ...}, {id: 'T4', name: 'API testing', urgency: 2, ...}, {id: 'T5', name: 'Documentation', urgency: 1, ...}]"]
+10 complexity = max(task['complexity'] for task in tasks)
+10 [] []
+10 complexity = max(task['complexity'] for task in tasks)
+10 ['task'] ["{id: 'T3', name: 'Code review', urgency: 3, ...}"]
+10 complexity = max(task['complexity'] for task in tasks)
+10 ['task'] ["{id: 'T4', name: 'API testing', urgency: 2, ...}"]
+10 complexity = max(task['complexity'] for task in tasks)
+10 ['task'] ["{id: 'T5', name: 'Documentation', urgency: 1, ...}"]
+10 complexity = max(task['complexity'] for task in tasks)
+10 ['task'] ["{id: 'T5', name: 'Documentation', urgency: 1, ...}"]
+14 max_complexity = complexity
+14 ['complexity', 'max_complexity'] ['6', '6']
+20 return max_complexity * 10
+20 ['max_complexity'] ['6']
+56 return priority_score
+56 ['priority_score'] ['60']
+FUNCTION_RETURN 56 process_tasks {'_type': 'int', '_value': 60}

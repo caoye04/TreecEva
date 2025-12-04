@@ -1,0 +1,58 @@
+Target: Find the value of variable word_score after [line 52] executes
+
+[line 47]  target_word = "python"
+Assign: target_word = 'python'
+[line 48]  word_score = calculate_word_score(target_word)
+Call function calculate_word_score(target_word='python' (defined at [line 47]))
+[line 3]  char_values = {chr(i + 97): i + 1 for i in range(26)}  # a=1, b=2, ..., z=26
+Compute: {chr(i + 97): i + 1 for i in range(26)}  # a=1, b=2, ..., z=26, where i=0 (an unknown source) = ?
+[line 6]  word = word.lower()
+(Missing param: 'func_name')
+[line 11]  position_weight = lambda pos: pos + 1 if pos < len(word) // 2 else len(word) - pos
+Compute: lambda pos: pos + 1 if pos < len(word) // 2 else len(word) - pos, where word='python' (an unknown source) = ?
+[line 14]  base_score = 0
+Assign: base_score = 0
+[line 15]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 16]  if char in char_values:
+Condition: True, entering 'if' block
+[line 18]  base_score += char_values[char] * position_weight(i)
+Update: base_score changed from 0 (defined at defined at [line 14]) to 0+char_values[char] * position_weight(i) = 0
+[line 11]  position_weight = lambda pos: pos + 1 if pos < len(word) // 2 else len(word) - pos
+Compute: lambda pos: pos + 1 if pos < len(word) // 2 else len(word) - pos, where pos=0 (an unknown source), word='python' (an unknown source) = ?
+[line 15]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 16]  if char in char_values:
+Condition: True, entering 'if' block
+[line 18]  base_score += char_values[char] * position_weight(i)
+Update: base_score changed from 16 (defined at defined at [line 18]) to 16+char_values[char] * position_weight(i) = 16
+[line 11]  position_weight = lambda pos: pos + 1 if pos < len(word) // 2 else len(word) - pos
+Compute: lambda pos: pos + 1 if pos < len(word) // 2 else len(word) - pos, where pos=1 (an unknown source), word='python' (an unknown source) = ?
+... [Line 15] repeats 3 more times ...
+... [Line 15] repeats 3 more times ...
+... [Line 15] repeats 3 more times ...
+... [Line 15] repeats 3 more times ...
+[line 15]  for i, char in enumerate(word):
+(Missing param: 'iter_var')
+[line 16]  if char in char_values:
+Condition: True, entering 'if' block
+[line 18]  base_score += char_values[char] * position_weight(i)
+Update: base_score changed from 180 (defined at defined at [line 18]) to 180+char_values[char] * position_weight(i) = 180
+[line 15]  for i, char in enumerate(word):
+Loop End: Iteration finished
+[line 21]  adjusted_score = base_score
+Compute: base_score, where base_score=194 (defined at [line 18]) = 194
+[line 22]  if len(word) > 5:
+Condition: True, entering 'if' block
+[line 24]  temp = adjusted_score
+Compute: adjusted_score, where adjusted_score=194 (defined at [line 21]) = 194
+[line 25]  adjusted_score = temp
+Compute: temp, where temp=194 (defined at [line 24]) = 194
+[line 28]  if word == 'python':
+Condition: True, entering 'if' block
+[line 29]  return adjusted_score * 2
+Return: adjusted_score * 2
+[line 52]  print(f"Result: {word_score}")
+Output: f"Result: {word_score}"
+
+Answer: word_score = 388 (last updated on defined at [line 48])

@@ -1,0 +1,171 @@
+Target: Find the value of variable network_reliability after [line 101] executes
+
+[line 83]  raw_network_data = [23, 14, 35, 42, 19, 28, 56, 31, 49, 63, 77, 21, 84, 91]
+Compute: [23, 14, 35, 42, 19, 28, 56, 31, 49, 63, 77, 21, 84, 91] = [23, 14, 35, 42, 19, ...]
+[line 84]  processed_data, error_logs = process_network_data(raw_network_data)
+(Missing param: 'func_name')
+[line 5]  processed = []
+Compute: [] = []
+[line 6]  error_count = 0
+Assign: error_count = 0
+[line 7]  for entry in raw_data:
+Loop Start: entry takes its first value 23
+[line 8]  if entry % 7 == 0:
+Condition: True, entering 'if' block
+[line 7]  for entry in raw_data:
+Loop Iteration: entry is now 14 (iteration 2)
+[line 8]  if entry % 7 == 0:
+Condition: True, entering 'if' block
+[line 9]  error_count += 1
+Update: error_count changed from 0 (defined at defined at [line 6]) to 0+1 = 1
+... [Line 7] repeats 11 more times ...
+... [Line 7] repeats 11 more times ...
+... [Line 7] repeats 11 more times ...
+... [Line 7] repeats 11 more times ...
+[line 7]  for entry in raw_data:
+Loop Iteration: entry is now 91 (iteration 14)
+[line 8]  if entry % 7 == 0:
+Condition: True, entering 'if' block
+[line 9]  error_count += 1
+Update: error_count changed from 10 (defined at defined at [line 9]) to 10+1 = 11
+[line 7]  for entry in raw_data:
+Loop End: Iteration finished
+[line 16]  return processed, error_count
+Return: processed, error_count
+[line 87]  active_candidates = [i for i, val in enumerate(processed_data) if val % 2 == 0]
+Compute: [i for i, val in enumerate(processed_data) if val % 2 == 0], where i=0 (an unknown source), val=139 (an unknown source) = ?
+[line 91]  traffic_simulation = [(node, processed_data[node] % 100) for node in active_candidates]
+Compute: [(node, processed_data[node] % 100) for node in active_candidates], where processed_data=[139, 131, 155] (an unknown source), active_candidates=[] (defined at [line 87]) = []
+[line 92]  simulated_failures = [node for node, traffic in traffic_simulation if traffic > 80]
+Compute: [node for node, traffic in traffic_simulation if traffic > 80], where traffic_simulation=[] (defined at [line 91]) = []
+[line 95]  active_nodes = [node for node in active_candidates if node not in simulated_failures]
+Compute: [node for node in active_candidates if node not in simulated_failures], where active_candidates=[] (defined at [line 87]), simulated_failures=[] (defined at [line 92]) = []
+[line 98]  connection_map, node_classification = map_connections(processed_data)
+(Missing param: 'func_name')
+[line 20]  connections = defaultdict(list)
+Call function defaultdict(list)
+[line 21]  node_types = Counter()
+Call function Counter()
+[line 23]  for i, node_id in enumerate(nodes):
+(Missing param: 'iter_var')
+[line 29]  for j in range(max(0, i-3), i):
+Loop Start: j takes its first value ?
+[line 23]  for i, node_id in enumerate(nodes):
+(Missing param: 'iter_var')
+[line 29]  for j in range(max(0, i-3), i):
+Loop End: Iteration finished
+[line 30]  if (nodes[i] ^ nodes[j]) % 5 == 0:  # XOR-based connection rule
+Condition: True, entering 'if' block
+[line 29]  for j in range(max(0, i-3), i):
+Loop End: Iteration finished
+[line 23]  for i, node_id in enumerate(nodes):
+(Missing param: 'iter_var')
+[line 29]  for j in range(max(0, i-3), i):
+Loop Iteration: j is now 0 (iteration 4)
+[line 30]  if (nodes[i] ^ nodes[j]) % 5 == 0:  # XOR-based connection rule
+Condition: True, entering 'if' block
+[line 29]  for j in range(max(0, i-3), i):
+Loop Iteration: j is now 1 (iteration 5)
+[line 30]  if (nodes[i] ^ nodes[j]) % 5 == 0:  # XOR-based connection rule
+Condition: True, entering 'if' block
+[line 29]  for j in range(max(0, i-3), i):
+Loop End: Iteration finished
+[line 23]  for i, node_id in enumerate(nodes):
+Loop End: Iteration finished
+[line 36]  for node in connections:
+Loop Start: node takes its first value ?
+[line 40]  return dict(connections), node_types
+Return: dict(connections), node_types
+[line 101]  network_reliability = calculate_network_reliability(active_nodes, connection_map)
+Call function calculate_network_reliability(active_nodes=[] (defined at [line 95]), connection_map={} (an unknown source))
+[line 42]  def calculate_network_reliability(active_nodes, connection_map):
+Enter function calculate_network_reliability: active_nodes=[] (active_nodes defined at [line 95]), connection_map={}
+  [line 44]  if not active_nodes:
+  Condition: True, entering 'if' block
+  [line 45]  return 0
+  Return: 0
+Function calculate_network_reliability returns 0
+[line 42]  def calculate_network_reliability(active_nodes, connection_map):
+Enter function calculate_network_reliability: active_nodes=[], connection_map={}
+  [line 44]  if not active_nodes:
+  Condition: True, entering 'if' block
+  [line 45]  return 0
+  Return: 0
+Function calculate_network_reliability returns 0
+[line 42]  def calculate_network_reliability(active_nodes, connection_map):
+Enter function calculate_network_reliability: active_nodes=[0, 1, 2], connection_map={}
+  [line 44]  if not active_nodes:
+  Condition: True, entering 'if' block
+  [line 48]  visited = set()
+  Call function set()
+  [line 49]  component_sizes = []
+  Compute: [] = []
+  [line 51]  for node in active_nodes:
+  Loop Start: node takes its first value 0
+  [line 52]  if node not in visited:
+  Condition: True, entering 'if' block
+  [line 54]  component = set()
+  Call function set()
+  [line 55]  queue = [node]
+  Compute: [node], where node=0 (defined at [line 51]) = [0]
+  [line 56]  while queue:
+  while Loop Start: Condition is true
+  [line 57]  current = queue.pop(0)
+  (Missing param: 'func_name')
+  [line 58]  if current not in component and current in active_nodes:
+  Condition: True, entering 'if' block
+  [line 62]  for neighbor in connection_map.get(current, []):
+  Loop Start: neighbor takes its first value ?
+  [line 56]  while queue:
+  while Loop End: Condition is false
+  [line 51]  for node in active_nodes:
+  Loop Iteration: node is now 1 (iteration 2)
+  [line 52]  if node not in visited:
+  Condition: True, entering 'if' block
+  [line 54]  component = set()
+  Call function set()
+  [line 55]  queue = [node]
+  Compute: [node], where node=1 (defined at [line 51]) = [1]
+  [line 56]  while queue:
+  while Loop Iteration: Condition is still true
+  [line 57]  current = queue.pop(0)
+  (Missing param: 'func_name')
+  [line 58]  if current not in component and current in active_nodes:
+  Condition: True, entering 'if' block
+  [line 62]  for neighbor in connection_map.get(current, []):
+  Loop End: Iteration finished
+  [line 56]  while queue:
+  while Loop End: Condition is false
+  [line 51]  for node in active_nodes:
+  Loop Iteration: node is now 2 (iteration 3)
+  [line 52]  if node not in visited:
+  Condition: True, entering 'if' block
+  [line 54]  component = set()
+  Call function set()
+  [line 55]  queue = [node]
+  Compute: [node], where node=2 (defined at [line 51]) = [2]
+  [line 56]  while queue:
+  while Loop Iteration: Condition is still true
+  [line 57]  current = queue.pop(0)
+  (Missing param: 'func_name')
+  [line 58]  if current not in component and current in active_nodes:
+  Condition: True, entering 'if' block
+  [line 62]  for neighbor in connection_map.get(current, []):
+  Loop End: Iteration finished
+  [line 56]  while queue:
+  while Loop End: Condition is false
+  [line 51]  for node in active_nodes:
+  Loop End: Iteration finished
+  [line 69]  total_nodes = len(active_nodes)
+  Call function len(active_nodes=[0, 1, 2] (parameter active_nodes))
+  [line 70]  largest_component = max(component_sizes) if component_sizes else 0
+  Compute: max(component_sizes) if component_sizes else 0, where component_sizes=[1, 1, 1] (defined at [line 49]) = 1
+  [line 71]  component_count = len(component_sizes)
+  Call function len(component_sizes=[1, 1, 1] (defined at [line 49]))
+  [line 78]  reliability = (largest_component / total_nodes) * 100 * (1 - (component_count - 1) / total_nodes)
+  Compute: (largest_component / total_nodes) * 100 * (1 - (component_count - 1) / total_nodes), where largest_component=1 (defined at [line 70]), total_nodes=3 (defined at [line 69]), component_count=3 (defined at [line 71]) = 11.11111111111111
+  [line 80]  return reliability
+  Return: reliability=11.11111111111111 (defined at [line 78])
+Function calculate_network_reliability returns 11.11111111111111
+
+Answer: network_reliability = 0 (last updated on defined at [line 101])

@@ -1,0 +1,31 @@
+Target: Find the value of variable final_score after [line 62] executes
+
+[line 61]  final_score = calculate_weighted_score(player_stats, weights)
+Call function calculate_weighted_score(player_stats={accuracy: 82, speed: 88, strength: 75, ...} (an unknown source), weights={accuracy: 2.5, speed: 1.8, strength: 1.2, ...} (an unknown source))
+[line 3]  def calculate_weighted_score(stats, weights):
+Enter function calculate_weighted_score: stats={accuracy: 82, speed: 88, strength: 75, ...}, weights={accuracy: 2.5, speed: 1.8, strength: 1.2, ...}
+  [line 5]  base_points = sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+  Call function sum(stat * weight for stat, weight in zip(stats.values(), weights.values()))
+  [line 8]  bonus_factor = 0
+  Assign: bonus_factor = 0
+  [line 12]  if stats['accuracy'] > 75:
+  Condition: True, entering 'if' block
+  [line 13]  bonus_factor += 1.5
+  Update: bonus_factor changed from 0 (defined at defined at [line 8]) to 0+1.5 = 1.5
+  [line 14]  if stats['speed'] > 85:
+  Condition: True, entering 'if' block
+  [line 15]  bonus_factor += 2.0
+  Update: bonus_factor changed from 1.5 (defined at defined at [line 13]) to 1.5+2.0 = 3.5
+  [line 18]  if stats['endurance'] < 70:
+  Condition: True, entering 'if' block
+  [line 22]  tier_code = stats['accuracy'] & stats['consistency']
+  Compute: stats['accuracy'] & stats['consistency'], where stats={accuracy: 82, speed: 88, strength: 75, ...} (parameter stats) = 66
+  [line 23]  tier_multiplier = 1.0 + (tier_code % 10) / 100
+  Compute: 1.0 + (tier_code % 10) / 100, where tier_code=66 (defined at [line 22]) = 1.06
+  [line 40]  return int(base_points * tier_multiplier + bonus_factor * 10)
+  Return: int(base_points * tier_multiplier + bonus_factor * 10)
+Function calculate_weighted_score returns 708
+[line 62]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
+
+Answer: final_score = 708 (last updated on defined at [line 61])

@@ -1,0 +1,197 @@
+Target: Find the value of variable priority_value after [line 98] executes
+
+[line 83]  active_nodes = ['node1', 'node2', 'primary_a', 'backup_b']
+Compute: ['node1', 'node2', 'primary_a', 'backup_b'] = ['node1', 'node2', 'primary_a', 'backup_b']
+[line 86]  connections = {'A-B': 5, 'B-C': 3, 'A-C': 2, 'C-D': 7}
+Compute: {'A-B': 5, 'B-C': 3, 'A-C': 2, 'C-D': 7} = {A-B: 5, B-C: 3, A-C: 2, ...}
+[line 87]  traffic_pattern = [45, 80, 60, 30]
+Compute: [45, 80, 60, 30] = [45, 80, 60, 30]
+[line 1]  def calculate_network_load(connections, traffic_pattern):
+Enter function calculate_network_load: connections={A-B: 5, B-C: 3, A-C: 2, ...} (connections defined at [line 86]), traffic_pattern=[45, 80, 60, 30] (traffic_pattern defined at [line 87])
+  [line 3]  load_factor = sum(connections.values()) * 0.15
+  Compute: sum(connections.values()) * 0.15, where connections={A-B: 5, B-C: 3, A-C: 2, ...} (parameter connections defined at [line 86]) = 2.55
+  [line 4]  for pattern in traffic_pattern:
+  Loop Start: pattern takes its first value 45
+  [line 5]  if pattern > 75:
+  Condition: True, entering 'if' block
+  [line 8]  load_factor += pattern * 0.1
+  Update: load_factor changed from 2.55 (defined at defined at [line 3]) to 2.55+pattern * 0.1 = 7.05
+  [line 4]  for pattern in traffic_pattern:
+  Loop Iteration: pattern is now 80 (iteration 2)
+  [line 5]  if pattern > 75:
+  Condition: True, entering 'if' block
+  [line 6]  load_factor += pattern * 0.25
+  Update: load_factor changed from 7.05 (defined at defined at [line 8]) to 7.05+pattern * 0.25 = 27.05
+  [line 4]  for pattern in traffic_pattern:
+  Loop Iteration: pattern is now 60 (iteration 3)
+  [line 5]  if pattern > 75:
+  Condition: True, entering 'if' block
+  [line 8]  load_factor += pattern * 0.1
+  Update: load_factor changed from 27.05 (defined at defined at [line 6]) to 27.05+pattern * 0.1 = 33.05
+  [line 4]  for pattern in traffic_pattern:
+  Loop Iteration: pattern is now 30 (iteration 4)
+  [line 5]  if pattern > 75:
+  Condition: True, entering 'if' block
+  [line 8]  load_factor += pattern * 0.1
+  Update: load_factor changed from 33.05 (defined at defined at [line 8]) to 33.05+pattern * 0.1 = 36.05
+  [line 4]  for pattern in traffic_pattern:
+  Loop End: Iteration finished
+  [line 9]  return load_factor
+  Return: load_factor=36.05 (defined at [line 8])
+Function calculate_network_load returns 36.05
+[line 93]  route_map = {'node1': 0.75, 'node2': 0.85, 'primary_a': 0.65}
+Compute: {'node1': 0.75, 'node2': 0.85, 'primary_a': 0.65} = {node1: 0.75, node2: 0.85, primary_a: 0.65}
+[line 11]  def optimize_route(route_map, start_point):
+Enter function optimize_route: route_map={node1: 0.75, node2: 0.85, primary_a: 0.65} (route_map defined at [line 93]), start_point='node2'
+  [line 13]  if start_point not in route_map:
+  Condition: True, entering 'if' block
+  [line 16]  efficiency = route_map[start_point] * 2
+  Compute: route_map[start_point] * 2, where route_map={node1: 0.75, node2: 0.85, primary_a: 0.65} (parameter route_map defined at [line 93]), start_point='node2' (parameter start_point) = 1.7
+  [line 17]  hop_count = len(route_map) - 2
+  Compute: len(route_map) - 2, where route_map={node1: 0.75, node2: 0.85, primary_a: 0.65} (parameter route_map defined at [line 93]) = 1
+  [line 20]  if hop_count > 5:
+  Condition: True, entering 'if' block
+  [line 23]  return efficiency * 1.2
+  Return: efficiency * 1.2
+Function optimize_route returns 2.04
+[line 97]  priority_value = calculate_final_priority(network_data, active_nodes)
+Call function calculate_final_priority(network_data={node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...} (an unknown source), active_nodes=['node1', 'node2', 'primary_a', 'backup_b'] (defined at [line 83]))
+[line 25]  def calculate_final_priority(network_data, active_nodes):
+Enter function calculate_final_priority: network_data={node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...}, active_nodes=['node1', 'node2', 'primary_a', 'backup_b'] (active_nodes defined at [line 83])
+  [line 27]  node_weights = {}
+  Compute: {} = {}
+  [line 28]  total_weight = 0
+  Assign: total_weight = 0
+  [line 31]  for node in active_nodes:
+  Loop Start: node takes its first value 'node1'
+  [line 33]  if node.startswith('backup'):
+  Condition: True, entering 'if' block
+  [line 35]  elif node.startswith('primary'):
+  'elif' Condition: True, entering block
+  [line 41]  node_weights[node] = 10
+  (Missing param: 'var')
+  [line 43]  total_weight += node_weights[node]
+  Update: total_weight changed from 0 (defined at defined at [line 28]) to 0+node_weights[node] = 10
+  [line 31]  for node in active_nodes:
+  Loop Iteration: node is now 'node2' (iteration 2)
+  [line 33]  if node.startswith('backup'):
+  Condition: True, entering 'if' block
+  [line 35]  elif node.startswith('primary'):
+  'elif' Condition: True, entering block
+  [line 41]  node_weights[node] = 10
+  (Missing param: 'var')
+  [line 43]  total_weight += node_weights[node]
+  Update: total_weight changed from 10 (defined at defined at [line 43]) to 10+node_weights[node] = 20
+  [line 31]  for node in active_nodes:
+  Loop Iteration: node is now 'primary_a' (iteration 3)
+  [line 33]  if node.startswith('backup'):
+  Condition: True, entering 'if' block
+  [line 35]  elif node.startswith('primary'):
+  'elif' Condition: True, entering block
+  [line 36]  node_weights[node] = 20
+  (Missing param: 'var')
+  [line 38]  if node == 'primary_main':
+  Condition: True, entering 'if' block
+  [line 43]  total_weight += node_weights[node]
+  Update: total_weight changed from 20 (defined at defined at [line 43]) to 20+node_weights[node] = 40
+  [line 31]  for node in active_nodes:
+  Loop Iteration: node is now 'backup_b' (iteration 4)
+  [line 33]  if node.startswith('backup'):
+  Condition: True, entering 'if' block
+  [line 34]  node_weights[node] = 5
+  (Missing param: 'var')
+  [line 43]  total_weight += node_weights[node]
+  Update: total_weight changed from 40 (defined at defined at [line 43]) to 40+node_weights[node] = 45
+  [line 31]  for node in active_nodes:
+  Loop End: Iteration finished
+  [line 46]  priority_score = 0
+  Assign: priority_score = 0
+  [line 47]  for node in active_nodes:
+  Loop Start: node takes its first value 'node1'
+  [line 48]  if node in network_data:
+  Condition: True, entering 'if' block
+  [line 50]  node_data = network_data[node]
+  Compute: network_data[node], where network_data={node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...} (parameter network_data), node='node1' (defined at [line 47]) = {latency: 25, bandwidth: 100, reliability: 0.95}
+  [line 51]  latency = node_data.get('latency', 100)
+  (Missing param: 'func_name')
+  [line 52]  bandwidth = node_data.get('bandwidth', 10)
+  (Missing param: 'func_name')
+  [line 53]  reliability = node_data.get('reliability', 0.5)
+  (Missing param: 'func_name')
+  [line 56]  node_score = (bandwidth / max(1, latency/10)) * reliability
+  Compute: (bandwidth / max(1, latency/10)) * reliability, where bandwidth=100 (an unknown source), latency=25 (an unknown source), reliability=0.95 (an unknown source) = 38.0
+  [line 57]  priority_score += node_score * (node_weights[node] / total_weight)
+  Update: priority_score changed from 0 (defined at defined at [line 46]) to 0+node_score * (node_weights[node] / total_weight) = 8.444444444444445
+  [line 47]  for node in active_nodes:
+  Loop Iteration: node is now 'node2' (iteration 2)
+  [line 48]  if node in network_data:
+  Condition: True, entering 'if' block
+  [line 50]  node_data = network_data[node]
+  Compute: network_data[node], where network_data={node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...} (parameter network_data), node='node2' (defined at [line 47]) = {latency: 15, bandwidth: 80, reliability: 0.99, ...}
+  [line 51]  latency = node_data.get('latency', 100)
+  (Missing param: 'func_name')
+  [line 52]  bandwidth = node_data.get('bandwidth', 10)
+  (Missing param: 'func_name')
+  [line 53]  reliability = node_data.get('reliability', 0.5)
+  (Missing param: 'func_name')
+  [line 56]  node_score = (bandwidth / max(1, latency/10)) * reliability
+  Compute: (bandwidth / max(1, latency/10)) * reliability, where bandwidth=80 (an unknown source), latency=15 (an unknown source), reliability=0.99 (an unknown source) = 52.800000000000004
+  [line 57]  priority_score += node_score * (node_weights[node] / total_weight)
+  Update: priority_score changed from 8.444444444444445 (defined at defined at [line 57]) to 8.444444444444445+node_score * (node_weights[node] / total_weight) = 20.177777777777777
+  [line 47]  for node in active_nodes:
+  Loop Iteration: node is now 'primary_a' (iteration 3)
+  [line 48]  if node in network_data:
+  Condition: True, entering 'if' block
+  [line 50]  node_data = network_data[node]
+  Compute: network_data[node], where network_data={node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...} (parameter network_data), node='primary_a' (defined at [line 47]) = {latency: 30, bandwidth: 120, reliability: 0.9}
+  [line 51]  latency = node_data.get('latency', 100)
+  (Missing param: 'func_name')
+  [line 52]  bandwidth = node_data.get('bandwidth', 10)
+  (Missing param: 'func_name')
+  [line 53]  reliability = node_data.get('reliability', 0.5)
+  (Missing param: 'func_name')
+  [line 56]  node_score = (bandwidth / max(1, latency/10)) * reliability
+  Compute: (bandwidth / max(1, latency/10)) * reliability, where bandwidth=120 (an unknown source), latency=30 (an unknown source), reliability=0.9 (an unknown source) = 36.0
+  [line 57]  priority_score += node_score * (node_weights[node] / total_weight)
+  Update: priority_score changed from 20.177777777777777 (defined at defined at [line 57]) to 20.177777777777777+node_score * (node_weights[node] / total_weight) = 36.17777777777778
+  [line 47]  for node in active_nodes:
+  Loop Iteration: node is now 'backup_b' (iteration 4)
+  [line 48]  if node in network_data:
+  Condition: True, entering 'if' block
+  [line 50]  node_data = network_data[node]
+  Compute: network_data[node], where network_data={node1: {latency: 25, bandwidth: 100, reliability: 0.95}, node2: {latency: 15, bandwidth: 80, reliability: 0.99, ...}, primary_a: {latency: 30, bandwidth: 120, reliability: 0.9}, ...} (parameter network_data), node='backup_b' (defined at [line 47]) = {latency: 50, bandwidth: 40, reliability: 0.85}
+  [line 51]  latency = node_data.get('latency', 100)
+  (Missing param: 'func_name')
+  [line 52]  bandwidth = node_data.get('bandwidth', 10)
+  (Missing param: 'func_name')
+  [line 53]  reliability = node_data.get('reliability', 0.5)
+  (Missing param: 'func_name')
+  [line 56]  node_score = (bandwidth / max(1, latency/10)) * reliability
+  Compute: (bandwidth / max(1, latency/10)) * reliability, where bandwidth=40 (an unknown source), latency=50 (an unknown source), reliability=0.85 (an unknown source) = 6.8
+  [line 57]  priority_score += node_score * (node_weights[node] / total_weight)
+  Update: priority_score changed from 36.17777777777778 (defined at defined at [line 57]) to 36.17777777777778+node_score * (node_weights[node] / total_weight) = 36.93333333333333
+  [line 47]  for node in active_nodes:
+  Loop End: Iteration finished
+  [line 60]  unused_metric = sum(node_weights.values()) * 0.25
+  Compute: sum(node_weights.values()) * 0.25, where node_weights={node1: 10, node2: 10, primary_a: 20, ...} (defined at [line 27]) = 11.25
+  [line 61]  if unused_metric > 100:
+  Condition: True, entering 'if' block
+  [line 65]  network_factor = 1.0
+  Assign: network_factor = 1.0
+  [line 66]  for node, data in network_data.items():
+  (Missing param: 'iter_var')
+  [line 67]  if node in active_nodes and data.get('critical', False):
+  Condition: True, entering 'if' block
+  [line 66]  for node, data in network_data.items():
+  (Missing param: 'iter_var')
+  [line 67]  if node in active_nodes and data.get('critical', False):
+  Condition: True, entering 'if' block
+  [line 68]  network_factor = 1.25
+  Assign: network_factor = 1.25
+  [line 71]  return round(priority_score * network_factor, 2)
+  Return: round(priority_score * network_factor, 2)
+Function calculate_final_priority returns 46.17
+[line 98]  print(f"Result: {priority_value}")
+Output: f"Result: {priority_value}"
+
+Answer: priority_value = 46.17 (last updated on defined at [line 97])

@@ -1,0 +1,79 @@
+Target: Find the value of variable final_signal_strength after [line 111] executes
+
+[line 61]  raw_frequencies = [45, 67, 32, 58, 72, 15, 92, 23, 45, 67, 33]
+Compute: [45, 67, 32, 58, 72, 15, 92, 23, 45, 67, 33] = [45, 67, 32, 58, 72, ...]
+[line 72]  frequency_analysis = analyze_frequency_band(raw_frequencies)
+Call function analyze_frequency_band(raw_frequencies=[45, 67, 32, 58, 72, ...] (defined at [line 61]))
+[line 4]  def analyze_frequency_band(frequencies, noise_threshold=0.3):
+Enter function analyze_frequency_band: frequencies=[45, 67, 32, 58, 72, ...] (raw_frequencies defined at [line 61]), noise_threshold=0.3
+  [line 6]  freq_counter = Counter(frequencies)
+  Call function Counter(frequencies=[45, 67, 32, 58, 72, ...] (parameter frequencies defined at [line 61]))
+  [line 7]  dominant_freq = freq_counter.most_common(1)[0][0] if freq_counter else 0
+  Compute: freq_counter.most_common(1)[0][0] if freq_counter else 0, where freq_counter={45: 2, 67: 2, 32: 1, ...} (defined at [line 6]) = 45
+  [line 8]  noise_level = sum(freq_counter.values()) / len(frequencies) if frequencies else 0
+  Compute: sum(freq_counter.values()) / len(frequencies) if frequencies else 0, where freq_counter={45: 2, 67: 2, 32: 1, ...} (defined at [line 6]), frequencies=[45, 67, 32, 58, 72, ...] (parameter frequencies defined at [line 61]) = 1.0
+  [line 9]  return {'dominant': dominant_freq, 'noise': noise_level * noise_threshold}
+  Return: {'dominant': dominant_freq, 'noise': noise_level * noise_threshold}
+Function analyze_frequency_band returns {dominant: 45, noise: 0.3}
+[line 73]  dominant_frequency = frequency_analysis['dominant']
+Compute: frequency_analysis['dominant'], where frequency_analysis={dominant: 45, noise: 0.3} (defined at [line 72]) = 45
+[line 13]  if not power_levels or not distance_factors:
+Condition: True, entering 'if' block
+[line 16]  efficiency_map = defaultdict(float)
+Call function defaultdict(float)
+[line 17]  for p, d in zip(power_levels, distance_factors):
+(Missing param: 'iter_var')
+[line 17]  for p, d in zip(power_levels, distance_factors):
+(Missing param: 'iter_var')
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+[line 17]  for p, d in zip(power_levels, distance_factors):
+(Missing param: 'iter_var')
+[line 17]  for p, d in zip(power_levels, distance_factors):
+Loop End: Iteration finished
+[line 22]  return max(efficiency_map.values()) if efficiency_map else 0.0
+Return: max(efficiency_map.values()) if efficiency_map else 0.0
+[line 80]  filtered_frequencies = [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25]
+Compute: [f for f in raw_frequencies if abs(f - dominant_frequency) <= 25], where f=45 (an unknown source) = ?
+[line 83]  transmission_power = 100  # Default
+Assign: transmission_power = 100
+[line 84]  if dominant_frequency > 60:
+Condition: True, entering 'if' block
+[line 86]  elif dominant_frequency < 40:
+'elif' Condition: True, entering block
+[line 26]  correction_factor = 1.0
+Assign: correction_factor = 1.0
+[line 27]  if humidity > 0.7:
+Condition: True, entering 'if' block
+[line 29]  elif humidity < 0.3:
+'elif' Condition: True, entering block
+[line 35]  return signal_value * correction_factor
+Return: signal_value * correction_factor
+[line 104]  final_signal_strength = calculate_signal_metric(filtered_frequencies, transmission_power)
+Call function calculate_signal_metric(filtered_frequencies=[45, 67, 32, 58, 23, ...] (defined at [line 80]), transmission_power=100 (defined at [line 83]))
+[line 39]  base_signal = 0
+Assign: base_signal = 0
+[line 40]  frequency_sum = sum(f for f in frequency_data if 30 <= f <= 70)
+Call function sum(f for f in frequency_data if 30 <= f <= 70)
+[line 43]  interference_level = len([f for f in frequency_data if f < 20 or f > 80])
+Call function len([f for f in frequency_data if f < 20 or f > 80])
+[line 46]  base_signal = frequency_sum * power / 100
+Compute: frequency_sum * power / 100, where frequency_sum=347 (defined at [line 40]), power=100 (an unknown source) = 347.0
+[line 52]  adjusted_signal = base_signal - (interference_level * 1.5)
+Compute: base_signal - (interference_level * 1.5), where base_signal=347.0 (defined at [line 46]), interference_level=0 (defined at [line 43]) = 347.0
+[line 55]  bit_factor = power & 0x0F  # Get lower 4 bits
+Compute: power & 0x0F  # Get lower 4 bits, where power=100 (an unknown source) = 4
+[line 58]  return max(0, adjusted_signal + (bit_factor / 2))
+Return: max(0, adjusted_signal + (bit_factor / 2))
+[line 107]  print(f"Frequency Analysis: {frequency_analysis}")
+Output: f"Frequency Analysis: {frequency_analysis}"
+[line 108]  print(f"Filtered Frequencies: {filtered_frequencies}")
+Output: f"Filtered Frequencies: {filtered_frequencies}"
+[line 109]  print(f"Transmission Power: {transmission_power}")
+Output: f"Transmission Power: {transmission_power}"
+[line 110]  print(f"Potential Metrics: {potential_metrics}")
+Output: f"Potential Metrics: {potential_metrics}"
+[line 111]  print(f"Result: {final_signal_strength}")
+Output: f"Result: {final_signal_strength}"
+
+Answer: final_signal_strength = 349.0 (last updated on defined at [line 104])

@@ -1,0 +1,297 @@
+Target: Find the value of variable security_level after [line 84] executes
+
+[line 82]  security_level = calculate_security_score(password_data)
+Call function calculate_security_score(password_data=[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}] (an unknown source))
+[line 1]  def calculate_security_score(password_data):
+Enter function calculate_security_score: password_data=[{username: 'admin', password: 'Secure123!', timestamp: '14:25'}, {username: 'user1', password: 'password123', timestamp: '09:30'}, {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'}]
+  [line 3]  base_score = 0
+  Assign: base_score = 0
+  [line 4]  length_factor = 0
+  Assign: length_factor = 0
+  [line 5]  complexity_bonus = 0
+  Assign: complexity_bonus = 0
+  [line 6]  penalty = 0
+  Assign: penalty = 0
+  [line 9]  for entry in password_data:
+  Loop Start: entry takes its first value {username: 'admin', password: 'Secure123!', timestamp: '14:25'}
+  [line 11]  password = entry['password']
+  Compute: entry['password'], where entry={username: 'admin', password: 'Secure123!', timestamp: '14:25'} (defined at [line 9]) = 'Secure123!'
+  [line 15]  if len(password) >= 12:
+  Condition: True, entering 'if' block
+  [line 17]  elif len(password) >= 8:
+  'elif' Condition: True, entering block
+  [line 18]  length_factor = 30
+  Assign: length_factor = 30
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 29]  complexity_count = sum([has_upper, has_lower, has_digit, has_special])
+  Call function sum([has_upper, has_lower=True (defined at [line 24]), has_digit=True (defined at [line 25]), has_special])
+  [line 30]  complexity_bonus = complexity_count * 10
+  Compute: complexity_count * 10, where complexity_count=4 (defined at [line 29]) = 40
+  [line 33]  common_patterns = ['123', 'abc', 'password', 'admin']
+  Compute: ['123', 'abc', 'password', 'admin'], where password='Secure123!' (defined at [line 11]) = ['123', 'abc', 'password', 'admin']
+  [line 34]  pattern_check = password.lower()
+  (Missing param: 'func_name')
+  [line 35]  for pattern in common_patterns:
+  Loop Start: pattern takes its first value '123'
+  [line 36]  if pattern in pattern_check:
+  Condition: True, entering 'if' block
+  [line 37]  penalty += 15
+  Update: penalty changed from 0 (defined at defined at [line 6]) to 0+15 = 15
+  [line 41]  entry_score = length_factor + complexity_bonus - penalty
+  Compute: length_factor + complexity_bonus - penalty, where length_factor=30 (defined at [line 18]), complexity_bonus=40 (defined at [line 30]), penalty=15 (defined at [line 37]) = 55
+  [line 44]  if entry_score > base_score:
+  Condition: True, entering 'if' block
+  [line 45]  base_score = entry_score
+  Compute: entry_score, where entry_score=55 (defined at [line 41]) = 55
+  [line 9]  for entry in password_data:
+  Loop Iteration: entry is now {username: 'user1', password: 'password123', timestamp: '09:30'} (iteration 2)
+  [line 11]  password = entry['password']
+  Compute: entry['password'], where entry={username: 'user1', password: 'password123', timestamp: '09:30'} (defined at [line 9]), password='Secure123!' (defined at [line 11]) = 'password123'
+  [line 15]  if len(password) >= 12:
+  Condition: True, entering 'if' block
+  [line 17]  elif len(password) >= 8:
+  'elif' Condition: True, entering block
+  [line 18]  length_factor = 30
+  Assign: length_factor = 30
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 29]  complexity_count = sum([has_upper, has_lower, has_digit, has_special])
+  Call function sum([has_upper, has_lower=True (defined at [line 24]), has_digit=True (defined at [line 25]), has_special])
+  [line 30]  complexity_bonus = complexity_count * 10
+  Compute: complexity_count * 10, where complexity_count=2 (defined at [line 29]) = 20
+  [line 33]  common_patterns = ['123', 'abc', 'password', 'admin']
+  Compute: ['123', 'abc', 'password', 'admin'], where password='password123' (defined at [line 11]) = ['123', 'abc', 'password', 'admin']
+  [line 34]  pattern_check = password.lower()
+  (Missing param: 'func_name')
+  [line 35]  for pattern in common_patterns:
+  Loop Iteration: pattern is now '123' (iteration 2)
+  [line 36]  if pattern in pattern_check:
+  Condition: True, entering 'if' block
+  [line 37]  penalty += 15
+  Update: penalty changed from 15 (defined at defined at [line 37]) to 15+15 = 30
+  [line 41]  entry_score = length_factor + complexity_bonus - penalty
+  Compute: length_factor + complexity_bonus - penalty, where length_factor=30 (defined at [line 18]), complexity_bonus=20 (defined at [line 30]), penalty=30 (defined at [line 37]) = 20
+  [line 44]  if entry_score > base_score:
+  Condition: True, entering 'if' block
+  [line 9]  for entry in password_data:
+  Loop Iteration: entry is now {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'} (iteration 3)
+  [line 11]  password = entry['password']
+  Compute: entry['password'], where entry={username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'} (defined at [line 9]), password='password123' (defined at [line 11]) = 'C0d3r@2023'
+  [line 15]  if len(password) >= 12:
+  Condition: True, entering 'if' block
+  [line 17]  elif len(password) >= 8:
+  'elif' Condition: True, entering block
+  [line 18]  length_factor = 30
+  Assign: length_factor = 30
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 23]  has_upper = any(c.isupper() for c in password)
+  Call function any(c.isupper() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 24]  has_lower = any(c.islower() for c in password)
+  Call function any(c.islower() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 25]  has_digit = any(c.isdigit() for c in password)
+  Call function any(c.isdigit() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 26]  has_special = any(not c.isalnum() for c in password)
+  Call function any(not c.isalnum() for c in password)
+  [line 29]  complexity_count = sum([has_upper, has_lower, has_digit, has_special])
+  Call function sum([has_upper, has_lower=True (defined at [line 24]), has_digit=True (defined at [line 25]), has_special])
+  [line 30]  complexity_bonus = complexity_count * 10
+  Compute: complexity_count * 10, where complexity_count=4 (defined at [line 29]) = 40
+  [line 33]  common_patterns = ['123', 'abc', 'password', 'admin']
+  Compute: ['123', 'abc', 'password', 'admin'], where password='C0d3r@2023' (defined at [line 11]) = ['123', 'abc', 'password', 'admin']
+  [line 34]  pattern_check = password.lower()
+  (Missing param: 'func_name')
+... [Line 35] repeats 3 more times ...
+... [Line 35] repeats 3 more times ...
+  [line 35]  for pattern in common_patterns:
+  Loop Iteration: pattern is now 'admin' (iteration 6)
+  [line 36]  if pattern in pattern_check:
+  Condition: True, entering 'if' block
+  [line 35]  for pattern in common_patterns:
+  Loop End: Iteration finished
+  [line 41]  entry_score = length_factor + complexity_bonus - penalty
+  Compute: length_factor + complexity_bonus - penalty, where length_factor=30 (defined at [line 18]), complexity_bonus=40 (defined at [line 30]), penalty=30 (defined at [line 37]) = 40
+  [line 44]  if entry_score > base_score:
+  Condition: True, entering 'if' block
+  [line 9]  for entry in password_data:
+  Loop End: Iteration finished
+  [line 54]  username_stats = {}
+  Compute: {} = {}
+  [line 55]  for entry in password_data:
+  Loop Start: entry takes its first value {username: 'admin', password: 'Secure123!', timestamp: '14:25'}
+  [line 56]  first_char = entry['username'][0].lower() if entry['username'] else ''
+  Compute: entry['username'][0].lower() if entry['username'] else '', where entry={username: 'admin', password: 'Secure123!', timestamp: '14:25'} (defined at [line 55]) = 'a'
+  [line 57]  if first_char in username_stats:
+  Condition: True, entering 'if' block
+  [line 60]  username_stats[first_char] = 1
+  (Missing param: 'var')
+  [line 55]  for entry in password_data:
+  Loop Iteration: entry is now {username: 'user1', password: 'password123', timestamp: '09:30'} (iteration 2)
+  [line 56]  first_char = entry['username'][0].lower() if entry['username'] else ''
+  Compute: entry['username'][0].lower() if entry['username'] else '', where entry={username: 'user1', password: 'password123', timestamp: '09:30'} (defined at [line 55]) = 'u'
+  [line 57]  if first_char in username_stats:
+  Condition: True, entering 'if' block
+  [line 60]  username_stats[first_char] = 1
+  (Missing param: 'var')
+  [line 55]  for entry in password_data:
+  Loop Iteration: entry is now {username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'} (iteration 3)
+  [line 56]  first_char = entry['username'][0].lower() if entry['username'] else ''
+  Compute: entry['username'][0].lower() if entry['username'] else '', where entry={username: 'developer', password: 'C0d3r@2023', timestamp: '11:45'} (defined at [line 55]) = 'd'
+  [line 57]  if first_char in username_stats:
+  Condition: True, entering 'if' block
+  [line 55]  for entry in password_data:
+  Loop End: Iteration finished
+  [line 67]  if base_score >= 70:
+  Condition: True, entering 'if' block
+  [line 69]  elif base_score >= 40:
+  'elif' Condition: True, entering block
+  [line 70]  return 2  # Medium security
+  Return: 2  # Medium security
+Function calculate_security_score returns 2
+[line 84]  print(f"Result: {security_level}")
+Output: f"Result: {security_level}"
+
+Answer: security_level = 2 (last updated on defined at [line 82])

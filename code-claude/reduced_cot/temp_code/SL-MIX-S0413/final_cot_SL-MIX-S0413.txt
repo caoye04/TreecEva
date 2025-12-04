@@ -1,0 +1,60 @@
+Target: Find the value of variable final_signal_strength after [line 70] executes
+
+[line 60]  signal_processor = SignalProcessor()
+Call function SignalProcessor()
+[line 3]  self.base_frequency = base_frequency
+(Missing param: 'result')
+[line 9]  self.calibration_factors = [1.5, 0.75, 2.25, 1.0]
+(Missing param: 'result')
+[line 10]  self.interference_map = {i: (i * 3) % 256 for i in range(16)}
+(Missing param: 'result')
+[line 69]  final_signal_strength = signal_processor.compute_final_strength()
+(Missing param: 'func_name')
+[line 36]  for i in range(5):
+Loop Start: i takes its first value 0
+[line 36]  for i in range(5):
+Loop End: Iteration finished
+[line 36]  for i in range(5):
+Loop End: Iteration finished
+[line 36]  for i in range(5):
+Loop End: Iteration finished
+[line 36]  for i in range(5):
+Loop End: Iteration finished
+[line 36]  for i in range(5):
+Loop End: Iteration finished
+[line 41]  filtered_high = self.noise_filters['high'](self.base_frequency)
+(Missing param: 'func_name')
+[line 42]  filtered_low = self.noise_filters['low'](self.base_frequency)
+(Missing param: 'func_name')
+[line 45]  key_value = filtered_high ^ filtered_low
+Compute: filtered_high ^ filtered_low, where filtered_high=32 (an unknown source), filtered_low=10 (an unknown source) = 42
+[line 26]  distortion = 0
+Assign: distortion = 0
+[line 27]  for i in range(1, 6):
+Loop Start: i takes its first value 1
+[line 28]  distortion += (frequency * i) % 17
+Update: distortion changed from 0 (defined at defined at [line 26]) to 0+(frequency * i) % 17 = 8
+[line 27]  for i in range(1, 6):
+Loop Iteration: i is now 2 (iteration 2)
+[line 28]  distortion += (frequency * i) % 17
+Update: distortion changed from 8 (defined at defined at [line 28]) to 8+(frequency * i) % 17 = 24
+... [Line 27] repeats 2 more times ...
+... [Line 27] repeats 2 more times ...
+[line 27]  for i in range(1, 6):
+Loop Iteration: i is now 5 (iteration 5)
+[line 28]  distortion += (frequency * i) % 17
+Update: distortion changed from 46 (defined at defined at [line 28]) to 46+(frequency * i) % 17 = 52
+[line 27]  for i in range(1, 6):
+Loop End: Iteration finished
+[line 29]  return distortion / 10.0
+Return: distortion / 10.0
+[line 52]  interference = self.interference_map.get(key_value, 0)
+(Missing param: 'func_name')
+[line 53]  strength_factor = min(self.calibration_factors) + max(self.calibration_factors)
+Compute: min(self.calibration_factors) + max(self.calibration_factors), where self=SignalProcessor(calibration_factors=[1.5, 0.75, 2.25, 1.0]) (an unknown source) = 3.0
+[line 56]  return (key_value * strength_factor) - interference
+Return: (key_value * strength_factor) - interference
+[line 70]  print(f"Target result: {final_signal_strength}")
+Output: f"Target result: {final_signal_strength}"
+
+Answer: final_signal_strength = 126.0 (last updated on an unknown source)

@@ -1,0 +1,82 @@
+Target: Find the value of variable target_value after [line 79] executes
+
+[line 12]  packets = raw_data.split('|')
+(Missing param: 'func_name')
+[line 15]  apply_security_filter = filter_flag and len(packets) > 5
+Compute: filter_flag and len(packets) > 5, where filter_flag=True (an unknown source), packets=['T123', 'U456S', 'ICMP789S', 'HTTPS123SS', 'TCP456', ...] (an unknown source) = True
+[line 16]  prioritize_encrypted = any(p.count('S') > 2 for p in packets)
+Call function any(p.count('S') > 2 for p in packets)
+[line 16]  prioritize_encrypted = any(p.count('S') > 2 for p in packets)
+Call function any(p.count('S') > 2 for p in packets)
+[line 16]  prioritize_encrypted = any(p.count('S') > 2 for p in packets)
+Call function any(p.count('S') > 2 for p in packets)
+[line 16]  prioritize_encrypted = any(p.count('S') > 2 for p in packets)
+Call function any(p.count('S') > 2 for p in packets)
+[line 16]  prioritize_encrypted = any(p.count('S') > 2 for p in packets)
+Call function any(p.count('S') > 2 for p in packets)
+[line 19]  for packet in packets:
+Loop Start: packet takes its first value 'T123'
+[line 20]  if not packet.strip():
+Condition: True, entering 'if' block
+[line 28]  if protocol == 'T':
+Condition: True, entering 'if' block
+[line 30]  security_score = packet.count('S') * 2
+Compute: packet.count('S') * 2, where packet='T123' (defined at [line 19]) = 0
+[line 45]  if apply_security_filter and security_score > 5:
+Condition: True, entering 'if' block
+[line 19]  for packet in packets:
+Loop Iteration: packet is now 'U456S' (iteration 2)
+[line 20]  if not packet.strip():
+Condition: True, entering 'if' block
+[line 28]  if protocol == 'T':
+Condition: True, entering 'if' block
+[line 31]  elif protocol == 'U':
+'elif' Condition: True, entering block
+[line 33]  security_score = packet.count('S')
+(Missing param: 'func_name')
+[line 45]  if apply_security_filter and security_score > 5:
+Condition: True, entering 'if' block
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+... [Line 19] repeats 6 more times ...
+[line 19]  for packet in packets:
+Loop Iteration: packet is now '' (iteration 9)
+[line 20]  if not packet.strip():
+Condition: True, entering 'if' block
+[line 19]  for packet in packets:
+Loop End: Iteration finished
+[line 55]  protocol_ranking = sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+[line 55]  protocol_ranking = sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+[line 55]  protocol_ranking = sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+[line 55]  protocol_ranking = sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+[line 55]  protocol_ranking = sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+[line 55]  protocol_ranking = sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(network_traffic.items(), key=lambda x: x[1], reverse=True)
+[line 56]  primary_protocol = protocol_ranking[0][0]
+Compute: protocol_ranking[0][0], where protocol_ranking=[('TCP', 3), ('UDP', 2), ('ICMP', 2), ('HTTPS', 1), ('HTTP', 0)] (defined at [line 55]) = 'TCP'
+[line 57]  secondary_protocol = protocol_ranking[1][0]
+Compute: protocol_ranking[1][0], where protocol_ranking=[('TCP', 3), ('UDP', 2), ('ICMP', 2), ('HTTPS', 1), ('HTTP', 0)] (defined at [line 55]) = 'UDP'
+[line 61]  if prioritize_encrypted:
+Condition: True, entering 'if' block
+[line 69]  target_value = network_traffic[primary_protocol] + network_traffic.get(secondary_protocol, 0)
+Compute: network_traffic[primary_protocol] + network_traffic.get(secondary_protocol, 0), where network_traffic={TCP: 3, UDP: 2, ICMP: 2, ...} (an unknown source), primary_protocol='TCP' (defined at [line 56]), secondary_protocol='UDP' (defined at [line 57]) = 5
+[line 72]  if apply_security_filter:
+Condition: True, entering 'if' block
+[line 77]  print(f"Network analysis complete. Protocol distribution: {network_traffic}")
+Output: f"Network analysis complete. Protocol distribution: {network_traffic}"
+[line 78]  print(f"Primary protocol: {primary_protocol}, Secondary protocol: {secondary_protocol}")
+Output: f"Primary protocol: {primary_protocol}, Secondary protocol: {secondary_protocol}"
+[line 79]  print(f"Target result: {target_value}")
+Output: f"Target result: {target_value}"
+
+Answer: target_value = 5 (last updated on defined at [line 69])

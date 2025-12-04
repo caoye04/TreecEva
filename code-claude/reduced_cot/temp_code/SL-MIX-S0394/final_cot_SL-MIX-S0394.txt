@@ -1,0 +1,40 @@
+Target: Find the value of variable encrypted_value after [line 26] executes
+
+[line 9]  base_value = 17
+Assign: base_value = 17
+[line 10]  modulus = 100
+Assign: modulus = 100
+[line 11]  multiplier = 7
+Assign: multiplier = 7
+[line 15]  offset = calculate_hash("secret", 17)
+Call function calculate_hash("secret", 17)
+[line 3]  hash_value = seed
+Compute: seed, where seed=17 (an unknown source) = 17
+[line 4]  for char in input_data:
+Loop Start: char takes its first value 's'
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=17 (defined at [line 3]), char='s' (defined at [line 4]) = 642
+[line 4]  for char in input_data:
+Loop Iteration: char is now 'e' (iteration 2)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=642 (defined at [line 5]), char='e' (defined at [line 4]) = 63
+... [Line 4] repeats 3 more times ...
+... [Line 4] repeats 3 more times ...
+[line 4]  for char in input_data:
+Loop Iteration: char is now 't' (iteration 6)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=550 (defined at [line 5]), char='t' (defined at [line 4]) = 217
+[line 4]  for char in input_data:
+Loop End: Iteration finished
+[line 6]  return hash_value
+Return: hash_value=217 (defined at [line 5])
+[line 18]  intermediate = base_value + offset
+Compute: base_value + offset, where base_value=17 (defined at [line 9]), offset=217 (defined at [line 15]) = 234
+[line 19]  shifted = intermediate << 2
+Compute: intermediate << 2, where intermediate=234 (defined at [line 18]) = 936
+[line 22]  base_value = base_value + 5 if shifted > 200 else base_value - 3
+Compute: base_value + 5 if shifted > 200 else base_value - 3, where base_value=17 (defined at [line 9]), shifted=936 (defined at [line 19]) = 22
+[line 26]  encrypted_value = (base_value * multiplier) % modulus
+Compute: (base_value * multiplier) % modulus, where base_value=22 (defined at [line 22]), multiplier=7 (defined at [line 11]), modulus=100 (defined at [line 10]) = 54
+
+Answer: encrypted_value = 54 (last updated on defined at [line 26])

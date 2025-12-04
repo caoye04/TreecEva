@@ -1,0 +1,132 @@
+Target: Find the value of variable optimal_path_length after [line 113] executes
+
+[line 75]  network_graph, signal_strengths, error_counts = process_network_data(raw_connections)
+(Missing param: 'func_name')
+[line 5]  network_graph = defaultdict(list)
+Call function defaultdict(list)
+[line 6]  signal_strengths = {}
+Compute: {} = {}
+[line 7]  error_counts = Counter()
+Call function Counter()
+[line 9]  for connection in raw_connections:
+Loop Start: connection takes its first value ('A', 'B', 15)
+[line 10]  source, target, strength = connection
+(Missing param: 'result')
+[line 12]  signal_strengths[(source, target)] = strength
+(Missing param: 'result')
+[line 15]  if strength < 10:
+Condition: True, entering 'if' block
+[line 9]  for connection in raw_connections:
+Loop Iteration: connection is now ('A', 'C', 22) (iteration 2)
+[line 10]  source, target, strength = connection
+(Missing param: 'result')
+[line 12]  signal_strengths[(source, target)] = strength
+(Missing param: 'result')
+[line 15]  if strength < 10:
+Condition: True, entering 'if' block
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+... [Line 9] repeats 5 more times ...
+[line 9]  for connection in raw_connections:
+Loop Iteration: connection is now ('F', 'G', 20) (iteration 8)
+[line 10]  source, target, strength = connection
+(Missing param: 'result')
+[line 12]  signal_strengths[(source, target)] = strength
+(Missing param: 'result')
+[line 15]  if strength < 10:
+Condition: True, entering 'if' block
+[line 9]  for connection in raw_connections:
+Loop End: Iteration finished
+[line 18]  return network_graph, signal_strengths, error_counts
+Return: network_graph, signal_strengths, error_counts
+[line 78]  reliability = analyze_network_redundancy(network_graph)
+Call function analyze_network_redundancy(network_graph={A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...} (defined at [line 5]))
+[line 22]  redundancy_score = 0
+Assign: redundancy_score = 0
+[line 23]  for node in graph:
+Loop Start: node takes its first value 'A'
+[line 24]  if len(graph[node]) > 1:
+Condition: True, entering 'if' block
+[line 25]  redundancy_score += len(graph[node])
+Update: redundancy_score changed from 0 (defined at defined at [line 22]) to 0+len(graph[node]) = 2
+[line 23]  for node in graph:
+Loop Iteration: node is now 'B' (iteration 2)
+[line 24]  if len(graph[node]) > 1:
+Condition: True, entering 'if' block
+[line 25]  redundancy_score += len(graph[node])
+Update: redundancy_score changed from 2 (defined at defined at [line 25]) to 2+len(graph[node]) = 4
+... [Line 23] repeats 3 more times ...
+... [Line 23] repeats 3 more times ...
+[line 23]  for node in graph:
+Loop Iteration: node is now 'F' (iteration 6)
+[line 24]  if len(graph[node]) > 1:
+Condition: True, entering 'if' block
+[line 23]  for node in graph:
+Loop End: Iteration finished
+[line 27]  reliability_factor = redundancy_score * 0.15
+Compute: redundancy_score * 0.15, where redundancy_score=4 (defined at [line 25]) = 0.6
+[line 28]  return reliability_factor
+Return: reliability_factor=0.6 (defined at [line 27])
+[line 79]  optimal_power = optimize_transmission(signal_strengths)
+Call function optimize_transmission(signal_strengths={('A', 'B'): 15, ('A', 'C'): 22, ('B', 'D'): 18, ...} (defined at [line 6]))
+[line 32]  transmission_values = list(strengths.values())
+Call function list(strengths.values())
+[line 33]  if not transmission_values:
+Condition: True, entering 'if' block
+[line 36]  optimal_power = sum(transmission_values) / len(transmission_values)
+Compute: sum(transmission_values) / len(transmission_values), where transmission_values=[15, 22, 18, 9, 14, ...] (defined at [line 32]) = 14.625
+[line 37]  return optimal_power * 2
+Return: optimal_power * 2
+[line 82]  network_performance = reliability * optimal_power / 10
+Compute: reliability * optimal_power / 10, where reliability=0.6 (defined at [line 78]), optimal_power=29.25 (defined at [line 36]) = 1.7550000000000001
+[line 83]  if network_performance > 50:
+Condition: True, entering 'if' block
+[line 92]  visited_nodes = ['A', 'B', 'D']
+Compute: ['A', 'B', 'D'] = ['A', 'B', 'D']
+[line 97]  for node in network_graph:
+Loop Start: node takes its first value 'A'
+[line 98]  if node not in visited_nodes and len(network_graph[node]) > 0:
+Condition: True, entering 'if' block
+[line 97]  for node in network_graph:
+Loop Iteration: node is now 'B' (iteration 2)
+[line 98]  if node not in visited_nodes and len(network_graph[node]) > 0:
+Condition: True, entering 'if' block
+... [Line 97] repeats 3 more times ...
+... [Line 97] repeats 3 more times ...
+[line 97]  for node in network_graph:
+Loop Iteration: node is now 'F' (iteration 6)
+[line 98]  if node not in visited_nodes and len(network_graph[node]) > 0:
+Condition: True, entering 'if' block
+[line 97]  for node in network_graph:
+Loop End: Iteration finished
+[line 105]  optimal_path_length = calculate_optimal_route(network_graph, visited_nodes)
+Call function calculate_optimal_route(network_graph={A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...} (defined at [line 5]), visited_nodes=['A', 'B', 'D'] (defined at [line 92]))
+[line 42]  nodes = [n for n in graph if n not in visited]
+Compute: [n for n in graph if n not in visited], where n='A' (an unknown source), graph={A: ['B', 'C'], B: ['D', 'E'], C: ['F'], ...} (an unknown source), visited=['A', 'B', 'D'] (an unknown source) = ?
+[line 45]  base_value = sum([len(graph[n]) for n in nodes])
+Call function sum([len(graph[n]) for n in nodes])
+[line 45]  base_value = sum([len(graph[n]) for n in nodes])
+Call function sum([len(graph[n]) for n in nodes])
+[line 45]  base_value = sum([len(graph[n]) for n in nodes])
+Call function sum([len(graph[n]) for n in nodes])
+[line 45]  base_value = sum([len(graph[n]) for n in nodes])
+Call function sum([len(graph[n]) for n in nodes])
+[line 48]  path_metric = (base_value << 2) & 0b11111111
+Compute: (base_value << 2) & 0b11111111, where base_value=3 (defined at [line 45]) = 12
+[line 51]  adjustment = len(visited) * 3
+Compute: len(visited) * 3, where visited=['A', 'B', 'D'] (an unknown source) = 9
+[line 52]  if adjustment > 0:
+Condition: True, entering 'if' block
+[line 53]  path_metric = (path_metric - adjustment) | 0b1100
+Compute: (path_metric - adjustment) | 0b1100, where path_metric=12 (defined at [line 48]), adjustment=9 (defined at [line 51]) = 15
+[line 56]  if not nodes:
+Condition: True, entering 'if' block
+[line 60]  return path_metric ^ 0b10101010
+Return: path_metric ^ 0b10101010
+[line 108]  if network_status == "optimal":
+Condition: True, entering 'if' block
+[line 113]  print(f"Result: {optimal_path_length}")
+Output: f"Result: {optimal_path_length}"
+
+Answer: optimal_path_length = 165 (last updated on defined at [line 105])

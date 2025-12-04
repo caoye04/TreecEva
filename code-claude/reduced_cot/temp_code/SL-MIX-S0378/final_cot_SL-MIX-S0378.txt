@@ -1,0 +1,44 @@
+Target: Find the value of variable priority_score after [line 57] executes
+
+[line 42]  minimum_urgency = 4
+Assign: minimum_urgency = 4
+[line 43]  minimum_importance = 6
+Assign: minimum_importance = 6
+[line 44]  filtered_tasks = [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance]
+Compute: [(u, i) for u, i, _ in task_list if u >= minimum_urgency and i >= minimum_importance], where u=5 (an unknown source), i=8 (an unknown source), _='Update documentation' (an unknown source), task_list=[(5, 8, 'Update documentation'), (7, 3, 'Fix minor bugs'), (9, 9, 'Resolve security issue'), (2, 4, 'Refactor old code'), (6, 7, 'Add new feature'), ...] (an unknown source), minimum_urgency=4 (defined at [line 42]), minimum_importance=6 (defined at [line 43]) = ?
+[line 51]  priority_score = calculate_priority(filtered_tasks)
+Call function calculate_priority(filtered_tasks=[(5, 8), (9, 9), (6, 7)] (defined at [line 44]))
+[line 5]  if not tasks:
+Condition: True, entering 'if' block
+[line 9]  urgencies = [t[0] for t in tasks]
+Compute: [t[0] for t in tasks], where t=(5, 8) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = ?
+[line 9]  urgencies = [t[0] for t in tasks]
+Compute: [t[0] for t in tasks], where t=(9, 9) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = ?
+[line 9]  urgencies = [t[0] for t in tasks]
+Compute: [t[0] for t in tasks], where t=(6, 7) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = ?
+[line 9]  urgencies = [t[0] for t in tasks]
+Compute: [t[0] for t in tasks], where t=(6, 7) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = [5, 9, 6]
+[line 10]  importances = [t[1] for t in tasks]
+Compute: [t[1] for t in tasks], where t=(5, 8) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = ?
+[line 10]  importances = [t[1] for t in tasks]
+Compute: [t[1] for t in tasks], where t=(9, 9) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = ?
+[line 10]  importances = [t[1] for t in tasks]
+Compute: [t[1] for t in tasks], where t=(6, 7) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = ?
+[line 10]  importances = [t[1] for t in tasks]
+Compute: [t[1] for t in tasks], where t=(6, 7) (an unknown source), tasks=[(5, 8), (9, 9), (6, 7)] (an unknown source) = [8, 9, 7]
+[line 18]  for u, i in zip(urgencies, importances):
+(Missing param: 'iter_var')
+[line 18]  for u, i in zip(urgencies, importances):
+Loop End: Iteration finished
+[line 18]  for u, i in zip(urgencies, importances):
+Loop End: Iteration finished
+[line 18]  for u, i in zip(urgencies, importances):
+Loop End: Iteration finished
+[line 22]  weighted_sum = sum(u * i for u, i in zip(urgencies, importances))
+Call function sum(u * i for u, i in zip(urgencies, importances))
+[line 23]  return weighted_sum // len(tasks)
+Return: weighted_sum // len(tasks)
+[line 57]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 54 (last updated on defined at [line 51])

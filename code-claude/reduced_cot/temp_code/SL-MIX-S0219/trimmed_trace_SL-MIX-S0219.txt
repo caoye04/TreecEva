@@ -1,0 +1,105 @@
+62
+total_stock
+---
+58 priority_items = ['C303', 'A101', 'D404']
+58 ['inventory', 'priority_items'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']"]
+61 total_stock = calculate_inventory_value(inventory, priority_items)
+61 ['inventory', 'priority_items'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']"]
+PARAM_MAPPING {'inventory': {'actual_var': 'inventory', 'value': {'A101': {'quantity': 5, 'price': 120}, 'B202': {'quantity': 10, 'price': 85}, 'C303': {'quantity': 3, 'price': 250}, 'D404': {'quantity': 7, 'price': 65}}}, 'priority_items': {'actual_var': 'priority_items', 'value': ['C303', 'A101', 'D404']}}
+FUNCTION_ENTER 1 calculate_inventory_value def calculate_inventory_value(inventory, priority_items):
+1 ['inventory', 'priority_items'] [{'_type': 'dict', '_items': {'A101': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 5}, 'price': {'_type': 'int', '_value': 120}}, '_len': 2}, 'B202': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 10}, 'price': {'_type': 'int', '_value': 85}}, '_len': 2}, 'C303': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 3}, 'price': {'_type': 'int', '_value': 250}}, '_len': 2}, 'D404': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 7}, 'price': {'_type': 'int', '_value': 65}}, '_len': 2}}, '_len': 4}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'C303'}, {'_type': 'str', '_value': 'A101'}, {'_type': 'str', '_value': 'D404'}], '_len': 3}]
+2 total = 0
+2 ['inventory', 'priority_items', 'total'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0']
+3 discount_factor = 0.85
+3 ['inventory', 'priority_items', 'total', 'discount_factor'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85']
+4 tax_rate = 0.07
+4 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07']
+7 sorted_items = sorted(inventory.items(), key=lambda x: x[1]['price'], reverse=True)
+7 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07']
+7 sorted_items = sorted(inventory.items(), key=lambda x: x[1]['price'], reverse=True)
+7 ['x'] ["('A101', {quantity: 5, price: 120})"]
+7 sorted_items = sorted(inventory.items(), key=lambda x: x[1]['price'], reverse=True)
+7 ['x'] ["('B202', {quantity: 10, price: 85})"]
+7 sorted_items = sorted(inventory.items(), key=lambda x: x[1]['price'], reverse=True)
+7 ['x'] ["('C303', {quantity: 3, price: 250})"]
+7 sorted_items = sorted(inventory.items(), key=lambda x: x[1]['price'], reverse=True)
+7 ['x'] ["('D404', {quantity: 7, price: 65})"]
+8 premium_threshold = sorted_items[0][1]['price'] * 0.75
+8 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'sorted_items', 'premium_threshold'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', "[('C303', {...2 items}), ('A101', {...2 items}), ('B202', {...2 items}), ('D404', {...2 items})]", '187.5']
+11 for item_id, details in inventory.items():
+11 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}']
+12 quantity = details['quantity']
+12 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5']
+13 price = details['price']
+13 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5', '120']
+16 item_value = quantity * price
+16 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5', '120', '600']
+19 if item_id in priority_items:
+19 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5', '120', '600']
+22 if priority_index % 2 == 1:
+22 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5', '120', '600']
+27 if price > premium_threshold:
+27 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '0', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5', '120', '600']
+37 total += item_value
+37 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'A101'", '{quantity: 5, price: 120}', '5', '120', '600']
+11 for item_id, details in inventory.items():
+11 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '5', '120', '600']
+12 quantity = details['quantity']
+12 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '10', '120', '600']
+13 price = details['price']
+13 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '10', '85', '600']
+16 item_value = quantity * price
+16 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '10', '85', '850']
+19 if item_id in priority_items:
+19 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '10', '85', '850']
+27 if price > premium_threshold:
+27 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '600', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '10', '85', '850']
+37 total += item_value
+37 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'B202'", '{quantity: 10, price: 85}', '10', '85', '850']
+11 for item_id, details in inventory.items():
+11 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '10', '85', '850']
+12 quantity = details['quantity']
+12 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '85', '850']
+13 price = details['price']
+13 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '850']
+16 item_value = quantity * price
+16 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '750']
+19 if item_id in priority_items:
+19 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '750']
+22 if priority_index % 2 == 1:
+22 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '750']
+23 item_value *= 1.1
+23 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '825.0000000000001']
+27 if price > premium_threshold:
+27 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '1450', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '825.0000000000001']
+37 total += item_value
+37 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '2275.0', '0.85', '0.07', '187.5', "'C303'", '{quantity: 3, price: 250}', '3', '250', '825.0000000000001']
+11 for item_id, details in inventory.items():
+11 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '3', '250', '825.0000000000001']
+12 quantity = details['quantity']
+12 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '7', '250', '825.0000000000001']
+13 price = details['price']
+13 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '7', '65', '825.0000000000001']
+16 item_value = quantity * price
+16 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'quantity', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '7', '65', '455']
+19 if item_id in priority_items:
+19 ['inventory', 'priority_items', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', "['C303', 'A101', 'D404']", '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '65', '455']
+22 if priority_index % 2 == 1:
+22 ['inventory', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '65', '455']
+23 item_value *= 1.1
+23 ['inventory', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '65', '500.50000000000006']
+27 if price > premium_threshold:
+27 ['inventory', 'total', 'discount_factor', 'tax_rate', 'premium_threshold', 'item_id', 'details', 'price', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', '2275.0', '0.85', '0.07', '187.5', "'D404'", '{quantity: 7, price: 65}', '65', '500.50000000000006']
+37 total += item_value
+37 ['inventory', 'total', 'discount_factor', 'tax_rate', 'item_id', 'details', 'item_value'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', '2775.5', '0.85', '0.07', "'D404'", '{quantity: 7, price: 65}', '500.50000000000006']
+11 for item_id, details in inventory.items():
+11 ['inventory', 'total', 'discount_factor', 'tax_rate', 'item_id', 'details'] ['{A101: {quantity: 5, price: 120}, B202: {quantity: 10, price: 85}, C303: {quantity: 3, price: 250}, ...}', '2775.5', '0.85', '0.07', "'D404'", '{quantity: 7, price: 65}']
+44 discounted_value = total * discount_factor
+44 ['total', 'discount_factor', 'tax_rate', 'discounted_value'] ['2775.5', '0.85', '0.07', '2359.1749999999997']
+45 final_value = discounted_value * (1 + tax_rate)
+45 ['tax_rate', 'discounted_value', 'final_value'] ['0.07', '2359.1749999999997', '2524.31725']
+47 return round(final_value)
+47 ['final_value'] ['2524.31725']
+FUNCTION_RETURN 47 calculate_inventory_value {'_type': 'int', '_value': 2524}
+62 print(f"Result: {total_stock}")
+62 ['total_stock'] ['2524']

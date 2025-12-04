@@ -1,0 +1,77 @@
+34
+final_elevation
+---
+3 highest_peak = max(peaks) if peaks else 0
+3 ['peaks', 'base_height', 'highest_peak'] ['[120, 340, 225, 190, 280]', '1000', '340']
+4 lowest_peak = min(peaks) if peaks else 0
+4 ['peaks', 'base_height', 'highest_peak', 'lowest_peak'] ['[120, 340, 225, 190, 280]', '1000', '340', '120']
+7 raw_elevations = [p + base_height for p in peaks]
+7 ['peaks', 'base_height', 'highest_peak', 'lowest_peak', 'p'] ['[120, 340, 225, 190, 280]', '1000', '340', '120', '120']
+7 raw_elevations = [p + base_height for p in peaks]
+7 ['peaks', 'base_height', 'highest_peak', 'lowest_peak', 'p'] ['[120, 340, 225, 190, 280]', '1000', '340', '120', '340']
+7 raw_elevations = [p + base_height for p in peaks]
+7 ['peaks', 'base_height', 'highest_peak', 'lowest_peak', 'p'] ['[120, 340, 225, 190, 280]', '1000', '340', '120', '225']
+7 raw_elevations = [p + base_height for p in peaks]
+7 ['peaks', 'base_height', 'highest_peak', 'lowest_peak', 'p'] ['[120, 340, 225, 190, 280]', '1000', '340', '120', '190']
+7 raw_elevations = [p + base_height for p in peaks]
+7 ['peaks', 'base_height', 'highest_peak', 'lowest_peak', 'p'] ['[120, 340, 225, 190, 280]', '1000', '340', '120', '280']
+7 raw_elevations = [p + base_height for p in peaks]
+7 ['peaks', 'base_height', 'highest_peak', 'lowest_peak', 'raw_elevations'] ['[120, 340, 225, 190, 280]', '1000', '340', '120', '[1120, 1340, 1225, 1190, 1280]']
+8 avg_elevation = sum(raw_elevations) / len(raw_elevations) if raw_elevations else 0
+8 ['highest_peak', 'lowest_peak', 'raw_elevations', 'avg_elevation'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1231.0']
+11 terrain_factor = (highest_peak - lowest_peak) / 100 if highest_peak != lowest_peak else 1
+11 ['highest_peak', 'lowest_peak', 'raw_elevations', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1231.0', '2.2']
+14 process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+14 ['highest_peak', 'lowest_peak', 'raw_elevations', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1231.0', '2.2']
+15 filter_significant = lambda x: x > avg_elevation / 2
+15 ['highest_peak', 'lowest_peak', 'raw_elevations', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1231.0', '2.2']
+18 processed_elevations = [process_elevation(e) for e in raw_elevations]
+18 ['highest_peak', 'lowest_peak', 'raw_elevations', 'e', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1120', '1231.0', '2.2']
+14 process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+14 ['x', 'terrain_factor'] ['1120', '2.2']
+18 processed_elevations = [process_elevation(e) for e in raw_elevations]
+18 ['highest_peak', 'lowest_peak', 'raw_elevations', 'e', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1340', '1231.0', '2.2']
+14 process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+14 ['x', 'terrain_factor'] ['1340', '2.2']
+18 processed_elevations = [process_elevation(e) for e in raw_elevations]
+18 ['highest_peak', 'lowest_peak', 'raw_elevations', 'e', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1225', '1231.0', '2.2']
+14 process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+14 ['x', 'terrain_factor'] ['1225', '2.2']
+18 processed_elevations = [process_elevation(e) for e in raw_elevations]
+18 ['highest_peak', 'lowest_peak', 'raw_elevations', 'e', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1190', '1231.0', '2.2']
+14 process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+14 ['x', 'terrain_factor'] ['1190', '2.2']
+18 processed_elevations = [process_elevation(e) for e in raw_elevations]
+18 ['highest_peak', 'lowest_peak', 'raw_elevations', 'e', 'avg_elevation', 'terrain_factor'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '1280', '1231.0', '2.2']
+14 process_elevation = lambda x: int(x / terrain_factor) if terrain_factor > 0 else x
+14 ['x', 'terrain_factor'] ['1280', '2.2']
+18 processed_elevations = [process_elevation(e) for e in raw_elevations]
+18 ['highest_peak', 'lowest_peak', 'raw_elevations', 'processed_elevations', 'avg_elevation'] ['340', '120', '[1120, 1340, 1225, 1190, 1280]', '[509, 609, 556, 540, 581]', '1231.0']
+19 significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+19 ['highest_peak', 'lowest_peak', 'e', 'processed_elevations', 'avg_elevation'] ['340', '120', '509', '[509, 609, 556, 540, 581]', '1231.0']
+15 filter_significant = lambda x: x > avg_elevation / 2
+15 ['x', 'avg_elevation'] ['509', '1231.0']
+19 significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+19 ['highest_peak', 'lowest_peak', 'e', 'processed_elevations', 'avg_elevation'] ['340', '120', '609', '[509, 609, 556, 540, 581]', '1231.0']
+15 filter_significant = lambda x: x > avg_elevation / 2
+15 ['x', 'avg_elevation'] ['609', '1231.0']
+19 significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+19 ['highest_peak', 'lowest_peak', 'e', 'processed_elevations', 'avg_elevation'] ['340', '120', '556', '[509, 609, 556, 540, 581]', '1231.0']
+15 filter_significant = lambda x: x > avg_elevation / 2
+15 ['x', 'avg_elevation'] ['556', '1231.0']
+19 significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+19 ['highest_peak', 'lowest_peak', 'e', 'processed_elevations', 'avg_elevation'] ['340', '120', '540', '[509, 609, 556, 540, 581]', '1231.0']
+15 filter_significant = lambda x: x > avg_elevation / 2
+15 ['x', 'avg_elevation'] ['540', '1231.0']
+19 significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+19 ['highest_peak', 'lowest_peak', 'e', 'processed_elevations', 'avg_elevation'] ['340', '120', '581', '[509, 609, 556, 540, 581]', '1231.0']
+15 filter_significant = lambda x: x > avg_elevation / 2
+15 ['x', 'avg_elevation'] ['581', '1231.0']
+19 significant_elevations = [e for e in processed_elevations if filter_significant(e)]
+19 ['highest_peak', 'lowest_peak', 'processed_elevations', 'significant_elevations'] ['340', '120', '[509, 609, 556, 540, 581]', '[]']
+26 actual_elevation = int(sum(significant_elevations) / len(significant_elevations)) if significant_elevations else 0
+26 ['highest_peak', 'lowest_peak', 'significant_elevations', 'actual_elevation'] ['340', '120', '[]', '0']
+33 elevation_adjustment = int((highest_peak - lowest_peak) / 20)
+33 ['highest_peak', 'lowest_peak', 'actual_elevation', 'elevation_adjustment'] ['340', '120', '0', '11']
+34 final_elevation = actual_elevation - elevation_adjustment
+34 ['actual_elevation', 'elevation_adjustment', 'final_elevation'] ['0', '11', '-11']

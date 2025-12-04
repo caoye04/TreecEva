@@ -1,0 +1,97 @@
+Target: Find the value of variable actual_overlap after [line 90] executes
+
+[line 76]  seq1 = [3, 7, 9, 12, 15]
+Compute: [3, 7, 9, 12, 15] = [3, 7, 9, 12, 15]
+[line 77]  seq2 = [4, 9, 10, 12, 20]
+Compute: [4, 9, 10, 12, 20] = [4, 9, 10, 12, 20]
+[line 80]  seq_product = [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else []
+Compute: [a*b for a, b in zip(seq1, seq2)] if len(seq1) == len(seq2) else [], where a=3 (an unknown source), b=4 (an unknown source), seq1=[3, 7, 9, 12, 15] (defined at [line 76]), seq2=[4, 9, 10, 12, 20] (defined at [line 77]) = ?
+[line 81]  seq_sum = sum(seq_product) if seq_product else 0
+Compute: sum(seq_product) if seq_product else 0, where seq_product=[12, 63, 90, 144, 300] (defined at [line 80]) = 609
+[line 84]  if seq_sum > 1000:
+Condition: True, entering 'if' block
+[line 90]  actual_overlap = calculate_overlap(seq1, seq2, use_optimization=True)
+Call function calculate_overlap(seq1=[3, 7, 9, 12, 15] (defined at [line 76]), seq2=[4, 9, 10, 12, 20] (defined at [line 77]), use_optimization=True)
+[line 3]  def calculate_overlap(sequence1, sequence2, use_optimization=False):
+Enter function calculate_overlap: sequence1=[3, 7, 9, 12, 15] (seq1 defined at [line 76]), sequence2=[4, 9, 10, 12, 20] (seq2 defined at [line 77]), use_optimization=True
+  [line 13]  noise = 0
+  Assign: noise = 0
+  [line 14]  for i, val in enumerate(seq):
+  (Missing param: 'iter_var')
+  [line 15]  if i % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 16]  noise += val * 2
+  Update: noise changed from 0 (defined at defined at [line 13]) to 0+val * 2 = 6
+  [line 14]  for i, val in enumerate(seq):
+  (Missing param: 'iter_var')
+  [line 15]  if i % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 17]  elif i % 3 == 1:
+  'elif' Condition: True, entering block
+  [line 18]  noise -= val // 2
+  Update: noise changed from 6 (defined at defined at [line 16]) to 6-val // 2 = 3
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+... [Line 14] repeats 2 more times ...
+  [line 14]  for i, val in enumerate(seq):
+  (Missing param: 'iter_var')
+  [line 15]  if i % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 17]  elif i % 3 == 1:
+  'elif' Condition: True, entering block
+  [line 18]  noise -= val // 2
+  Update: noise changed from 34 (defined at defined at [line 18]) to 34-val // 2 = 27
+  [line 14]  for i, val in enumerate(seq):
+  Loop End: Iteration finished
+  [line 21]  return abs(noise) % 100
+  Return: abs(noise) % 100
+  [line 25]  if not use_optimization:
+  Condition: True, entering 'if' block
+  [line 32]  s1_counter = {}
+  Compute: {} = {}
+  [line 33]  for item in sequence1:
+  Loop Start: item takes its first value 3
+  [line 34]  s1_counter[item] = s1_counter.get(item, 0) + 1
+  (Missing param: 'result')
+  [line 33]  for item in sequence1:
+  Loop Iteration: item is now 7 (iteration 2)
+  [line 34]  s1_counter[item] = s1_counter.get(item, 0) + 1
+  (Missing param: 'result')
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+  [line 33]  for item in sequence1:
+  Loop Iteration: item is now 15 (iteration 5)
+  [line 34]  s1_counter[item] = s1_counter.get(item, 0) + 1
+  (Missing param: 'result')
+  [line 33]  for item in sequence1:
+  Loop End: Iteration finished
+  [line 40]  overlap_candidates = []
+  Compute: [] = []
+  [line 43]  overlap_count = 0
+  Assign: overlap_count = 0
+  [line 44]  for item in sequence2:
+  Loop Start: item takes its first value 4
+  [line 45]  if item in s1_counter and s1_counter[item] > 0:
+  Condition: True, entering 'if' block
+  [line 44]  for item in sequence2:
+  Loop Iteration: item is now 9 (iteration 2)
+  [line 45]  if item in s1_counter and s1_counter[item] > 0:
+  Condition: True, entering 'if' block
+  [line 46]  overlap_count += 1
+  Update: overlap_count changed from 0 (defined at defined at [line 43]) to 0+1 = 1
+... [Line 44] repeats 2 more times ...
+... [Line 44] repeats 2 more times ...
+  [line 44]  for item in sequence2:
+  Loop Iteration: item is now 20 (iteration 5)
+  [line 45]  if item in s1_counter and s1_counter[item] > 0:
+  Condition: True, entering 'if' block
+  [line 44]  for item in sequence2:
+  Loop End: Iteration finished
+  [line 52]  if len(overlap_candidates) > 0:
+  Condition: True, entering 'if' block
+  [line 64]  return overlap_count
+  Return: overlap_count=2 (defined at [line 46])
+Function calculate_overlap returns 2
+
+Answer: actual_overlap = 2 (last updated on defined at [line 90])

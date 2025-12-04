@@ -1,0 +1,138 @@
+Target: Find the value of variable priority_score after [line 86] executes
+
+[line 51]  signal_data = [18, 23, 45, 12, 23, 42, 18, 36]
+Compute: [18, 23, 45, 12, 23, 42, 18, 36] = [18, 23, 45, 12, 23, ...]
+[line 53]  processing_flags = {'normalize': True, 'filter_duplicates': False, 'enhance': True}
+Compute: {'normalize': True, 'filter_duplicates': False, 'enhance': True} = {normalize: True, filter_duplicates: False, enhance: True}
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=18 (an unknown source), processing_flags={normalize: True, filter_duplicates: False, enhance: True} (defined at [line 53]), signal_data=[18, 23, 45, 12, 23, ...] (defined at [line 51]) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=23 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=45 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=12 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=23 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=42 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=18 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=36 (an unknown source) = ?
+[line 56]  enhanced_signals = [s * 2 if processing_flags['enhance'] else s for s in signal_data]
+Compute: [s * 2 if processing_flags['enhance'] else s for s in signal_data], where s=36 (an unknown source), processing_flags={normalize: True, filter_duplicates: False, enhance: True} (defined at [line 53]), signal_data=[18, 23, 45, 12, 23, ...] (defined at [line 51]) = [36, 46, 90, 24, 46, ...]
+[line 57]  if processing_flags['normalize']:
+Condition: True, entering 'if' block
+[line 58]  max_signal = max(enhanced_signals)
+Call function max(enhanced_signals=[36, 46, 90, 24, 46, ...] (defined at [line 56]))
+[line 59]  normalized_signals = [s / max_signal * 100 for s in enhanced_signals]
+Compute: [s / max_signal * 100 for s in enhanced_signals], where s=36 (an unknown source), max_signal=90 (defined at [line 58]), enhanced_signals=[36, 46, 90, 24, 46, ...] (defined at [line 56]) = ?
+[line 64]  if processing_flags['filter_duplicates']:
+Condition: True, entering 'if' block
+[line 67]  filtered_signals = signal_data.copy()
+(Missing param: 'func_name')
+[line 70]  lambda_transform = lambda x: x**2 - x + 41
+Compute: lambda x: x**2 - x + 41 = ?
+[line 71]  transformed_signals = list(map(lambda_transform, normalized_signals))
+Call function list(map(lambda_transform, normalized_signals))
+[line 74]  quality_index = sum(transformed_signals) / len(transformed_signals)
+Compute: sum(transformed_signals) / len(transformed_signals), where transformed_signals=[1601.0, 2602.234567901234, 9941.0, 725.4444444444446, 2602.234567901234, ...] (defined at [line 71]) = 4261.586419753086
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where quality_index=4261.586419753086 (defined at [line 74]), transformed_signals=[1601.0, 2602.234567901234, 9941.0, 725.4444444444446, 2602.234567901234, ...] (defined at [line 71]) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=1601.0 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=2602.234567901234 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=9941.0 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=725.4444444444446 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=2602.234567901234 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=8658.777777777776 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=1601.0 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=6361.0 (an unknown source) = ?
+[line 75]  variance_metric = sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals)
+Compute: sum((s - quality_index)**2 for s in transformed_signals) / len(transformed_signals), where s=6361.0 (an unknown source) = ?
+[line 78]  priority_score = calculate_priority(filtered_signals)
+Call function calculate_priority(filtered_signals=[18, 23, 45, 12, 23, ...] (an unknown source))
+[line 21]  if not signals:
+Condition: True, entering 'if' block
+[line 25]  base_value = sum(signals) // len(signals)
+Compute: sum(signals) // len(signals), where signals=[18, 23, 45, 12, 23, ...] (an unknown source) = 27
+[line 32]  unique_signals = set(signals)
+Call function set(signals=[18, 23, 45, 12, 23, ...] (an unknown source))
+[line 37]  for s in signals[:3]:
+Loop Start: s takes its first value 18
+[line 37]  for s in signals[:3]:
+Loop End: Iteration finished
+[line 37]  for s in signals[:3]:
+Loop End: Iteration finished
+[line 37]  for s in signals[:3]:
+Loop End: Iteration finished
+[line 41]  bit_scores = [calculate_bit_strength(s) for s in unique_signals]
+Compute: [calculate_bit_strength(s) for s in unique_signals], where s=36 (defined at [line 37]), unique_signals={36, 42, 12, 45, 18, ...} (defined at [line 32]) = ?
+[line 3]  binary = bin(signal)[2:]
+Compute: bin(signal)[2:], where signal=36 (an unknown source) = '100100'
+[line 4]  ones_count = binary.count('1')
+(Missing param: 'func_name')
+[line 5]  zeros_count = binary.count('0')
+(Missing param: 'func_name')
+[line 8]  return ones_count - zeros_count
+Return: ones_count - zeros_count
+[line 3]  binary = bin(signal)[2:]
+Compute: bin(signal)[2:], where signal=42 (an unknown source) = '101010'
+[line 4]  ones_count = binary.count('1')
+(Missing param: 'func_name')
+[line 5]  zeros_count = binary.count('0')
+(Missing param: 'func_name')
+[line 8]  return ones_count - zeros_count
+Return: ones_count - zeros_count
+[line 3]  binary = bin(signal)[2:]
+Compute: bin(signal)[2:], where signal=12 (an unknown source) = '1100'
+[line 4]  ones_count = binary.count('1')
+(Missing param: 'func_name')
+[line 5]  zeros_count = binary.count('0')
+(Missing param: 'func_name')
+[line 8]  return ones_count - zeros_count
+Return: ones_count - zeros_count
+[line 3]  binary = bin(signal)[2:]
+Compute: bin(signal)[2:], where signal=45 (an unknown source) = '101101'
+[line 4]  ones_count = binary.count('1')
+(Missing param: 'func_name')
+[line 5]  zeros_count = binary.count('0')
+(Missing param: 'func_name')
+[line 8]  return ones_count - zeros_count
+Return: ones_count - zeros_count
+[line 3]  binary = bin(signal)[2:]
+Compute: bin(signal)[2:], where signal=18 (an unknown source) = '10010'
+[line 4]  ones_count = binary.count('1')
+(Missing param: 'func_name')
+[line 5]  zeros_count = binary.count('0')
+(Missing param: 'func_name')
+[line 8]  return ones_count - zeros_count
+Return: ones_count - zeros_count
+[line 3]  binary = bin(signal)[2:]
+Compute: bin(signal)[2:], where signal=23 (an unknown source) = '10111'
+[line 4]  ones_count = binary.count('1')
+(Missing param: 'func_name')
+[line 5]  zeros_count = binary.count('0')
+(Missing param: 'func_name')
+[line 8]  return ones_count - zeros_count
+Return: ones_count - zeros_count
+[line 42]  priority = base_value + sum(bit_scores)
+Compute: base_value + sum(bit_scores), where base_value=27 (defined at [line 25]), bit_scores=[-2, 0, 0, 2, -1, ...] (defined at [line 41]) = 29
+[line 48]  return priority
+Return: priority=29 (defined at [line 42])
+[line 81]  if variance_metric > 1000:
+Condition: True, entering 'if' block
+[line 82]  priority_score += 10
+Update: priority_score changed from 29 (defined at defined at [line 78]) to 29+10 = 39
+[line 86]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 39 (last updated on defined at [line 82])

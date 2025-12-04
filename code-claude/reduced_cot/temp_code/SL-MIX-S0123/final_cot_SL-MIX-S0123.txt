@@ -1,0 +1,298 @@
+Target: Find the value of variable optimal_sequence_length after [line 142] executes
+
+[line 118]  positions = [1, 2, 3, 4]
+Compute: [1, 2, 3, 4] = [1, 2, 3, 4]
+[line 49]  all_combinations = list(itertools.combinations(elements, positions))
+Call function list(itertools.combinations(elements, positions))
+[line 50]  filtered_combinations = [combo for combo in all_combinations if 'G' in combo]
+Compute: [combo for combo in all_combinations if 'G' in combo], where combo=('A>T', 'C>G') (an unknown source), all_combinations=[('A>T', 'C>G'), ('A>T', 'G>C'), ('A>T', 'T>A'), ('C>G', 'G>C'), ('C>G', 'T>A'), ...] (defined at [line 49]) = ?
+[line 51]  return filtered_combinations
+Return: filtered_combinations=[] (defined at [line 50])
+[line 122]  sequence_lengths, mutation_level = analyze_genetic_sequences(test_sequences)
+(Missing param: 'func_name')
+[line 5]  total_mutations = 0
+Assign: total_mutations = 0
+[line 6]  sequence_lengths = []
+Compute: [] = []
+[line 8]  for seq in sequences:
+Loop Start: seq takes its first value 'ACGTACGTACGTACGT'
+[line 10]  mutation_sites = len([base for base in seq if base in 'ACGT'])
+Call function len([base for base in seq if base in 'ACGT'])
+[line 11]  expected_mutations = mutation_sites * mutation_rate
+Compute: mutation_sites * mutation_rate, where mutation_sites=16 (defined at [line 10]), mutation_rate=0.05 (an unknown source) = 0.8
+[line 12]  total_mutations += expected_mutations
+Update: total_mutations changed from 0 (defined at defined at [line 5]) to 0+expected_mutations = 0.8
+[line 8]  for seq in sequences:
+Loop Iteration: seq is now 'GGGGCCCCAAAATTTT' (iteration 2)
+[line 11]  expected_mutations = mutation_sites * mutation_rate
+Compute: mutation_sites * mutation_rate, where mutation_sites=16 (defined at [line 10]), mutation_rate=0.05 (an unknown source) = 0.8
+[line 12]  total_mutations += expected_mutations
+Update: total_mutations changed from 0.8 (defined at defined at [line 12]) to 0.8+expected_mutations = 1.6
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+[line 8]  for seq in sequences:
+Loop Iteration: seq is now 'AATTCCGG' (iteration 5)
+[line 11]  expected_mutations = mutation_sites * mutation_rate
+Compute: mutation_sites * mutation_rate, where mutation_sites=8 (defined at [line 10]), mutation_rate=0.05 (an unknown source) = 0.4
+[line 12]  total_mutations += expected_mutations
+Update: total_mutations changed from 2.8000000000000003 (defined at defined at [line 12]) to 2.8000000000000003+expected_mutations = 3.2
+[line 8]  for seq in sequences:
+Loop End: Iteration finished
+[line 16]  if total_mutations > 50:
+Condition: True, entering 'if' block
+[line 18]  elif total_mutations > 20:
+'elif' Condition: True, entering block
+[line 21]  mutation_severity = "LOW"
+Assign: mutation_severity = 'LOW'
+[line 23]  return sequence_lengths, mutation_severity
+Return: sequence_lengths, mutation_severity
+[line 129]  filter_threshold = 30  # Complexity threshold
+Assign: filter_threshold = 30
+[line 130]  min_seq_length = 10
+Assign: min_seq_length = 10
+[line 131]  max_gc_percentage = 0.7
+Assign: max_gc_percentage = 0.7
+[line 133]  valid_sequences = filter_sequences(test_sequences, min_seq_length, max_gc_percentage)
+Call function filter_sequences(test_sequences=['ACGTACGTACGTACGT', 'GGGGCCCCAAAATTTT', 'ATGCATGCATGC', 'GCGCGCGCGCGC', 'AATTCCGG'] (an unknown source), min_seq_length=10 (defined at [line 130]), max_gc_percentage=0.7 (defined at [line 131]))
+[line 55]  valid_sequences = []
+Compute: [] = []
+[line 58]  for seq in sequences:
+Loop Start: seq takes its first value 'ACGTACGTACGTACGT'
+[line 60]  if len(seq) < min_length:
+Condition: True, entering 'if' block
+[line 72]  if gc_content <= max_gc_content:
+Condition: True, entering 'if' block
+[line 58]  for seq in sequences:
+Loop Iteration: seq is now 'GGGGCCCCAAAATTTT' (iteration 2)
+[line 60]  if len(seq) < min_length:
+Condition: True, entering 'if' block
+[line 72]  if gc_content <= max_gc_content:
+Condition: True, entering 'if' block
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+[line 58]  for seq in sequences:
+Loop Iteration: seq is now 'AATTCCGG' (iteration 5)
+[line 60]  if len(seq) < min_length:
+Condition: True, entering 'if' block
+[line 58]  for seq in sequences:
+Loop End: Iteration finished
+[line 77]  return valid_sequences
+Return: valid_sequences=['ACGTACGTACGTACGT', 'GGGGCCCCAAAATTTT', 'ATGCATGCATGC'] (defined at [line 55])
+[line 136]  optimal_sequence_length = calculate_optimal_length(valid_sequences, filter_threshold)
+Call function calculate_optimal_length(valid_sequences=['ACGTACGTACGTACGT', 'GGGGCCCCAAAATTTT', 'ATGCATGCATGC'] (defined at [line 55]), filter_threshold=30 (defined at [line 129]))
+[line 81]  if not sequences:
+Condition: True, entering 'if' block
+[line 85]  complexity_scores = [calculate_complexity_score(seq) for seq in sequences]
+Compute: [calculate_complexity_score(seq) for seq in sequences], where seq='ACGTACGTACGTACGT' (defined at [line 58]), sequences=['ACGTACGTACGTACGT', 'GGGGCCCCAAAATTTT', 'ATGCATGCATGC'] (an unknown source) = ?
+[line 28]  unique_bigrams = set()
+Call function set()
+[line 29]  unique_trigrams = set()
+Call function set()
+[line 31]  for i in range(len(sequence) - 1):
+Loop Start: i takes its first value 0
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop Start: i takes its first value 0
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 38]  complexity = len(unique_bigrams) * 2 + len(unique_trigrams) * 3
+Compute: len(unique_bigrams) * 2 + len(unique_trigrams) * 3, where unique_bigrams={'GT', 'TA', 'CG', 'AC'} (defined at [line 28]), unique_trigrams={'ACG', 'CGT', 'TAC', 'GTA'} (defined at [line 29]) = 20
+[line 44]  return complexity
+Return: complexity=20 (defined at [line 38])
+[line 28]  unique_bigrams = set()
+Call function set()
+[line 29]  unique_trigrams = set()
+Call function set()
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop Iteration: i is now 13 (iteration 30)
+[line 38]  complexity = len(unique_bigrams) * 2 + len(unique_trigrams) * 3
+Compute: len(unique_bigrams) * 2 + len(unique_trigrams) * 3, where unique_bigrams={'TT', 'CC', 'GC', 'CA', 'GG', ...} (defined at [line 28]), unique_trigrams={'CCA', 'ATT', 'GGC', 'AAT', 'CCC', ...} (defined at [line 29]) = 44
+[line 44]  return complexity
+Return: complexity=44 (defined at [line 38])
+[line 28]  unique_bigrams = set()
+Call function set()
+[line 29]  unique_trigrams = set()
+Call function set()
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 31]  for i in range(len(sequence) - 1):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop End: Iteration finished
+[line 34]  for i in range(len(sequence) - 2):
+Loop Iteration: i is now 9 (iteration 41)
+[line 38]  complexity = len(unique_bigrams) * 2 + len(unique_trigrams) * 3
+Compute: len(unique_bigrams) * 2 + len(unique_trigrams) * 3, where unique_bigrams={'TG', 'CA', 'GC', 'AT'} (defined at [line 28]), unique_trigrams={'CAT', 'ATG', 'TGC', 'GCA'} (defined at [line 29]) = 20
+[line 44]  return complexity
+Return: complexity=20 (defined at [line 38])
+[line 93]  filtered_indices = [i for i, score in enumerate(complexity_scores) if score >= threshold]
+Compute: [i for i, score in enumerate(complexity_scores) if score >= threshold], where i=0 (defined at [line 34]), score=20 (an unknown source), complexity_scores=[20, 44, 20] (defined at [line 85]), threshold=30 (an unknown source) = ?
+[line 95]  if not filtered_indices:
+Condition: True, entering 'if' block
+[line 99]  filtered_lengths = [len(sequences[i]) for i in filtered_indices]
+Compute: [len(sequences[i]) for i in filtered_indices], where sequences=['ACGTACGTACGTACGT', 'GGGGCCCCAAAATTTT', 'ATGCATGCATGC'] (an unknown source), i=1 (defined at [line 34]), filtered_indices=[1] (defined at [line 93]) = ?
+[line 99]  filtered_lengths = [len(sequences[i]) for i in filtered_indices]
+Compute: [len(sequences[i]) for i in filtered_indices], where sequences=['ACGTACGTACGTACGT', 'GGGGCCCCAAAATTTT', 'ATGCATGCATGC'] (an unknown source), i=1 (defined at [line 34]), filtered_indices=[1] (defined at [line 93]) = [16]
+[line 100]  optimal_length = sum(filtered_lengths) // len(filtered_lengths)
+Compute: sum(filtered_lengths) // len(filtered_lengths), where filtered_lengths=[16] (defined at [line 99]) = 16
+[line 105]  return optimal_length
+Return: optimal_length=16 (defined at [line 100])
+[line 142]  print(f"Result: {optimal_sequence_length}")
+Output: f"Result: {optimal_sequence_length}"
+
+Answer: optimal_sequence_length = 16 (last updated on defined at [line 136])

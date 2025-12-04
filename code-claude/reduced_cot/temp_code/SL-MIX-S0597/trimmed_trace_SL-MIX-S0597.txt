@@ -1,0 +1,47 @@
+34
+common_count
+---
+PARAM_MAPPING {'text': {'actual_var': 'sample_text', 'value': 'Python programming is both fun and practical. Python offers many libraries.'}, 'keywords': {'actual_var': 'keywords', 'value': ['python', 'programming', 'libraries', 'code', 'developer']}, 'weights': {'actual_var': 'weight_factors', 'value': {'relevance': 0.7, 'density': 0.3}}}
+FUNCTION_ENTER 4 analyze_text def analyze_text(text, keywords, weights):
+4 ['text', 'keywords', 'weights'] [{'_type': 'str', '_value': 'Python programming is both fun and practical. Python offers many libraries.'}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'python'}, {'_type': 'str', '_value': 'programming'}, {'_type': 'str', '_value': 'libraries'}, {'_type': 'str', '_value': 'code'}, {'_type': 'str', '_value': 'developer'}], '_len': 5}, {'_type': 'dict', '_items': {'relevance': {'_type': 'float', '_value': 0.7}, 'density': {'_type': 'float', '_value': 0.3}}, '_len': 2}]
+6 text = text.lower().replace(',', ' ').replace('.', ' ')
+6 ['text', 'keywords'] ["'python programming is both fun and practical  python offers many libraries '", "['python', 'programming', 'libraries', 'code', 'developer']"]
+7 words = text.split()
+7 ['text', 'keywords', 'words'] ["'python programming is both fun and practical  python offers many libraries '", "['python', 'programming', 'libraries', 'code', 'developer']", "['python', 'programming', 'is', 'both', 'fun', ...]"]
+10 word_freq = Counter(words)
+10 ['keywords', 'words', 'word_freq'] ["['python', 'programming', 'libraries', 'code', 'developer']", "['python', 'programming', 'is', 'both', 'fun', ...]", '{python: 2, programming: 1, is: 1, ...}']
+14 text_set = set(words)
+14 ['keywords', 'words', 'text_set', 'word_freq'] ["['python', 'programming', 'libraries', 'code', 'developer']", "['python', 'programming', 'is', 'both', 'fun', ...]", "{'libraries', 'programming', 'both', 'and', 'practical', ...}", '{python: 2, programming: 1, is: 1, ...}']
+15 keyword_set = set(keywords)
+15 ['keywords', 'words', 'text_set', 'keyword_set', 'word_freq'] ["['python', 'programming', 'libraries', 'code', 'developer']", "['python', 'programming', 'is', 'both', 'fun', ...]", "{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '{python: 2, programming: 1, is: 1, ...}']
+18 total_words = len(words)
+18 ['keywords', 'words', 'text_set', 'keyword_set', 'total_words', 'word_freq'] ["['python', 'programming', 'libraries', 'code', 'developer']", "['python', 'programming', 'is', 'both', 'fun', ...]", "{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '11', '{python: 2, programming: 1, is: 1, ...}']
+19 unique_words = len(text_set)
+19 ['keywords', 'text_set', 'keyword_set', 'total_words', 'unique_words', 'word_freq'] ["['python', 'programming', 'libraries', 'code', 'developer']", "{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '11', '10', '{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['word_freq'] ['{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['kw', 'word_freq'] ["'python'", '{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['kw', 'word_freq'] ["'programming'", '{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['kw', 'word_freq'] ["'libraries'", '{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['kw', 'word_freq'] ["'code'", '{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['kw', 'word_freq'] ["'developer'", '{python: 2, programming: 1, is: 1, ...}']
+22 density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+22 ['kw', 'word_freq'] ["'developer'", '{python: 2, programming: 1, is: 1, ...}']
+25 metrics = defaultdict(int)
+25 ['text_set', 'keyword_set', 'total_words', 'unique_words', 'density', 'metrics'] ["{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '11', '10', '0.36363636363636365', '{}']
+26 metrics['density'] = round(density * 100, 2)  # Convert to percentage
+26 ['text_set', 'keyword_set', 'total_words', 'unique_words', 'density', 'metrics'] ["{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '11', '10', '0.36363636363636365', '{density: 36.36}']
+27 metrics['unique_ratio'] = unique_words / total_words if total_words > 0 else 0
+27 ['text_set', 'keyword_set', 'total_words', 'unique_words', 'metrics'] ["{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '11', '10', '{density: 36.36, unique_ratio: 0.9090909090909091}']
+31 multiplier = 2 if metrics['density'] > 5 else 3
+31 ['text_set', 'keyword_set', 'metrics', 'multiplier'] ["{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '{density: 36.36, unique_ratio: 0.9090909090909091}', '2']
+34 common_count = len(text_set & keyword_set) * multiplier
+34 ['text_set', 'keyword_set', 'multiplier', 'common_count'] ["{'libraries', 'programming', 'both', 'and', 'practical', ...}", "{'libraries', 'programming', 'code', 'developer', 'python'}", '2', '6']
+43 return common_count
+43 ['common_count'] ['6']
+FUNCTION_RETURN 43 analyze_text {'_type': 'int', '_value': 6}

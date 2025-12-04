@@ -1,0 +1,66 @@
+Target: Find the value of variable final_priority after [line 103] executes
+
+[line 17]  def calculate_resource_efficiency(resources):
+Enter function calculate_resource_efficiency: resources={cpu: 8, memory: 16, disk: 500}
+  [line 19]  if not resources:
+  Condition: True, entering 'if' block
+  [line 27]  return efficiency * 100
+  Return: efficiency * 100
+Function calculate_resource_efficiency returns 55.343511450381676
+[line 1]  def process_tasks(queue, available_resources=None):
+Enter function process_tasks: queue=[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}], available_resources={cpu: 8, memory: 16, disk: 500}
+  [line 3]  if available_resources is None:
+  Condition: True, entering 'if' block
+  [line 6]  processed = []
+  Compute: [] = []
+  [line 7]  for task in queue:
+  Loop Start: task takes its first value {id: 'task1', priority: 7, deadline: 24}
+  [line 8]  if task.get("priority", 0) > 5:
+  Condition: True, entering 'if' block
+  [line 7]  for task in queue:
+  Loop Iteration: task is now {id: 'task2', priority: 3, deadline: 48} (iteration 2)
+  [line 8]  if task.get("priority", 0) > 5:
+  Condition: True, entering 'if' block
+  [line 7]  for task in queue:
+  Loop Iteration: task is now {id: 'task3', priority: 5, deadline: 12} (iteration 3)
+  [line 8]  if task.get("priority", 0) > 5:
+  Condition: True, entering 'if' block
+  [line 7]  for task in queue:
+  Loop Iteration: task is now {id: 'task4', priority: 2, deadline: 72} (iteration 4)
+  [line 8]  if task.get("priority", 0) > 5:
+  Condition: True, entering 'if' block
+  [line 7]  for task in queue:
+  Loop End: Iteration finished
+  [line 15]  return processed
+  Return: processed=[('task1', {...3 items}), ('task2', {...3 items}), ('task3', {...3 items}), ('task4', {...3 items})] (defined at [line 6])
+Function process_tasks returns [('task1', {...3 items}), ('task2', {...3 items}), ('task3', {...3 items}), ('task4', {...3 items})]
+[line 98]  final_priority = priority_calculator(task_queue, resource_map)
+Call function priority_calculator(task_queue=[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}] (an unknown source), resource_map={cpu: 8, memory: 16, disk: 500} (an unknown source))
+[line 31]  if not tasks or not resources:
+Condition: True, entering 'if' block
+[line 35]  priorities = [t.get("priority", 0) for t in tasks]
+Compute: [t.get("priority", 0) for t in tasks], where t={id: 'task1', priority: 7, deadline: 24} (an unknown source), tasks=[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}] (an unknown source) = ?
+[line 39]  resource_weights = {k: v / sum(resources.values()) for k, v in resources.items()}
+Compute: {k: v / sum(resources.values()) for k, v in resources.items()}, where k='cpu' (an unknown source), v=8 (an unknown source), resources={cpu: 8, memory: 16, disk: 500} (an unknown source) = ?
+[line 40]  resource_factor = calculate_resource_efficiency(resource_weights)
+Call function calculate_resource_efficiency(resource_weights={cpu: 0.015267175572519083, memory: 0.030534351145038167, disk: 0.9541984732824428} (defined at [line 39]))
+[line 19]  if not resources:
+Condition: True, entering 'if' block
+[line 27]  return efficiency * 100
+Return: efficiency * 100
+[line 65]  base_priority = sum(priorities) / len(priorities)
+Compute: sum(priorities) / len(priorities), where priorities=[7, 3, 5, 2] (defined at [line 35]) = 4.25
+[line 66]  weighted_priority = base_priority * (1 + (max(priorities) - min(priorities)) / 10)
+Compute: base_priority * (1 + (max(priorities) - min(priorities)) / 10), where base_priority=4.25 (defined at [line 65]), priorities=[7, 3, 5, 2] (defined at [line 35]) = 6.375
+[line 69]  if resource_factor > 1000:
+Condition: True, entering 'if' block
+[line 73]  return round(weighted_priority * 10) / 10
+Return: round(weighted_priority * 10) / 10
+[line 101]  print(f"Task stats: {task_stats}")
+Output: f"Task stats: {task_stats}"
+[line 102]  print(f"Resource efficiency: {efficiency_score}")
+Output: f"Resource efficiency: {efficiency_score}"
+[line 103]  print(f"Result: {final_priority}")
+Output: f"Result: {final_priority}"
+
+Answer: final_priority = 6.4 (last updated on defined at [line 98])

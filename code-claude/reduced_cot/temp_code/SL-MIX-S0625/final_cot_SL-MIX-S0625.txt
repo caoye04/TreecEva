@@ -1,0 +1,175 @@
+Target: Find the value of variable total_score after [line 77] executes
+
+[line 67]  sample_text = "The quick brown fox jumps over the lazy dog. The fox was quick and brown."
+Assign: sample_text = 'The quick brown fox jumps over the lazy dog. The fox was quick and brown.'
+[line 70]  word_frequencies = analyze_text(sample_text)
+Call function analyze_text(sample_text='The quick brown fox jumps over the lazy dog. The fox was quick and brown.' (defined at [line 67]))
+[line 19]  cleaned_text = ''
+Assign: cleaned_text = ''
+[line 20]  for char in text.lower():
+Loop Start: char takes its first value 't'
+[line 21]  if char.isalnum() or char.isspace():
+Condition: True, entering 'if' block
+[line 22]  cleaned_text += char
+Update: cleaned_text changed from '' (defined at defined at [line 19]) to ''+char = 't'
+[line 20]  for char in text.lower():
+Loop Iteration: char is now 'h' (iteration 2)
+[line 21]  if char.isalnum() or char.isspace():
+Condition: True, entering 'if' block
+[line 22]  cleaned_text += char
+Update: cleaned_text changed from 't' (defined at defined at [line 22]) to 't'+char = 'th'
+... [Line 20] repeats 70 more times ...
+... [Line 20] repeats 70 more times ...
+... [Line 20] repeats 70 more times ...
+[line 20]  for char in text.lower():
+Loop Iteration: char is now '.' (iteration 73)
+[line 21]  if char.isalnum() or char.isspace():
+Condition: True, entering 'if' block
+[line 20]  for char in text.lower():
+Loop End: Iteration finished
+[line 25]  words = cleaned_text.split()
+(Missing param: 'func_name')
+[line 28]  frequencies = {}
+Compute: {} = {}
+[line 29]  for word in words:
+Loop Start: word takes its first value 'the'
+[line 30]  if word in frequencies:
+Condition: True, entering 'if' block
+[line 33]  frequencies[word] = 1
+(Missing param: 'var')
+[line 29]  for word in words:
+Loop Iteration: word is now 'quick' (iteration 2)
+[line 30]  if word in frequencies:
+Condition: True, entering 'if' block
+[line 33]  frequencies[word] = 1
+(Missing param: 'var')
+... [Line 29] repeats 12 more times ...
+... [Line 29] repeats 12 more times ...
+... [Line 29] repeats 12 more times ...
+[line 29]  for word in words:
+Loop Iteration: word is now 'brown' (iteration 15)
+[line 30]  if word in frequencies:
+Condition: True, entering 'if' block
+[line 29]  for word in words:
+Loop End: Iteration finished
+[line 39]  return frequencies
+Return: frequencies={the: 3, quick: 2, brown: 2, ...} (defined at [line 28])
+[line 73]  target_words = ["quick", "fox", "elephant", "brown"]
+Compute: ["quick", "fox", "elephant", "brown"] = ['quick', 'fox', 'elephant', 'brown']
+[line 76]  total_score = calculate_final_score(word_frequencies, target_words)
+Call function calculate_final_score(word_frequencies={the: 3, quick: 2, brown: 2, ...} (defined at [line 70]), target_words=['quick', 'fox', 'elephant', 'brown'] (defined at [line 73]))
+[line 41]  def calculate_final_score(word_frequencies, target_words):
+Enter function calculate_final_score: word_frequencies={the: 3, quick: 2, brown: 2, ...} (word_frequencies defined at [line 70]), target_words=['quick', 'fox', 'elephant', 'brown'] (target_words defined at [line 73])
+  [line 42]  base_score = 0
+  Assign: base_score = 0
+  [line 43]  bonus_points = 0
+  Assign: bonus_points = 0
+  [line 44]  penalty = 0
+  Assign: penalty = 0
+  [line 47]  for word in target_words:
+  Loop Start: word takes its first value 'quick'
+  [line 48]  if word in word_frequencies:
+  Condition: True, entering 'if' block
+  [line 50]  word_score = word_frequencies[word] * calculate_word_value(word)
+  Compute: word_frequencies[word] * calculate_word_value(word), where word_frequencies={the: 3, quick: 2, brown: 2, ...} (parameter word_frequencies defined at [line 70]), word='quick' (defined at [line 47]) = ?
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 6]  multiplier = 1
+  Assign: multiplier = 1
+  [line 7]  if len(set(word)) == len(word):  # All unique characters
+  Condition: True, entering 'if' block
+  [line 8]  multiplier = 1.5
+  Assign: multiplier = 1.5
+  [line 15]  return int(base_value * multiplier)
+  Return: int(base_value * multiplier)
+  [line 51]  base_score += word_score
+  Update: base_score changed from ? (defined at defined at [line 42]) to ?+word_score = 182
+  [line 54]  if word_frequencies[word] > 2:
+  Condition: True, entering 'if' block
+  [line 47]  for word in target_words:
+  Loop Iteration: word is now 'fox' (iteration 2)
+  [line 48]  if word in word_frequencies:
+  Condition: True, entering 'if' block
+  [line 50]  word_score = word_frequencies[word] * calculate_word_value(word)
+  Compute: word_frequencies[word] * calculate_word_value(word), where word_frequencies={the: 3, quick: 2, brown: 2, ...} (parameter word_frequencies defined at [line 70]), word='fox' (defined at [line 47]) = 182
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 6]  multiplier = 1
+  Assign: multiplier = 1
+  [line 7]  if len(set(word)) == len(word):  # All unique characters
+  Condition: True, entering 'if' block
+  [line 8]  multiplier = 1.5
+  Assign: multiplier = 1.5
+  [line 15]  return int(base_value * multiplier)
+  Return: int(base_value * multiplier)
+  [line 51]  base_score += word_score
+  Update: base_score changed from ? (defined at defined at [line 51]) to ?+word_score = 316
+  [line 54]  if word_frequencies[word] > 2:
+  Condition: True, entering 'if' block
+  [line 47]  for word in target_words:
+  Loop Iteration: word is now 'elephant' (iteration 3)
+  [line 48]  if word in word_frequencies:
+  Condition: True, entering 'if' block
+  [line 58]  penalty += 10
+  Update: penalty changed from 0 (defined at defined at [line 44]) to 0+10 = 10
+  [line 47]  for word in target_words:
+  Loop Iteration: word is now 'brown' (iteration 4)
+  [line 48]  if word in word_frequencies:
+  Condition: True, entering 'if' block
+  [line 50]  word_score = word_frequencies[word] * calculate_word_value(word)
+  Compute: word_frequencies[word] * calculate_word_value(word), where word_frequencies={the: 3, quick: 2, brown: 2, ...} (parameter word_frequencies defined at [line 70]), word='brown' (defined at [line 47]) = 134
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 3]  base_value = sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  Call function sum(ord(c) - ord('a') + 1 for c in word.lower() if c.isalpha())
+  [line 6]  multiplier = 1
+  Assign: multiplier = 1
+  [line 7]  if len(set(word)) == len(word):  # All unique characters
+  Condition: True, entering 'if' block
+  [line 8]  multiplier = 1.5
+  Assign: multiplier = 1.5
+  [line 15]  return int(base_value * multiplier)
+  Return: int(base_value * multiplier)
+  [line 51]  base_score += word_score
+  Update: base_score changed from ? (defined at defined at [line 51]) to ?+word_score = 532
+  [line 54]  if word_frequencies[word] > 2:
+  Condition: True, entering 'if' block
+  [line 47]  for word in target_words:
+  Loop End: Iteration finished
+  [line 64]  return base_score + bonus_points - penalty
+  Return: base_score + bonus_points - penalty
+Function calculate_final_score returns 522
+[line 77]  print(f"Result: {total_score}")
+Output: f"Result: {total_score}"
+
+Answer: total_score = 522 (last updated on defined at [line 76])

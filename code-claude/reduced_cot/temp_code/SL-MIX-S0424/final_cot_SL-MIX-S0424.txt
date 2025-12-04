@@ -1,0 +1,20 @@
+Target: Find the value of variable shipping_cost after [line 19] executes
+
+[line 2]  package_weight = 12.5  # Weight in kg
+Assign: package_weight = 12.5
+[line 3]  weight_limit = 10.0   # Standard weight limit
+Assign: weight_limit = 10.0
+[line 4]  base_rate = 15.0      # Base shipping rate
+Assign: base_rate = 15.0
+[line 7]  express_delivery = True
+Assign: express_delivery = True
+[line 8]  premium_factor = 0.25  # 25% premium for express delivery
+Assign: premium_factor = 0.25
+[line 11]  overweight = package_weight - weight_limit
+Compute: package_weight - weight_limit, where package_weight=12.5 (defined at [line 2]), weight_limit=10.0 (defined at [line 3]) = 2.5
+[line 12]  weight_surcharge = overweight * 2.0 if overweight > 0 else 0
+Compute: overweight * 2.0 if overweight > 0 else 0, where overweight=2.5 (defined at [line 11]) = 5.0
+[line 19]  shipping_cost = base_rate * (1 + premium_factor if express_delivery else 0) + (weight_surcharge if package_weight > weight_limit else 0)
+Compute: base_rate * (1 + premium_factor if express_delivery else 0) + (weight_surcharge if package_weight > weight_limit else 0), where base_rate=15.0 (defined at [line 4]), premium_factor=0.25 (defined at [line 8]), express_delivery=True (defined at [line 7]), weight_surcharge=5.0 (defined at [line 12]), package_weight=12.5 (defined at [line 2]), weight_limit=10.0 (defined at [line 3]) = 23.75
+
+Answer: shipping_cost = 23.75 (last updated on defined at [line 19])

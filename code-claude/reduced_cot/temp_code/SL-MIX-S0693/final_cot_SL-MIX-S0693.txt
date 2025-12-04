@@ -1,0 +1,60 @@
+Target: Find the value of variable word_score after [line 58] executes
+
+[line 25]  text = "programming puzzles are challenging and fun"
+Assign: text = 'programming puzzles are challenging and fun'
+[line 26]  words = text.split()
+(Missing param: 'func_name')
+[line 33]  min_length = 5
+Assign: min_length = 5
+[line 34]  max_length = 10
+Assign: max_length = 10
+[line 35]  filtered_words = [word for word in words if min_length <= len(word) <= max_length]
+Compute: [word for word in words if min_length <= len(word) <= max_length], where word='programming' (an unknown source), words=['programming', 'puzzles', 'are', 'challenging', 'and', ...] (an unknown source), min_length=5 (defined at [line 33]), max_length=10 (defined at [line 34]) = ?
+[line 41]  word_index = 2 % len(filtered_words)
+Compute: 2 % len(filtered_words), where filtered_words=['puzzles'] (defined at [line 35]) = 0
+[line 42]  filtered_word = filtered_words[word_index]
+Compute: filtered_words[word_index], where filtered_words=['puzzles'] (defined at [line 35]), word_index=0 (defined at [line 41]) = 'puzzles'
+[line 45]  base_multipliers = [1, 2, 1, 3, 1]
+Compute: [1, 2, 1, 3, 1] = [1, 2, 1, 3, 1]
+[line 46]  multiplier_cycles = itertools.cycle(base_multipliers)
+(Missing param: 'func_name')
+[line 47]  multipliers = [next(multiplier_cycles) for _ in range(len(filtered_word))]
+Compute: [next(multiplier_cycles) for _ in range(len(filtered_word))], where multiplier_cycles=<itertools.cycle object at 0x0000022B19B13940> (an unknown source), _=0 (an unknown source), filtered_word='puzzles' (defined at [line 42]) = ?
+[line 53]  word_score = calculate_word_value(filtered_word, multipliers)
+Call function calculate_word_value(filtered_word='puzzles' (defined at [line 42]), multipliers=[1, 2, 1, 3, 1, ...] (defined at [line 47]))
+[line 3]  def calculate_word_value(word, multipliers):
+Enter function calculate_word_value: word='puzzles' (filtered_word defined at [line 42]), multipliers=[1, 2, 1, 3, 1, ...] (multipliers defined at [line 47])
+  [line 11]  value = 0
+  Assign: value = 0
+  [line 12]  for i, char in enumerate(word):
+  (Missing param: 'iter_var')
+  [line 14]  if i < len(multipliers):
+  Condition: True, entering 'if' block
+  [line 15]  value += letter_values.get(char.lower(), 0) * multipliers[i]
+  Update: value changed from 0 (defined at defined at [line 11]) to 0+letter_values.get(char.lower(), 0) * multipliers[i] = 3
+  [line 12]  for i, char in enumerate(word):
+  (Missing param: 'iter_var')
+  [line 14]  if i < len(multipliers):
+  Condition: True, entering 'if' block
+  [line 15]  value += letter_values.get(char.lower(), 0) * multipliers[i]
+  Update: value changed from 3 (defined at defined at [line 15]) to 3+letter_values.get(char.lower(), 0) * multipliers[i] = 5
+... [Line 12] repeats 4 more times ...
+... [Line 12] repeats 4 more times ...
+... [Line 12] repeats 4 more times ...
+  [line 12]  for i, char in enumerate(word):
+  (Missing param: 'iter_var')
+  [line 14]  if i < len(multipliers):
+  Condition: True, entering 'if' block
+  [line 15]  value += letter_values.get(char.lower(), 0) * multipliers[i]
+  Update: value changed from 47 (defined at defined at [line 15]) to 47+letter_values.get(char.lower(), 0) * multipliers[i] = 49
+  [line 12]  for i, char in enumerate(word):
+  Loop End: Iteration finished
+  [line 20]  length_bonus = max(0, len(word) - 4)
+  Call function max(0, len(word) - 4)
+  [line 22]  return value + length_bonus
+  Return: value + length_bonus
+Function calculate_word_value returns 52
+[line 58]  print(f"Result: {word_score}")
+Output: f"Result: {word_score}"
+
+Answer: word_score = 52 (last updated on defined at [line 53])

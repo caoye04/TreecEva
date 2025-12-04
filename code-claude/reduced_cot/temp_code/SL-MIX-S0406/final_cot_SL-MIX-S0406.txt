@@ -1,0 +1,73 @@
+Target: Find the value of variable target_index after [line 53] executes
+
+[line 44]  temperatures = [22.5, 25.8, 27.1, 23.4, 26.0, 28.3, 24.7]
+Compute: [22.5, 25.8, 27.1, 23.4, 26.0, 28.3, 24.7] = [22.5, 25.8, 27.1, 23.4, 26.0, ...]
+[line 45]  target_temp = 26.5
+Assign: target_temp = 26.5
+[line 3]  hot_days = [t for t in temps if t > threshold]
+Compute: [t for t in temps if t > threshold], where t=22.5 (an unknown source), temps=[22.5, 25.8, 27.1, 23.4, 26.0, ...] (an unknown source), threshold=25.0 (an unknown source) = ?
+[line 4]  cold_days = [t for t in temps if t <= threshold]
+Compute: [t for t in temps if t <= threshold], where t=22.5 (an unknown source), temps=[22.5, 25.8, 27.1, 23.4, 26.0, ...] (an unknown source), threshold=25.0 (an unknown source) = ?
+[line 7]  avg_hot = sum(hot_days) / len(hot_days) if hot_days else 0
+Compute: sum(hot_days) / len(hot_days) if hot_days else 0, where hot_days=[25.8, 27.1, 26.0, 28.3] (defined at [line 3]) = 26.8
+[line 8]  avg_cold = sum(cold_days) / len(cold_days) if cold_days else 0
+Compute: sum(cold_days) / len(cold_days) if cold_days else 0, where cold_days=[22.5, 23.4, 24.7] (defined at [line 4]) = 23.53333333333333
+[line 10]  return len(hot_days), avg_hot - avg_cold
+Return: len(hot_days), avg_hot - avg_cold
+[line 53]  target_index = find_target_index(temperatures, target_temp)
+Call function find_target_index(temperatures=[22.5, 25.8, 27.1, 23.4, 26.0, ...] (defined at [line 44]), target_temp=26.5 (defined at [line 45]))
+[line 12]  def find_target_index(temps, target):
+Enter function find_target_index: temps=[22.5, 25.8, 27.1, 23.4, 26.0, ...] (temperatures defined at [line 44]), target=26.5 (target_temp defined at [line 45])
+  [line 14]  if not temps:
+  Condition: True, entering 'if' block
+  [line 18]  closest_diff = float('inf')
+  Call function float('inf')
+  [line 19]  second_closest = float('inf')
+  Call function float('inf')
+  [line 20]  closest_idx = -1
+  Compute: -1 = ?
+  [line 25]  for i, temp in enumerate(temps):
+  (Missing param: 'iter_var')
+  [line 27]  diff = abs(temp - target)
+  Call function abs(temp - target)
+  [line 31]  if diff < closest_diff:
+  Condition: True, entering 'if' block
+  [line 32]  second_closest = closest_diff
+  Compute: closest_diff = ?
+  [line 33]  closest_diff = diff
+  Compute: diff = ?
+  [line 34]  closest_idx = i
+  Compute: i = ?
+  [line 25]  for i, temp in enumerate(temps):
+  (Missing param: 'iter_var')
+  [line 27]  diff = abs(temp - target)
+  Call function abs(temp - target)
+  [line 31]  if diff < closest_diff:
+  Condition: True, entering 'if' block
+  [line 32]  second_closest = closest_diff
+  Compute: closest_diff, where closest_diff=4.0 (defined at [line 33]) = 4.0
+  [line 33]  closest_diff = diff
+  Compute: diff, where diff=0.6999999999999993 (defined at [line 27]) = 0.6999999999999993
+  [line 34]  closest_idx = i
+  Compute: i, where i=1 (an unknown source) = 1
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+... [Line 25] repeats 4 more times ...
+  [line 25]  for i, temp in enumerate(temps):
+  (Missing param: 'iter_var')
+  [line 27]  diff = abs(temp - target)
+  Call function abs(temp - target)
+  [line 31]  if diff < closest_diff:
+  Condition: True, entering 'if' block
+  [line 35]  elif diff < second_closest:
+  'elif' Condition: True, entering block
+  [line 25]  for i, temp in enumerate(temps):
+  Loop End: Iteration finished
+  [line 41]  return closest_idx
+  Return: closest_idx=4 (defined at [line 34])
+Function find_target_index returns 4
+
+Answer: target_index = ? (last updated on defined at [line 53])

@@ -1,0 +1,153 @@
+50
+password_strength
+---
+2 base_score = 0
+2 ['pwd', 'base_score'] ["'Py@3xCode'", '0']
+3 length_factor = min(len(pwd), 12) / 4
+3 ['pwd', 'base_score', 'length_factor'] ["'Py@3xCode'", '0', '2.25']
+6 has_lower = any(c.islower() for c in pwd)
+6 [] []
+6 has_lower = any(c.islower() for c in pwd)
+6 ['c'] ["'P'"]
+6 has_lower = any(c.islower() for c in pwd)
+6 ['c'] ["'y'"]
+7 has_upper = any(c.isupper() for c in pwd)
+7 [] []
+7 has_upper = any(c.isupper() for c in pwd)
+7 ['c'] ["'P'"]
+8 has_digit = any(c.isdigit() for c in pwd)
+8 [] []
+8 has_digit = any(c.isdigit() for c in pwd)
+8 ['c'] ["'P'"]
+8 has_digit = any(c.isdigit() for c in pwd)
+8 ['c'] ["'y'"]
+8 has_digit = any(c.isdigit() for c in pwd)
+8 ['c'] ["'@'"]
+8 has_digit = any(c.isdigit() for c in pwd)
+8 ['c'] ["'3'"]
+9 has_special = any(not c.isalnum() for c in pwd)
+9 [] []
+9 has_special = any(not c.isalnum() for c in pwd)
+9 ['c'] ["'P'"]
+9 has_special = any(not c.isalnum() for c in pwd)
+9 ['c'] ["'y'"]
+9 has_special = any(not c.isalnum() for c in pwd)
+9 ['c'] ["'@'"]
+12 diversity = sum([has_lower, has_upper, has_digit, has_special])
+12 ['pwd', 'base_score', 'length_factor', 'has_lower', 'has_upper', 'has_digit', 'has_special', 'diversity'] ["'Py@3xCode'", '0', '2.25', 'True', 'True', 'True', 'True', '4']
+15 char_freq = {}
+15 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq'] ["'Py@3xCode'", '0', '2.25', '4', '{}']
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{}', "'P'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{}', "'P'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1}', "'P'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1}', "'y'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1}', "'y'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1}', "'y'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1}', "'@'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1}', "'@'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1}', "'@'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1}', "'3'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1}', "'3'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'3'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'x'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'x'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'x'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'C'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'C'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'C'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'o'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'o'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'o'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'d'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'d'"]
+20 char_freq[c] = 1
+20 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'d'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'e'"]
+17 if c in char_freq:
+17 ['pwd', 'base_score', 'length_factor', 'diversity', 'char_freq', 'c'] ["'Py@3xCode'", '0', '2.25', '4', '{P: 1, y: 1, @: 1, ...}', "'e'"]
+16 for c in pwd:
+16 ['pwd', 'base_score', 'length_factor', 'diversity', 'c'] ["'Py@3xCode'", '0', '2.25', '4', "'e'"]
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '0']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '0']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '1']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '1']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '2']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '2']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '3']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '3']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '4']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '4']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '5']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '5']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '6']
+28 if ord(pwd[i]) + 1 == ord(pwd[i+1]) and ord(pwd[i+1]) + 1 == ord(pwd[i+2]):
+28 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '6']
+27 for i in range(len(pwd) - 2):
+27 ['pwd', 'base_score', 'length_factor', 'diversity', 'i'] ["'Py@3xCode'", '0', '2.25', '4', '6']
+33 for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+33 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '0', "'a'", '3']
+34 if char in pwd.lower():
+34 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '0', "'a'", '3']
+33 for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+33 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '1', "'e'", '1']
+34 if char in pwd.lower():
+34 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '1', "'e'", '1']
+33 for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+33 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '2', "'i'", '4']
+34 if char in pwd.lower():
+34 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '2', "'i'", '4']
+33 for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+33 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '3', "'o'", '1']
+34 if char in pwd.lower():
+34 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '3', "'o'", '1']
+33 for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+33 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '4', "'u'", '5']
+34 if char in pwd.lower():
+34 ['pwd', 'base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ["'Py@3xCode'", '0', '2.25', '4', '4', "'u'", '5']
+33 for i, (char, count) in enumerate(zip(['a', 'e', 'i', 'o', 'u'], [3, 1, 4, 1, 5])):
+33 ['base_score', 'length_factor', 'diversity', 'i', 'char', 'count'] ['0', '2.25', '4', '4', "'u'", '5']
+38 strength_multiplier = 1.5 if diversity >= 3 else 1.0
+38 ['base_score', 'length_factor', 'diversity', 'strength_multiplier'] ['0', '2.25', '4', '1.5']
+39 base_score = 10 * length_factor * strength_multiplier
+39 ['base_score', 'length_factor', 'diversity', 'strength_multiplier'] ['33.75', '2.25', '4', '1.5']
+42 if base_score > 30:
+42 ['base_score', 'diversity'] ['33.75', '4']
+50 password_strength = int(base_score + diversity * 5)
+50 ['base_score', 'diversity', 'password_strength'] ['33.75', '4', '53']

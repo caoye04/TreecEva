@@ -1,0 +1,74 @@
+Target: Find the value of variable final_balance after [line 57] executes
+
+[line 16]  deposit_bonus = 25
+Assign: deposit_bonus = 25
+[line 17]  processed_deposits = sum(account_history['deposits']) + deposit_bonus
+Compute: sum(account_history['deposits']) + deposit_bonus, where account_history={deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0} (an unknown source), deposit_bonus=25 (defined at [line 16]) = 2525
+[line 20]  account_age = 15
+Assign: account_age = 15
+[line 21]  loyalty_multiplier = 1.0 + (account_age / 100)
+Compute: 1.0 + (account_age / 100), where account_age=15 (defined at [line 20]) = 1.15
+[line 22]  bonus_adjusted_deposits = processed_deposits * loyalty_multiplier
+Compute: processed_deposits * loyalty_multiplier, where processed_deposits=2525 (defined at [line 17]), loyalty_multiplier=1.15 (defined at [line 21]) = 2903.75
+[line 25]  withdrawal_charges = calculate_fees(sum(account_history['withdrawals']), 'standard')
+Call function calculate_fees(sum(account_history['withdrawals']), 'standard')
+[line 2]  base_fees = {'premium': 0.01, 'standard': 0.02, 'basic': 0.03}
+Compute: {'premium': 0.01, 'standard': 0.02, 'basic': 0.03} = {premium: 0.01, standard: 0.02, basic: 0.03}
+[line 3]  discount_factor = 0.95 if amount > 1000 else 1.0
+Compute: 0.95 if amount > 1000 else 1.0, where amount=600 (an unknown source) = 1.0
+[line 6]  return amount * base_fees.get(tier, 0.03) * discount_factor
+Return: amount * base_fees.get(tier, 0.03) * discount_factor
+[line 26]  total_withdrawals = sum(account_history['withdrawals']) + withdrawal_charges
+Compute: sum(account_history['withdrawals']) + withdrawal_charges, where account_history={deposits: [250, 500, 750, 1000], withdrawals: [100, 200, 300], fees_paid: 0} (an unknown source), withdrawal_charges=12.0 (defined at [line 25]) = 612.0
+[line 30]  active_transactions = {}
+Compute: {} = {}
+[line 31]  transaction_ids = [105, 106, 107, 108]
+Compute: [105, 106, 107, 108] = [105, 106, 107, 108]
+[line 32]  interest_rates = [0.02, 0.03, 0.025, 0.015]
+Compute: [0.02, 0.03, 0.025, 0.015] = [0.02, 0.03, 0.025, 0.015]
+[line 35]  for i, tx_id in enumerate(transaction_ids[:-1]):
+(Missing param: 'iter_var')
+[line 37]  tx_amount = bonus_adjusted_deposits - total_withdrawals
+Compute: bonus_adjusted_deposits - total_withdrawals, where bonus_adjusted_deposits=2903.75 (defined at [line 22]), total_withdrawals=612.0 (defined at [line 26]) = 2291.75
+[line 38]  interest = tx_amount * interest_rates[i]
+Compute: tx_amount * interest_rates[i], where tx_amount=2291.75 (defined at [line 37]), interest_rates=[0.02, 0.03, 0.025, 0.015] (defined at [line 32]), i=0 (an unknown source) = 45.835
+[line 41]  active_transactions[tx_id] = tx_amount + interest
+(Missing param: 'result')
+[line 35]  for i, tx_id in enumerate(transaction_ids[:-1]):
+(Missing param: 'iter_var')
+[line 37]  tx_amount = bonus_adjusted_deposits - total_withdrawals
+Compute: bonus_adjusted_deposits - total_withdrawals, where bonus_adjusted_deposits=2903.75 (defined at [line 22]), total_withdrawals=612.0 (defined at [line 26]) = 2291.75
+[line 38]  interest = tx_amount * interest_rates[i]
+Compute: tx_amount * interest_rates[i], where tx_amount=2291.75 (defined at [line 37]), interest_rates=[0.02, 0.03, 0.025, 0.015] (defined at [line 32]), i=1 (an unknown source) = 68.7525
+[line 41]  active_transactions[tx_id] = tx_amount + interest
+(Missing param: 'result')
+[line 35]  for i, tx_id in enumerate(transaction_ids[:-1]):
+(Missing param: 'iter_var')
+[line 37]  tx_amount = bonus_adjusted_deposits - total_withdrawals
+Compute: bonus_adjusted_deposits - total_withdrawals, where bonus_adjusted_deposits=2903.75 (defined at [line 22]), total_withdrawals=612.0 (defined at [line 26]) = 2291.75
+[line 38]  interest = tx_amount * interest_rates[i]
+Compute: tx_amount * interest_rates[i], where tx_amount=2291.75 (defined at [line 37]), interest_rates=[0.02, 0.03, 0.025, 0.015] (defined at [line 32]), i=2 (an unknown source) = 57.29375
+[line 41]  active_transactions[tx_id] = tx_amount + interest
+(Missing param: 'result')
+[line 35]  for i, tx_id in enumerate(transaction_ids[:-1]):
+Loop End: Iteration finished
+[line 48]  active_transactions[transaction_ids[-1]] = bonus_adjusted_deposits - total_withdrawals
+(Missing param: 'result')
+[line 51]  final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+Compute: active_transactions[max(active_transactions, key=lambda k: active_transactions[k])], where active_transactions={105: 2337.585, 106: 2360.5025, 107: 2349.04375, ...} (defined at [line 30]) = ?
+[line 51]  final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+Compute: active_transactions[max(active_transactions, key=lambda k: active_transactions[k])], where active_transactions={105: 2337.585, 106: 2360.5025, 107: 2349.04375, ...} (defined at [line 30]), k=105 (an unknown source) = ?
+[line 51]  final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+Compute: active_transactions[max(active_transactions, key=lambda k: active_transactions[k])], where k=106 (an unknown source) = ?
+[line 51]  final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+Compute: active_transactions[max(active_transactions, key=lambda k: active_transactions[k])], where k=107 (an unknown source) = ?
+[line 51]  final_balance = active_transactions[max(active_transactions, key=lambda k: active_transactions[k])]
+Compute: active_transactions[max(active_transactions, key=lambda k: active_transactions[k])], where k=108 (an unknown source) = ?
+[line 54]  rounding_precision = 2
+Assign: rounding_precision = 2
+[line 55]  final_balance = round(final_balance, rounding_precision)
+Call function round(final_balance=2360.5 (defined at [line 51]), rounding_precision=2 (defined at [line 54]))
+[line 57]  print(f"Result: {final_balance}")
+Output: f"Result: {final_balance}"
+
+Answer: final_balance = 2360.5 (last updated on defined at [line 55])

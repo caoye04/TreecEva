@@ -1,0 +1,23 @@
+3 message = 42  # Original message to encrypt
+3 ['message'] [{'_type': 'int', '_value': 42}]
+4 key = 15      # Encryption key
+4 ['message', 'key'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}]
+7 cipher = lambda msg, k: msg ^ k
+7 ['message', 'key'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}]
+10 validation = message & key  # Bitwise AND for validation
+10 ['message', 'key', 'validation'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}]
+11 check_sum = message | key  # Bitwise OR for checksum
+11 ['message', 'key', 'validation', 'check_sum'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 47}]
+14 encrypted_code = cipher(message, key)
+14 ['message', 'key', 'validation', 'check_sum'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 47}]
+FUNCTION_ENTER 7 <lambda> cipher = lambda msg, k: msg ^ k
+7 ['msg', 'k'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}]
+DEPTH_2 7 cipher = lambda msg, k: msg ^ k
+7 ['msg', 'k'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}]
+FUNCTION_RETURN 7 <lambda> {'_type': 'int', '_value': 37}
+16 print(f"Validation: {validation}")
+16 ['message', 'key', 'validation', 'check_sum', 'encrypted_code'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 37}]
+17 print(f"Checksum: {check_sum}")
+17 ['message', 'key', 'validation', 'check_sum', 'encrypted_code'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 37}]
+18 print(f"Result: {encrypted_code}")
+18 ['message', 'key', 'validation', 'check_sum', 'encrypted_code'] [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 15}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 37}]

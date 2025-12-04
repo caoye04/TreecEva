@@ -1,0 +1,85 @@
+Target: Find the value of variable network_reliability after [line 92] executes
+
+[line 5]  redundant_stats = defaultdict(int)
+Call function defaultdict(int)
+[line 6]  for entry in raw_data:
+Loop Start: entry takes its first value 12
+[line 7]  if entry % 3 == 0:
+Condition: True, entering 'if' block
+[line 9]  if entry % 5 == 0:
+Condition: True, entering 'if' block
+[line 6]  for entry in raw_data:
+Loop Iteration: entry is now 45 (iteration 2)
+[line 7]  if entry % 3 == 0:
+Condition: True, entering 'if' block
+[line 9]  if entry % 5 == 0:
+Condition: True, entering 'if' block
+... [Line 6] repeats 6 more times ...
+... [Line 6] repeats 6 more times ...
+... [Line 6] repeats 6 more times ...
+[line 6]  for entry in raw_data:
+Loop Iteration: entry is now 90 (iteration 9)
+[line 7]  if entry % 3 == 0:
+Condition: True, entering 'if' block
+[line 9]  if entry % 5 == 0:
+Condition: True, entering 'if' block
+[line 6]  for entry in raw_data:
+Loop End: Iteration finished
+[line 13]  outlier_count = sum(1 for x in raw_data if x > threshold * 2)
+Call function sum(1 for x in raw_data if x > threshold * 2)
+[line 14]  return {'metrics': redundant_stats, 'outliers': outlier_count}
+Return: {'metrics': redundant_stats, 'outliers': outlier_count}
+[line 58]  packet_loss = 8.5
+Assign: packet_loss = 8.5
+[line 76]  connection_history = Counter()
+Call function Counter()
+[line 77]  connection_history['successful'] = 85
+(Missing param: 'var')
+[line 78]  connection_history['failed'] = 12
+(Missing param: 'var')
+[line 79]  connection_history['timeout'] = 3
+(Missing param: 'var')
+[line 82]  network_reliability = calculate_network_score(packet_loss, latency_stats, connection_history)
+Call function calculate_network_score(packet_loss=8.5 (defined at [line 58]), latency_stats={west-01: [45, 48, 52, 47, 49], central-01: [30, 32, 35, 31, 29], west-02: [50, 53, 48, 51, 49]} (an unknown source), connection_history={successful: 85, failed: 12, timeout: 3} (defined at [line 76]))
+[line 18]  base_score = 100
+Assign: base_score = 100
+[line 21]  packet_loss_factor = min(packet_loss * 1.5, 50)
+Call function min(packet_loss * 1.5, 50)
+[line 22]  adjusted_score = base_score - packet_loss_factor
+Compute: base_score - packet_loss_factor, where base_score=100 (defined at [line 18]), packet_loss_factor=12.75 (defined at [line 21]) = 87.25
+[line 26]  for server, values in latency_data.items():
+(Missing param: 'iter_var')
+[line 27]  if server.startswith('east'):
+Condition: True, entering 'if' block
+[line 26]  for server, values in latency_data.items():
+(Missing param: 'iter_var')
+[line 27]  if server.startswith('east'):
+Condition: True, entering 'if' block
+[line 26]  for server, values in latency_data.items():
+(Missing param: 'iter_var')
+[line 27]  if server.startswith('east'):
+Condition: True, entering 'if' block
+[line 26]  for server, values in latency_data.items():
+Loop End: Iteration finished
+[line 32]  connection_factor = 0
+Assign: connection_factor = 0
+[line 33]  total_connections = sum(connection_data.values())
+Call function sum(connection_data.values())
+[line 35]  if total_connections > 0:
+Condition: True, entering 'if' block
+[line 36]  success_rate = connection_data.get('successful', 0) / total_connections
+Compute: connection_data.get('successful', 0) / total_connections, where connection_data={successful: 85, failed: 12, timeout: 3} (an unknown source), total_connections=100 (defined at [line 33]) = 0.85
+[line 38]  connection_factor = success_rate * 25
+Compute: success_rate * 25, where success_rate=0.85 (defined at [line 36]) = 21.25
+[line 44]  signal_quality = 0b1010 & 0b1100
+Compute: 0b1010 & 0b1100 = 8
+[line 45]  signal_boost = signal_quality >> 1
+Compute: signal_quality >> 1, where signal_quality=8 (defined at [line 44]) = 4
+[line 48]  reliability = adjusted_score + connection_factor - (signal_boost * 0.5)
+Compute: adjusted_score + connection_factor - (signal_boost * 0.5), where adjusted_score=87.25 (defined at [line 22]), connection_factor=21.25 (defined at [line 38]), signal_boost=4 (defined at [line 45]) = 106.5
+[line 51]  return round(reliability, 2)
+Return: round(reliability, 2)
+[line 92]  print(f"Network reliability score: {network_reliability}")
+Output: f"Network reliability score: {network_reliability}"
+
+Answer: network_reliability = 106.5 (last updated on defined at [line 82])

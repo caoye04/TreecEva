@@ -1,0 +1,55 @@
+Target: Find the value of variable inventory_value after [line 71] executes
+
+[line 30]  seasonal_items = ['magazines', 'rare_books']
+Compute: ['magazines', 'rare_books'] = ['magazines', 'rare_books']
+[line 35]  if len([item for item in inventory if 'paperback' in item]) > 2:
+Condition: True, entering 'if' block
+[line 42]  binding_counts = defaultdict(int)
+Call function defaultdict(int)
+[line 43]  for item in inventory:
+Loop Start: item takes its first value 'fiction_paperback'
+[line 44]  if 'paperback' in item:
+Condition: True, entering 'if' block
+[line 43]  for item in inventory:
+Loop Iteration: item is now 'fiction_hardcover' (iteration 2)
+[line 44]  if 'paperback' in item:
+Condition: True, entering 'if' block
+[line 46]  elif 'hardcover' in item:
+'elif' Condition: True, entering block
+... [Line 43] repeats 5 more times ...
+... [Line 43] repeats 5 more times ...
+... [Line 43] repeats 5 more times ...
+[line 43]  for item in inventory:
+Loop Iteration: item is now 'magazines' (iteration 8)
+[line 44]  if 'paperback' in item:
+Condition: True, entering 'if' block
+[line 46]  elif 'hardcover' in item:
+'elif' Condition: True, entering block
+[line 43]  for item in inventory:
+Loop End: Iteration finished
+[line 53]  for binding, count in binding_counts.items():
+(Missing param: 'iter_var')
+[line 54]  relevant_items = [item for item in inventory if binding in item]
+Compute: [item for item in inventory if binding in item], where item='fiction_paperback' (defined at [line 43]), inventory={fiction_paperback: 120, fiction_hardcover: 85, non_fiction_paperback: 95, ...} (an unknown source), binding='paperback' (an unknown source) = ?
+[line 55]  if relevant_items:
+Condition: True, entering 'if' block
+[line 53]  for binding, count in binding_counts.items():
+(Missing param: 'iter_var')
+[line 55]  if relevant_items:
+Condition: True, entering 'if' block
+[line 53]  for binding, count in binding_counts.items():
+(Missing param: 'iter_var')
+[line 55]  if relevant_items:
+Condition: True, entering 'if' block
+[line 53]  for binding, count in binding_counts.items():
+Loop End: Iteration finished
+[line 59]  distribution_factor = binding_counts['hardcover'] / (binding_counts['paperback'] + 1)
+Compute: binding_counts['hardcover'] / (binding_counts['paperback'] + 1), where binding_counts={paperback: 270, hardcover: 265, other: 530} (defined at [line 42]) = 0.977859778597786
+[line 60]  if distribution_factor > 0.5:
+Condition: True, entering 'if' block
+[line 66]  inventory_value = sum(item_value for item, item_value in inventory.items() if item not in seasonal_items)
+Call function sum(item_value for item, item_value in inventory.items() if item not in seasonal_items)
+[line 71]  print(f"Result: {inventory_value}")
+Output: f"Result: {inventory_value}"
+
+Answer: inventory_value = 535 (last updated on defined at [line 66])

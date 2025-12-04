@@ -1,0 +1,83 @@
+58
+decryption_key
+---
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'p'] ['[18, 24, 12, 42, 30, ...]', '18']
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'p'] ['[18, 24, 12, 42, 30, ...]', '24']
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'p'] ['[18, 24, 12, 42, 30, ...]', '12']
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'p'] ['[18, 24, 12, 42, 30, ...]', '42']
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'p'] ['[18, 24, 12, 42, 30, ...]', '30']
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'p'] ['[18, 24, 12, 42, 30, ...]', '50']
+8 filtered_packets = [p for p in packets if p % 3 != 0]  # Filter out packets divisible by 3
+8 ['packets', 'filtered_packets'] ['[18, 24, 12, 42, 30, ...]', '[50]']
+16 security_level = 4
+16 ['packets', 'filtered_packets', 'security_level'] ['[18, 24, 12, 42, 30, ...]', '[50]', '4']
+22 for i, packet in enumerate(filtered_packets):
+22 ['packets', 'filtered_packets', 'security_level', 'i', 'packet'] ['[18, 24, 12, 42, 30, ...]', '[50]', '4', '0', '50']
+23 if i >= len(packets) - 2:
+23 ['packets', 'filtered_packets', 'security_level', 'i', 'packet'] ['[18, 24, 12, 42, 30, ...]', '[50]', '4', '0', '50']
+27 threat_level = (packet & 0x0F) + security_level
+27 ['packets', 'filtered_packets', 'security_level', 'i', 'packet', 'threat_level'] ['[18, 24, 12, 42, 30, ...]', '[50]', '4', '0', '50', '6']
+28 if threat_level > 10:
+28 ['packets', 'filtered_packets', 'i', 'packet', 'threat_level'] ['[18, 24, 12, 42, 30, ...]', '[50]', '0', '50', '6']
+22 for i, packet in enumerate(filtered_packets):
+22 ['packets', 'filtered_packets', 'i', 'packet'] ['[18, 24, 12, 42, 30, ...]', '[50]', '0', '50']
+35 hash_value = 0
+35 ['packets', 'filtered_packets', 'i', 'packet', 'hash_value'] ['[18, 24, 12, 42, 30, ...]', '[50]', '0', '50', '0']
+36 for p in filtered_packets:
+36 ['packets', 'p', 'filtered_packets', 'i', 'packet', 'hash_value'] ['[18, 24, 12, 42, 30, ...]', '50', '[50]', '0', '50', '0']
+37 hash_value = ((hash_value << 3) | (hash_value >> 29)) & 0xFFFFFFFF
+37 ['packets', 'p', 'filtered_packets', 'i', 'packet', 'hash_value'] ['[18, 24, 12, 42, 30, ...]', '50', '[50]', '0', '50', '0']
+38 hash_value ^= p
+38 ['packets', 'p', 'filtered_packets', 'i', 'packet', 'hash_value'] ['[18, 24, 12, 42, 30, ...]', '50', '[50]', '0', '50', '50']
+36 for p in filtered_packets:
+36 ['packets', 'p', 'filtered_packets', 'i', 'packet', 'hash_value'] ['[18, 24, 12, 42, 30, ...]', '50', '[50]', '0', '50', '50']
+44 key_parts = [0xA5, 0xF1, 0x3C, 0x77, 0xBE, 0x2D, 0x8F]
+44 ['packets', 'i', 'packet', 'hash_value', 'key_parts'] ['[18, 24, 12, 42, 30, ...]', '0', '50', '50', '[165, 241, 60, 119, 190, ...]']
+45 valid_index = 0
+45 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '0', '50', '50', '[165, 241, 60, 119, 190, ...]', '0']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '0', '18', '50', '[165, 241, 60, 119, 190, ...]', '0']
+49 if i < len(key_parts) and packet % 2 == 0:
+49 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '0', '18', '50', '[165, 241, 60, 119, 190, ...]', '0']
+50 valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+50 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '0', '18', '50', '[165, 241, 60, 119, 190, ...]', '2']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '1', '24', '50', '[165, 241, 60, 119, 190, ...]', '2']
+49 if i < len(key_parts) and packet % 2 == 0:
+49 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '1', '24', '50', '[165, 241, 60, 119, 190, ...]', '2']
+50 valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+50 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '1', '24', '50', '[165, 241, 60, 119, 190, ...]', '2']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '2', '12', '50', '[165, 241, 60, 119, 190, ...]', '2']
+49 if i < len(key_parts) and packet % 2 == 0:
+49 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '2', '12', '50', '[165, 241, 60, 119, 190, ...]', '2']
+50 valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+50 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '2', '12', '50', '[165, 241, 60, 119, 190, ...]', '6']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '3', '42', '50', '[165, 241, 60, 119, 190, ...]', '6']
+49 if i < len(key_parts) and packet % 2 == 0:
+49 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '3', '42', '50', '[165, 241, 60, 119, 190, ...]', '6']
+50 valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+50 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '3', '42', '50', '[165, 241, 60, 119, 190, ...]', '1']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '4', '30', '50', '[165, 241, 60, 119, 190, ...]', '1']
+49 if i < len(key_parts) and packet % 2 == 0:
+49 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '4', '30', '50', '[165, 241, 60, 119, 190, ...]', '1']
+50 valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+50 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '4', '30', '50', '[165, 241, 60, 119, 190, ...]', '0']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '5', '50', '50', '[165, 241, 60, 119, 190, ...]', '0']
+49 if i < len(key_parts) and packet % 2 == 0:
+49 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '5', '50', '50', '[165, 241, 60, 119, 190, ...]', '0']
+50 valid_index = (valid_index + (packet & 0x07)) % len(key_parts)
+50 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '5', '50', '50', '[165, 241, 60, 119, 190, ...]', '2']
+48 for i, packet in enumerate(packets):
+48 ['packets', 'i', 'packet', 'hash_value', 'key_parts', 'valid_index'] ['[18, 24, 12, 42, 30, ...]', '5', '50', '50', '[165, 241, 60, 119, 190, ...]', '2']
+58 decryption_key = key_parts[valid_index] ^ (hash_value & 0xFF)
+58 ['hash_value', 'key_parts', 'valid_index', 'decryption_key'] ['50', '[165, 241, 60, 119, 190, ...]', '2', '14']

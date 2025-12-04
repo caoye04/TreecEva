@@ -1,0 +1,112 @@
+Target: Find the value of variable active_signals after [line 46] executes
+
+[line 1]  def signal_processing_analysis(raw_data, frequency_bands):
+Enter function signal_processing_analysis: raw_data=[20, 45, 24, 32, 28, ...], frequency_bands=[25, 40, 50, 60, 75, ...]
+  [line 4]  extracted_frequencies = set()
+  Call function set()
+  [line 5]  noise_threshold = 15
+  Assign: noise_threshold = 15
+  [line 6]  signal_strength = {}
+  Compute: {} = {}
+  [line 9]  for i, amplitude in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 10]  if i % 2 == 0:  # Even indices represent frequency markers
+  Condition: True, entering 'if' block
+  [line 11]  freq = amplitude * 2.5
+  Compute: amplitude * 2.5, where amplitude=20 (an unknown source) = 50.0
+  [line 13]  signal_strength[round(freq)] = raw_data[i+1] if i+1 < len(raw_data) else 0
+  (Missing param: 'result')
+  [line 9]  for i, amplitude in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 10]  if i % 2 == 0:  # Even indices represent frequency markers
+  Condition: True, entering 'if' block
+... [Line 9] repeats 7 more times ...
+... [Line 9] repeats 7 more times ...
+... [Line 9] repeats 7 more times ...
+... [Line 9] repeats 7 more times ...
+  [line 9]  for i, amplitude in enumerate(raw_data):
+  (Missing param: 'iter_var')
+  [line 10]  if i % 2 == 0:  # Even indices represent frequency markers
+  Condition: True, entering 'if' block
+  [line 9]  for i, amplitude in enumerate(raw_data):
+  Loop End: Iteration finished
+  [line 16]  valid_frequencies = set()
+  Call function set()
+  [line 17]  for freq in extracted_frequencies:
+  Loop Start: freq takes its first value 70
+  [line 19]  snr = signal_strength.get(freq, 0) - noise_threshold
+  Compute: signal_strength.get(freq, 0) - noise_threshold, where signal_strength={50: 45, 60: 32, 70: 50, ...} (defined at [line 6]), freq=70 (defined at [line 17]), noise_threshold=15 (defined at [line 5]) = 35
+  [line 20]  if snr > 0:
+  Condition: True, entering 'if' block
+  [line 17]  for freq in extracted_frequencies:
+  Loop Iteration: freq is now 40 (iteration 2)
+  [line 19]  snr = signal_strength.get(freq, 0) - noise_threshold
+  Compute: signal_strength.get(freq, 0) - noise_threshold, where signal_strength={50: 45, 60: 32, 70: 50, ...} (defined at [line 6]), freq=40 (defined at [line 17]), noise_threshold=15 (defined at [line 5]) = -10
+  [line 20]  if snr > 0:
+  Condition: True, entering 'if' block
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+... [Line 17] repeats 2 more times ...
+  [line 17]  for freq in extracted_frequencies:
+  Loop Iteration: freq is now 60 (iteration 5)
+  [line 19]  snr = signal_strength.get(freq, 0) - noise_threshold
+  Compute: signal_strength.get(freq, 0) - noise_threshold, where signal_strength={50: 45, 60: 32, 70: 50, ...} (defined at [line 6]), freq=60 (defined at [line 17]), noise_threshold=15 (defined at [line 5]) = 17
+  [line 20]  if snr > 0:
+  Condition: True, entering 'if' block
+  [line 17]  for freq in extracted_frequencies:
+  Loop End: Iteration finished
+  [line 25]  max_freq = max(valid_frequencies) if valid_frequencies else 0
+  Compute: max(valid_frequencies) if valid_frequencies else 0, where valid_frequencies={50, 60, 70} (defined at [line 16]) = ?
+  [line 26]  min_freq = min(valid_frequencies) if valid_frequencies else 0
+  Compute: min(valid_frequencies) if valid_frequencies else 0, where valid_frequencies={50, 60, 70} (defined at [line 16]) = ?
+  [line 27]  frequency_range = max_freq - min_freq if valid_frequencies else 0
+  Compute: max_freq - min_freq if valid_frequencies else 0, where valid_frequencies={50, 60, 70} (defined at [line 16]) = ?
+  [line 30]  active_bands = set()
+  Call function set()
+  [line 31]  for band in frequency_bands:
+  Loop Start: band takes its first value 25
+  [line 33]  if band % 3 == 0 or band % 5 == 0:
+  Condition: True, entering 'if' block
+  [line 31]  for band in frequency_bands:
+  Loop Iteration: band is now 40 (iteration 2)
+  [line 33]  if band % 3 == 0 or band % 5 == 0:
+  Condition: True, entering 'if' block
+... [Line 31] repeats 4 more times ...
+... [Line 31] repeats 4 more times ...
+  [line 31]  for band in frequency_bands:
+  Loop Iteration: band is now 100 (iteration 7)
+  [line 33]  if band % 3 == 0 or band % 5 == 0:
+  Condition: True, entering 'if' block
+  [line 31]  for band in frequency_bands:
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop Start: i takes its first value 0
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 41]  for i in range(10):
+  Loop End: Iteration finished
+  [line 46]  active_signals = len(valid_frequencies & active_bands)
+  Call function len(valid_frequencies & active_bands)
+  [line 58]  if frequency_range > 30:
+  Condition: True, entering 'if' block
+  [line 71]  return result
+  Return: result
+Function signal_processing_analysis returns {active_signals: 2, potential_signals: 8, quality_metric: 3.0, ...}
+
+Answer: active_signals = {active_signals: 2, potential_signals: 8, quality_metric: 3.0, ...} (last updated on defined at [line 46])

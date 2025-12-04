@@ -1,0 +1,133 @@
+61
+total_points
+---
+10 raw_scores = [42, 18, 27, 35, 19, 30, 25]
+10 ['raw_scores'] ['[42, 18, 27, 35, 19, ...]']
+11 score_weights = [1.0, 0.8, 1.2, 1.0, 0.9, 1.1, 1.0]
+11 ['raw_scores', 'score_weights'] ['[42, 18, 27, 35, 19, ...]', '[1.0, 0.8, 1.2, 1.0, 0.9, ...]']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['42', '1.0']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['18', '0.8']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['27', '1.2']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['35', '1.0']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['19', '0.9']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['30', '1.1']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['score', 'weight'] ['25', '1.0']
+14 weighted_scores = [score * weight for score, weight in zip(raw_scores, score_weights)]
+14 ['raw_scores', 'score_weights', 'weighted_scores'] ['[42, 18, 27, 35, 19, ...]', '[1.0, 0.8, 1.2, 1.0, 0.9, ...]', '[42.0, 14.4, 32.4, 35.0, 17.1, ...]']
+30 player_level = 4
+30 ['weighted_scores', 'player_level'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '4']
+31 win_streak = 3
+31 ['weighted_scores', 'player_level', 'win_streak'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '4', '3']
+32 bonus_points = calculate_bonus(player_level, win_streak)
+32 ['weighted_scores', 'player_level', 'win_streak'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '4', '3']
+PARAM_MAPPING {'level': {'actual_var': 'player_level', 'value': 4}, 'streak': {'actual_var': 'win_streak', 'value': 3}}
+FUNCTION_ENTER 3 calculate_bonus def calculate_bonus(level, streak):
+3 ['level', 'streak'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 3}]
+5 multiplier = min(level * 0.5, 3)
+5 ['level', 'streak', 'multiplier'] ['4', '3', '2.0']
+6 bonus = streak * multiplier
+6 ['streak', 'multiplier', 'bonus'] ['3', '2.0', '6.0']
+7 return int(bonus)
+7 ['bonus'] ['6.0']
+FUNCTION_RETURN 7 calculate_bonus {'_type': 'int', '_value': 6}
+35 point_combinations = list(itertools.product([5, 10, 15], repeat=2))
+35 ['weighted_scores', 'player_level', 'bonus_points', 'point_combinations'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '4', '6', '[(5, 5), (5, 10), (5, 15), (10, 5), (10, 10), ...]']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(5, 5)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(5, 10)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(5, 15)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(10, 5)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(10, 10)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(10, 15)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(15, 5)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(15, 10)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['combo'] ['(15, 15)']
+36 point_options = [sum(combo) for combo in point_combinations]
+36 ['weighted_scores', 'player_level', 'bonus_points', 'point_combinations', 'point_options'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '4', '6', '[(5, 5), (5, 10), (5, 15), (10, 5), (10, 10), ...]', '[10, 15, 20, 15, 20, ...]']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['10']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['15']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['20']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['15']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['20']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['25']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['20']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['25']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['p'] ['30']
+39 valid_options = [p for p in point_options if p <= player_level * 10]
+39 ['weighted_scores', 'player_level', 'bonus_points', 'point_options', 'valid_options'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '4', '6', '[10, 15, 20, 15, 20, ...]', '[10, 15, 20, 15, 20, ...]']
+42 base_points = int(sum(weighted_scores))
+42 ['weighted_scores', 'bonus_points', 'valid_options', 'base_points'] ['[42.0, 14.4, 32.4, 35.0, 17.1, ...]', '6', '[10, 15, 20, 15, 20, ...]', '198']
+45 modifier = base_points % 10
+45 ['bonus_points', 'valid_options', 'base_points', 'modifier'] ['6', '[10, 15, 20, 15, 20, ...]', '198', '8']
+46 if modifier > 5:
+46 ['bonus_points', 'valid_options', 'base_points', 'modifier'] ['6', '[10, 15, 20, 15, 20, ...]', '198', '8']
+47 base_points += (10 - modifier)
+47 ['bonus_points', 'valid_options', 'base_points', 'modifier'] ['6', '[10, 15, 20, 15, 20, ...]', '200', '8']
+52 filtered_points = [base_points]
+52 ['bonus_points', 'valid_options', 'base_points', 'filtered_points'] ['6', '[10, 15, 20, 15, 20, ...]', '200', '[200]']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200]', '10']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200]', '10']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200]', '15']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200]', '15']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200]', '20']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200]', '20']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20]', '15']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20]', '15']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20]', '20']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20]', '20']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20]', '25']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20]', '25']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20]', '20']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20]', '20']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20, 20]', '25']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20, 20]', '25']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20, 20]', '30']
+54 if option % player_level == 0:
+54 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20, 20]', '30']
+53 for option in valid_options:
+53 ['bonus_points', 'valid_options', 'filtered_points', 'option'] ['6', '[10, 15, 20, 15, 20, ...]', '[200, 20, 20, 20]', '30']
+58 filtered_points[0] += bonus_points
+58 ['bonus_points', 'filtered_points'] ['6', '[206, 20, 20, 20]']
+61 total_points = sum(filtered_points)
+61 ['filtered_points', 'total_points'] ['[206, 20, 20, 20]', '266']

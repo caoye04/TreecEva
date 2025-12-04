@@ -1,0 +1,65 @@
+Target: Find the value of variable final_priority after [line 51] executes
+
+[line 9]  valid_tasks = []
+Compute: [] = []
+[line 13]  for task in task_list:
+Loop Start: task takes its first value 'dev:active'
+[line 14]  parts = task.split(':')
+(Missing param: 'func_name')
+[line 15]  task_type = parts[0]
+Compute: parts[0], where parts=['dev', 'active'] (an unknown source) = 'dev'
+[line 16]  task_status = parts[1] if len(parts) > 1 else "unknown"
+Compute: parts[1] if len(parts) > 1 else "unknown", where parts=['dev', 'active'] (an unknown source) = 'active'
+[line 20]  if task_status.lower() in ["active", "pending"]:
+Condition: True, entering 'if' block
+[line 22]  if task_type.lower() in ["dev", "test"]:
+Condition: True, entering 'if' block
+[line 13]  for task in task_list:
+Loop Iteration: task is now 'test:active' (iteration 2)
+[line 14]  parts = task.split(':')
+(Missing param: 'func_name')
+[line 15]  task_type = parts[0]
+Compute: parts[0], where parts=['test', 'active'] (an unknown source) = 'test'
+[line 16]  task_status = parts[1] if len(parts) > 1 else "unknown"
+Compute: parts[1] if len(parts) > 1 else "unknown", where parts=['test', 'active'] (an unknown source) = 'active'
+[line 20]  if task_status.lower() in ["active", "pending"]:
+Condition: True, entering 'if' block
+[line 22]  if task_type.lower() in ["dev", "test"]:
+Condition: True, entering 'if' block
+... [Line 13] repeats 5 more times ...
+... [Line 13] repeats 5 more times ...
+... [Line 13] repeats 5 more times ...
+... [Line 13] repeats 5 more times ...
+... [Line 13] repeats 5 more times ...
+[line 13]  for task in task_list:
+Loop Iteration: task is now 'docs:active' (iteration 8)
+[line 14]  parts = task.split(':')
+(Missing param: 'func_name')
+[line 15]  task_type = parts[0]
+Compute: parts[0], where parts=['docs', 'active'] (an unknown source) = 'docs'
+[line 16]  task_status = parts[1] if len(parts) > 1 else "unknown"
+Compute: parts[1] if len(parts) > 1 else "unknown", where parts=['docs', 'active'] (an unknown source) = 'active'
+[line 20]  if task_status.lower() in ["active", "pending"]:
+Condition: True, entering 'if' block
+[line 22]  if task_type.lower() in ["dev", "test"]:
+Condition: True, entering 'if' block
+[line 25]  elif task_type.lower() == "docs":
+'elif' Condition: True, entering block
+[line 13]  for task in task_list:
+Loop End: Iteration finished
+[line 32]  total_valid_tasks = len(valid_tasks)
+Call function len(valid_tasks=['dev:active', 'test:active', 'test:pending', 'dev:active', 'test:active'] (defined at [line 9]))
+[line 39]  dev_tasks = sum(1 for task in valid_tasks if task.startswith("dev:"))
+Call function sum(1 for task in valid_tasks if task.startswith("dev:"))
+[line 40]  test_tasks = sum(1 for task in valid_tasks if task.startswith("test:"))
+Call function sum(1 for task in valid_tasks if task.startswith("test:"))
+[line 43]  if dev_tasks > test_tasks:
+Condition: True, entering 'if' block
+[line 45]  elif dev_tasks < test_tasks:
+'elif' Condition: True, entering block
+[line 46]  priority_multiplier = 2
+Assign: priority_multiplier = 2
+[line 51]  final_priority = total_valid_tasks * priority_multiplier
+Compute: total_valid_tasks * priority_multiplier, where total_valid_tasks=5 (defined at [line 32]), priority_multiplier=2 (defined at [line 46]) = 10
+
+Answer: final_priority = 10 (last updated on defined at [line 51])

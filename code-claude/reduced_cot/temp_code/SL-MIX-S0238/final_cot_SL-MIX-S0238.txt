@@ -1,0 +1,106 @@
+Target: Find the value of variable final_score after [line 119] executes
+
+[line 102]  raw_text = "Python 3.9 introduces several new features such as Union Operators in dict."
+Assign: raw_text = 'Python 3.9 introduces several new features such as Union Operators in dict.'
+[line 105]  processed_data = process_data(raw_text)
+Call function process_data(raw_text='Python 3.9 introduces several new features such as Union Operators in dict.' (defined at [line 102]))
+[line 34]  word_lengths = [len(word) for word in raw_data.split()]
+Compute: [len(word) for word in raw_data.split()], where word='Python' (an unknown source), raw_data='Python 3.9 introduces several new features such as Union Operators in dict.' (an unknown source) = ?
+[line 38]  for i, length in enumerate(word_lengths):
+(Missing param: 'iter_var')
+[line 40]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 38]  for i, length in enumerate(word_lengths):
+(Missing param: 'iter_var')
+[line 40]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 38] repeats 9 more times ...
+... [Line 38] repeats 9 more times ...
+[line 38]  for i, length in enumerate(word_lengths):
+(Missing param: 'iter_var')
+[line 40]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 38]  for i, length in enumerate(word_lengths):
+Loop End: Iteration finished
+[line 44]  numerical_values = []
+Compute: [] = []
+[line 45]  for char in raw_data:
+Loop Start: char takes its first value 'P'
+[line 46]  if char.isdigit():
+Condition: True, entering 'if' block
+[line 45]  for char in raw_data:
+Loop Iteration: char is now 'y' (iteration 2)
+[line 46]  if char.isdigit():
+Condition: True, entering 'if' block
+... [Line 45] repeats 72 more times ...
+... [Line 45] repeats 72 more times ...
+[line 45]  for char in raw_data:
+Loop Iteration: char is now '.' (iteration 75)
+[line 46]  if char.isdigit():
+Condition: True, entering 'if' block
+[line 45]  for char in raw_data:
+Loop End: Iteration finished
+[line 51]  for i in range(len(numerical_values) - 1):
+Loop Start: i takes its first value 0
+[line 51]  for i in range(len(numerical_values) - 1):
+Loop End: Iteration finished
+[line 55]  char_counts, vowels, consonants = analyze_text_frequencies(raw_data)
+(Missing param: 'func_name')
+[line 5]  char_counts = Counter(text.lower())
+Call function Counter(text.lower())
+[line 6]  vowels = {'a', 'e', 'i', 'o', 'u'}
+Compute: {'a', 'e', 'i', 'o', 'u'} = {'u', 'a', 'o', 'i', 'e'}
+[line 7]  consonants = {c for c in 'bcdfghjklmnpqrstvwxyz'}
+Compute: {c for c in 'bcdfghjklmnpqrstvwxyz'}, where c='b' (an unknown source) = ?
+[line 9]  vowel_count = sum(char_counts[v] for v in vowels)
+Call function sum(char_counts[v] for v in vowels)
+[line 10]  consonant_count = sum(char_counts[c] for c in consonants)
+Call function sum(char_counts[c] for c in consonants)
+[line 14]  return char_counts, vowel_count, consonant_count
+Return: char_counts, vowel_count, consonant_count
+[line 58]  return {
+Return: {
+[line 118]  final_score = calculate_weighted_score(processed_data, weights)
+Call function calculate_weighted_score(processed_data={word_lengths: [6, 3, 10, 7, 3, ...], position_map: {0: 6, 2: 10, 4: 3, ...}, numerical_values: [3, 9], ...} (defined at [line 105]), weights={frequency: 0.1, vowels: 0.2, length: 1.5, ...} (an unknown source))
+[line 78]  length_score = sum(data['word_lengths']) * weights.get('length', 0)
+Compute: sum(data['word_lengths']) * weights.get('length', 0), where data={word_lengths: [6, 3, 10, 7, 3, ...], position_map: {0: 6, 2: 10, 4: 3, ...}, numerical_values: [3, 9], ...} (an unknown source), weights={frequency: 0.1, vowels: 0.2, length: 1.5, ...} (an unknown source) = 96.0
+[line 84]  avg, median, weighted_sum = calculate_sequence_metrics(data['numerical_values'])
+(Missing param: 'func_name')
+[line 18]  if not numbers:
+Condition: True, entering 'if' block
+[line 22]  avg = sum(numbers) / len(numbers)
+Compute: sum(numbers) / len(numbers), where numbers=[3, 9] (an unknown source) = 6.0
+[line 23]  median = sorted(numbers)[len(numbers) // 2]
+Compute: sorted(numbers)[len(numbers) // 2], where numbers=[3, 9] (an unknown source) = 9
+[line 24]  product = 1
+Assign: product = 1
+[line 25]  for num in numbers[:3]:  # Only first 3 numbers affect product
+Loop Start: num takes its first value 3
+[line 26]  product *= num
+Update: product changed from 1 (defined at defined at [line 24]) to 1*num = 3
+[line 25]  for num in numbers[:3]:  # Only first 3 numbers affect product
+Loop Iteration: num is now 9 (iteration 2)
+[line 26]  product *= num
+Update: product changed from 3 (defined at defined at [line 26]) to 3*num = 27
+[line 25]  for num in numbers[:3]:  # Only first 3 numbers affect product
+Loop End: Iteration finished
+[line 29]  weighted_sum = sum(i * val for i, val in enumerate(numbers, 1))
+Call function sum(i * val for i, val in enumerate(numbers, 1))
+[line 30]  return avg, median, weighted_sum
+Return: avg, median, weighted_sum
+[line 85]  numerical_score = weighted_sum * weights.get('numerical', 0)
+Compute: weighted_sum * weights.get('numerical', 0), where weighted_sum=21 (defined at [line 29]), weights={frequency: 0.1, vowels: 0.2, length: 1.5, ...} (an unknown source) = 42.0
+[line 88]  position_score = sum(data['position_map'].values()) * weights.get('position', 0)
+Compute: sum(data['position_map'].values()) * weights.get('position', 0), where data={word_lengths: [6, 3, 10, 7, 3, ...], position_map: {0: 6, 2: 10, 4: 3, ...}, numerical_values: [3, 9], ...} (an unknown source), weights={frequency: 0.1, vowels: 0.2, length: 1.5, ...} (an unknown source) = 22.5
+[line 91]  combined_score = length_score + numerical_score + position_score
+Compute: length_score + numerical_score + position_score, where length_score=96.0 (defined at [line 78]), numerical_score=42.0 (defined at [line 85]), position_score=22.5 (defined at [line 88]) = 160.5
+[line 94]  if combined_score > 100:
+Condition: True, entering 'if' block
+[line 95]  combined_score = combined_score % 100 + 50
+Compute: combined_score % 100 + 50, where combined_score=160.5 (defined at [line 91]) = 110.5
+[line 99]  return round(combined_score, 2)
+Return: round(combined_score, 2)
+[line 119]  print(f"Result: {final_score}")
+Output: f"Result: {final_score}"
+
+Answer: final_score = 110.5 (last updated on defined at [line 118])

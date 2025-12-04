@@ -1,0 +1,117 @@
+Target: Find the value of variable priority_value after [line 78] executes
+
+[line 50]  packet_loss_rate = 0.05
+Assign: packet_loss_rate = 0.05
+[line 51]  latency_ms = 120
+Assign: latency_ms = 120
+[line 55]  packets = ["GET /index.html", "POST /api/data", "ACK 12345", "SYN", "FIN"]
+Compute: ["GET /index.html", "POST /api/data", "ACK 12345", "SYN", "FIN"] = ['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN']
+[line 1]  def analyze_network_traffic(packets, signal_strength=0.8):
+Enter function analyze_network_traffic: packets=['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN'] (packets defined at [line 55]), signal_strength=0.8
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where packets={'_type': 'list', '_items': [{'_type': 'str', '_value': 'GET /index.html'}, {'_type': 'str', '_value': 'POST /api/data'}, {'_type': 'str', '_value': 'ACK 12345'}, {'_type': 'str', '_value': 'SYN'}, {'_type': 'str', '_value': 'FIN'}], '_len': 5} (parameter packets defined at [line 55]) = ?
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where p='GET /index.html' (an unknown source) = ?
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where p='POST /api/data' (an unknown source) = ?
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where p='ACK 12345' (an unknown source) = ?
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where p='SYN' (an unknown source) = ?
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where p='FIN' (an unknown source) = ?
+  [line 2]  noise_level = sum(len(p) for p in packets) % 17
+  Compute: sum(len(p) for p in packets) % 17, where p='FIN' (an unknown source) = ?
+  [line 3]  potential_threats = [(i, p) for i, p in enumerate(packets) if len(p) > 10]
+  Compute: [(i, p) for i, p in enumerate(packets) if len(p) > 10], where i=0 (an unknown source), p='GET /index.html' (an unknown source), packets=['GET /index.html', 'POST /api/data', 'ACK 12345', 'SYN', 'FIN'] (parameter packets defined at [line 55]) = ?
+  [line 6]  integrity_factor = 0
+  Assign: integrity_factor = 0
+  [line 7]  for idx, packet in enumerate(packets):
+  (Missing param: 'iter_var')
+  [line 8]  if idx % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 9]  integrity_factor += len(packet) & 0x0F
+  Update: integrity_factor changed from 0 (defined at defined at [line 6]) to 0+len(packet) & 0x0F = 15
+  [line 7]  for idx, packet in enumerate(packets):
+  (Missing param: 'iter_var')
+  [line 8]  if idx % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 10]  elif idx % 3 == 1:
+  'elif' Condition: True, entering block
+  [line 11]  integrity_factor -= len(packet) >> 2
+  Update: integrity_factor changed from 15 (defined at defined at [line 9]) to 15-len(packet) >> 2 = 12
+... [Line 7] repeats 2 more times ...
+... [Line 7] repeats 2 more times ...
+... [Line 7] repeats 2 more times ...
+... [Line 7] repeats 2 more times ...
+  [line 7]  for idx, packet in enumerate(packets):
+  (Missing param: 'iter_var')
+  [line 8]  if idx % 3 == 0:
+  Condition: True, entering 'if' block
+  [line 10]  elif idx % 3 == 1:
+  'elif' Condition: True, entering block
+  [line 11]  integrity_factor -= len(packet) >> 2
+  Update: integrity_factor changed from 18 (defined at defined at [line 11]) to 18-len(packet) >> 2 = 18
+  [line 7]  for idx, packet in enumerate(packets):
+  Loop End: Iteration finished
+  [line 15]  return noise_level, integrity_factor, potential_threats
+  Return: noise_level, integrity_factor, potential_threats
+Function analyze_network_traffic returns (10, 18, [(...2 items), (...2 items)])
+[line 62]  packet_data = "DATA:PRIORITY:ANALYSIS"
+Assign: packet_data = 'DATA:PRIORITY:ANALYSIS'
+[line 63]  error_threshold = 15
+Assign: error_threshold = 15
+[line 70]  priority_value = get_data_priority(packet_data, error_threshold)
+Call function get_data_priority(packet_data='DATA:PRIORITY:ANALYSIS' (defined at [line 62]), error_threshold=15 (defined at [line 63]))
+[line 19]  sequence_count = 0
+Assign: sequence_count = 0
+[line 20]  anomaly_score = 0
+Assign: anomaly_score = 0
+[line 21]  bit_patterns = []
+Compute: [] = []
+[line 24]  for i, char in enumerate(data):
+(Missing param: 'iter_var')
+[line 26]  if i > 0 and char == data[i-1]:
+Condition: True, entering 'if' block
+[line 30]  char_value = ord(char)
+Call function ord(char='D' (an unknown source))
+[line 34]  if char_value > 110:
+Condition: True, entering 'if' block
+[line 24]  for i, char in enumerate(data):
+(Missing param: 'iter_var')
+[line 26]  if i > 0 and char == data[i-1]:
+Condition: True, entering 'if' block
+[line 30]  char_value = ord(char)
+Call function ord(char='A' (an unknown source))
+[line 34]  if char_value > 110:
+Condition: True, entering 'if' block
+... [Line 24] repeats 19 more times ...
+... [Line 24] repeats 19 more times ...
+... [Line 24] repeats 19 more times ...
+... [Line 24] repeats 19 more times ...
+[line 24]  for i, char in enumerate(data):
+(Missing param: 'iter_var')
+[line 26]  if i > 0 and char == data[i-1]:
+Condition: True, entering 'if' block
+[line 30]  char_value = ord(char)
+Call function ord(char='S' (an unknown source))
+[line 34]  if char_value > 110:
+Condition: True, entering 'if' block
+[line 24]  for i, char in enumerate(data):
+Loop End: Iteration finished
+[line 38]  raw_priority = (sum(bit_patterns) * 3) // len(data)
+Compute: (sum(bit_patterns) * 3) // len(data), where bit_patterns=[4, 1, 4, 1, 10, ...] (defined at [line 21]), data='DATA:PRIORITY:ANALYSIS' (an unknown source) = 18
+[line 39]  adjusted_priority = raw_priority
+Compute: raw_priority, where raw_priority=18 (defined at [line 38]) = 18
+[line 42]  if anomaly_score > threshold:
+Condition: True, entering 'if' block
+[line 44]  elif sequence_count > len(data) // 4:
+'elif' Condition: True, entering block
+[line 47]  return adjusted_priority
+Return: adjusted_priority=18 (defined at [line 39])
+[line 74]  if packet_loss_rate < 0.1 and latency_ms < 200:
+Condition: True, entering 'if' block
+[line 78]  print(f"Result: {priority_value}")
+Output: f"Result: {priority_value}"
+
+Answer: priority_value = 18 (last updated on defined at [line 70])

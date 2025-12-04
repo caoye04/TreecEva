@@ -1,0 +1,79 @@
+37
+filtered_sum
+---
+4 temperature_readings = [23.4, 22.1, 25.7, -999.0, 21.5, 24.3, -999.0, 26.2, 19.8]
+4 ['temperature_readings'] ['[23.4, 22.1, 25.7, -999.0, 21.5, ...]']
+7 invalid_marker = -999.0
+7 ['temperature_readings', 'invalid_marker'] ['[23.4, 22.1, 25.7, -999.0, 21.5, ...]', '-999.0']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['23.4']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['22.1']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['25.7']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['-999.0']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['21.5']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['24.3']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['-999.0']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['26.2']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['t'] ['19.8']
+8 valid_temps = [t for t in temperature_readings if t != invalid_marker]
+8 ['temperature_readings', 'invalid_marker', 'valid_temps'] ['[23.4, 22.1, 25.7, -999.0, 21.5, ...]', '-999.0', '[23.4, 22.1, 25.7, 21.5, 24.3, ...]']
+11 min_valid = min(valid_temps)
+11 ['valid_temps', 'min_valid'] ['[23.4, 22.1, 25.7, 21.5, 24.3, ...]', '19.8']
+12 max_valid = max(valid_temps)
+12 ['valid_temps', 'min_valid', 'max_valid'] ['[23.4, 22.1, 25.7, 21.5, 24.3, ...]', '19.8', '26.2']
+13 threshold = (max_valid + min_valid) / 2
+13 ['valid_temps', 'min_valid', 'max_valid', 'threshold'] ['[23.4, 22.1, 25.7, 21.5, 24.3, ...]', '19.8', '26.2', '23.0']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['valid_temps', 'max_valid', 'threshold'] ['[23.4, 22.1, 25.7, 21.5, 24.3, ...]', '26.2', '23.0']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['23.4']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['22.1']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['25.7']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['21.5']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['24.3']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['26.2']
+16 above_threshold = list(filter(lambda x: x > threshold, valid_temps))
+16 ['x'] ['19.8']
+19 sorted_temps = sorted(valid_temps)
+19 ['valid_temps', 'max_valid', 'above_threshold', 'sorted_temps'] ['[23.4, 22.1, 25.7, 21.5, 24.3, ...]', '26.2', '[23.4, 25.7, 24.3, 26.2]', '[19.8, 21.5, 22.1, 23.4, 24.3, ...]']
+20 middle_temps = sorted_temps[1:-1]
+20 ['max_valid', 'above_threshold', 'sorted_temps', 'middle_temps'] ['26.2', '[23.4, 25.7, 24.3, 26.2]', '[19.8, 21.5, 22.1, 23.4, 24.3, ...]', '[21.5, 22.1, 23.4, 24.3, 25.7]']
+23 analysis_set = middle_temps + above_threshold[-2:]
+23 ['max_valid', 'above_threshold', 'middle_temps', 'analysis_set'] ['26.2', '[23.4, 25.7, 24.3, 26.2]', '[21.5, 22.1, 23.4, 24.3, 25.7]', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]']
+26 correction = len(analysis_set) % 3
+26 ['max_valid', 'analysis_set', 'correction'] ['26.2', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]', '1']
+27 if correction == 0:
+27 ['max_valid', 'analysis_set', 'correction'] ['26.2', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]', '1']
+30 corrected_temps = analysis_set[:-correction]
+30 ['max_valid', 'analysis_set', 'correction', 'corrected_temps'] ['26.2', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]', '1', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]']
+33 filter_threshold = 0.8 * max_valid
+33 ['max_valid', 'corrected_temps', 'filter_threshold'] ['26.2', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]', '20.96']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['t'] ['21.5']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['t'] ['22.1']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['t'] ['23.4']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['t'] ['24.3']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['t'] ['25.7']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['t'] ['24.3']
+34 filtered_temps = [t for t in corrected_temps if t >= filter_threshold]
+34 ['corrected_temps', 'filter_threshold', 'filtered_temps'] ['[21.5, 22.1, 23.4, 24.3, 25.7, ...]', '20.96', '[21.5, 22.1, 23.4, 24.3, 25.7, ...]']
+37 filtered_sum = sum(filtered_temps)
+37 ['filtered_temps', 'filtered_sum'] ['[21.5, 22.1, 23.4, 24.3, 25.7, ...]', '141.3']

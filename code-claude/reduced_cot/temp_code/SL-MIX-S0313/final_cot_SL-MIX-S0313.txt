@@ -1,0 +1,33 @@
+Target: Find the value of variable final_score after [line 73] executes
+
+[line 73]  final_score = calculate_player_score(player_stats, bonus_factors)
+Call function calculate_player_score(player_stats={hits: 156, runs: 89, home_runs: 32, ...} (an unknown source), bonus_factors={team_performance: 1.15, fan_popularity: 1.2, media_coverage: 0.95} (an unknown source))
+[line 3]  def calculate_player_score(stats, bonus):
+Enter function calculate_player_score: stats={hits: 156, runs: 89, home_runs: 32, ...}, bonus={team_performance: 1.15, fan_popularity: 1.2, media_coverage: 0.95}
+  [line 5]  base_points = stats['hits'] * 1.0 + stats['runs'] * 1.5 + stats['home_runs'] * 4.0
+  Compute: stats['hits'] * 1.0 + stats['runs'] * 1.5 + stats['home_runs'] * 4.0, where stats={hits: 156, runs: 89, home_runs: 32, ...} (parameter stats) = 417.5
+  [line 11]  experience_factor = min(stats['years'], 10) / 10.0
+  Compute: min(stats['years'], 10) / 10.0, where stats={hits: 156, runs: 89, home_runs: 32, ...} (parameter stats) = 0.7
+  [line 17]  team_modifier = bonus['team_performance'] if stats['team_wins'] > 80 else 1.0
+  Compute: bonus['team_performance'] if stats['team_wins'] > 80 else 1.0, where bonus={team_performance: 1.15, fan_popularity: 1.2, media_coverage: 0.95} (parameter bonus), stats={hits: 156, runs: 89, home_runs: 32, ...} (parameter stats) = 1.15
+  [line 20]  streak_bonus = 1.0
+  Assign: streak_bonus = 1.0
+  [line 21]  if stats['current_streak'] > 0:
+  Condition: True, entering 'if' block
+  [line 22]  streak_bonus = 1.0 + (stats['current_streak'] * 0.01)
+  Compute: 1.0 + (stats['current_streak'] * 0.01), where stats={hits: 156, runs: 89, home_runs: 32, ...} (parameter stats) = 1.05
+  [line 28]  position_bonus = 1.2 if stats['position'] in ['catcher', 'pitcher'] else 1.0
+  Compute: 1.2 if stats['position'] in ['catcher', 'pitcher'] else 1.0, where stats={hits: 156, runs: 89, home_runs: 32, ...} (parameter stats) = 1.2
+  [line 37]  multiplier = team_modifier * streak_bonus * position_bonus * (1.0 + experience_factor)
+  Compute: team_modifier * streak_bonus * position_bonus * (1.0 + experience_factor), where team_modifier=1.15 (defined at [line 17]), streak_bonus=1.05 (defined at [line 22]), position_bonus=1.2 (defined at [line 28]), experience_factor=0.7 (defined at [line 11]) = 2.4633000000000003
+  [line 40]  performance_score = base_points * multiplier
+  Compute: base_points * multiplier, where base_points=417.5 (defined at [line 5]), multiplier=2.4633000000000003 (defined at [line 37]) = 1028.42775
+  [line 43]  seasonal_games = [g for g in range(stats['games_played']) if g % 20 == 0]
+  Compute: [g for g in range(stats['games_played']) if g % 20 == 0], where g=0 (an unknown source), stats={hits: 156, runs: 89, home_runs: 32, ...} (parameter stats) = ?
+  [line 44]  seasonal_factor = len(seasonal_games) / 10.0 if seasonal_games else 0.1
+  Compute: len(seasonal_games) / 10.0 if seasonal_games else 0.1, where seasonal_games=[0, 20, 40, 60, 80, ...] (defined at [line 43]) = 0.8
+  [line 47]  return round(performance_score * seasonal_factor, 2)
+  Return: round(performance_score * seasonal_factor, 2)
+Function calculate_player_score returns 822.74
+
+Answer: final_score = 822.74 (last updated on defined at [line 73])

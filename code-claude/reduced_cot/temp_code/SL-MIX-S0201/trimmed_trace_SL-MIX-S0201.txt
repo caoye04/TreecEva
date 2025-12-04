@@ -1,0 +1,207 @@
+76
+total_weight
+---
+20 min_items = 2
+20 ['items', 'min_items'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2']
+24 for item_name in items:
+24 ['items', 'min_items', 'item_name'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'"]
+24 for item_name in items:
+24 ['items', 'min_items', 'item_name'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'"]
+24 for item_name in items:
+24 ['items', 'min_items', 'item_name'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'"]
+24 for item_name in items:
+24 ['items', 'min_items', 'item_name'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'"]
+24 for item_name in items:
+24 ['items', 'min_items', 'item_name'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'"]
+24 for item_name in items:
+24 ['items', 'min_items', 'item_name'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'"]
+29 item_scores = {}
+29 ['items', 'min_items', 'item_name', 'item_scores'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{}']
+30 for item_name, properties in items.items():
+30 ['items', 'min_items', 'item_name', 'item_scores', 'properties'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{}', '{weight: 3, rarity: 8, level: 12, ...}']
+31 score = calculate_item_score(properties)
+31 ['items', 'min_items', 'item_name', 'item_scores', 'properties'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{}', '{weight: 3, rarity: 8, level: 12, ...}']
+PARAM_MAPPING {'item_properties': {'actual_var': 'properties', 'value': {'weight': 3, 'rarity': 8, 'level': 12, 'condition_penalty': 2}}}
+FUNCTION_ENTER 3 calculate_item_score def calculate_item_score(item_properties):
+3 ['item_properties'] [{'_type': 'dict', '_items': {'weight': {'_type': 'int', '_value': 3}, 'rarity': {'_type': 'int', '_value': 8}, 'level': {'_type': 'int', '_value': 12}, 'condition_penalty': {'_type': 'int', '_value': 2}}, '_len': 4}]
+4 base_score = item_properties['rarity'] * 2.5
+4 ['item_properties', 'base_score'] ['{weight: 3, rarity: 8, level: 12, ...}', '20.0']
+5 bonus = item_properties['level'] * 0.75
+5 ['item_properties', 'base_score', 'bonus'] ['{weight: 3, rarity: 8, level: 12, ...}', '20.0', '9.0']
+6 penalty = item_properties.get('condition_penalty', 0)
+6 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 3, rarity: 8, level: 12, ...}', '20.0', '9.0', '2']
+7 return max(0, base_score + bonus - penalty)
+7 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 3, rarity: 8, level: 12, ...}', '20.0', '9.0', '2']
+FUNCTION_RETURN 7 calculate_item_score {'_type': 'float', '_value': 27.0}
+32 item_scores[item_name] = score
+32 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{ancient_amulet: 27.0}', '{weight: 3, rarity: 8, level: 12, ...}', '27.0']
+30 for item_name, properties in items.items():
+30 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 27.0}', '{weight: 2, rarity: 7, level: 9}', '27.0']
+31 score = calculate_item_score(properties)
+31 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 27.0}', '{weight: 2, rarity: 7, level: 9}', '27.0']
+PARAM_MAPPING {'item_properties': {'actual_var': 'properties', 'value': {'weight': 2, 'rarity': 7, 'level': 9}}}
+FUNCTION_ENTER 3 calculate_item_score def calculate_item_score(item_properties):
+3 ['item_properties'] [{'_type': 'dict', '_items': {'weight': {'_type': 'int', '_value': 2}, 'rarity': {'_type': 'int', '_value': 7}, 'level': {'_type': 'int', '_value': 9}}, '_len': 3}]
+4 base_score = item_properties['rarity'] * 2.5
+4 ['item_properties', 'base_score'] ['{weight: 2, rarity: 7, level: 9}', '17.5']
+5 bonus = item_properties['level'] * 0.75
+5 ['item_properties', 'base_score', 'bonus'] ['{weight: 2, rarity: 7, level: 9}', '17.5', '6.75']
+6 penalty = item_properties.get('condition_penalty', 0)
+6 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 2, rarity: 7, level: 9}', '17.5', '6.75', '0']
+7 return max(0, base_score + bonus - penalty)
+7 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 2, rarity: 7, level: 9}', '17.5', '6.75', '0']
+FUNCTION_RETURN 7 calculate_item_score {'_type': 'float', '_value': 24.25}
+32 item_scores[item_name] = score
+32 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 27.0, mystic_orb: 24.25}', '{weight: 2, rarity: 7, level: 9}', '24.25']
+30 for item_name, properties in items.items():
+30 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 27.0, mystic_orb: 24.25}', '{weight: 6, rarity: 5, level: 14, ...}', '24.25']
+31 score = calculate_item_score(properties)
+31 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 27.0, mystic_orb: 24.25}', '{weight: 6, rarity: 5, level: 14, ...}', '24.25']
+PARAM_MAPPING {'item_properties': {'actual_var': 'properties', 'value': {'weight': 6, 'rarity': 5, 'level': 14, 'condition_penalty': 3}}}
+FUNCTION_ENTER 3 calculate_item_score def calculate_item_score(item_properties):
+3 ['item_properties'] [{'_type': 'dict', '_items': {'weight': {'_type': 'int', '_value': 6}, 'rarity': {'_type': 'int', '_value': 5}, 'level': {'_type': 'int', '_value': 14}, 'condition_penalty': {'_type': 'int', '_value': 3}}, '_len': 4}]
+4 base_score = item_properties['rarity'] * 2.5
+4 ['item_properties', 'base_score'] ['{weight: 6, rarity: 5, level: 14, ...}', '12.5']
+5 bonus = item_properties['level'] * 0.75
+5 ['item_properties', 'base_score', 'bonus'] ['{weight: 6, rarity: 5, level: 14, ...}', '12.5', '10.5']
+6 penalty = item_properties.get('condition_penalty', 0)
+6 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 6, rarity: 5, level: 14, ...}', '12.5', '10.5', '3']
+7 return max(0, base_score + bonus - penalty)
+7 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 6, rarity: 5, level: 14, ...}', '12.5', '10.5', '3']
+FUNCTION_RETURN 7 calculate_item_score {'_type': 'float', '_value': 20.0}
+32 item_scores[item_name] = score
+32 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0}', '{weight: 6, rarity: 5, level: 14, ...}', '20.0']
+30 for item_name, properties in items.items():
+30 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0}', '{weight: 1, rarity: 6, level: 8}', '20.0']
+31 score = calculate_item_score(properties)
+31 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0}', '{weight: 1, rarity: 6, level: 8}', '20.0']
+PARAM_MAPPING {'item_properties': {'actual_var': 'properties', 'value': {'weight': 1, 'rarity': 6, 'level': 8}}}
+FUNCTION_ENTER 3 calculate_item_score def calculate_item_score(item_properties):
+3 ['item_properties'] [{'_type': 'dict', '_items': {'weight': {'_type': 'int', '_value': 1}, 'rarity': {'_type': 'int', '_value': 6}, 'level': {'_type': 'int', '_value': 8}}, '_len': 3}]
+4 base_score = item_properties['rarity'] * 2.5
+4 ['item_properties', 'base_score'] ['{weight: 1, rarity: 6, level: 8}', '15.0']
+5 bonus = item_properties['level'] * 0.75
+5 ['item_properties', 'base_score', 'bonus'] ['{weight: 1, rarity: 6, level: 8}', '15.0', '6.0']
+6 penalty = item_properties.get('condition_penalty', 0)
+6 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 1, rarity: 6, level: 8}', '15.0', '6.0', '0']
+7 return max(0, base_score + bonus - penalty)
+7 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 1, rarity: 6, level: 8}', '15.0', '6.0', '0']
+FUNCTION_RETURN 7 calculate_item_score {'_type': 'float', '_value': 21.0}
+32 item_scores[item_name] = score
+32 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '{weight: 1, rarity: 6, level: 8}', '21.0']
+30 for item_name, properties in items.items():
+30 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '{weight: 4, rarity: 9, level: 15, ...}', '21.0']
+31 score = calculate_item_score(properties)
+31 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '{weight: 4, rarity: 9, level: 15, ...}', '21.0']
+PARAM_MAPPING {'item_properties': {'actual_var': 'properties', 'value': {'weight': 4, 'rarity': 9, 'level': 15, 'condition_penalty': 1}}}
+FUNCTION_ENTER 3 calculate_item_score def calculate_item_score(item_properties):
+3 ['item_properties'] [{'_type': 'dict', '_items': {'weight': {'_type': 'int', '_value': 4}, 'rarity': {'_type': 'int', '_value': 9}, 'level': {'_type': 'int', '_value': 15}, 'condition_penalty': {'_type': 'int', '_value': 1}}, '_len': 4}]
+4 base_score = item_properties['rarity'] * 2.5
+4 ['item_properties', 'base_score'] ['{weight: 4, rarity: 9, level: 15, ...}', '22.5']
+5 bonus = item_properties['level'] * 0.75
+5 ['item_properties', 'base_score', 'bonus'] ['{weight: 4, rarity: 9, level: 15, ...}', '22.5', '11.25']
+6 penalty = item_properties.get('condition_penalty', 0)
+6 ['item_properties', 'base_score', 'bonus', 'penalty'] ['{weight: 4, rarity: 9, level: 15, ...}', '22.5', '11.25', '1']
+7 return max(0, base_score + bonus - penalty)
+7 ['base_score', 'bonus', 'penalty'] ['22.5', '11.25', '1']
+FUNCTION_RETURN 7 calculate_item_score {'_type': 'float', '_value': 32.75}
+32 item_scores[item_name] = score
+32 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '{weight: 4, rarity: 9, level: 15, ...}', '32.75']
+30 for item_name, properties in items.items():
+30 ['items', 'min_items', 'item_name', 'item_scores', 'properties', 'score'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '{weight: 4, rarity: 9, level: 15, ...}', '32.75']
+35 efficiency = {}
+35 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '32.75', '{}']
+36 for item_name, score in item_scores.items():
+36 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '27.0', '{}']
+37 weight = items[item_name]['weight']
+37 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '27.0', '{}', '3']
+38 efficiency[item_name] = score / weight if weight > 0 else 0
+38 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '27.0', '{ancient_amulet: 9.0}', '3']
+36 for item_name, score in item_scores.items():
+36 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '24.25', '{ancient_amulet: 9.0}', '3']
+37 weight = items[item_name]['weight']
+37 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '24.25', '{ancient_amulet: 9.0}', '2']
+38 efficiency[item_name] = score / weight if weight > 0 else 0
+38 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '24.25', '{ancient_amulet: 9.0, mystic_orb: 12.125}', '2']
+36 for item_name, score in item_scores.items():
+36 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '20.0', '{ancient_amulet: 9.0, mystic_orb: 12.125}', '2']
+37 weight = items[item_name]['weight']
+37 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '20.0', '{ancient_amulet: 9.0, mystic_orb: 12.125}', '6']
+38 efficiency[item_name] = score / weight if weight > 0 else 0
+38 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '20.0', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335}', '6']
+36 for item_name, score in item_scores.items():
+36 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '21.0', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335}', '6']
+37 weight = items[item_name]['weight']
+37 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '21.0', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335}', '1']
+38 efficiency[item_name] = score / weight if weight > 0 else 0
+38 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '21.0', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '1']
+36 for item_name, score in item_scores.items():
+36 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '32.75', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '1']
+37 weight = items[item_name]['weight']
+37 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '32.75', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4']
+38 efficiency[item_name] = score / weight if weight > 0 else 0
+38 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '32.75', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4']
+36 for item_name, score in item_scores.items():
+36 ['items', 'min_items', 'item_name', 'item_scores', 'score', 'efficiency', 'weight'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 27.0, mystic_orb: 24.25, enchanted_blade: 20.0, ...}', '32.75', '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4']
+42 for item_name, props in items.items():
+42 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'props'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '{weight: 3, rarity: 8, level: 12, ...}']
+42 for item_name, props in items.items():
+42 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'props'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '{weight: 2, rarity: 7, level: 9}']
+42 for item_name, props in items.items():
+42 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'props'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '{weight: 6, rarity: 5, level: 14, ...}']
+42 for item_name, props in items.items():
+42 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'props'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '{weight: 1, rarity: 6, level: 8}']
+42 for item_name, props in items.items():
+42 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'props'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '{weight: 4, rarity: 9, level: 15, ...}']
+42 for item_name, props in items.items():
+42 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'props'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '{weight: 4, rarity: 9, level: 15, ...}']
+48 selected_items = []
+48 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'selected_items'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '[]']
+51 sorted_items = sorted(efficiency.items(), key=lambda x: x[1], reverse=True)
+51 ['items', 'min_items', 'item_name', 'efficiency', 'weight', 'selected_items'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '{ancient_amulet: 9.0, mystic_orb: 12.125, enchanted_blade: 3.3333333333333335, ...}', '4', '[]']
+51 sorted_items = sorted(efficiency.items(), key=lambda x: x[1], reverse=True)
+51 ['x'] ["('ancient_amulet', 9.0)"]
+51 sorted_items = sorted(efficiency.items(), key=lambda x: x[1], reverse=True)
+51 ['x'] ["('mystic_orb', 12.125)"]
+51 sorted_items = sorted(efficiency.items(), key=lambda x: x[1], reverse=True)
+51 ['x'] ["('enchanted_blade', 3.3333333333333335)"]
+51 sorted_items = sorted(efficiency.items(), key=lambda x: x[1], reverse=True)
+51 ['x'] ["('crystal_flask', 21.0)"]
+51 sorted_items = sorted(efficiency.items(), key=lambda x: x[1], reverse=True)
+51 ['x'] ["('dragon_scale', 8.1875)"]
+53 for item_name, _ in sorted_items:
+53 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '4', '[]', "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '21.0']
+54 if remaining_capacity >= items[item_name]['weight']:
+54 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'crystal_flask'", '4', '[]', "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '21.0']
+53 for item_name, _ in sorted_items:
+53 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '4', "['crystal_flask']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '12.125']
+54 if remaining_capacity >= items[item_name]['weight']:
+54 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'mystic_orb'", '4', "['crystal_flask']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '12.125']
+53 for item_name, _ in sorted_items:
+53 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '4', "['crystal_flask', 'mystic_orb']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '9.0']
+54 if remaining_capacity >= items[item_name]['weight']:
+54 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'ancient_amulet'", '4', "['crystal_flask', 'mystic_orb']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '9.0']
+53 for item_name, _ in sorted_items:
+53 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '4', "['crystal_flask', 'mystic_orb', 'ancient_amulet']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '8.1875']
+54 if remaining_capacity >= items[item_name]['weight']:
+54 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'dragon_scale'", '4', "['crystal_flask', 'mystic_orb', 'ancient_amulet']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '8.1875']
+53 for item_name, _ in sorted_items:
+53 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '4', "['crystal_flask', 'mystic_orb', 'ancient_amulet', 'dragon_scale']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '3.3333333333333335']
+54 if remaining_capacity >= items[item_name]['weight']:
+54 ['items', 'min_items', 'item_name', 'weight', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", '4', "['crystal_flask', 'mystic_orb', 'ancient_amulet', 'dragon_scale']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '3.3333333333333335']
+53 for item_name, _ in sorted_items:
+53 ['items', 'min_items', 'item_name', 'selected_items', 'sorted_items', '_'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "'enchanted_blade'", "['crystal_flask', 'mystic_orb', 'ancient_amulet', 'dragon_scale']", "[('crystal_flask', 21.0), ('mystic_orb', 12.125), ('ancient_amulet', 9.0), ('dragon_scale', 8.1875), ('enchanted_blade', 3.3333333333333335)]", '3.3333333333333335']
+59 if len(selected_items) < min_items and len(selected_items) > 0:
+59 ['items', 'min_items', 'selected_items'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', '2', "['crystal_flask', 'mystic_orb', 'ancient_amulet', 'dragon_scale']"]
+73 final_selection = {item: items[item]['weight'] for item in selected_items}
+73 ['item'] ["'crystal_flask'"]
+73 final_selection = {item: items[item]['weight'] for item in selected_items}
+73 ['item'] ["'mystic_orb'"]
+73 final_selection = {item: items[item]['weight'] for item in selected_items}
+73 ['item'] ["'ancient_amulet'"]
+73 final_selection = {item: items[item]['weight'] for item in selected_items}
+73 ['item'] ["'dragon_scale'"]
+73 final_selection = {item: items[item]['weight'] for item in selected_items}
+73 ['items', 'selected_items', 'final_selection'] ['{ancient_amulet: {weight: 3, rarity: 8, level: 12, ...}, mystic_orb: {weight: 2, rarity: 7, level: 9}, enchanted_blade: {weight: 6, rarity: 5, level: 14, ...}, ...}', "['crystal_flask', 'mystic_orb', 'ancient_amulet', 'dragon_scale']", '{crystal_flask: 1, mystic_orb: 2, ancient_amulet: 3, ...}']
+76 total_weight = sum(final_selection.values())
+76 ['final_selection', 'total_weight'] ['{crystal_flask: 1, mystic_orb: 2, ancient_amulet: 3, ...}', '10']

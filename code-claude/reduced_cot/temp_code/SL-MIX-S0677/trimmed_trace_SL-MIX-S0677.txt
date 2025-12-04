@@ -1,0 +1,115 @@
+51
+total_score
+---
+16 round_multipliers = [1.0, 1.5, 0.8]
+16 ['players', 'round_multipliers'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]']
+17 total_rounds = len(round_multipliers)
+17 ['players', 'round_multipliers', 'total_rounds'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3']
+18 qualification_threshold = 100
+18 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100']
+21 raw_scores = {}
+21 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{}']
+22 bonus_points = {}
+22 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{}', '{}']
+23 final_scores = {}
+23 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{}', '{}', '{}']
+26 for i, (name, base_score, level) in enumerate(players):
+26 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{}', '{}', '{}', '0', "'Alice'", '120', '3']
+28 round_index = i % total_rounds
+28 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{}', '{}', '{}', '0', "'Alice'", '120', '3', '0']
+29 multiplier = round_multipliers[round_index]
+29 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{}', '{}', '{}', '0', "'Alice'", '120', '3', '0', '1.0']
+30 raw_scores[name] = base_score * multiplier
+30 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{}', '{}', '0', "'Alice'", '120', '3', '0', '1.0']
+33 bonus = calculate_bonus(level)
+33 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{}', '{}', '0', "'Alice'", '120', '3', '0', '1.0']
+PARAM_MAPPING {'level': {'actual_var': 'level', 'value': 3}}
+FUNCTION_ENTER 2 calculate_bonus def calculate_bonus(level):
+2 ['level'] [{'_type': 'int', '_value': 3}]
+4 bonus_factors = {1: 5, 2: 10, 3: 15, 4: 20}
+4 ['level', 'bonus_factors'] ['3', '{1: 5, 2: 10, 3: 15, ...}']
+5 return bonus_factors.get(level, 0) * 0.5
+5 ['level', 'bonus_factors'] ['3', '{1: 5, 2: 10, 3: 15, ...}']
+FUNCTION_RETURN 5 calculate_bonus {'_type': 'float', '_value': 7.5}
+34 bonus_points[name] = bonus
+34 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{Alice: 7.5}', '{}', '0', "'Alice'", '120', '3', '0', '1.0', '7.5']
+37 penalty = 10 if raw_scores[name] < qualification_threshold else 0
+37 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{Alice: 7.5}', '{}', '0', "'Alice'", '120', '3', '0', '1.0', '7.5', '0']
+40 final_scores[name] = raw_scores[name] + bonus_points[name] - penalty
+40 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{Alice: 7.5}', '{Alice: 127.5}', '0', "'Alice'", '120', '3', '0', '1.0', '7.5', '0']
+26 for i, (name, base_score, level) in enumerate(players):
+26 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{Alice: 7.5}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '0', '1.0', '7.5', '0']
+28 round_index = i % total_rounds
+28 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{Alice: 7.5}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '1', '1.0', '7.5', '0']
+29 multiplier = round_multipliers[round_index]
+29 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0}', '{Alice: 7.5}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '1', '1.5', '7.5', '0']
+30 raw_scores[name] = base_score * multiplier
+30 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '1', '1.5', '7.5', '0']
+33 bonus = calculate_bonus(level)
+33 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '1', '1.5', '7.5', '0']
+PARAM_MAPPING {'level': {'actual_var': 'level', 'value': 2}}
+FUNCTION_ENTER 2 calculate_bonus def calculate_bonus(level):
+2 ['level'] [{'_type': 'int', '_value': 2}]
+4 bonus_factors = {1: 5, 2: 10, 3: 15, 4: 20}
+4 ['level', 'bonus_factors'] ['2', '{1: 5, 2: 10, 3: 15, ...}']
+5 return bonus_factors.get(level, 0) * 0.5
+5 ['level', 'bonus_factors'] ['2', '{1: 5, 2: 10, 3: 15, ...}']
+FUNCTION_RETURN 5 calculate_bonus {'_type': 'float', '_value': 5.0}
+34 bonus_points[name] = bonus
+34 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '1', '1.5', '5.0', '0']
+37 penalty = 10 if raw_scores[name] < qualification_threshold else 0
+37 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5}', '1', "'Bob'", '85', '2', '1', '1.5', '5.0', '0']
+40 final_scores[name] = raw_scores[name] + bonus_points[name] - penalty
+40 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5, Bob: 132.5}', '1', "'Bob'", '85', '2', '1', '1.5', '5.0', '0']
+26 for i, (name, base_score, level) in enumerate(players):
+26 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '1', '1.5', '5.0', '0']
+28 round_index = i % total_rounds
+28 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '2', '1.5', '5.0', '0']
+29 multiplier = round_multipliers[round_index]
+29 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '2', '0.8', '5.0', '0']
+30 raw_scores[name] = base_score * multiplier
+30 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '2', '0.8', '5.0', '0']
+33 bonus = calculate_bonus(level)
+33 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '2', '0.8', '5.0', '0']
+PARAM_MAPPING {'level': {'actual_var': 'level', 'value': 4}}
+FUNCTION_ENTER 2 calculate_bonus def calculate_bonus(level):
+2 ['level'] [{'_type': 'int', '_value': 4}]
+4 bonus_factors = {1: 5, 2: 10, 3: 15, 4: 20}
+4 ['level', 'bonus_factors'] ['4', '{1: 5, 2: 10, 3: 15, ...}']
+5 return bonus_factors.get(level, 0) * 0.5
+5 ['level', 'bonus_factors'] ['4', '{1: 5, 2: 10, 3: 15, ...}']
+FUNCTION_RETURN 5 calculate_bonus {'_type': 'float', '_value': 10.0}
+34 bonus_points[name] = bonus
+34 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '2', '0.8', '10.0', '0']
+37 penalty = 10 if raw_scores[name] < qualification_threshold else 0
+37 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5}', '2', "'Charlie'", '150', '4', '2', '0.8', '10.0', '0']
+40 final_scores[name] = raw_scores[name] + bonus_points[name] - penalty
+40 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '2', "'Charlie'", '150', '4', '2', '0.8', '10.0', '0']
+26 for i, (name, base_score, level) in enumerate(players):
+26 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '2', '0.8', '10.0', '0']
+28 round_index = i % total_rounds
+28 ['players', 'round_multipliers', 'total_rounds', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '3', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '0', '0.8', '10.0', '0']
+29 multiplier = round_multipliers[round_index]
+29 ['players', 'round_multipliers', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'round_index', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '[1.0, 1.5, 0.8]', '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '0', '1.0', '10.0', '0']
+30 raw_scores[name] = base_score * multiplier
+30 ['players', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'multiplier', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0, ...}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '1.0', '10.0', '0']
+33 bonus = calculate_bonus(level)
+33 ['players', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0, ...}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '10.0', '0']
+PARAM_MAPPING {'level': {'actual_var': 'level', 'value': 1}}
+FUNCTION_ENTER 2 calculate_bonus def calculate_bonus(level):
+2 ['level'] [{'_type': 'int', '_value': 1}]
+4 bonus_factors = {1: 5, 2: 10, 3: 15, 4: 20}
+4 ['level', 'bonus_factors'] ['1', '{1: 5, 2: 10, 3: 15, ...}']
+5 return bonus_factors.get(level, 0) * 0.5
+5 ['level', 'bonus_factors'] ['1', '{1: 5, 2: 10, 3: 15, ...}']
+FUNCTION_RETURN 5 calculate_bonus {'_type': 'float', '_value': 2.5}
+34 bonus_points[name] = bonus
+34 ['players', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'bonus', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0, ...}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0, ...}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '2.5', '0']
+37 penalty = 10 if raw_scores[name] < qualification_threshold else 0
+37 ['players', 'qualification_threshold', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '100', '{Alice: 120.0, Bob: 127.5, Charlie: 120.0, ...}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0, ...}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0}', '3', "'David'", '95', '1', '10']
+40 final_scores[name] = raw_scores[name] + bonus_points[name] - penalty
+40 ['players', 'raw_scores', 'bonus_points', 'final_scores', 'i', 'name', 'base_score', 'level', 'penalty'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '{Alice: 120.0, Bob: 127.5, Charlie: 120.0, ...}', '{Alice: 7.5, Bob: 5.0, Charlie: 10.0, ...}', '{Alice: 127.5, Bob: 132.5, Charlie: 130.0, ...}', '3', "'David'", '95', '1', '10']
+26 for i, (name, base_score, level) in enumerate(players):
+26 ['players', 'final_scores', 'i', 'name', 'base_score', 'level'] ["[('Alice', 120, 3), ('Bob', 85, 2), ('Charlie', 150, 4), ('David', 95, 1)]", '{Alice: 127.5, Bob: 132.5, Charlie: 130.0, ...}', '3', "'David'", '95', '1']
+51 total_score = sum(final_scores.values())
+51 ['final_scores', 'total_score'] ['{Alice: 127.5, Bob: 132.5, Charlie: 130.0, ...}', '477.5']

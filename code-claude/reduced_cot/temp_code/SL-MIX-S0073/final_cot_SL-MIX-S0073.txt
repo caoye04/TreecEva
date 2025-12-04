@@ -1,0 +1,172 @@
+Target: Find the value of variable final_stock after [line 107] executes
+
+[line 78]  priority_items = ["B202", "E505", "A101"]
+Compute: ["B202", "E505", "A101"] = ['B202', 'E505', 'A101']
+[line 91]  for item_id, details in inventory.items():
+(Missing param: 'iter_var')
+[line 92]  if item_id in previous_month_sales:
+Condition: True, entering 'if' block
+[line 91]  for item_id, details in inventory.items():
+(Missing param: 'iter_var')
+[line 92]  if item_id in previous_month_sales:
+Condition: True, entering 'if' block
+... [Line 91] repeats 2 more times ...
+... [Line 91] repeats 2 more times ...
+[line 91]  for item_id, details in inventory.items():
+(Missing param: 'iter_var')
+[line 92]  if item_id in previous_month_sales:
+Condition: True, entering 'if' block
+[line 91]  for item_id, details in inventory.items():
+Loop End: Iteration finished
+[line 106]  final_stock = calculate_inventory_value(inventory, priority_items)
+Call function calculate_inventory_value(inventory={A101: {price: 25.99, quantity: 15, weight: 2}, B202: {price: 10.5, quantity: 8, weight: 1}, C303: {price: 5.75, quantity: 3, weight: 0.5}, ...} (an unknown source), priority_items=['B202', 'E505', 'A101'] (defined at [line 78]))
+[line 16]  def calculate_inventory_value(inventory, priority_items):
+Enter function calculate_inventory_value: inventory={A101: {price: 25.99, quantity: 15, weight: 2}, B202: {price: 10.5, quantity: 8, weight: 1}, C303: {price: 5.75, quantity: 3, weight: 0.5}, ...}, priority_items=['B202', 'E505', 'A101'] (priority_items defined at [line 78])
+  [line 17]  total_value = 0
+  Assign: total_value = 0
+  [line 20]  warehouse_capacity = 1000
+  Assign: warehouse_capacity = 1000
+  [line 21]  warehouse_used = sum(item['quantity'] for item in inventory.values())
+  Call function sum(item['quantity'] for item in inventory.values())
+  [line 25]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 26]  if details['quantity'] < 5:
+  Condition: True, entering 'if' block
+  [line 25]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 26]  if details['quantity'] < 5:
+  Condition: True, entering 'if' block
+... [Line 25] repeats 2 more times ...
+... [Line 25] repeats 2 more times ...
+  [line 25]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 26]  if details['quantity'] < 5:
+  Condition: True, entering 'if' block
+  [line 25]  for item_id, details in inventory.items():
+  Loop End: Iteration finished
+  [line 30]  weight_distribution = {}
+  Compute: {} = {}
+  [line 31]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 32]  weight_class = details['weight'] // 5
+  Compute: details['weight'] // 5, where details={price: 25.99, quantity: 15, weight: 2} (an unknown source) = 0
+  [line 33]  if weight_class not in weight_distribution:
+  Condition: True, entering 'if' block
+  [line 34]  weight_distribution[weight_class] = 0
+  (Missing param: 'var')
+  [line 31]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 32]  weight_class = details['weight'] // 5
+  Compute: details['weight'] // 5, where details={price: 10.5, quantity: 8, weight: 1} (an unknown source) = 0
+  [line 33]  if weight_class not in weight_distribution:
+  Condition: True, entering 'if' block
+... [Line 31] repeats 2 more times ...
+... [Line 31] repeats 2 more times ...
+... [Line 31] repeats 2 more times ...
+... [Line 31] repeats 2 more times ...
+  [line 31]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 32]  weight_class = details['weight'] // 5
+  Compute: details['weight'] // 5, where details={price: 49.95, quantity: 6, weight: 5} (an unknown source) = 1
+  [line 33]  if weight_class not in weight_distribution:
+  Condition: True, entering 'if' block
+  [line 31]  for item_id, details in inventory.items():
+  Loop End: Iteration finished
+  [line 38]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 39]  item_value = details['price'] * details['quantity']
+  Compute: details['price'] * details['quantity'], where details={price: 25.99, quantity: 15, weight: 2} (an unknown source) = 389.84999999999997
+  [line 2]  if discount_type == "seasonal":
+  Condition: True, entering 'if' block
+  [line 3]  return price * 0.75
+  Return: price * 0.75
+  [line 11]  base_rate = 5
+  Assign: base_rate = 5
+  [line 12]  weight_factor = weight * 0.1
+  Compute: weight * 0.1, where weight=2 (an unknown source) = 0.2
+  [line 13]  distance_factor = distance * 0.05
+  Compute: distance * 0.05, where distance=100 (an unknown source) = 5.0
+  [line 14]  return base_rate + weight_factor + distance_factor
+  Return: base_rate + weight_factor + distance_factor
+  [line 50]  if item_id in priority_items:
+  Condition: True, entering 'if' block
+  [line 52]  priority_index = priority_items.index(item_id)
+  (Missing param: 'func_name')
+  [line 53]  priority_multiplier = 1 + (len(priority_items) - priority_index) * 0.1
+  Compute: 1 + (len(priority_items) - priority_index) * 0.1, where priority_items=['B202', 'E505', 'A101'] (parameter priority_items defined at [line 78]), priority_index=2 (an unknown source) = 1.1
+  [line 54]  total_value += item_value * priority_multiplier
+  Update: total_value changed from 0 (defined at defined at [line 17]) to 0+item_value * priority_multiplier = 428.835
+  [line 38]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 39]  item_value = details['price'] * details['quantity']
+  Compute: details['price'] * details['quantity'], where details={price: 10.5, quantity: 8, weight: 1} (an unknown source) = 84.0
+  [line 2]  if discount_type == "seasonal":
+  Condition: True, entering 'if' block
+  [line 3]  return price * 0.75
+  Return: price * 0.75
+  [line 11]  base_rate = 5
+  Assign: base_rate = 5
+  [line 12]  weight_factor = weight * 0.1
+  Compute: weight * 0.1, where weight=1 (an unknown source) = 0.1
+  [line 13]  distance_factor = distance * 0.05
+  Compute: distance * 0.05, where distance=100 (an unknown source) = 5.0
+  [line 14]  return base_rate + weight_factor + distance_factor
+  Return: base_rate + weight_factor + distance_factor
+  [line 50]  if item_id in priority_items:
+  Condition: True, entering 'if' block
+  [line 52]  priority_index = priority_items.index(item_id)
+  (Missing param: 'func_name')
+  [line 53]  priority_multiplier = 1 + (len(priority_items) - priority_index) * 0.1
+  Compute: 1 + (len(priority_items) - priority_index) * 0.1, where priority_items=['B202', 'E505', 'A101'] (parameter priority_items defined at [line 78]), priority_index=0 (an unknown source) = 1.3
+  [line 54]  total_value += item_value * priority_multiplier
+  Update: total_value changed from 428.835 (defined at defined at [line 54]) to 428.835+item_value * priority_multiplier = 538.035
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+... [Line 38] repeats 2 more times ...
+  [line 38]  for item_id, details in inventory.items():
+  (Missing param: 'iter_var')
+  [line 39]  item_value = details['price'] * details['quantity']
+  Compute: details['price'] * details['quantity'], where details={price: 49.95, quantity: 6, weight: 5} (an unknown source) = 299.70000000000005
+  [line 2]  if discount_type == "seasonal":
+  Condition: True, entering 'if' block
+  [line 3]  return price * 0.75
+  Return: price * 0.75
+  [line 11]  base_rate = 5
+  Assign: base_rate = 5
+  [line 12]  weight_factor = weight * 0.1
+  Compute: weight * 0.1, where weight=5 (an unknown source) = 0.5
+  [line 13]  distance_factor = distance * 0.05
+  Compute: distance * 0.05, where distance=100 (an unknown source) = 5.0
+  [line 14]  return base_rate + weight_factor + distance_factor
+  Return: base_rate + weight_factor + distance_factor
+  [line 50]  if item_id in priority_items:
+  Condition: True, entering 'if' block
+  [line 52]  priority_index = priority_items.index(item_id)
+  (Missing param: 'func_name')
+  [line 53]  priority_multiplier = 1 + (len(priority_items) - priority_index) * 0.1
+  Compute: 1 + (len(priority_items) - priority_index) * 0.1, where priority_items=['B202', 'E505', 'A101'] (parameter priority_items defined at [line 78]), priority_index=1 (an unknown source) = 1.2
+  [line 54]  total_value += item_value * priority_multiplier
+  Update: total_value changed from 538.035 (defined at defined at [line 54]) to 538.035+item_value * priority_multiplier = 897.675
+  [line 38]  for item_id, details in inventory.items():
+  Loop End: Iteration finished
+  [line 57]  storage_efficiency = (warehouse_used / warehouse_capacity) * 100
+  Compute: (warehouse_used / warehouse_capacity) * 100, where warehouse_used=34 (defined at [line 21]), warehouse_capacity=1000 (defined at [line 20]) = 3.4000000000000004
+  [line 58]  if storage_efficiency > 80:
+  Condition: True, entering 'if' block
+  [line 63]  tax_rate = 0.08
+  Assign: tax_rate = 0.08
+  [line 64]  total_value *= (1 + tax_rate)
+  Update: total_value changed from 897.675 (defined at defined at [line 54]) to 897.675*(1 + tax_rate) = 969.489
+  [line 66]  return round(total_value, 2)
+  Return: round(total_value, 2)
+Function calculate_inventory_value returns 969.49
+[line 107]  print(f"Result: {final_stock}")
+Output: f"Result: {final_stock}"
+
+Answer: final_stock = 969.49 (last updated on defined at [line 106])

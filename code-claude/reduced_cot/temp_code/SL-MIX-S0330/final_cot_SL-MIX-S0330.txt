@@ -1,0 +1,35 @@
+Target: Find the value of variable final_score after [line 48] executes
+
+[line 31]  base_points = 75
+Assign: base_points = 75
+[line 32]  time_bonus = 12
+Assign: time_bonus = 12
+[line 33]  accuracy_points = 8
+Assign: accuracy_points = 8
+[line 34]  bonus_multiplier = 1.8
+Assign: bonus_multiplier = 1.8
+[line 35]  raw_penalties = (3, 4, 2)
+Compute: (3, 4, 2) = (3, 4, 2)
+[line 38]  total_points = base_points + (time_bonus if time_bonus < 15 else 15) + accuracy_points
+Compute: base_points + (time_bonus if time_bonus < 15 else 15) + accuracy_points, where base_points=75 (defined at [line 31]), time_bonus=12 (defined at [line 32]), accuracy_points=8 (defined at [line 33]) = 95
+[line 41]  penalties = sum(penalty for penalty in raw_penalties if penalty > 0)
+Call function sum(penalty for penalty in raw_penalties if penalty > 0)
+[line 48]  final_score = calculate_adjusted_score(total_points, bonus_multiplier, penalties)
+Call function calculate_adjusted_score(total_points=95 (defined at [line 38]), bonus_multiplier=1.8 (defined at [line 34]), penalties=9 (defined at [line 41]))
+[line 1]  def calculate_adjusted_score(points, multiplier, penalties):
+Enter function calculate_adjusted_score: points=95 (total_points defined at [line 38]), multiplier=1.8 (bonus_multiplier defined at [line 34]), penalties=9 (penalties defined at [line 41])
+  [line 3]  preliminary_score = points * multiplier
+  Compute: points * multiplier, where points=95 (parameter points defined at [line 38]), multiplier=1.8 (parameter multiplier defined at [line 34]) = 171.0
+  [line 6]  penalty_threshold = 5
+  Assign: penalty_threshold = 5
+  [line 7]  effective_penalties = penalties if penalties < penalty_threshold else penalty_threshold
+  Compute: penalties if penalties < penalty_threshold else penalty_threshold, where penalties=9 (parameter penalties defined at [line 41]), penalty_threshold=5 (defined at [line 6]) = 5
+  [line 18]  adjustment_factor = 1.5 if preliminary_score > 100 else 1.0
+  Compute: 1.5 if preliminary_score > 100 else 1.0, where preliminary_score=171.0 (defined at [line 3]) = 1.5
+  [line 25]  result = preliminary_score * adjustment_factor - effective_penalties * 3
+  Compute: preliminary_score * adjustment_factor - effective_penalties * 3, where preliminary_score=171.0 (defined at [line 3]), adjustment_factor=1.5 (defined at [line 18]), effective_penalties=5 (defined at [line 7]) = 241.5
+  [line 28]  return round(result, 1)
+  Return: round(result, 1)
+Function calculate_adjusted_score returns 241.5
+
+Answer: final_score = 241.5 (last updated on defined at [line 48])

@@ -1,0 +1,273 @@
+88
+signal_strength
+---
+28 signal_data = [0.2, -0.1, 0.5, 0.8, 1.2, 0.7, 0.3, -0.2, -0.5, -0.3, 0.1, 0.4]
+28 ['signal_data'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]']
+39 filtered_data = apply_filters(signal_data, filters)
+39 ['signal_data', 'filters'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}']
+8 results = {}
+8 ['signal_data', 'filters', 'results'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{}']
+9 for filter_name, filter_func in filters.items():
+9 ['signal_data', 'filters', 'results', 'filter_name'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{}', "'lowpass'"]
+10 filtered = list(map(filter_func, signal_data))
+10 ['signal_data', 'filters', 'results', 'filter_name'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{}', "'lowpass'"]
+11 results[filter_name] = filtered
+11 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...]}', "'lowpass'", '[0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...]']
+9 for filter_name, filter_func in filters.items():
+9 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...]}', "'highpass'", '[0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...]']
+10 filtered = list(map(filter_func, signal_data))
+10 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...]}', "'highpass'", '[0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...]']
+11 results[filter_name] = filtered
+11 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...], highpass: [0.24, -0.12, 0.5, 0.8, 1.2, ...]}', "'highpass'", '[0.24, -0.12, 0.5, 0.8, 1.2, ...]']
+9 for filter_name, filter_func in filters.items():
+9 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...], highpass: [0.24, -0.12, 0.5, 0.8, 1.2, ...]}', "'bandpass'", '[0.24, -0.12, 0.5, 0.8, 1.2, ...]']
+10 filtered = list(map(filter_func, signal_data))
+10 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...], highpass: [0.24, -0.12, 0.5, 0.8, 1.2, ...]}', "'bandpass'", '[0.24, -0.12, 0.5, 0.8, 1.2, ...]']
+11 results[filter_name] = filtered
+11 ['signal_data', 'filters', 'results', 'filter_name', 'filtered'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...], highpass: [0.24, -0.12, 0.5, 0.8, 1.2, ...], bandpass: [0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]}', "'bandpass'", '[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]']
+9 for filter_name, filter_func in filters.items():
+9 ['signal_data', 'filters', 'results', 'filter_name'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: function(...), highpass: function(...), bandpass: function(...)}', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...], highpass: [0.24, -0.12, 0.5, 0.8, 1.2, ...], bandpass: [0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]}', "'bandpass'"]
+12 return results.get('bandpass', signal_data)  # Default to original if no bandpass
+12 ['signal_data', 'results'] ['[0.2, -0.1, 0.5, 0.8, 1.2, ...]', '{lowpass: [0.2, -0.1, 0.5, 0.6400000000000001, 0.96, ...], highpass: [0.24, -0.12, 0.5, 0.8, 1.2, ...], bandpass: [0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]}']
+PARAM_MAPPING {'data': {'actual_var': 'filtered_data', 'value': [0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, -0.45, -0.27, 0.06999999999999999, 0.36000000000000004]}}
+FUNCTION_ENTER 1 calculate_noise_floor def calculate_noise_floor(data, threshold=0.05):
+1 ['data', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 0.13999999999999999}, {'_type': 'float', '_value': -0.06999999999999999}, {'_type': 'float', '_value': 0.45}, {'_type': 'float', '_value': 0.7200000000000001}, {'_type': 'float', '_value': 0.84}, {'_type': 'float', '_value': 0.63}, {'_type': 'float', '_value': 0.27}, {'_type': 'float', '_value': -0.13999999999999999}, {'_type': 'float', '_value': -0.45}, {'_type': 'float', '_value': -0.27}], '_len': 12}, {'_type': 'float', '_value': 0.05}]
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.13999999999999999']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.06999999999999999']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.45']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.7200000000000001']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.84']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.63']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.27']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.13999999999999999']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.45']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.27']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.06999999999999999']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'x'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.36000000000000004']
+3 noise_base = sum([abs(x) for x in data if abs(x) < threshold])
+3 ['data', 'threshold', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.13999999999999999', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.06999999999999999', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.45', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.7200000000000001', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.84', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.63', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.27', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.13999999999999999', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.45', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '-0.27', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.06999999999999999', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'x', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0.36000000000000004', '0']
+4 return noise_base / max(1, len([x for x in data if abs(x) < threshold]))
+4 ['data', 'threshold', 'noise_base'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.05', '0']
+FUNCTION_RETURN 4 calculate_noise_floor {'_type': 'float', '_value': 0.0}
+45 potential_freqs = [433.92, 868.3, 915.0, 2400.0, 5800.0]
+45 ['filtered_data', 'potential_freqs'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[433.92, 868.3, 915.0, 2400.0, 5800.0]']
+46 freq_weights = [0.3, 0.2, 0.15, 0.25, 0.1]
+46 ['filtered_data', 'potential_freqs', 'freq_weights'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[433.92, 868.3, 915.0, 2400.0, 5800.0]', '[0.3, 0.2, 0.15, 0.25, 0.1]']
+47 weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+47 ['f', 'w'] ['433.92', '0.3']
+47 weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+47 ['f', 'w'] ['868.3', '0.2']
+47 weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+47 ['f', 'w'] ['915.0', '0.15']
+47 weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+47 ['f', 'w'] ['2400.0', '0.25']
+47 weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+47 ['f', 'w'] ['5800.0', '0.1']
+47 weighted_freqs = [(f, w) for f, w in zip(potential_freqs, freq_weights)]
+47 ['filtered_data', 'potential_freqs', 'freq_weights', 'weighted_freqs'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[433.92, 868.3, 915.0, 2400.0, 5800.0]', '[0.3, 0.2, 0.15, 0.25, 0.1]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]']
+50 optimal_freq = 0
+50 ['filtered_data', 'weighted_freqs', 'optimal_freq'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0']
+51 max_weight = 0
+51 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0']
+52 for freq, weight in weighted_freqs:
+52 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '433.92', '0.3']
+54 if freq > 2000:
+54 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '433.92', '0.3']
+52 for freq, weight in weighted_freqs:
+52 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '868.3', '0.2']
+54 if freq > 2000:
+54 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '868.3', '0.2']
+52 for freq, weight in weighted_freqs:
+52 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '915.0', '0.15']
+54 if freq > 2000:
+54 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '915.0', '0.15']
+52 for freq, weight in weighted_freqs:
+52 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '2400.0', '0.25']
+54 if freq > 2000:
+54 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '2400.0', '0.25']
+55 adjusted_weight = weight * (1 + 0.1 * (freq // 1000))
+55 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '2400.0', '0.25', '0.3']
+56 if adjusted_weight > max_weight:
+56 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0', '2400.0', '0.25', '0.3']
+57 max_weight = adjusted_weight
+57 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '0', '0.3', '2400.0', '0.25', '0.3']
+58 optimal_freq = freq
+58 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '2400.0', '0.3', '2400.0', '0.25', '0.3']
+52 for freq, weight in weighted_freqs:
+52 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '2400.0', '0.3', '5800.0', '0.1', '0.3']
+54 if freq > 2000:
+54 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '2400.0', '0.3', '5800.0', '0.1', '0.3']
+55 adjusted_weight = weight * (1 + 0.1 * (freq // 1000))
+55 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '2400.0', '0.3', '5800.0', '0.1', '0.15000000000000002']
+56 if adjusted_weight > max_weight:
+56 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'max_weight', 'freq', 'weight', 'adjusted_weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '2400.0', '0.3', '5800.0', '0.1', '0.15000000000000002']
+52 for freq, weight in weighted_freqs:
+52 ['filtered_data', 'weighted_freqs', 'optimal_freq', 'freq', 'weight'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(433.92, 0.3), (868.3, 0.2), (915.0, 0.15), (2400.0, 0.25), (5800.0, 0.1)]', '2400.0', '5800.0', '0.1']
+PARAM_MAPPING {'data': {'actual_var': 'filtered_data', 'value': [0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, -0.45, -0.27, 0.06999999999999999, 0.36000000000000004]}}
+FUNCTION_ENTER 14 find_peaks def find_peaks(data, window_size=3):
+14 ['data', 'window_size'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 0.13999999999999999}, {'_type': 'float', '_value': -0.06999999999999999}, {'_type': 'float', '_value': 0.45}, {'_type': 'float', '_value': 0.7200000000000001}, {'_type': 'float', '_value': 0.84}, {'_type': 'float', '_value': 0.63}, {'_type': 'float', '_value': 0.27}, {'_type': 'float', '_value': -0.13999999999999999}, {'_type': 'float', '_value': -0.45}, {'_type': 'float', '_value': -0.27}], '_len': 12}, {'_type': 'int', '_value': 3}]
+16 peaks = []
+16 ['data', 'window_size', 'peaks'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3']
+18 is_peak = True
+18 ['data', 'window_size', 'peaks', 'i', 'is_peak'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3', 'True']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3', 'True', '1']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3', 'True', '1']
+21 is_peak = False
+21 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3', 'False', '1']
+22 break
+22 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3', 'False', '1']
+23 if is_peak:
+23 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '3', 'False', '1']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'False', '1']
+18 is_peak = True
+18 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '1']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '1']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '1']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '2']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '2']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '3']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '3']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '3']
+23 if is_peak:
+23 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[]', '4', 'True', '3']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'True', '3']
+18 is_peak = True
+18 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'True', '3']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'True', '1']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'True', '1']
+21 is_peak = False
+21 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'False', '1']
+22 break
+22 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'False', '1']
+23 if is_peak:
+23 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '5', 'False', '1']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'False', '1']
+18 is_peak = True
+18 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'True', '1']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'True', '1']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'True', '1']
+21 is_peak = False
+21 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'False', '1']
+22 break
+22 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'False', '1']
+23 if is_peak:
+23 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '6', 'False', '1']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'False', '1']
+18 is_peak = True
+18 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'True', '1']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'True', '1']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'True', '1']
+21 is_peak = False
+21 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'False', '1']
+22 break
+22 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'False', '1']
+23 if is_peak:
+23 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '7', 'False', '1']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'False', '1']
+18 is_peak = True
+18 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'True', '1']
+19 for j in range(1, window_size + 1):
+19 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'True', '1']
+20 if data[i] <= data[i - j] or data[i] <= data[i + j]:
+20 ['data', 'window_size', 'peaks', 'i', 'is_peak', 'j'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'True', '1']
+21 is_peak = False
+21 ['data', 'window_size', 'peaks', 'i', 'is_peak'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'False']
+22 break
+22 ['data', 'window_size', 'peaks', 'i', 'is_peak'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'False']
+23 if is_peak:
+23 ['data', 'window_size', 'peaks', 'i', 'is_peak'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8', 'False']
+17 for i in range(window_size, len(data) - window_size):
+17 ['data', 'window_size', 'peaks', 'i'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '3', '[(4, 0.84)]', '8']
+25 return sorted(peaks, key=lambda x: x[1], reverse=True)[:5]  # Top 5 peaks
+25 ['data', 'peaks'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[(4, 0.84)]']
+25 return sorted(peaks, key=lambda x: x[1], reverse=True)[:5]  # Top 5 peaks
+25 ['x'] ['(4, 0.84)']
+FUNCTION_RETURN 25 find_peaks {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 0.84}], '_len': 2}], '_len': 1}
+88 signal_strength = analyze_signal(filtered_data, optimal_freq)
+88 ['filtered_data', 'optimal_freq'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '2400.0']
+PARAM_MAPPING {'data': {'actual_var': 'filtered_data', 'value': [0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, -0.45, -0.27, 0.06999999999999999, 0.36000000000000004]}, 'frequency': {'actual_var': 'optimal_freq', 'value': 2400.0}}
+FUNCTION_ENTER 68 analyze_signal def analyze_signal(data, frequency):
+68 ['data', 'frequency'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 0.13999999999999999}, {'_type': 'float', '_value': -0.06999999999999999}, {'_type': 'float', '_value': 0.45}, {'_type': 'float', '_value': 0.7200000000000001}, {'_type': 'float', '_value': 0.84}, {'_type': 'float', '_value': 0.63}, {'_type': 'float', '_value': 0.27}, {'_type': 'float', '_value': -0.13999999999999999}, {'_type': 'float', '_value': -0.45}, {'_type': 'float', '_value': -0.27}], '_len': 12}, {'_type': 'float', '_value': 2400.0}]
+70 middle_slice = data[len(data)//4:3*len(data)//4]
+70 ['data', 'frequency', 'middle_slice'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '2400.0', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]']
+73 freq_coef = (frequency / 1000) ** 0.5
+73 ['data', 'frequency', 'middle_slice', 'freq_coef'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '2400.0', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'val'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '0.7200000000000001']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'val'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '0.84']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'val'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '0.63']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'val'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '0.27']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'val'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '-0.13999999999999999']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'val'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '-0.45']
+76 adjusted_values = [val * freq_coef for val in middle_slice]
+76 ['data', 'middle_slice', 'freq_coef', 'adjusted_values'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[0.7200000000000001, 0.84, 0.63, 0.27, -0.13999999999999999, ...]', '1.5491933384829668', '[1.1154192037077362, 1.3013224043256921, 0.9759918032442692, 0.41828220139040106, -0.21688706738761532, ...]']
+79 base_strength = sum(adjusted_values) / len(adjusted_values)
+79 ['data', 'adjusted_values', 'base_strength'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '[1.1154192037077362, 1.3013224043256921, 0.9759918032442692, 0.41828220139040106, -0.21688706738761532, ...]', '0.48283192382719137']
+82 tuned_strength = base_strength * (10 - len(data[:3]))
+82 ['data', 'base_strength', 'tuned_strength'] ['[0.13999999999999999, -0.06999999999999999, 0.45, 0.7200000000000001, 0.84, ...]', '0.48283192382719137', '3.3798234667903397']
+85 return round(tuned_strength * 10) / 10
+85 ['tuned_strength'] ['3.3798234667903397']
+FUNCTION_RETURN 85 analyze_signal {'_type': 'float', '_value': 3.4}

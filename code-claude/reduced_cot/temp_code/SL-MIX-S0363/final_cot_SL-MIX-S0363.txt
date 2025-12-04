@@ -1,0 +1,148 @@
+Target: Find the value of variable priority_score after [line 113] executes
+
+[line 80]  document = "The quick brown fox jumps over the lazy dog. This is a simple test document with keywords."
+Assign: document = 'The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.'
+[line 83]  word_count, avg_length, section_data = analyze_document(document)
+(Missing param: 'func_name')
+[line 5]  word_count = len(text.split())
+Call function len(text.split())
+[line 6]  char_count = len(text)
+Call function len(text='The quick brown fox jumps over the lazy dog. This is a simple test document with keywords.' (an unknown source))
+[line 7]  avg_word_length = char_count / max(1, word_count)
+Compute: char_count / max(1, word_count), where char_count=90 (defined at [line 6]), word_count=17 (defined at [line 5]) = 5.294117647058823
+[line 10]  sections = text.split('.')
+(Missing param: 'func_name')
+[line 11]  section_metrics = []
+Compute: [] = []
+[line 12]  for section in sections:
+Loop Start: section takes its first value 'The quick brown fox jumps over the lazy dog'
+[line 13]  words = section.strip().split()
+(Missing param: 'func_name')
+[line 14]  if len(words) > 0:
+Condition: True, entering 'if' block
+[line 12]  for section in sections:
+Loop Iteration: section is now ' This is a simple test document with keywords' (iteration 2)
+[line 13]  words = section.strip().split()
+(Missing param: 'func_name')
+[line 14]  if len(words) > 0:
+Condition: True, entering 'if' block
+[line 12]  for section in sections:
+Loop Iteration: section is now '' (iteration 3)
+[line 13]  words = section.strip().split()
+(Missing param: 'func_name')
+[line 14]  if len(words) > 0:
+Condition: True, entering 'if' block
+[line 12]  for section in sections:
+Loop End: Iteration finished
+[line 20]  return word_count, avg_word_length, section_metrics
+Return: word_count, avg_word_length, section_metrics
+[line 24]  base_score = metrics[0] * 0.3 + metrics[1] * 0.7
+Compute: metrics[0] * 0.3 + metrics[1] * 0.7, where metrics=[17, 5.294117647058823] (an unknown source) = 8.805882352941175
+[line 25]  multiplier = 1.0
+Assign: multiplier = 1.0
+[line 26]  if metrics[0] > 100:
+Condition: True, entering 'if' block
+[line 28]  if metrics[1] > 5.0:
+Condition: True, entering 'if' block
+[line 29]  multiplier += 0.15
+Update: multiplier changed from 1.0 (defined at defined at [line 25]) to 1.0+0.15 = 1.15
+[line 31]  return base_score * multiplier
+Return: base_score * multiplier
+[line 87]  words = document.lower().replace('.', '').split()
+(Missing param: 'func_name')
+[line 88]  filtered_words = filter_keywords(words)
+Call function filter_keywords(words=['the', 'quick', 'brown', 'fox', 'jumps', ...] (an unknown source))
+[line 33]  def filter_keywords(words, min_length=4):
+Enter function filter_keywords: words=['the', 'quick', 'brown', 'fox', 'jumps', ...], min_length=4
+  [line 35]  filtered = []
+  Compute: [] = []
+  [line 36]  ignored = []
+  Compute: [] = []
+  [line 38]  for word in words:
+  Loop Start: word takes its first value 'the'
+  [line 39]  if len(word) >= min_length and not word.isdigit():
+  Condition: True, entering 'if' block
+  [line 38]  for word in words:
+  Loop Iteration: word is now 'quick' (iteration 2)
+  [line 39]  if len(word) >= min_length and not word.isdigit():
+  Condition: True, entering 'if' block
+... [Line 38] repeats 14 more times ...
+... [Line 38] repeats 14 more times ...
+  [line 38]  for word in words:
+  Loop Iteration: word is now 'keywords' (iteration 17)
+  [line 39]  if len(word) >= min_length and not word.isdigit():
+  Condition: True, entering 'if' block
+  [line 38]  for word in words:
+  Loop End: Iteration finished
+  [line 48]  return filtered
+  Return: filtered=['quick', 'brown', 'jumps', 'over', 'lazy', ...] (defined at [line 35])
+Function filter_keywords returns ['quick', 'brown', 'jumps', 'over', 'lazy', ...]
+[line 92]  backup_weights = [1.8, 9, 0.5, 0.7]  # Distractor
+Compute: [1.8, 9, 0.5, 0.7]  # Distractor = [1.8, 9, 0.5, 0.7]
+[line 95]  if word_count > 20:
+Condition: True, entering 'if' block
+[line 98]  weights = backup_weights
+Compute: backup_weights, where backup_weights=[1.8, 9, 0.5, 0.7] (defined at [line 92]) = [1.8, 9, 0.5, 0.7]
+[line 101]  if avg_length > 10:  # This condition is false
+Condition: True, entering 'if' block
+[line 106]  priority_score = calculate_priority(filtered_words, weights)
+Call function calculate_priority(filtered_words=['quick', 'brown', 'jumps', 'over', 'lazy', ...] (defined at [line 88]), weights=[1.8, 9, 0.5, 0.7] (defined at [line 98]))
+[line 50]  def calculate_priority(words, weights):
+Enter function calculate_priority: words=['quick', 'brown', 'jumps', 'over', 'lazy', ...] (filtered_words defined at [line 88]), weights=[1.8, 9, 0.5, 0.7] (weights defined at [line 98])
+  [line 51]  if not words or not weights:
+  Condition: True, entering 'if' block
+  [line 55]  initial_score = 0
+  Assign: initial_score = 0
+  [line 56]  for i, word in enumerate(words[:5]):  # Only first 5 words matter
+  (Missing param: 'iter_var')
+  [line 57]  position_factor = 6 - i  # Position weight decreases
+  Compute: 6 - i  # Position weight decreases, where i=0 (an unknown source) = 6
+  [line 58]  length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+  Call function min(len(word) / 2, 5)
+  [line 59]  initial_score += position_factor * length_factor
+  Update: initial_score changed from 0 (defined at defined at [line 55]) to 0+position_factor * length_factor = 15.0
+  [line 56]  for i, word in enumerate(words[:5]):  # Only first 5 words matter
+  (Missing param: 'iter_var')
+  [line 57]  position_factor = 6 - i  # Position weight decreases
+  Compute: 6 - i  # Position weight decreases, where i=1 (an unknown source) = 5
+  [line 58]  length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+  Call function min(len(word) / 2, 5)
+  [line 59]  initial_score += position_factor * length_factor
+  Update: initial_score changed from 15.0 (defined at defined at [line 59]) to 15.0+position_factor * length_factor = 27.5
+... [Line 56] repeats 2 more times ...
+... [Line 56] repeats 2 more times ...
+... [Line 56] repeats 2 more times ...
+... [Line 56] repeats 2 more times ...
+  [line 56]  for i, word in enumerate(words[:5]):  # Only first 5 words matter
+  (Missing param: 'iter_var')
+  [line 57]  position_factor = 6 - i  # Position weight decreases
+  Compute: 6 - i  # Position weight decreases, where i=4 (an unknown source) = 2
+  [line 58]  length_factor = min(len(word) / 2, 5)  # Cap length factor at 5
+  Call function min(len(word) / 2, 5)
+  [line 59]  initial_score += position_factor * length_factor
+  Update: initial_score changed from 43.5 (defined at defined at [line 59]) to 43.5+position_factor * length_factor = 47.5
+  [line 56]  for i, word in enumerate(words[:5]):  # Only first 5 words matter
+  Loop End: Iteration finished
+  [line 62]  weighted_score = initial_score * weights[0]  # First weight is multiplicative
+  Compute: initial_score * weights[0]  # First weight is multiplicative, where initial_score=47.5 (defined at [line 59]), weights=[1.8, 9, 0.5, 0.7] (parameter weights defined at [line 98]) = 85.5
+  [line 63]  weighted_score += weights[1]  # Second weight is additive
+  Update: weighted_score changed from 85.5 (defined at defined at [line 62]) to 85.5+weights[1]  # Second weight is additive = 94.5
+  [line 67]  for w in weights[2:]:  # These weights are ignored
+  Loop Start: w takes its first value 0.5
+  [line 67]  for w in weights[2:]:  # These weights are ignored
+  Loop End: Iteration finished
+  [line 67]  for w in weights[2:]:  # These weights are ignored
+  Loop End: Iteration finished
+  [line 75]  final_score = int(weighted_score) // 3 * 3  # Integer division by 3, then multiply by 3
+  Compute: int(weighted_score) // 3 * 3  # Integer division by 3, then multiply by 3, where weighted_score=94.5 (defined at [line 63]) = 93
+  [line 77]  return final_score
+  Return: final_score=93 (defined at [line 75])
+Function calculate_priority returns 93
+[line 109]  combined_metrics = word_count + len(filtered_words)
+Compute: word_count + len(filtered_words), where word_count=17 (defined at [line 5]), filtered_words=['quick', 'brown', 'jumps', 'over', 'lazy', ...] (defined at [line 88]) = 28
+[line 110]  if combined_metrics > 50:  # This condition is false
+Condition: True, entering 'if' block
+[line 113]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 93 (last updated on defined at [line 106])

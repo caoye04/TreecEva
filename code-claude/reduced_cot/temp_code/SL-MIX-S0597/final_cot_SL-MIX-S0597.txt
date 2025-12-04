@@ -1,0 +1,35 @@
+Target: Find the value of variable common_count after [line 34] executes
+
+[line 4]  def analyze_text(text, keywords, weights):
+Enter function analyze_text: text='Python programming is both fun and practical. Python offers many libraries.', keywords=['python', 'programming', 'libraries', 'code', 'developer'], weights={relevance: 0.7, density: 0.3}
+  [line 6]  text = text.lower().replace(',', ' ').replace('.', ' ')
+  (Missing param: 'func_name')
+  [line 7]  words = text.split()
+  (Missing param: 'func_name')
+  [line 10]  word_freq = Counter(words)
+  Call function Counter(words=['python', 'programming', 'is', 'both', 'fun', ...] (an unknown source))
+  [line 14]  text_set = set(words)
+  Call function set(words=['python', 'programming', 'is', 'both', 'fun', ...] (an unknown source))
+  [line 15]  keyword_set = set(keywords)
+  Call function set(keywords=['python', 'programming', 'libraries', 'code', 'developer'] (parameter keywords))
+  [line 18]  total_words = len(words)
+  Call function len(words=['python', 'programming', 'is', 'both', 'fun', ...] (an unknown source))
+  [line 19]  unique_words = len(text_set)
+  Call function len(text_set={'libraries', 'programming', 'both', 'and', 'practical', ...} (defined at [line 14]))
+  [line 22]  density = sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0
+  Compute: sum(word_freq[kw] for kw in keywords if kw in word_freq) / total_words if total_words > 0 else 0, where word_freq={python: 2, programming: 1, is: 1, ...} (defined at [line 10]), keywords=['python', 'programming', 'libraries', 'code', 'developer'] (parameter keywords), total_words=11 (defined at [line 18]) = ?
+  [line 25]  metrics = defaultdict(int)
+  Call function defaultdict(int)
+  [line 26]  metrics['density'] = round(density * 100, 2)  # Convert to percentage
+  (Missing param: 'func_name')
+  [line 27]  metrics['unique_ratio'] = unique_words / total_words if total_words > 0 else 0
+  (Missing param: 'result')
+  [line 31]  multiplier = 2 if metrics['density'] > 5 else 3
+  Compute: 2 if metrics['density'] > 5 else 3, where metrics={density: 36.36, unique_ratio: 0.9090909090909091} (defined at [line 25]) = 2
+  [line 34]  common_count = len(text_set & keyword_set) * multiplier
+  Compute: len(text_set & keyword_set) * multiplier, where text_set={'libraries', 'programming', 'both', 'and', 'practical', ...} (defined at [line 14]), keyword_set={'libraries', 'programming', 'code', 'developer', 'python'} (defined at [line 15]), multiplier=2 (defined at [line 31]) = 6
+  [line 43]  return common_count
+  Return: common_count=6 (defined at [line 34])
+Function analyze_text returns 6
+
+Answer: common_count = 6 (last updated on defined at [line 34])

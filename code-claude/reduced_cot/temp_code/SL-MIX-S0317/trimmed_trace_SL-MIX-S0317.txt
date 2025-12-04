@@ -1,0 +1,257 @@
+59
+final_score
+---
+PARAM_MAPPING {'student_answers': {'actual_var': 'student_answers', 'value': {1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', 5: 'cell membrane', 6: 'DNA', 9: 'Krebs cycle', 10: 'ecosystem'}}, 'answer_key': {'actual_var': 'answer_key', 'value': {1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', 4: 'meiosis', 5: 'cell wall', 6: 'dna', 7: 'protein', 8: 'lipid', 9: 'krebs cycle', 10: 'ecosystem'}}}
+FUNCTION_ENTER 13 calculate_weighted_score def calculate_weighted_score(student_answers, answer_key):
+13 ['student_answers', 'answer_key'] [{'_type': 'dict', '_items': {'1': {'_type': 'str', '_value': 'Photosynthesis'}, '2': {'_type': 'str', '_value': 'mitochondria'}, '3': {'_type': 'str', '_value': 'DARWIN'}, '5': {'_type': 'str', '_value': 'cell membrane'}, '6': {'_type': 'str', '_value': 'DNA'}}, '_len': 7}, {'_type': 'dict', '_items': {'1': {'_type': 'str', '_value': 'photosynthesis'}, '2': {'_type': 'str', '_value': 'mitochondria'}, '3': {'_type': 'str', '_value': 'Darwin'}, '4': {'_type': 'str', '_value': 'meiosis'}, '5': {'_type': 'str', '_value': 'cell wall'}}, '_len': 10}]
+15 penalty = 0
+15 ['student_answers', 'answer_key', 'penalty'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0']
+16 bonus = 0
+16 ['student_answers', 'answer_key', 'penalty', 'bonus'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0']
+19 correct_count = 0
+19 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '0']
+20 partial_points = 0
+20 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '0', '0']
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '0', '0', '1', "'Photosynthesis'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '0', '0', '1', "'Photosynthesis'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '0', '0', '1', "'Photosynthesis'", "'photosynthesis'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'Photosynthesis'}, 'str2': {'actual_var': 'correct_answer', 'value': 'photosynthesis'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'Photosynthesis'}, {'_type': 'str', '_value': 'photosynthesis'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'Photosynthesis'", "'photosynthesis'"]
+5 return text.lower().strip()
+5 ['text'] ["'Photosynthesis'"]
+5 return text.lower().strip()
+5 ['text'] ["'photosynthesis'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'photosynthesis'", "'photosynthesis'", "{'i', 'p', 'n', 'e', 'y', ...}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'photosynthesis'", "'photosynthesis'", "{'i', 'p', 'n', 'e', 'y', ...}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 1.0}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '0', '0', '1', "'Photosynthesis'", "'photosynthesis'"]
+5 return text.lower().strip()
+5 ['text'] ["'Photosynthesis'"]
+5 return text.lower().strip()
+5 ['text'] ["'photosynthesis'"]
+31 correct_count += 1
+31 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '0', '1', "'Photosynthesis'", "'photosynthesis'"]
+33 if question_id % 3 == 0:
+33 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '0', '1', "'Photosynthesis'", "'photosynthesis'"]
+36 partial_points += 10
+36 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '10', '1', "'Photosynthesis'", "'photosynthesis'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '10', '2', "'mitochondria'", "'photosynthesis'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '10', '2', "'mitochondria'", "'photosynthesis'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '10', '2', "'mitochondria'", "'mitochondria'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'mitochondria'}, 'str2': {'actual_var': 'correct_answer', 'value': 'mitochondria'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'mitochondria'}, {'_type': 'str', '_value': 'mitochondria'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'mitochondria'", "'mitochondria'"]
+5 return text.lower().strip()
+5 ['text'] ["'mitochondria'"]
+5 return text.lower().strip()
+5 ['text'] ["'mitochondria'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'mitochondria'", "'mitochondria'", "{'d', 'm', 'c', 'a', 'r', ...}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'mitochondria'", "'mitochondria'", "{'d', 'm', 'c', 'a', 'r', ...}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 1.0}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '1', '10', '2', "'mitochondria'", "'mitochondria'"]
+5 return text.lower().strip()
+5 ['text'] ["'mitochondria'"]
+5 return text.lower().strip()
+5 ['text'] ["'mitochondria'"]
+31 correct_count += 1
+31 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '10', '2', "'mitochondria'", "'mitochondria'"]
+33 if question_id % 3 == 0:
+33 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '10', '2', "'mitochondria'", "'mitochondria'"]
+36 partial_points += 10
+36 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '20', '2', "'mitochondria'", "'mitochondria'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '20', '3', "'DARWIN'", "'mitochondria'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '20', '3', "'DARWIN'", "'mitochondria'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '20', '3', "'DARWIN'", "'Darwin'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'DARWIN'}, 'str2': {'actual_var': 'correct_answer', 'value': 'Darwin'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'DARWIN'}, {'_type': 'str', '_value': 'Darwin'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'DARWIN'", "'Darwin'"]
+5 return text.lower().strip()
+5 ['text'] ["'DARWIN'"]
+5 return text.lower().strip()
+5 ['text'] ["'Darwin'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'darwin'", "'darwin'", "{'d', 'a', 'r', 'i', 'n', ...}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'darwin'", "'darwin'", "{'d', 'a', 'r', 'i', 'n', ...}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 1.0}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '2', '20', '3', "'DARWIN'", "'Darwin'"]
+5 return text.lower().strip()
+5 ['text'] ["'DARWIN'"]
+5 return text.lower().strip()
+5 ['text'] ["'Darwin'"]
+31 correct_count += 1
+31 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '20', '3', "'DARWIN'", "'Darwin'"]
+33 if question_id % 3 == 0:
+33 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '20', '3', "'DARWIN'", "'Darwin'"]
+34 partial_points += 15
+34 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '3', "'DARWIN'", "'Darwin'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '5', "'cell membrane'", "'Darwin'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '5', "'cell membrane'", "'Darwin'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '5', "'cell membrane'", "'cell wall'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'cell membrane'}, 'str2': {'actual_var': 'correct_answer', 'value': 'cell wall'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'cell membrane'}, {'_type': 'str', '_value': 'cell wall'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'cell membrane'", "'cell wall'"]
+5 return text.lower().strip()
+5 ['text'] ["'cell membrane'"]
+5 return text.lower().strip()
+5 ['text'] ["'cell wall'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'cell membrane'", "'cell wall'", "{'l', 'a', ' ', 'e', 'c'}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'cell membrane'", "'cell wall'", "{'l', 'a', ' ', 'e', 'c'}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 0.5555555555555556}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '5', "'cell membrane'", "'cell wall'"]
+5 return text.lower().strip()
+5 ['text'] ["'cell membrane'"]
+5 return text.lower().strip()
+5 ['text'] ["'cell wall'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '6', "'DNA'", "'cell wall'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '6', "'DNA'", "'cell wall'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '6', "'DNA'", "'dna'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'DNA'}, 'str2': {'actual_var': 'correct_answer', 'value': 'dna'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'DNA'}, {'_type': 'str', '_value': 'dna'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'DNA'", "'dna'"]
+5 return text.lower().strip()
+5 ['text'] ["'DNA'"]
+5 return text.lower().strip()
+5 ['text'] ["'dna'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'dna'", "'dna'", "{'d', 'n', 'a'}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'dna'", "'dna'", "{'d', 'n', 'a'}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 1.0}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '3', '35', '6', "'DNA'", "'dna'"]
+5 return text.lower().strip()
+5 ['text'] ["'DNA'"]
+5 return text.lower().strip()
+5 ['text'] ["'dna'"]
+31 correct_count += 1
+31 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '35', '6', "'DNA'", "'dna'"]
+33 if question_id % 3 == 0:
+33 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '35', '6', "'DNA'", "'dna'"]
+34 partial_points += 15
+34 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '50', '6', "'DNA'", "'dna'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '50', '9', "'Krebs cycle'", "'dna'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '50', '9', "'Krebs cycle'", "'dna'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '50', '9', "'Krebs cycle'", "'krebs cycle'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'Krebs cycle'}, 'str2': {'actual_var': 'correct_answer', 'value': 'krebs cycle'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'Krebs cycle'}, {'_type': 'str', '_value': 'krebs cycle'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'Krebs cycle'", "'krebs cycle'"]
+5 return text.lower().strip()
+5 ['text'] ["'Krebs cycle'"]
+5 return text.lower().strip()
+5 ['text'] ["'krebs cycle'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'krebs cycle'", "'krebs cycle'", "{'l', 'k', 'r', ' ', 'e', ...}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'krebs cycle'", "'krebs cycle'", "{'l', 'k', 'r', ' ', 'e', ...}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 1.0}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '4', '50', '9', "'Krebs cycle'", "'krebs cycle'"]
+5 return text.lower().strip()
+5 ['text'] ["'Krebs cycle'"]
+5 return text.lower().strip()
+5 ['text'] ["'krebs cycle'"]
+31 correct_count += 1
+31 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '50', '9', "'Krebs cycle'", "'krebs cycle'"]
+33 if question_id % 3 == 0:
+33 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '50', '9', "'Krebs cycle'", "'krebs cycle'"]
+34 partial_points += 15
+34 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '65', '9', "'Krebs cycle'", "'krebs cycle'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '65', '10', "'ecosystem'", "'krebs cycle'"]
+23 if question_id in answer_key:
+23 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '65', '10', "'ecosystem'", "'krebs cycle'"]
+24 correct_answer = answer_key[question_id]
+24 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '65', '10', "'ecosystem'", "'ecosystem'"]
+PARAM_MAPPING {'str1': {'actual_var': 'student_answer', 'value': 'ecosystem'}, 'str2': {'actual_var': 'correct_answer', 'value': 'ecosystem'}}
+FUNCTION_ENTER 7 calculate_similarity def calculate_similarity(str1, str2):
+7 ['str1', 'str2'] [{'_type': 'str', '_value': 'ecosystem'}, {'_type': 'str', '_value': 'ecosystem'}]
+9 str1, str2 = normalize_string(str1), normalize_string(str2)
+9 ['str1', 'str2'] ["'ecosystem'", "'ecosystem'"]
+5 return text.lower().strip()
+5 ['text'] ["'ecosystem'"]
+5 return text.lower().strip()
+5 ['text'] ["'ecosystem'"]
+10 common_chars = set(str1) & set(str2)
+10 ['str1', 'str2', 'common_chars'] ["'ecosystem'", "'ecosystem'", "{'o', 'm', 'e', 'y', 't', ...}"]
+11 return len(common_chars) / max(len(set(str1)), len(set(str2)))
+11 ['str1', 'str2', 'common_chars'] ["'ecosystem'", "'ecosystem'", "{'o', 'm', 'e', 'y', 't', ...}"]
+FUNCTION_RETURN 11 calculate_similarity {'_type': 'float', '_value': 1.0}
+30 if normalize_string(student_answer) == normalize_string(correct_answer):
+30 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer', 'correct_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '5', '65', '10', "'ecosystem'", "'ecosystem'"]
+5 return text.lower().strip()
+5 ['text'] ["'ecosystem'"]
+5 return text.lower().strip()
+5 ['text'] ["'ecosystem'"]
+31 correct_count += 1
+31 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '6', '65', '10', "'ecosystem'"]
+33 if question_id % 3 == 0:
+33 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '6', '65', '10', "'ecosystem'"]
+36 partial_points += 10
+36 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '6', '75', '10', "'ecosystem'"]
+22 for question_id, student_answer in student_answers.items():
+22 ['student_answers', 'answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'question_id', 'student_answer'] ["{1: 'Photosynthesis', 2: 'mitochondria', 3: 'DARWIN', ...}", "{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '6', '75', '10', "'ecosystem'"]
+43 incorrect_count = len(answer_key) - correct_count
+43 ['answer_key', 'penalty', 'bonus', 'correct_count', 'partial_points', 'incorrect_count'] ["{1: 'photosynthesis', 2: 'mitochondria', 3: 'Darwin', ...}", '0', '0', '6', '75', '4']
+44 penalty = incorrect_count * 5
+44 ['penalty', 'bonus', 'partial_points', 'incorrect_count'] ['20', '0', '75', '4']
+5 return text.lower().strip()
+5 ['text'] ["'cell membrane'"]
+5 return text.lower().strip()
+5 ['text'] ["'cell wall'"]
+5 return text.lower().strip()
+5 ['text'] ["'ecosystem'"]
+5 return text.lower().strip()
+5 ['text'] ["'ecosystem'"]
+50 bonus = len(correct_difficult) * 8
+50 ['penalty', 'bonus', 'partial_points', 'correct_difficult'] ['20', '8', '75', '[10]']
+53 raw_score = partial_points - (penalty & 0x3F)  # Apply bitwise AND to limit penalty
+53 ['penalty', 'bonus', 'partial_points', 'raw_score'] ['20', '8', '75', '55']
+56 adjusted_score = raw_score | bonus
+56 ['bonus', 'raw_score', 'adjusted_score'] ['8', '55', '63']
+59 final_score = min(100, adjusted_score)
+59 ['adjusted_score', 'final_score'] ['63', '63']
+60 return final_score
+60 ['final_score'] ['63']
+FUNCTION_RETURN 60 calculate_weighted_score {'_type': 'int', '_value': 63}

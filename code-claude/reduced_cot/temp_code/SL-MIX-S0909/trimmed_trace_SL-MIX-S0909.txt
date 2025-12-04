@@ -1,0 +1,59 @@
+43
+final_hash
+---
+PARAM_MAPPING {'items': {'actual_var': 'inventory', 'value': {'widget_a': {'quantity': 15, 'price': 45, 'location': 'Shelf A'}, 'widget_b': {'quantity': 30, 'price': 25, 'location': 'Shelf B'}, 'gadget_x': {'quantity': 10, 'price': 65, 'location': 'Shelf C'}}}}
+FUNCTION_ENTER 1 calculate_inventory_value def calculate_inventory_value(items):
+1 ['items'] [{'_type': 'dict', '_items': {'widget_a': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 15}, 'price': {'_type': 'int', '_value': 45}, 'location': {'_type': 'str', '_value': 'Shelf A'}}, '_len': 3}, 'widget_b': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 30}, 'price': {'_type': 'int', '_value': 25}, 'location': {'_type': 'str', '_value': 'Shelf B'}}, '_len': 3}, 'gadget_x': {'_type': 'dict', '_items': {'quantity': {'_type': 'int', '_value': 10}, 'price': {'_type': 'int', '_value': 65}, 'location': {'_type': 'str', '_value': 'Shelf C'}}, '_len': 3}}, '_len': 3}]
+2 total = 0
+2 ['items', 'total'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '0']
+4 for item, details in items.items():
+4 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '0', "'widget_a'", "{quantity: 15, price: 45, location: 'Shelf A'}"]
+5 total += details['quantity'] * details['price']
+5 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '675', "'widget_a'", "{quantity: 15, price: 45, location: 'Shelf A'}"]
+4 for item, details in items.items():
+4 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '675', "'widget_b'", "{quantity: 30, price: 25, location: 'Shelf B'}"]
+5 total += details['quantity'] * details['price']
+5 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '1425', "'widget_b'", "{quantity: 30, price: 25, location: 'Shelf B'}"]
+4 for item, details in items.items():
+4 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '1425', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}"]
+5 total += details['quantity'] * details['price']
+5 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '2075', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}"]
+4 for item, details in items.items():
+4 ['items', 'total', 'item', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", '2075', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}"]
+8 discount_factor = 0.95 if total > 1000 else 1.0
+8 ['total', 'details', 'discount_factor'] ['2075', "{quantity: 10, price: 65, location: 'Shelf C'}", '0.95']
+9 return total * discount_factor
+9 ['total', 'details', 'discount_factor'] ['2075', "{quantity: 10, price: 65, location: 'Shelf C'}", '0.95']
+FUNCTION_RETURN 9 calculate_inventory_value {'_type': 'float', '_value': 1971.25}
+24 security_codes = ('admin', 'manager', 'staff')
+24 ['inventory', 'security_codes'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')"]
+25 user_type = security_codes[1]  # Current user is a manager
+25 ['inventory', 'security_codes', 'user_type'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'"]
+28 base_hash = 0
+28 ['inventory', 'security_codes', 'user_type', 'base_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '0']
+29 for item_name, details in inventory.items():
+29 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '0', "'widget_a'", "{quantity: 15, price: 45, location: 'Shelf A'}"]
+30 item_hash = details['quantity'] & 0xFF
+30 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '0', "'widget_a'", "{quantity: 15, price: 45, location: 'Shelf A'}", '15']
+31 base_hash = (base_hash << 4) | item_hash
+31 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '15', "'widget_a'", "{quantity: 15, price: 45, location: 'Shelf A'}", '15']
+29 for item_name, details in inventory.items():
+29 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '15', "'widget_b'", "{quantity: 30, price: 25, location: 'Shelf B'}", '15']
+30 item_hash = details['quantity'] & 0xFF
+30 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '15', "'widget_b'", "{quantity: 30, price: 25, location: 'Shelf B'}", '30']
+31 base_hash = (base_hash << 4) | item_hash
+31 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '254', "'widget_b'", "{quantity: 30, price: 25, location: 'Shelf B'}", '30']
+29 for item_name, details in inventory.items():
+29 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '254', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}", '30']
+30 item_hash = details['quantity'] & 0xFF
+30 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '254', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}", '10']
+31 base_hash = (base_hash << 4) | item_hash
+31 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details', 'item_hash'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '4074', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}", '10']
+29 for item_name, details in inventory.items():
+29 ['inventory', 'security_codes', 'user_type', 'base_hash', 'item_name', 'details'] ["{widget_a: {quantity: 15, price: 45, location: 'Shelf A'}, widget_b: {quantity: 30, price: 25, location: 'Shelf B'}, gadget_x: {quantity: 10, price: 65, location: 'Shelf C'}}", "('admin', 'manager', 'staff')", "'manager'", '4074', "'gadget_x'", "{quantity: 10, price: 65, location: 'Shelf C'}"]
+34 inventory_hash = base_hash % 256
+34 ['security_codes', 'user_type', 'base_hash', 'inventory_hash'] ["('admin', 'manager', 'staff')", "'manager'", '4074', '234']
+37 access_level = security_codes.index(user_type) * 16
+37 ['security_codes', 'user_type', 'inventory_hash', 'access_level'] ["('admin', 'manager', 'staff')", "'manager'", '234', '16']
+43 final_hash = inventory_hash ^ access_level
+43 ['inventory_hash', 'access_level', 'final_hash'] ['234', '16', '250']

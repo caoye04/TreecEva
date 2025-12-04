@@ -1,0 +1,15 @@
+29
+final_stock
+---
+3 current_stock = 145
+3 ['warehouse_data', 'season_factor', 'current_stock'] ["{location: 'Central', projected_shipments: 42, priority: False}", '1.2', '145']
+4 projected_increase = warehouse_data.get('projected_shipments', 50) * season_factor
+4 ['warehouse_data', 'season_factor', 'current_stock', 'projected_increase'] ["{location: 'Central', projected_shipments: 42, priority: False}", '1.2', '145', '50.4']
+7 standard_orders = 35
+7 ['warehouse_data', 'current_stock', 'projected_increase', 'standard_orders'] ["{location: 'Central', projected_shipments: 42, priority: False}", '145', '50.4', '35']
+8 canceled_orders = 12
+8 ['warehouse_data', 'current_stock', 'projected_increase', 'standard_orders', 'canceled_orders'] ["{location: 'Central', projected_shipments: 42, priority: False}", '145', '50.4', '35', '12']
+9 priority_status = warehouse_data.get('priority', False)
+9 ['warehouse_data', 'current_stock', 'projected_increase', 'standard_orders', 'canceled_orders', 'priority_status'] ["{location: 'Central', projected_shipments: 42, priority: False}", '145', '50.4', '35', '12', 'False']
+29 final_stock = current_stock + projected_increase - (canceled_orders if priority_status else standard_orders)
+29 ['current_stock', 'projected_increase', 'standard_orders', 'canceled_orders', 'priority_status', 'final_stock'] ['145', '50.4', '35', '12', 'False', '160.4']

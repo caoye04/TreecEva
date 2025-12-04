@@ -1,0 +1,73 @@
+Target: Find the value of variable crop_yield after [line 93] executes
+
+[line 93]  crop_yield = calculate_final_yield(field_data, rainfall_data)
+Call function calculate_final_yield(field_data={size: 25, crop_type: 'wheat', soil_samples: [(...2 items), (...2 items), (...2 items), (...2 items)], ...} (an unknown source), rainfall_data=[5, 0, 2, 8, 12, ...] (an unknown source))
+[line 27]  def calculate_final_yield(field_data, rainfall_data):
+Enter function calculate_final_yield: field_data={size: 25, crop_type: 'wheat', soil_samples: [(...2 items), (...2 items), (...2 items), (...2 items)], ...}, rainfall_data=[5, 0, 2, 8, 12, ...]
+  [line 29]  field_size = field_data["size"]
+  Compute: field_data["size"], where field_data={size: 25, crop_type: 'wheat', soil_samples: [(...2 items), (...2 items), (...2 items), (...2 items)], ...} (parameter field_data) = 25
+  [line 31]  soil_samples = field_data["soil_samples"]
+  Compute: field_data["soil_samples"], where field_data={size: 25, crop_type: 'wheat', soil_samples: [(...2 items), (...2 items), (...2 items), (...2 items)], ...} (parameter field_data) = [(12, 6.8), (15, 7.2), (11, 6.5), (14, 7.0)]
+  [line 32]  temperature_data = field_data["temperature"]
+  Compute: field_data["temperature"], where field_data={size: 25, crop_type: 'wheat', soil_samples: [(...2 items), (...2 items), (...2 items), (...2 items)], ...} (parameter field_data) = [22, 24, 26, 25, 23]
+  [line 44]  base_yield = field_size * 10
+  Compute: field_size * 10, where field_size=25 (defined at [line 29]) = 250
+  [line 47]  soil_quality = analyze_soil_quality(soil_samples)
+  Call function analyze_soil_quality(soil_samples=[(12, 6.8), (15, 7.2), (11, 6.5), (14, 7.0)] (defined at [line 31]))
+  [line 1]  def analyze_soil_quality(soil_samples):
+  Enter function analyze_soil_quality: soil_samples=[(12, 6.8), (15, 7.2), (11, 6.5), (14, 7.0)] (soil_samples defined at [line 31])
+    [line 3]  if not soil_samples:
+    Condition: True, entering 'if' block
+    [line 6]  mineral_content = sum(sample[0] for sample in soil_samples if len(sample) > 0)
+    Call function sum(sample[0] for sample in soil_samples if len(sample) > 0)
+    [line 7]  acidity_level = sum(sample[1] for sample in soil_samples if len(sample) > 0) / len(soil_samples)
+    Compute: sum(sample[1] for sample in soil_samples if len(sample) > 0) / len(soil_samples), where sample=(14, 7.0) (an unknown source) = ?
+    [line 10]  quality_score = mineral_content - 2 * abs(acidity_level - 7)
+    Compute: mineral_content - 2 * abs(acidity_level - 7), where mineral_content=52 (defined at [line 6]), acidity_level=6.875 (defined at [line 7]) = 51.75
+    [line 11]  return quality_score
+    Return: quality_score=51.75 (defined at [line 10])
+  Function analyze_soil_quality returns 51.75
+  [line 48]  quality_factor = max(0.5, min(1.5, soil_quality / 10))
+  Call function max(0.5, min(1.5, soil_quality / 10))
+  [line 51]  relevant_rainfall = rainfall_data[10:30]
+  Compute: rainfall_data[10:30], where rainfall_data=[5, 0, 2, 8, 12, ...] (parameter rainfall_data) = [10, 12, 8, 5, 7, ...]
+  [line 52]  total_rainfall = sum(relevant_rainfall)
+  Call function sum(relevant_rainfall=[10, 12, 8, 5, 7, ...] (defined at [line 51]))
+  [line 55]  if total_rainfall < 50:
+  Condition: True, entering 'if' block
+  [line 57]  elif total_rainfall < 100:
+  'elif' Condition: True, entering block
+  [line 59]  elif total_rainfall <= 200:
+  'elif' Condition: True, entering block
+  [line 60]  rainfall_factor = 1.2
+  Assign: rainfall_factor = 1.2
+  [line 65]  growth_factor = calculate_growth_factor(temperature_data)
+  Call function calculate_growth_factor(temperature_data=[22, 24, 26, 25, 23] (defined at [line 32]))
+  [line 13]  def calculate_growth_factor(temperature_data):
+  Enter function calculate_growth_factor: temperature_data=[22, 24, 26, 25, 23] (temperature_data defined at [line 32])
+    [line 15]  if not temperature_data:
+    Condition: True, entering 'if' block
+    [line 18]  avg_temp = sum(temperature_data) / len(temperature_data)
+    Compute: sum(temperature_data) / len(temperature_data), where temperature_data=[22, 24, 26, 25, 23] (parameter temperature_data defined at [line 32]) = 24.0
+    [line 20]  if avg_temp < 15:
+    Condition: True, entering 'if' block
+    [line 22]  elif avg_temp > 35:
+    'elif' Condition: True, entering block
+    [line 25]  return 1.0 + (25 - abs(avg_temp - 25)) / 50
+    Return: 1.0 + (25 - abs(avg_temp - 25)) / 50
+  Function calculate_growth_factor returns 1.48
+  [line 68]  raw_yield = base_yield * quality_factor * rainfall_factor * growth_factor
+  Compute: base_yield * quality_factor * rainfall_factor * growth_factor, where base_yield=250 (defined at [line 44]), quality_factor=1.5 (defined at [line 48]), rainfall_factor=1.2 (defined at [line 60]), growth_factor=1.48 (defined at [line 65]) = 666.0
+  [line 74]  final_yield = round(raw_yield)
+  Call function round(raw_yield=666.0 (defined at [line 68]))
+  [line 76]  return final_yield
+  Return: final_yield=666 (defined at [line 74])
+Function calculate_final_yield returns 666
+[line 3]  if not soil_samples:
+Condition: True, entering 'if' block
+[line 10]  quality_score = mineral_content - 2 * abs(acidity_level - 7)
+Compute: mineral_content - 2 * abs(acidity_level - 7), where mineral_content=22 (defined at [line 6]), acidity_level=6.75 (defined at [line 7]) = 21.5
+[line 11]  return quality_score
+Return: quality_score=21.5 (defined at [line 10])
+
+Answer: crop_yield = ? (last updated on defined at [line 93])

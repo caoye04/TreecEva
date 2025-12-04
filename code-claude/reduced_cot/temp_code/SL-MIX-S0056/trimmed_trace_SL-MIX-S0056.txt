@@ -1,0 +1,117 @@
+102
+final_score
+---
+58 skill_match = calculate_overlap_ratio(candidate['skills'], requirements['required_skills'])
+58 ['candidate', 'requirements'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", "{position_level: 'senior', required_skills: ['python', 'data analysis', 'machine learning', 'statistics'], min_years_experience: 5, ...}"]
+3 set_a = set(s.lower() for s in skills_a)
+3 [] []
+3 set_a = set(s.lower() for s in skills_a)
+3 ['s'] ["'Python'"]
+3 set_a = set(s.lower() for s in skills_a)
+3 ['s'] ["'SQL'"]
+3 set_a = set(s.lower() for s in skills_a)
+3 ['s'] ["'Data Analysis'"]
+3 set_a = set(s.lower() for s in skills_a)
+3 ['s'] ["'Machine Learning'"]
+3 set_a = set(s.lower() for s in skills_a)
+3 ['s'] ["'Cloud Computing'"]
+3 set_a = set(s.lower() for s in skills_a)
+3 ['s'] ["'Cloud Computing'"]
+4 set_b = set(s.lower() for s in skills_b)
+4 [] []
+4 set_b = set(s.lower() for s in skills_b)
+4 ['s'] ["'python'"]
+4 set_b = set(s.lower() for s in skills_b)
+4 ['s'] ["'data analysis'"]
+4 set_b = set(s.lower() for s in skills_b)
+4 ['s'] ["'machine learning'"]
+4 set_b = set(s.lower() for s in skills_b)
+4 ['s'] ["'statistics'"]
+4 set_b = set(s.lower() for s in skills_b)
+4 ['s'] ["'statistics'"]
+7 intersection = set_a.intersection(set_b)
+7 ['set_a', 'set_b', 'intersection'] ["{'python', 'cloud computing', 'sql', 'data analysis', 'machine learning'}", "{'python', 'data analysis', 'machine learning', 'statistics'}", "{'python', 'data analysis', 'machine learning'}"]
+15 overlap_ratio = len(intersection) / len(set_b) if set_b else 0
+15 ['set_b', 'intersection', 'overlap_ratio'] ["{'python', 'data analysis', 'machine learning', 'statistics'}", "{'python', 'data analysis', 'machine learning'}", '0.75']
+17 return overlap_ratio
+17 ['overlap_ratio'] ['0.75']
+59 skill_score = skill_match * 35
+59 ['candidate', 'skill_match', 'skill_score'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '0.75', '26.25']
+62 experience_factors = {'international': 2, 'team_size': candidate['team_led_size']}
+62 ['candidate', 'skill_score', 'experience_factors'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '{international: 2, team_size: 6}']
+63 experience_score = analyze_experience(candidate['years_experience'], experience_factors)
+63 ['candidate', 'skill_score', 'experience_factors'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '{international: 2, team_size: 6}']
+21 base_score = min(years_experience * 1.5, 10)
+21 ['years_experience', 'complexity_factors', 'base_score'] ['6', '{international: 2, team_size: 6}', '9.0']
+24 for factor, weight in complexity_factors.items():
+24 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '9.0', "'international'", '2']
+25 if factor == 'international':
+25 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '9.0', "'international'", '2']
+26 base_score += weight * 0.8
+26 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '10.6', "'international'", '2']
+24 for factor, weight in complexity_factors.items():
+24 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '10.6', "'team_size'", '6']
+25 if factor == 'international':
+25 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '10.6', "'team_size'", '6']
+27 elif factor == 'team_size':
+27 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '10.6', "'team_size'", '6']
+24 for factor, weight in complexity_factors.items():
+24 ['complexity_factors', 'base_score', 'factor', 'weight'] ['{international: 2, team_size: 6}', '10.6', "'team_size'", '6']
+32 normalized_score = min(base_score, 10)
+32 ['base_score', 'normalized_score'] ['10.6', '10']
+33 return normalized_score
+33 ['normalized_score'] ['10']
+66 education_level = parse_education_level(candidate['education'])
+66 ['candidate', 'skill_score', 'experience_score'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10']
+46 for level, score in education_map.items():
+46 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'high school'", '1']
+47 if level in education.lower():
+47 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'high school'", '1']
+46 for level, score in education_map.items():
+46 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'associate'", '2']
+47 if level in education.lower():
+47 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'associate'", '2']
+46 for level, score in education_map.items():
+46 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'bachelor'", '3']
+47 if level in education.lower():
+47 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'bachelor'", '3']
+46 for level, score in education_map.items():
+46 ['education', 'education_map', 'level', 'score'] ["'Master in Computer Science'", '{high school: 1, associate: 2, bachelor: 3, ...}', "'master'", '4']
+47 if level in education.lower():
+47 ['education', 'level', 'score'] ["'Master in Computer Science'", "'master'", '4']
+48 return score
+48 ['score'] ['4']
+67 education_score = education_level * 3
+67 ['candidate', 'skill_score', 'experience_score', 'education_level', 'education_score'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '4', '12']
+70 for project in candidate['projects']:
+70 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'E-commerce Platform', role: 'Lead', complexity: 8}"]
+71 if project['complexity'] > 7:
+71 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'E-commerce Platform', role: 'Lead', complexity: 8}"]
+75 if project['role'].lower() == 'lead':
+75 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'E-commerce Platform', role: 'Lead', complexity: 8}"]
+70 for project in candidate['projects']:
+70 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'Data Pipeline', role: 'Developer', complexity: 7}"]
+71 if project['complexity'] > 7:
+71 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'Data Pipeline', role: 'Developer', complexity: 7}"]
+75 if project['role'].lower() == 'lead':
+75 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'Data Pipeline', role: 'Developer', complexity: 7}"]
+70 for project in candidate['projects']:
+70 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'ML Recommendation System', role: 'Data Scientist', complexity: 9}"]
+71 if project['complexity'] > 7:
+71 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'ML Recommendation System', role: 'Data Scientist', complexity: 9}"]
+75 if project['role'].lower() == 'lead':
+75 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'ML Recommendation System', role: 'Data Scientist', complexity: 9}"]
+70 for project in candidate['projects']:
+70 ['candidate', 'skill_score', 'experience_score', 'education_score', 'project'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', "{name: 'ML Recommendation System', role: 'Data Scientist', complexity: 9}"]
+83 relevant_score = skill_score + (experience_score * 2) + education_score
+83 ['candidate', 'skill_score', 'experience_score', 'education_score', 'relevant_score'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '26.25', '10', '12', '58.25']
+86 if candidate['certifications']:
+86 ['candidate', 'relevant_score'] ["{name: 'Alex Johnson', years_experience: 6, education: 'Master in Computer Science', ...}", '58.25']
+91 normalized_score = min(relevant_score, 100)
+91 ['relevant_score', 'normalized_score'] ['58.25', '58.25']
+94 if requirements['position_level'] == 'senior':
+94 ['normalized_score'] ['58.25']
+95 normalized_score *= 1.1
+95 ['normalized_score'] ['64.075']
+102 final_score = int(normalized_score)
+102 ['normalized_score', 'final_score'] ['64.075', '64']

@@ -1,0 +1,79 @@
+46
+active_users
+---
+PARAM_MAPPING {'log_data': {'actual_var': 'log_data', 'value': [('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ('user101', 'login', 4), ('user202', 'search', 18), ('user101', 'logout', 2), ('user789', 'message', 30), ('user202', 'post', 22)]}}
+FUNCTION_ENTER 3 analyze_user_activity def analyze_user_activity(log_data):
+3 ['log_data'] [{'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user123'}, {'_type': 'str', '_value': 'login'}, {'_type': 'int', '_value': 5}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user456'}, {'_type': 'str', '_value': 'search'}, {'_type': 'int', '_value': 12}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user789'}, {'_type': 'str', '_value': 'post'}, {'_type': 'int', '_value': 8}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user123'}, {'_type': 'str', '_value': 'message'}, {'_type': 'int', '_value': 25}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user456'}, {'_type': 'str', '_value': 'logout'}, {'_type': 'int', '_value': 3}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user101'}, {'_type': 'str', '_value': 'login'}, {'_type': 'int', '_value': 4}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user202'}, {'_type': 'str', '_value': 'search'}, {'_type': 'int', '_value': 18}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user101'}, {'_type': 'str', '_value': 'logout'}, {'_type': 'int', '_value': 2}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user789'}, {'_type': 'str', '_value': 'message'}, {'_type': 'int', '_value': 30}], '_len': 3}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'user202'}, {'_type': 'str', '_value': 'post'}, {'_type': 'int', '_value': 22}], '_len': 3}], '_len': 10}]
+6 inactive_threshold = 15
+6 ['log_data', 'inactive_threshold'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15']
+19 user_times = {}
+19 ['log_data', 'inactive_threshold', 'user_times'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{}']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{}', "'user123'", "'login'", '5']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{}', "'user123'", "'login'", '5']
+22 user_times[user_id] = []
+22 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: []}', "'user123'", "'login'", '5']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5]}', "'user456'", "'search'", '12']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5]}', "'user456'", "'search'", '12']
+22 user_times[user_id] = []
+22 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5], user456: []}', "'user456'", "'search'", '12']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5], user456: [12]}', "'user789'", "'post'", '8']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5], user456: [12]}', "'user789'", "'post'", '8']
+22 user_times[user_id] = []
+22 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5], user456: [12], user789: []}', "'user789'", "'post'", '8']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5], user456: [12], user789: [8]}', "'user123'", "'message'", '25']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5], user456: [12], user789: [8]}', "'user123'", "'message'", '25']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12], user789: [8]}', "'user456'", "'logout'", '3']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12], user789: [8]}', "'user456'", "'logout'", '3']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8]}', "'user101'", "'login'", '4']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8]}', "'user101'", "'login'", '4']
+22 user_times[user_id] = []
+22 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user101'", "'login'", '4']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user202'", "'search'", '18']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user202'", "'search'", '18']
+22 user_times[user_id] = []
+22 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user202'", "'search'", '18']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user101'", "'logout'", '2']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user101'", "'logout'", '2']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user789'", "'message'", '30']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8], ...}', "'user789'", "'message'", '30']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8, 30], ...}', "'user202'", "'post'", '22']
+21 if user_id not in user_times:
+21 ['log_data', 'inactive_threshold', 'user_times', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', '{user123: [5, 25], user456: [12, 3], user789: [8, 30], ...}', "'user202'", "'post'", '22']
+20 for user_id, action, duration in log_data:
+20 ['log_data', 'inactive_threshold', 'user_id', 'action', 'duration'] ["[('user123', 'login', 5), ('user456', 'search', 12), ('user789', 'post', 8), ('user123', 'message', 25), ('user456', 'logout', 3), ...]", '15', "'user202'", "'post'", '22']
+36 if avg_time >= inactive_threshold]
+36 ['inactive_threshold'] ['15']
+36 if avg_time >= inactive_threshold]
+36 ['inactive_threshold'] ['15']
+36 if avg_time >= inactive_threshold]
+36 ['inactive_threshold'] ['15']
+36 if avg_time >= inactive_threshold]
+36 ['inactive_threshold'] ['15']
+36 if avg_time >= inactive_threshold]
+36 ['inactive_threshold'] ['15']
+43 filtered_users = set(active_user_ids)
+43 ['active_user_ids', 'filtered_users'] ["['user123', 'user789', 'user202']", "{'user123', 'user789', 'user202'}"]
+46 active_users = len(filtered_users)
+46 ['filtered_users', 'active_users'] ["{'user123', 'user789', 'user202'}", '3']
+48 return active_users
+48 ['active_users'] ['3']
+FUNCTION_RETURN 48 analyze_user_activity {'_type': 'int', '_value': 3}

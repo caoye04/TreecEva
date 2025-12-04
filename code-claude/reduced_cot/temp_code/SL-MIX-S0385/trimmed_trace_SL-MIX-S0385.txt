@@ -1,0 +1,215 @@
+63
+valid_combinations
+---
+50 ingredients = ['apple', 'banana', 'carrot', 'date', 'eggplant']
+50 ['ingredients'] ["['apple', 'banana', 'carrot', 'date', 'eggplant']"]
+51 allergies = ['banana', 'eggplant']
+51 ['ingredients', 'allergies'] ["['apple', 'banana', 'carrot', 'date', 'eggplant']", "['banana', 'eggplant']"]
+58 valid_combinations = calculate_valid_combinations(ingredients, allergies)
+58 ['ingredients', 'allergies'] ["['apple', 'banana', 'carrot', 'date', 'eggplant']", "['banana', 'eggplant']"]
+PARAM_MAPPING {'ingredients': {'actual_var': 'ingredients', 'value': ['apple', 'banana', 'carrot', 'date', 'eggplant']}, 'allergies': {'actual_var': 'allergies', 'value': ['banana', 'eggplant']}}
+FUNCTION_ENTER 3 calculate_valid_combinations def calculate_valid_combinations(ingredients, allergies):
+3 ['ingredients', 'allergies'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': 'apple'}, {'_type': 'str', '_value': 'banana'}, {'_type': 'str', '_value': 'carrot'}, {'_type': 'str', '_value': 'date'}, {'_type': 'str', '_value': 'eggplant'}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'banana'}, {'_type': 'str', '_value': 'eggplant'}], '_len': 2}]
+5 valid_count = 0
+5 ['ingredients', 'allergies', 'valid_count'] ["['apple', 'banana', 'carrot', 'date', 'eggplant']", "['banana', 'eggplant']", '0']
+6 total_possibilities = 0
+6 ['ingredients', 'allergies', 'valid_count', 'total_possibilities'] ["['apple', 'banana', 'carrot', 'date', 'eggplant']", "['banana', 'eggplant']", '0', '0']
+18 all_combinations = list(itertools.combinations(ingredients, 3))
+18 ['ingredients', 'allergies', 'valid_count', 'total_possibilities', 'all_combinations'] ["['apple', 'banana', 'carrot', 'date', 'eggplant']", "['banana', 'eggplant']", '0', '0', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]"]
+19 total_possibilities = len(all_combinations)
+19 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'True']
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'True', "'apple'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'True', "'apple'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'True', "'banana'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'True', "'banana'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'False', "'banana'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'False', "'banana'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'carrot')", 'False', "'banana'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'False', "'banana'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'True', "'banana'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'True', "'apple'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'True', "'apple'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'True', "'banana'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'True', "'banana'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'False', "'banana'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'False', "'banana'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'date')", 'False', "'banana'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'False', "'banana'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'True', "'banana'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'True', "'apple'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'True', "'apple'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'True', "'banana'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'True', "'banana'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'False', "'banana'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'False', "'banana'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'banana', 'eggplant')", 'False', "'banana'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'False', "'banana'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'banana'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'apple'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'apple'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'carrot'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'carrot'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'date'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'date'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'date'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '0', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'date'"]
+39 valid_count += 1
+39 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'date')", 'True', "'date'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'date'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'date'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'apple'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'apple'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'carrot'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'carrot'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'eggplant'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'True', "'eggplant'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'False', "'eggplant'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'False', "'eggplant'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'carrot', 'eggplant')", 'False', "'eggplant'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'False', "'eggplant'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'eggplant'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'apple'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'apple'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'date'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'date'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'eggplant'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'True', "'eggplant'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'False', "'eggplant'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'False', "'eggplant'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('apple', 'date', 'eggplant')", 'False', "'eggplant'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'False', "'eggplant'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'True', "'eggplant'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'True', "'banana'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'True', "'banana'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'False', "'banana'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'False', "'banana'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'date')", 'False', "'banana'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'False', "'banana'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'True', "'banana'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'True', "'banana'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'True', "'banana'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'False', "'banana'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'False', "'banana'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'carrot', 'eggplant')", 'False', "'banana'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'False', "'banana'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'True', "'banana'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'True', "'banana'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'True', "'banana'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'False', "'banana'"]
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'False', "'banana'"]
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('banana', 'date', 'eggplant')", 'False', "'banana'"]
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'False', "'banana'"]
+28 is_safe = True
+28 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'banana'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'carrot'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'carrot'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'date'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'date'"]
+30 for item in combo:
+30 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'eggplant'"]
+31 if item in allergies:
+31 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe', 'item'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'True', "'eggplant'"]
+33 is_safe = False
+33 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'False']
+34 break
+34 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'False']
+37 if is_safe:
+37 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo', 'is_safe'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')", 'False']
+26 for combo in all_combinations:
+26 ['allergies', 'valid_count', 'total_possibilities', 'all_combinations', 'combo'] ["['banana', 'eggplant']", '1', '10', "[('apple', 'banana', 'carrot'), ('apple', 'banana', 'date'), ('apple', 'banana', 'eggplant'), ('apple', 'carrot', 'date'), ('apple', 'carrot', 'eggplant'), ...]", "('carrot', 'date', 'eggplant')"]
+42 max_theoretical = total_possibilities - len(allergies)
+42 ['allergies', 'valid_count', 'total_possibilities', 'max_theoretical'] ["['banana', 'eggplant']", '1', '10', '8']
+43 if max_theoretical < 0:
+43 ['valid_count', 'max_theoretical'] ['1', '8']
+47 return valid_count
+47 ['valid_count'] ['1']
+FUNCTION_RETURN 47 calculate_valid_combinations {'_type': 'int', '_value': 1}
+63 print(f"Result: {valid_combinations}")
+63 ['valid_combinations'] ['1']

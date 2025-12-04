@@ -1,0 +1,323 @@
+104
+priority_score
+---
+96 sorted_tickets = sort_by_category(all_tickets)
+96 ['all_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]']
+PARAM_MAPPING {'tickets': {'actual_var': 'all_tickets', 'value': [{'id': 101, 'severity': 3, 'days_open': 5, 'customer_tier': 1, 'category': 'bug'}, {'id': 102, 'severity': 2, 'days_open': 8, 'customer_tier': 2, 'category': 'feature'}, {'id': 103, 'severity': 4, 'days_open': 2, 'customer_tier': 1, 'category': 'bug'}, {'id': 104, 'severity': 1, 'days_open': 12, 'customer_tier': 3, 'category': 'general'}, {'id': 105, 'severity': 3, 'days_open': 3, 'customer_tier': 2, 'category': 'bug'}]}}
+FUNCTION_ENTER 13 sort_by_category def sort_by_category(tickets):
+13 ['tickets'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 101}, 'severity': {'_type': 'int', '_value': 3}, 'days_open': {'_type': 'int', '_value': 5}, 'customer_tier': {'_type': 'int', '_value': 1}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 102}, 'severity': {'_type': 'int', '_value': 2}, 'days_open': {'_type': 'int', '_value': 8}, 'customer_tier': {'_type': 'int', '_value': 2}, 'category': {'_type': 'str', '_value': 'feature'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 103}, 'severity': {'_type': 'int', '_value': 4}, 'days_open': {'_type': 'int', '_value': 2}, 'customer_tier': {'_type': 'int', '_value': 1}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 104}, 'severity': {'_type': 'int', '_value': 1}, 'days_open': {'_type': 'int', '_value': 12}, 'customer_tier': {'_type': 'int', '_value': 3}, 'category': {'_type': 'str', '_value': 'general'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 105}, 'severity': {'_type': 'int', '_value': 3}, 'days_open': {'_type': 'int', '_value': 3}, 'customer_tier': {'_type': 'int', '_value': 2}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}], '_len': 5}]
+15 categories = {}
+15 ['tickets', 'categories'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{}']
+16 for ticket in tickets:
+16 ['tickets', 'categories', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{}', '{id: 101, severity: 3, days_open: 5, ...}']
+17 cat = ticket.get('category', 'general')
+17 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{}', '{id: 101, severity: 3, days_open: 5, ...}', "'bug'"]
+18 if cat not in categories:
+18 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{}', '{id: 101, severity: 3, days_open: 5, ...}', "'bug'"]
+19 categories[cat] = []
+19 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: []}', '{id: 101, severity: 3, days_open: 5, ...}', "'bug'"]
+16 for ticket in tickets:
+16 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}]}', '{id: 102, severity: 2, days_open: 8, ...}', "'bug'"]
+17 cat = ticket.get('category', 'general')
+17 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}]}', '{id: 102, severity: 2, days_open: 8, ...}', "'feature'"]
+18 if cat not in categories:
+18 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}]}', '{id: 102, severity: 2, days_open: 8, ...}', "'feature'"]
+19 categories[cat] = []
+19 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}], feature: []}', '{id: 102, severity: 2, days_open: 8, ...}', "'feature'"]
+16 for ticket in tickets:
+16 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}], feature: [{...5 items}]}', '{id: 103, severity: 4, days_open: 2, ...}', "'feature'"]
+17 cat = ticket.get('category', 'general')
+17 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}], feature: [{...5 items}]}', '{id: 103, severity: 4, days_open: 2, ...}', "'bug'"]
+18 if cat not in categories:
+18 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}], feature: [{...5 items}]}', '{id: 103, severity: 4, days_open: 2, ...}', "'bug'"]
+16 for ticket in tickets:
+16 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}]}', '{id: 104, severity: 1, days_open: 12, ...}', "'bug'"]
+17 cat = ticket.get('category', 'general')
+17 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}]}', '{id: 104, severity: 1, days_open: 12, ...}', "'general'"]
+18 if cat not in categories:
+18 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}]}', '{id: 104, severity: 1, days_open: 12, ...}', "'general'"]
+19 categories[cat] = []
+19 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}], general: []}', '{id: 104, severity: 1, days_open: 12, ...}', "'general'"]
+16 for ticket in tickets:
+16 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'general'"]
+17 cat = ticket.get('category', 'general')
+17 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'bug'"]
+18 if cat not in categories:
+18 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'bug'"]
+16 for ticket in tickets:
+16 ['tickets', 'categories', 'ticket', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'bug'"]
+22 sorted_tickets = []
+22 ['tickets', 'categories', 'ticket', 'cat', 'sorted_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'bug'", '[]']
+23 for cat in sorted(categories.keys()):
+23 ['tickets', 'categories', 'ticket', 'cat', 'sorted_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'bug'", '[]']
+23 for cat in sorted(categories.keys()):
+23 ['tickets', 'categories', 'ticket', 'cat', 'sorted_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'feature'", '[{id: 103, severity: 4, days_open: 2, ...}, {id: 101, severity: 3, days_open: 5, ...}, {id: 105, severity: 3, days_open: 3, ...}]']
+23 for cat in sorted(categories.keys()):
+23 ['tickets', 'categories', 'ticket', 'cat', 'sorted_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'general'", '[{id: 103, severity: 4, days_open: 2, ...}, {id: 101, severity: 3, days_open: 5, ...}, {id: 105, severity: 3, days_open: 3, ...}, {id: 102, severity: 2, days_open: 8, ...}]']
+23 for cat in sorted(categories.keys()):
+23 ['tickets', 'categories', 'ticket', 'cat', 'sorted_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'general'", '[{id: 103, severity: 4, days_open: 2, ...}, {id: 101, severity: 3, days_open: 5, ...}, {id: 105, severity: 3, days_open: 3, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 104, severity: 1, days_open: 12, ...}]']
+26 return sorted_tickets
+26 ['tickets', 'categories', 'ticket', 'cat', 'sorted_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '{bug: [{...5 items}, {...5 items}, {...5 items}], feature: [{...5 items}], general: [{...5 items}]}', '{id: 105, severity: 3, days_open: 3, ...}', "'general'", '[{id: 103, severity: 4, days_open: 2, ...}, {id: 101, severity: 3, days_open: 5, ...}, {id: 105, severity: 3, days_open: 3, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 104, severity: 1, days_open: 12, ...}]']
+FUNCTION_RETURN 26 sort_by_category {'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 103}, 'severity': {'_type': 'int', '_value': 4}, 'days_open': {'_type': 'int', '_value': 2}, 'customer_tier': {'_type': 'int', '_value': 1}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 101}, 'severity': {'_type': 'int', '_value': 3}, 'days_open': {'_type': 'int', '_value': 5}, 'customer_tier': {'_type': 'int', '_value': 1}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 105}, 'severity': {'_type': 'int', '_value': 3}, 'days_open': {'_type': 'int', '_value': 3}, 'customer_tier': {'_type': 'int', '_value': 2}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 102}, 'severity': {'_type': 'int', '_value': 2}, 'days_open': {'_type': 'int', '_value': 8}, 'customer_tier': {'_type': 'int', '_value': 2}, 'category': {'_type': 'str', '_value': 'feature'}}, '_len': 5}, {'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 104}, 'severity': {'_type': 'int', '_value': 1}, 'days_open': {'_type': 'int', '_value': 12}, 'customer_tier': {'_type': 'int', '_value': 3}, 'category': {'_type': 'str', '_value': 'general'}}, '_len': 5}], '_len': 5}
+99 filtered_tickets = filter_relevant_tickets(all_tickets, threshold=25)
+99 ['all_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]']
+30 urgent = []
+30 ['tickets', 'threshold', 'urgent'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[]']
+33 for i, ticket in enumerate(tickets):
+33 ['tickets', 'threshold', 'urgent', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[]', '0', '{id: 101, severity: 3, days_open: 5, ...}']
+34 urgency = calculate_ticket_urgency(ticket)
+34 ['tickets', 'threshold', 'urgent', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[]', '0', '{id: 101, severity: 3, days_open: 5, ...}']
+PARAM_MAPPING {'ticket': {'actual_var': 'ticket', 'value': {'id': 101, 'severity': 3, 'days_open': 5, 'customer_tier': 1, 'category': 'bug'}}}
+FUNCTION_ENTER 1 calculate_ticket_urgency def calculate_ticket_urgency(ticket):
+1 ['ticket'] [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 101}, 'severity': {'_type': 'int', '_value': 3}, 'days_open': {'_type': 'int', '_value': 5}, 'customer_tier': {'_type': 'int', '_value': 1}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}]
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 101, severity: 3, days_open: 5, ...}', '3']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5', '1']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5', '1']
+FUNCTION_RETURN 11 calculate_ticket_urgency {'_type': 'int', '_value': 55}
+39 if urgency > threshold:
+39 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[]', '0', '{id: 101, severity: 3, days_open: 5, ...}', '55']
+33 for i, ticket in enumerate(tickets):
+33 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}]', '1', '{id: 102, severity: 2, days_open: 8, ...}', '55']
+34 urgency = calculate_ticket_urgency(ticket)
+34 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}]', '1', '{id: 102, severity: 2, days_open: 8, ...}', '55']
+PARAM_MAPPING {'ticket': {'actual_var': 'ticket', 'value': {'id': 102, 'severity': 2, 'days_open': 8, 'customer_tier': 2, 'category': 'feature'}}}
+FUNCTION_ENTER 1 calculate_ticket_urgency def calculate_ticket_urgency(ticket):
+1 ['ticket'] [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 102}, 'severity': {'_type': 'int', '_value': 2}, 'days_open': {'_type': 'int', '_value': 8}, 'customer_tier': {'_type': 'int', '_value': 2}, 'category': {'_type': 'str', '_value': 'feature'}}, '_len': 5}]
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 102, severity: 2, days_open: 8, ...}', '2']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8', '2']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8', '2']
+FUNCTION_RETURN 11 calculate_ticket_urgency {'_type': 'int', '_value': 52}
+39 if urgency > threshold:
+39 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}]', '1', '{id: 102, severity: 2, days_open: 8, ...}', '52']
+33 for i, ticket in enumerate(tickets):
+33 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}]', '2', '{id: 103, severity: 4, days_open: 2, ...}', '52']
+34 urgency = calculate_ticket_urgency(ticket)
+34 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}]', '2', '{id: 103, severity: 4, days_open: 2, ...}', '52']
+PARAM_MAPPING {'ticket': {'actual_var': 'ticket', 'value': {'id': 103, 'severity': 4, 'days_open': 2, 'customer_tier': 1, 'category': 'bug'}}}
+FUNCTION_ENTER 1 calculate_ticket_urgency def calculate_ticket_urgency(ticket):
+1 ['ticket'] [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 103}, 'severity': {'_type': 'int', '_value': 4}, 'days_open': {'_type': 'int', '_value': 2}, 'customer_tier': {'_type': 'int', '_value': 1}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}]
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 103, severity: 4, days_open: 2, ...}', '4']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2', '1']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2', '1']
+FUNCTION_RETURN 11 calculate_ticket_urgency {'_type': 'int', '_value': 51}
+39 if urgency > threshold:
+39 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}]', '2', '{id: 103, severity: 4, days_open: 2, ...}', '51']
+33 for i, ticket in enumerate(tickets):
+33 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}]', '3', '{id: 104, severity: 1, days_open: 12, ...}', '51']
+34 urgency = calculate_ticket_urgency(ticket)
+34 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}]', '3', '{id: 104, severity: 1, days_open: 12, ...}', '51']
+PARAM_MAPPING {'ticket': {'actual_var': 'ticket', 'value': {'id': 104, 'severity': 1, 'days_open': 12, 'customer_tier': 3, 'category': 'general'}}}
+FUNCTION_ENTER 1 calculate_ticket_urgency def calculate_ticket_urgency(ticket):
+1 ['ticket'] [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 104}, 'severity': {'_type': 'int', '_value': 1}, 'days_open': {'_type': 'int', '_value': 12}, 'customer_tier': {'_type': 'int', '_value': 3}, 'category': {'_type': 'str', '_value': 'general'}}, '_len': 5}]
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 104, severity: 1, days_open: 12, ...}', '1']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12', '3']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12', '3']
+FUNCTION_RETURN 11 calculate_ticket_urgency {'_type': 'int', '_value': 52}
+39 if urgency > threshold:
+39 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}]', '3', '{id: 104, severity: 1, days_open: 12, ...}', '52']
+33 for i, ticket in enumerate(tickets):
+33 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}]', '4', '{id: 105, severity: 3, days_open: 3, ...}', '52']
+34 urgency = calculate_ticket_urgency(ticket)
+34 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}]', '4', '{id: 105, severity: 3, days_open: 3, ...}', '52']
+PARAM_MAPPING {'ticket': {'actual_var': 'ticket', 'value': {'id': 105, 'severity': 3, 'days_open': 3, 'customer_tier': 2, 'category': 'bug'}}}
+FUNCTION_ENTER 1 calculate_ticket_urgency def calculate_ticket_urgency(ticket):
+1 ['ticket'] [{'_type': 'dict', '_items': {'id': {'_type': 'int', '_value': 105}, 'severity': {'_type': 'int', '_value': 3}, 'days_open': {'_type': 'int', '_value': 3}, 'customer_tier': {'_type': 'int', '_value': 2}, 'category': {'_type': 'str', '_value': 'bug'}}, '_len': 5}]
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 105, severity: 3, days_open: 3, ...}', '3']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3', '2']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3', '2']
+FUNCTION_RETURN 11 calculate_ticket_urgency {'_type': 'int', '_value': 42}
+39 if urgency > threshold:
+39 ['tickets', 'threshold', 'urgent', 'i', 'ticket', 'urgency'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '25', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}]', '4', '{id: 105, severity: 3, days_open: 3, ...}', '42']
+33 for i, ticket in enumerate(tickets):
+33 ['tickets', 'urgent', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '4', '{id: 105, severity: 3, days_open: 3, ...}']
+45 return urgent
+45 ['tickets', 'urgent', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '4', '{id: 105, severity: 3, days_open: 3, ...}']
+102 priority_score = calculate_final_priority(filtered_tickets)
+102 ['filtered_tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]']
+48 if not tickets:
+48 ['tickets'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]']
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 [] []
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 ['t'] ['{id: 101, severity: 3, days_open: 5, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 101, severity: 3, days_open: 5, ...}', '3']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5', '1']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5', '1']
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 ['t'] ['{id: 102, severity: 2, days_open: 8, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 102, severity: 2, days_open: 8, ...}', '2']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8', '2']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8', '2']
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 ['t'] ['{id: 103, severity: 4, days_open: 2, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 103, severity: 4, days_open: 2, ...}', '4']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2', '1']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2', '1']
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 ['t'] ['{id: 104, severity: 1, days_open: 12, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 104, severity: 1, days_open: 12, ...}', '1']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12', '3']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12', '3']
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 ['t'] ['{id: 105, severity: 3, days_open: 3, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 105, severity: 3, days_open: 3, ...}', '3']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3', '2']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3', '2']
+52 base_score = sum(calculate_ticket_urgency(t) for t in tickets)
+52 ['t'] ['{id: 105, severity: 3, days_open: 3, ...}']
+59 categories = [t.get('category', 'general') for t in tickets]
+59 ['tickets', 'base_score', 't'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', '{id: 101, severity: 3, days_open: 5, ...}']
+59 categories = [t.get('category', 'general') for t in tickets]
+59 ['tickets', 'base_score', 't'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', '{id: 102, severity: 2, days_open: 8, ...}']
+59 categories = [t.get('category', 'general') for t in tickets]
+59 ['tickets', 'base_score', 't'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', '{id: 103, severity: 4, days_open: 2, ...}']
+59 categories = [t.get('category', 'general') for t in tickets]
+59 ['tickets', 'base_score', 't'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', '{id: 104, severity: 1, days_open: 12, ...}']
+59 categories = [t.get('category', 'general') for t in tickets]
+59 ['tickets', 'base_score', 't'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', '{id: 105, severity: 3, days_open: 3, ...}']
+59 categories = [t.get('category', 'general') for t in tickets]
+59 ['tickets', 'base_score', 'categories'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "['bug', 'feature', 'bug', 'general', 'bug']"]
+60 category_counts = {cat: categories.count(cat) for cat in set(categories)}
+60 ['tickets', 'base_score', 'categories', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "['bug', 'feature', 'bug', 'general', 'bug']", "'feature'"]
+60 category_counts = {cat: categories.count(cat) for cat in set(categories)}
+60 ['tickets', 'base_score', 'categories', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "['bug', 'feature', 'bug', 'general', 'bug']", "'bug'"]
+60 category_counts = {cat: categories.count(cat) for cat in set(categories)}
+60 ['tickets', 'base_score', 'categories', 'cat'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "['bug', 'feature', 'bug', 'general', 'bug']", "'general'"]
+60 category_counts = {cat: categories.count(cat) for cat in set(categories)}
+60 ['tickets', 'base_score', 'categories', 'category_counts'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "['bug', 'feature', 'bug', 'general', 'bug']", '{feature: 1, bug: 3, general: 1}']
+64 for i, ticket in enumerate(tickets):
+64 ['tickets', 'base_score', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', '{feature: 1, bug: 3, general: 1}', '0', '{id: 101, severity: 3, days_open: 5, ...}']
+65 cat = ticket.get('category', 'general')
+65 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'bug'", '{feature: 1, bug: 3, general: 1}', '0', '{id: 101, severity: 3, days_open: 5, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 101, severity: 3, days_open: 5, ...}', '3']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5', '1']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 101, severity: 3, days_open: 5, ...}', '3', '5', '1']
+64 for i, ticket in enumerate(tickets):
+64 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'bug'", '{feature: 1, bug: 3, general: 1}', '1', '{id: 102, severity: 2, days_open: 8, ...}']
+65 cat = ticket.get('category', 'general')
+65 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'feature'", '{feature: 1, bug: 3, general: 1}', '1', '{id: 102, severity: 2, days_open: 8, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 102, severity: 2, days_open: 8, ...}', '2']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8', '2']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 102, severity: 2, days_open: 8, ...}', '2', '8', '2']
+64 for i, ticket in enumerate(tickets):
+64 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'feature'", '{feature: 1, bug: 3, general: 1}', '2', '{id: 103, severity: 4, days_open: 2, ...}']
+65 cat = ticket.get('category', 'general')
+65 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'bug'", '{feature: 1, bug: 3, general: 1}', '2', '{id: 103, severity: 4, days_open: 2, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 103, severity: 4, days_open: 2, ...}', '4']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2', '1']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 103, severity: 4, days_open: 2, ...}', '4', '2', '1']
+64 for i, ticket in enumerate(tickets):
+64 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'bug'", '{feature: 1, bug: 3, general: 1}', '3', '{id: 104, severity: 1, days_open: 12, ...}']
+65 cat = ticket.get('category', 'general')
+65 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'general'", '{feature: 1, bug: 3, general: 1}', '3', '{id: 104, severity: 1, days_open: 12, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 104, severity: 1, days_open: 12, ...}', '1']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12', '3']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 104, severity: 1, days_open: 12, ...}', '1', '12', '3']
+64 for i, ticket in enumerate(tickets):
+64 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'general'", '{feature: 1, bug: 3, general: 1}', '4', '{id: 105, severity: 3, days_open: 3, ...}']
+65 cat = ticket.get('category', 'general')
+65 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'bug'", '{feature: 1, bug: 3, general: 1}', '4', '{id: 105, severity: 3, days_open: 3, ...}']
+3 severity = ticket.get('severity', 1)
+3 ['ticket', 'severity'] ['{id: 105, severity: 3, days_open: 3, ...}', '3']
+4 days_open = ticket.get('days_open', 0)
+4 ['ticket', 'severity', 'days_open'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3']
+5 customer_tier = ticket.get('customer_tier', 3)
+5 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3', '2']
+11 return severity * 5 + max(0, days_open - 1) * 3 + (5 - customer_tier) * 7
+11 ['ticket', 'severity', 'days_open', 'customer_tier'] ['{id: 105, severity: 3, days_open: 3, ...}', '3', '3', '2']
+64 for i, ticket in enumerate(tickets):
+64 ['tickets', 'base_score', 'cat', 'category_counts', 'i', 'ticket'] ['[{id: 101, severity: 3, days_open: 5, ...}, {id: 102, severity: 2, days_open: 8, ...}, {id: 103, severity: 4, days_open: 2, ...}, {id: 104, severity: 1, days_open: 12, ...}, {id: 105, severity: 3, days_open: 3, ...}]', '252', "'bug'", '{feature: 1, bug: 3, general: 1}', '4', '{id: 105, severity: 3, days_open: 3, ...}']
+70 priority_factor = 1.0
+70 ['base_score', 'cat', 'category_counts', 'priority_factor'] ['252', "'bug'", '{feature: 1, bug: 3, general: 1}', '1.0']
+71 if len(tickets) >= 5:
+71 ['base_score', 'cat', 'category_counts', 'priority_factor'] ['252', "'bug'", '{feature: 1, bug: 3, general: 1}', '1.0']
+72 priority_factor = 1.25
+72 ['base_score', 'cat', 'category_counts', 'priority_factor'] ['252', "'bug'", '{feature: 1, bug: 3, general: 1}', '1.25']
+77 for cat, count in category_counts.items():
+77 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'feature'", '{feature: 1, bug: 3, general: 1}', '1.25', '1']
+78 if cat == 'security' and count >= 2:
+78 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'feature'", '{feature: 1, bug: 3, general: 1}', '1.25', '1']
+77 for cat, count in category_counts.items():
+77 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'bug'", '{feature: 1, bug: 3, general: 1}', '1.25', '3']
+78 if cat == 'security' and count >= 2:
+78 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'bug'", '{feature: 1, bug: 3, general: 1}', '1.25', '3']
+77 for cat, count in category_counts.items():
+77 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'general'", '{feature: 1, bug: 3, general: 1}', '1.25', '1']
+78 if cat == 'security' and count >= 2:
+78 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'general'", '{feature: 1, bug: 3, general: 1}', '1.25', '1']
+77 for cat, count in category_counts.items():
+77 ['base_score', 'cat', 'category_counts', 'priority_factor', 'count'] ['252', "'general'", '{feature: 1, bug: 3, general: 1}', '1.25', '1']
+84 return int(base_score * priority_factor)
+84 ['base_score', 'priority_factor'] ['252', '1.25']
+104 print(f"Result: {priority_score}")
+104 ['priority_score'] ['315']

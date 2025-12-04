@@ -1,0 +1,88 @@
+Target: Find the value of variable priority_value after [line 75] executes
+
+[line 58]  discard_threshold = 4
+Assign: discard_threshold = 4
+[line 62]  filtered_data = [item for item in all_data if item['importance'] > discard_threshold]
+Compute: [item for item in all_data if item['importance'] > discard_threshold], where item={name: 'alpha', importance: 7, category: 'primary'} (an unknown source), all_data=[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'gamma', importance: 3, category: 'primary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}] (an unknown source), discard_threshold=4 (defined at [line 58]) = ?
+[line 70]  priority_value = calculate_priority(filtered_data)
+Call function calculate_priority(filtered_data=[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}] (defined at [line 62]))
+[line 14]  if not data_points:
+Condition: True, entering 'if' block
+[line 18]  sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+Call function sorted(data_points=[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}] (an unknown source), key=lambda x: (-x['importance'], x['name']))
+[line 18]  sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+Call function sorted(data_points=[{name: 'alpha', importance: 7, category: 'primary'}, {name: 'beta', importance: 9, category: 'secondary'}, {name: 'delta', importance: 5, category: 'tertiary'}, {name: 'epsilon', importance: 8, category: 'primary'}] (an unknown source), key=lambda x: (-x['importance'], x['name']))
+[line 18]  sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+Call function sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+[line 18]  sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+Call function sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+[line 18]  sorted_data = sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+Call function sorted(data_points, key=lambda x: (-x['importance'], x['name']))
+[line 21]  top_items = sorted_data[:3]
+Compute: sorted_data[:3], where sorted_data=[{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}, {name: 'delta', importance: 5, category: 'tertiary'}] (defined at [line 18]) = [{name: 'beta', importance: 9, category: 'secondary'}, {name: 'epsilon', importance: 8, category: 'primary'}, {name: 'alpha', importance: 7, category: 'primary'}]
+[line 24]  weight_base = 10
+Assign: weight_base = 10
+[line 25]  decay_factor = 0.8
+Assign: decay_factor = 0.8
+[line 27]  total = 0
+Assign: total = 0
+[line 28]  weight = weight_base
+Compute: weight_base, where weight_base=10 (defined at [line 24]) = 10
+[line 30]  for item in top_items:
+Loop Start: item takes its first value {name: 'beta', importance: 9, category: 'secondary'}
+[line 32]  transformed_name = transform_string(item['name'], 'capitalize')
+Call function transform_string(item['name'], 'capitalize')
+[line 9]  if operation_type in transform_map:
+Condition: True, entering 'if' block
+[line 10]  return transform_map[operation_type](text)
+Return: transform_map[operation_type](text)
+[line 33]  item['display_name'] = transformed_name
+(Missing param: 'result')
+[line 36]  contribution = item['importance'] * weight
+Compute: item['importance'] * weight, where item={name: 'beta', importance: 9, category: 'secondary', ...} (defined at [line 30]), weight=10 (defined at [line 28]) = 90
+[line 37]  total += contribution
+Update: total changed from 0 (defined at defined at [line 27]) to 0+contribution = 90
+[line 38]  weight *= decay_factor
+Update: weight changed from 10 (defined at defined at [line 28]) to 10*decay_factor = 8.0
+[line 30]  for item in top_items:
+Loop Iteration: item is now {name: 'epsilon', importance: 8, category: 'primary'} (iteration 2)
+[line 32]  transformed_name = transform_string(item['name'], 'capitalize')
+Call function transform_string(item['name'], 'capitalize')
+[line 9]  if operation_type in transform_map:
+Condition: True, entering 'if' block
+[line 10]  return transform_map[operation_type](text)
+Return: transform_map[operation_type](text)
+[line 33]  item['display_name'] = transformed_name
+(Missing param: 'result')
+[line 36]  contribution = item['importance'] * weight
+Compute: item['importance'] * weight, where item={name: 'epsilon', importance: 8, category: 'primary', ...} (defined at [line 30]), weight=8.0 (defined at [line 38]) = 64.0
+[line 37]  total += contribution
+Update: total changed from 90 (defined at defined at [line 37]) to 90+contribution = 154.0
+[line 38]  weight *= decay_factor
+Update: weight changed from 8.0 (defined at defined at [line 38]) to 8.0*decay_factor = 6.4
+[line 30]  for item in top_items:
+Loop Iteration: item is now {name: 'alpha', importance: 7, category: 'primary'} (iteration 3)
+[line 32]  transformed_name = transform_string(item['name'], 'capitalize')
+Call function transform_string(item['name'], 'capitalize')
+[line 9]  if operation_type in transform_map:
+Condition: True, entering 'if' block
+[line 10]  return transform_map[operation_type](text)
+Return: transform_map[operation_type](text)
+[line 33]  item['display_name'] = transformed_name
+(Missing param: 'result')
+[line 36]  contribution = item['importance'] * weight
+Compute: item['importance'] * weight, where item={name: 'alpha', importance: 7, category: 'primary', ...} (defined at [line 30]), weight=6.4 (defined at [line 38]) = 44.800000000000004
+[line 37]  total += contribution
+Update: total changed from 154.0 (defined at defined at [line 37]) to 154.0+contribution = 198.8
+[line 30]  for item in top_items:
+Loop End: Iteration finished
+[line 45]  return round(total)
+Return: round(total)
+[line 73]  print(f"Filtered data count: {len(filtered_data)}")
+Output: f"Filtered data count: {len(filtered_data)}"
+[line 74]  print(f"Importance range: {importance_range}")
+Output: f"Importance range: {importance_range}"
+[line 75]  print(f"Result: {priority_value}")
+Output: f"Result: {priority_value}"
+
+Answer: priority_value = 199 (last updated on defined at [line 70])

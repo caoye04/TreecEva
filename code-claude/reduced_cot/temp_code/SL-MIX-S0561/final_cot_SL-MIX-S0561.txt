@@ -1,0 +1,84 @@
+Target: Find the value of variable final_frequency after [line 57] executes
+
+[line 6]  char_count = Counter(text)
+Call function Counter(text='Python programming is fun and educational!' (an unknown source))
+[line 7]  vowels = {'a', 'e', 'i', 'o', 'u'}
+Compute: {'a', 'e', 'i', 'o', 'u'} = {'e', 'a', 'u', 'i', 'o'}
+[line 10]  vowel_stats = {v: char_count.get(v, 0) for v in vowels}
+Compute: {v: char_count.get(v, 0) for v in vowels}, where v='e' (an unknown source), char_count={P: 1, y: 1, t: 2, ...} (defined at [line 6]), vowels={'e', 'a', 'u', 'i', 'o'} (defined at [line 7]) = ?
+[line 11]  vowel_total = sum(vowel_stats.values())
+Call function sum(vowel_stats.values())
+[line 12]  consonant_total = sum(char_count[c] for c in char_count if c.isalpha() and c.lower() not in vowels)
+Call function sum(char_count[c] for c in char_count if c.isalpha() and c.lower() not in vowels)
+[line 15]  bit_patterns = {}
+Compute: {} = {}
+[line 16]  for i, char in enumerate(text[:15]):
+(Missing param: 'iter_var')
+[line 17]  if char in bit_patterns:
+Condition: True, entering 'if' block
+[line 20]  bit_patterns[char] = (1 << (i % 5))
+(Missing param: 'result')
+[line 16]  for i, char in enumerate(text[:15]):
+(Missing param: 'iter_var')
+[line 17]  if char in bit_patterns:
+Condition: True, entering 'if' block
+[line 20]  bit_patterns[char] = (1 << (i % 5))
+(Missing param: 'result')
+... [Line 16] repeats 12 more times ...
+... [Line 16] repeats 12 more times ...
+... [Line 16] repeats 12 more times ...
+[line 16]  for i, char in enumerate(text[:15]):
+(Missing param: 'iter_var')
+[line 17]  if char in bit_patterns:
+Condition: True, entering 'if' block
+[line 16]  for i, char in enumerate(text[:15]):
+Loop End: Iteration finished
+[line 23]  most_common = char_count.most_common(3)
+(Missing param: 'func_name')
+[line 24]  most_common_char = most_common[0][0] if most_common else ''
+Compute: most_common[0][0] if most_common else '', where most_common=[('n', 5), (' ', 5), ('a', 4)] (an unknown source) = 'n'
+[line 32]  actual_frequencies = {}
+Compute: {} = {}
+[line 33]  for char, count in char_count.items():
+(Missing param: 'iter_var')
+[line 34]  if char.isalpha():
+Condition: True, entering 'if' block
+[line 36]  base_value = ord(char.lower()) - ord('a') + 1
+Compute: ord(char.lower()) - ord('a') + 1, where char='P' (an unknown source) = 16
+[line 37]  if char.isupper():
+Condition: True, entering 'if' block
+[line 38]  actual_frequencies[char] = (count << 1) | base_value
+(Missing param: 'result')
+[line 33]  for char, count in char_count.items():
+(Missing param: 'iter_var')
+[line 34]  if char.isalpha():
+Condition: True, entering 'if' block
+[line 36]  base_value = ord(char.lower()) - ord('a') + 1
+Compute: ord(char.lower()) - ord('a') + 1, where char='y' (an unknown source) = 25
+[line 37]  if char.isupper():
+Condition: True, entering 'if' block
+[line 40]  actual_frequencies[char] = count ^ base_value
+(Missing param: 'result')
+... [Line 33] repeats 18 more times ...
+... [Line 33] repeats 18 more times ...
+... [Line 33] repeats 18 more times ...
+... [Line 33] repeats 18 more times ...
+... [Line 33] repeats 18 more times ...
+[line 33]  for char, count in char_count.items():
+(Missing param: 'iter_var')
+[line 34]  if char.isalpha():
+Condition: True, entering 'if' block
+[line 41]  elif char.isdigit():
+'elif' Condition: True, entering block
+[line 44]  actual_frequencies[char] = count
+(Missing param: 'result')
+[line 33]  for char, count in char_count.items():
+Loop End: Iteration finished
+[line 51]  if vowel_total > consonant_total:
+Condition: True, entering 'if' block
+[line 54]  bit_mask = 0x1F  # 00011111 in binary
+Assign: bit_mask = 31
+[line 57]  final_frequency = actual_frequencies[most_common_char] & bit_mask
+Compute: actual_frequencies[most_common_char] & bit_mask, where actual_frequencies={P: 18, y: 24, t: 22, ...} (defined at [line 32]), most_common_char='n' (defined at [line 24]), bit_mask=31 (defined at [line 54]) = 11
+
+Answer: final_frequency = 11 (last updated on defined at [line 57])

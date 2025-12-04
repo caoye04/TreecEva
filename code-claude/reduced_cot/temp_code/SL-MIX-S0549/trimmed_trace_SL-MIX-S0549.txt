@@ -1,0 +1,107 @@
+58
+final_score
+---
+55 final_score = calculate_weighted_score(student_records, course_weights)
+55 ['student_records', 'course_weights'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}']
+2 total_weighted = 0
+2 ['records', 'weights', 'total_weighted'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0']
+3 total_credits = 0
+3 ['records', 'weights', 'total_weighted', 'total_credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '0']
+6 weight_lookup = {course: weight for course, weight in weights.items()}
+6 ['records', 'weights', 'total_weighted', 'total_credits', 'course', 'weight'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '0', "'Math101'", '1.2']
+6 weight_lookup = {course: weight for course, weight in weights.items()}
+6 ['records', 'weights', 'total_weighted', 'total_credits', 'course', 'weight'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '0', "'Physics'", '1.1']
+6 weight_lookup = {course: weight for course, weight in weights.items()}
+6 ['records', 'weights', 'total_weighted', 'total_credits', 'course', 'weight'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '0', "'History'", '0.9']
+6 weight_lookup = {course: weight for course, weight in weights.items()}
+6 ['records', 'weights', 'total_weighted', 'total_credits', 'weight_lookup'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '0', '{Math101: 1.2, Physics: 1.1, History: 0.9}']
+12 highest_score = 0
+12 ['records', 'total_weighted', 'total_credits', 'weight_lookup', 'highest_score'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0']
+13 lowest_score = 100
+13 ['records', 'total_weighted', 'total_credits', 'weight_lookup', 'highest_score', 'lowest_score'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '100']
+15 for course in records:
+15 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '100']
+16 grade = records[course]['grade']
+16 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score', 'grade'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '100', '85']
+17 credits = records[course]['credits']
+17 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '100', '85', '4']
+20 if grade > highest_score:
+20 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '0', '100', '85', '4']
+21 highest_score = grade
+21 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '100', '85', '4']
+22 if grade < lowest_score:
+22 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '100', '85', '4']
+23 lowest_score = grade
+23 ['records', 'total_weighted', 'total_credits', 'course', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '85', '4']
+26 weight = weight_lookup.get(course, 1.0)
+26 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '85', '4']
+29 weighted_value = grade * credits * weight
+29 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '0', '0', "'Math101'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '85', '4', '408.0']
+30 total_weighted += weighted_value
+30 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '0', "'Math101'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '85', '4', '408.0']
+31 total_credits += credits
+31 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Math101'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '85', '4', '408.0']
+15 for course in records:
+15 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '85', '4', '408.0']
+16 grade = records[course]['grade']
+16 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '78', '4', '408.0']
+17 credits = records[course]['credits']
+17 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '78', '3', '408.0']
+20 if grade > highest_score:
+20 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '78', '3', '408.0']
+22 if grade < lowest_score:
+22 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '85', '78', '3', '408.0']
+23 lowest_score = grade
+23 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.2', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '78', '3', '408.0']
+26 weight = weight_lookup.get(course, 1.0)
+26 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '78', '3', '408.0']
+29 weighted_value = grade * credits * weight
+29 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '408.0', '4', "'Physics'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '78', '3', '257.40000000000003']
+30 total_weighted += weighted_value
+30 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '4', "'Physics'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '78', '3', '257.40000000000003']
+31 total_credits += credits
+31 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Physics'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '78', '3', '257.40000000000003']
+15 for course in records:
+15 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '78', '3', '257.40000000000003']
+16 grade = records[course]['grade']
+16 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '92', '3', '257.40000000000003']
+17 credits = records[course]['credits']
+17 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '92', '4', '257.40000000000003']
+20 if grade > highest_score:
+20 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '85', '78', '92', '4', '257.40000000000003']
+21 highest_score = grade
+21 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '257.40000000000003']
+22 if grade < lowest_score:
+22 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.1', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '257.40000000000003']
+26 weight = weight_lookup.get(course, 1.0)
+26 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '257.40000000000003']
+29 weighted_value = grade * credits * weight
+29 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '665.4000000000001', '7', "'Chemistry'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '368.0']
+30 total_weighted += weighted_value
+30 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '7', "'Chemistry'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '368.0']
+31 total_credits += credits
+31 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'Chemistry'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '368.0']
+15 for course in records:
+15 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '92', '4', '368.0']
+16 grade = records[course]['grade']
+16 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '88', '4', '368.0']
+17 credits = records[course]['credits']
+17 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '88', '2', '368.0']
+20 if grade > highest_score:
+20 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'highest_score', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '92', '78', '88', '2', '368.0']
+22 if grade < lowest_score:
+22 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'lowest_score', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '78', '88', '2', '368.0']
+26 weight = weight_lookup.get(course, 1.0)
+26 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'weight_lookup', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '{Math101: 1.2, Physics: 1.1, History: 0.9}', '88', '2', '368.0']
+29 weighted_value = grade * credits * weight
+29 ['records', 'total_weighted', 'total_credits', 'course', 'weight', 'grade', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1033.4', '11', "'English'", '1.0', '88', '2', '176.0']
+30 total_weighted += weighted_value
+30 ['records', 'total_weighted', 'total_credits', 'course', 'credits', 'weighted_value'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1209.4', '11', "'English'", '2', '176.0']
+31 total_credits += credits
+31 ['records', 'total_weighted', 'total_credits', 'course', 'credits'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1209.4', '13', "'English'", '2']
+15 for course in records:
+15 ['records', 'total_weighted', 'total_credits', 'course'] ['{Math101: {grade: 85, credits: 4}, Physics: {grade: 78, credits: 3}, Chemistry: {grade: 92, credits: 4}, ...}', '1209.4', '13', "'English'"]
+37 return round(total_weighted / total_credits, 2) if total_credits > 0 else 0
+37 ['total_weighted', 'total_credits'] ['1209.4', '13']
+58 print(f"Result: {final_score}")
+58 ['final_score'] ['93.03']

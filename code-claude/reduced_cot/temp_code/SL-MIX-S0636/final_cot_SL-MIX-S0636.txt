@@ -1,0 +1,188 @@
+Target: Find the value of variable resource_allocation after [line 126] executes
+
+[line 91]  server_load = {'server_a': 50, 'server_b': 30, 'server_c': 20}
+Compute: {'server_a': 50, 'server_b': 30, 'server_c': 20} = {server_a: 50, server_b: 30, server_c: 20}
+[line 98]  resource_map = {'server_a': 60, 'server_b': 30, 'server_c': 30}
+Compute: {'server_a': 60, 'server_b': 30, 'server_c': 30} = {server_a: 60, server_b: 30, server_c: 30}
+[line 111]  for server, metrics in server_metrics.items():
+(Missing param: 'iter_var')
+[line 3]  priority = 0
+Assign: priority = 0
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 0 (defined at defined at [line 3]) to 0+value * weight_map.get(metric, 0) = 2.4000000000000004
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 2.4000000000000004 (defined at defined at [line 6]) to 2.4000000000000004+value * weight_map.get(metric, 0) = 3.8000000000000003
+... [Line 4] repeats 8 more times ...
+... [Line 4] repeats 8 more times ...
+... [Line 4] repeats 8 more times ...
+[line 11]  return priority
+Return: priority=4.300000000000001 (defined at [line 6])
+[line 111]  for server, metrics in server_metrics.items():
+Loop End: Iteration finished
+[line 3]  priority = 0
+Assign: priority = 0
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 0 (defined at defined at [line 3]) to 0+value * weight_map.get(metric, 0) = 1.7999999999999998
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 1.7999999999999998 (defined at defined at [line 6]) to 1.7999999999999998+value * weight_map.get(metric, 0) = 2.8
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 2.8 (defined at defined at [line 6]) to 2.8+value * weight_map.get(metric, 0) = 3.5999999999999996
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 11]  return priority
+Return: priority=3.5999999999999996 (defined at [line 6])
+[line 111]  for server, metrics in server_metrics.items():
+Loop End: Iteration finished
+[line 3]  priority = 0
+Assign: priority = 0
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 0 (defined at defined at [line 3]) to 0+value * weight_map.get(metric, 0) = 1.5
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 1.5 (defined at defined at [line 6]) to 1.5+value * weight_map.get(metric, 0) = 3.3
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 5]  if metric in weight_map:
+Condition: True, entering 'if' block
+[line 6]  priority += value * weight_map.get(metric, 0)
+Update: priority changed from 3.3 (defined at defined at [line 6]) to 3.3+value * weight_map.get(metric, 0) = 3.5999999999999996
+[line 4]  for metric, value in metrics.items():
+(Missing param: 'iter_var')
+[line 11]  return priority
+Return: priority=3.5999999999999996 (defined at [line 6])
+[line 111]  for server, metrics in server_metrics.items():
+Loop End: Iteration finished
+[line 115]  resource_allocation = calculate_optimal_allocation(server_load, resource_map)
+Call function calculate_optimal_allocation(server_load={server_a: 50, server_b: 30, server_c: 20} (defined at [line 91]), resource_map={server_a: 60, server_b: 30, server_c: 30} (defined at [line 98]))
+[line 35]  def calculate_optimal_allocation(load_factors, resource_availability):
+Enter function calculate_optimal_allocation: load_factors={server_a: 50, server_b: 30, server_c: 20} (server_load defined at [line 91]), resource_availability={server_a: 60, server_b: 30, server_c: 30} (resource_map defined at [line 98])
+  [line 37]  total_load = sum(load_factors.values())
+  Call function sum(load_factors.values())
+  [line 38]  total_resources = sum(resource_availability.values())
+  Call function sum(resource_availability.values())
+  [line 46]  baseline = {}
+  Compute: {} = {}
+  [line 47]  for server, load in load_factors.items():
+  (Missing param: 'iter_var')
+  [line 49]  proportion = load / total_load if total_load > 0 else 0
+  Compute: load / total_load if total_load > 0 else 0, where load=50 (an unknown source), total_load=100 (defined at [line 37]) = 0.5
+  [line 50]  baseline[server] = int(proportion * total_resources)
+  (Missing param: 'func_name')
+  [line 47]  for server, load in load_factors.items():
+  (Missing param: 'iter_var')
+  [line 49]  proportion = load / total_load if total_load > 0 else 0
+  Compute: load / total_load if total_load > 0 else 0, where load=30 (an unknown source), total_load=100 (defined at [line 37]) = 0.3
+  [line 50]  baseline[server] = int(proportion * total_resources)
+  (Missing param: 'func_name')
+  [line 47]  for server, load in load_factors.items():
+  (Missing param: 'iter_var')
+  [line 49]  proportion = load / total_load if total_load > 0 else 0
+  Compute: load / total_load if total_load > 0 else 0, where load=20 (an unknown source), total_load=100 (defined at [line 37]) = 0.2
+  [line 50]  baseline[server] = int(proportion * total_resources)
+  (Missing param: 'func_name')
+  [line 47]  for server, load in load_factors.items():
+  Loop End: Iteration finished
+  [line 61]  allocated = sum(baseline.values())
+  Call function sum(baseline.values())
+  [line 62]  remaining = total_resources - allocated
+  Compute: total_resources - allocated, where total_resources=120 (defined at [line 38]), allocated=120 (defined at [line 61]) = 0
+  [line 66]  for server in load_factors:
+  Loop Start: server takes its first value 'server_a'
+  [line 67]  if server in priorities:
+  Condition: True, entering 'if' block
+  [line 66]  for server in load_factors:
+  Loop Iteration: server is now 'server_b' (iteration 2)
+  [line 67]  if server in priorities:
+  Condition: True, entering 'if' block
+  [line 66]  for server in load_factors:
+  Loop Iteration: server is now 'server_c' (iteration 3)
+  [line 67]  if server in priorities:
+  Condition: True, entering 'if' block
+  [line 66]  for server in load_factors:
+  Loop End: Iteration finished
+  [line 71]  priority_sum = sum(priorities.get(server, 0) for server in load_factors)
+  Call function sum(priorities.get(server, 0) for server in load_factors)
+  [line 71]  priority_sum = sum(priorities.get(server, 0) for server in load_factors)
+  Call function sum(priorities.get(server, 0) for server in load_factors)
+  [line 71]  priority_sum = sum(priorities.get(server, 0) for server in load_factors)
+  Call function sum(priorities.get(server, 0) for server in load_factors)
+  [line 71]  priority_sum = sum(priorities.get(server, 0) for server in load_factors)
+  Call function sum(priorities.get(server, 0) for server in load_factors)
+  [line 71]  priority_sum = sum(priorities.get(server, 0) for server in load_factors)
+  Call function sum(priorities.get(server, 0) for server in load_factors)
+  [line 73]  if priority_sum > 0 and remaining > 0:
+  Condition: True, entering 'if' block
+  [line 16]  optimized = {}
+  Compute: {} = {}
+  [line 17]  for source, targets in connections.items():
+  (Missing param: 'iter_var')
+  [line 18]  filtered_targets = {t: v for t, v in targets.items() if v > 0}
+  Compute: {t: v for t, v in targets.items() if v > 0}, where t='server_b' (an unknown source), v=5 (an unknown source), targets={server_b: 5, server_c: 3} (an unknown source) = ?
+  [line 19]  optimized[source] = filtered_targets
+  (Missing param: 'result')
+  [line 17]  for source, targets in connections.items():
+  (Missing param: 'iter_var')
+  [line 19]  optimized[source] = filtered_targets
+  (Missing param: 'result')
+  [line 17]  for source, targets in connections.items():
+  (Missing param: 'iter_var')
+  [line 19]  optimized[source] = filtered_targets
+  (Missing param: 'result')
+  [line 17]  for source, targets in connections.items():
+  Loop End: Iteration finished
+  [line 20]  return optimized
+  Return: optimized={server_a: {server_b: 5, server_c: 3}, server_b: {server_a: 2, server_c: 7}, server_c: {server_a: 4, server_b: 1}} (defined at [line 16])
+  [line 88]  return baseline
+  Return: baseline={server_a: 60, server_b: 36, server_c: 24} (defined at [line 46])
+Function calculate_optimal_allocation returns {server_a: 60, server_b: 36, server_c: 24}
+[line 119]  for server, allocated in resource_allocation.items():
+(Missing param: 'iter_var')
+[line 120]  load = server_load.get(server, 0)
+(Missing param: 'func_name')
+[line 121]  if load > 0:
+Condition: True, entering 'if' block
+[line 119]  for server, allocated in resource_allocation.items():
+(Missing param: 'iter_var')
+[line 120]  load = server_load.get(server, 0)
+(Missing param: 'func_name')
+[line 121]  if load > 0:
+Condition: True, entering 'if' block
+[line 119]  for server, allocated in resource_allocation.items():
+(Missing param: 'iter_var')
+[line 120]  load = server_load.get(server, 0)
+(Missing param: 'func_name')
+[line 121]  if load > 0:
+Condition: True, entering 'if' block
+[line 119]  for server, allocated in resource_allocation.items():
+Loop End: Iteration finished
+[line 126]  print(f"Resource Allocation: {resource_allocation}")
+Output: f"Resource Allocation: {resource_allocation}"
+
+Answer: resource_allocation = {server_a: 60, server_b: 36, server_c: 24} (last updated on defined at [line 115])

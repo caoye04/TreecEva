@@ -1,0 +1,31 @@
+39
+total_points
+---
+25 game_scores = [75, 120, 45]
+25 ['game_scores'] ['[75, 120, 45]']
+26 penalties = {"time": 15, "fouls": 30, "warnings": 5}
+26 ['game_scores', 'penalties'] ['[75, 120, 45]', '{time: 15, fouls: 30, warnings: 5}']
+34 total_points = calculate_final_score(game_scores, penalties)
+34 ['game_scores', 'penalties'] ['[75, 120, 45]', '{time: 15, fouls: 30, warnings: 5}']
+PARAM_MAPPING {'scores': {'actual_var': 'game_scores', 'value': [75, 120, 45]}, 'penalties': {'actual_var': 'penalties', 'value': {'time': 15, 'fouls': 30, 'warnings': 5}}}
+FUNCTION_ENTER 1 calculate_final_score def calculate_final_score(scores, penalties):
+1 ['scores', 'penalties'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 75}, {'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 45}], '_len': 3}, {'_type': 'dict', '_items': {'time': {'_type': 'int', '_value': 15}, 'fouls': {'_type': 'int', '_value': 30}, 'warnings': {'_type': 'int', '_value': 5}}, '_len': 3}]
+2 base_score = sum(scores)
+2 ['scores', 'penalties', 'base_score'] ['[75, 120, 45]', '{time: 15, fouls: 30, warnings: 5}', '240']
+3 penalty_points = sum(penalties.values())
+3 ['scores', 'penalties', 'base_score', 'penalty_points'] ['[75, 120, 45]', '{time: 15, fouls: 30, warnings: 5}', '240', '50']
+6 max_score = max(scores) if scores else 0
+6 ['scores', 'base_score', 'penalty_points', 'max_score'] ['[75, 120, 45]', '240', '50', '120']
+7 multiplier = 1.5 if max_score > 100 else 1.0
+7 ['base_score', 'penalty_points', 'max_score', 'multiplier'] ['240', '50', '120', '1.5']
+21 adjusted_score = base_score * multiplier - penalty_points
+21 ['base_score', 'penalty_points', 'multiplier', 'adjusted_score'] ['240', '50', '1.5', '310.0']
+22 return adjusted_score if adjusted_score > 0 else 0
+22 ['adjusted_score'] ['310.0']
+FUNCTION_RETURN 22 calculate_final_score {'_type': 'float', '_value': 310.0}
+37 print(f"Alternative points: {alt_calculation}")
+37 ['total_points'] ['310.0']
+38 print(f"Time bonus: {time_bonus}")
+38 ['total_points'] ['310.0']
+39 print(f"Result: {total_points}")
+39 ['total_points'] ['310.0']

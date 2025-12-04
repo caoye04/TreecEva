@@ -1,0 +1,93 @@
+103
+final_altitude
+---
+90 altitude_readings = [4267, 4256, 4289, 4302, 9876, 4275]
+90 ['altitude_readings'] ['[4267, 4256, 4289, 4302, 9876, ...]']
+103 final_altitude = calculate_effective_altitude(altitude_readings, sensor_status)
+103 ['altitude_readings', 'sensor_status'] ['[4267, 4256, 4289, 4302, 9876, ...]', '{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}']
+PARAM_MAPPING {'readings': {'actual_var': 'altitude_readings', 'value': [4267, 4256, 4289, 4302, 9876, 4275]}, 'sensor_status': {'actual_var': 'sensor_status', 'value': {'barometer_active': False, 'magnetic_interference': 3, 'use_legacy_algorithm': False, 'health': {'calibration_age': 45, 'error_count': 2, 'temperature': 90}}}}
+FUNCTION_ENTER 33 calculate_effective_altitude def calculate_effective_altitude(readings, sensor_status):
+33 ['readings', 'sensor_status'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 4267}, {'_type': 'int', '_value': 4256}, {'_type': 'int', '_value': 4289}, {'_type': 'int', '_value': 4302}, {'_type': 'int', '_value': 9876}, {'_type': 'int', '_value': 4275}], '_len': 6}, {'_type': 'dict', '_items': {'barometer_active': {'_type': 'bool', '_value': False}, 'magnetic_interference': {'_type': 'int', '_value': 3}, 'use_legacy_algorithm': {'_type': 'bool', '_value': False}, 'health': {'_type': 'dict', '_items': {'calibration_age': {'_type': 'int', '_value': 45}, 'error_count': {'_type': 'int', '_value': 2}, 'temperature': {'_type': 'int', '_value': 90}}, '_len': 3}}, '_len': 4}]
+40 magnetic_interference = sensor_status['magnetic_interference']
+40 ['readings', 'sensor_status', 'magnetic_interference'] ['[4267, 4256, 4289, 4302, 9876, ...]', '{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3']
+43 filtered_readings = preprocess_data(readings, 9500)
+43 ['readings', 'sensor_status', 'magnetic_interference'] ['[4267, 4256, 4289, 4302, 9876, ...]', '{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'v'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '4267']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'v'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '4256']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'v'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '4289']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'v'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '4302']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'v'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '9876']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'v'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '4275']
+3 processed = [v for v in values if v < threshold]
+3 ['values', 'threshold', 'processed'] ['[4267, 4256, 4289, 4302, 9876, ...]', '9500', '[4267, 4256, 4289, 4302, 4275]']
+4 return processed if processed else [0]
+4 ['processed'] ['[4267, 4256, 4289, 4302, 4275]']
+46 avg_reading = sum(filtered_readings) / len(filtered_readings)
+46 ['sensor_status', 'magnetic_interference', 'filtered_readings', 'avg_reading'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3', '[4267, 4256, 4289, 4302, 4275]', '4277.8']
+49 barometric_factor = 0
+49 ['sensor_status', 'magnetic_interference', 'avg_reading', 'barometric_factor'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3', '4277.8', '0']
+50 if sensor_status['barometer_active']:
+50 ['sensor_status', 'magnetic_interference', 'avg_reading', 'barometric_factor'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3', '4277.8', '0']
+60 mag_adjustment = 0
+60 ['sensor_status', 'magnetic_interference', 'avg_reading', 'barometric_factor', 'mag_adjustment'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3', '4277.8', '0', '0']
+61 if magnetic_interference > 0:
+61 ['sensor_status', 'magnetic_interference', 'avg_reading', 'barometric_factor', 'mag_adjustment'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3', '4277.8', '0', '0']
+62 mag_adjustment = -15 if magnetic_interference > 2 else -7
+62 ['sensor_status', 'magnetic_interference', 'avg_reading', 'barometric_factor', 'mag_adjustment'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '3', '4277.8', '0', '-15']
+65 drift_percent = calculate_drift_compensation(sensor_status['health'])
+65 ['sensor_status', 'avg_reading', 'barometric_factor', 'mag_adjustment'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '4277.8', '0', '-15']
+19 drift = 0
+19 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '0']
+20 if sensor_health['calibration_age'] > 30:
+20 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '0']
+21 drift -= sensor_health['calibration_age'] // 10
+21 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '-4']
+23 if sensor_health['error_count'] > 0:
+23 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '-4']
+24 drift -= sensor_health['error_count'] * 2
+24 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '-8']
+26 if sensor_health['temperature'] > 85:
+26 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '-8']
+27 drift -= (sensor_health['temperature'] - 85) * 1.5
+27 ['sensor_health', 'drift'] ['{calibration_age: 45, error_count: 2, temperature: 90}', '-15.5']
+31 return max(-25, drift)  # Cap at -25% drift
+31 ['drift'] ['-15.5']
+68 correction_factors = [drift_percent, mag_adjustment / 100]
+68 ['sensor_status', 'avg_reading', 'barometric_factor', 'mag_adjustment', 'drift_percent', 'correction_factors'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '4277.8', '0', '-15', '-15.5', '[-15.5, -0.15]']
+75 if sensor_status['use_legacy_algorithm']:
+75 ['sensor_status', 'avg_reading', 'barometric_factor', 'correction_factors'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '4277.8', '0', '[-15.5, -0.15]']
+81 adjusted_reading = apply_atmospheric_correction(avg_reading, correction_factors)
+81 ['sensor_status', 'avg_reading', 'barometric_factor', 'correction_factors'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '4277.8', '0', '[-15.5, -0.15]']
+PARAM_MAPPING {'value': {'actual_var': 'avg_reading', 'value': 4277.8}, 'correction_factors': {'actual_var': 'correction_factors', 'value': [-15.5, -0.15]}}
+FUNCTION_ENTER 6 apply_atmospheric_correction def apply_atmospheric_correction(value, correction_factors):
+6 ['value', 'correction_factors'] [{'_type': 'float', '_value': 4277.8}, {'_type': 'list', '_items': [{'_type': 'float', '_value': -15.5}, {'_type': 'float', '_value': -0.15}], '_len': 2}]
+8 base = value
+8 ['value', 'correction_factors', 'base'] ['4277.8', '[-15.5, -0.15]', '4277.8']
+9 for factor in correction_factors:
+9 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '4277.8', '-15.5']
+10 if factor > 0:
+10 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '4277.8', '-15.5']
+14 base = base * (1 - abs(factor)/50)
+14 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '2951.682', '-15.5']
+9 for factor in correction_factors:
+9 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '2951.682', '-0.15']
+10 if factor > 0:
+10 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '2951.682', '-0.15']
+14 base = base * (1 - abs(factor)/50)
+14 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '2942.8269539999997', '-0.15']
+9 for factor in correction_factors:
+9 ['correction_factors', 'base', 'factor'] ['[-15.5, -0.15]', '2942.8269539999997', '-0.15']
+15 return base
+15 ['base'] ['2942.8269539999997']
+FUNCTION_RETURN 15 apply_atmospheric_correction {'_type': 'float', '_value': 2942.8269539999997}
+84 if sensor_status['barometer_active'] and barometric_factor > 0:
+84 ['sensor_status', 'barometric_factor', 'adjusted_reading'] ['{barometer_active: False, magnetic_interference: 3, use_legacy_algorithm: False, ...}', '0', '2942.8269539999997']
+87 return int(adjusted_reading)
+87 ['adjusted_reading'] ['2942.8269539999997']
+FUNCTION_RETURN 87 calculate_effective_altitude {'_type': 'int', '_value': 2942}

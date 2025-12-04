@@ -1,0 +1,122 @@
+Target: Find the value of variable network_efficiency after [line 70] executes
+
+[line 1]  def calculate_latency(packets, overhead=0.05):
+Enter function calculate_latency: packets=[{size: 64, priority: 1, dropped: False, ...}, {size: 128, priority: 2, dropped: False, ...}, {size: 256, priority: 1, dropped: True, ...}, {size: 512, priority: 3, dropped: False, ...}, {size: 128, priority: 2, dropped: False, ...}], overhead=0.05
+  [line 3]  latency_base = sum(p['size'] for p in packets) * overhead
+  Compute: sum(p['size'] for p in packets) * overhead, where packets={'_type': 'list', '_items': [{'_type': 'dict', '_items': {'size': {'_type': 'int', '_value': 64}, 'priority': {'_type': 'int', '_value': 1}, 'dropped': {'_type': 'bool', '_value': False}, 'encrypted': {'_type': 'bool', '_value': True}, 'header_size': {'_type': 'int', '_value': 8}}, '_len': 5}, {'_type': 'dict', '_items': {'size': {'_type': 'int', '_value': 128}, 'priority': {'_type': 'int', '_value': 2}, 'dropped': {'_type': 'bool', '_value': False}, 'encrypted': {'_type': 'bool', '_value': False}, 'header_size': {'_type': 'int', '_value': 12}}, '_len': 5}, {'_type': 'dict', '_items': {'size': {'_type': 'int', '_value': 256}, 'priority': {'_type': 'int', '_value': 1}, 'dropped': {'_type': 'bool', '_value': True}, 'encrypted': {'_type': 'bool', '_value': False}, 'header_size': {'_type': 'int', '_value': 8}}, '_len': 5}, {'_type': 'dict', '_items': {'size': {'_type': 'int', '_value': 512}, 'priority': {'_type': 'int', '_value': 3}, 'dropped': {'_type': 'bool', '_value': False}, 'encrypted': {'_type': 'bool', '_value': True}, 'header_size': {'_type': 'int', '_value': 16}}, '_len': 5}, {'_type': 'dict', '_items': {'size': {'_type': 'int', '_value': 128}, 'priority': {'_type': 'int', '_value': 2}, 'dropped': {'_type': 'bool', '_value': False}, 'encrypted': {'_type': 'bool', '_value': False}, 'header_size': {'_type': 'int', '_value': 12}}, '_len': 5}], '_len': 5} (parameter packets), overhead={'_type': 'float', '_value': 0.05} (an unknown source) = ?
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+  [line 4]  return latency_base + sum(p.get('priority', 0) for p in packets)
+  Return: latency_base + sum(p.get('priority', 0) for p in packets)
+Function calculate_latency returns 63.400000000000006
+[line 24]  def calculate_efficiency(traffic_data):
+Enter function calculate_efficiency: traffic_data=[{size: 64, priority: 1, dropped: False, ...}, {size: 128, priority: 2, dropped: False, ...}, {size: 256, priority: 1, dropped: True, ...}, {size: 512, priority: 3, dropped: False, ...}, {size: 128, priority: 2, dropped: False, ...}]
+  [line 26]  packet_count = len(traffic_data)
+  Call function len(traffic_data=[{size: 64, priority: 1, dropped: False, ...}, {size: 128, priority: 2, dropped: False, ...}, {size: 256, priority: 1, dropped: True, ...}, {size: 512, priority: 3, dropped: False, ...}, {size: 128, priority: 2, dropped: False, ...}] (parameter traffic_data))
+  [line 27]  dropped_packets = sum(1 for p in traffic_data if p.get('dropped', False))
+  Call function sum(1 for p in traffic_data if p.get('dropped', False))
+  [line 33]  for packet in traffic_data:
+  Loop Start: packet takes its first value {size: 64, priority: 1, dropped: False, ...}
+  [line 43]  if not packet.get('dropped', False):
+  Condition: True, entering 'if' block
+  [line 33]  for packet in traffic_data:
+  Loop Iteration: packet is now {size: 128, priority: 2, dropped: False, ...} (iteration 2)
+  [line 43]  if not packet.get('dropped', False):
+  Condition: True, entering 'if' block
+... [Line 33] repeats 2 more times ...
+... [Line 33] repeats 2 more times ...
+  [line 33]  for packet in traffic_data:
+  Loop Iteration: packet is now {size: 128, priority: 2, dropped: False, ...} (iteration 5)
+  [line 43]  if not packet.get('dropped', False):
+  Condition: True, entering 'if' block
+  [line 33]  for packet in traffic_data:
+  Loop End: Iteration finished
+  [line 51]  for idx, packet in enumerate(traffic_data):
+  (Missing param: 'iter_var')
+  [line 52]  if idx % 3 == 0:  # Every third packet affects QoS differently (distraction)
+  Condition: True, entering 'if' block
+  [line 51]  for idx, packet in enumerate(traffic_data):
+  (Missing param: 'iter_var')
+  [line 52]  if idx % 3 == 0:  # Every third packet affects QoS differently (distraction)
+  Condition: True, entering 'if' block
+  [line 54]  elif idx % 2 == 0:  # Even packets
+  'elif' Condition: True, entering block
+... [Line 51] repeats 2 more times ...
+... [Line 51] repeats 2 more times ...
+... [Line 51] repeats 2 more times ...
+  [line 51]  for idx, packet in enumerate(traffic_data):
+  (Missing param: 'iter_var')
+  [line 52]  if idx % 3 == 0:  # Every third packet affects QoS differently (distraction)
+  Condition: True, entering 'if' block
+  [line 54]  elif idx % 2 == 0:  # Even packets
+  'elif' Condition: True, entering block
+  [line 51]  for idx, packet in enumerate(traffic_data):
+  Loop End: Iteration finished
+  [line 58]  nodes = [i for i in range(min(5, packet_count))]
+  Compute: [i for i in range(min(5, packet_count))], where i=0 (an unknown source), packet_count=5 (defined at [line 26]) = ?
+  [line 6]  def optimize_route(nodes, start_idx=0):
+  Enter function optimize_route: nodes=[0, 1, 2, 3, 4] (nodes defined at [line 58]), start_idx=0
+    [line 8]  if not nodes:
+    Condition: True, entering 'if' block
+    [line 11]  path = [start_idx]
+    Compute: [start_idx], where start_idx=0 (an unknown source) = [0]
+    [line 12]  visited = {start_idx}
+    Compute: {start_idx}, where start_idx=0 (an unknown source) = {0}
+    [line 14]  for _ in range(len(nodes) - 1):
+    Loop Start: _ takes its first value 0
+    [line 15]  current = path[-1]
+    Compute: path[-1], where path=[0] (defined at [line 11]) = 0
+    [line 16]  next_node = (current + 1) % len(nodes)
+    Compute: (current + 1) % len(nodes), where current=0 (defined at [line 15]), nodes=[0, 1, 2, 3, 4] (parameter nodes defined at [line 58]) = 1
+    [line 17]  while next_node in visited:
+    while Loop Start: Condition is true
+    [line 14]  for _ in range(len(nodes) - 1):
+    Loop Iteration: _ is now 1 (iteration 2)
+    [line 15]  current = path[-1]
+    Compute: path[-1], where path=[0, 1] (defined at [line 11]) = 1
+    [line 16]  next_node = (current + 1) % len(nodes)
+    Compute: (current + 1) % len(nodes), where current=1 (defined at [line 15]), nodes=[0, 1, 2, 3, 4] (parameter nodes defined at [line 58]) = 2
+    [line 17]  while next_node in visited:
+    while Loop End: Condition is false
+    [line 14]  for _ in range(len(nodes) - 1):
+    Loop Iteration: _ is now 2 (iteration 3)
+    [line 15]  current = path[-1]
+    Compute: path[-1], where path=[0, 1, 2] (defined at [line 11]) = 2
+    [line 16]  next_node = (current + 1) % len(nodes)
+    Compute: (current + 1) % len(nodes), where current=2 (defined at [line 15]), nodes=[0, 1, 2, 3, 4] (parameter nodes defined at [line 58]) = 3
+    [line 17]  while next_node in visited:
+    while Loop End: Condition is false
+    [line 14]  for _ in range(len(nodes) - 1):
+    Loop Iteration: _ is now 3 (iteration 4)
+    [line 15]  current = path[-1]
+    Compute: path[-1], where path=[0, 1, 2, 3] (defined at [line 11]) = 3
+    [line 16]  next_node = (current + 1) % len(nodes)
+    Compute: (current + 1) % len(nodes), where current=3 (defined at [line 15]), nodes=[0, 1, 2, 3, 4] (parameter nodes defined at [line 58]) = 4
+    [line 17]  while next_node in visited:
+    while Loop End: Condition is false
+    [line 14]  for _ in range(len(nodes) - 1):
+    Loop End: Iteration finished
+    [line 22]  return path
+    Return: path=[0, 1, 2, 3, 4] (defined at [line 11])
+  Function optimize_route returns [0, 1, 2, 3, 4]
+  [line 63]  delivery_ratio = (packet_count - dropped_packets) / packet_count if packet_count > 0 else 0
+  Compute: (packet_count - dropped_packets) / packet_count if packet_count > 0 else 0, where packet_count=5 (defined at [line 26]), dropped_packets=1 (defined at [line 27]) = 0.8
+  [line 69]  if delivery_ratio > 0:
+  Condition: True, entering 'if' block
+  [line 70]  network_efficiency = round(delivery_ratio * 100 - (dropped_packets * 2), 2)
+  Call function round(delivery_ratio * 100 - (dropped_packets * 2), 2)
+  [line 74]  return network_efficiency
+  Return: network_efficiency=78.0 (defined at [line 70])
+Function calculate_efficiency returns 78.0
+
+Answer: network_efficiency = 78.0 (last updated on defined at [line 70])

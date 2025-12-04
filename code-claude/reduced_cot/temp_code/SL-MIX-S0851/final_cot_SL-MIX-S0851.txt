@@ -1,0 +1,40 @@
+Target: Find the value of variable average_rating after [line 25] executes
+
+[line 11]  views_threshold = 100
+Assign: views_threshold = 100
+[line 12]  all_ratings = [(name, rating) for name, rating, views in movie_data]
+Compute: [(name, rating) for name, rating, views in movie_data], where name='The Matrix' (an unknown source), rating=4.7 (an unknown source), views=220 (an unknown source), movie_data=[('The Matrix', 4.7, 220), ('Inception', 4.8, 180), ('Interstellar', 4.9, 150), ('Memento', 4.5, 90), ('Primer', 4.3, 50)] (an unknown source) = ?
+[line 13]  filtered_ratings = [(name, rating) for name, rating, views in movie_data if views > views_threshold]
+Compute: [(name, rating) for name, rating, views in movie_data if views > views_threshold], where name='The Matrix' (an unknown source), rating=4.7 (an unknown source), views=220 (an unknown source), movie_data=[('The Matrix', 4.7, 220), ('Inception', 4.8, 180), ('Interstellar', 4.9, 150), ('Memento', 4.5, 90), ('Primer', 4.3, 50)] (an unknown source), views_threshold=100 (defined at [line 11]) = ?
+[line 17]  average_rating = sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings)
+Compute: sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings), where filtered_ratings=[('The Matrix', 4.7), ('Inception', 4.8), ('Interstellar', 4.9)] (defined at [line 13]) = ?
+[line 17]  average_rating = sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings)
+Compute: sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings), where x=('The Matrix', 4.7) (an unknown source), filtered_ratings=[('The Matrix', 4.7), ('Inception', 4.8), ('Interstellar', 4.9)] (defined at [line 13]) = ?
+[line 17]  average_rating = sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings)
+Compute: sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings), where x=('Inception', 4.8) (an unknown source) = ?
+[line 17]  average_rating = sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings)
+Compute: sum(map(lambda x: x[1], filtered_ratings)) / len(filtered_ratings), where x=('Interstellar', 4.9) (an unknown source) = ?
+[line 20]  print("All movies:")
+Output: "All movies:"
+[line 21]  for i, (name, _) in enumerate(all_ratings):
+(Missing param: 'iter_var')
+[line 22]  print(f"{i+1}. {name}")
+Output: f"{i+1}. {name}"
+[line 21]  for i, (name, _) in enumerate(all_ratings):
+(Missing param: 'iter_var')
+[line 22]  print(f"{i+1}. {name}")
+Output: f"{i+1}. {name}"
+... [Line 21] repeats 2 more times ...
+... [Line 21] repeats 2 more times ...
+[line 21]  for i, (name, _) in enumerate(all_ratings):
+(Missing param: 'iter_var')
+[line 22]  print(f"{i+1}. {name}")
+Output: f"{i+1}. {name}"
+[line 21]  for i, (name, _) in enumerate(all_ratings):
+Loop End: Iteration finished
+[line 24]  print(f"\nNumber of popular movies: {rating_count}")
+Output: f"\nNumber of popular movies: {rating_count}"
+[line 25]  print(f"Average rating of popular movies: {average_rating}")
+Output: f"Average rating of popular movies: {average_rating}"
+
+Answer: average_rating = 4.8 (last updated on defined at [line 17])

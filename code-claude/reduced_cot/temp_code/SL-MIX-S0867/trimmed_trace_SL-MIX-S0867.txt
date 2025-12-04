@@ -1,0 +1,83 @@
+38
+active_connections
+---
+PARAM_MAPPING {'log_entries': {'actual_var': 'log_entries', 'value': ['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', '172.16.0.2:connected', '192.168.1.6:connected', '10.0.0.1:connected']}}
+FUNCTION_ENTER 4 analyze_network_traffic def analyze_network_traffic(log_entries):
+4 ['log_entries'] [{'_type': 'list', '_items': [{'_type': 'str', '_value': '192.168.1.5:connected'}, {'_type': 'str', '_value': '10.0.0.1:retry'}, {'_type': 'str', '_value': '172.16.0.1:connected'}, {'_type': 'str', '_value': '192.168.1.5:disconnected'}, {'_type': 'str', '_value': '10.0.0.0:error'}, {'_type': 'str', '_value': '172.16.0.2:connected'}, {'_type': 'str', '_value': '192.168.1.6:connected'}, {'_type': 'str', '_value': '10.0.0.1:connected'}], '_len': 8}]
+6 connection_data = []
+6 ['log_entries', 'connection_data'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", '[]']
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", '[]', "'192.168.1.5:connected'"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", '[]', "'192.168.1.5:connected'", "['192.168.1.5', 'connected']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", '[]', "'192.168.1.5:connected'", "['192.168.1.5', 'connected']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5']", "'192.168.1.5:connected'", "['192.168.1.5', 'connected']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5']", "'10.0.0.1:retry'", "['192.168.1.5', 'connected']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5']", "'10.0.0.1:retry'", "['10.0.0.1', 'retry']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5']", "'10.0.0.1:retry'", "['10.0.0.1', 'retry']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1']", "'10.0.0.1:retry'", "['10.0.0.1', 'retry']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1']", "'172.16.0.1:connected'", "['10.0.0.1', 'retry']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1']", "'172.16.0.1:connected'", "['172.16.0.1', 'connected']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1']", "'172.16.0.1:connected'", "['172.16.0.1', 'connected']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1']", "'172.16.0.1:connected'", "['172.16.0.1', 'connected']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1']", "'192.168.1.5:disconnected'", "['172.16.0.1', 'connected']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1']", "'192.168.1.5:disconnected'", "['192.168.1.5', 'disconnected']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1']", "'192.168.1.5:disconnected'", "['192.168.1.5', 'disconnected']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5']", "'192.168.1.5:disconnected'", "['192.168.1.5', 'disconnected']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5']", "'10.0.0.0:error'", "['192.168.1.5', 'disconnected']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5']", "'10.0.0.0:error'", "['10.0.0.0', 'error']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5']", "'10.0.0.0:error'", "['10.0.0.0', 'error']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0']", "'10.0.0.0:error'", "['10.0.0.0', 'error']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0']", "'172.16.0.2:connected'", "['10.0.0.0', 'error']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0']", "'172.16.0.2:connected'", "['172.16.0.2', 'connected']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0']", "'172.16.0.2:connected'", "['172.16.0.2', 'connected']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'172.16.0.2:connected'", "['172.16.0.2', 'connected']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'192.168.1.6:connected'", "['172.16.0.2', 'connected']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'192.168.1.6:connected'", "['192.168.1.6', 'connected']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'192.168.1.6:connected'", "['192.168.1.6', 'connected']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'192.168.1.6:connected'", "['192.168.1.6', 'connected']"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'10.0.0.1:connected'", "['192.168.1.6', 'connected']"]
+12 parts = entry.split(':')
+12 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'10.0.0.1:connected'", "['10.0.0.1', 'connected']"]
+13 if len(parts) < 2:
+13 ['log_entries', 'connection_data', 'entry', 'parts'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'10.0.0.1:connected'", "['10.0.0.1', 'connected']"]
+24 if status == 'retry':
+24 ['log_entries', 'connection_data', 'entry'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'10.0.0.1:connected'"]
+11 for entry in log_entries:
+11 ['log_entries', 'connection_data', 'entry'] ["['192.168.1.5:connected', '10.0.0.1:retry', '172.16.0.1:connected', '192.168.1.5:disconnected', '10.0.0.0:error', ...]", "['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", "'10.0.0.1:connected'"]
+29 connection_counter = Counter(connection_data)
+29 ['connection_data', 'connection_counter'] ["['192.168.1.5', '10.0.0.1', '172.16.0.1', '192.168.1.5', '10.0.0.0', ...]", '{192.168.1.5: 2, 10.0.0.1: 2, 172.16.0.1: 1, ...}']
+38 active_connections = len(connection_counter)
+38 ['connection_counter', 'active_connections'] ['{192.168.1.5: 2, 10.0.0.1: 2, 172.16.0.1: 1, ...}', '6']
+44 print(f"Result: {active_connections}")
+44 ['active_connections'] ['6']
+45 return active_connections
+45 ['active_connections'] ['6']
+FUNCTION_RETURN 45 analyze_network_traffic {'_type': 'int', '_value': 6}

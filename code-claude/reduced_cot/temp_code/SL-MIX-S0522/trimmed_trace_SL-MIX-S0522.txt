@@ -1,0 +1,81 @@
+103
+final_priority
+---
+PARAM_MAPPING {'resources': {'actual_var': 'resource_map', 'value': {'cpu': 8, 'memory': 16, 'disk': 500}}}
+FUNCTION_ENTER 17 calculate_resource_efficiency def calculate_resource_efficiency(resources):
+17 ['resources'] [{'_type': 'dict', '_items': {'cpu': {'_type': 'int', '_value': 8}, 'memory': {'_type': 'int', '_value': 16}, 'disk': {'_type': 'int', '_value': 500}}, '_len': 3}]
+19 if not resources:
+19 ['resources'] ['{cpu: 8, memory: 16, disk: 500}']
+27 return efficiency * 100
+27 ['resources', 'efficiency'] ['{cpu: 8, memory: 16, disk: 500}', '0.5534351145038168']
+FUNCTION_RETURN 27 calculate_resource_efficiency {'_type': 'float', '_value': 55.343511450381676}
+PARAM_MAPPING {'queue': {'actual_var': 'task_queue', 'value': [{'id': 'task1', 'priority': 7, 'deadline': 24}, {'id': 'task2', 'priority': 3, 'deadline': 48}, {'id': 'task3', 'priority': 5, 'deadline': 12}, {'id': 'task4', 'priority': 2, 'deadline': 72}]}, 'available_resources': {'actual_var': 'resource_map', 'value': {'cpu': 8, 'memory': 16, 'disk': 500}}}
+FUNCTION_ENTER 1 process_tasks def process_tasks(queue, available_resources=None):
+1 ['queue', 'available_resources'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'task1'}, 'priority': {'_type': 'int', '_value': 7}, 'deadline': {'_type': 'int', '_value': 24}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'task2'}, 'priority': {'_type': 'int', '_value': 3}, 'deadline': {'_type': 'int', '_value': 48}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'task3'}, 'priority': {'_type': 'int', '_value': 5}, 'deadline': {'_type': 'int', '_value': 12}}, '_len': 3}, {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'task4'}, 'priority': {'_type': 'int', '_value': 2}, 'deadline': {'_type': 'int', '_value': 72}}, '_len': 3}], '_len': 4}, {'_type': 'dict', '_items': {'cpu': {'_type': 'int', '_value': 8}, 'memory': {'_type': 'int', '_value': 16}, 'disk': {'_type': 'int', '_value': 500}}, '_len': 3}]
+3 if available_resources is None:
+3 ['queue', 'available_resources'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}']
+6 processed = []
+6 ['queue', 'processed'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '[]']
+7 for task in queue:
+7 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '[]', "{id: 'task1', priority: 7, deadline: 24}"]
+8 if task.get("priority", 0) > 5:
+8 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '[]', "{id: 'task1', priority: 7, deadline: 24}"]
+7 for task in queue:
+7 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items})]", "{id: 'task2', priority: 3, deadline: 48}"]
+8 if task.get("priority", 0) > 5:
+8 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items})]", "{id: 'task2', priority: 3, deadline: 48}"]
+7 for task in queue:
+7 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items}), ('task2', {...3 items})]", "{id: 'task3', priority: 5, deadline: 12}"]
+8 if task.get("priority", 0) > 5:
+8 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items}), ('task2', {...3 items})]", "{id: 'task3', priority: 5, deadline: 12}"]
+7 for task in queue:
+7 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items}), ('task2', {...3 items}), ('task3', {...3 items})]", "{id: 'task4', priority: 2, deadline: 72}"]
+8 if task.get("priority", 0) > 5:
+8 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items}), ('task2', {...3 items}), ('task3', {...3 items})]", "{id: 'task4', priority: 2, deadline: 72}"]
+7 for task in queue:
+7 ['queue', 'processed', 'task'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", "[('task1', {...3 items}), ('task2', {...3 items}), ('task3', {...3 items}), ('task4', {...3 items})]", "{id: 'task4', priority: 2, deadline: 72}"]
+15 return processed
+15 ['processed'] ["[('task1', {...3 items}), ('task2', {...3 items}), ('task3', {...3 items}), ('task4', {...3 items})]"]
+FUNCTION_RETURN 15 process_tasks {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'task1'}, {'_type': 'dict', '_items': {'cpu': {'_type': 'int', '_value': 16}, 'memory': {'_type': 'int', '_value': 32}, 'disk': {'_type': 'int', '_value': 1000}}, '_len': 3}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'task2'}, {'_type': 'dict', '_items': {'cpu': {'_type': 'int', '_value': 8}, 'memory': {'_type': 'int', '_value': 16}, 'disk': {'_type': 'int', '_value': 500}}, '_len': 3}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'task3'}, {'_type': 'dict', '_items': {'cpu': {'_type': 'int', '_value': 8}, 'memory': {'_type': 'int', '_value': 16}, 'disk': {'_type': 'int', '_value': 500}}, '_len': 3}], '_len': 2}, {'_type': 'tuple', '_items': [{'_type': 'str', '_value': 'task4'}, {'_type': 'dict', '_items': {'cpu': {'_type': 'int', '_value': 8}, 'memory': {'_type': 'int', '_value': 16}, 'disk': {'_type': 'int', '_value': 500}}, '_len': 3}], '_len': 2}], '_len': 4}
+98 final_priority = priority_calculator(task_queue, resource_map)
+98 ['task_queue', 'resource_map'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}']
+31 if not tasks or not resources:
+31 ['tasks', 'resources'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}']
+35 priorities = [t.get("priority", 0) for t in tasks]
+35 ['tasks', 'resources', 't'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}', "{id: 'task1', priority: 7, deadline: 24}"]
+35 priorities = [t.get("priority", 0) for t in tasks]
+35 ['tasks', 'resources', 't'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}', "{id: 'task2', priority: 3, deadline: 48}"]
+35 priorities = [t.get("priority", 0) for t in tasks]
+35 ['tasks', 'resources', 't'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}', "{id: 'task3', priority: 5, deadline: 12}"]
+35 priorities = [t.get("priority", 0) for t in tasks]
+35 ['tasks', 'resources', 't'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}', "{id: 'task4', priority: 2, deadline: 72}"]
+35 priorities = [t.get("priority", 0) for t in tasks]
+35 ['tasks', 'resources', 'priorities'] ["[{id: 'task1', priority: 7, deadline: 24}, {id: 'task2', priority: 3, deadline: 48}, {id: 'task3', priority: 5, deadline: 12}, {id: 'task4', priority: 2, deadline: 72}]", '{cpu: 8, memory: 16, disk: 500}', '[7, 3, 5, 2]']
+39 resource_weights = {k: v / sum(resources.values()) for k, v in resources.items()}
+39 ['resources', 'priorities', 'k', 'v'] ['{cpu: 8, memory: 16, disk: 500}', '[7, 3, 5, 2]', "'cpu'", '8']
+39 resource_weights = {k: v / sum(resources.values()) for k, v in resources.items()}
+39 ['resources', 'priorities', 'k', 'v'] ['{cpu: 8, memory: 16, disk: 500}', '[7, 3, 5, 2]', "'memory'", '16']
+39 resource_weights = {k: v / sum(resources.values()) for k, v in resources.items()}
+39 ['resources', 'priorities', 'k', 'v'] ['{cpu: 8, memory: 16, disk: 500}', '[7, 3, 5, 2]', "'disk'", '500']
+39 resource_weights = {k: v / sum(resources.values()) for k, v in resources.items()}
+39 ['resources', 'priorities', 'resource_weights'] ['{cpu: 8, memory: 16, disk: 500}', '[7, 3, 5, 2]', '{cpu: 0.015267175572519083, memory: 0.030534351145038167, disk: 0.9541984732824428}']
+40 resource_factor = calculate_resource_efficiency(resource_weights)
+40 ['resources', 'priorities', 'resource_weights'] ['{cpu: 8, memory: 16, disk: 500}', '[7, 3, 5, 2]', '{cpu: 0.015267175572519083, memory: 0.030534351145038167, disk: 0.9541984732824428}']
+19 if not resources:
+19 ['resources'] ['{cpu: 0.015267175572519083, memory: 0.030534351145038167, disk: 0.9541984732824428}']
+27 return efficiency * 100
+27 ['efficiency'] ['0.5534351145038168']
+65 base_priority = sum(priorities) / len(priorities)
+65 ['priorities', 'resource_factor', 'base_priority'] ['[7, 3, 5, 2]', '55.343511450381676', '4.25']
+66 weighted_priority = base_priority * (1 + (max(priorities) - min(priorities)) / 10)
+66 ['priorities', 'resource_factor', 'base_priority', 'weighted_priority'] ['[7, 3, 5, 2]', '55.343511450381676', '4.25', '6.375']
+69 if resource_factor > 1000:
+69 ['resource_factor', 'weighted_priority'] ['55.343511450381676', '6.375']
+73 return round(weighted_priority * 10) / 10
+73 ['weighted_priority'] ['6.375']
+101 print(f"Task stats: {task_stats}")
+101 ['final_priority'] ['6.4']
+102 print(f"Resource efficiency: {efficiency_score}")
+102 ['final_priority'] ['6.4']
+103 print(f"Result: {final_priority}")
+103 ['final_priority'] ['6.4']

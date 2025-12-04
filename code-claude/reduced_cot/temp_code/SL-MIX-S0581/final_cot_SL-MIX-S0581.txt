@@ -1,0 +1,97 @@
+Target: Find the value of variable filtered_sum after [line 65] executes
+
+[line 35]  sensor_a = [12, 15, 9, 23, 18, 17]
+Compute: [12, 15, 9, 23, 18, 17] = [12, 15, 9, 23, 18, ...]
+[line 36]  sensor_b = [14, 8, 21, 6, 33, 10]
+Compute: [14, 8, 21, 6, 33, 10] = [14, 8, 21, 6, 33, ...]
+[line 39]  combined_data = []
+Compute: [] = []
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+(Missing param: 'iter_var')
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+Loop End: Iteration finished
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+Loop End: Iteration finished
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+Loop End: Iteration finished
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+Loop End: Iteration finished
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+Loop End: Iteration finished
+[line 40]  for idx, (a, b) in enumerate(zip(sensor_a, sensor_b)):
+Loop End: Iteration finished
+[line 46]  processed_readings, anomalies, avg, data_range = process_sensor_data(combined_data)
+(Missing param: 'func_name')
+[line 5]  processed = []
+Compute: [] = []
+[line 6]  anomaly_count = 0
+Assign: anomaly_count = 0
+[line 9]  min_value = float('inf')
+Call function float('inf')
+[line 10]  max_value = float('-inf')
+Call function float('-inf')
+[line 12]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 14]  adjusted = reading * 1.05
+Compute: reading * 1.05 = ?
+[line 17]  min_value = min(min_value, adjusted)
+Call function min(min_value, adjusted)
+[line 18]  max_value = max(max_value, adjusted)
+Call function max(max_value=12.600000000000001 (defined at [line 10]), adjusted=12.600000000000001 (defined at [line 14]))
+[line 21]  if int(adjusted) % 3 == 0:
+Condition: True, entering 'if' block
+[line 22]  anomaly_count += 1
+Update: anomaly_count changed from 0 (defined at defined at [line 6]) to 0+1 = 1
+[line 12]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 14]  adjusted = reading * 1.05
+Compute: reading * 1.05, where reading=8 (an unknown source) = 8.4
+[line 17]  min_value = min(min_value, adjusted)
+Call function min(min_value=8.4 (defined at [line 17]), adjusted=8.4 (defined at [line 14]))
+[line 18]  max_value = max(max_value, adjusted)
+Call function max(max_value=12.600000000000001 (defined at [line 18]), adjusted=8.4 (defined at [line 14]))
+[line 21]  if int(adjusted) % 3 == 0:
+Condition: True, entering 'if' block
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+... [Line 12] repeats 3 more times ...
+[line 12]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 14]  adjusted = reading * 1.05
+Compute: reading * 1.05, where reading=10 (an unknown source) = 10.5
+[line 17]  min_value = min(min_value, adjusted)
+Call function min(min_value=6.300000000000001 (defined at [line 17]), adjusted=10.5 (defined at [line 14]))
+[line 18]  max_value = max(max_value, adjusted)
+Call function max(max_value=18.900000000000002 (defined at [line 18]), adjusted=10.5 (defined at [line 14]))
+[line 21]  if int(adjusted) % 3 == 0:
+Condition: True, entering 'if' block
+[line 12]  for i, reading in enumerate(readings):
+Loop End: Iteration finished
+[line 29]  mean_value = sum(processed) / len(processed) if processed else 0
+Compute: sum(processed) / len(processed) if processed else 0, where processed=[8.4, 10.5] (defined at [line 5]) = 9.45
+[line 30]  range_value = max_value - min_value
+Compute: max_value - min_value, where max_value=18.900000000000002 (defined at [line 18]), min_value=6.300000000000001 (defined at [line 17]) = 12.600000000000001
+[line 32]  return processed, anomaly_count, mean_value, range_value
+Return: processed, anomaly_count, mean_value, range_value
+[line 49]  sliced_readings = processed_readings[1:5]
+Compute: processed_readings[1:5], where processed_readings=[8.4, 10.5] (an unknown source) = [10.5]
+[line 52]  transformed_values = []
+Compute: [] = []
+[line 53]  for pos, val in enumerate(sliced_readings, 1):
+(Missing param: 'iter_var')
+[line 55]  if val > 15:
+Condition: True, entering 'if' block
+[line 53]  for pos, val in enumerate(sliced_readings, 1):
+Loop End: Iteration finished
+[line 61]  threshold = avg - (anomalies * 0.5)
+Compute: avg - (anomalies * 0.5), where avg=9.45 (an unknown source), anomalies=4 (an unknown source) = 7.449999999999999
+[line 62]  filtered_values = [val for val in transformed_values if val > threshold]
+Compute: [val for val in transformed_values if val > threshold], where val=10.5 (an unknown source), transformed_values=[10.5] (defined at [line 52]), threshold=7.449999999999999 (defined at [line 61]) = ?
+[line 65]  filtered_sum = sum(filtered_values)
+Call function sum(filtered_values=[10.5] (defined at [line 62]))
+
+Answer: filtered_sum = 10.5 (last updated on defined at [line 65])

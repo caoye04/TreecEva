@@ -1,0 +1,311 @@
+48
+network_strength
+---
+PARAM_MAPPING {'nodes': {'actual_var': 'nodes', 'value': [1, 2, 3, 4, 5]}, 'connections': {'actual_var': 'active_connections', 'value': [(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), (4, 5, 4, 2)]}}
+FUNCTION_ENTER 10 calculate_network_strength def calculate_network_strength(nodes, connections):
+10 ['nodes', 'connections'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 5}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 2}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 4}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 1}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 3}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 5}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 2}], '_len': 4}], '_len': 6}]
+11 if not nodes or len(nodes) < 2:
+11 ['nodes', 'connections'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]']
+18 connection_density = len(connections) / (len(nodes) * (len(nodes) - 1) / 2)
+18 ['nodes', 'connections', 'connection_density'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6']
+21 total_quality = 0
+21 ['nodes', 'connections', 'connection_density', 'total_quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '0']
+22 active_count = 0
+22 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '0', '0']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '0', '0', '(1, 2, 5, 2)']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '0', '0', '(1, 2, 5, 2)', '1', '2', '5', '2']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '0', '0', '(1, 2, 5, 2)', '1', '2', '5', '2']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '0', '0', '(1, 2, 5, 2)', '1', '2', '5', '2']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 5}, 'interference': {'actual_var': 'interference', 'value': 2}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'int', '_value': 5}, {'_type': 'int', '_value': 2}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['5', '2', '75']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['5', '2', '75', '5.0']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['5', '2', '75', '5.0']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 70.0}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '70.0', '0', '(1, 2, 5, 2)', '1', '2', '5', '2', '70.0']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '70.0', '1', '(1, 2, 5, 2)', '1', '2', '5', '2', '70.0']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '70.0', '1', '(1, 3, 8, 4)', '1', '2', '5', '2', '70.0']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '70.0', '1', '(1, 3, 8, 4)', '1', '3', '8', '4', '70.0']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '70.0', '1', '(1, 3, 8, 4)', '1', '3', '8', '4', '70.0']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '70.0', '1', '(1, 3, 8, 4)', '1', '3', '8', '4', '70.0']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 8}, 'interference': {'actual_var': 'interference', 'value': 4}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'int', '_value': 8}, {'_type': 'int', '_value': 4}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['8', '4', '60']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['8', '4', '60', '10.0']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['8', '4', '60', '10.0']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 50.0}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '120.0', '1', '(1, 3, 8, 4)', '1', '3', '8', '4', '50.0']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '120.0', '2', '(1, 3, 8, 4)', '1', '3', '8', '4', '50.0']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '120.0', '2', '(2, 3, 6, 1)', '1', '3', '8', '4', '50.0']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '120.0', '2', '(2, 3, 6, 1)', '2', '3', '6', '1', '50.0']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '120.0', '2', '(2, 3, 6, 1)', '2', '3', '6', '1', '50.0']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '120.0', '2', '(2, 3, 6, 1)', '2', '3', '6', '1', '50.0']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 6}, 'interference': {'actual_var': 'interference', 'value': 1}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'int', '_value': 6}, {'_type': 'int', '_value': 1}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['6', '1', '70']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['6', '1', '70', '2.5']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['6', '1', '70', '2.5']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 67.5}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '187.5', '2', '(2, 3, 6, 1)', '2', '3', '6', '1', '67.5']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '187.5', '3', '(2, 3, 6, 1)', '2', '3', '6', '1', '67.5']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '187.5', '3', '(2, 4, 10, 3)', '2', '3', '6', '1', '67.5']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '187.5', '3', '(2, 4, 10, 3)', '2', '4', '10', '3', '67.5']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '187.5', '3', '(2, 4, 10, 3)', '2', '4', '10', '3', '67.5']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '187.5', '3', '(2, 4, 10, 3)', '2', '4', '10', '3', '67.5']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 10}, 'interference': {'actual_var': 'interference', 'value': 3}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'int', '_value': 10}, {'_type': 'int', '_value': 3}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['10', '3', '50']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['10', '3', '50', '7.5']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['10', '3', '50', '7.5']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 42.5}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '230.0', '3', '(2, 4, 10, 3)', '2', '4', '10', '3', '42.5']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '230.0', '4', '(2, 4, 10, 3)', '2', '4', '10', '3', '42.5']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '230.0', '4', '(3, 5, 7, 5)', '2', '4', '10', '3', '42.5']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '230.0', '4', '(3, 5, 7, 5)', '3', '5', '7', '5', '42.5']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '230.0', '4', '(3, 5, 7, 5)', '3', '5', '7', '5', '42.5']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '230.0', '4', '(3, 5, 7, 5)', '3', '5', '7', '5', '42.5']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 7}, 'interference': {'actual_var': 'interference', 'value': 5}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 5}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['7', '5', '65']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['7', '5', '65', '12.5']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['7', '5', '65', '12.5']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 52.5}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '282.5', '4', '(3, 5, 7, 5)', '3', '5', '7', '5', '52.5']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '282.5', '5', '(3, 5, 7, 5)', '3', '5', '7', '5', '52.5']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '282.5', '5', '(4, 5, 4, 2)', '3', '5', '7', '5', '52.5']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '282.5', '5', '(4, 5, 4, 2)', '4', '5', '4', '2', '52.5']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '282.5', '5', '(4, 5, 4, 2)', '4', '5', '4', '2', '52.5']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '282.5', '5', '(4, 5, 4, 2)', '4', '5', '4', '2', '52.5']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 4}, 'interference': {'actual_var': 'interference', 'value': 2}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 2}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['4', '2', '80']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['4', '2', '80', '5.0']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['4', '2', '80', '5.0']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 75.0}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '5', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '6', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '6', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0']
+36 avg_quality = total_quality / active_count if active_count > 0 else 0
+36 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality', 'avg_quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '6', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0', '59.583333333333336']
+45 stability_factor = 0.8 + (0.2 * connection_density)
+45 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality', 'avg_quality', 'stability_factor'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '6', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0', '59.583333333333336', '0.92']
+48 network_strength = int(avg_quality * stability_factor)
+48 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality', 'avg_quality', 'stability_factor', 'network_strength'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '6', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0', '59.583333333333336', '0.92', '54']
+50 return network_strength
+50 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality', 'avg_quality', 'stability_factor', 'network_strength'] ['[1, 2, 3, 4, 5]', '[(1, 2, 5, 2), (1, 3, 8, 4), (2, 3, 6, 1), (2, 4, 10, 3), (3, 5, 7, 5), ...]', '0.6', '357.5', '6', '(4, 5, 4, 2)', '4', '5', '4', '2', '75.0', '59.583333333333336', '0.92', '54']
+FUNCTION_RETURN 50 calculate_network_strength {'_type': 'int', '_value': 54}
+PARAM_MAPPING {'nodes': {'actual_var': 'nodes', 'value': [1, 2, 3, 4, 5]}, 'connections': {'actual_var': 'improved_connections', 'value': [(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), (4, 5, 3.2, 1.4)]}}
+FUNCTION_ENTER 10 calculate_network_strength def calculate_network_strength(nodes, connections):
+10 ['nodes', 'connections'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 5}], '_len': 5}, {'_type': 'list', '_items': [{'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 2}, {'_type': 'float', '_value': 4.0}, {'_type': 'float', '_value': 1.4}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 1}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 6.4}, {'_type': 'float', '_value': 2.8}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 3}, {'_type': 'float', '_value': 4.800000000000001}, {'_type': 'float', '_value': 0.7}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 2}, {'_type': 'int', '_value': 4}, {'_type': 'float', '_value': 8.0}, {'_type': 'float', '_value': 2.0999999999999996}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 3}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 5.6000000000000005}, {'_type': 'float', '_value': 3.5}], '_len': 4}, {'_type': 'tuple', '_items': [{'_type': 'int', '_value': 4}, {'_type': 'int', '_value': 5}, {'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': 1.4}], '_len': 4}], '_len': 6}]
+11 if not nodes or len(nodes) < 2:
+11 ['nodes', 'connections'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]']
+18 connection_density = len(connections) / (len(nodes) * (len(nodes) - 1) / 2)
+18 ['nodes', 'connections', 'connection_density'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6']
+21 total_quality = 0
+21 ['nodes', 'connections', 'connection_density', 'total_quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '0']
+22 active_count = 0
+22 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '0', '0']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '0', '0', '(1, 2, 4.0, 1.4)']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '0', '0', '(1, 2, 4.0, 1.4)', '1', '2', '4.0', '1.4']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '0', '0', '(1, 2, 4.0, 1.4)', '1', '2', '4.0', '1.4']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '0', '0', '(1, 2, 4.0, 1.4)', '1', '2', '4.0', '1.4']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 4.0}, 'interference': {'actual_var': 'interference', 'value': 1.4}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'float', '_value': 4.0}, {'_type': 'float', '_value': 1.4}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['4.0', '1.4', '80.0']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['4.0', '1.4', '80.0', '3.5']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['4.0', '1.4', '80.0', '3.5']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 76.5}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '76.5', '0', '(1, 2, 4.0, 1.4)', '1', '2', '4.0', '1.4', '76.5']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '76.5', '1', '(1, 2, 4.0, 1.4)', '1', '2', '4.0', '1.4', '76.5']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '76.5', '1', '(1, 3, 6.4, 2.8)', '1', '2', '4.0', '1.4', '76.5']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '76.5', '1', '(1, 3, 6.4, 2.8)', '1', '3', '6.4', '2.8', '76.5']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '76.5', '1', '(1, 3, 6.4, 2.8)', '1', '3', '6.4', '2.8', '76.5']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '76.5', '1', '(1, 3, 6.4, 2.8)', '1', '3', '6.4', '2.8', '76.5']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 6.4}, 'interference': {'actual_var': 'interference', 'value': 2.8}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'float', '_value': 6.4}, {'_type': 'float', '_value': 2.8}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['6.4', '2.8', '68.0']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['6.4', '2.8', '68.0', '7.0']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['6.4', '2.8', '68.0', '7.0']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 61.0}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '137.5', '1', '(1, 3, 6.4, 2.8)', '1', '3', '6.4', '2.8', '61.0']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '137.5', '2', '(1, 3, 6.4, 2.8)', '1', '3', '6.4', '2.8', '61.0']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '137.5', '2', '(2, 3, 4.800000000000001, 0.7)', '1', '3', '6.4', '2.8', '61.0']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '137.5', '2', '(2, 3, 4.800000000000001, 0.7)', '2', '3', '4.800000000000001', '0.7', '61.0']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '137.5', '2', '(2, 3, 4.800000000000001, 0.7)', '2', '3', '4.800000000000001', '0.7', '61.0']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '137.5', '2', '(2, 3, 4.800000000000001, 0.7)', '2', '3', '4.800000000000001', '0.7', '61.0']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 4.800000000000001}, 'interference': {'actual_var': 'interference', 'value': 0.7}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'float', '_value': 4.800000000000001}, {'_type': 'float', '_value': 0.7}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['4.800000000000001', '0.7', '76.0']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['4.800000000000001', '0.7', '76.0', '1.75']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['4.800000000000001', '0.7', '76.0', '1.75']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 74.25}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '211.75', '2', '(2, 3, 4.800000000000001, 0.7)', '2', '3', '4.800000000000001', '0.7', '74.25']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '211.75', '3', '(2, 3, 4.800000000000001, 0.7)', '2', '3', '4.800000000000001', '0.7', '74.25']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '211.75', '3', '(2, 4, 8.0, 2.0999999999999996)', '2', '3', '4.800000000000001', '0.7', '74.25']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '211.75', '3', '(2, 4, 8.0, 2.0999999999999996)', '2', '4', '8.0', '2.0999999999999996', '74.25']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '211.75', '3', '(2, 4, 8.0, 2.0999999999999996)', '2', '4', '8.0', '2.0999999999999996', '74.25']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '211.75', '3', '(2, 4, 8.0, 2.0999999999999996)', '2', '4', '8.0', '2.0999999999999996', '74.25']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 8.0}, 'interference': {'actual_var': 'interference', 'value': 2.0999999999999996}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'float', '_value': 8.0}, {'_type': 'float', '_value': 2.0999999999999996}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['8.0', '2.0999999999999996', '60.0']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['8.0', '2.0999999999999996', '60.0', '5.249999999999999']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['8.0', '2.0999999999999996', '60.0', '5.249999999999999']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 54.75}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '266.5', '3', '(2, 4, 8.0, 2.0999999999999996)', '2', '4', '8.0', '2.0999999999999996', '54.75']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '266.5', '4', '(2, 4, 8.0, 2.0999999999999996)', '2', '4', '8.0', '2.0999999999999996', '54.75']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '266.5', '4', '(3, 5, 5.6000000000000005, 3.5)', '2', '4', '8.0', '2.0999999999999996', '54.75']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '266.5', '4', '(3, 5, 5.6000000000000005, 3.5)', '3', '5', '5.6000000000000005', '3.5', '54.75']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '266.5', '4', '(3, 5, 5.6000000000000005, 3.5)', '3', '5', '5.6000000000000005', '3.5', '54.75']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '266.5', '4', '(3, 5, 5.6000000000000005, 3.5)', '3', '5', '5.6000000000000005', '3.5', '54.75']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 5.6000000000000005}, 'interference': {'actual_var': 'interference', 'value': 3.5}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'float', '_value': 5.6000000000000005}, {'_type': 'float', '_value': 3.5}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['5.6000000000000005', '3.5', '72.0']
+6 noise_factor = interference * 2.5
+6 ['distance', 'interference', 'base_quality', 'noise_factor'] ['5.6000000000000005', '3.5', '72.0', '8.75']
+8 return max(0, base_quality - noise_factor)
+8 ['distance', 'interference', 'base_quality', 'noise_factor'] ['5.6000000000000005', '3.5', '72.0', '8.75']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 63.25}
+30 total_quality += quality
+30 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '329.75', '4', '(3, 5, 5.6000000000000005, 3.5)', '3', '5', '5.6000000000000005', '3.5', '63.25']
+31 active_count += 1
+31 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '329.75', '5', '(3, 5, 5.6000000000000005, 3.5)', '3', '5', '5.6000000000000005', '3.5', '63.25']
+26 for connection in connections:
+26 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '329.75', '5', '(4, 5, 3.2, 1.4)', '3', '5', '5.6000000000000005', '3.5', '63.25']
+27 node1, node2, distance, interference = connection
+27 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '329.75', '5', '(4, 5, 3.2, 1.4)', '4', '5', '3.2', '1.4', '63.25']
+28 if node1 in nodes and node2 in nodes:
+28 ['nodes', 'connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'node1', 'node2', 'distance', 'interference', 'quality'] ['[1, 2, 3, 4, 5]', '[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '329.75', '5', '(4, 5, 3.2, 1.4)', '4', '5', '3.2', '1.4', '63.25']
+29 quality = calculate_signal_quality(distance, interference)
+29 ['connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'distance', 'interference', 'quality'] ['[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '329.75', '5', '(4, 5, 3.2, 1.4)', '3.2', '1.4', '63.25']
+PARAM_MAPPING {'distance': {'actual_var': 'distance', 'value': 3.2}, 'interference': {'actual_var': 'interference', 'value': 1.4}}
+FUNCTION_ENTER 3 calculate_signal_quality def calculate_signal_quality(distance, interference):
+3 ['distance', 'interference'] [{'_type': 'float', '_value': 3.2}, {'_type': 'float', '_value': 1.4}]
+5 base_quality = 100 - (distance * 5)
+5 ['distance', 'interference', 'base_quality'] ['3.2', '1.4', '84.0']
+6 noise_factor = interference * 2.5
+6 ['interference', 'base_quality', 'noise_factor'] ['1.4', '84.0', '3.5']
+8 return max(0, base_quality - noise_factor)
+8 ['base_quality', 'noise_factor'] ['84.0', '3.5']
+FUNCTION_RETURN 8 calculate_signal_quality {'_type': 'float', '_value': 80.5}
+30 total_quality += quality
+30 ['connections', 'connection_density', 'total_quality', 'active_count', 'connection', 'quality'] ['[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '410.25', '5', '(4, 5, 3.2, 1.4)', '80.5']
+31 active_count += 1
+31 ['connections', 'connection_density', 'total_quality', 'active_count', 'connection'] ['[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '410.25', '6', '(4, 5, 3.2, 1.4)']
+26 for connection in connections:
+26 ['connections', 'connection_density', 'total_quality', 'active_count', 'connection'] ['[(1, 2, 4.0, 1.4), (1, 3, 6.4, 2.8), (2, 3, 4.800000000000001, 0.7), (2, 4, 8.0, 2.0999999999999996), (3, 5, 5.6000000000000005, 3.5), ...]', '0.6', '410.25', '6', '(4, 5, 3.2, 1.4)']
+36 avg_quality = total_quality / active_count if active_count > 0 else 0
+36 ['connection_density', 'total_quality', 'active_count', 'avg_quality'] ['0.6', '410.25', '6', '68.375']
+45 stability_factor = 0.8 + (0.2 * connection_density)
+45 ['connection_density', 'avg_quality', 'stability_factor'] ['0.6', '68.375', '0.92']
+48 network_strength = int(avg_quality * stability_factor)
+48 ['avg_quality', 'stability_factor', 'network_strength'] ['68.375', '0.92', '62']
+50 return network_strength
+50 ['network_strength'] ['62']
+FUNCTION_RETURN 50 calculate_network_strength {'_type': 'int', '_value': 62}

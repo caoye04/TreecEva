@@ -1,0 +1,75 @@
+Target: Find the value of variable efficiency after [line 65] executes
+
+[line 56]  operational_hours = 720  # Hours in a month
+Assign: operational_hours = 720
+[line 60]  efficiency = calculate_power_efficiency(turbines, operational_hours)
+Call function calculate_power_efficiency(turbines=[{id: 'T1', capacity: 2.5, uptime: 0.92, ...}, {id: 'T2', capacity: 2.0, uptime: 0.88, ...}, {id: 'T3', capacity: 3.0, uptime: 0.95, ...}, {id: 'T4', capacity: 2.8, uptime: 0.9, ...}] (an unknown source), operational_hours=720 (defined at [line 56]))
+[line 1]  def calculate_power_efficiency(turbines, hours):
+Enter function calculate_power_efficiency: turbines=[{id: 'T1', capacity: 2.5, uptime: 0.92, ...}, {id: 'T2', capacity: 2.0, uptime: 0.88, ...}, {id: 'T3', capacity: 3.0, uptime: 0.95, ...}, {id: 'T4', capacity: 2.8, uptime: 0.9, ...}], hours=720 (operational_hours defined at [line 56])
+  [line 3]  base_output = sum(t['capacity'] for t in turbines)
+  Call function sum(t['capacity'] for t in turbines)
+  [line 6]  maintenance_factor = 0.95
+  Assign: maintenance_factor = 0.95
+  [line 7]  weather_impact = [0.8, 1.2, 0.9, 1.0, 1.1]
+  Compute: [0.8, 1.2, 0.9, 1.0, 1.1] = [0.8, 1.2, 0.9, 1.0, 1.1]
+  [line 10]  theoretical_max = base_output * hours
+  Compute: base_output * hours, where base_output=10.3 (defined at [line 3]), hours=720 (parameter hours defined at [line 56]) = 7416.000000000001
+  [line 17]  actual_output = 0
+  Assign: actual_output = 0
+  [line 18]  for i, turbine in enumerate(turbines):
+  (Missing param: 'iter_var')
+  [line 20]  weather_idx = i % len(weather_impact)
+  Compute: i % len(weather_impact), where i=0 (an unknown source), weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]) = 0
+  [line 21]  weather_modifier = weather_impact[weather_idx]
+  Compute: weather_impact[weather_idx], where weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]), weather_idx=0 (defined at [line 20]) = 0.8
+  [line 24]  contribution = turbine['capacity'] * turbine['uptime'] * maintenance_factor
+  Compute: turbine['capacity'] * turbine['uptime'] * maintenance_factor, where turbine={id: 'T1', capacity: 2.5, uptime: 0.92, ...} (an unknown source), maintenance_factor=0.95 (defined at [line 6]) = 2.185
+  [line 27]  contribution *= weather_modifier
+  Update: contribution changed from 2.185 (defined at defined at [line 24]) to 2.185*weather_modifier = 1.7480000000000002
+  [line 34]  actual_output += contribution
+  Update: actual_output changed from 0 (defined at defined at [line 17]) to 0+contribution = 1.7480000000000002
+  [line 18]  for i, turbine in enumerate(turbines):
+  (Missing param: 'iter_var')
+  [line 20]  weather_idx = i % len(weather_impact)
+  Compute: i % len(weather_impact), where i=1 (an unknown source), weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]) = 1
+  [line 21]  weather_modifier = weather_impact[weather_idx]
+  Compute: weather_impact[weather_idx], where weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]), weather_idx=1 (defined at [line 20]) = 1.2
+  [line 24]  contribution = turbine['capacity'] * turbine['uptime'] * maintenance_factor
+  Compute: turbine['capacity'] * turbine['uptime'] * maintenance_factor, where turbine={id: 'T2', capacity: 2.0, uptime: 0.88, ...} (an unknown source), maintenance_factor=0.95 (defined at [line 6]) = 1.672
+  [line 27]  contribution *= weather_modifier
+  Update: contribution changed from 1.672 (defined at defined at [line 24]) to 1.672*weather_modifier = 2.0063999999999997
+  [line 34]  actual_output += contribution
+  Update: actual_output changed from 1.7480000000000002 (defined at defined at [line 34]) to 1.7480000000000002+contribution = 3.7544
+  [line 18]  for i, turbine in enumerate(turbines):
+  (Missing param: 'iter_var')
+  [line 20]  weather_idx = i % len(weather_impact)
+  Compute: i % len(weather_impact), where i=2 (an unknown source), weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]) = 2
+  [line 21]  weather_modifier = weather_impact[weather_idx]
+  Compute: weather_impact[weather_idx], where weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]), weather_idx=2 (defined at [line 20]) = 0.9
+  [line 24]  contribution = turbine['capacity'] * turbine['uptime'] * maintenance_factor
+  Compute: turbine['capacity'] * turbine['uptime'] * maintenance_factor, where turbine={id: 'T3', capacity: 3.0, uptime: 0.95, ...} (an unknown source), maintenance_factor=0.95 (defined at [line 6]) = 2.7074999999999996
+  [line 27]  contribution *= weather_modifier
+  Update: contribution changed from 2.7074999999999996 (defined at defined at [line 24]) to 2.7074999999999996*weather_modifier = 2.4367499999999995
+  [line 34]  actual_output += contribution
+  Update: actual_output changed from 3.7544 (defined at defined at [line 34]) to 3.7544+contribution = 6.1911499999999995
+  [line 18]  for i, turbine in enumerate(turbines):
+  (Missing param: 'iter_var')
+  [line 20]  weather_idx = i % len(weather_impact)
+  Compute: i % len(weather_impact), where i=3 (an unknown source), weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]) = 3
+  [line 21]  weather_modifier = weather_impact[weather_idx]
+  Compute: weather_impact[weather_idx], where weather_impact=[0.8, 1.2, 0.9, 1.0, 1.1] (defined at [line 7]), weather_idx=3 (defined at [line 20]) = 1.0
+  [line 24]  contribution = turbine['capacity'] * turbine['uptime'] * maintenance_factor
+  Compute: turbine['capacity'] * turbine['uptime'] * maintenance_factor, where turbine={id: 'T4', capacity: 2.8, uptime: 0.9, ...} (an unknown source), maintenance_factor=0.95 (defined at [line 6]) = 2.3939999999999997
+  [line 27]  contribution *= weather_modifier
+  Update: contribution changed from 2.3939999999999997 (defined at defined at [line 24]) to 2.3939999999999997*weather_modifier = 2.3939999999999997
+  [line 34]  actual_output += contribution
+  Update: actual_output changed from 6.1911499999999995 (defined at defined at [line 34]) to 6.1911499999999995+contribution = 8.585149999999999
+  [line 18]  for i, turbine in enumerate(turbines):
+  Loop End: Iteration finished
+  [line 37]  return round((actual_output / theoretical_max) * 100, 2)
+  Return: round((actual_output / theoretical_max) * 100, 2)
+Function calculate_power_efficiency returns 0.12
+[line 65]  print(f"Wind farm efficiency: {efficiency}%")
+Output: f"Wind farm efficiency: {efficiency}%"
+
+Answer: efficiency = 0.12 (last updated on defined at [line 60])

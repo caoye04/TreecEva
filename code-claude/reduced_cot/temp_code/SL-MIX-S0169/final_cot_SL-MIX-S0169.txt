@@ -1,0 +1,74 @@
+Target: Find the value of variable priority_level after [line 69] executes
+
+[line 24]  def calculate_priority(message_data, system_config):
+Enter function calculate_priority: message_data={urgency: 8, importance: 7, category: 'system', ...}, system_config={memory: 16384, backup_complete: True, maintenance_mode: False, ...}
+  [line 32]  urgency = message_data.get('urgency', 0)
+  (Missing param: 'func_name')
+  [line 33]  importance = message_data.get('importance', 0)
+  (Missing param: 'func_name')
+  [line 36]  potential_impact = urgency * importance * 0.5
+  Compute: urgency * importance * 0.5, where urgency=8 (an unknown source), importance=7 (an unknown source) = 28.0
+  [line 37]  if potential_impact > 50:
+  Condition: True, entering 'if' block
+  [line 14]  total_load = 0
+  Assign: total_load = 0
+  [line 15]  for server, stats in servers.items():
+  (Missing param: 'iter_var')
+  [line 16]  if stats['active']:
+  Condition: True, entering 'if' block
+  [line 17]  total_load += stats['connections'] * 0.5
+  Update: total_load changed from 0 (defined at defined at [line 14]) to 0+stats['connections'] * 0.5 = 60.0
+  [line 18]  if stats['cpu_usage'] > 80:
+  Condition: True, entering 'if' block
+  [line 19]  total_load += 15
+  Update: total_load changed from 60.0 (defined at defined at [line 17]) to 60.0+15 = 75.0
+  [line 15]  for server, stats in servers.items():
+  (Missing param: 'iter_var')
+  [line 16]  if stats['active']:
+  Condition: True, entering 'if' block
+  [line 17]  total_load += stats['connections'] * 0.5
+  Update: total_load changed from 75.0 (defined at defined at [line 19]) to 75.0+stats['connections'] * 0.5 = 120.0
+  [line 18]  if stats['cpu_usage'] > 80:
+  Condition: True, entering 'if' block
+  [line 20]  elif stats['cpu_usage'] > 60:
+  'elif' Condition: True, entering block
+  [line 21]  total_load += 10
+  Update: total_load changed from 120.0 (defined at defined at [line 17]) to 120.0+10 = 130.0
+  [line 15]  for server, stats in servers.items():
+  (Missing param: 'iter_var')
+  [line 16]  if stats['active']:
+  Condition: True, entering 'if' block
+  [line 15]  for server, stats in servers.items():
+  Loop End: Iteration finished
+  [line 22]  return total_load
+  Return: total_load=130.0 (defined at [line 21])
+  [line 51]  message_length = len(message_data.get('content', ''))
+  Call function len(message_data.get('content', ''))
+  [line 52]  is_encrypted = message_data.get('encrypted', False)
+  (Missing param: 'func_name')
+  [line 1]  def analyze_sentiment(text):
+  Enter function analyze_sentiment: text='Database connection failed with error code 5123. Backup systems activated.'
+    [line 10]  return max(-10, min(10, sentiment_score))
+    Return: max(-10, min(10, sentiment_score))
+  Function analyze_sentiment returns 0
+  [line 56]  if is_encrypted and message_length > 1000:
+  Condition: True, entering 'if' block
+  [line 58]  elif is_encrypted:
+  'elif' Condition: True, entering block
+  [line 64]  base_priority = urgency * 0.7 + importance * 0.3
+  Compute: urgency * 0.7 + importance * 0.3, where urgency=8 (an unknown source), importance=7 (an unknown source) = 7.699999999999999
+  [line 65]  category_weight = {'system': 2.5, 'user': 1.0, 'info': 0.5}
+  Compute: {'system': 2.5, 'user': 1.0, 'info': 0.5} = {system: 2.5, user: 1.0, info: 0.5}
+  [line 66]  message_category = message_data.get('category', 'info')
+  (Missing param: 'func_name')
+  [line 69]  priority_level = base_priority * category_weight.get(message_category, 1.0)
+  Compute: base_priority * category_weight.get(message_category, 1.0), where base_priority=7.699999999999999 (defined at [line 64]), category_weight={system: 2.5, user: 1.0, info: 0.5} (defined at [line 65]), message_category='system' (an unknown source) = 19.25
+  [line 72]  if message_data.get('from_admin', False):
+  Condition: True, entering 'if' block
+  [line 78]  if system_config.get('maintenance_mode', False):
+  Condition: True, entering 'if' block
+  [line 82]  return priority_level
+  Return: priority_level=19.25 (defined at [line 69])
+Function calculate_priority returns 19.25
+
+Answer: priority_level = 19.25 (last updated on defined at [line 69])

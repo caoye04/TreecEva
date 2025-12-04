@@ -1,0 +1,54 @@
+Target: Find the value of variable decrypted_value after [line 23] executes
+
+[line 17]  encrypted_message = "CAB"
+Assign: encrypted_message = 'CAB'
+[line 18]  temporary_key = 7
+Assign: temporary_key = 7
+[line 19]  cipher_key = temporary_key & 0xF  # Ensure key is 4-bits only
+Compute: temporary_key & 0xF  # Ensure key is 4-bits only, where temporary_key=7 (defined at [line 18]) = 7
+[line 22]  decrypted_value = decrypt_message(encrypted_message, cipher_key)
+Call function decrypt_message(encrypted_message='CAB' (defined at [line 17]), cipher_key=7 (defined at [line 19]))
+[line 3]  result = 0
+Assign: result = 0
+[line 4]  char_values = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6}
+Compute: {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6} = {A: 1, B: 2, C: 3, ...}
+[line 5]  position_multipliers = {0: 1, 1: 2, 2: 3}
+Compute: {0: 1, 1: 2, 2: 3} = {0: 1, 1: 2, 2: 3}
+[line 7]  for i, char in enumerate(message):
+(Missing param: 'iter_var')
+[line 8]  if i < len(position_multipliers):
+Condition: True, entering 'if' block
+[line 10]  char_value = char_values.get(char, 0)
+(Missing param: 'func_name')
+[line 11]  multiplier = position_multipliers[i]
+Compute: position_multipliers[i], where position_multipliers={0: 1, 1: 2, 2: 3} (defined at [line 5]), i=0 (an unknown source) = 1
+[line 12]  result += (char_value * multiplier) ^ key
+Update: result changed from 0 (defined at defined at [line 3]) to 0+(char_value * multiplier) ^ key = 4
+[line 7]  for i, char in enumerate(message):
+(Missing param: 'iter_var')
+[line 8]  if i < len(position_multipliers):
+Condition: True, entering 'if' block
+[line 10]  char_value = char_values.get(char, 0)
+(Missing param: 'func_name')
+[line 11]  multiplier = position_multipliers[i]
+Compute: position_multipliers[i], where position_multipliers={0: 1, 1: 2, 2: 3} (defined at [line 5]), i=1 (an unknown source) = 2
+[line 12]  result += (char_value * multiplier) ^ key
+Update: result changed from 4 (defined at defined at [line 12]) to 4+(char_value * multiplier) ^ key = 9
+[line 7]  for i, char in enumerate(message):
+(Missing param: 'iter_var')
+[line 8]  if i < len(position_multipliers):
+Condition: True, entering 'if' block
+[line 10]  char_value = char_values.get(char, 0)
+(Missing param: 'func_name')
+[line 11]  multiplier = position_multipliers[i]
+Compute: position_multipliers[i], where position_multipliers={0: 1, 1: 2, 2: 3} (defined at [line 5]), i=2 (an unknown source) = 3
+[line 12]  result += (char_value * multiplier) ^ key
+Update: result changed from 9 (defined at defined at [line 12]) to 9+(char_value * multiplier) ^ key = 10
+[line 7]  for i, char in enumerate(message):
+Loop End: Iteration finished
+[line 14]  return result
+Return: result=10 (defined at [line 12])
+[line 23]  print(f"Result: {decrypted_value}")
+Output: f"Result: {decrypted_value}"
+
+Answer: decrypted_value = 10 (last updated on defined at [line 22])

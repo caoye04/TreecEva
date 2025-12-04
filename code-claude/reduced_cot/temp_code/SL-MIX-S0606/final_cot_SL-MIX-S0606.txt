@@ -1,0 +1,120 @@
+Target: Find the value of variable priority_value after [line 80] executes
+
+[line 41]  readings = [12, 15, 9, 18, 14]
+Compute: [12, 15, 9, 18, 14] = [12, 15, 9, 18, 14]
+[line 44]  processed_data, average, delta, var = analyze_sensor_readings(readings)
+(Missing param: 'func_name')
+[line 3]  processed = {}
+Compute: {} = {}
+[line 4]  noise_factor = 3.7
+Assign: noise_factor = 3.7
+[line 5]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 6]  processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+(Missing param: 'result')
+[line 5]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 6]  processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+(Missing param: 'result')
+... [Line 5] repeats 2 more times ...
+... [Line 5] repeats 2 more times ...
+[line 5]  for i, reading in enumerate(readings):
+(Missing param: 'iter_var')
+[line 6]  processed[f'sensor_{i}'] = reading * noise_factor - (i % 3)
+(Missing param: 'result')
+[line 5]  for i, reading in enumerate(readings):
+Loop End: Iteration finished
+[line 9]  avg_reading = sum(readings) / len(readings)
+Compute: sum(readings) / len(readings), where readings=[12, 15, 9, 18, 14] (defined at [line 41]) = 13.6
+[line 10]  max_diff = max(readings) - min(readings)
+Compute: max(readings) - min(readings), where readings=[12, 15, 9, 18, 14] (defined at [line 41]) = 9
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where avg_reading=13.6 (defined at [line 9]), readings=[12, 15, 9, 18, 14] (defined at [line 41]) = ?
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where r=12 (an unknown source), avg_reading=13.6 (defined at [line 9]) = ?
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where r=15 (an unknown source), avg_reading=13.6 (defined at [line 9]) = ?
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where r=9 (an unknown source), avg_reading=13.6 (defined at [line 9]) = ?
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where r=18 (an unknown source), avg_reading=13.6 (defined at [line 9]) = ?
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where r=14 (an unknown source), avg_reading=13.6 (defined at [line 9]) = ?
+[line 11]  variance = sum((r - avg_reading) ** 2 for r in readings) / len(readings)
+Compute: sum((r - avg_reading) ** 2 for r in readings) / len(readings), where r=14 (an unknown source), avg_reading=13.6 (defined at [line 9]) = ?
+[line 13]  return processed, avg_reading, max_diff, variance
+Return: processed, avg_reading, max_diff, variance
+[line 54]  filtered_data = {}
+Compute: {} = {}
+[line 55]  threshold = 20
+Assign: threshold = 20
+[line 58]  for sensor_id, value in processed_data.items():
+(Missing param: 'iter_var')
+[line 68]  if value > average + delta/2:
+Condition: True, entering 'if' block
+[line 69]  category = 'critical'
+Assign: category = 'critical'
+[line 76]  if category in ['critical', 'warning'] or value > threshold - 5:
+Condition: True, entering 'if' block
+[line 77]  filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+(Missing param: 'func_name')
+[line 58]  for sensor_id, value in processed_data.items():
+(Missing param: 'iter_var')
+[line 68]  if value > average + delta/2:
+Condition: True, entering 'if' block
+[line 69]  category = 'critical'
+Assign: category = 'critical'
+[line 76]  if category in ['critical', 'warning'] or value > threshold - 5:
+Condition: True, entering 'if' block
+[line 77]  filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+(Missing param: 'func_name')
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+... [Line 58] repeats 2 more times ...
+[line 58]  for sensor_id, value in processed_data.items():
+(Missing param: 'iter_var')
+[line 68]  if value > average + delta/2:
+Condition: True, entering 'if' block
+[line 69]  category = 'critical'
+Assign: category = 'critical'
+[line 76]  if category in ['critical', 'warning'] or value > threshold - 5:
+Condition: True, entering 'if' block
+[line 77]  filtered_data[f'{category}_{sensor_id}'] = round(value, 1)
+(Missing param: 'func_name')
+[line 58]  for sensor_id, value in processed_data.items():
+Loop End: Iteration finished
+[line 80]  priority_value = calculate_priority(filtered_data, threshold)
+Call function calculate_priority(filtered_data={critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...} (defined at [line 54]), threshold=20 (defined at [line 55]))
+[line 15]  def calculate_priority(data, threshold):
+Enter function calculate_priority: data={critical_sensor_0: 44.4, critical_sensor_1: 54.5, critical_sensor_2: 31.3, ...} (filtered_data defined at [line 54]), threshold=20 (threshold defined at [line 55])
+  [line 17]  if not data:
+  Condition: True, entering 'if' block
+  [line 21]  components = []
+  Compute: [] = []
+  [line 22]  for key, value in data.items():
+  (Missing param: 'iter_var')
+  [line 23]  if 'critical' in key:
+  Condition: True, entering 'if' block
+  [line 22]  for key, value in data.items():
+  (Missing param: 'iter_var')
+  [line 23]  if 'critical' in key:
+  Condition: True, entering 'if' block
+... [Line 22] repeats 2 more times ...
+... [Line 22] repeats 2 more times ...
+  [line 22]  for key, value in data.items():
+  (Missing param: 'iter_var')
+  [line 23]  if 'critical' in key:
+  Condition: True, entering 'if' block
+  [line 22]  for key, value in data.items():
+  Loop End: Iteration finished
+  [line 32]  baseline = sum(components) / len(components)
+  Compute: sum(components) / len(components), where components=[111.0, 136.25, 78.25, 166.5, 127.0] (defined at [line 21]) = 123.8
+  [line 35]  if baseline > threshold:
+  Condition: True, entering 'if' block
+  [line 36]  return int(baseline + (baseline - threshold) * 0.8)
+  Return: int(baseline + (baseline - threshold) * 0.8)
+Function calculate_priority returns 206
+
+Answer: priority_value = 206 (last updated on defined at [line 80])

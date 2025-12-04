@@ -1,0 +1,120 @@
+Target: Find the value of variable critical_packet_count after [line 109] executes
+
+[line 105]  priority_threshold = 4
+Assign: priority_threshold = 4
+[line 108]  critical_packet_count = network_analyzer(packets, priority_threshold)
+Call function network_analyzer(packets=[(1001, 256, 3, 1, 'srv01'), (1002, 512, 5, 1, 'srv02'), (1003, 128, 2, -4, 'srv01'), (1004, 1024, 4, 1, 'srv03'), (1005, 768, 5, 1, 'srv01'), ...] (an unknown source), priority_threshold=4 (defined at [line 105]))
+[line 3]  def network_analyzer(packets, priority_threshold):
+Enter function network_analyzer: packets=[(1001, 256, 3, 1, 'srv01'), (1002, 512, 5, 1, 'srv02'), (1003, 128, 2, -4, 'srv01'), (1004, 1024, 4, 1, 'srv03'), (1005, 768, 5, 1, 'srv01'), ...], priority_threshold=4 (priority_threshold defined at [line 105])
+  [line 7]  error_codes = set()
+  Call function set()
+  [line 10]  total_bytes = 0
+  Assign: total_bytes = 0
+  [line 16]  seen_packets = set()
+  Call function set()
+  [line 19]  for i, packet in enumerate(packets):
+  (Missing param: 'iter_var')
+  [line 20]  packet_id, size, priority, status, destination = packet
+  (Missing param: 'result')
+  [line 23]  total_bytes += size
+  Update: total_bytes changed from 0 (defined at defined at [line 10]) to 0+size = 256
+  [line 32]  if status < 0:
+  Condition: True, entering 'if' block
+  [line 39]  if packet_id in seen_packets:
+  Condition: True, entering 'if' block
+  [line 19]  for i, packet in enumerate(packets):
+  (Missing param: 'iter_var')
+  [line 20]  packet_id, size, priority, status, destination = packet
+  (Missing param: 'result')
+  [line 23]  total_bytes += size
+  Update: total_bytes changed from 256 (defined at defined at [line 23]) to 256+size = 768
+  [line 32]  if status < 0:
+  Condition: True, entering 'if' block
+  [line 39]  if packet_id in seen_packets:
+  Condition: True, entering 'if' block
+... [Line 19] repeats 9 more times ...
+... [Line 19] repeats 9 more times ...
+... [Line 19] repeats 9 more times ...
+... [Line 19] repeats 9 more times ...
+... [Line 19] repeats 9 more times ...
+  [line 19]  for i, packet in enumerate(packets):
+  (Missing param: 'iter_var')
+  [line 20]  packet_id, size, priority, status, destination = packet
+  (Missing param: 'result')
+  [line 23]  total_bytes += size
+  Update: total_bytes changed from 4480 (defined at defined at [line 23]) to 4480+size = 4992
+  [line 32]  if status < 0:
+  Condition: True, entering 'if' block
+  [line 39]  if packet_id in seen_packets:
+  Condition: True, entering 'if' block
+  [line 19]  for i, packet in enumerate(packets):
+  Loop End: Iteration finished
+  [line 45]  if total_bytes > 0:
+  Condition: True, entering 'if' block
+  [line 52]  if count > 3 and dest.startswith('srv')]
+  Condition: True, entering 'if' block
+  [line 52]  if count > 3 and dest.startswith('srv')]
+  Condition: True, entering 'if' block
+  [line 52]  if count > 3 and dest.startswith('srv')]
+  Condition: True, entering 'if' block
+  [line 52]  if count > 3 and dest.startswith('srv')]
+  Condition: True, entering 'if' block
+  [line 52]  if count > 3 and dest.startswith('srv')]
+  Condition: True, entering 'if' block
+  [line 60]  error_hash = 0
+  Assign: error_hash = 0
+  [line 61]  for code in error_codes:
+  Loop Start: code takes its first value -4
+  [line 62]  error_hash = (error_hash ^ abs(code)) << 1
+  Compute: (error_hash ^ abs(code)) << 1, where error_hash=0 (defined at [line 60]), code=-4 (defined at [line 61]) = 8
+  [line 63]  if error_hash > 1024:
+  Condition: True, entering 'if' block
+  [line 61]  for code in error_codes:
+  Loop Iteration: code is now -2 (iteration 2)
+  [line 62]  error_hash = (error_hash ^ abs(code)) << 1
+  Compute: (error_hash ^ abs(code)) << 1, where error_hash=8 (defined at [line 62]), code=-2 (defined at [line 61]) = 20
+  [line 63]  if error_hash > 1024:
+  Condition: True, entering 'if' block
+  [line 61]  for code in error_codes:
+  Loop Iteration: code is now -1 (iteration 3)
+  [line 62]  error_hash = (error_hash ^ abs(code)) << 1
+  Compute: (error_hash ^ abs(code)) << 1, where error_hash=20 (defined at [line 62]), code=-1 (defined at [line 61]) = 42
+  [line 63]  if error_hash > 1024:
+  Condition: True, entering 'if' block
+  [line 61]  for code in error_codes:
+  Loop End: Iteration finished
+  [line 67]  critical_count = sum(1 for _, _, p, _, _ in packets if p >= priority_threshold)
+  Call function sum(1 for _, _, p, _, _ in packets if p >= priority_threshold)
+  [line 77]  for _, size, _, _, _ in packets:
+  (Missing param: 'iter_var')
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 77]  for _, size, _, _, _ in packets:
+  Loop End: Iteration finished
+  [line 86]  return critical_count
+  Return: critical_count=6 (defined at [line 67])
+Function network_analyzer returns 6
+[line 109]  print(f"Critical packet count: {critical_packet_count}")
+Output: f"Critical packet count: {critical_packet_count}"
+
+Answer: critical_packet_count = 6 (last updated on defined at [line 108])

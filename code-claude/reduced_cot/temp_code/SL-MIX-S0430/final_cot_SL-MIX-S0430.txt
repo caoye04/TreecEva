@@ -1,0 +1,47 @@
+Target: Find the value of variable optimal_rotation after [line 34] executes
+
+[line 1]  def analyze_lock_combination(digits, pattern):
+Enter function analyze_lock_combination: digits=[3, 8, 5, 2, 9], pattern='AbCdE'
+  [line 3]  base_value = sum(d for d in digits if d % 2 == 0)
+  Call function sum(d for d in digits if d % 2 == 0)
+  [line 4]  noise_factor = len([p for p in pattern if p.isupper()])
+  Call function len([p for p in pattern if p.isupper()])
+  [line 7]  transformed = []
+  Compute: [] = []
+  [line 8]  for i, digit in enumerate(digits):
+  (Missing param: 'iter_var')
+  [line 10]  if i < len(pattern) and pattern[i].isalpha():
+  Condition: True, entering 'if' block
+  [line 8]  for i, digit in enumerate(digits):
+  (Missing param: 'iter_var')
+  [line 10]  if i < len(pattern) and pattern[i].isalpha():
+  Condition: True, entering 'if' block
+... [Line 8] repeats 2 more times ...
+... [Line 8] repeats 2 more times ...
+  [line 8]  for i, digit in enumerate(digits):
+  (Missing param: 'iter_var')
+  [line 10]  if i < len(pattern) and pattern[i].isalpha():
+  Condition: True, entering 'if' block
+  [line 8]  for i, digit in enumerate(digits):
+  Loop End: Iteration finished
+  [line 16]  potential_a = sum(transformed) % 16
+  Compute: sum(transformed) % 16, where transformed=[6, 6, 0, 4, 8] (defined at [line 7]) = 8
+  [line 17]  potential_b = (base_value + noise_factor) % 16
+  Compute: (base_value + noise_factor) % 16, where base_value=10 (defined at [line 3]), noise_factor=3 (defined at [line 4]) = 13
+  [line 20]  clockwise_factor = sum(1 for c in pattern if c.islower())
+  Call function sum(1 for c in pattern if c.islower())
+  [line 21]  counter_factor = sum(1 for c in pattern if c.isupper())
+  Call function sum(1 for c in pattern if c.isupper())
+  [line 24]  is_clockwise = clockwise_factor > counter_factor
+  Compute: clockwise_factor > counter_factor, where clockwise_factor=2 (defined at [line 20]), counter_factor=3 (defined at [line 21]) = False
+  [line 31]  result = potential_a ^ potential_b
+  Compute: potential_a ^ potential_b, where potential_a=8 (defined at [line 16]), potential_b=13 (defined at [line 17]) = 5
+  [line 34]  optimal_rotation = (result & 0xF) if is_clockwise else 15 - (result & 0xF)
+  Compute: (result & 0xF) if is_clockwise else 15 - (result & 0xF), where result=5 (defined at [line 31]), is_clockwise=False (defined at [line 24]) = 10
+  [line 36]  print(f"Result: {optimal_rotation}")
+  Output: f"Result: {optimal_rotation}"
+  [line 37]  return optimal_rotation
+  Return: optimal_rotation=10 (defined at [line 34])
+Function analyze_lock_combination returns 10
+
+Answer: optimal_rotation = 10 (last updated on defined at [line 34])

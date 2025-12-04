@@ -1,0 +1,18 @@
+Target: Find the value of variable valid_entries after [line 18] executes
+
+[line 2]  sensor_data = [3.5, -1.2, 4.7, -0.8, 2.9, 5.1, -2.3, 3.0]
+Compute: [3.5, -1.2, 4.7, -0.8, 2.9, 5.1, -2.3, 3.0] = [3.5, -1.2, 4.7, -0.8, 2.9, ...]
+[line 3]  temperature_threshold = 0.0
+Assign: temperature_threshold = 0.0
+[line 6]  filtered_indices = [i for i, value in enumerate(sensor_data) if value > temperature_threshold]
+Compute: [i for i, value in enumerate(sensor_data) if value > temperature_threshold], where i=0 (an unknown source), value=3.5 (an unknown source), sensor_data=[3.5, -1.2, 4.7, -0.8, 2.9, ...] (defined at [line 2]), temperature_threshold=0.0 (defined at [line 3]) = ?
+[line 9]  indexed_readings = list(zip(filtered_indices, [sensor_data[i] for i in filtered_indices]))
+Call function list(zip(filtered_indices, [sensor_data[i] for i in filtered_indices]))
+[line 12]  calibrated_data = [(idx, reading * 1.1) for idx, reading in indexed_readings]
+Compute: [(idx, reading * 1.1) for idx, reading in indexed_readings], where idx=0 (an unknown source), reading=3.5 (an unknown source), indexed_readings=[(0, 3.5), (2, 4.7), (4, 2.9), (5, 5.1), (7, 3.0)] (defined at [line 9]) = ?
+[line 15]  filtered_data = [data for data in calibrated_data if data[1] > 3.0]
+Compute: [data for data in calibrated_data if data[1] > 3.0], where data=(0, 3.8500000000000005) (an unknown source), calibrated_data=[(0, 3.8500000000000005), (2, 5.170000000000001), (4, 3.19), (5, 5.61), (7, 3.3000000000000003)] (defined at [line 12]) = ?
+[line 18]  valid_entries = len([entry for entry in filtered_data])
+Call function len([entry for entry in filtered_data])
+
+Answer: valid_entries = 5 (last updated on defined at [line 18])

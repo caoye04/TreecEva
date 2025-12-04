@@ -1,0 +1,62 @@
+Target: Find the value of variable final_hash after [line 47] executes
+
+[line 24]  raw_data = "security_hash_algorithm"
+Assign: raw_data = 'security_hash_algorithm'
+[line 25]  input_data = raw_data + "_v2"
+Compute: raw_data + "_v2", where raw_data='security_hash_algorithm' (defined at [line 24]) = 'security_hash_algorithm_v2'
+[line 28]  filter_chars = ['a', 'e', 'i', 'o', 'u']
+Compute: ['a', 'e', 'i', 'o', 'u'] = ['a', 'e', 'i', 'o', 'u']
+[line 32]  filtered_data = ''.join([c for c in input_data if c not in filter_chars])
+(Missing param: 'func_name')
+[line 35]  char_counts = {}
+Compute: {} = {}
+[line 36]  for char in filtered_data:
+Loop Start: char takes its first value 's'
+[line 37]  if char in char_counts:
+Condition: True, entering 'if' block
+[line 40]  char_counts[char] = 1
+(Missing param: 'var')
+[line 36]  for char in filtered_data:
+Loop Iteration: char is now 'c' (iteration 2)
+[line 37]  if char in char_counts:
+Condition: True, entering 'if' block
+[line 40]  char_counts[char] = 1
+(Missing param: 'var')
+... [Line 36] repeats 16 more times ...
+... [Line 36] repeats 16 more times ...
+... [Line 36] repeats 16 more times ...
+[line 36]  for char in filtered_data:
+Loop Iteration: char is now '2' (iteration 19)
+[line 37]  if char in char_counts:
+Condition: True, entering 'if' block
+[line 36]  for char in filtered_data:
+Loop End: Iteration finished
+[line 47]  final_hash = calculate_hash(filtered_data)
+Call function calculate_hash(filtered_data='scrty_hsh_lgrthm_v2' (an unknown source))
+[line 1]  def calculate_hash(data):
+Enter function calculate_hash: data='scrty_hsh_lgrthm_v2'
+  [line 3]  multiplier = 31
+  Assign: multiplier = 31
+  [line 8]  hash_value = 0
+  Assign: hash_value = 0
+  [line 9]  for item in data:
+  Loop Start: item takes its first value 's'
+  [line 11]  hash_value = (hash_value * multiplier) ^ ord(item)
+  Compute: (hash_value * multiplier) ^ ord(item), where hash_value=0 (defined at [line 8]), multiplier=31 (defined at [line 3]), item='s' (defined at [line 9]) = 115
+  [line 9]  for item in data:
+  Loop Iteration: item is now 'c' (iteration 2)
+  [line 11]  hash_value = (hash_value * multiplier) ^ ord(item)
+  Compute: (hash_value * multiplier) ^ ord(item), where hash_value=115 (defined at [line 11]), multiplier=31 (defined at [line 3]), item='c' (defined at [line 9]) = 3470
+... [Line 9] repeats 16 more times ...
+... [Line 9] repeats 16 more times ...
+  [line 9]  for item in data:
+  Loop Iteration: item is now '2' (iteration 19)
+  [line 11]  hash_value = (hash_value * multiplier) ^ ord(item)
+  Compute: (hash_value * multiplier) ^ ord(item), where hash_value=2524477056826170404460393759 (defined at [line 11]), multiplier=31 (defined at [line 3]), item='2' (defined at [line 9]) = 78258788761611282538272206579
+  [line 9]  for item in data:
+  Loop End: Iteration finished
+  [line 21]  return hash_value
+  Return: hash_value=78258788761611282538272206579 (defined at [line 11])
+Function calculate_hash returns 78258788761611282538272206579
+
+Answer: final_hash = 78258788761611282538272206579 (last updated on defined at [line 47])

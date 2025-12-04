@@ -1,0 +1,39 @@
+Target: Find the value of variable priority_score after [line 55] executes
+
+[line 54]  priority_score = calculate_priority(customer_data, "Gold")
+Call function calculate_priority(customer_data={customer_id: 'C12345', name: 'John Smith', purchases: 15, ...} (an unknown source), "Gold")
+[line 1]  def calculate_priority(customer_data, tier):
+Enter function calculate_priority: customer_data={customer_id: 'C12345', name: 'John Smith', purchases: 15, ...}, tier='Gold'
+  [line 2]  base_points = 100
+  Assign: base_points = 100
+  [line 10]  activity_score = 0
+  Assign: activity_score = 0
+  [line 11]  loyalty_bonus = 0
+  Assign: loyalty_bonus = 0
+  [line 15]  purchases = customer_data.get("purchases", 0)
+  (Missing param: 'func_name')
+  [line 16]  returns = customer_data.get("returns", 0)
+  Return: s = customer_data.get("s", 0)
+  [line 17]  years = customer_data.get("loyalty_years", 0)
+  (Missing param: 'func_name')
+  [line 20]  if purchases > 0:
+  Condition: True, entering 'if' block
+  [line 21]  activity_ratio = max(0, (purchases - returns) / purchases)
+  Call function max(0, (purchases - returns) / purchases)
+  [line 22]  activity_score = int(purchases * activity_ratio)
+  Call function int(purchases * activity_ratio)
+  [line 25]  if years > 2:
+  Condition: True, entering 'if' block
+  [line 26]  loyalty_bonus = years * 5
+  Compute: years * 5, where years=4 (an unknown source) = 20
+  [line 34]  tier_factor = tier_multipliers.get(tier, 1.0)
+  (Missing param: 'func_name')
+  [line 35]  potential_value = base_points * tier_factor + activity_score + loyalty_bonus
+  Compute: base_points * tier_factor + activity_score + loyalty_bonus, where base_points=100 (defined at [line 2]), tier_factor=2.0 (an unknown source), activity_score=12 (defined at [line 22]), loyalty_bonus=20 (defined at [line 26]) = 232.0
+  [line 41]  return int(potential_value)
+  Return: int(potential_value)
+Function calculate_priority returns 232
+[line 55]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 232 (last updated on defined at [line 54])

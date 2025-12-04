@@ -1,0 +1,88 @@
+Target: Find the value of variable priority_level after [line 73] executes
+
+[line 3]  active_connections = {}
+Compute: {} = {}
+[line 8]  for route in routes:
+Loop Start: route takes its first value {id: 'R001', path: ['A', 'B', 'C'], bandwidth: 150}
+[line 8]  for route in routes:
+Loop End: Iteration finished
+[line 8]  for route in routes:
+Loop End: Iteration finished
+[line 8]  for route in routes:
+Loop End: Iteration finished
+[line 22]  is_critical = False
+Assign: is_critical = False
+[line 23]  base_priority = 0
+Assign: base_priority = 0
+[line 24]  adjustment = 0
+Assign: adjustment = 0
+[line 27]  for idx, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 29]  packet_size = packet['size']
+Compute: packet['size'], where packet={type: 'DATA', size: 1200, route_id: 'R001'} (an unknown source) = 1200
+[line 30]  route_id = packet['route_id']
+Compute: packet['route_id'], where packet={type: 'DATA', size: 1200, route_id: 'R001'} (an unknown source) = 'R001'
+[line 36]  if packet_type == 'data':
+Condition: True, entering 'if' block
+[line 46]  if route_id in active_connections:
+Condition: True, entering 'if' block
+[line 52]  if importance >= 2 and packet_size > 1000:
+Condition: True, entering 'if' block
+[line 56]  elif importance >= 1 and packet_size > 500:
+'elif' Condition: True, entering block
+[line 57]  is_critical = False
+Assign: is_critical = False
+[line 58]  base_priority = 50
+Assign: base_priority = 50
+[line 59]  adjustment = 10
+Assign: adjustment = 10
+[line 27]  for idx, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 29]  packet_size = packet['size']
+Compute: packet['size'], where packet={type: 'CONTROL', size: 800, route_id: 'R002'} (an unknown source) = 800
+[line 30]  route_id = packet['route_id']
+Compute: packet['route_id'], where packet={type: 'CONTROL', size: 800, route_id: 'R002'} (an unknown source), route_id='R001' (defined at [line 30]) = 'R002'
+[line 36]  if packet_type == 'data':
+Condition: True, entering 'if' block
+[line 38]  elif packet_type == 'control':
+'elif' Condition: True, entering block
+[line 46]  if route_id in active_connections:
+Condition: True, entering 'if' block
+[line 52]  if importance >= 2 and packet_size > 1000:
+Condition: True, entering 'if' block
+[line 56]  elif importance >= 1 and packet_size > 500:
+'elif' Condition: True, entering block
+[line 57]  is_critical = False
+Assign: is_critical = False
+[line 58]  base_priority = 50
+Assign: base_priority = 50
+[line 59]  adjustment = 10
+Assign: adjustment = 10
+[line 27]  for idx, packet in enumerate(packets):
+(Missing param: 'iter_var')
+[line 29]  packet_size = packet['size']
+Compute: packet['size'], where packet={type: 'PRIORITY', size: 1500, route_id: 'R001'} (an unknown source) = 1500
+[line 30]  route_id = packet['route_id']
+Compute: packet['route_id'], where packet={type: 'PRIORITY', size: 1500, route_id: 'R001'} (an unknown source), route_id='R002' (defined at [line 30]) = 'R001'
+[line 36]  if packet_type == 'data':
+Condition: True, entering 'if' block
+[line 38]  elif packet_type == 'control':
+'elif' Condition: True, entering block
+[line 40]  elif packet_type == 'priority':
+'elif' Condition: True, entering block
+[line 46]  if route_id in active_connections:
+Condition: True, entering 'if' block
+[line 52]  if importance >= 2 and packet_size > 1000:
+Condition: True, entering 'if' block
+[line 53]  is_critical = True
+Assign: is_critical = True
+[line 54]  base_priority = 75
+Assign: base_priority = 75
+[line 55]  adjustment = 15
+Assign: adjustment = 15
+[line 27]  for idx, packet in enumerate(packets):
+Loop End: Iteration finished
+[line 73]  priority_level = base_priority * (1 if is_critical else 0.5) + adjustment
+Compute: base_priority * (1 if is_critical else 0.5) + adjustment, where base_priority=75 (defined at [line 54]), is_critical=True (defined at [line 53]), adjustment=15 (defined at [line 55]) = 90
+
+Answer: priority_level = 90 (last updated on defined at [line 73])

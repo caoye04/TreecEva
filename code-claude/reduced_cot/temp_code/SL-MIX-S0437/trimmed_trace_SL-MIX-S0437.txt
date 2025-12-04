@@ -1,0 +1,25 @@
+26
+priority_score
+---
+6 is_urgent = True
+6 ['is_urgent'] ['True']
+7 waiting_time = 45  # minutes
+7 ['is_urgent', 'waiting_time'] ['True', '45']
+10 base_score = waiting_time // 10
+10 ['is_urgent', 'waiting_time', 'base_score'] ['True', '45', '4']
+11 if waiting_time % 10 >= 5:
+11 ['is_urgent', 'base_score'] ['True', '4']
+12 base_score += 1
+12 ['is_urgent', 'base_score'] ['True', '5']
+15 urgency_factor = 0.5
+15 ['is_urgent', 'base_score', 'urgency_factor'] ['True', '5', '0.5']
+16 penalty = 2
+16 ['is_urgent', 'base_score', 'urgency_factor', 'penalty'] ['True', '5', '0.5', '2']
+19 subscription = "premium"
+19 ['is_urgent', 'base_score', 'urgency_factor', 'penalty', 'subscription'] ['True', '5', '0.5', '2', "'premium'"]
+20 customer_tier = 2 if subscription == "premium" else 1
+20 ['is_urgent', 'base_score', 'urgency_factor', 'penalty', 'subscription', 'customer_tier'] ['True', '5', '0.5', '2', "'premium'", '2']
+23 base_score = base_score + customer_tier
+23 ['is_urgent', 'base_score', 'urgency_factor', 'penalty', 'customer_tier'] ['True', '7', '0.5', '2', '2']
+26 priority_score = base_score * (1 + urgency_factor) if is_urgent else base_score - penalty
+26 ['is_urgent', 'base_score', 'urgency_factor', 'penalty', 'priority_score'] ['True', '7', '0.5', '2', '10.5']

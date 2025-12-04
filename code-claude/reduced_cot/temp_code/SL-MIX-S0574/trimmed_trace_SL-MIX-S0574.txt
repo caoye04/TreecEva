@@ -1,0 +1,71 @@
+69
+target_frequency
+---
+50 signal_raw = [18, -22, 15, -16, 20, -25, 17, -19, 21, -24, 16, -18]
+50 ['signal_raw'] ['[18, -22, 15, -16, 20, ...]']
+53 background_noise = [5, -4, 6, -3, 4, -5, 3, -6]
+53 ['signal_raw', 'background_noise'] ['[18, -22, 15, -16, 20, ...]', '[5, -4, 6, -3, 4, ...]']
+57 if len(background_noise) > 10:
+57 ['signal_raw', 'background_noise'] ['[18, -22, 15, -16, 20, ...]', '[5, -4, 6, -3, 4, ...]']
+66 filtered_signals = process_signal(signal_raw)
+66 ['signal_raw'] ['[18, -22, 15, -16, 20, ...]']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '18']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '-22']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '15']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '-16']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '20']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '-25']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '17']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '-19']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '21']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '-24']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '16']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'x'] ['[18, -22, 15, -16, 20, ...]', '15', '-18']
+3 filtered = [x for x in signal_data if abs(x) > noise_threshold]
+3 ['signal_data', 'noise_threshold', 'filtered'] ['[18, -22, 15, -16, 20, ...]', '15', '[18, -22, -16, 20, -25, ...]']
+11 return filtered
+11 ['signal_data', 'filtered'] ['[18, -22, 15, -16, 20, ...]', '[18, -22, -16, 20, -25, ...]']
+69 target_frequency = calculate_frequency(filtered_signals)
+69 ['filtered_signals'] ['[18, -22, -16, 20, -25, ...]']
+PARAM_MAPPING {'signal_data': {'actual_var': 'filtered_signals', 'value': [18, -22, -16, 20, -25, 17, -19, 21, -24, 16, -18]}}
+FUNCTION_ENTER 19 calculate_frequency def calculate_frequency(signal_data):
+19 ['signal_data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 18}, {'_type': 'int', '_value': -22}, {'_type': 'int', '_value': -16}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': -25}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': -19}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': -24}, {'_type': 'int', '_value': 16}], '_len': 11}]
+21 if not signal_data:
+21 ['signal_data'] ['[18, -22, -16, 20, -25, ...]']
+31 base_frequency = sum(signal_data[::2]) - sum(signal_data[1::2])
+31 ['signal_data', 'base_frequency'] ['[18, -22, -16, 20, -25, ...]', '-136']
+PARAM_MAPPING {'signal': {'actual_var': 'signal_data', 'value': [18, -22, -16, 20, -25, 17, -19, 21, -24, 16, -18]}}
+FUNCTION_ENTER 13 calculate_amplitude def calculate_amplitude(signal):
+13 ['signal'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 18}, {'_type': 'int', '_value': -22}, {'_type': 'int', '_value': -16}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': -25}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': -19}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': -24}, {'_type': 'int', '_value': 16}], '_len': 11}]
+15 if not signal:
+15 ['signal'] ['[18, -22, -16, 20, -25, ...]']
+17 return max(signal) - min(signal)
+17 ['signal'] ['[18, -22, -16, 20, -25, ...]']
+FUNCTION_RETURN 17 calculate_amplitude {'_type': 'int', '_value': 46}
+38 if len(signal_data) > 20:
+38 ['signal_data', 'base_frequency'] ['[18, -22, -16, 20, -25, ...]', '-136']
+42 elif len(signal_data) > 10:
+42 ['signal_data', 'base_frequency'] ['[18, -22, -16, 20, -25, ...]', '-136']
+44 return base_frequency / 2
+44 ['base_frequency'] ['-136']
+FUNCTION_RETURN 44 calculate_frequency {'_type': 'float', '_value': -68.0}
+PARAM_MAPPING {'signal': {'actual_var': 'filtered_signals', 'value': [18, -22, -16, 20, -25, 17, -19, 21, -24, 16, -18]}}
+FUNCTION_ENTER 13 calculate_amplitude def calculate_amplitude(signal):
+13 ['signal'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 18}, {'_type': 'int', '_value': -22}, {'_type': 'int', '_value': -16}, {'_type': 'int', '_value': 20}, {'_type': 'int', '_value': -25}, {'_type': 'int', '_value': 17}, {'_type': 'int', '_value': -19}, {'_type': 'int', '_value': 21}, {'_type': 'int', '_value': -24}, {'_type': 'int', '_value': 16}], '_len': 11}]
+15 if not signal:
+15 ['signal'] ['[18, -22, -16, 20, -25, ...]']
+17 return max(signal) - min(signal)
+17 ['signal'] ['[18, -22, -16, 20, -25, ...]']
+FUNCTION_RETURN 17 calculate_amplitude {'_type': 'int', '_value': 46}

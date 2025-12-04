@@ -1,0 +1,69 @@
+55
+signal_strength
+---
+26 threshold = lambda x: sum(x) / len(x) >= 40
+26 ['sensor_data'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}']
+27 valid_stations = [station for station, readings in sensor_data.items() if threshold(readings)]
+27 ['station', 'readings'] ["'station1'", '[42, 45, 41, 38, 44]']
+26 threshold = lambda x: sum(x) / len(x) >= 40
+26 ['x'] ['[42, 45, 41, 38, 44]']
+27 valid_stations = [station for station, readings in sensor_data.items() if threshold(readings)]
+27 ['station', 'readings'] ["'station2'", '[39, 37, 42, 41, 40]']
+26 threshold = lambda x: sum(x) / len(x) >= 40
+26 ['x'] ['[39, 37, 42, 41, 40]']
+27 valid_stations = [station for station, readings in sensor_data.items() if threshold(readings)]
+27 ['station', 'readings'] ["'station3'", '[44, 46, 45, 47, 43]']
+26 threshold = lambda x: sum(x) / len(x) >= 40
+26 ['x'] ['[44, 46, 45, 47, 43]']
+27 valid_stations = [station for station, readings in sensor_data.items() if threshold(readings)]
+27 ['station', 'readings'] ["'station4'", '[36, 38, 35, 37, 39]']
+26 threshold = lambda x: sum(x) / len(x) >= 40
+26 ['x'] ['[36, 38, 35, 37, 39]']
+27 valid_stations = [station for station, readings in sensor_data.items() if threshold(readings)]
+27 ['sensor_data', 'valid_stations'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}', "['station1', 'station3']"]
+30 all_readings = []
+30 ['sensor_data', 'valid_stations', 'all_readings'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}', "['station1', 'station3']", '[]']
+31 for station in valid_stations:
+31 ['sensor_data', 'valid_stations', 'all_readings', 'station'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}', "['station1', 'station3']", '[]', "'station1'"]
+33 readings = sensor_data[station]
+33 ['sensor_data', 'valid_stations', 'all_readings', 'station', 'readings'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}', "['station1', 'station3']", '[]', "'station1'", '[42, 45, 41, 38, 44]']
+31 for station in valid_stations:
+31 ['sensor_data', 'valid_stations', 'all_readings', 'station', 'readings'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}', "['station1', 'station3']", '[47, 35]', "'station3'", '[42, 45, 41, 38, 44]']
+33 readings = sensor_data[station]
+33 ['sensor_data', 'valid_stations', 'all_readings', 'station', 'readings'] ['{station1: [42, 45, 41, 38, 44], station2: [39, 37, 42, 41, 40], station3: [44, 46, 45, 47, 43], ...}', "['station1', 'station3']", '[47, 35]', "'station3'", '[44, 46, 45, 47, 43]']
+31 for station in valid_stations:
+31 ['valid_stations', 'all_readings', 'station', 'readings'] ["['station1', 'station3']", '[47, 35, 43, 49]', "'station3'", '[44, 46, 45, 47, 43]']
+49 min_acceptable = 38
+49 ['all_readings', 'readings', 'min_acceptable'] ['[47, 35, 43, 49]', '[44, 46, 45, 47, 43]', '38']
+50 max_acceptable = 50
+50 ['all_readings', 'readings', 'min_acceptable', 'max_acceptable'] ['[47, 35, 43, 49]', '[44, 46, 45, 47, 43]', '38', '50']
+51 filtered_readings = [r for r in all_readings if min_acceptable <= r <= max_acceptable]
+51 ['r'] ['47']
+51 filtered_readings = [r for r in all_readings if min_acceptable <= r <= max_acceptable]
+51 ['r'] ['35']
+51 filtered_readings = [r for r in all_readings if min_acceptable <= r <= max_acceptable]
+51 ['r'] ['43']
+51 filtered_readings = [r for r in all_readings if min_acceptable <= r <= max_acceptable]
+51 ['r'] ['49']
+51 filtered_readings = [r for r in all_readings if min_acceptable <= r <= max_acceptable]
+51 ['all_readings', 'readings', 'min_acceptable', 'max_acceptable', 'filtered_readings'] ['[47, 35, 43, 49]', '[44, 46, 45, 47, 43]', '38', '50', '[47, 43, 49]']
+54 signal_strength = calculate_signal_quality(filtered_readings)
+54 ['readings', 'filtered_readings'] ['[44, 46, 45, 47, 43]', '[47, 43, 49]']
+5 if not readings:
+5 ['readings'] ['[47, 43, 49]']
+8 signal_mean = sum(readings) / len(readings)
+8 ['readings', 'signal_mean'] ['[47, 43, 49]', '46.333333333333336']
+10 weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+10 ['signal_mean'] ['46.333333333333336']
+10 weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+10 ['r', 'signal_mean'] ['47', '46.333333333333336']
+10 weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+10 ['r', 'signal_mean'] ['43', '46.333333333333336']
+10 weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+10 ['r', 'signal_mean'] ['49', '46.333333333333336']
+10 weighted_sum = sum(1 / (abs(r - signal_mean) + 1) for r in readings)
+10 ['r', 'signal_mean'] ['49', '46.333333333333336']
+11 return round(weighted_sum * 10, 2)
+11 ['weighted_sum'] ['1.1034965034965045']
+55 print(f"Result: {signal_strength}")
+55 ['signal_strength'] ['11.03']

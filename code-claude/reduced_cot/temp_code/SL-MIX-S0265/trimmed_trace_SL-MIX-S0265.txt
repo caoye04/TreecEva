@@ -1,0 +1,109 @@
+84
+optimal_inventory
+---
+PARAM_MAPPING {'sales_data': {'actual_var': 'sales_data', 'value': [42, 45, 38, 51, 44, 47, 53, 41, 49, 52]}}
+FUNCTION_ENTER 36 inventory_optimizer def inventory_optimizer(sales_data):
+36 ['sales_data'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 38}, {'_type': 'int', '_value': 51}, {'_type': 'int', '_value': 44}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 53}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 49}, {'_type': 'int', '_value': 52}], '_len': 10}]
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '42']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '45']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '38']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '51']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '44']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '47']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '53']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '41']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '49']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'x'] ['[42, 45, 38, 51, 44, ...]', '52']
+38 filtered_data = [x for x in sales_data if x > 0]
+38 ['sales_data', 'filtered_data'] ['[42, 45, 38, 51, 44, ...]', '[42, 45, 38, 51, 44, ...]']
+41 metrics = calculate_metrics(filtered_data)
+41 ['filtered_data'] ['[42, 45, 38, 51, 44, ...]']
+PARAM_MAPPING {'data': {'actual_var': 'filtered_data', 'value': [42, 45, 38, 51, 44, 47, 53, 41, 49, 52]}}
+FUNCTION_ENTER 1 calculate_metrics def calculate_metrics(data, weight_factor=1.5):
+1 ['data', 'weight_factor'] [{'_type': 'list', '_items': [{'_type': 'int', '_value': 42}, {'_type': 'int', '_value': 45}, {'_type': 'int', '_value': 38}, {'_type': 'int', '_value': 51}, {'_type': 'int', '_value': 44}, {'_type': 'int', '_value': 47}, {'_type': 'int', '_value': 53}, {'_type': 'int', '_value': 41}, {'_type': 'int', '_value': 49}, {'_type': 'int', '_value': 52}], '_len': 10}, {'_type': 'float', '_value': 1.5}]
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 [] []
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['0', '42']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['1', '45']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['2', '38']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['3', '51']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['4', '44']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['5', '47']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['6', '53']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['7', '41']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['8', '49']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['9', '52']
+5 trend_factor = sum((i+1) * v for i, v in enumerate(data)) / sum(data) if sum(data) else 1
+5 ['i', 'v'] ['9', '52']
+12 return {
+12 ['trend_factor'] ['5.653679653679654']
+FUNCTION_RETURN 12 calculate_metrics {'_type': 'dict', '_items': {'mean': {'_type': 'float', '_value': 46.2}, 'trend': {'_type': 'float', '_value': 5.653679653679654}, 'seasonal': {'_type': 'float', '_value': 1.147186147186147}, 'confidence': {'_type': 'float', '_value': 72.92568856264745}, 'weighted_factor': {'_type': 'float', '_value': 2.348051948051948}}, '_len': 5}
+44 mean_demand = metrics['mean']
+44 ['filtered_data', 'metrics', 'mean_demand'] ['[42, 45, 38, 51, 44, ...]', '{mean: 46.2, trend: 5.653679653679654, seasonal: 1.147186147186147, ...}', '46.2']
+45 trend_factor = metrics['trend']
+45 ['filtered_data', 'metrics', 'mean_demand', 'trend_factor'] ['[42, 45, 38, 51, 44, ...]', '{mean: 46.2, trend: 5.653679653679654, seasonal: 1.147186147186147, ...}', '46.2', '5.653679653679654']
+48 service_level = 0.95
+48 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95']
+49 lead_time = 2
+49 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2']
+50 safety_factor = lambda sl: 1.0 + (sl - 0.5) * 2 if sl > 0.5 else 0.5
+50 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '1']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '2']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '3']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '4']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '5']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '6']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '7']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '8']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '9']
+54 for i in range(1, len(filtered_data))]) if len(filtered_data) > 1 else 0
+54 ['filtered_data', 'mean_demand', 'trend_factor', 'service_level', 'lead_time', 'i'] ['[42, 45, 38, 51, 44, ...]', '46.2', '5.653679653679654', '0.95', '2', '9']
+66 base_stock = mean_demand * lead_time
+66 ['mean_demand', 'trend_factor', 'service_level', 'lead_time', 'recent_trend', 'base_stock'] ['46.2', '5.653679653679654', '0.95', '2', '3', '92.4']
+67 safety_stock = mean_demand * safety_factor(service_level) * (lead_time ** 0.5)
+67 ['mean_demand', 'trend_factor', 'service_level', 'lead_time', 'recent_trend', 'base_stock'] ['46.2', '5.653679653679654', '0.95', '2', '3', '92.4']
+70 if recent_trend > 0:
+70 ['mean_demand', 'trend_factor', 'recent_trend', 'base_stock', 'safety_stock'] ['46.2', '5.653679653679654', '3', '92.4', '124.1396665051103']
+78 reorder_point = base_stock + safety_stock
+78 ['mean_demand', 'trend_factor', 'base_stock', 'safety_stock', 'reorder_point'] ['46.2', '5.653679653679654', '92.4', '124.1396665051103', '216.5396665051103']
+84 optimal_inventory = int(reorder_point + (trend_factor - 1) * mean_demand * 5)
+84 ['mean_demand', 'trend_factor', 'reorder_point', 'optimal_inventory'] ['46.2', '5.653679653679654', '216.5396665051103', '1291']
+87 if mean_demand <= 0:
+87 ['optimal_inventory'] ['1291']
+90 return optimal_inventory
+90 ['optimal_inventory'] ['1291']
+FUNCTION_RETURN 90 inventory_optimizer {'_type': 'int', '_value': 1291}

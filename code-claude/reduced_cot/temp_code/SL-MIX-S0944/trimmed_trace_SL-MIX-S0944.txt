@@ -1,0 +1,593 @@
+79
+priority_score
+---
+75 message = "Important! Review the proposal before the deadline on Friday."
+75 ['message'] ["'Important! Review the proposal before the deadline on Friday.'"]
+76 settings = {"category": "critical", "filters": ["spam", "automated"], "time_settings": {"morning": 1.2, "afternoon": 1.0, "evening": 0.8}}
+76 ['message', 'settings'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}"]
+79 priority_score = calculate_priority(message, settings)
+79 ['message', 'settings'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}"]
+PARAM_MAPPING {'message': {'actual_var': 'message', 'value': 'Important! Review the proposal before the deadline on Friday.'}, 'settings': {'actual_var': 'settings', 'value': {'category': 'critical', 'filters': ['spam', 'automated'], 'time_settings': {'morning': 1.2, 'afternoon': 1.0, 'evening': 0.8}}}}
+FUNCTION_ENTER 9 calculate_priority def calculate_priority(message, settings):
+9 ['message', 'settings'] [{'_type': 'str', '_value': 'Important! Review the proposal before the deadline on Friday.'}, {'_type': 'dict', '_items': {'category': {'_type': 'str', '_value': 'critical'}, 'filters': {'_type': 'list', '_items': [{'_type': 'str', '_value': 'spam'}, {'_type': 'str', '_value': 'automated'}], '_len': 2}, 'time_settings': {'_type': 'dict', '_items': {'morning': {'_type': 'float', '_value': 1.2}, 'afternoon': {'_type': 'float', '_value': 1.0}, 'evening': {'_type': 'float', '_value': 0.8}}, '_len': 3}}, '_len': 3}]
+11 priority = 0
+11 ['message', 'settings', 'priority'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0']
+14 is_urgent = "urgent" in message.lower()
+14 ['message', 'settings', 'priority', 'is_urgent'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False']
+15 is_important = "important" in message.lower()
+15 ['message', 'settings', 'priority', 'is_urgent', 'is_important'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True']
+16 has_deadline = "deadline" in message.lower() or "due" in message.lower()
+16 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True']
+19 special_keywords = {"review": 5, "approve": 8, "reject": 7, "discuss": 3, "consider": 2}
+19 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}']
+20 keyword_bonus = 0
+20 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '0']
+21 for keyword, value in special_keywords.items():
+21 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '0', "'review'", '5']
+22 if keyword in message.lower():
+22 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '0', "'review'", '5']
+23 keyword_bonus += value
+23 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'review'", '5']
+21 for keyword, value in special_keywords.items():
+21 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'approve'", '8']
+22 if keyword in message.lower():
+22 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'approve'", '8']
+21 for keyword, value in special_keywords.items():
+21 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'reject'", '7']
+22 if keyword in message.lower():
+22 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'reject'", '7']
+21 for keyword, value in special_keywords.items():
+21 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'discuss'", '3']
+22 if keyword in message.lower():
+22 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'discuss'", '3']
+21 for keyword, value in special_keywords.items():
+21 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'consider'", '2']
+22 if keyword in message.lower():
+22 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'consider'", '2']
+21 for keyword, value in special_keywords.items():
+21 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'special_keywords', 'keyword_bonus', 'keyword', 'value'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '{review: 5, approve: 8, reject: 7, ...}', '5', "'consider'", '2']
+26 base_score = len(message) // 10
+26 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'keyword_bonus', 'base_score'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '5', '6']
+29 if is_urgent and is_important:
+29 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'keyword_bonus', 'base_score'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '5', '6']
+31 elif is_urgent:
+31 ['message', 'settings', 'priority', 'is_urgent', 'is_important', 'has_deadline', 'keyword_bonus', 'base_score'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'False', 'True', 'True', '5', '6']
+33 elif is_important:
+33 ['message', 'settings', 'priority', 'is_important', 'has_deadline', 'keyword_bonus', 'base_score'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '0', 'True', 'True', '5', '6']
+34 priority = base_score * 1.5
+34 ['message', 'settings', 'priority', 'has_deadline', 'keyword_bonus', 'base_score'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '9.0', 'True', '5', '6']
+39 if has_deadline:
+39 ['message', 'settings', 'priority', 'has_deadline', 'keyword_bonus'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '9.0', 'True', '5']
+40 priority += 15
+40 ['message', 'settings', 'priority', 'keyword_bonus'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '24.0', '5']
+44 if category == "critical":
+44 ['message', 'settings', 'priority', 'keyword_bonus'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '24.0', '5']
+45 priority *= 2
+45 ['message', 'settings', 'priority', 'keyword_bonus'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '48.0', '5']
+50 time_settings = settings.get("time_settings", {})
+50 ['message', 'settings', 'priority', 'keyword_bonus', 'time_settings'] ["'Important! Review the proposal before the deadline on Friday.'", "{category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}", '48.0', '5', '{morning: 1.2, afternoon: 1.0, evening: 0.8}']
+51 if time_settings:
+51 ['message', 'priority', 'keyword_bonus', 'time_settings'] ["'Important! Review the proposal before the deadline on Friday.'", '48.0', '5', '{morning: 1.2, afternoon: 1.0, evening: 0.8}']
+57 question_marks = count_occurrences(message, "?")
+57 ['message', 'priority', 'keyword_bonus'] ["'Important! Review the proposal before the deadline on Friday.'", '48.0', '5']
+PARAM_MAPPING {'text': {'actual_var': 'message', 'value': 'Important! Review the proposal before the deadline on Friday.'}, 'target_chars': {'actual_var': '"?"', 'value': '"?"'}}
+FUNCTION_ENTER 1 count_occurrences def count_occurrences(text, target_chars):
+1 ['text', 'target_chars'] [{'_type': 'str', '_value': 'Important! Review the proposal before the deadline on Friday.'}, {'_type': 'str', '_value': '?'}]
+3 count = 0
+3 ['text', 'target_chars', 'count'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0']
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'m'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'m'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'p'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'p'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'n'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'n'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'!'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'!'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'v'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'v'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'w'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'w'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'h'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'h'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'p'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'p'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'p'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'p'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'s'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'s'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'l'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'l'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'b'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'b'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'f'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'f'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'h'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'h'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'d'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'d'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'d'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'d'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'l'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'l'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'n'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'n'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'n'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'n'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'f'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'f'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'d'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'d'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'y'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'y'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'.'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'.'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'.'"]
+7 return count
+7 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'?'", '0', "'.'"]
+FUNCTION_RETURN 7 count_occurrences {'_type': 'int', '_value': 0}
+58 exclamation_marks = count_occurrences(message, "!")
+58 ['message', 'priority', 'keyword_bonus', 'question_marks'] ["'Important! Review the proposal before the deadline on Friday.'", '48.0', '5', '0']
+PARAM_MAPPING {'text': {'actual_var': 'message', 'value': 'Important! Review the proposal before the deadline on Friday.'}, 'target_chars': {'actual_var': '"!"', 'value': '"!"'}}
+FUNCTION_ENTER 1 count_occurrences def count_occurrences(text, target_chars):
+1 ['text', 'target_chars'] [{'_type': 'str', '_value': 'Important! Review the proposal before the deadline on Friday.'}, {'_type': 'str', '_value': '!'}]
+3 count = 0
+3 ['text', 'target_chars', 'count'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0']
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'m'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'m'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'p'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'p'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'n'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'n'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'!'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '0', "'!'"]
+6 count += 1
+6 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'!'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'v'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'v'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'w'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'w'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'h'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'h'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'p'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'p'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'p'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'p'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'s'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'s'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'l'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'l'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'b'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'b'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'f'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'f'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'t'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'t'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'h'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'h'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'d'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'d'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'d'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'d'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'l'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'l'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'n'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'n'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'e'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'o'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'n'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'n'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "' '"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'f'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'f'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'r'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'i'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'i'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'d'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'d'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'a'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'a'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'y'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'y'"]
+4 for char in text.lower():
+4 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'.'"]
+5 if char in target_chars:
+5 ['text', 'target_chars', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", "'!'", '1', "'.'"]
+4 for char in text.lower():
+4 ['text', 'count', 'char'] ["'Important! Review the proposal before the deadline on Friday.'", '1', "'.'"]
+7 return count
+7 ['count'] ['1']
+FUNCTION_RETURN 7 count_occurrences {'_type': 'int', '_value': 1}
+61 priority += exclamation_marks * 5
+61 ['priority', 'keyword_bonus', 'question_marks', 'exclamation_marks'] ['53.0', '5', '0', '1']
+62 priority += question_marks * 2
+62 ['priority', 'keyword_bonus', 'question_marks'] ['53.0', '5', '0']
+65 priority += keyword_bonus
+65 ['priority', 'keyword_bonus'] ['58.0', '5']
+72 return round(priority)
+72 ['priority'] ['58.0']
+FUNCTION_RETURN 72 calculate_priority {'_type': 'int', '_value': 58}

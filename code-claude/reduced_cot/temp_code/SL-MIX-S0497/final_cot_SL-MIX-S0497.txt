@@ -1,0 +1,98 @@
+Target: Find the value of variable encryption_strength after [line 82] executes
+
+[line 53]  network_packets = ["TCP:192.168.1.1", "UDP:10.0.0.1", "TCP:192.168.1.1"]
+Compute: ["TCP:192.168.1.1", "UDP:10.0.0.1", "TCP:192.168.1.1"] = ['TCP:192.168.1.1', 'UDP:10.0.0.1', 'TCP:192.168.1.1']
+[line 54]  network_load = analyze_network_traffic(network_packets)
+Call function analyze_network_traffic(network_packets=['TCP:192.168.1.1', 'UDP:10.0.0.1', 'TCP:192.168.1.1'] (defined at [line 53]))
+[line 10]  total_bytes = sum(len(p) for p in packets)
+Call function sum(len(p) for p in packets)
+[line 10]  total_bytes = sum(len(p) for p in packets)
+Call function sum(len(p) for p in packets)
+[line 10]  total_bytes = sum(len(p) for p in packets)
+Call function sum(len(p) for p in packets)
+[line 10]  total_bytes = sum(len(p) for p in packets)
+Call function sum(len(p) for p in packets)
+[line 10]  total_bytes = sum(len(p) for p in packets)
+Call function sum(len(p) for p in packets)
+[line 11]  unique_packets = len(set(packets))
+Call function len(set(packets))
+[line 12]  return total_bytes * unique_packets // 8
+Return: total_bytes * unique_packets // 8
+[line 57]  raw_data = "CyberSec2023"
+Assign: raw_data = 'CyberSec2023'
+[line 58]  processed_data = raw_data.lower().replace("cyber", "c") + "45"
+Compute: raw_data.lower().replace("cyber", "c") + "45", where raw_data='CyberSec2023' (defined at [line 57]) = 'csec202345'
+[line 3]  hash_value = 0
+Assign: hash_value = 0
+[line 4]  for char in text:
+Loop Start: char takes its first value 'C'
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=0 (defined at [line 3]), char='C' (defined at [line 4]) = 67
+[line 4]  for char in text:
+Loop Iteration: char is now 'y' (iteration 2)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=67 (defined at [line 5]), char='y' (defined at [line 4]) = 204
+... [Line 4] repeats 15 more times ...
+... [Line 4] repeats 15 more times ...
+[line 6]  return hash_value
+Return: hash_value=647 (defined at [line 5])
+[line 62]  security_threshold = network_load // 10
+Compute: network_load // 10, where network_load=10 (defined at [line 54]) = 1
+[line 66]  encryption_strength = calculate_final_strength(processed_data)
+Call function calculate_final_strength(processed_data='csec202345' (defined at [line 58]))
+[line 16]  base_value = len(data)
+Call function len(data='csec202345' (an unknown source))
+[line 17]  if base_value == 0:
+Condition: True, entering 'if' block
+[line 21]  digits = [int(c) for c in data if c.isdigit()]
+Compute: [int(c) for c in data if c.isdigit()], where c='c' (an unknown source), data='csec202345' (an unknown source) = ?
+[line 22]  if not digits:
+Condition: True, entering 'if' block
+[line 28]  vulnerability_index = calculate_hash(data[:5]) if len(data) > 5 else 42
+Compute: calculate_hash(data[:5]) if len(data) > 5 else 42, where data='csec202345' (an unknown source) = ?
+[line 3]  hash_value = 0
+Assign: hash_value = 0
+[line 4]  for char in text:
+Loop Iteration: char is now 'c' (iteration 14)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=0 (defined at [line 3]), char='c' (defined at [line 4]) = 99
+[line 4]  for char in text:
+Loop Iteration: char is now 's' (iteration 15)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=99 (defined at [line 5]), char='s' (defined at [line 4]) = 193
+[line 4]  for char in text:
+Loop Iteration: char is now 'e' (iteration 16)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=193 (defined at [line 5]), char='e' (defined at [line 4]) = 102
+[line 4]  for char in text:
+Loop Iteration: char is now 'c' (iteration 17)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=102 (defined at [line 5]), char='c' (defined at [line 4]) = 270
+[line 4]  for char in text:
+Loop Iteration: char is now '2' (iteration 18)
+[line 5]  hash_value = (hash_value * 31 + ord(char)) % 997
+Compute: (hash_value * 31 + ord(char)) % 997, where hash_value=270 (defined at [line 5]), char='2' (defined at [line 4]) = 444
+[line 4]  for char in text:
+Loop Iteration: char is now '2' (iteration 19)
+[line 6]  return hash_value
+Return: hash_value=444 (defined at [line 5])
+[line 31]  strength_factor = (digits[0] * 10 + digits[-1]) ^ (digits[1] if len(digits) > 1 else 3)
+Compute: (digits[0] * 10 + digits[-1]) ^ (digits[1] if len(digits) > 1 else 3), where digits=[2, 0, 2, 3, 4, ...] (defined at [line 21]) = 25
+[line 36]  if vulnerability_index < 30:
+Condition: True, entering 'if' block
+[line 40]  if isinstance(data, dict) and "priority" in data:
+Condition: True, entering 'if' block
+[line 44]  if len(digits) > 3:
+Condition: True, entering 'if' block
+[line 45]  strength_factor = strength_factor | (digits[2] << 2)
+Compute: strength_factor | (digits[2] << 2), where strength_factor=25 (defined at [line 31]), digits=[2, 0, 2, 3, 4, ...] (defined at [line 21]) = 25
+[line 48]  result = (strength_factor & 0xFF) + (base_value % 10)
+Compute: (strength_factor & 0xFF) + (base_value % 10), where strength_factor=25 (defined at [line 45]), base_value=10 (defined at [line 16]) = 25
+[line 50]  return result
+Return: result=25 (defined at [line 48])
+[line 69]  if security_threshold > encryption_strength:
+Condition: True, entering 'if' block
+[line 82]  print(f"Result: {encryption_strength}")
+Output: f"Result: {encryption_strength}"
+
+Answer: encryption_strength = 25 (last updated on defined at [line 66])

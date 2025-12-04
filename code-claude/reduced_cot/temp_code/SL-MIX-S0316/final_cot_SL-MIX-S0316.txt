@@ -1,0 +1,89 @@
+Target: Find the value of variable priority_score after [line 119] executes
+
+[line 35]  if not description:
+Condition: True, entering 'if' block
+[line 38]  words = description.lower().split()
+(Missing param: 'func_name')
+[line 39]  complexity_score = len(words) * 2
+Compute: len(words) * 2, where words=['fix', 'vulnerability', 'in', 'authentication', 'api'] (an unknown source) = 10
+[line 41]  technical_terms = ['api', 'database', 'server', 'network', 'interface']
+Compute: ['api', 'database', 'server', 'network', 'interface'] = ['api', 'database', 'server', 'network', 'interface']
+[line 42]  complexity_score += sum(5 for word in words if word in technical_terms)
+Update: complexity_score changed from 10 (defined at defined at [line 39]) to 10+sum(5 for word in words if word in technical_terms) = ?
+[line 44]  return complexity_score
+Return: complexity_score=15 (defined at [line 42])
+[line 112]  priority_score = calculate_final_priority(request_data)
+Call function calculate_final_priority(request_data={id: 'B12345', category: 'security', urgency_level: 8, ...} (an unknown source))
+[line 51]  def calculate_final_priority(request_data):
+Enter function calculate_final_priority: request_data={id: 'B12345', category: 'security', urgency_level: 8, ...}
+  [line 53]  category = request_data.get('category', 'general')
+  (Missing param: 'func_name')
+  [line 54]  urgency = request_data.get('urgency_level', 5)
+  (Missing param: 'func_name')
+  [line 55]  days_pending = request_data.get('days_pending', 0)
+  (Missing param: 'func_name')
+  [line 56]  description = request_data.get('description', '')
+  (Missing param: 'func_name')
+  [line 59]  team_size = request_data.get('team_size', 5)
+  (Missing param: 'func_name')
+  [line 60]  current_workload = request_data.get('current_workload', 25)
+  (Missing param: 'func_name')
+  [line 61]  request_id = request_data.get('id', '000')
+  (Missing param: 'func_name')
+  [line 64]  base_score = calculate_priority_factor(category, urgency)
+  Call function calculate_priority_factor(category='security' (an unknown source), urgency=8 (an unknown source))
+  [line 1]  def calculate_priority_factor(category, urgency):
+  Enter function calculate_priority_factor: category='security', urgency=8
+    [line 14]  if category in category_weights:
+    Condition: True, entering 'if' block
+    [line 15]  return category_weights[category] * (urgency / 10)
+    Return: category_weights[category] * (urgency / 10)
+  Function calculate_priority_factor returns 56.0
+  [line 32]  def analyze_request_complexity(description):
+  Enter function analyze_request_complexity: description='Fix vulnerability in authentication API'
+    [line 35]  if not description:
+    Condition: True, entering 'if' block
+    [line 38]  words = description.lower().split()
+    (Missing param: 'func_name')
+    [line 39]  complexity_score = len(words) * 2
+    Compute: len(words) * 2, where words=['fix', 'vulnerability', 'in', 'authentication', 'api'] (an unknown source) = 10
+    [line 41]  technical_terms = ['api', 'database', 'server', 'network', 'interface']
+    Compute: ['api', 'database', 'server', 'network', 'interface'] = ['api', 'database', 'server', 'network', 'interface']
+    [line 44]  return complexity_score
+    Return: complexity_score=15 (defined at [line 39])
+  Function analyze_request_complexity returns 15
+  [line 46]  def calculate_team_availability(team_size, current_workload):
+  Enter function calculate_team_availability: team_size=4, current_workload=30
+    [line 48]  availability = max(0, team_size * 10 - current_workload)
+    Call function max(0, team_size * 10 - current_workload)
+    [line 49]  return availability * 0.8
+    Return: availability * 0.8
+  Function calculate_team_availability returns 8.0
+  [line 72]  time_adjusted_score = apply_time_factors(base_score, days_pending)
+  Call function apply_time_factors(base_score=56.0 (defined at [line 64]), days_pending=20 (an unknown source))
+  [line 19]  def apply_time_factors(base_score, days_pending):
+  Enter function apply_time_factors: base_score=56.0 (base_score defined at [line 64]), days_pending=20
+    [line 21]  time_multiplier = min(3.0, 1 + (days_pending / 30))
+    Call function min(3.0, 1 + (days_pending / 30))
+    [line 30]  return base_score * time_multiplier
+    Return: base_score * time_multiplier
+  Function apply_time_factors returns 93.33333333333333
+  [line 75]  if request_id.startswith('A'):
+  Condition: True, entering 'if' block
+  [line 88]  final_score = time_adjusted_score
+  Compute: time_adjusted_score, where time_adjusted_score=93.33333333333333 (defined at [line 72]) = 93.33333333333333
+  [line 89]  if urgency > 7:
+  Condition: True, entering 'if' block
+  [line 90]  final_score += 15
+  Update: final_score changed from 93.33333333333333 (defined at defined at [line 88]) to 93.33333333333333+15 = 108.33333333333333
+  [line 92]  if days_pending > 14:
+  Condition: True, entering 'if' block
+  [line 93]  final_score += 10
+  Update: final_score changed from 108.33333333333333 (defined at defined at [line 90]) to 108.33333333333333+10 = 118.33333333333333
+  [line 95]  return round(final_score)
+  Return: round(final_score)
+Function calculate_final_priority returns 118
+[line 119]  print(f"Result: {priority_score}")
+Output: f"Result: {priority_score}"
+
+Answer: priority_score = 118 (last updated on defined at [line 112])

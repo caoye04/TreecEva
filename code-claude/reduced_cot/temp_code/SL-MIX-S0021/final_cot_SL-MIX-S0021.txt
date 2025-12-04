@@ -1,0 +1,37 @@
+Target: Find the value of variable overlap_size after [line 29] executes
+
+[line 3]  def calculate_region_metrics(primary_data, secondary_data):
+Enter function calculate_region_metrics: primary_data=[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...], secondary_data={(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...}
+  [line 5]  primary_regions = {(x, y) for x, y in primary_data}
+  Compute: {(x, y) for x, y in primary_data}, where x=2 (an unknown source), y=3 (an unknown source), primary_data=[(2, 3), (4, 6), (6, 3), (8, 9), (10, 12), ...] (parameter primary_data) = ?
+  [line 8]  active_stations = {coord for coord, status in secondary_data.items() if status == 'active'}
+  Compute: {coord for coord, status in secondary_data.items() if status == 'active'}, where coord=(0, 1) (an unknown source), status='active' (an unknown source), secondary_data={(0, 1): 'active', (2, 1): 'inactive', (4, 4): 'active', ...} (parameter secondary_data) = ?
+  [line 12]  active_regions = {(x+2, y+2) for x, y in active_stations}
+  Compute: {(x+2, y+2) for x, y in active_stations}, where x=0 (an unknown source), y=1 (an unknown source), active_stations={(0, 1), (6, 1), (10, 10), (4, 4)} (defined at [line 8]) = ?
+  [line 15]  candidate_regions = set()
+  Call function set()
+  [line 16]  for x, y in primary_regions:
+  (Missing param: 'iter_var')
+  [line 17]  if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+  Condition: True, entering 'if' block
+  [line 16]  for x, y in primary_regions:
+  (Missing param: 'iter_var')
+  [line 17]  if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+  Condition: True, entering 'if' block
+... [Line 16] repeats 3 more times ...
+... [Line 16] repeats 3 more times ...
+  [line 16]  for x, y in primary_regions:
+  (Missing param: 'iter_var')
+  [line 17]  if x % 2 == 0 and y % 3 == 0:  # Only select regions with specific coordinates
+  Condition: True, entering 'if' block
+  [line 16]  for x, y in primary_regions:
+  Loop End: Iteration finished
+  [line 29]  overlap_size = len(active_regions.intersection(candidate_regions))
+  Call function len(active_regions.intersection(candidate_regions))
+  [line 32]  if len(candidate_regions) > 0:
+  Condition: True, entering 'if' block
+  [line 37]  return overlap_size
+  Return: overlap_size=1 (defined at [line 29])
+Function calculate_region_metrics returns 1
+
+Answer: overlap_size = 1 (last updated on defined at [line 29])

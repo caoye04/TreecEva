@@ -1,0 +1,241 @@
+105
+signal_strength
+---
+80 raw_signal_data = [15, 22, 8, 31, 44, 12, 7, 25]
+80 ['raw_signal_data'] ['[15, 22, 8, 31, 44, ...]']
+81 ambient_conditions = {'temperature': 22.5, 'humidity': 65, 'noise_floor': 3}
+81 ['raw_signal_data', 'ambient_conditions'] ['[15, 22, 8, 31, 44, ...]', '{temperature: 22.5, humidity: 65, noise_floor: 3}']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['15']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['22']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['8']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['31']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['44']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['12']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['7']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['s'] ['25']
+84 processed_signals = [s + ambient_conditions['noise_floor'] for s in raw_signal_data]
+84 ['raw_signal_data', 'ambient_conditions', 'processed_signals'] ['[15, 22, 8, 31, 44, ...]', '{temperature: 22.5, humidity: 65, noise_floor: 3}', '[18, 25, 11, 34, 47, ...]']
+3 if ambient_noise == 0:
+3 ['signal_peaks', 'ambient_noise'] ['[15, 22, 8, 31, 44, ...]', '3']
+5 return sum(signal_peaks) / ambient_noise
+5 ['signal_peaks', 'ambient_noise'] ['[15, 22, 8, 31, 44, ...]', '3']
+93 filtered_signals, avg_level, peak_level = apply_filters(processed_signals, 'bandpass')
+93 ['ambient_conditions', 'processed_signals'] ['{temperature: 22.5, humidity: 65, noise_floor: 3}', '[18, 25, 11, 34, 47, ...]']
+9 filtered = []
+9 ['raw_signals', 'filtered'] ['[18, 25, 11, 34, 47, ...]', '[]']
+10 if filter_type == 'lowpass':
+10 ['raw_signals', 'filtered'] ['[18, 25, 11, 34, 47, ...]', '[]']
+12 elif filter_type == 'highpass':
+12 ['raw_signals', 'filtered'] ['[18, 25, 11, 34, 47, ...]', '[]']
+14 elif filter_type == 'bandpass':
+14 ['raw_signals', 'filtered'] ['[18, 25, 11, 34, 47, ...]', '[]']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '18']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '25']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '11']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '34']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '47']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '15']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '10']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered', 's'] ['[18, 25, 11, 34, 47, ...]', '[]', '28']
+15 filtered = [s * 0.8 + 10 for s in raw_signals]
+15 ['raw_signals', 'filtered'] ['[18, 25, 11, 34, 47, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]']
+20 avg = sum(filtered) / len(filtered) if filtered else 0
+20 ['filtered', 'avg'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '28.8']
+21 peak = max(filtered) if filtered else 0
+21 ['filtered', 'avg', 'peak'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '28.8', '47.6']
+22 return filtered, avg, peak
+22 ['filtered', 'avg', 'peak'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '28.8', '47.6']
+96 noise_threshold = ambient_conditions['noise_floor'] * 3
+96 ['ambient_conditions', 'filtered_signals', 'noise_threshold'] ['{temperature: 22.5, humidity: 65, noise_floor: 3}', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9']
+105 signal_strength = calculate_final_signal(filtered_signals, noise_threshold)
+105 ['filtered_signals', 'noise_threshold'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9']
+PARAM_MAPPING {'signals': {'actual_var': 'filtered_signals', 'value': [24.4, 30.0, 18.8, 37.2, 47.6, 22.0, 18.0, 32.400000000000006]}, 'threshold': {'actual_var': 'noise_threshold', 'value': 9}}
+FUNCTION_ENTER 24 calculate_final_signal def calculate_final_signal(signals, threshold):
+24 ['signals', 'threshold'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 24.4}, {'_type': 'float', '_value': 30.0}, {'_type': 'float', '_value': 18.8}, {'_type': 'float', '_value': 37.2}, {'_type': 'float', '_value': 47.6}, {'_type': 'float', '_value': 22.0}, {'_type': 'float', '_value': 18.0}, {'_type': 'float', '_value': 32.400000000000006}], '_len': 8}, {'_type': 'int', '_value': 9}]
+26 primary_signals = []
+26 ['signals', 'threshold', 'primary_signals'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[]']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[]', '0', '24.4']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[]', '0', '24.4']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4]', '1', '30.0']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4]', '1', '30.0']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0]', '2', '18.8']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0]', '2', '18.8']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8]', '3', '37.2']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8]', '3', '37.2']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2]', '4', '47.6']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2]', '4', '47.6']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6]', '5', '22.0']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6]', '5', '22.0']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '18.0']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '18.0']
+34 elif signal > threshold:
+34 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '18.0']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '7', '32.400000000000006']
+32 if signal > threshold * 2:
+32 ['signals', 'threshold', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '9', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '7', '32.400000000000006']
+31 for i, signal in enumerate(signals):
+31 ['signals', 'primary_signals', 'i', 'signal'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '7', '32.400000000000006']
+40 weighted_primary = 0
+40 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '7', '32.400000000000006', '0']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '24.4', '0']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '24.4', '24.4']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '30.0', '24.4']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '30.0', '84.4']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '18.8', '84.4']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '18.8', '140.8']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '37.2', '140.8']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '37.2', '289.6']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '47.6', '289.6']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '47.6', '527.6']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '5', '22.0', '527.6']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '5', '22.0', '659.6']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '32.400000000000006', '659.6']
+42 weighted_primary += signal * (i + 1)
+42 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '32.400000000000006', '886.4000000000001']
+41 for i, signal in enumerate(primary_signals):
+41 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '32.400000000000006', '886.4000000000001']
+49 for i, j in zip(range(5), range(3, 8)):
+49 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'j'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '32.400000000000006', '886.4000000000001', '3']
+49 for i, j in zip(range(5), range(3, 8)):
+49 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'j'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '32.400000000000006', '886.4000000000001', '4']
+49 for i, j in zip(range(5), range(3, 8)):
+49 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'j'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '32.400000000000006', '886.4000000000001', '5']
+49 for i, j in zip(range(5), range(3, 8)):
+49 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'j'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '32.400000000000006', '886.4000000000001', '6']
+49 for i, j in zip(range(5), range(3, 8)):
+49 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'j'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '32.400000000000006', '886.4000000000001', '7']
+49 for i, j in zip(range(5), range(3, 8)):
+49 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'j'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '32.400000000000006', '886.4000000000001', '7']
+53 bit_modifier = 0
+53 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '32.400000000000006', '886.4000000000001', '0']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '24.4', '886.4000000000001', '0']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '24.4', '886.4000000000001', '0']
+56 bit_value = int(signal) & 0x0F  # Get lower 4 bits
+56 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '24.4', '886.4000000000001', '0', '8']
+57 bit_modifier |= (bit_value << (i * 4))  # Shift and OR
+57 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '0', '24.4', '886.4000000000001', '8', '8']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '30.0', '886.4000000000001', '8', '8']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '30.0', '886.4000000000001', '8', '8']
+56 bit_value = int(signal) & 0x0F  # Get lower 4 bits
+56 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '30.0', '886.4000000000001', '8', '14']
+57 bit_modifier |= (bit_value << (i * 4))  # Shift and OR
+57 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '1', '30.0', '886.4000000000001', '232', '14']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '18.8', '886.4000000000001', '232', '14']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '18.8', '886.4000000000001', '232', '14']
+56 bit_value = int(signal) & 0x0F  # Get lower 4 bits
+56 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '18.8', '886.4000000000001', '232', '2']
+57 bit_modifier |= (bit_value << (i * 4))  # Shift and OR
+57 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '2', '18.8', '886.4000000000001', '744', '2']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '37.2', '886.4000000000001', '744', '2']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '37.2', '886.4000000000001', '744', '2']
+56 bit_value = int(signal) & 0x0F  # Get lower 4 bits
+56 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '37.2', '886.4000000000001', '744', '5']
+57 bit_modifier |= (bit_value << (i * 4))  # Shift and OR
+57 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier', 'bit_value'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '3', '37.2', '886.4000000000001', '21224', '5']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '47.6', '886.4000000000001', '21224']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '4', '47.6', '886.4000000000001', '21224']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '5', '22.0', '886.4000000000001', '21224']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '5', '22.0', '886.4000000000001', '21224']
+54 for i, signal in enumerate(primary_signals):
+54 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '32.400000000000006', '886.4000000000001', '21224']
+55 if i < 4:  # Only use up to 4 signals
+55 ['signals', 'primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '32.400000000000006', '886.4000000000001', '21224']
+54 for i, signal in enumerate(primary_signals):
+54 ['primary_signals', 'i', 'signal', 'weighted_primary', 'bit_modifier'] ['[24.4, 30.0, 18.8, 37.2, 47.6, ...]', '6', '32.400000000000006', '886.4000000000001', '21224']
+60 adjustment = (bit_modifier & 0xFF) >> 2
+60 ['weighted_primary', 'bit_modifier', 'adjustment'] ['886.4000000000001', '21224', '58']
+63 coefficient = 1
+63 ['weighted_primary', 'adjustment', 'coefficient'] ['886.4000000000001', '58', '1']
+64 for idx, val in enumerate(range(3, 8)):
+64 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '1', '0', '3']
+65 if idx % 2 == 0:
+65 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '1', '0', '3']
+66 coefficient *= val
+66 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '3', '0', '3']
+64 for idx, val in enumerate(range(3, 8)):
+64 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '3', '1', '4']
+65 if idx % 2 == 0:
+65 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '3', '1', '4']
+68 coefficient = coefficient // 2 if coefficient > 10 else coefficient + 1
+68 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '4', '1', '4']
+64 for idx, val in enumerate(range(3, 8)):
+64 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '4', '2', '5']
+65 if idx % 2 == 0:
+65 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '4', '2', '5']
+66 coefficient *= val
+66 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '20', '2', '5']
+64 for idx, val in enumerate(range(3, 8)):
+64 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '20', '3', '6']
+65 if idx % 2 == 0:
+65 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '20', '3', '6']
+68 coefficient = coefficient // 2 if coefficient > 10 else coefficient + 1
+68 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '10', '3', '6']
+64 for idx, val in enumerate(range(3, 8)):
+64 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '10', '4', '7']
+65 if idx % 2 == 0:
+65 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '10', '4', '7']
+66 coefficient *= val
+66 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '70', '4', '7']
+64 for idx, val in enumerate(range(3, 8)):
+64 ['weighted_primary', 'adjustment', 'coefficient', 'idx', 'val'] ['886.4000000000001', '58', '70', '4', '7']
+71 result = (weighted_primary // coefficient) + adjustment
+71 ['weighted_primary', 'adjustment', 'coefficient', 'result'] ['886.4000000000001', '58', '70', '70.0']
+77 return result
+77 ['result'] ['70.0']
+FUNCTION_RETURN 77 calculate_final_signal {'_type': 'float', '_value': 70.0}

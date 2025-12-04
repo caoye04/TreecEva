@@ -1,0 +1,79 @@
+Target: Find the value of variable compression_hash after [line 29] executes
+
+[line 1]  text = "abcabdabcabc"
+Assign: text = 'abcabdabcabc'
+[line 4]  substrings = []
+Compute: [] = []
+[line 5]  for i in range(len(text) - 1):
+Loop Start: i takes its first value 0
+[line 6]  substr = text[i:i+2]
+Compute: text[i:i+2], where text='abcabdabcabc' (defined at [line 1]), i=0 (defined at [line 5]) = 'ab'
+[line 5]  for i in range(len(text) - 1):
+Loop Iteration: i is now 1 (iteration 2)
+[line 6]  substr = text[i:i+2]
+Compute: text[i:i+2], where text='abcabdabcabc' (defined at [line 1]), i=1 (defined at [line 5]) = 'bc'
+... [Line 5] repeats 8 more times ...
+... [Line 5] repeats 8 more times ...
+[line 5]  for i in range(len(text) - 1):
+Loop Iteration: i is now 10 (iteration 11)
+[line 6]  substr = text[i:i+2]
+Compute: text[i:i+2], where text='abcabdabcabc' (defined at [line 1]), i=10 (defined at [line 5]) = 'bc'
+[line 5]  for i in range(len(text) - 1):
+Loop End: Iteration finished
+[line 10]  freq_map = {}
+Compute: {} = {}
+[line 11]  for substr in substrings:
+Loop Start: substr takes its first value 'ab'
+[line 12]  if substr in freq_map:
+Condition: True, entering 'if' block
+[line 15]  freq_map[substr] = 1
+(Missing param: 'var')
+[line 11]  for substr in substrings:
+Loop Iteration: substr is now 'bc' (iteration 2)
+[line 12]  if substr in freq_map:
+Condition: True, entering 'if' block
+[line 15]  freq_map[substr] = 1
+(Missing param: 'var')
+... [Line 11] repeats 8 more times ...
+... [Line 11] repeats 8 more times ...
+... [Line 11] repeats 8 more times ...
+[line 11]  for substr in substrings:
+Loop Iteration: substr is now 'bc' (iteration 11)
+[line 12]  if substr in freq_map:
+Condition: True, entering 'if' block
+[line 11]  for substr in substrings:
+Loop End: Iteration finished
+[line 18]  sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+[line 18]  sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+[line 18]  sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+[line 18]  sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+[line 18]  sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+[line 18]  sorted_patterns = sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+Call function sorted(freq_map.items(), key=lambda x: x[1], reverse=True)
+[line 19]  top_patterns = sorted_patterns[:2]
+Compute: sorted_patterns[:2], where sorted_patterns=[('ab', 4), ('bc', 3), ('ca', 2), ('bd', 1), ('da', 1)] (defined at [line 18]) = [('ab', 4), ('bc', 3)]
+[line 22]  total_occurrences = sum(count for pattern, count in top_patterns)
+Call function sum(count for pattern, count in top_patterns)
+[line 23]  original_chars = total_occurrences * 2
+Compute: total_occurrences * 2, where total_occurrences=7 (defined at [line 22]) = 14
+[line 24]  compressed_chars = len(top_patterns) * 2 + total_occurrences
+Compute: len(top_patterns) * 2 + total_occurrences, where top_patterns=[('ab', 4), ('bc', 3)] (defined at [line 19]), total_occurrences=7 (defined at [line 22]) = 11
+[line 25]  savings = original_chars - compressed_chars
+Compute: original_chars - compressed_chars, where original_chars=14 (defined at [line 23]), compressed_chars=11 (defined at [line 24]) = 3
+[line 28]  pattern_sum = sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+Call function sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+[line 28]  pattern_sum = sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+Call function sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+[line 28]  pattern_sum = sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+Call function sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+[line 28]  pattern_sum = sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+Call function sum(ord(p[0]) + ord(p[1]) for p, c in top_patterns)
+[line 29]  compression_hash = (savings * 10 + pattern_sum) % 256
+Compute: (savings * 10 + pattern_sum) % 256, where savings=3 (defined at [line 25]), pattern_sum=392 (defined at [line 28]) = 166
+
+Answer: compression_hash = 166 (last updated on defined at [line 29])

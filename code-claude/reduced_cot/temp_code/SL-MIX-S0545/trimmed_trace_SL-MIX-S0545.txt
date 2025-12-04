@@ -1,0 +1,75 @@
+55
+final_pressure
+---
+48 readings = [102.5, 103.1, 101.8, 104.2, 105.7, 103.4, 102.9, 101.5, 102.3]
+48 ['readings'] ['[102.5, 103.1, 101.8, 104.2, 105.7, ...]']
+51 filter_threshold = 104.0
+51 ['readings', 'filter_threshold'] ['[102.5, 103.1, 101.8, 104.2, 105.7, ...]', '104.0']
+54 final_pressure = calculate_adjusted_pressure(readings, filter_threshold)
+54 ['readings', 'filter_threshold'] ['[102.5, 103.1, 101.8, 104.2, 105.7, ...]', '104.0']
+PARAM_MAPPING {'readings': {'actual_var': 'readings', 'value': [102.5, 103.1, 101.8, 104.2, 105.7, 103.4, 102.9, 101.5, 102.3]}, 'filter_threshold': {'actual_var': 'filter_threshold', 'value': 104.0}}
+FUNCTION_ENTER 18 calculate_adjusted_pressure def calculate_adjusted_pressure(readings, filter_threshold):
+18 ['readings', 'filter_threshold'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 102.5}, {'_type': 'float', '_value': 103.1}, {'_type': 'float', '_value': 101.8}, {'_type': 'float', '_value': 104.2}, {'_type': 'float', '_value': 105.7}, {'_type': 'float', '_value': 103.4}, {'_type': 'float', '_value': 102.9}, {'_type': 'float', '_value': 101.5}, {'_type': 'float', '_value': 102.3}], '_len': 9}, {'_type': 'float', '_value': 104.0}]
+20 mid_start = len(readings) // 3
+20 ['readings', 'filter_threshold', 'mid_start'] ['[102.5, 103.1, 101.8, 104.2, 105.7, ...]', '104.0', '3']
+21 mid_end = 2 * len(readings) // 3
+21 ['readings', 'filter_threshold', 'mid_start', 'mid_end'] ['[102.5, 103.1, 101.8, 104.2, 105.7, ...]', '104.0', '3', '6']
+22 mid_section = readings[mid_start:mid_end]
+22 ['readings', 'filter_threshold', 'mid_start', 'mid_end', 'mid_section'] ['[102.5, 103.1, 101.8, 104.2, 105.7, ...]', '104.0', '3', '6', '[104.2, 105.7, 103.4]']
+25 calibration = 0.95
+25 ['filter_threshold', 'mid_section', 'calibration'] ['104.0', '[104.2, 105.7, 103.4]', '0.95']
+26 calibrated = [reading * calibration for reading in mid_section]
+26 ['filter_threshold', 'mid_section', 'calibration', 'reading'] ['104.0', '[104.2, 105.7, 103.4]', '0.95', '104.2']
+26 calibrated = [reading * calibration for reading in mid_section]
+26 ['filter_threshold', 'mid_section', 'calibration', 'reading'] ['104.0', '[104.2, 105.7, 103.4]', '0.95', '105.7']
+26 calibrated = [reading * calibration for reading in mid_section]
+26 ['filter_threshold', 'mid_section', 'calibration', 'reading'] ['104.0', '[104.2, 105.7, 103.4]', '0.95', '103.4']
+26 calibrated = [reading * calibration for reading in mid_section]
+26 ['filter_threshold', 'mid_section', 'calibration', 'calibrated'] ['104.0', '[104.2, 105.7, 103.4]', '0.95', '[98.99, 100.41499999999999, 98.23]']
+29 filtered_readings, anomaly_count = filter_sequence(calibrated, filter_threshold)
+29 ['filter_threshold', 'calibrated'] ['104.0', '[98.99, 100.41499999999999, 98.23]']
+3 filtered = [x for x in data if x <= threshold]
+3 ['data', 'threshold', 'x'] ['[98.99, 100.41499999999999, 98.23]', '104.0', '98.99']
+3 filtered = [x for x in data if x <= threshold]
+3 ['data', 'threshold', 'x'] ['[98.99, 100.41499999999999, 98.23]', '104.0', '100.41499999999999']
+3 filtered = [x for x in data if x <= threshold]
+3 ['data', 'threshold', 'x'] ['[98.99, 100.41499999999999, 98.23]', '104.0', '98.23']
+3 filtered = [x for x in data if x <= threshold]
+3 ['data', 'threshold', 'filtered'] ['[98.99, 100.41499999999999, 98.23]', '104.0', '[98.99, 100.41499999999999, 98.23]']
+5 discarded = len(data) - len(filtered)
+5 ['data', 'filtered', 'discarded'] ['[98.99, 100.41499999999999, 98.23]', '[98.99, 100.41499999999999, 98.23]', '0']
+6 return filtered, discarded
+6 ['filtered', 'discarded'] ['[98.99, 100.41499999999999, 98.23]', '0']
+10 if not values:
+10 ['values'] ['[102.5, 103.1, 101.8]']
+12 avg = sum(values) / len(values)
+12 ['values', 'avg'] ['[102.5, 103.1, 101.8]', '102.46666666666665']
+14 max_val = max(values)
+14 ['values', 'avg', 'max_val'] ['[102.5, 103.1, 101.8]', '102.46666666666665', '103.1']
+15 min_val = min(values)
+15 ['values', 'avg', 'max_val', 'min_val'] ['[102.5, 103.1, 101.8]', '102.46666666666665', '103.1', '101.8']
+16 return avg, min_val, max_val
+16 ['values', 'avg', 'max_val', 'min_val'] ['[102.5, 103.1, 101.8]', '102.46666666666665', '103.1', '101.8']
+36 if filtered_readings:
+36 ['filtered_readings'] ['[98.99, 100.41499999999999, 98.23]']
+37 mean_pressure, _, _ = calculate_statistics(filtered_readings)
+37 ['filtered_readings'] ['[98.99, 100.41499999999999, 98.23]']
+10 if not values:
+10 ['values'] ['[98.99, 100.41499999999999, 98.23]']
+12 avg = sum(values) / len(values)
+12 ['values', 'avg'] ['[98.99, 100.41499999999999, 98.23]', '99.21166666666666']
+14 max_val = max(values)
+14 ['values', 'avg', 'max_val'] ['[98.99, 100.41499999999999, 98.23]', '99.21166666666666', '100.41499999999999']
+15 min_val = min(values)
+15 ['values', 'avg', 'max_val', 'min_val'] ['[98.99, 100.41499999999999, 98.23]', '99.21166666666666', '100.41499999999999', '98.23']
+16 return avg, min_val, max_val
+16 ['avg', 'max_val', 'min_val'] ['99.21166666666666', '100.41499999999999', '98.23']
+39 compensation = 1.05
+39 ['mean_pressure', 'compensation'] ['99.21166666666666', '1.05']
+40 result = mean_pressure * compensation
+40 ['mean_pressure', 'compensation', 'result'] ['99.21166666666666', '1.05', '104.17224999999999']
+45 return round(result, 2)
+45 ['result'] ['104.17224999999999']
+FUNCTION_RETURN 45 calculate_adjusted_pressure {'_type': 'float', '_value': 104.17}
+55 print(f"Result: {final_pressure}")
+55 ['final_pressure'] ['104.17']

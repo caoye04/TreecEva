@@ -1,0 +1,47 @@
+46
+product_rating
+---
+30 review_scores = analyze_reviews(product_reviews)
+30 ['product_reviews'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']"]
+4 sentiment_scores = []
+4 ['reviews', 'sentiment_scores'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[]']
+5 for review in reviews:
+5 ['reviews', 'sentiment_scores', 'review'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[]', "'This product is excellent and works great!'"]
+16 score = len(review) % 3 + 2
+16 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[]', "'This product is excellent and works great!'", '2']
+5 for review in reviews:
+5 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2]', "'Disappointed with the quality, wouldn't recommend.'", '2']
+16 score = len(review) % 3 + 2
+16 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2]', "'Disappointed with the quality, wouldn't recommend.'", '4']
+5 for review in reviews:
+5 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2, 4]', "'Perfect for my needs, very happy with purchase.'", '4']
+16 score = len(review) % 3 + 2
+16 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2, 4]', "'Perfect for my needs, very happy with purchase.'", '4']
+5 for review in reviews:
+5 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2, 4, 4]', "'Good value but shipping was slow.'", '4']
+16 score = len(review) % 3 + 2
+16 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2, 4, 4]', "'Good value but shipping was slow.'", '2']
+5 for review in reviews:
+5 ['reviews', 'sentiment_scores', 'review', 'score'] ["['This product is excellent and works great!', 'Disappointed with the quality, wouldn't recommend.', 'Perfect for my needs, very happy with purchase.', 'Good value but shipping was slow.']", '[2, 4, 4, 2]', "'Good value but shipping was slow.'", '2']
+19 return sentiment_scores
+19 ['sentiment_scores', 'score'] ['[2, 4, 4, 2]', '2']
+39 threshold = 3
+39 ['review_scores', 'threshold'] ['[2, 4, 4, 2]', '3']
+40 filtered_scores = [score for score in review_scores if score > threshold]
+40 ['score'] ['2']
+40 filtered_scores = [score for score in review_scores if score > threshold]
+40 ['score'] ['4']
+40 filtered_scores = [score for score in review_scores if score > threshold]
+40 ['score'] ['4']
+40 filtered_scores = [score for score in review_scores if score > threshold]
+40 ['score'] ['2']
+40 filtered_scores = [score for score in review_scores if score > threshold]
+40 ['review_scores', 'threshold', 'filtered_scores'] ['[2, 4, 4, 2]', '3', '[4, 4]']
+43 importance_weights = [0.5, 0.8]
+43 ['filtered_scores', 'importance_weights'] ['[4, 4]', '[0.5, 0.8]']
+46 product_rating = sum([(weight * score) for score, weight in zip(filtered_scores, importance_weights)])
+46 ['score', 'weight'] ['4', '0.5']
+46 product_rating = sum([(weight * score) for score, weight in zip(filtered_scores, importance_weights)])
+46 ['score', 'weight'] ['4', '0.8']
+46 product_rating = sum([(weight * score) for score, weight in zip(filtered_scores, importance_weights)])
+46 ['filtered_scores', 'importance_weights', 'product_rating'] ['[4, 4]', '[0.5, 0.8]', '5.2']

@@ -1,0 +1,349 @@
+Target: Find the value of variable priority_score after [line 79] executes
+
+[line 75]  message = "Important! Review the proposal before the deadline on Friday."
+Assign: message = 'Important! Review the proposal before the deadline on Friday.'
+[line 76]  settings = {"category": "critical", "filters": ["spam", "automated"], "time_settings": {"morning": 1.2, "afternoon": 1.0, "evening": 0.8}}
+Compute: {"category": "critical", "filters": ["spam", "automated"], "time_settings": {"morning": 1.2, "afternoon": 1.0, "evening": 0.8}} = {category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}}
+[line 79]  priority_score = calculate_priority(message, settings)
+Call function calculate_priority(message='Important! Review the proposal before the deadline on Friday.' (defined at [line 75]), settings={category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}} (defined at [line 76]))
+[line 9]  def calculate_priority(message, settings):
+Enter function calculate_priority: message='Important! Review the proposal before the deadline on Friday.' (message defined at [line 75]), settings={category: 'critical', filters: ['spam', 'automated'], time_settings: {morning: 1.2, afternoon: 1.0, evening: 0.8}} (settings defined at [line 76])
+  [line 11]  priority = 0
+  Assign: priority = 0
+  [line 14]  is_urgent = "urgent" in message.lower()
+  Compute: "urgent" in message.lower(), where message='Important! Review the proposal before the deadline on Friday.' (parameter message defined at [line 75]) = False
+  [line 15]  is_important = "important" in message.lower()
+  Compute: "important" in message.lower(), where message='Important! Review the proposal before the deadline on Friday.' (parameter message defined at [line 75]) = True
+  [line 16]  has_deadline = "deadline" in message.lower() or "due" in message.lower()
+  Compute: "deadline" in message.lower() or "due" in message.lower(), where message='Important! Review the proposal before the deadline on Friday.' (parameter message defined at [line 75]) = True
+  [line 19]  special_keywords = {"review": 5, "approve": 8, "reject": 7, "discuss": 3, "consider": 2}
+  Compute: {"review": 5, "approve": 8, "reject": 7, "discuss": 3, "consider": 2} = {review: 5, approve: 8, reject: 7, ...}
+  [line 20]  keyword_bonus = 0
+  Assign: keyword_bonus = 0
+  [line 21]  for keyword, value in special_keywords.items():
+  (Missing param: 'iter_var')
+  [line 22]  if keyword in message.lower():
+  Condition: True, entering 'if' block
+  [line 23]  keyword_bonus += value
+  Update: keyword_bonus changed from 0 (defined at defined at [line 20]) to 0+value = 5
+  [line 21]  for keyword, value in special_keywords.items():
+  (Missing param: 'iter_var')
+  [line 22]  if keyword in message.lower():
+  Condition: True, entering 'if' block
+... [Line 21] repeats 2 more times ...
+... [Line 21] repeats 2 more times ...
+  [line 21]  for keyword, value in special_keywords.items():
+  (Missing param: 'iter_var')
+  [line 22]  if keyword in message.lower():
+  Condition: True, entering 'if' block
+  [line 21]  for keyword, value in special_keywords.items():
+  Loop End: Iteration finished
+  [line 26]  base_score = len(message) // 10
+  Compute: len(message) // 10, where message='Important! Review the proposal before the deadline on Friday.' (parameter message defined at [line 75]) = 6
+  [line 29]  if is_urgent and is_important:
+  Condition: True, entering 'if' block
+  [line 31]  elif is_urgent:
+  'elif' Condition: True, entering block
+  [line 33]  elif is_important:
+  'elif' Condition: True, entering block
+  [line 34]  priority = base_score * 1.5
+  Compute: base_score * 1.5, where base_score=6 (defined at [line 26]) = 9.0
+  [line 39]  if has_deadline:
+  Condition: True, entering 'if' block
+  [line 40]  priority += 15
+  Update: priority changed from 9.0 (defined at defined at [line 34]) to 9.0+15 = 24.0
+  [line 44]  if category == "critical":
+  Condition: True, entering 'if' block
+  [line 45]  priority *= 2
+  Update: priority changed from 24.0 (defined at defined at [line 40]) to 24.0*2 = 48.0
+  [line 50]  time_settings = settings.get("time_settings", {})
+  (Missing param: 'func_name')
+  [line 51]  if time_settings:
+  Condition: True, entering 'if' block
+  [line 57]  question_marks = count_occurrences(message, "?")
+  Call function count_occurrences(message='Important! Review the proposal before the deadline on Friday.' (parameter message defined at [line 75]), "?")
+  [line 1]  def count_occurrences(text, target_chars):
+  Enter function count_occurrences: text='Important! Review the proposal before the deadline on Friday.' (message defined at [line 75]), target_chars='?'
+    [line 3]  count = 0
+    Assign: count = 0
+    [line 4]  for char in text.lower():
+    Loop Start: char takes its first value 'i'
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'm' (iteration 2)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+... [Line 4] repeats 120 more times ...
+... [Line 4] repeats 120 more times ...
+    [line 7]  return count
+    Return: count=0 (defined at [line 3])
+  Function count_occurrences returns 0
+  [line 58]  exclamation_marks = count_occurrences(message, "!")
+  Call function count_occurrences(message='Important! Review the proposal before the deadline on Friday.' (parameter message defined at [line 75]), "!")
+  [line 1]  def count_occurrences(text, target_chars):
+  Enter function count_occurrences: text='Important! Review the proposal before the deadline on Friday.' (message defined at [line 75]), target_chars='!'
+    [line 3]  count = 0
+    Assign: count = 0
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'i' (iteration 63)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'm' (iteration 64)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'p' (iteration 65)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'o' (iteration 66)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'r' (iteration 67)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 't' (iteration 68)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'a' (iteration 69)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'n' (iteration 70)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 't' (iteration 71)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now '!' (iteration 72)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 6]  count += 1
+    Update: count changed from 0 (defined at defined at [line 3]) to 0+1 = 1
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 73)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'r' (iteration 74)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 75)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'v' (iteration 76)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'i' (iteration 77)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 78)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'w' (iteration 79)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 80)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 't' (iteration 81)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'h' (iteration 82)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 83)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 84)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'p' (iteration 85)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'r' (iteration 86)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'o' (iteration 87)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'p' (iteration 88)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'o' (iteration 89)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 's' (iteration 90)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'a' (iteration 91)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'l' (iteration 92)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 93)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'b' (iteration 94)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 95)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'f' (iteration 96)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'o' (iteration 97)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'r' (iteration 98)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 99)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 100)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 't' (iteration 101)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'h' (iteration 102)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 103)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 104)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'd' (iteration 105)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 106)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'a' (iteration 107)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'd' (iteration 108)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'l' (iteration 109)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'i' (iteration 110)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'n' (iteration 111)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'e' (iteration 112)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 113)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'o' (iteration 114)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'n' (iteration 115)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now ' ' (iteration 116)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'f' (iteration 117)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'r' (iteration 118)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'i' (iteration 119)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'd' (iteration 120)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'a' (iteration 121)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now 'y' (iteration 122)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now '.' (iteration 123)
+    [line 5]  if char in target_chars:
+    Condition: True, entering 'if' block
+    [line 4]  for char in text.lower():
+    Loop Iteration: char is now '.' (iteration 124)
+    [line 7]  return count
+    Return: count=1 (defined at [line 6])
+  Function count_occurrences returns 1
+  [line 61]  priority += exclamation_marks * 5
+  Update: priority changed from ? (defined at defined at [line 45]) to ?+exclamation_marks * 5 = 53.0
+  [line 62]  priority += question_marks * 2
+  Update: priority changed from 53.0 (defined at defined at [line 61]) to 53.0+question_marks * 2 = 53.0
+  [line 65]  priority += keyword_bonus
+  Update: priority changed from 53.0 (defined at defined at [line 62]) to 53.0+keyword_bonus = 58.0
+  [line 72]  return round(priority)
+  Return: round(priority)
+Function calculate_priority returns 58
+
+Answer: priority_score = ? (last updated on defined at [line 79])

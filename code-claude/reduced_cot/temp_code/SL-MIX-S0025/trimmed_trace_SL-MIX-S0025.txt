@@ -1,0 +1,43 @@
+21
+inventory_value
+---
+4 price_list = {'apple': 1.25, 'banana': 0.75, 'orange': 1.50, 'grape': 2.00}
+4 ['price_list'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}']
+5 inventory = {'apple': 10, 'banana': 15, 'grape': 5}
+5 ['price_list', 'inventory'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 10, banana: 15, grape: 5}']
+8 sales_data = {'apple': 3, 'banana': 7, 'orange': 2}
+8 ['price_list', 'inventory', 'sales_data'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 10, banana: 15, grape: 5}', '{apple: 3, banana: 7, orange: 2}']
+11 for item, quantity in sales_data.items():
+11 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 10, banana: 15, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'apple'", '3']
+12 if item in inventory:
+12 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 10, banana: 15, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'apple'", '3']
+13 inventory[item] = max(0, inventory[item] - quantity)
+13 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 15, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'apple'", '3']
+11 for item, quantity in sales_data.items():
+11 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 15, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'banana'", '7']
+12 if item in inventory:
+12 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 15, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'banana'", '7']
+13 inventory[item] = max(0, inventory[item] - quantity)
+13 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 8, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'banana'", '7']
+11 for item, quantity in sales_data.items():
+11 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 8, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'orange'", '2']
+12 if item in inventory:
+12 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 8, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'orange'", '2']
+11 for item, quantity in sales_data.items():
+11 ['price_list', 'inventory', 'sales_data', 'item', 'quantity'] ['{apple: 1.25, banana: 0.75, orange: 1.5, ...}', '{apple: 7, banana: 8, grape: 5}', '{apple: 3, banana: 7, orange: 2}', "'orange'", '2']
+16 inventory_value = sum(item_price * inventory.get(item, 0) for item, item_price in price_list.items())
+16 [] []
+16 inventory_value = sum(item_price * inventory.get(item, 0) for item, item_price in price_list.items())
+16 ['item', 'item_price'] ["'apple'", '1.25']
+16 inventory_value = sum(item_price * inventory.get(item, 0) for item, item_price in price_list.items())
+16 ['item', 'item_price'] ["'banana'", '0.75']
+16 inventory_value = sum(item_price * inventory.get(item, 0) for item, item_price in price_list.items())
+16 ['item', 'item_price'] ["'orange'", '1.5']
+16 inventory_value = sum(item_price * inventory.get(item, 0) for item, item_price in price_list.items())
+16 ['item', 'item_price'] ["'grape'", '2.0']
+16 inventory_value = sum(item_price * inventory.get(item, 0) for item, item_price in price_list.items())
+16 ['item', 'item_price'] ["'grape'", '2.0']
+20 print(f"Daily sales: ${daily_sales:.2f}")
+20 ['inventory_value'] ['24.75']
+21 print(f"Remaining inventory value: ${inventory_value:.2f}")
+21 ['inventory_value'] ['24.75']

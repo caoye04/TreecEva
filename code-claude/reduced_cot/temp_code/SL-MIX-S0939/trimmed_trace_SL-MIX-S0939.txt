@@ -1,0 +1,265 @@
+88
+final_priority
+---
+PARAM_MAPPING {'packets': {'actual_var': 'network_packets', 'value': [{'protocol': 'TCP', 'data': 'HELLO', 'checksum': 500, 'size': 20, 'ttl': 64, 'priority': 5}, {'protocol': 'UDP', 'data': 'WORLD', 'checksum': 25, 'size': 15, 'ttl': 32, 'priority': 3}, {'protocol': 'ICMP', 'data': 'PING!', 'checksum': 125, 'size': 12, 'ttl': 128, 'priority': 8}, {'protocol': 'TCP', 'data': 'TEST1', 'checksum': 20, 'size': 25, 'ttl': 64, 'urgent': True}, {'protocol': 'HTTP', 'data': 'GET /', 'checksum': 30, 'size': 30, 'ttl': 64, 'priority': 2}, {'protocol': 'UDP', 'data': 'DATA!', 'checksum': 125, 'size': 10, 'ttl': 16, 'priority': 4, 'valid': False}]}, 'target_protocols': {'actual_var': 'target_protocols', 'value': ['TCP', 'UDP', 'ICMP']}}
+FUNCTION_ENTER 38 calculate_priority def calculate_priority(packets, target_protocols):
+38 ['packets', 'target_protocols'] [{'_type': 'list', '_items': [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'TCP'}, 'data': {'_type': 'str', '_value': 'HELLO'}, 'checksum': {'_type': 'int', '_value': 500}, 'size': {'_type': 'int', '_value': 20}, 'ttl': {'_type': 'int', '_value': 64}}, '_len': 6}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'UDP'}, 'data': {'_type': 'str', '_value': 'WORLD'}, 'checksum': {'_type': 'int', '_value': 25}, 'size': {'_type': 'int', '_value': 15}, 'ttl': {'_type': 'int', '_value': 32}}, '_len': 6}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'ICMP'}, 'data': {'_type': 'str', '_value': 'PING!'}, 'checksum': {'_type': 'int', '_value': 125}, 'size': {'_type': 'int', '_value': 12}, 'ttl': {'_type': 'int', '_value': 128}}, '_len': 6}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'TCP'}, 'data': {'_type': 'str', '_value': 'TEST1'}, 'checksum': {'_type': 'int', '_value': 20}, 'size': {'_type': 'int', '_value': 25}, 'ttl': {'_type': 'int', '_value': 64}}, '_len': 6}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'HTTP'}, 'data': {'_type': 'str', '_value': 'GET /'}, 'checksum': {'_type': 'int', '_value': 30}, 'size': {'_type': 'int', '_value': 30}, 'ttl': {'_type': 'int', '_value': 64}}, '_len': 6}, {'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'UDP'}, 'data': {'_type': 'str', '_value': 'DATA!'}, 'checksum': {'_type': 'int', '_value': 125}, 'size': {'_type': 'int', '_value': 10}, 'ttl': {'_type': 'int', '_value': 16}}, '_len': 7}], '_len': 6}, {'_type': 'list', '_items': [{'_type': 'str', '_value': 'TCP'}, {'_type': 'str', '_value': 'UDP'}, {'_type': 'str', '_value': 'ICMP'}], '_len': 3}]
+40 valid_packets = []
+40 ['packets', 'target_protocols', 'valid_packets'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]']
+41 invalid_checksum = 0
+41 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '0']
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '0', "{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}"]
+46 if packet['size'] < 10 or packet['ttl'] <= 0:
+46 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '0', "{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}"]
+49 if validate_packet(packet, target_protocols):
+49 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '0', "{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}"]
+9 if packet['protocol'] not in protocols:
+9 ['packet', 'protocols'] ["{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}", "['TCP', 'UDP', 'ICMP']"]
+11 checksum = calculate_checksum(packet)
+11 ['packet', 'protocols'] ["{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}", "['TCP', 'UDP', 'ICMP']"]
+PARAM_MAPPING {'packet': {'actual_var': 'packet', 'value': {'protocol': 'TCP', 'data': 'HELLO', 'checksum': 500, 'size': 20, 'ttl': 64, 'priority': 5}}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'TCP'}, 'data': {'_type': 'str', '_value': 'HELLO'}, 'checksum': {'_type': 'int', '_value': 500}, 'size': {'_type': 'int', '_value': 20}, 'ttl': {'_type': 'int', '_value': 64}}, '_len': 6}]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 [] []
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'H'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'E'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'L'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'L'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'O'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'O'"]
+4 multiplier = len(packet['data']) % 4 + 1
+4 ['packet', 'base', 'multiplier'] ["{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}", '372', '2']
+5 return (base * multiplier) % 256
+5 ['packet', 'base', 'multiplier'] ["{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}", '372', '2']
+FUNCTION_RETURN 5 calculate_checksum {'_type': 'int', '_value': 232}
+12 return packet['checksum'] == checksum
+12 ['packet', 'protocols', 'checksum'] ["{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}", "['TCP', 'UDP', 'ICMP']", '232']
+52 invalid_checksum += 1
+52 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '1', "{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}"]
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '1', "{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}"]
+46 if packet['size'] < 10 or packet['ttl'] <= 0:
+46 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '1', "{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}"]
+49 if validate_packet(packet, target_protocols):
+49 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '1', "{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}"]
+9 if packet['protocol'] not in protocols:
+9 ['packet', 'protocols'] ["{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}", "['TCP', 'UDP', 'ICMP']"]
+11 checksum = calculate_checksum(packet)
+11 ['packet', 'protocols'] ["{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}", "['TCP', 'UDP', 'ICMP']"]
+PARAM_MAPPING {'packet': {'actual_var': 'packet', 'value': {'protocol': 'UDP', 'data': 'WORLD', 'checksum': 25, 'size': 15, 'ttl': 32, 'priority': 3}}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'UDP'}, 'data': {'_type': 'str', '_value': 'WORLD'}, 'checksum': {'_type': 'int', '_value': 25}, 'size': {'_type': 'int', '_value': 15}, 'ttl': {'_type': 'int', '_value': 32}}, '_len': 6}]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 [] []
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'W'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'O'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'R'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'L'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'D'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'D'"]
+4 multiplier = len(packet['data']) % 4 + 1
+4 ['packet', 'base', 'multiplier'] ["{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}", '392', '2']
+5 return (base * multiplier) % 256
+5 ['packet', 'base', 'multiplier'] ["{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}", '392', '2']
+FUNCTION_RETURN 5 calculate_checksum {'_type': 'int', '_value': 16}
+12 return packet['checksum'] == checksum
+12 ['packet', 'protocols', 'checksum'] ["{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}", "['TCP', 'UDP', 'ICMP']", '16']
+52 invalid_checksum += 1
+52 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '2', "{protocol: 'UDP', data: 'WORLD', checksum: 25, ...}"]
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '2', "{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}"]
+46 if packet['size'] < 10 or packet['ttl'] <= 0:
+46 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '2', "{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}"]
+49 if validate_packet(packet, target_protocols):
+49 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '2', "{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}"]
+9 if packet['protocol'] not in protocols:
+9 ['packet', 'protocols'] ["{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}", "['TCP', 'UDP', 'ICMP']"]
+11 checksum = calculate_checksum(packet)
+11 ['packet', 'protocols'] ["{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}", "['TCP', 'UDP', 'ICMP']"]
+PARAM_MAPPING {'packet': {'actual_var': 'packet', 'value': {'protocol': 'ICMP', 'data': 'PING!', 'checksum': 125, 'size': 12, 'ttl': 128, 'priority': 8}}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'ICMP'}, 'data': {'_type': 'str', '_value': 'PING!'}, 'checksum': {'_type': 'int', '_value': 125}, 'size': {'_type': 'int', '_value': 12}, 'ttl': {'_type': 'int', '_value': 128}}, '_len': 6}]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 [] []
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'P'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'I'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'N'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'G'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'!'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'!'"]
+4 multiplier = len(packet['data']) % 4 + 1
+4 ['packet', 'base', 'multiplier'] ["{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}", '335', '2']
+5 return (base * multiplier) % 256
+5 ['packet', 'base', 'multiplier'] ["{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}", '335', '2']
+FUNCTION_RETURN 5 calculate_checksum {'_type': 'int', '_value': 158}
+12 return packet['checksum'] == checksum
+12 ['packet', 'protocols', 'checksum'] ["{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}", "['TCP', 'UDP', 'ICMP']", '158']
+52 invalid_checksum += 1
+52 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '3', "{protocol: 'ICMP', data: 'PING!', checksum: 125, ...}"]
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '3', "{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}"]
+46 if packet['size'] < 10 or packet['ttl'] <= 0:
+46 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '3', "{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}"]
+49 if validate_packet(packet, target_protocols):
+49 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '3', "{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}"]
+9 if packet['protocol'] not in protocols:
+9 ['packet', 'protocols'] ["{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}", "['TCP', 'UDP', 'ICMP']"]
+11 checksum = calculate_checksum(packet)
+11 ['packet', 'protocols'] ["{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}", "['TCP', 'UDP', 'ICMP']"]
+PARAM_MAPPING {'packet': {'actual_var': 'packet', 'value': {'protocol': 'TCP', 'data': 'TEST1', 'checksum': 20, 'size': 25, 'ttl': 64, 'urgent': True}}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'TCP'}, 'data': {'_type': 'str', '_value': 'TEST1'}, 'checksum': {'_type': 'int', '_value': 20}, 'size': {'_type': 'int', '_value': 25}, 'ttl': {'_type': 'int', '_value': 64}}, '_len': 6}]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 [] []
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'T'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'E'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'S'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'T'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'1'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'1'"]
+4 multiplier = len(packet['data']) % 4 + 1
+4 ['packet', 'base', 'multiplier'] ["{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}", '369', '2']
+5 return (base * multiplier) % 256
+5 ['packet', 'base', 'multiplier'] ["{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}", '369', '2']
+FUNCTION_RETURN 5 calculate_checksum {'_type': 'int', '_value': 226}
+12 return packet['checksum'] == checksum
+12 ['packet', 'protocols', 'checksum'] ["{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}", "['TCP', 'UDP', 'ICMP']", '226']
+52 invalid_checksum += 1
+52 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '4', "{protocol: 'TCP', data: 'TEST1', checksum: 20, ...}"]
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '4', "{protocol: 'HTTP', data: 'GET /', checksum: 30, ...}"]
+46 if packet['size'] < 10 or packet['ttl'] <= 0:
+46 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '4', "{protocol: 'HTTP', data: 'GET /', checksum: 30, ...}"]
+49 if validate_packet(packet, target_protocols):
+49 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '4', "{protocol: 'HTTP', data: 'GET /', checksum: 30, ...}"]
+9 if packet['protocol'] not in protocols:
+9 ['packet', 'protocols'] ["{protocol: 'HTTP', data: 'GET /', checksum: 30, ...}", "['TCP', 'UDP', 'ICMP']"]
+10 return False
+10 ['packet', 'protocols'] ["{protocol: 'HTTP', data: 'GET /', checksum: 30, ...}", "['TCP', 'UDP', 'ICMP']"]
+52 invalid_checksum += 1
+52 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '5', "{protocol: 'HTTP', data: 'GET /', checksum: 30, ...}"]
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '5', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+46 if packet['size'] < 10 or packet['ttl'] <= 0:
+46 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '5', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+49 if validate_packet(packet, target_protocols):
+49 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '5', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+9 if packet['protocol'] not in protocols:
+9 ['packet', 'protocols'] ["{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}", "['TCP', 'UDP', 'ICMP']"]
+11 checksum = calculate_checksum(packet)
+11 ['packet'] ["{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+PARAM_MAPPING {'packet': {'actual_var': 'packet', 'value': {'protocol': 'UDP', 'data': 'DATA!', 'checksum': 125, 'size': 10, 'ttl': 16, 'priority': 4, 'valid': False}}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'dict', '_items': {'protocol': {'_type': 'str', '_value': 'UDP'}, 'data': {'_type': 'str', '_value': 'DATA!'}, 'checksum': {'_type': 'int', '_value': 125}, 'size': {'_type': 'int', '_value': 10}, 'ttl': {'_type': 'int', '_value': 16}}, '_len': 7}]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 [] []
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'D'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'A'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'T'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'A'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'!'"]
+3 base = sum(ord(c) for c in packet['data'][:5])
+3 ['c'] ["'!'"]
+4 multiplier = len(packet['data']) % 4 + 1
+4 ['packet', 'base', 'multiplier'] ["{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}", '315', '2']
+5 return (base * multiplier) % 256
+5 ['packet', 'base', 'multiplier'] ["{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}", '315', '2']
+FUNCTION_RETURN 5 calculate_checksum {'_type': 'int', '_value': 118}
+12 return packet['checksum'] == checksum
+12 ['packet', 'checksum'] ["{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}", '118']
+52 invalid_checksum += 1
+52 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '6', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+44 for packet in packets:
+44 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '6', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+55 protocol_counts, _ = analyze_traffic(valid_packets, target_protocols)
+55 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '6', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}"]
+16 protocol_counts = {p: 0 for p in target_protocols}
+16 ['packets', 'target_protocols', 'p'] ['[]', "['TCP', 'UDP', 'ICMP']", "'TCP'"]
+16 protocol_counts = {p: 0 for p in target_protocols}
+16 ['packets', 'target_protocols', 'p'] ['[]', "['TCP', 'UDP', 'ICMP']", "'UDP'"]
+16 protocol_counts = {p: 0 for p in target_protocols}
+16 ['packets', 'target_protocols', 'p'] ['[]', "['TCP', 'UDP', 'ICMP']", "'ICMP'"]
+16 protocol_counts = {p: 0 for p in target_protocols}
+16 ['packets', 'target_protocols', 'protocol_counts'] ['[]', "['TCP', 'UDP', 'ICMP']", '{TCP: 0, UDP: 0, ICMP: 0}']
+17 total_size = 0
+17 ['packets', 'target_protocols', 'protocol_counts', 'total_size'] ['[]', "['TCP', 'UDP', 'ICMP']", '{TCP: 0, UDP: 0, ICMP: 0}', '0']
+18 for packet in packets:
+18 ['packets', 'target_protocols', 'protocol_counts', 'total_size'] ['[]', "['TCP', 'UDP', 'ICMP']", '{TCP: 0, UDP: 0, ICMP: 0}', '0']
+24 traffic_density = total_size / max(1, sum(protocol_counts.values()))
+24 ['packets', 'target_protocols', 'protocol_counts', 'total_size', 'traffic_density'] ['[]', "['TCP', 'UDP', 'ICMP']", '{TCP: 0, UDP: 0, ICMP: 0}', '0', '0.0']
+25 return protocol_counts, traffic_density
+25 ['packets', 'target_protocols', 'protocol_counts', 'traffic_density'] ['[]', "['TCP', 'UDP', 'ICMP']", '{TCP: 0, UDP: 0, ICMP: 0}', '0.0']
+56 priorities = extract_priorities(valid_packets)
+56 ['packets', 'target_protocols', 'valid_packets', 'invalid_checksum', 'packet', 'protocol_counts'] ["[{protocol: 'TCP', data: 'HELLO', checksum: 500, ...}, {protocol: 'UDP', data: 'WORLD', checksum: 25, ...}, {protocol: 'ICMP', data: 'PING!', checksum: 125, ...}, {protocol: 'TCP', data: 'TEST1', checksum: 20, ...}, {protocol: 'HTTP', data: 'GET /', checksum: 30, ...}, ...]", "['TCP', 'UDP', 'ICMP']", '[]', '6', "{protocol: 'UDP', data: 'DATA!', checksum: 125, ...}", '{TCP: 0, UDP: 0, ICMP: 0}']
+PARAM_MAPPING {'packets': {'actual_var': 'valid_packets', 'value': []}}
+FUNCTION_ENTER 27 extract_priorities def extract_priorities(packets, valid_only=True):
+27 ['packets', 'valid_only'] [{'_type': 'list', '_items': [], '_len': 0}, {'_type': 'bool', '_value': True}]
+29 priorities = []
+29 ['packets', 'priorities'] ['[]', '[]']
+30 for packet in packets:
+30 ['packets', 'priorities'] ['[]', '[]']
+36 return priorities
+36 ['priorities'] ['[]']
+FUNCTION_RETURN 36 extract_priorities {'_type': 'list', '_items': [], '_len': 0}
+59 weights = {'TCP': 2, 'UDP': 1, 'ICMP': 3}
+59 ['target_protocols', 'valid_packets', 'invalid_checksum', 'priorities', 'protocol_counts', 'weights'] ["['TCP', 'UDP', 'ICMP']", '[]', '6', '[]', '{TCP: 0, UDP: 0, ICMP: 0}', '{TCP: 2, UDP: 1, ICMP: 3}']
+60 protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+60 ['protocol_counts', 'weights'] ['{TCP: 0, UDP: 0, ICMP: 0}', '{TCP: 2, UDP: 1, ICMP: 3}']
+60 protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+60 ['p', 'protocol_counts', 'weights'] ["'TCP'", '{TCP: 0, UDP: 0, ICMP: 0}', '{TCP: 2, UDP: 1, ICMP: 3}']
+60 protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+60 ['p', 'protocol_counts', 'weights'] ["'UDP'", '{TCP: 0, UDP: 0, ICMP: 0}', '{TCP: 2, UDP: 1, ICMP: 3}']
+60 protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+60 ['p', 'protocol_counts', 'weights'] ["'ICMP'", '{TCP: 0, UDP: 0, ICMP: 0}', '{TCP: 2, UDP: 1, ICMP: 3}']
+60 protocol_score = sum(protocol_counts.get(p, 0) * weights.get(p, 0) for p in target_protocols)
+60 ['p', 'protocol_counts', 'weights'] ["'ICMP'", '{TCP: 0, UDP: 0, ICMP: 0}', '{TCP: 2, UDP: 1, ICMP: 3}']
+63 if priorities:
+63 ['valid_packets', 'invalid_checksum', 'priorities', 'protocol_score'] ['[]', '6', '[]', '0']
+68 avg_priority = 0
+68 ['valid_packets', 'invalid_checksum', 'protocol_score', 'avg_priority'] ['[]', '6', '0', '0']
+76 base_score = protocol_score * 5
+76 ['valid_packets', 'invalid_checksum', 'protocol_score', 'base_score', 'avg_priority'] ['[]', '6', '0', '0', '0']
+77 priority_factor = max(1, avg_priority / 10)
+77 ['valid_packets', 'invalid_checksum', 'base_score', 'priority_factor', 'avg_priority'] ['[]', '6', '0', '1', '0']
+78 security_adjustment = min(invalid_checksum, 5) * 3
+78 ['valid_packets', 'invalid_checksum', 'base_score', 'priority_factor', 'security_adjustment'] ['[]', '6', '0', '1', '15']
+81 ttl_values = [p['ttl'] for p in valid_packets]
+81 ['valid_packets', 'base_score', 'priority_factor', 'security_adjustment', 'ttl_values'] ['[]', '0', '1', '15', '[]']
+82 if ttl_values:
+82 ['base_score', 'priority_factor', 'security_adjustment', 'ttl_values'] ['0', '1', '15', '[]']
+88 final_priority = int(base_score * priority_factor) - security_adjustment
+88 ['base_score', 'priority_factor', 'security_adjustment', 'final_priority'] ['0', '1', '15', '-15']
+90 return final_priority
+90 ['final_priority'] ['-15']
+FUNCTION_RETURN 90 calculate_priority {'_type': 'int', '_value': -15}

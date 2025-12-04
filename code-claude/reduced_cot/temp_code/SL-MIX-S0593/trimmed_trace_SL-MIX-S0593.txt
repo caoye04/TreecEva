@@ -1,0 +1,87 @@
+84
+final_priority
+---
+75 ticket = "TCKT-1234|4|database|urgent|John Doe"
+75 ['ticket'] ["'TCKT-1234|4|database|urgent|John Doe'"]
+76 ticket_data = extract_metadata(ticket)
+76 ['ticket'] ["'TCKT-1234|4|database|urgent|John Doe'"]
+PARAM_MAPPING {'ticket': {'actual_var': 'ticket', 'value': 'TCKT-1234|4|database|urgent|John Doe'}}
+FUNCTION_ENTER 11 extract_metadata def extract_metadata(ticket):
+11 ['ticket'] [{'_type': 'str', '_value': 'TCKT-1234|4|database|urgent|John Doe'}]
+13 metadata = {}
+13 ['ticket', 'metadata'] ["'TCKT-1234|4|database|urgent|John Doe'", '{}']
+14 fields = ticket.split('|')
+14 ['ticket', 'metadata', 'fields'] ["'TCKT-1234|4|database|urgent|John Doe'", '{}', "['TCKT-1234', '4', 'database', 'urgent', 'John Doe']"]
+15 if len(fields) >= 3:
+15 ['metadata', 'fields'] ['{}', "['TCKT-1234', '4', 'database', 'urgent', 'John Doe']"]
+16 metadata['id'] = fields[0]
+16 ['metadata', 'fields'] ["{id: 'TCKT-1234'}", "['TCKT-1234', '4', 'database', 'urgent', 'John Doe']"]
+17 metadata['severity'] = int(fields[1])
+17 ['metadata', 'fields'] ["{id: 'TCKT-1234', severity: 4}", "['TCKT-1234', '4', 'database', 'urgent', 'John Doe']"]
+18 metadata['component'] = fields[2]
+18 ['metadata', 'fields'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}", "['TCKT-1234', '4', 'database', 'urgent', 'John Doe']"]
+19 return metadata
+19 ['metadata'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}"]
+FUNCTION_RETURN 19 extract_metadata {'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'TCKT-1234'}, 'severity': {'_type': 'int', '_value': 4}, 'component': {'_type': 'str', '_value': 'database'}}, '_len': 3}
+84 final_priority = calculate_priority(ticket_data)
+84 ['ticket_data'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}"]
+PARAM_MAPPING {'ticket_data': {'actual_var': 'ticket_data', 'value': {'id': 'TCKT-1234', 'severity': 4, 'component': 'database'}}}
+FUNCTION_ENTER 21 calculate_priority def calculate_priority(ticket_data):
+21 ['ticket_data'] [{'_type': 'dict', '_items': {'id': {'_type': 'str', '_value': 'TCKT-1234'}, 'severity': {'_type': 'int', '_value': 4}, 'component': {'_type': 'str', '_value': 'database'}}, '_len': 3}]
+23 base_score = 0
+23 ['ticket_data', 'base_score'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}", '0']
+24 severity_map = {1: 5, 2: 15, 3: 30, 4: 60, 5: 100}
+24 ['ticket_data', 'base_score', 'severity_map'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}", '0', '{1: 5, 2: 15, 3: 30, ...}']
+5 error_counts = Counter()
+5 ['logs', 'error_counts'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{}']
+6 for entry in logs:
+6 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{}', "'NETWORK:ERROR:Connection timeout'"]
+7 if 'ERROR' in entry:
+7 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{}', "'NETWORK:ERROR:Connection timeout'"]
+8 error_counts[entry.split(':')[0]] += 1
+8 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{NETWORK: 1}', "'NETWORK:ERROR:Connection timeout'"]
+6 for entry in logs:
+6 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{NETWORK: 1}', "'DATABASE:ERROR:Query failed'"]
+7 if 'ERROR' in entry:
+7 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{NETWORK: 1}', "'DATABASE:ERROR:Query failed'"]
+8 error_counts[entry.split(':')[0]] += 1
+8 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{NETWORK: 1, DATABASE: 1}', "'DATABASE:ERROR:Query failed'"]
+6 for entry in logs:
+6 ['logs', 'error_counts', 'entry'] ["['NETWORK:ERROR:Connection timeout', 'DATABASE:ERROR:Query failed']", '{NETWORK: 1, DATABASE: 1}', "'DATABASE:ERROR:Query failed'"]
+9 return error_counts
+9 ['error_counts'] ['{NETWORK: 1, DATABASE: 1}']
+42 severity = ticket_data['severity']
+42 ['ticket_data', 'base_score', 'severity_map', 'component_weights', 'severity'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}", '0', '{1: 5, 2: 15, 3: 30, ...}', '{network: 1.2, database: 1.5, security: 2.0, ...}', '4']
+43 component = ticket_data['component']
+43 ['ticket_data', 'base_score', 'severity_map', 'component_weights', 'severity', 'component'] ["{id: 'TCKT-1234', severity: 4, component: 'database'}", '0', '{1: 5, 2: 15, 3: 30, ...}', '{network: 1.2, database: 1.5, security: 2.0, ...}', '4', "'database'"]
+50 if component in ('network', 'security'):
+50 ['base_score', 'severity_map', 'component_weights', 'severity', 'component'] ['0', '{1: 5, 2: 15, 3: 30, ...}', '{network: 1.2, database: 1.5, security: 2.0, ...}', '4', "'database'"]
+52 elif component == 'database':
+52 ['base_score', 'severity_map', 'component_weights', 'severity', 'component'] ['0', '{1: 5, 2: 15, 3: 30, ...}', '{network: 1.2, database: 1.5, security: 2.0, ...}', '4', "'database'"]
+56 real_severity = severity_map.get(severity, 0)
+56 ['base_score', 'severity_map', 'component_weights', 'severity', 'component', 'real_severity'] ['0', '{1: 5, 2: 15, 3: 30, ...}', '{network: 1.2, database: 1.5, security: 2.0, ...}', '4', "'database'", '60']
+57 component_factor = component_weights[component]
+57 ['base_score', 'component_weights', 'severity', 'component', 'real_severity', 'component_factor'] ['0', '{network: 1.2, database: 1.5, security: 2.0, ...}', '4', "'database'", '60', '1.5']
+58 base_score = real_severity * component_factor
+58 ['base_score', 'severity', 'real_severity', 'component_factor'] ['90.0', '4', '60', '1.5']
+62 if severity > 3:
+62 ['base_score', 'severity'] ['90.0', '4']
+67 impact_factors = (1.0, 0.8, 1.2, 0.9, 1.5)
+67 ['base_score', 'severity', 'impact_factors'] ['90.0', '4', '(1.0, 0.8, 1.2, 0.9, 1.5)']
+68 selected_impacts = {0, 2, 4} if severity > 3 else {1, 3}
+68 ['base_score', 'severity', 'selected_impacts', 'impact_factors'] ['90.0', '4', '{0, 2, 4}', '(1.0, 0.8, 1.2, 0.9, 1.5)']
+69 final_factor = sum(impact_factors[i] for i in selected_impacts) / len(selected_impacts)
+69 ['impact_factors'] ['(1.0, 0.8, 1.2, 0.9, 1.5)']
+69 final_factor = sum(impact_factors[i] for i in selected_impacts) / len(selected_impacts)
+69 ['i', 'impact_factors'] ['0', '(1.0, 0.8, 1.2, 0.9, 1.5)']
+69 final_factor = sum(impact_factors[i] for i in selected_impacts) / len(selected_impacts)
+69 ['i', 'impact_factors'] ['2', '(1.0, 0.8, 1.2, 0.9, 1.5)']
+69 final_factor = sum(impact_factors[i] for i in selected_impacts) / len(selected_impacts)
+69 ['i', 'impact_factors'] ['4', '(1.0, 0.8, 1.2, 0.9, 1.5)']
+69 final_factor = sum(impact_factors[i] for i in selected_impacts) / len(selected_impacts)
+69 ['i', 'impact_factors'] ['4', '(1.0, 0.8, 1.2, 0.9, 1.5)']
+71 priority_value = round(base_score * final_factor)
+71 ['base_score', 'final_factor', 'priority_value'] ['90.0', '1.2333333333333334', '111']
+72 return priority_value
+72 ['priority_value'] ['111']
+FUNCTION_RETURN 72 calculate_priority {'_type': 'int', '_value': 111}

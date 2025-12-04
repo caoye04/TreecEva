@@ -1,0 +1,74 @@
+Target: Find the value of variable target_hash after [line 59] executes
+
+[line 33]  base_signal = [42, -17, 28, 13, -5, 104, 76, -42, 19, 11]
+Compute: [42, -17, 28, 13, -5, 104, 76, -42, 19, 11] = [42, -17, 28, 13, -5, ...]
+[line 34]  signal_strength = [x for x in base_signal if x > 0]  # Only positive values matter
+Compute: [x for x in base_signal if x > 0]  # Only positive values matter, where x=42 (an unknown source), base_signal=[42, -17, 28, 13, -5, ...] (defined at [line 33]) = ?
+[line 37]  noise_factors = [3, 7, 2, 9, 4]
+Compute: [3, 7, 2, 9, 4] = [3, 7, 2, 9, 4]
+[line 38]  primary_noise = noise_factors[2]  # Only this value is relevant
+Compute: noise_factors[2]  # Only this value is relevant, where noise_factors=[3, 7, 2, 9, 4] (defined at [line 37]) = 2
+[line 8]  def analyze_frequencies(signal):
+Enter function analyze_frequencies: signal=[42, -17, 28, 13, -5, ...] (base_signal defined at [line 33])
+  [line 10]  freq_counter = Counter(signal)
+  Call function Counter(signal=[42, -17, 28, 13, -5, ...] (parameter signal defined at [line 33]))
+  [line 11]  return freq_counter.most_common(3)
+  Return: freq_counter.most_common(3)
+Function analyze_frequencies returns [(42, 1), (-17, 1), (28, 1)]
+[line 13]  def filter_noise(data, threshold):
+Enter function filter_noise: data=[42, -17, 28, 13, -5, ...] (base_signal defined at [line 33]), threshold=10
+  [line 15]  return [x for x in data if abs(x) > threshold]
+  Return: [x for x in data if abs(x) > threshold]
+Function filter_noise returns [42, -17, 28, 13, 104, ...]
+[line 50]  interference_pattern = calculate_interference(base_signal, primary_noise)
+Call function calculate_interference(base_signal=[42, -17, 28, 13, -5, ...] (defined at [line 33]), primary_noise=2 (defined at [line 38]))
+[line 19]  interference = defaultdict(int)
+Call function defaultdict(int)
+[line 20]  for i, val in enumerate(signal):
+(Missing param: 'iter_var')
+[line 21]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  for i, val in enumerate(signal):
+(Missing param: 'iter_var')
+[line 21]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 20] repeats 7 more times ...
+... [Line 20] repeats 7 more times ...
+... [Line 20] repeats 7 more times ...
+[line 20]  for i, val in enumerate(signal):
+(Missing param: 'iter_var')
+[line 21]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 20]  for i, val in enumerate(signal):
+Loop End: Iteration finished
+[line 27]  result = [0] * 5
+Compute: [0] * 5 = [0, 0, 0, 0, 0]
+[line 28]  for k, v in interference.items():
+(Missing param: 'iter_var')
+[line 29]  result[k] = (v * noise_level) % 1337
+(Missing param: 'result')
+[line 28]  for k, v in interference.items():
+(Missing param: 'iter_var')
+[line 29]  result[k] = (v * noise_level) % 1337
+(Missing param: 'result')
+... [Line 28] repeats 2 more times ...
+... [Line 28] repeats 2 more times ...
+[line 28]  for k, v in interference.items():
+(Missing param: 'iter_var')
+[line 29]  result[k] = (v * noise_level) % 1337
+(Missing param: 'result')
+[line 28]  for k, v in interference.items():
+Loop End: Iteration finished
+[line 30]  return result
+Return: result=[62, 212, 1289, 38, 1327] (defined at [line 27])
+[line 59]  target_hash = calculate_hash(signal_strength, interference_pattern)
+Call function calculate_hash(signal_strength=[42, 28, 13, 104, 76, ...] (defined at [line 34]), interference_pattern=[62, 212, 1289, 38, 1327] (defined at [line 50]))
+[line 3]  def calculate_hash(strength, pattern):
+Enter function calculate_hash: strength=[42, 28, 13, 104, 76, ...] (signal_strength defined at [line 34]), pattern=[62, 212, 1289, 38, 1327] (interference_pattern defined at [line 50])
+  [line 5]  base_value = sum(strength) % 997
+  Compute: sum(strength) % 997, where strength=[42, 28, 13, 104, 76, ...] (parameter strength defined at [line 34]) = 293
+  [line 6]  return (base_value * pattern[2]) % 10000
+  Return: (base_value * pattern[2]) % 10000
+Function calculate_hash returns 7677
+
+Answer: target_hash = 7677 (last updated on defined at [line 59])

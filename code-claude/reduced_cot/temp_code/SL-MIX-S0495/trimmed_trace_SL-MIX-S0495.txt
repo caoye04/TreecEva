@@ -1,0 +1,1327 @@
+99
+priority_value
+---
+12 valid_packets = {}
+12 ['packets', 'valid_packets'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}']
+13 corrupted_count = 0
+13 ['packets', 'valid_packets', 'corrupted_count'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0']
+14 priority_sum = 0
+14 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0']
+15 security_level = 3
+15 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3', '{total_processed: 0, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}"]
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}"]
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}", "'ALERT System update required'"]
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}", "'ALERT System update required'"]
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}", "'ALERT System update required'"]
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'ALERT System update required'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'ALERT System update required'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'ALERT System update required'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '0', '0', "'A'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '0', '0', "'A'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '1', '0', "'A'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '1', '1', "'L'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '1', '1', "'L'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '5', '1', "'L'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '5', '2', "'E'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '5', '2', "'E'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '10', '2', "'E'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '10', '3', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '10', '3', "'R'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '15', '3', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '15', '4', "'T'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '15', '4', "'T'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '19', '4', "'T'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '19', '5', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '19', '5', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '5', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '6', "'S'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '6', "'S'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '20', '6', "'S'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '20', '7', "'y'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '20', '7', "'y'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '19', '7', "'y'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '19', '8', "'s'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '19', '8', "'s'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '22', '8', "'s'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '22', '9', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '22', '9', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '9', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '10', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '10', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '22', '10', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '22', '11', "'m'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '22', '11', "'m'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '16', '11', "'m'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '16', '12', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '16', '12', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '16', '12', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '16', '13', "'u'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '16', '13', "'u'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '23', '13', "'u'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '23', '14', "'p'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '23', '14', "'p'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '23', '14', "'p'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '23', '15', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '23', '15', "'d'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '15', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '16', "'a'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '17', '16', "'a'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '18', '16', "'a'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '18', '17', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '18', '17', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '21', '17', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '21', '18', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '21', '18', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '18', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '19', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '19', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '24', '19', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '24', '20', "'r'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '24', '20', "'r'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '20', "'r'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '21', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '21', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '28', '21', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '28', '22', "'q'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '28', '22', "'q'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '29', '22', "'q'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '29', '23', "'u'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '29', '23', "'u'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '23', "'u'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '24', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '26', '24', "'i'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '35', '24', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '35', '25', "'r'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '35', '25', "'r'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '36', '25', "'r'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '36', '26', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '36', '26', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '41', '26', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '41', '27', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '41', '27', "'d'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '47', '27', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '47', '27', "'d'"]
+9 return checksum % 256
+9 ['packet', 'checksum', 'i', 'char'] ["'ALERT System update required'", '47', '27', "'d'"]
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 47}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '0', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}", "'ALERT System update required'", '47']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}", "'ALERT System update required'", '47']
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '0', "'PKT001'", "{content: 'ALERT System update required', priority: 8, source: 'admin', ...}", "'ALERT System update required'", '47']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 1, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'ALERT System update required'", '47']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'ALERT System update required'", '47']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'User login from 192.168.1.5'", '47']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'User login from 192.168.1.5'", '47']
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'User login from 192.168.1.5'", '47']
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'User login from 192.168.1.5'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'User login from 192.168.1.5'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'User login from 192.168.1.5'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '0', "'U'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '0', "'U'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '5', '0', "'U'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '5', '1', "'s'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '5', '1', "'s'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '2', '1', "'s'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '2', '2', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '2', '2', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '7', '2', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '7', '3', "'r'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '7', '3', "'r'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '3', "'r'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '4', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '4', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '4', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '5', "'l'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '0', '5', "'l'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '6', '5', "'l'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '6', '6', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '6', '6', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '21', '6', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '21', '7', "'g'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '21', '7', "'g'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '19', '7', "'g'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '19', '8', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '19', '8', "'i'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '28', '8', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '28', '9', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '28', '9', "'n'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '26', '9', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '26', '10', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '26', '10', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '26', '10', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '26', '11', "'f'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '26', '11', "'f'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '28', '11', "'f'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '28', '12', "'r'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '28', '12', "'r'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '30', '12', "'r'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '30', '13', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '30', '13', "'o'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '24', '13', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '24', '14', "'m'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '24', '14', "'m'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '37', '14', "'m'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '37', '15', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '37', '15', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '39', '15', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '39', '16', "'1'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '39', '16', "'1'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '40', '16', "'1'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '40', '17', "'9'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '40', '17', "'9'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '43', '17', "'9'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '43', '18', "'2'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '43', '18', "'2'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '45', '18', "'2'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '45', '19', "'.'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '45', '19', "'.'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '47', '19', "'.'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '47', '20', "'1'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '47', '20', "'1'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '48', '20', "'1'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '48', '21', "'6'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '48', '21', "'6'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '51', '21', "'6'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '51', '22', "'8'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '51', '22', "'8'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '59', '22', "'8'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '59', '23', "'.'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '59', '23', "'.'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '57', '23', "'.'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '57', '24', "'1'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '57', '24', "'1'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '58', '24', "'1'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '58', '25', "'.'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '58', '25', "'.'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '56', '25', "'.'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '56', '26', "'5'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '56', '26', "'5'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '61', '26', "'5'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '61', '26', "'5'"]
+9 return checksum % 256
+9 ['packet', 'checksum', 'i', 'char'] ["'User login from 192.168.1.5'", '61', '26', "'5'"]
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 61}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '1', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'User login from 192.168.1.5'", '61']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'User login from 192.168.1.5'", '61']
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '1', "'PKT002'", "{content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}", "'User login from 192.168.1.5'", '61']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 2, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'User login from 192.168.1.5'", '61']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'User login from 192.168.1.5'", '61']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'CRITICAL Database connection lost'", '61']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'CRITICAL Database connection lost'", '61']
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'CRITICAL Database connection lost'", '61']
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'CRITICAL Database connection lost'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'CRITICAL Database connection lost'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'CRITICAL Database connection lost'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '0', '0', "'C'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '0', '0', "'C'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '3', '0', "'C'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '3', '1', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '3', '1', "'R'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '6', '1', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '6', '2', "'I'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '6', '2', "'I'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '15', '2', "'I'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '15', '3', "'T'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '15', '3', "'T'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '10', '3', "'T'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '10', '4', "'I'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '10', '4', "'I'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '19', '4', "'I'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '19', '5', "'C'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '19', '5', "'C'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '23', '5', "'C'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '23', '6', "'A'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '23', '6', "'A'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '24', '6', "'A'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '24', '7', "'L'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '24', '7', "'L'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '28', '7', "'L'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '28', '8', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '28', '8', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '28', '8', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '28', '9', "'D'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '28', '9', "'D'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '24', '9', "'D'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '24', '10', "'a'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '24', '10', "'a'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '25', '10', "'a'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '25', '11', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '25', '11', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '30', '11', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '30', '12', "'a'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '30', '12', "'a'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '31', '12', "'a'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '31', '13', "'b'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '31', '13', "'b'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '25', '13', "'b'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '25', '14', "'a'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '25', '14', "'a'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '26', '14', "'a'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '26', '15', "'s'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '26', '15', "'s'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '29', '15', "'s'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '29', '16', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '29', '16', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '34', '16', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '34', '17', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '34', '17', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '32', '17', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '32', '18', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '32', '18', "'c'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '35', '18', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '35', '19', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '35', '19', "'o'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '37', '19', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '37', '20', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '37', '20', "'n'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '51', '20', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '51', '21', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '51', '21', "'n'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '53', '21', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '53', '22', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '53', '22', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '58', '22', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '58', '23', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '58', '23', "'c'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '60', '23', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '60', '24', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '60', '24', "'t'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '64', '24', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '64', '25', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '64', '25', "'i'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '70', '25', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '70', '26', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '70', '26', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '85', '26', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '85', '27', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '85', '27', "'n'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '83', '27', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '83', '28', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '83', '28', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '83', '28', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '83', '29', "'l'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '83', '29', "'l'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '85', '29', "'l'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '85', '30', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '85', '30', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '100', '30', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '100', '31', "'s'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '100', '31', "'s'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '99', '31', "'s'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '99', '32', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '99', '32', "'t'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '103', '32', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '103', '32', "'t'"]
+9 return checksum % 256
+9 ['packet', 'checksum', 'i', 'char'] ["'CRITICAL Database connection lost'", '103', '32', "'t'"]
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 103}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '2', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'CRITICAL Database connection lost'", '103']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '3', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'CRITICAL Database connection lost'", '103']
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '3', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '2', "'PKT003'", "{content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}", "'CRITICAL Database connection lost'", '103']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '3', '0', '3', '{total_processed: 3, high_priority: 0, medium_priority: 0, ...}', '3', "'PKT004'", "{content: 'Potential malicious activity detected', priority: 7, source: 'security', ...}", "'CRITICAL Database connection lost'", '103']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '3', '0', '3', '{total_processed: 4, high_priority: 0, medium_priority: 0, ...}', '3', "'PKT004'", "{content: 'Potential malicious activity detected', priority: 7, source: 'security', ...}", "'CRITICAL Database connection lost'", '103']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '3', '0', '3', '{total_processed: 4, high_priority: 0, medium_priority: 0, ...}', '3', "'PKT004'", "{content: 'Potential malicious activity detected', priority: 7, source: 'security', ...}", "'Potential malicious activity detected'", '103']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '3', '0', '3', '{total_processed: 4, high_priority: 0, medium_priority: 0, ...}', '3', "'PKT004'", "{content: 'Potential malicious activity detected', priority: 7, source: 'security', ...}", "'Potential malicious activity detected'", '103']
+38 corrupted_count += 2
+38 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 4, high_priority: 0, medium_priority: 0, ...}', '3', "'PKT004'", "{content: 'Potential malicious activity detected', priority: 7, source: 'security', ...}", "'Potential malicious activity detected'", '103']
+39 continue
+39 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 4, high_priority: 0, medium_priority: 0, ...}', '3', "'PKT004'", "{content: 'Potential malicious activity detected', priority: 7, source: 'security', ...}", "'Potential malicious activity detected'", '103']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 4, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'Potential malicious activity detected'", '103']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'Potential malicious activity detected'", '103']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'WARNING Low disk space'", '103']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'WARNING Low disk space'", '103']
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'WARNING Low disk space'", '103']
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'WARNING Low disk space'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'WARNING Low disk space'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'WARNING Low disk space'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '0', '0', "'W'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '0', '0', "'W'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '7', '0', "'W'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '7', '1', "'A'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '7', '1', "'A'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '3', '1', "'A'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '3', '2', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '3', '2', "'R'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '5', '2', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '5', '3', "'N'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '5', '3', "'N'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '1', '3', "'N'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '1', '4', "'I'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '1', '4', "'I'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '10', '4', "'I'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '10', '5', "'N'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '10', '5', "'N'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '14', '5', "'N'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '14', '6', "'G'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '14', '6', "'G'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '21', '6', "'G'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '21', '7', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '21', '7', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '23', '7', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '23', '8', "'L'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '23', '8', "'L'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '35', '8', "'L'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '35', '9', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '35', '9', "'o'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '37', '9', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '37', '10', "'w'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '37', '10', "'w'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '44', '10', "'w'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '44', '11', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '44', '11', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '46', '11', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '46', '12', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '46', '12', "'d'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '50', '12', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '50', '13', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '50', '13', "'i'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '52', '13', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '52', '14', "'s'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '52', '14', "'s'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '55', '14', "'s'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '55', '15', "'k'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '55', '15', "'k'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '49', '15', "'k'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '49', '16', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '49', '16', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '49', '16', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '49', '17', "'s'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '49', '17', "'s'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '54', '17', "'s'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '54', '18', "'p'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '54', '18', "'p'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '54', '18', "'p'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '54', '19', "'a'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '54', '19', "'a'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '48', '19', "'a'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '48', '20', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '48', '20', "'c'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '51', '20', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '51', '21', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '51', '21', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '53', '21', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '53', '21', "'e'"]
+9 return checksum % 256
+9 ['packet', 'checksum', 'i', 'char'] ["'WARNING Low disk space'", '53', '21', "'e'"]
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 53}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '5', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'WARNING Low disk space'", '53']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'WARNING Low disk space'", '53']
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '4', "'PKT005'", "{content: 'WARNING Low disk space', priority: 6, source: 'system', ...}", "'WARNING Low disk space'", '53']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 5, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'WARNING Low disk space'", '53']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'WARNING Low disk space'", '53']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'New device connected to network'", '53']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'New device connected to network'", '53']
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'New device connected to network'", '53']
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'New device connected to network'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'New device connected to network'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'New device connected to network'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '0', '0', "'N'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '0', '0', "'N'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '14', '0', "'N'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '14', '1', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '14', '1', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '8', '1', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '8', '2', "'w'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '8', '2', "'w'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '15', '2', "'w'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '15', '3', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '15', '3', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '13', '3', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '13', '4', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '13', '4', "'d'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '17', '4', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '17', '5', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '17', '5', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '23', '5', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '23', '6', "'v'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '23', '6', "'v'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '29', '6', "'v'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '29', '7', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '29', '7', "'i'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '27', '7', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '27', '8', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '27', '8', "'c'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '30', '8', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '30', '9', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '30', '9', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '24', '9', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '24', '10', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '24', '10', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '24', '10', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '24', '11', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '24', '11', "'c'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '30', '11', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '30', '12', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '30', '12', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '45', '12', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '45', '13', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '45', '13', "'n'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '43', '13', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '43', '14', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '43', '14', "'n'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '57', '14', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '57', '15', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '57', '15', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '63', '15', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '63', '16', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '63', '16', "'c'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '66', '16', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '66', '17', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '66', '17', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '69', '17', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '69', '18', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '69', '18', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '74', '18', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '74', '19', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '74', '19', "'d'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '76', '19', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '76', '20', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '76', '20', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '76', '20', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '76', '21', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '76', '21', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '75', '21', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '75', '22', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '75', '22', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '90', '22', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '90', '23', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '90', '23', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '88', '23', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '88', '24', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '88', '24', "'n'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '102', '24', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '102', '25', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '102', '25', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '96', '25', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '96', '26', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '96', '26', "'t'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '100', '26', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '100', '27', "'w'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '100', '27', "'w'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '99', '27', "'w'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '99', '28', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '99', '28', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '114', '28', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '114', '29', "'r'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '114', '29', "'r'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '117', '29', "'r'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '117', '30', "'k'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '117', '30', "'k'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '128', '30', "'k'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '128', '30', "'k'"]
+9 return checksum % 256
+9 ['packet', 'checksum', 'i', 'char'] ["'New device connected to network'", '128', '30', "'k'"]
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 128}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '6', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'New device connected to network'", '128']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'New device connected to network'", '128']
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '5', "'PKT006'", "{content: 'New device connected to network', priority: 5, source: 'network', ...}", "'New device connected to network'", '128']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 6, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'New device connected to network'", '128']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'New device connected to network'", '128']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'Routine backup completed'", '128']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'Routine backup completed'", '128']
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'Routine backup completed'", '128']
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'Routine backup completed'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'Routine backup completed'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'Routine backup completed'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '0', '0', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '0', '0', "'R'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '2', '0', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '2', '1', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '2', '1', "'o'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '4', '1', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '4', '2', "'u'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '4', '2', "'u'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '9', '2', "'u'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '9', '3', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '9', '3', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '14', '3', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '14', '4', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '14', '4', "'i'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '23', '4', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '23', '5', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '23', '5', "'n'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '17', '5', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '17', '6', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '17', '6', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '22', '6', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '22', '7', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '22', '7', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '20', '7', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '20', '8', "'b'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '20', '8', "'b'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '22', '8', "'b'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '22', '9', "'a'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '22', '9', "'a'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '16', '9', "'a'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '16', '10', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '16', '10', "'c'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '19', '10', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '19', '11', "'k'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '19', '11', "'k'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '21', '11', "'k'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '21', '12', "'u'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '21', '12', "'u'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '26', '12', "'u'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '26', '13', "'p'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '26', '13', "'p'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '29', '13', "'p'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '29', '14', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '29', '14', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '29', '14', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '29', '15', "'c'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '29', '15', "'c'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '27', '15', "'c'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '27', '16', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '27', '16', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '42', '16', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '42', '17', "'m'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '42', '17', "'m'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '44', '17', "'m'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '44', '18', "'p'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '44', '18', "'p'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '44', '18', "'p'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '44', '19', "'l'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '44', '19', "'l'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '42', '19', "'l'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '42', '20', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '42', '20', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '47', '20', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '47', '21', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '47', '21', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '40', '21', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '40', '22', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '40', '22', "'e'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '45', '22', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '45', '23', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '45', '23', "'d'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '43', '23', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '43', '23', "'d'"]
+9 return checksum % 256
+9 ['packet', 'checksum', 'i', 'char'] ["'Routine backup completed'", '43', '23', "'d'"]
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 43}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '7', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'Routine backup completed'", '43']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'Routine backup completed'", '43']
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '6', "'PKT007'", "{content: 'Routine backup completed', priority: 2, source: 'backup', ...}", "'Routine backup completed'", '43']
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '3', '{total_processed: 7, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'Routine backup completed'", '43']
+28 metrics['total_processed'] += 1
+28 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '3', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'Routine backup completed'", '43']
+31 content = packet_data.get('content', '')
+31 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '3', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'", '43']
+37 if security_level > 2 and 'malicious' in content.lower():
+37 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'security_level', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '3', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'", '43']
+43 actual_checksum = calculate_checksum(content)
+43 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'", '43']
+PARAM_MAPPING {'packet': {'actual_var': 'content', 'value': 'ERROR File not found'}}
+FUNCTION_ENTER 1 calculate_checksum def calculate_checksum(packet):
+1 ['packet'] [{'_type': 'str', '_value': 'ERROR File not found'}]
+3 checksum = 0
+3 ['packet', 'checksum'] ["'ERROR File not found'", '0']
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '0', '0', "'E'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '0', '0', "'E'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '5', '0', "'E'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '5', '1', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '5', '1', "'R'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '0', '1', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '0', '2', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '0', '2', "'R'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '2', '2', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '2', '3', "'O'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '2', '3', "'O'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '6', '3', "'O'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '6', '4', "'R'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '6', '4', "'R'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '8', '4', "'R'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '8', '5', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '8', '5', "' '"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '10', '5', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '10', '6', "'F'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '10', '6', "'F'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '16', '6', "'F'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '16', '7', "'i'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '16', '7', "'i'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '22', '7', "'i'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '22', '8', "'l'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '22', '8', "'l'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '34', '8', "'l'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '34', '9', "'e'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '34', '9', "'e'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '36', '9', "'e'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '36', '10', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '36', '10', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '36', '10', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '36', '11', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '36', '11', "'n'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '34', '11', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '34', '12', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '34', '12', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '49', '12', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '49', '13', "'t'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '49', '13', "'t'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '54', '13', "'t'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '54', '14', "' '"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '54', '14', "' '"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '54', '14', "' '"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '54', '15', "'f'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '54', '15', "'f'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '48', '15', "'f'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '48', '16', "'o'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '48', '16', "'o'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '63', '16', "'o'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '63', '17', "'u'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '63', '17', "'u'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '56', '17', "'u'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '56', '18', "'n'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '56', '18', "'n'"]
+6 checksum += ord(char) & 0x0F
+6 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '70', '18', "'n'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '70', '19', "'d'"]
+5 if i % 2 == 0:
+5 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '70', '19', "'d'"]
+8 checksum ^= (ord(char) >> 4)
+8 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '64', '19', "'d'"]
+4 for i, char in enumerate(packet):
+4 ['packet', 'checksum', 'i', 'char'] ["'ERROR File not found'", '64', '19', "'d'"]
+9 return checksum % 256
+9 ['checksum'] ['64']
+FUNCTION_RETURN 9 calculate_checksum {'_type': 'int', '_value': 64}
+46 if expected_checksum != actual_checksum:
+46 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'metrics', 'idx', 'packet_id', 'packet_data', 'content', 'actual_checksum'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '8', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'", '64']
+47 corrupted_count += 1
+47 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'metrics', 'idx', 'packet_id', 'packet_data', 'content'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '9', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'"]
+48 continue
+48 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'metrics', 'idx', 'packet_id', 'packet_data', 'content'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '9', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'"]
+27 for idx, (packet_id, packet_data) in enumerate(packets.items()):
+27 ['packets', 'valid_packets', 'corrupted_count', 'priority_sum', 'metrics', 'idx', 'packet_id', 'packet_data', 'content'] ["{PKT001: {content: 'ALERT System update required', priority: 8, source: 'admin', ...}, PKT002: {content: 'User login from 192.168.1.5', priority: 3, source: 'auth', ...}, PKT003: {content: 'CRITICAL Database connection lost', priority: 9, source: 'db', ...}, ...}", '{}', '9', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', '7', "'PKT008'", "{content: 'ERROR File not found', priority: 6, source: 'filesystem', ...}", "'ERROR File not found'"]
+84 for content in valid_packets.values():
+84 ['valid_packets', 'corrupted_count', 'priority_sum', 'metrics', 'content'] ['{}', '9', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}', "'ERROR File not found'"]
+91 if metrics['high_priority'] > 0:
+91 ['corrupted_count', 'priority_sum', 'metrics'] ['9', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}']
+93 elif metrics['medium_priority'] > metrics['low_priority']:
+93 ['corrupted_count', 'priority_sum', 'metrics'] ['9', '0', '{total_processed: 8, high_priority: 0, medium_priority: 0, ...}']
+96 priority_factor = 1
+96 ['corrupted_count', 'priority_sum', 'priority_factor'] ['9', '0', '1']
+99 priority_value = int((priority_sum * priority_factor) - corrupted_count)
+99 ['corrupted_count', 'priority_sum', 'priority_factor', 'priority_value'] ['9', '0', '1', '-9']

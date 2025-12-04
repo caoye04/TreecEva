@@ -1,0 +1,129 @@
+128
+network_throughput
+---
+81 primary_interfaces = ['eth0', 'eth1', 'wlan0']
+81 ['primary_interfaces'] ["['eth0', 'eth1', 'wlan0']"]
+82 backup_interfaces = ['eth2', 'wlan1']
+82 ['primary_interfaces', 'backup_interfaces'] ["['eth0', 'eth1', 'wlan0']", "['eth2', 'wlan1']"]
+85 all_interface_combinations = list(itertools.product(primary_interfaces, backup_interfaces))
+85 ['primary_interfaces', 'backup_interfaces', 'all_interface_combinations'] ["['eth0', 'eth1', 'wlan0']", "['eth2', 'wlan1']", "[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'eth0'", "'eth2'"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'eth0'", "'wlan1'"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'eth1'", "'eth2'"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'eth1'", "'wlan1'"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'wlan0'", "'eth2'"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'wlan0'", "'wlan1'"]
+89 for primary, backup in all_interface_combinations:
+89 ['all_interface_combinations', 'primary', 'backup'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "'wlan0'", "'wlan1'"]
+5 priority_levels = {'HIGH': 3, 'MEDIUM': 2, 'LOW': 1}
+5 ['headers', 'priority_levels'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}']
+6 total_priority = 0
+6 ['headers', 'priority_levels', 'total_priority'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '0']
+7 for header in headers:
+7 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '0', "{id: 1, priority: 'HIGH', encrypted: True}"]
+8 if 'priority' in header:
+8 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '0', "{id: 1, priority: 'HIGH', encrypted: True}"]
+9 total_priority += priority_levels.get(header['priority'], 0)
+9 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '3', "{id: 1, priority: 'HIGH', encrypted: True}"]
+10 if 'encrypted' in header and header['encrypted']:
+10 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '3', "{id: 1, priority: 'HIGH', encrypted: True}"]
+11 total_priority += 2
+11 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '5', "{id: 1, priority: 'HIGH', encrypted: True}"]
+7 for header in headers:
+7 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '5', "{id: 2, priority: 'MEDIUM', encrypted: False}"]
+8 if 'priority' in header:
+8 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '5', "{id: 2, priority: 'MEDIUM', encrypted: False}"]
+9 total_priority += priority_levels.get(header['priority'], 0)
+9 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '7', "{id: 2, priority: 'MEDIUM', encrypted: False}"]
+10 if 'encrypted' in header and header['encrypted']:
+10 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '7', "{id: 2, priority: 'MEDIUM', encrypted: False}"]
+7 for header in headers:
+7 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '7', "{id: 3, priority: 'LOW', encrypted: False}"]
+8 if 'priority' in header:
+8 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '7', "{id: 3, priority: 'LOW', encrypted: False}"]
+9 total_priority += priority_levels.get(header['priority'], 0)
+9 ['headers', 'priority_levels', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '{HIGH: 3, MEDIUM: 2, LOW: 1}', '8', "{id: 3, priority: 'LOW', encrypted: False}"]
+10 if 'encrypted' in header and header['encrypted']:
+10 ['headers', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '8', "{id: 3, priority: 'LOW', encrypted: False}"]
+7 for header in headers:
+7 ['headers', 'total_priority', 'header'] ["[{id: 1, priority: 'HIGH', encrypted: True}, {id: 2, priority: 'MEDIUM', encrypted: False}, {id: 3, priority: 'LOW', encrypted: False}]", '8', "{id: 3, priority: 'LOW', encrypted: False}"]
+12 return total_priority * 0.75  # Scaling factor
+12 ['total_priority'] ['8']
+116 noise_factor = 4
+116 ['all_interface_combinations', 'packet_data', 'noise_factor'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4']
+119 network_throughput = calculate_effective_throughput(packet_data, noise_factor)
+119 ['all_interface_combinations', 'packet_data', 'noise_factor'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", "{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4']
+PARAM_MAPPING {'packet_data': {'actual_var': 'packet_data', 'value': {'payload_size': 1500, 'protocol': 'TCP', 'latency': 25, 'jitter_samples': [18, 22, 19, 21], 'packet_loss': 0.03, 'signal_strength': -58, 'transmission_status': ['OK', 'OK', 'ERROR', 'OK'], 'headers': [{'id': 1, 'priority': 'HIGH', 'encrypted': True}, {'id': 2, 'priority': 'MEDIUM', 'encrypted': False}, {'id': 3, 'priority': 'LOW', 'encrypted': False}]}}, 'noise_factor': {'actual_var': 'noise_factor', 'value': 4}}
+FUNCTION_ENTER 26 calculate_effective_throughput def calculate_effective_throughput(packet_data, noise_factor):
+26 ['packet_data', 'noise_factor'] [{'_type': 'dict', '_items': {'payload_size': {'_type': 'int', '_value': 1500}, 'protocol': {'_type': 'str', '_value': 'TCP'}, 'latency': {'_type': 'int', '_value': 25}, 'jitter_samples': {'_type': 'list', '_items': [{'_type': 'int', '_value': 18}, {'_type': 'int', '_value': 22}, {'_type': 'int', '_value': 19}, {'_type': 'int', '_value': 21}], '_len': 4}, 'packet_loss': {'_type': 'float', '_value': 0.03}}, '_len': 8}, {'_type': 'int', '_value': 4}]
+29 raw_data = packet_data['payload_size']
+29 ['packet_data', 'noise_factor', 'raw_data'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500']
+30 protocol = packet_data['protocol']
+30 ['packet_data', 'noise_factor', 'raw_data', 'protocol'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'"]
+38 for status in packet_data.get('transmission_status', ['OK', 'OK']):
+38 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+39 if status != 'OK':
+39 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+38 for status in packet_data.get('transmission_status', ['OK', 'OK']):
+38 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+39 if status != 'OK':
+39 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+38 for status in packet_data.get('transmission_status', ['OK', 'OK']):
+38 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'ERROR'"]
+39 if status != 'OK':
+39 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'ERROR'"]
+38 for status in packet_data.get('transmission_status', ['OK', 'OK']):
+38 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+39 if status != 'OK':
+39 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+38 for status in packet_data.get('transmission_status', ['OK', 'OK']):
+38 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'status'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", "'OK'"]
+43 base_throughput = raw_data * 8  # Convert bytes to bits
+43 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'base_throughput'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", '12000']
+46 if noise_factor > 5:
+46 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'base_throughput'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", '12000']
+51 overhead = calculate_bandwidth_overhead(raw_data, protocol)
+51 ['packet_data', 'noise_factor', 'raw_data', 'protocol', 'base_throughput'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '1500', "'TCP'", '12000']
+23 base_overhead = protocol_overhead.get(protocol_type, 0.1)
+23 ['data_size', 'protocol_type', 'protocol_overhead', 'base_overhead'] ['1500', "'TCP'", '{TCP: 0.12, UDP: 0.08, HTTP: 0.15, ...}', '0.12']
+24 return data_size * base_overhead
+24 ['data_size', 'base_overhead'] ['1500', '0.12']
+52 effective_throughput = base_throughput - (overhead * 8)
+52 ['packet_data', 'noise_factor', 'base_throughput', 'overhead', 'effective_throughput'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '12000', '180.0', '10560.0']
+55 packet_loss = packet_data.get('packet_loss', 0.05)
+55 ['packet_data', 'noise_factor', 'effective_throughput', 'packet_loss'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '10560.0', '0.03']
+56 if packet_loss > 0.1:
+56 ['packet_data', 'noise_factor', 'effective_throughput', 'packet_loss'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '10560.0', '0.03']
+59 effective_throughput *= (1 - packet_loss)
+59 ['packet_data', 'noise_factor', 'effective_throughput', 'packet_loss'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '10243.199999999999', '0.03']
+62 signal_strength = packet_data.get('signal_strength', -65)
+62 ['packet_data', 'noise_factor', 'effective_throughput', 'signal_strength'] ["{payload_size: 1500, protocol: 'TCP', latency: 25, ...}", '4', '10243.199999999999', '-58']
+63 if signal_strength < -70:
+63 ['noise_factor', 'effective_throughput', 'signal_strength'] ['4', '10243.199999999999', '-58']
+65 elif signal_strength < -60:
+65 ['noise_factor', 'effective_throughput', 'signal_strength'] ['4', '10243.199999999999', '-58']
+71 noise_adjustment = 1.0
+71 ['noise_factor', 'effective_throughput', 'noise_adjustment'] ['4', '10243.199999999999', '1.0']
+72 if noise_factor < 3:
+72 ['noise_factor', 'effective_throughput', 'noise_adjustment'] ['4', '10243.199999999999', '1.0']
+74 elif noise_factor < 5:
+74 ['noise_factor', 'effective_throughput', 'noise_adjustment'] ['4', '10243.199999999999', '1.0']
+75 noise_adjustment = 0.9
+75 ['effective_throughput', 'noise_adjustment'] ['10243.199999999999', '0.9']
+78 return round(effective_throughput * noise_adjustment, 2)
+78 ['effective_throughput', 'noise_adjustment'] ['10243.199999999999', '0.9']
+FUNCTION_RETURN 78 calculate_effective_throughput {'_type': 'float', '_value': 9218.88}
+125 print(f"Interface pairs analyzed: {len(all_interface_combinations)}")
+125 ['all_interface_combinations', 'network_throughput'] ["[('eth0', 'eth2'), ('eth0', 'wlan1'), ('eth1', 'eth2'), ('eth1', 'wlan1'), ('wlan0', 'eth2'), ...]", '9218.88']
+126 print(f"Header priority score: {header_priority}")
+126 ['network_throughput'] ['9218.88']
+127 print(f"Packet efficiency: {packet_efficiency}")
+127 ['network_throughput'] ['9218.88']
+128 print(f"Result: {network_throughput}")
+128 ['network_throughput'] ['9218.88']

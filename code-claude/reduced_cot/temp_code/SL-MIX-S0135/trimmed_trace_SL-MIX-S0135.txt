@@ -1,0 +1,197 @@
+55
+encryption_key
+---
+PARAM_MAPPING {'message': {'actual_var': 'message', 'value': 'hello world'}}
+FUNCTION_ENTER 3 analyze_message def analyze_message(message):
+3 ['message'] [{'_type': 'str', '_value': 'hello world'}]
+6 bit_count = 0
+6 ['message', 'bit_count'] ["'hello world'", '0']
+7 checksum = 0
+7 ['message', 'bit_count', 'checksum'] ["'hello world'", '0', '0']
+8 priority_chars = ['a', 'e', 'i', 'o', 'u']
+8 ['message', 'bit_count', 'checksum', 'priority_chars'] ["'hello world'", '0', '0', "['a', 'e', 'i', 'o', 'u']"]
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char'] ["'hello world'", '0', '0', "['a', 'e', 'i', 'o', 'u']", '0', "'h'"]
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val'] ["'hello world'", '0', '0', "['a', 'e', 'i', 'o', 'u']", '0', "'h'", '104']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val'] ["'hello world'", '3', '0', "['a', 'e', 'i', 'o', 'u']", '0', "'h'", '104']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val'] ["'hello world'", '3', '0', "['a', 'e', 'i', 'o', 'u']", '0', "'h'", '104']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '3', '0', "['a', 'e', 'i', 'o', 'u']", '0', "'h'", '104', '40']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '3', '0', "['a', 'e', 'i', 'o', 'u']", '0', "'h'", '104', '40']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '3', '0', "['a', 'e', 'i', 'o', 'u']", '1', "'e'", '104', '40']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '3', '0', "['a', 'e', 'i', 'o', 'u']", '1', "'e'", '101', '40']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '7', '0', "['a', 'e', 'i', 'o', 'u']", '1', "'e'", '101', '40']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '7', '0', "['a', 'e', 'i', 'o', 'u']", '1', "'e'", '101', '40']
+22 checksum = (checksum + ascii_val) % 97
+22 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '7', '4', "['a', 'e', 'i', 'o', 'u']", '1', "'e'", '101', '40']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '7', '4', "['a', 'e', 'i', 'o', 'u']", '2', "'l'", '101', '40']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '7', '4', "['a', 'e', 'i', 'o', 'u']", '2', "'l'", '108', '40']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '11', '4', "['a', 'e', 'i', 'o', 'u']", '2', "'l'", '108', '40']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '11', '4', "['a', 'e', 'i', 'o', 'u']", '2', "'l'", '108', '40']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '11', '4', "['a', 'e', 'i', 'o', 'u']", '2', "'l'", '108', '46']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '11', '4', "['a', 'e', 'i', 'o', 'u']", '2', "'l'", '108', '46']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '11', '4', "['a', 'e', 'i', 'o', 'u']", '3', "'l'", '108', '46']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '11', '4', "['a', 'e', 'i', 'o', 'u']", '3', "'l'", '108', '46']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '15', '4', "['a', 'e', 'i', 'o', 'u']", '3', "'l'", '108', '46']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '15', '4', "['a', 'e', 'i', 'o', 'u']", '3', "'l'", '108', '46']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '15', '4', "['a', 'e', 'i', 'o', 'u']", '3', "'l'", '108', '47']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '15', '4', "['a', 'e', 'i', 'o', 'u']", '3', "'l'", '108', '47']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '15', '4', "['a', 'e', 'i', 'o', 'u']", '4', "'o'", '108', '47']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '15', '4', "['a', 'e', 'i', 'o', 'u']", '4', "'o'", '111', '47']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '21', '4', "['a', 'e', 'i', 'o', 'u']", '4', "'o'", '111', '47']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '21', '4', "['a', 'e', 'i', 'o', 'u']", '4', "'o'", '111', '47']
+22 checksum = (checksum + ascii_val) % 97
+22 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '21', '18', "['a', 'e', 'i', 'o', 'u']", '4', "'o'", '111', '47']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '21', '18', "['a', 'e', 'i', 'o', 'u']", '5', "' '", '111', '47']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '21', '18', "['a', 'e', 'i', 'o', 'u']", '5', "' '", '32', '47']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '22', '18', "['a', 'e', 'i', 'o', 'u']", '5', "' '", '32', '47']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '22', '18', "['a', 'e', 'i', 'o', 'u']", '5', "' '", '32', '47']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '22', '18', "['a', 'e', 'i', 'o', 'u']", '5', "' '", '32', '37']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '22', '18', "['a', 'e', 'i', 'o', 'u']", '5', "' '", '32', '37']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '22', '18', "['a', 'e', 'i', 'o', 'u']", '6', "'w'", '32', '37']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '22', '18', "['a', 'e', 'i', 'o', 'u']", '6', "'w'", '119', '37']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '28', '18', "['a', 'e', 'i', 'o', 'u']", '6', "'w'", '119', '37']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '28', '18', "['a', 'e', 'i', 'o', 'u']", '6', "'w'", '119', '37']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '28', '18', "['a', 'e', 'i', 'o', 'u']", '6', "'w'", '119', '49']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '28', '18', "['a', 'e', 'i', 'o', 'u']", '6', "'w'", '119', '49']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '28', '18', "['a', 'e', 'i', 'o', 'u']", '7', "'o'", '119', '49']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '28', '18', "['a', 'e', 'i', 'o', 'u']", '7', "'o'", '111', '49']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '34', '18', "['a', 'e', 'i', 'o', 'u']", '7', "'o'", '111', '49']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '34', '18', "['a', 'e', 'i', 'o', 'u']", '7', "'o'", '111', '49']
+22 checksum = (checksum + ascii_val) % 97
+22 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '34', '32', "['a', 'e', 'i', 'o', 'u']", '7', "'o'", '111', '49']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '34', '32', "['a', 'e', 'i', 'o', 'u']", '8', "'r'", '111', '49']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '34', '32', "['a', 'e', 'i', 'o', 'u']", '8', "'r'", '114', '49']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '38', '32', "['a', 'e', 'i', 'o', 'u']", '8', "'r'", '114', '49']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '38', '32', "['a', 'e', 'i', 'o', 'u']", '8', "'r'", '114', '49']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '38', '32', "['a', 'e', 'i', 'o', 'u']", '8', "'r'", '114', '58']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '38', '32', "['a', 'e', 'i', 'o', 'u']", '8', "'r'", '114', '58']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '38', '32', "['a', 'e', 'i', 'o', 'u']", '9', "'l'", '114', '58']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '38', '32', "['a', 'e', 'i', 'o', 'u']", '9', "'l'", '108', '58']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '42', '32', "['a', 'e', 'i', 'o', 'u']", '9', "'l'", '108', '58']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '42', '32', "['a', 'e', 'i', 'o', 'u']", '9', "'l'", '108', '58']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '42', '32', "['a', 'e', 'i', 'o', 'u']", '9', "'l'", '108', '37']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '42', '32', "['a', 'e', 'i', 'o', 'u']", '9', "'l'", '108', '37']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '42', '32', "['a', 'e', 'i', 'o', 'u']", '10', "'d'", '108', '37']
+16 ascii_val = ord(char)
+16 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '42', '32', "['a', 'e', 'i', 'o', 'u']", '10', "'d'", '100', '37']
+17 bit_count += bin(ascii_val).count('1')
+17 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '45', '32', "['a', 'e', 'i', 'o', 'u']", '10', "'d'", '100', '37']
+21 if char in priority_chars:
+21 ['message', 'bit_count', 'checksum', 'priority_chars', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '45', '32', "['a', 'e', 'i', 'o', 'u']", '10', "'d'", '100', '37']
+25 potential_modifier = (ascii_val ^ idx) & 0x3f
+25 ['message', 'bit_count', 'checksum', 'idx', 'char', 'ascii_val', 'potential_modifier'] ["'hello world'", '45', '32', '10', "'d'", '100', '46']
+26 if potential_modifier > 30:
+26 ['message', 'bit_count', 'checksum', 'idx', 'char', 'potential_modifier'] ["'hello world'", '45', '32', '10', "'d'", '46']
+11 for idx, char in enumerate(message):
+11 ['message', 'bit_count', 'checksum', 'idx', 'char'] ["'hello world'", '45', '32', '10', "'d'"]
+30 char_freq = Counter(message)
+30 ['message', 'bit_count', 'checksum', 'char', 'char_freq'] ["'hello world'", '45', '32', "'d'", '{h: 1, e: 1, l: 3, ...}']
+31 top_chars = char_freq.most_common(3)
+31 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars'] ['45', '32', "'d'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]"]
+35 entropy_estimate = 0
+35 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars'] ['45', '32', "'d'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]"]
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'h'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'h'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'e'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'e'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'l'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '3']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'l'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '3']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'o'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '2']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'o'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '2']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "' '", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "' '", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'w'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'w'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'r'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'r'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'d'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+38 entropy_estimate += freq * (ord(char) % 16)
+38 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'d'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+36 for char, freq in char_freq.items():
+36 ['bit_count', 'checksum', 'char', 'char_freq', 'top_chars', 'freq'] ['45', '32', "'d'", '{h: 1, e: 1, l: 3, ...}', "[('l', 3), ('o', 2), ('h', 1)]", '1']
+41 sum_frequencies = sum(freq for _, freq in top_chars)
+41 [] []
+41 sum_frequencies = sum(freq for _, freq in top_chars)
+41 ['_', 'freq'] ["'l'", '3']
+41 sum_frequencies = sum(freq for _, freq in top_chars)
+41 ['_', 'freq'] ["'o'", '2']
+41 sum_frequencies = sum(freq for _, freq in top_chars)
+41 ['_', 'freq'] ["'h'", '1']
+41 sum_frequencies = sum(freq for _, freq in top_chars)
+41 ['_', 'freq'] ["'h'", '1']
+55 encryption_key = (bit_count ^ (sum_frequencies & 0xff)) + checksum
+55 ['bit_count', 'checksum', 'sum_frequencies', 'encryption_key'] ['45', '32', '6', '75']
+58 if entropy_estimate > 1000:
+58 [] []
+64 return {
+64 [] []
+FUNCTION_RETURN 64 analyze_message {'_type': 'dict', '_items': {'primary_key': {'_type': 'int', '_value': 75}, 'backup_key': {'_type': 'int', '_value': 75}, 'validation': {'_type': 'int', '_value': 77}, 'security_level': {'_type': 'str', '_value': 'medium'}}, '_len': 4}

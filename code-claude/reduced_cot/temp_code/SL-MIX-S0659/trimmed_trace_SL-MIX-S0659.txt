@@ -1,0 +1,191 @@
+91
+priority_level
+---
+90 priority_level = calculate_priority()
+90 [] []
+43 file_data = []
+43 ['permission_map', 'file_data'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", '[]']
+44 for filename, permission in permission_map.items():
+44 ['permission_map', 'file_data', 'filename', 'permission'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", '[]', "'user_config.json'", "'644'"]
+45 name, extension = filename.split('.') if '.' in filename else (filename, '')
+45 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", '[]', "'user_config.json'", "'644'", "'user_config'", "'json'"]
+46 extension = f'.{extension}' if extension else ''
+46 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", '[]', "'user_config.json'", "'644'", "'user_config'", "'.json'"]
+PARAM_MAPPING {'permissions': {'actual_var': 'permission', 'value': '644'}}
+FUNCTION_ENTER 1 analyze_file_permissions def analyze_file_permissions(permissions):
+1 ['permissions'] [{'_type': 'str', '_value': '644'}]
+3 binary_repr = bin(int(permissions, 8))[2:].zfill(9)
+3 ['permissions', 'binary_repr'] ["'644'", "'110100100'"]
+6 user = binary_repr[:3]
+6 ['permissions', 'binary_repr', 'user'] ["'644'", "'110100100'", "'110'"]
+7 group = binary_repr[3:6]
+7 ['permissions', 'binary_repr', 'user', 'group'] ["'644'", "'110100100'", "'110'", "'100'"]
+8 others = binary_repr[6:]
+8 ['permissions', 'binary_repr', 'user', 'group', 'others'] ["'644'", "'110100100'", "'110'", "'100'", "'100'"]
+11 user_score = int(user, 2) * 100
+11 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600']
+12 group_score = int(group, 2) * 10
+12 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600', '40']
+13 others_score = int(others, 2)
+13 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600', '40', '4']
+15 return user_score + group_score + others_score
+15 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600', '40', '4']
+FUNCTION_RETURN 15 analyze_file_permissions {'_type': 'int', '_value': 644}
+44 for filename, permission in permission_map.items():
+44 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "'system.env'", "'640'", "'user_config'", "'.json'"]
+45 name, extension = filename.split('.') if '.' in filename else (filename, '')
+45 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "'system.env'", "'640'", "'system'", "'env'"]
+46 extension = f'.{extension}' if extension else ''
+46 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "'system.env'", "'640'", "'system'", "'.env'"]
+PARAM_MAPPING {'permissions': {'actual_var': 'permission', 'value': '640'}}
+FUNCTION_ENTER 1 analyze_file_permissions def analyze_file_permissions(permissions):
+1 ['permissions'] [{'_type': 'str', '_value': '640'}]
+3 binary_repr = bin(int(permissions, 8))[2:].zfill(9)
+3 ['permissions', 'binary_repr'] ["'640'", "'110100000'"]
+6 user = binary_repr[:3]
+6 ['permissions', 'binary_repr', 'user'] ["'640'", "'110100000'", "'110'"]
+7 group = binary_repr[3:6]
+7 ['permissions', 'binary_repr', 'user', 'group'] ["'640'", "'110100000'", "'110'", "'100'"]
+8 others = binary_repr[6:]
+8 ['permissions', 'binary_repr', 'user', 'group', 'others'] ["'640'", "'110100000'", "'110'", "'100'", "'000'"]
+11 user_score = int(user, 2) * 100
+11 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score'] ["'640'", "'110100000'", "'110'", "'100'", "'000'", '600']
+12 group_score = int(group, 2) * 10
+12 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score'] ["'640'", "'110100000'", "'110'", "'100'", "'000'", '600', '40']
+13 others_score = int(others, 2)
+13 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'640'", "'110100000'", "'110'", "'100'", "'000'", '600', '40', '0']
+15 return user_score + group_score + others_score
+15 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'640'", "'110100000'", "'110'", "'100'", "'000'", '600', '40', '0']
+FUNCTION_RETURN 15 analyze_file_permissions {'_type': 'int', '_value': 640}
+44 for filename, permission in permission_map.items():
+44 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}]", "'backup.key'", "'600'", "'system'", "'.env'"]
+45 name, extension = filename.split('.') if '.' in filename else (filename, '')
+45 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}]", "'backup.key'", "'600'", "'backup'", "'key'"]
+46 extension = f'.{extension}' if extension else ''
+46 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}]", "'backup.key'", "'600'", "'backup'", "'.key'"]
+PARAM_MAPPING {'permissions': {'actual_var': 'permission', 'value': '600'}}
+FUNCTION_ENTER 1 analyze_file_permissions def analyze_file_permissions(permissions):
+1 ['permissions'] [{'_type': 'str', '_value': '600'}]
+3 binary_repr = bin(int(permissions, 8))[2:].zfill(9)
+3 ['permissions', 'binary_repr'] ["'600'", "'110000000'"]
+6 user = binary_repr[:3]
+6 ['permissions', 'binary_repr', 'user'] ["'600'", "'110000000'", "'110'"]
+7 group = binary_repr[3:6]
+7 ['permissions', 'binary_repr', 'user', 'group'] ["'600'", "'110000000'", "'110'", "'000'"]
+8 others = binary_repr[6:]
+8 ['permissions', 'binary_repr', 'user', 'group', 'others'] ["'600'", "'110000000'", "'110'", "'000'", "'000'"]
+11 user_score = int(user, 2) * 100
+11 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score'] ["'600'", "'110000000'", "'110'", "'000'", "'000'", '600']
+12 group_score = int(group, 2) * 10
+12 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score'] ["'600'", "'110000000'", "'110'", "'000'", "'000'", '600', '0']
+13 others_score = int(others, 2)
+13 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'600'", "'110000000'", "'110'", "'000'", "'000'", '600', '0', '0']
+15 return user_score + group_score + others_score
+15 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'600'", "'110000000'", "'110'", "'000'", "'000'", '600', '0', '0']
+FUNCTION_RETURN 15 analyze_file_permissions {'_type': 'int', '_value': 600}
+44 for filename, permission in permission_map.items():
+44 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "'public_data.xml'", "'644'", "'backup'", "'.key'"]
+45 name, extension = filename.split('.') if '.' in filename else (filename, '')
+45 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "'public_data.xml'", "'644'", "'public_data'", "'xml'"]
+46 extension = f'.{extension}' if extension else ''
+46 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "'public_data.xml'", "'644'", "'public_data'", "'.xml'"]
+PARAM_MAPPING {'permissions': {'actual_var': 'permission', 'value': '644'}}
+FUNCTION_ENTER 1 analyze_file_permissions def analyze_file_permissions(permissions):
+1 ['permissions'] [{'_type': 'str', '_value': '644'}]
+3 binary_repr = bin(int(permissions, 8))[2:].zfill(9)
+3 ['permissions', 'binary_repr'] ["'644'", "'110100100'"]
+6 user = binary_repr[:3]
+6 ['permissions', 'binary_repr', 'user'] ["'644'", "'110100100'", "'110'"]
+7 group = binary_repr[3:6]
+7 ['permissions', 'binary_repr', 'user', 'group'] ["'644'", "'110100100'", "'110'", "'100'"]
+8 others = binary_repr[6:]
+8 ['permissions', 'binary_repr', 'user', 'group', 'others'] ["'644'", "'110100100'", "'110'", "'100'", "'100'"]
+11 user_score = int(user, 2) * 100
+11 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600']
+12 group_score = int(group, 2) * 10
+12 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600', '40']
+13 others_score = int(others, 2)
+13 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600', '40', '4']
+15 return user_score + group_score + others_score
+15 ['permissions', 'binary_repr', 'user', 'group', 'others', 'user_score', 'group_score', 'others_score'] ["'644'", "'110100100'", "'110'", "'100'", "'100'", '600', '40', '4']
+FUNCTION_RETURN 15 analyze_file_permissions {'_type': 'int', '_value': 644}
+44 for filename, permission in permission_map.items():
+44 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}]", "'admin_settings.conf'", "'600'", "'public_data'", "'.xml'"]
+45 name, extension = filename.split('.') if '.' in filename else (filename, '')
+45 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}]", "'admin_settings.conf'", "'600'", "'admin_settings'", "'conf'"]
+46 extension = f'.{extension}' if extension else ''
+46 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}]", "'admin_settings.conf'", "'600'", "'admin_settings'", "'.conf'"]
+PARAM_MAPPING {'permissions': {'actual_var': 'permission', 'value': '600'}}
+FUNCTION_ENTER 1 analyze_file_permissions def analyze_file_permissions(permissions):
+1 ['permissions'] [{'_type': 'str', '_value': '600'}]
+3 binary_repr = bin(int(permissions, 8))[2:].zfill(9)
+3 ['permissions', 'binary_repr'] ["'600'", "'110000000'"]
+6 user = binary_repr[:3]
+6 ['binary_repr', 'user'] ["'110000000'", "'110'"]
+7 group = binary_repr[3:6]
+7 ['binary_repr', 'user', 'group'] ["'110000000'", "'110'", "'000'"]
+8 others = binary_repr[6:]
+8 ['binary_repr', 'user', 'group', 'others'] ["'110000000'", "'110'", "'000'", "'000'"]
+11 user_score = int(user, 2) * 100
+11 ['user', 'group', 'others', 'user_score'] ["'110'", "'000'", "'000'", '600']
+12 group_score = int(group, 2) * 10
+12 ['group', 'others', 'user_score', 'group_score'] ["'000'", "'000'", '600', '0']
+13 others_score = int(others, 2)
+13 ['others', 'user_score', 'group_score', 'others_score'] ["'000'", '600', '0', '0']
+15 return user_score + group_score + others_score
+15 ['user_score', 'group_score', 'others_score'] ['600', '0', '0']
+FUNCTION_RETURN 15 analyze_file_permissions {'_type': 'int', '_value': 600}
+44 for filename, permission in permission_map.items():
+44 ['permission_map', 'file_data', 'filename', 'permission', 'name', 'extension'] ["{user_config.json: '644', system.env: '640', backup.key: '600', ...}", "[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "'admin_settings.conf'", "'600'", "'admin_settings'", "'.conf'"]
+63 risk_categories = filter_sensitive_files(file_data)
+63 ['file_data', 'name', 'extension'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "'admin_settings'", "'.conf'"]
+18 high_risk = []
+18 ['files_data', 'high_risk'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", '[]']
+19 medium_risk = []
+19 ['files_data', 'high_risk', 'medium_risk'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", '[]', '[]']
+20 low_risk = []
+20 ['files_data', 'high_risk', 'medium_risk', 'low_risk'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", '[]', '[]', '[]']
+22 for file_info in files_data:
+22 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", '[]', '[]', '[]', "{name: 'user_config', extension: '.json', permissions: '644', ...}"]
+23 if 'config' in file_info['name'] and file_info['score'] > 600:
+23 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", '[]', '[]', '[]', "{name: 'user_config', extension: '.json', permissions: '644', ...}"]
+22 for file_info in files_data:
+22 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", '[]', '[]', "{name: 'system', extension: '.env', permissions: '640', ...}"]
+23 if 'config' in file_info['name'] and file_info['score'] > 600:
+23 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", '[]', '[]', "{name: 'system', extension: '.env', permissions: '640', ...}"]
+25 elif file_info['extension'] in ['.env', '.key'] or file_info['score'] > 700:
+25 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", '[]', '[]', "{name: 'system', extension: '.env', permissions: '640', ...}"]
+22 for file_info in files_data:
+22 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}]", '[]', "{name: 'backup', extension: '.key', permissions: '600', ...}"]
+23 if 'config' in file_info['name'] and file_info['score'] > 600:
+23 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}]", '[]', "{name: 'backup', extension: '.key', permissions: '600', ...}"]
+25 elif file_info['extension'] in ['.env', '.key'] or file_info['score'] > 700:
+25 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}]", '[]', "{name: 'backup', extension: '.key', permissions: '600', ...}"]
+22 for file_info in files_data:
+22 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", '[]', "{name: 'public_data', extension: '.xml', permissions: '644', ...}"]
+23 if 'config' in file_info['name'] and file_info['score'] > 600:
+23 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", '[]', "{name: 'public_data', extension: '.xml', permissions: '644', ...}"]
+25 elif file_info['extension'] in ['.env', '.key'] or file_info['score'] > 700:
+25 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", '[]', "{name: 'public_data', extension: '.xml', permissions: '644', ...}"]
+22 for file_info in files_data:
+22 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "[{name: 'public_data', extension: '.xml', permissions: '644', ...}]", "{name: 'admin_settings', extension: '.conf', permissions: '600', ...}"]
+23 if 'config' in file_info['name'] and file_info['score'] > 600:
+23 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "[{name: 'public_data', extension: '.xml', permissions: '644', ...}]", "{name: 'admin_settings', extension: '.conf', permissions: '600', ...}"]
+25 elif file_info['extension'] in ['.env', '.key'] or file_info['score'] > 700:
+25 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "[{name: 'public_data', extension: '.xml', permissions: '644', ...}]", "{name: 'admin_settings', extension: '.conf', permissions: '600', ...}"]
+22 for file_info in files_data:
+22 ['files_data', 'high_risk', 'medium_risk', 'low_risk', 'file_info'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}, {name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}, {name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "[{name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]", "{name: 'admin_settings', extension: '.conf', permissions: '600', ...}"]
+30 return {'high': high_risk, 'medium': medium_risk, 'low': low_risk}
+30 ['high_risk', 'medium_risk', 'low_risk'] ["[{name: 'user_config', extension: '.json', permissions: '644', ...}]", "[{name: 'system', extension: '.env', permissions: '640', ...}, {name: 'backup', extension: '.key', permissions: '600', ...}]", "[{name: 'public_data', extension: '.xml', permissions: '644', ...}, {name: 'admin_settings', extension: '.conf', permissions: '600', ...}]"]
+66 security_metric = len(risk_categories['high']) * 5 + len(risk_categories['medium']) * 3
+66 ['security_metric', 'risk_categories'] ['11', '{high: [{...4 items}], medium: [{...4 items}, {...4 items}], low: [{...4 items}, {...4 items}]}']
+72 base_priority = (security_metric << 2) | (1 if len(risk_categories['high']) > 0 else 0)
+72 ['security_metric', 'base_priority', 'risk_categories'] ['11', '45', '{high: [{...4 items}], medium: [{...4 items}, {...4 items}], low: [{...4 items}, {...4 items}]}']
+79 priority_adjust = lambda x: x + 3 if len(risk_categories['high']) > 1 else x
+79 ['base_priority', 'risk_categories'] ['45', '{high: [{...4 items}], medium: [{...4 items}, {...4 items}], low: [{...4 items}, {...4 items}]}']
+82 result = priority_adjust(base_priority)
+82 ['base_priority'] ['45']
+87 return result
+87 ['result'] ['45']
+91 print(f"Result: {priority_level}")
+91 ['priority_level'] ['45']

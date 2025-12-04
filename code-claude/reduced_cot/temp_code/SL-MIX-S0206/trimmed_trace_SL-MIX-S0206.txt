@@ -1,0 +1,143 @@
+56
+final_priority
+---
+18 urgency_weight = 0.6
+18 ['tasks', 'urgency_weight'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6']
+19 importance_weight = 0.4
+19 ['tasks', 'urgency_weight', 'importance_weight'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4']
+22 highest_priority = 0
+22 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0']
+31 for i, (task_name, deadline, importance) in enumerate(tasks):
+31 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0', '0', "'Database migration'", '2', '5']
+33 urgency = calculate_urgency(deadline)
+33 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0', '0', "'Database migration'", '2', '5']
+PARAM_MAPPING {'days_left': {'actual_var': 'deadline', 'value': 2}}
+FUNCTION_ENTER 3 calculate_urgency def calculate_urgency(days_left):
+3 ['days_left'] [{'_type': 'int', '_value': 2}]
+5 base_urgency = 10 if days_left <= 0 else max(1, 10 - days_left)
+5 ['days_left', 'base_urgency'] ['2', '8']
+6 return base_urgency
+6 ['days_left', 'base_urgency'] ['2', '8']
+FUNCTION_RETURN 6 calculate_urgency {'_type': 'int', '_value': 8}
+34 raw_priority = (urgency * urgency_weight) + (importance * importance_weight)
+34 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0', '0', "'Database migration'", '2', '5', '8', '6.8']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0', '0', "'Database migration'", '2', '5', '8', '6.8']
+38 adjusted_priority = adjustment(raw_priority)
+38 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0', '0', "'Database migration'", '2', '5', '8', '6.8']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['x'] ['6.8']
+41 if adjusted_priority > highest_priority:
+41 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '0', '0', "'Database migration'", '2', '5', '8', '6.8', '10.2']
+42 highest_priority = adjusted_priority
+42 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '0', "'Database migration'", '2', '5', '8', '6.8', '10.2']
+46 if i == 2:
+46 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '0', "'Database migration'", '2', '5', '8', '6.8', '10.2']
+31 for i, (task_name, deadline, importance) in enumerate(tasks):
+31 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '8', '6.8', '10.2']
+33 urgency = calculate_urgency(deadline)
+33 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '8', '6.8', '10.2']
+PARAM_MAPPING {'days_left': {'actual_var': 'deadline', 'value': 7}}
+FUNCTION_ENTER 3 calculate_urgency def calculate_urgency(days_left):
+3 ['days_left'] [{'_type': 'int', '_value': 7}]
+5 base_urgency = 10 if days_left <= 0 else max(1, 10 - days_left)
+5 ['days_left', 'base_urgency'] ['7', '3']
+6 return base_urgency
+6 ['days_left', 'base_urgency'] ['7', '3']
+FUNCTION_RETURN 6 calculate_urgency {'_type': 'int', '_value': 3}
+34 raw_priority = (urgency * urgency_weight) + (importance * importance_weight)
+34 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '3', '3.0', '10.2']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '3', '3.0', '10.2']
+38 adjusted_priority = adjustment(raw_priority)
+38 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '3', '3.0', '10.2']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['x'] ['3.0']
+41 if adjusted_priority > highest_priority:
+41 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '3', '3.0', '3.0']
+46 if i == 2:
+46 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '1', "'API documentation'", '7', '3', '3', '3.0', '3.0']
+31 for i, (task_name, deadline, importance) in enumerate(tasks):
+31 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '2', "'Security audit'", '1', '5', '3', '3.0', '3.0']
+33 urgency = calculate_urgency(deadline)
+33 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '2', "'Security audit'", '1', '5', '3', '3.0', '3.0']
+PARAM_MAPPING {'days_left': {'actual_var': 'deadline', 'value': 1}}
+FUNCTION_ENTER 3 calculate_urgency def calculate_urgency(days_left):
+3 ['days_left'] [{'_type': 'int', '_value': 1}]
+5 base_urgency = 10 if days_left <= 0 else max(1, 10 - days_left)
+5 ['days_left', 'base_urgency'] ['1', '9']
+6 return base_urgency
+6 ['days_left', 'base_urgency'] ['1', '9']
+FUNCTION_RETURN 6 calculate_urgency {'_type': 'int', '_value': 9}
+34 raw_priority = (urgency * urgency_weight) + (importance * importance_weight)
+34 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '3.0']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '3.0']
+38 adjusted_priority = adjustment(raw_priority)
+38 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '3.0']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['x'] ['7.3999999999999995']
+41 if adjusted_priority > highest_priority:
+41 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '10.2', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1']
+42 highest_priority = adjusted_priority
+42 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1']
+46 if i == 2:
+46 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1']
+47 base_priority = raw_priority
+47 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority', 'base_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1', '7.3999999999999995']
+51 deadline_factor = 10 / (deadline + 1)
+51 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority', 'base_priority', 'deadline_factor'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1', '7.3999999999999995', '5.0']
+53 actual_priority = base_priority * deadline_factor
+53 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority', 'base_priority', 'deadline_factor', 'actual_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1', '7.3999999999999995', '5.0', '37.0']
+55 multiplier = 1.25
+55 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority', 'actual_priority', 'multiplier'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1', '37.0', '1.25']
+56 final_priority = actual_priority * multiplier
+56 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority', 'actual_priority', 'multiplier', 'final_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '2', "'Security audit'", '1', '5', '9', '7.3999999999999995', '11.1', '37.0', '1.25', '46.25']
+31 for i, (task_name, deadline, importance) in enumerate(tasks):
+31 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '9', '7.3999999999999995', '11.1']
+33 urgency = calculate_urgency(deadline)
+33 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '9', '7.3999999999999995', '11.1']
+PARAM_MAPPING {'days_left': {'actual_var': 'deadline', 'value': 4}}
+FUNCTION_ENTER 3 calculate_urgency def calculate_urgency(days_left):
+3 ['days_left'] [{'_type': 'int', '_value': 4}]
+5 base_urgency = 10 if days_left <= 0 else max(1, 10 - days_left)
+5 ['days_left', 'base_urgency'] ['4', '6']
+6 return base_urgency
+6 ['days_left', 'base_urgency'] ['4', '6']
+FUNCTION_RETURN 6 calculate_urgency {'_type': 'int', '_value': 6}
+34 raw_priority = (urgency * urgency_weight) + (importance * importance_weight)
+34 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '6', '5.199999999999999', '11.1']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '6', '5.199999999999999', '11.1']
+38 adjusted_priority = adjustment(raw_priority)
+38 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '6', '5.199999999999999', '11.1']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['x'] ['5.199999999999999']
+41 if adjusted_priority > highest_priority:
+41 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '6', '5.199999999999999', '5.199999999999999']
+46 if i == 2:
+46 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '3', "'UI redesign'", '4', '4', '6', '5.199999999999999', '5.199999999999999']
+31 for i, (task_name, deadline, importance) in enumerate(tasks):
+31 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '4', "'Performance testing'", '3', '4', '6', '5.199999999999999', '5.199999999999999']
+33 urgency = calculate_urgency(deadline)
+33 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '4', "'Performance testing'", '3', '4', '6', '5.199999999999999', '5.199999999999999']
+PARAM_MAPPING {'days_left': {'actual_var': 'deadline', 'value': 3}}
+FUNCTION_ENTER 3 calculate_urgency def calculate_urgency(days_left):
+3 ['days_left'] [{'_type': 'int', '_value': 3}]
+5 base_urgency = 10 if days_left <= 0 else max(1, 10 - days_left)
+5 ['days_left', 'base_urgency'] ['3', '7']
+6 return base_urgency
+6 ['base_urgency'] ['7']
+FUNCTION_RETURN 6 calculate_urgency {'_type': 'int', '_value': 7}
+34 raw_priority = (urgency * urgency_weight) + (importance * importance_weight)
+34 ['tasks', 'urgency_weight', 'importance_weight', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'urgency', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '0.6', '0.4', '11.1', '4', "'Performance testing'", '3', '4', '7', '5.800000000000001', '5.199999999999999']
+37 adjustment = lambda x: x * 1.5 if deadline <= 2 else x
+37 ['tasks', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '11.1', '4', "'Performance testing'", '3', '4', '5.800000000000001', '5.199999999999999']
+38 adjusted_priority = adjustment(raw_priority)
+38 ['tasks', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'raw_priority', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '11.1', '4', "'Performance testing'", '3', '4', '5.800000000000001', '5.199999999999999']
+41 if adjusted_priority > highest_priority:
+41 ['tasks', 'highest_priority', 'i', 'task_name', 'deadline', 'importance', 'adjusted_priority'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '11.1', '4', "'Performance testing'", '3', '4', '5.800000000000001']
+46 if i == 2:
+46 ['tasks', 'i', 'task_name', 'deadline', 'importance'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '4', "'Performance testing'", '3', '4']
+31 for i, (task_name, deadline, importance) in enumerate(tasks):
+31 ['tasks', 'i', 'task_name', 'deadline', 'importance'] ["[('Database migration', 2, 5), ('API documentation', 7, 3), ('Security audit', 1, 5), ('UI redesign', 4, 4), ('Performance testing', 3, 4)]", '4', "'Performance testing'", '3', '4']

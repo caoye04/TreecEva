@@ -1,0 +1,107 @@
+77
+priority_score
+---
+PARAM_MAPPING {'customer_data': {'actual_var': 'customer_data', 'value': {'customer_id': 'C1092', 'credit_score': 720, 'account_age': 42, 'income': 65000, 'transactions': [250, 340, 120, 500, 80], 'spending_habits': 'high', 'month': 9, 'loyalty_tier': 'gold'}}, 'metrics': {'actual_var': 'performance_metrics', 'value': {'response_time': 18, 'resolution_rate': 0.85, 'customer_satisfaction': 4.2}}}
+FUNCTION_ENTER 32 calculate_final_score def calculate_final_score(customer_data, metrics):
+32 ['customer_data', 'metrics'] [{'_type': 'dict', '_items': {'customer_id': {'_type': 'str', '_value': 'C1092'}, 'credit_score': {'_type': 'int', '_value': 720}, 'account_age': {'_type': 'int', '_value': 42}, 'income': {'_type': 'int', '_value': 65000}, 'transactions': {'_type': 'list', '_items': [{'_type': 'int', '_value': 250}, {'_type': 'int', '_value': 340}, {'_type': 'int', '_value': 120}, {'_type': 'int', '_value': 500}, {'_type': 'int', '_value': 80}], '_len': 5}}, '_len': 8}, {'_type': 'dict', '_items': {'response_time': {'_type': 'int', '_value': 18}, 'resolution_rate': {'_type': 'float', '_value': 0.85}, 'customer_satisfaction': {'_type': 'float', '_value': 4.2}}, '_len': 3}]
+34 credit_score = customer_data.get('credit_score', 650)
+34 ['customer_data', 'metrics', 'credit_score'] ["{customer_id: 'C1092', credit_score: 720, account_age: 42, ...}", '{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '720']
+35 account_age = customer_data.get('account_age', 24)  # in months
+35 ['customer_data', 'metrics', 'credit_score', 'account_age'] ["{customer_id: 'C1092', credit_score: 720, account_age: 42, ...}", '{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '720', '42']
+36 income = customer_data.get('income', 50000)
+36 ['customer_data', 'metrics', 'credit_score', 'account_age', 'income'] ["{customer_id: 'C1092', credit_score: 720, account_age: 42, ...}", '{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '720', '42', '65000']
+3 pattern_score = 0
+3 ['history', 'pattern_score'] ['[250, 340, 120, 500, 80]', '0']
+4 for transaction in history:
+4 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '0', '250']
+5 if transaction > 500:
+5 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '0', '250']
+7 elif transaction > 100:
+7 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '0', '250']
+8 pattern_score += 1
+8 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '1', '250']
+4 for transaction in history:
+4 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '1', '340']
+5 if transaction > 500:
+5 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '1', '340']
+7 elif transaction > 100:
+7 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '1', '340']
+8 pattern_score += 1
+8 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '2', '340']
+4 for transaction in history:
+4 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '2', '120']
+5 if transaction > 500:
+5 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '2', '120']
+7 elif transaction > 100:
+7 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '2', '120']
+8 pattern_score += 1
+8 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '3', '120']
+4 for transaction in history:
+4 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '3', '500']
+5 if transaction > 500:
+5 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '3', '500']
+7 elif transaction > 100:
+7 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '3', '500']
+8 pattern_score += 1
+8 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '4', '500']
+4 for transaction in history:
+4 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '4', '80']
+5 if transaction > 500:
+5 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '4', '80']
+7 elif transaction > 100:
+7 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '4', '80']
+4 for transaction in history:
+4 ['history', 'pattern_score', 'transaction'] ['[250, 340, 120, 500, 80]', '4', '80']
+9 return pattern_score * 1.5
+9 ['pattern_score'] ['4']
+PARAM_MAPPING {'income': {'actual_var': 'income', 'value': 65000}, 'spending_ratio': {'actual_var': '0.7', 'value': '0.7'}}
+FUNCTION_ENTER 17 calculate_potential_value def calculate_potential_value(income, spending_ratio):
+17 ['income', 'spending_ratio'] [{'_type': 'int', '_value': 65000}, {'_type': 'float', '_value': 0.7}]
+19 base_value = income * 0.01
+19 ['income', 'spending_ratio', 'base_value'] ['65000', '0.7', '650.0']
+20 multiplier = 1 + (spending_ratio * 0.5)
+20 ['spending_ratio', 'base_value', 'multiplier'] ['0.7', '650.0', '1.35']
+21 return base_value * multiplier
+21 ['base_value', 'multiplier'] ['650.0', '1.35']
+FUNCTION_RETURN 21 calculate_potential_value {'_type': 'float', '_value': 877.5000000000001}
+30 return score * seasonal_factors.get(month, 1.0)
+30 ['score', 'month', 'seasonal_factors'] ['100', '9', '{1: 0.95, 2: 0.92, 3: 0.98, ...}']
+49 risk_factor = calculate_risk_factor(credit_score, account_age)
+49 ['metrics', 'credit_score', 'account_age'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '720', '42']
+PARAM_MAPPING {'credit_score': {'actual_var': 'credit_score', 'value': 720}, 'account_age': {'actual_var': 'account_age', 'value': 42}}
+FUNCTION_ENTER 11 calculate_risk_factor def calculate_risk_factor(credit_score, account_age):
+11 ['credit_score', 'account_age'] [{'_type': 'int', '_value': 720}, {'_type': 'int', '_value': 42}]
+13 base_risk = 100 - (credit_score / 10)
+13 ['credit_score', 'account_age', 'base_risk'] ['720', '42', '28.0']
+14 age_adjustment = min(account_age / 12, 5)  # Cap at 5 years
+14 ['account_age', 'base_risk', 'age_adjustment'] ['42', '28.0', '3.5']
+15 return max(base_risk - age_adjustment * 3, 10)  # Minimum risk is 10
+15 ['account_age', 'base_risk', 'age_adjustment'] ['42', '28.0', '3.5']
+FUNCTION_RETURN 15 calculate_risk_factor {'_type': 'float', '_value': 17.5}
+52 base_score = 80 - (risk_factor * 0.5)
+52 ['metrics', 'account_age', 'risk_factor', 'base_score'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '17.5', '71.25']
+55 adjustment = 0
+55 ['metrics', 'account_age', 'base_score', 'adjustment'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '71.25', '0']
+56 if 'response_time' in metrics:
+56 ['metrics', 'account_age', 'base_score', 'adjustment'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '71.25', '0']
+58 response_hours = metrics['response_time']
+58 ['metrics', 'account_age', 'base_score', 'adjustment', 'response_hours'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '71.25', '0', '18']
+59 adjustment += 10 if response_hours < 24 else (5 if response_hours < 48 else 0)
+59 ['metrics', 'account_age', 'base_score', 'adjustment', 'response_hours'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '71.25', '10', '18']
+61 if 'resolution_rate' in metrics:
+61 ['metrics', 'account_age', 'base_score', 'adjustment'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '71.25', '10']
+63 resolution = metrics['resolution_rate']
+63 ['metrics', 'account_age', 'base_score', 'adjustment', 'resolution'] ['{response_time: 18, resolution_rate: 0.85, customer_satisfaction: 4.2}', '42', '71.25', '10', '0.85']
+64 adjustment += resolution * 10
+64 ['account_age', 'base_score', 'adjustment', 'resolution'] ['42', '71.25', '18.5', '0.85']
+71 engagement_factor = 1.2 if account_age > 36 else 1.0
+71 ['account_age', 'base_score', 'adjustment', 'engagement_factor'] ['42', '71.25', '18.5', '1.2']
+74 priority_calculator = lambda base, adj, factor: (base + adj) * factor
+74 ['base_score', 'adjustment', 'engagement_factor'] ['71.25', '18.5', '1.2']
+77 priority_score = priority_calculator(base_score, adjustment, engagement_factor)
+77 ['base_score', 'adjustment', 'engagement_factor'] ['71.25', '18.5', '1.2']
+74 priority_calculator = lambda base, adj, factor: (base + adj) * factor
+74 ['base', 'adj', 'factor'] ['71.25', '18.5', '1.2']
+84 return round(priority_score, 2)
+84 ['priority_score'] ['107.7']
+FUNCTION_RETURN 84 calculate_final_score {'_type': 'float', '_value': 107.7}

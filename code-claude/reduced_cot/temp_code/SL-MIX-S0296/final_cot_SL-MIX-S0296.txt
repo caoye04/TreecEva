@@ -1,0 +1,97 @@
+Target: Find the value of variable target_frequency after [line 65] executes
+
+[line 33]  signal_data = [42, 18, 35, 27, 13, 19, 31, 24]
+Compute: [42, 18, 35, 27, 13, 19, 31, 24] = [42, 18, 35, 27, 13, ...]
+[line 37]  processed_signal, frequencies, bands = analyze_signal(signal_data)
+(Missing param: 'func_name')
+[line 6]  processed_data = []
+Compute: [] = []
+[line 7]  for i in range(len(raw_data)):
+Loop Start: i takes its first value 0
+[line 8]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 7]  for i in range(len(raw_data)):
+Loop Iteration: i is now 1 (iteration 2)
+[line 8]  if i % 2 == 0:
+Condition: True, entering 'if' block
+... [Line 7] repeats 5 more times ...
+... [Line 7] repeats 5 more times ...
+[line 7]  for i in range(len(raw_data)):
+Loop Iteration: i is now 7 (iteration 8)
+[line 8]  if i % 2 == 0:
+Condition: True, entering 'if' block
+[line 7]  for i in range(len(raw_data)):
+Loop End: Iteration finished
+[line 14]  misleading_bands = []
+Compute: [] = []
+[line 15]  for i in range(3):
+Loop Start: i takes its first value 0
+[line 15]  for i in range(3):
+Loop End: Iteration finished
+[line 15]  for i in range(3):
+Loop End: Iteration finished
+[line 15]  for i in range(3):
+Loop End: Iteration finished
+[line 20]  potential_frequencies = []
+Compute: [] = []
+[line 21]  for i in range(len(processed_data) - 2):
+Loop Start: i takes its first value 0
+[line 22]  if processed_data[i] > noise_threshold:
+Condition: True, entering 'if' block
+[line 24]  freq = (processed_data[i] ^ processed_data[i+1]) | (processed_data[i+2] & 0x3F)
+Compute: (processed_data[i] ^ processed_data[i+1]) | (processed_data[i+2] & 0x3F), where processed_data=[84, 9, 70, 13, 26, ...] (defined at [line 6]), i=0 (defined at [line 21]) = 95
+[line 21]  for i in range(len(processed_data) - 2):
+Loop Iteration: i is now 1 (iteration 2)
+[line 22]  if processed_data[i] > noise_threshold:
+Condition: True, entering 'if' block
+... [Line 21] repeats 3 more times ...
+... [Line 21] repeats 3 more times ...
+... [Line 21] repeats 3 more times ...
+[line 21]  for i in range(len(processed_data) - 2):
+Loop Iteration: i is now 5 (iteration 6)
+[line 22]  if processed_data[i] > noise_threshold:
+Condition: True, entering 'if' block
+[line 21]  for i in range(len(processed_data) - 2):
+Loop End: Iteration finished
+[line 30]  return processed_data, potential_frequencies, misleading_bands
+Return: processed_data, potential_frequencies, misleading_bands
+[line 41]  filter_results = []
+Compute: [] = []
+[line 43]  for freq in frequencies:
+Loop Start: freq takes its first value 95
+[line 43]  for freq in frequencies:
+Loop End: Iteration finished
+[line 43]  for freq in frequencies:
+Loop End: Iteration finished
+[line 43]  for freq in frequencies:
+Loop End: Iteration finished
+[line 43]  for freq in frequencies:
+Loop End: Iteration finished
+[line 43]  for freq in frequencies:
+Loop End: Iteration finished
+[line 43]  for freq in frequencies:
+Loop End: Iteration finished
+[line 53]  pattern_strength = []
+Compute: [] = []
+[line 54]  for i in range(len(filter_results) - 1):
+Loop Start: i takes its first value 0
+[line 54]  for i in range(len(filter_results) - 1):
+Loop End: Iteration finished
+[line 54]  for i in range(len(filter_results) - 1):
+Loop End: Iteration finished
+[line 54]  for i in range(len(filter_results) - 1):
+Loop End: Iteration finished
+[line 54]  for i in range(len(filter_results) - 1):
+Loop End: Iteration finished
+[line 54]  for i in range(len(filter_results) - 1):
+Loop End: Iteration finished
+[line 60]  base_index = (sum(pattern_strength) % len(filter_results))
+Compute: (sum(pattern_strength) % len(filter_results)), where pattern_strength=[13, 13, 13, 45, 45] (defined at [line 53]), filter_results=[31, 45, 31, 45, 47, ...] (defined at [line 41]) = 3
+[line 61]  offset = (bands[1] % 3) - 1
+Compute: (bands[1] % 3) - 1, where bands=[159, 47, 79] (an unknown source) = 1
+[line 62]  effective_index = (base_index + offset) % len(filter_results)
+Compute: (base_index + offset) % len(filter_results), where base_index=3 (defined at [line 60]), offset=1 (defined at [line 61]), filter_results=[31, 45, 31, 45, 47, ...] (defined at [line 41]) = 4
+[line 65]  target_frequency = filter_results[effective_index] & 0xFF
+Compute: filter_results[effective_index] & 0xFF, where filter_results=[31, 45, 31, 45, 47, ...] (defined at [line 41]), effective_index=4 (defined at [line 62]) = 47
+
+Answer: target_frequency = 47 (last updated on defined at [line 65])

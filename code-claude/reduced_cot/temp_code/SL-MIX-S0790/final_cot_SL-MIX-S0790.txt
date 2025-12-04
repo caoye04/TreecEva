@@ -1,0 +1,64 @@
+Target: Find the value of variable effective_signal after [line 67] executes
+
+[line 11]  sensor_data = [12, 8, 15, 10, 7, 9, 14]
+Compute: [12, 8, 15, 10, 7, 9, 14] = [12, 8, 15, 10, 7, ...]
+[line 12]  background_noise = 3
+Assign: background_noise = 3
+[line 15]  filtered_readings = [max(0, reading - background_noise) for reading in sensor_data]
+Compute: [max(0, reading - background_noise) for reading in sensor_data], where reading=12 (an unknown source), background_noise=3 (defined at [line 12]), sensor_data=[12, 8, 15, 10, 7, ...] (defined at [line 11]) = ?
+[line 18]  signal_strength = sum(filtered_readings) // len(filtered_readings)
+Compute: sum(filtered_readings) // len(filtered_readings), where filtered_readings=[9, 5, 12, 7, 4, ...] (defined at [line 15]) = 7
+[line 21]  frequency_bands = {'low': 0.2, 'mid': 0.5, 'high': 0.3}
+Compute: {'low': 0.2, 'mid': 0.5, 'high': 0.3} = {low: 0.2, mid: 0.5, high: 0.3}
+[line 27]  for i, reading in enumerate(filtered_readings):
+(Missing param: 'iter_var')
+[line 28]  if reading > 0:
+Condition: True, entering 'if' block
+[line 27]  for i, reading in enumerate(filtered_readings):
+(Missing param: 'iter_var')
+[line 28]  if reading > 0:
+Condition: True, entering 'if' block
+... [Line 27] repeats 4 more times ...
+... [Line 27] repeats 4 more times ...
+[line 27]  for i, reading in enumerate(filtered_readings):
+(Missing param: 'iter_var')
+[line 28]  if reading > 0:
+Condition: True, entering 'if' block
+[line 27]  for i, reading in enumerate(filtered_readings):
+Loop End: Iteration finished
+[line 38]  amplification_modes = ['low', 'medium', 'high']
+Compute: ['low', 'medium', 'high'] = ['low', 'medium', 'high']
+[line 39]  selected_mode = amplification_modes[1]  # medium mode
+Compute: amplification_modes[1]  # medium mode, where amplification_modes=['low', 'medium', 'high'] (defined at [line 38]) = 'medium'
+[line 41]  amplification_factors = {'low': 1.5, 'medium': 2.5, 'high': 4.0}
+Compute: {'low': 1.5, 'medium': 2.5, 'high': 4.0} = {low: 1.5, medium: 2.5, high: 4.0}
+[line 42]  amplification_factor = int(amplification_factors[selected_mode])
+Call function int(amplification_factors[selected_mode])
+[line 45]  if selected_mode == 'high':
+Condition: True, entering 'if' block
+[line 48]  elif selected_mode == 'low':
+'elif' Condition: True, entering block
+[line 56]  for band, weight in frequency_bands.items():
+(Missing param: 'iter_var')
+[line 57]  if band == 'high':
+Condition: True, entering 'if' block
+[line 59]  elif band == 'low':
+'elif' Condition: True, entering block
+[line 56]  for band, weight in frequency_bands.items():
+(Missing param: 'iter_var')
+[line 57]  if band == 'high':
+Condition: True, entering 'if' block
+[line 59]  elif band == 'low':
+'elif' Condition: True, entering block
+[line 56]  for band, weight in frequency_bands.items():
+(Missing param: 'iter_var')
+[line 57]  if band == 'high':
+Condition: True, entering 'if' block
+[line 56]  for band, weight in frequency_bands.items():
+Loop End: Iteration finished
+[line 63]  noise_reduction = 2
+Assign: noise_reduction = 2
+[line 67]  effective_signal = (signal_strength * amplification_factor) // noise_reduction
+Compute: (signal_strength * amplification_factor) // noise_reduction, where signal_strength=7 (defined at [line 18]), amplification_factor=2 (defined at [line 42]), noise_reduction=2 (defined at [line 63]) = 7
+
+Answer: effective_signal = 7 (last updated on defined at [line 67])

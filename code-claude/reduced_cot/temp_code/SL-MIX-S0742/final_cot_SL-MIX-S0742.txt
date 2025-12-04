@@ -1,0 +1,107 @@
+Target: Find the value of variable optimal_path_length after [line 116] executes
+
+[line 84]  nodes = ["A", "B", "C", "D", "E"]
+Compute: ["A", "B", "C", "D", "E"] = ['A', 'B', 'C', 'D', 'E']
+[line 100]  metrics, efficiency = calculate_network_metrics(nodes, connections, traffic_patterns)
+(Missing param: 'func_name')
+[line 6]  network = defaultdict(list)
+Call function defaultdict(list)
+[line 7]  for src, dest, bandwidth in connections:
+(Missing param: 'iter_var')
+[line 7]  for src, dest, bandwidth in connections:
+Loop End: Iteration finished
+[line 7]  for src, dest, bandwidth in connections:
+Loop End: Iteration finished
+[line 7]  for src, dest, bandwidth in connections:
+Loop End: Iteration finished
+[line 7]  for src, dest, bandwidth in connections:
+Loop End: Iteration finished
+[line 7]  for src, dest, bandwidth in connections:
+Loop End: Iteration finished
+[line 7]  for src, dest, bandwidth in connections:
+Loop End: Iteration finished
+[line 13]  for node in nodes:
+Loop Start: node takes its first value 'A'
+[line 13]  for node in nodes:
+Loop End: Iteration finished
+[line 13]  for node in nodes:
+Loop End: Iteration finished
+[line 13]  for node in nodes:
+Loop End: Iteration finished
+[line 13]  for node in nodes:
+Loop End: Iteration finished
+[line 13]  for node in nodes:
+Loop End: Iteration finished
+[line 19]  congestion = Counter()
+Call function Counter()
+[line 20]  for pattern in traffic_patterns:
+Loop Start: pattern takes its first value ('A', 'C', 5)
+[line 21]  source, destination, volume = pattern
+(Missing param: 'result')
+[line 20]  for pattern in traffic_patterns:
+Loop Iteration: pattern is now ('B', 'D', 8) (iteration 2)
+[line 21]  source, destination, volume = pattern
+(Missing param: 'result')
+[line 20]  for pattern in traffic_patterns:
+Loop Iteration: pattern is now ('E', 'B', 12) (iteration 3)
+[line 21]  source, destination, volume = pattern
+(Missing param: 'result')
+[line 20]  for pattern in traffic_patterns:
+Loop End: Iteration finished
+[line 34]  routing_metrics = {}
+Compute: {} = {}
+[line 37]  theoretical_max = sum(b for _, _, b in connections)
+Call function sum(b for _, _, b in connections)
+[line 42]  scaling_coefficient = 2.5 if len(nodes) > 5 else 1.8
+Compute: 2.5 if len(nodes) > 5 else 1.8, where nodes=['A', 'B', 'C', 'D', 'E'] (defined at [line 84]) = 1.8
+[line 56]  node_degrees = {n: len(network[n]) for n in nodes}
+Compute: {n: len(network[n]) for n in nodes}, where n='A' (an unknown source), network={A: [(...2 items), (...2 items)], B: [(...2 items), (...2 items), (...2 items)], C: [(...2 items), (...2 items)], ...} (defined at [line 6]), nodes=['A', 'B', 'C', 'D', 'E'] (defined at [line 84]) = ?
+[line 57]  if sum(node_degrees.values()) > 0:
+Condition: True, entering 'if' block
+[line 58]  connectivity_index = len(connections) / sum(node_degrees.values())
+Compute: len(connections) / sum(node_degrees.values()), where connections=[('A', 'B', 10), ('B', 'C', 15), ('C', 'D', 20), ('D', 'E', 25), ('E', 'A', 30), ...] (an unknown source), node_degrees={A: 2, B: 3, C: 2, ...} (defined at [line 56]) = 0.5
+[line 60]  essential_path_metric = int(42 * connectivity_index)
+Call function int(42 * connectivity_index)
+[line 63]  routing_metrics["connectivity"] = connectivity_index
+(Missing param: 'result')
+[line 64]  routing_metrics["essential"] = essential_path_metric
+(Missing param: 'result')
+[line 65]  routing_metrics["theoretical"] = theoretical_max
+(Missing param: 'result')
+[line 73]  efficiency_score = 0
+Assign: efficiency_score = 0
+[line 74]  for node, degree in node_degrees.items():
+(Missing param: 'iter_var')
+[line 75]  if degree > 0 and node in congestion:
+Condition: True, entering 'if' block
+[line 76]  efficiency_score += (congestion[node] / degree)
+Update: efficiency_score changed from 0 (defined at defined at [line 73]) to 0+(congestion[node] / degree) = 2.5
+[line 74]  for node, degree in node_degrees.items():
+(Missing param: 'iter_var')
+[line 75]  if degree > 0 and node in congestion:
+Condition: True, entering 'if' block
+[line 76]  efficiency_score += (congestion[node] / degree)
+Update: efficiency_score changed from 2.5 (defined at defined at [line 76]) to 2.5+(congestion[node] / degree) = 9.166666666666668
+... [Line 74] repeats 2 more times ...
+... [Line 74] repeats 2 more times ...
+... [Line 74] repeats 2 more times ...
+[line 74]  for node, degree in node_degrees.items():
+(Missing param: 'iter_var')
+[line 75]  if degree > 0 and node in congestion:
+Condition: True, entering 'if' block
+[line 76]  efficiency_score += (congestion[node] / degree)
+Update: efficiency_score changed from 15.666666666666668 (defined at defined at [line 76]) to 15.666666666666668+(congestion[node] / degree) = 19.666666666666668
+[line 74]  for node, degree in node_degrees.items():
+Loop End: Iteration finished
+[line 79]  normalized_efficiency = min(100, int(efficiency_score * scaling_coefficient))
+Call function min(100, int(efficiency_score * scaling_coefficient))
+[line 81]  return routing_metrics, normalized_efficiency
+Return: routing_metrics, normalized_efficiency
+[line 103]  if efficiency > 50:
+Condition: True, entering 'if' block
+[line 107]  routing_metrics = {"essential": 21}
+Compute: {"essential": 21} = {essential: 21}
+[line 116]  optimal_path_length = routing_metrics["essential"]
+Compute: routing_metrics["essential"], where routing_metrics={essential: 21} (defined at [line 107]) = 21
+
+Answer: optimal_path_length = 21 (last updated on defined at [line 116])

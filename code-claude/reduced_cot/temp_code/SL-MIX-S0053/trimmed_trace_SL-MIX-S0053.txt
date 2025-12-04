@@ -1,0 +1,91 @@
+88
+final_priority
+---
+66 email_content = "URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP."
+66 ['email_content'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'"]
+67 sender_email = "manager@company.com"
+67 ['email_content', 'sender_email'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "'manager@company.com'"]
+70 sender_domain = extract_domain(sender_email)
+70 ['email_content', 'sender_email'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "'manager@company.com'"]
+18 if '@' in email_address:
+18 ['email_address'] ["'manager@company.com'"]
+19 return email_address.split('@')[1]
+19 ['email_address'] ["'manager@company.com'"]
+85 final_priority = calculate_email_priority(email_content, sender_domain)
+85 ['email_content', 'sender_domain'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "'company.com'"]
+PARAM_MAPPING {'content': {'actual_var': 'email_content', 'value': 'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'}, 'sender_domain': {'actual_var': 'sender_domain', 'value': 'company.com'}}
+FUNCTION_ENTER 22 calculate_email_priority def calculate_email_priority(content, sender_domain):
+22 ['content', 'sender_domain'] [{'_type': 'str', '_value': 'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'}, {'_type': 'str', '_value': 'company.com'}]
+25 priority_score = 50
+25 ['content', 'sender_domain', 'priority_score'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "'company.com'", '50']
+PARAM_MAPPING {'text': {'actual_var': 'content', 'value': 'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'}}
+FUNCTION_ENTER 1 check_spam_indicators def check_spam_indicators(text):
+1 ['text'] [{'_type': 'str', '_value': 'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'}]
+2 spam_words = ['free', 'discount', 'offer', 'limited']
+2 ['text', 'spam_words'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "['free', 'discount', 'offer', 'limited']"]
+3 count = 0
+3 ['text', 'spam_words', 'count'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "['free', 'discount', 'offer', 'limited']", '0']
+6 text_lower = text.lower()
+6 ['text', 'spam_words', 'count', 'text_lower'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'"]
+8 for word in spam_words:
+8 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'free'"]
+9 if word in text_lower:
+9 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'free'"]
+8 for word in spam_words:
+8 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'discount'"]
+9 if word in text_lower:
+9 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'discount'"]
+8 for word in spam_words:
+8 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'offer'"]
+9 if word in text_lower:
+9 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'offer'"]
+8 for word in spam_words:
+8 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'limited'"]
+9 if word in text_lower:
+9 ['spam_words', 'count', 'text_lower', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'urgent: important meeting tomorrow with client. please prepare the presentation asap.'", "'limited'"]
+8 for word in spam_words:
+8 ['spam_words', 'count', 'word'] ["['free', 'discount', 'offer', 'limited']", '0', "'limited'"]
+14 return count
+14 ['count', 'word'] ['0', "'limited'"]
+FUNCTION_RETURN 14 check_spam_indicators {'_type': 'int', '_value': 0}
+41 domain_bonus = trusted_domains.get(sender_domain, 0)
+41 ['content', 'sender_domain', 'priority_score', 'trusted_domains', 'domain_bonus'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", "'company.com'", '50', '{company.com: 10, partner.org: 8, client.net: 5}', '10']
+44 urgency_words = ['urgent', 'immediate', 'asap', 'important']
+44 ['content', 'priority_score', 'domain_bonus', 'urgency_words'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']"]
+45 urgency_count = 0
+45 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '0']
+47 for word in urgency_words:
+47 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '0', "'urgent'"]
+48 if word in content.lower():
+48 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '0', "'urgent'"]
+49 urgency_count += 1
+49 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '1', "'urgent'"]
+47 for word in urgency_words:
+47 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '1', "'immediate'"]
+48 if word in content.lower():
+48 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '1', "'immediate'"]
+47 for word in urgency_words:
+47 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '1', "'asap'"]
+48 if word in content.lower():
+48 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '1', "'asap'"]
+49 urgency_count += 1
+49 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '2', "'asap'"]
+47 for word in urgency_words:
+47 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '2', "'important'"]
+48 if word in content.lower():
+48 ['content', 'priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ["'URGENT: Important meeting tomorrow with client. Please prepare the presentation ASAP.'", '50', '10', "['urgent', 'immediate', 'asap', 'important']", '2', "'important'"]
+49 urgency_count += 1
+49 ['priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ['50', '10', "['urgent', 'immediate', 'asap', 'important']", '3', "'important'"]
+47 for word in urgency_words:
+47 ['priority_score', 'domain_bonus', 'urgency_words', 'urgency_count', 'word'] ['50', '10', "['urgent', 'immediate', 'asap', 'important']", '3', "'important'"]
+52 if spam_count >= 2:
+52 ['priority_score', 'domain_bonus', 'urgency_count'] ['50', '10', '3']
+57 priority_score += domain_bonus
+57 ['priority_score', 'domain_bonus', 'urgency_count'] ['60', '10', '3']
+60 priority_score += urgency_count * 7
+60 ['priority_score', 'urgency_count'] ['81', '3']
+63 return max(min(priority_score, 100), 0)
+63 ['priority_score'] ['81']
+FUNCTION_RETURN 63 calculate_email_priority {'_type': 'int', '_value': 81}
+88 print(f"Email priority score: {final_priority}")
+88 ['final_priority'] ['81']

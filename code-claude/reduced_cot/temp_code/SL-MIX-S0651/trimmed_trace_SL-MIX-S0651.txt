@@ -1,0 +1,113 @@
+70
+optimal_frequency
+---
+PARAM_MAPPING {'signal_data': {'actual_var': 'signal_data', 'value': [0.2, 0.7, 0.9, 0.4, 0.6, 0.8, 0.3, 0.5]}, 'interference_patterns': {'actual_var': 'interference_patterns', 'value': [12, 7, 25, 9, 14]}}
+FUNCTION_ENTER 37 calculate_optimal_frequency def calculate_optimal_frequency(signal_data, interference_patterns):
+37 ['signal_data', 'interference_patterns'] [{'_type': 'list', '_items': [{'_type': 'float', '_value': 0.2}, {'_type': 'float', '_value': 0.7}, {'_type': 'float', '_value': 0.9}, {'_type': 'float', '_value': 0.4}, {'_type': 'float', '_value': 0.6}, {'_type': 'float', '_value': 0.8}, {'_type': 'float', '_value': 0.3}, {'_type': 'float', '_value': 0.5}], '_len': 8}, {'_type': 'list', '_items': [{'_type': 'int', '_value': 12}, {'_type': 'int', '_value': 7}, {'_type': 'int', '_value': 25}, {'_type': 'int', '_value': 9}, {'_type': 'int', '_value': 14}], '_len': 5}]
+39 signal_quality, filtered_data = process_signal(signal_data, 0.3)
+39 ['signal_data', 'interference_patterns'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '[12, 7, 25, 9, 14]']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.2']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.7']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.9']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.4']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.6']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.8']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.3']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'x'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '0.5']
+3 filtered = [x * 0.8 for x in data if x > threshold]
+3 ['data', 'threshold', 'filtered'] ['[0.2, 0.7, 0.9, 0.4, 0.6, ...]', '0.3', '[0.5599999999999999, 0.7200000000000001, 0.32000000000000006, 0.48, 0.6400000000000001, ...]']
+4 noise_reduction = sum(filtered) / len(filtered) if filtered else 0
+4 ['filtered', 'noise_reduction'] ['[0.5599999999999999, 0.7200000000000001, 0.32000000000000006, 0.48, 0.6400000000000001, ...]', '0.52']
+5 return noise_reduction, filtered
+5 ['filtered', 'noise_reduction'] ['[0.5599999999999999, 0.7200000000000001, 0.32000000000000006, 0.48, 0.6400000000000001, ...]', '0.52']
+49 interference_strength, top_sources = analyze_interference(interference_patterns)
+49 ['interference_patterns', 'signal_quality'] ['[12, 7, 25, 9, 14]', '0.52']
+9 strength = 0
+9 ['patterns', 'strength'] ['[12, 7, 25, 9, 14]', '0']
+10 priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+10 ['patterns', 'strength', 'i', 'p'] ['[12, 7, 25, 9, 14]', '0', '0', '12']
+10 priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+10 ['patterns', 'strength', 'i', 'p'] ['[12, 7, 25, 9, 14]', '0', '1', '7']
+10 priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+10 ['patterns', 'strength', 'i', 'p'] ['[12, 7, 25, 9, 14]', '0', '2', '25']
+10 priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+10 ['patterns', 'strength', 'i', 'p'] ['[12, 7, 25, 9, 14]', '0', '3', '9']
+10 priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+10 ['patterns', 'strength', 'i', 'p'] ['[12, 7, 25, 9, 14]', '0', '4', '14']
+10 priority_queue = [(i, p % 10) for i, p in enumerate(patterns)]
+10 ['patterns', 'strength', 'priority_queue'] ['[12, 7, 25, 9, 14]', '0', '[(0, 2), (1, 7), (2, 5), (3, 9), (4, 4)]']
+13 for idx, (pos, priority) in enumerate(priority_queue):
+13 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['0', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '0', '3', '9']
+14 if idx < 3:  # Only consider top 3 interference sources
+14 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['0', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '0', '3', '9']
+15 strength += priority * 1.5
+15 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['13.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '0', '3', '9']
+13 for idx, (pos, priority) in enumerate(priority_queue):
+13 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['13.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '1', '1', '7']
+14 if idx < 3:  # Only consider top 3 interference sources
+14 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['13.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '1', '1', '7']
+15 strength += priority * 1.5
+15 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['24.0', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '1', '1', '7']
+13 for idx, (pos, priority) in enumerate(priority_queue):
+13 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['24.0', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '2', '2', '5']
+14 if idx < 3:  # Only consider top 3 interference sources
+14 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['24.0', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '2', '2', '5']
+15 strength += priority * 1.5
+15 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['31.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '2', '2', '5']
+13 for idx, (pos, priority) in enumerate(priority_queue):
+13 ['strength', 'priority_queue', 'idx', 'pos', 'priority'] ['31.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '3', '4', '4']
+14 if idx < 3:  # Only consider top 3 interference sources
+14 ['strength', 'priority_queue', 'idx'] ['31.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]', '3']
+17 break
+17 ['strength', 'priority_queue'] ['31.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]']
+19 return strength, priority_queue[:3]
+19 ['strength', 'priority_queue'] ['31.5', '[(3, 9), (1, 7), (2, 5), (4, 4), (0, 2)]']
+57 frequency_bands, _ = calculate_frequency_bands(signal_quality * 10)
+57 ['interference_strength', 'signal_quality'] ['31.5', '0.52']
+23 bands = []
+23 ['bands'] ['[]']
+26 for i in range(5):
+26 ['bands', 'i'] ['[]', '0']
+26 for i in range(5):
+26 ['bands', 'i'] ['[110.4]', '1']
+26 for i in range(5):
+26 ['bands', 'i'] ['[110.4, 210.4]', '2']
+26 for i in range(5):
+26 ['bands', 'i'] ['[110.4, 210.4, 310.4]', '3']
+26 for i in range(5):
+26 ['bands', 'i'] ['[110.4, 210.4, 310.4, 410.4]', '4']
+26 for i in range(5):
+26 ['bands', 'i'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', '4']
+32 noise_bands = {b + 20 for b in bands if b % 2 == 0}
+32 ['bands', 'b'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', '110.4']
+32 noise_bands = {b + 20 for b in bands if b % 2 == 0}
+32 ['bands', 'b'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', '210.4']
+32 noise_bands = {b + 20 for b in bands if b % 2 == 0}
+32 ['bands', 'b'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', '310.4']
+32 noise_bands = {b + 20 for b in bands if b % 2 == 0}
+32 ['bands', 'b'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', '410.4']
+32 noise_bands = {b + 20 for b in bands if b % 2 == 0}
+32 ['bands', 'b'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', '510.4']
+32 noise_bands = {b + 20 for b in bands if b % 2 == 0}
+32 ['bands', 'noise_bands'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', 'set()']
+35 return bands, noise_bands
+35 ['bands', 'noise_bands'] ['[110.4, 210.4, 310.4, 410.4, 510.4]', 'set()']
+60 band_index = int(interference_strength) % len(frequency_bands)
+60 ['interference_strength', 'frequency_bands', 'band_index', 'signal_quality'] ['31.5', '[110.4, 210.4, 310.4, 410.4, 510.4]', '1', '0.52']
+61 base_freq = frequency_bands[band_index]
+61 ['interference_strength', 'frequency_bands', 'band_index', 'base_freq', 'signal_quality'] ['31.5', '[110.4, 210.4, 310.4, 410.4, 510.4]', '1', '210.4', '0.52']
+64 if signal_quality > 5:
+64 ['interference_strength', 'base_freq', 'signal_quality'] ['31.5', '210.4', '0.52']
+70 optimal_frequency = base_freq - (interference_strength * 1.5)
+70 ['interference_strength', 'base_freq', 'optimal_frequency'] ['31.5', '210.4', '163.15']
+76 return optimal_frequency
+76 ['optimal_frequency'] ['163.15']
+FUNCTION_RETURN 76 calculate_optimal_frequency {'_type': 'float', '_value': 163.15}

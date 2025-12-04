@@ -1,0 +1,20 @@
+Target: Find the value of variable filtered_sum after [line 34] executes
+
+[line 5]  base_compounds = [c for c in compounds if c > 0]
+Compute: [c for c in compounds if c > 0], where c=10 (an unknown source), compounds=[10, 15, -3, 20, -2, ...] (an unknown source) = ?
+[line 6]  impurities = [abs(c) for c in compounds if c < 0]
+Compute: [abs(c) for c in compounds if c < 0], where c=10 (an unknown source), compounds=[10, 15, -3, 20, -2, ...] (an unknown source) = ?
+[line 9]  purity_index = sum(base_compounds) - sum(impurities)
+Compute: sum(base_compounds) - sum(impurities), where base_compounds=[10, 15, 20, 8, 12] (defined at [line 5]), impurities=[3, 2, 1] (defined at [line 6]) = 59
+[line 10]  normalized_purity = min(100, max(0, purity_index))
+Call function min(100, max(0, purity_index))
+[line 21]  potential_yield = [c for c in base_compounds if c > threshold]
+Compute: [c for c in base_compounds if c > threshold], where c=10 (an unknown source), base_compounds=[10, 15, 20, 8, 12] (defined at [line 5]), threshold=9 (an unknown source) = ?
+[line 25]  catalyst_effect = 2 if normalized_purity > 75 else 1
+Compute: 2 if normalized_purity > 75 else 1, where normalized_purity=59 (defined at [line 10]) = 1
+[line 28]  product = [p * catalyst_effect for p in potential_yield]
+Compute: [p * catalyst_effect for p in potential_yield], where p=10 (an unknown source), catalyst_effect=1 (defined at [line 25]), potential_yield=[10, 15, 20, 12] (defined at [line 21]) = ?
+[line 34]  filtered_sum = sum(product)
+Call function sum(product=[10, 15, 20, 12] (defined at [line 28]))
+
+Answer: filtered_sum = 57 (last updated on defined at [line 34])
