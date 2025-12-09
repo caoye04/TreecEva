@@ -99,7 +99,15 @@ class NaturalCOTGenerator:
             return None
         
         with open(trimmed_file, 'r', encoding='utf-8') as f:
-            return f.read()
+            content = f.read()
+        
+        # 如果内容超过10万字符，截断到10万字符
+        MAX_LENGTH = 100000
+        if len(content) > MAX_LENGTH:
+            content = content[:MAX_LENGTH]
+            print(f"    ⚠ 警告: trace文件过长，已截断到 {MAX_LENGTH} 字符")
+        
+        return content
     
     def _generate_prompt(self, description, code, trimmed_trace):
         """
@@ -399,14 +407,14 @@ def main():
         print("\n错误: 必须指定 --all 或 --case")
         return
 
-    # API配置 - 与 ai_analyzer.py 保持一致
-    API_KEY = "sk-tT9Ddv4cOCl5BXW4kivhRQ"
-    BASE_URL = "https://llmapi.paratera.com/v1"
+    # API配置
+    API_KEY = "sk-gq8qRNNiNIjS0x8tzfMl8F9bscL4wopT7oA2qD2FU8xKTrnp"
+    BASE_URL = "https://api.ezai88.com/v1"
 
     api_config = {
         "base_url": BASE_URL,
         "api_key": API_KEY,
-        "model": "DeepSeek-V3.2-Exp"
+        "model": "claude-3-7-sonnet-20250219"
     }
 
     print(f"{'='*60}")
