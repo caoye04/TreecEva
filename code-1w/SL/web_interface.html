@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据集管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Highlight.js 语法高亮 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/c.min.js"></script>
+    
+    <style>
+        .log-container {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .log-stdout { color: #10b981; }
+        .log-stderr { color: #ef4444; }
+        .log-info { color: #3b82f6; }
+        .log-status { color: #8b5cf6; }
+        .log-error { color: #f59e0b; }
+        
+        /* 代码块样式优化 */
+        .code-block {
+            position: relative;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #21252b;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #181a1f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .code-language {
+            color: #abb2bf;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .copy-button {
+            background: #282c34;
+            color: #abb2bf;
+            border: 1px solid #3e4451;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .copy-button:hover {
+            background: #3e4451;
+            color: #61afef;
+        }
+        
+        .copy-button.copied {
+            background: #98c379;
+            color: #21252b;
+            border-color: #98c379;
+        }
+        
+        /* 行号样式 */
+        .hljs {
+            padding: 1rem !important;
+            background: #282c34 !important;
+            overflow-x: auto;
+        }
+        
+        .code-with-lines {
+            display: flex;
+        }
+        
+        .line-numbers {
+            padding: 1rem 0.5rem 1rem 1rem;
+            background: #21252b;
+            color: #5c6370;
+            text-align: right;
+            user-select: none;
+            border-right: 1px solid #181a1f;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .line-numbers span {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const API_BASE = 'http://localhost:5000/api';
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('overview');
+            const [dataset, setDataset] = useState(null);
+            const [stats, setStats] = useState(null);
+            const [selectedTask, setSelectedTask] = useState(null);
+            const [logs, setLogs] = useState([]);
+            const [searchTerm, setSearchTerm] = useState('');
+            const [filterLang, setFilterLang] = useState('all');
+            const [filterDiff, setFilterDiff] = useState('all');
+            const [isConnected, setIsConnected] = useState(false);
+
+            useEffect(() => {
+                checkConnection();
+                loadDataset();
+                loadStats();
+                connectToLogs();
+            }, []);
+
+            const checkConnection = async () => {
+                try {
+                    const res = await fetch('http://localhost:5000/');
+                    if (res.ok) {
+                        setIsConnected(true);
+                    }
+                } catch (error) {
+                    setIsConnected(false);
+                    console.error('Cannot connect to API server:', error);
+                }
+            };
+
+            const loadDataset = async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/dataset`);
+                    const data = await res.json();
+                    if (data.success) {
+                        setDataset(data.data);
+                    }
+                } catch (error) {
+                    console.error('Failed to load dataset:', error);
+                }
+            };
+
+            const loadStats = async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/dataset/stats`);
+                    const data = await res.json();
+                    if (data.success) {
+                        setStats(data.data);
+                    }
+                } catch (error) {
+                    console.error('Failed to load stats:', error);
+                }
+            };
+
+            const connectToLogs = () => {
+                const eventSource = new EventSource(`${API_BASE}/logs`);
+                
+                eventSource.onmessage = (event) => {
+                    try {
+                        const log = JSON.parse(event.data);
+                        if (log.type !== 'ping' && log.message) {
+                            setLogs(prev => [...prev.slice(-199), log]);
+                        }
+                    } catch (e) {
+                        console.error('Log parse error:', e);
+                    }
+                };
+
+                eventSource.onerror = (error) => {
+                    console.error('EventSource error:', error);
+                    setIsConnected(false);
+                };
+
+                return () => eventSource.close();
+            };
+
+            const executeOperation = async (operation, taskId = null, numTasks = 1) => {
+                try {
+                    const res = await fetch(`${API_BASE}/execute`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            operation, 
+                            task_id: taskId, 
+                            num_tasks: numTasks 
+                        })
+                    });
+                    
+                    const data = await res.json();
+                    if (data.success) {
+                        setLogs(prev => [...prev, { 
+                            type: 'info', 
+                            message: `✓ ${operation} operation started` 
+                        }]);
+                        
+                        // 刷新数据
+                        setTimeout(() => {
+                            loadDataset();
+                            loadStats();
+                        }, 2000);
+                    }
+                } catch (error) {
+                    console.error('Failed to execute operation:', error);
+                    setLogs(prev => [...prev, { 
+                        type: 'error', 
+                        message: `✗ Failed to start ${operation}: ${error.message}` 
+                    }]);
+                }
+            };
+
+            if (!isConnected) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md">
+                            <div className="text-center">
+                                <div className="text-6xl mb-4">⚠️</div>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                                    无法连接到服务器
+                                </h2>
+                                <p className="text-gray-600 mb-6">
+                                    请确保后端服务器正在运行：
+                                </p>
+                                <div className="bg-gray-900 text-green-400 p-4 rounded font-mono text-sm text-left mb-6">
+                                    python web_server.py
+                                </div>
+                                <button 
+                                    onClick={checkConnection}
+                                    className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                >
+                                    重试连接
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            const tasks = dataset ? dataset.slice(1) : [];
+            const filteredTasks = tasks.filter(task => {
+                const matchesSearch = task.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                    task.task.description.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesLang = filterLang === 'all' || task.metadata.language === filterLang;
+                const matchesDiff = filterDiff === 'all' || task.metadata.difficulty === parseInt(filterDiff);
+                return matchesSearch && matchesLang && matchesDiff;
+            });
+
+            return (
+                <div className="min-h-screen">
+                    {/* Header */}
+                    <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+                        <div className="max-w-7xl mx-auto px-4 py-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h1 className="text-3xl font-bold">数据集管理系统</h1>
+                                    <p className="mt-1 text-blue-100">Statement-Level MIX Dataset Manager</p>
+                                </div>
+                                <div className="flex items-center gap-2 bg-green-500 px-4 py-2 rounded-full">
+                                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                                    <span className="text-sm font-semibold">Connected</span>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Navigation */}
+                    <nav className="bg-white border-b shadow-sm sticky top-0 z-10">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <div className="flex space-x-8">
+                                {[
+                                    { id: 'overview', label: '概览', icon: '📊' },
+                                    { id: 'tasks', label: '任务', icon: '📝' },
+                                    { id: 'operations', label: '操作', icon: '⚙️' },
+                                    { id: 'logs', label: '日志', icon: '📋' }
+                                ].map(tab => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
+                                            activeTab === tab.id
+                                                ? 'border-blue-500 text-blue-600'
+                                                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                        }`}
+                                    >
+                                        <span className="mr-2">{tab.icon}</span>
+                                        {tab.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content */}
+                    <main className="max-w-7xl mx-auto px-4 py-6">
+                        {activeTab === 'overview' && (
+                            <OverviewTab stats={stats} tasks={tasks} />
+                        )}
+
+                        {activeTab === 'tasks' && (
+                            <TasksTab
+                                tasks={filteredTasks}
+                                searchTerm={searchTerm}
+                                setSearchTerm={setSearchTerm}
+                                filterLang={filterLang}
+                                setFilterLang={setFilterLang}
+                                filterDiff={filterDiff}
+                                setFilterDiff={setFilterDiff}
+                                selectedTask={selectedTask}
+                                setSelectedTask={setSelectedTask}
+                                executeOperation={executeOperation}
+                            />
+                        )}
+
+                        {activeTab === 'operations' && (
+                            <OperationsTab executeOperation={executeOperation} />
+                        )}
+
+                        {activeTab === 'logs' && (
+                            <LogsTab logs={logs} setLogs={setLogs} />
+                        )}
+                    </main>
+                </div>
+            );
+        }
+
+        function OverviewTab({ stats, tasks }) {
+            if (!stats) {
+                return (
+                    <div className="text-center py-12">
+                        <div className="text-4xl mb-4">⏳</div>
+                        <div className="text-gray-500">Loading statistics...</div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="space-y-6">
+                    {/* Summary Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <StatCard 
+                            title="Total Tasks" 
+                            value={stats.total_tasks} 
+                            icon="📦"
+                            color="blue" 
+                        />
+                        <StatCard 
+                            title="With CoT" 
+                            value={stats.with_cot} 
+                            icon="🧠"
+                            color="green" 
+                        />
+                        <StatCard 
+                            title="With Answer" 
+                            value={stats.with_answer} 
+                            icon="✅"
+                            color="purple" 
+                        />
+                        <StatCard 
+                            title="Completion" 
+                            value={`${Math.round(stats.with_answer / stats.total_tasks * 100)}%`} 
+                            icon="📈"
+                            color="orange" 
+                        />
+                    </div>
+
+                    {/* Distribution Charts */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-white p-6 rounded-lg shadow">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center">
+                                <span className="mr-2">🎯</span>
+                                Difficulty Distribution
+                            </h3>
+                            <DistributionChart 
+                                data={stats.difficulty_distribution} 
+                                label="Level" 
+                                color="blue"
+                            />
+                        </div>
+
+                        <div className="bg-white p-6 rounded-lg shadow">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center">
+                                <span className="mr-2">💻</span>
+                                Language Distribution
+                            </h3>
+                            <DistributionChart 
+                                data={stats.language_distribution} 
+                                label="" 
+                                color="green"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Recent Tasks */}
+                    <div className="bg-white p-6 rounded-lg shadow">
+                        <h3 className="text-lg font-semibold mb-4 flex items-center">
+                            <span className="mr-2">🕐</span>
+                            Recent Tasks
+                        </h3>
+                        <div className="space-y-2">
+                            {tasks.slice(-5).reverse().map(task => (
+                                <div key={task.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                    <div>
+                                        <span className="font-mono font-semibold text-sm">{task.id}</span>
+                                        <span className="ml-3 text-sm text-gray-600">
+                                            {task.metadata.language}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                            Difficulty: {task.metadata.difficulty}
+                                        </span>
+                                        {task.task.cot && (
+                                            <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                                                Has CoT
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function StatCard({ title, value, icon, color }) {
+            const colors = {
+                blue: 'from-blue-500 to-blue-600',
+                green: 'from-green-500 to-green-600',
+                purple: 'from-purple-500 to-purple-600',
+                orange: 'from-orange-500 to-orange-600'
+            };
+
+            return (
+                <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <div className={`inline-block p-3 rounded-lg bg-gradient-to-br ${colors[color]} text-white mb-4 text-2xl`}>
+                        {icon}
+                    </div>
+                    <h3 className="text-gray-500 text-sm font-medium">{title}</h3>
+                    <p className="text-3xl font-bold mt-2">{value}</p>
+                </div>
+            );
+        }
+
+        function DistributionChart({ data, label, color }) {
+            const maxValue = Math.max(...Object.values(data));
+            const colorClasses = {
+                blue: 'bg-blue-500',
+                green: 'bg-green-500',
+                purple: 'bg-purple-500',
+                orange: 'bg-orange-500'
+            };
+
+            return (
+                <div className="space-y-3">
+                    {Object.entries(data).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => (
+                        <div key={key} className="flex items-center">
+                            <div className="w-24 text-sm text-gray-600 font-medium">
+                                {label} {key}
+                            </div>
+                            <div className="flex-1 bg-gray-200 rounded-full h-8 mx-4 overflow-hidden">
+                                <div
+                                    className={`${colorClasses[color]} h-8 rounded-full flex items-center justify-end px-3 transition-all duration-500`}
+                                    style={{ width: `${Math.max((value / maxValue) * 100, 5)}%` }}
+                                >
+                                    <span className="text-xs text-white font-bold">{value}</span>
+                                </div>
+                            </div>
+                            <div className="w-16 text-right text-sm text-gray-500">
+                                {Math.round((value / Object.values(data).reduce((a, b) => a + b, 0)) * 100)}%
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        function TasksTab({ tasks, searchTerm, setSearchTerm, filterLang, setFilterLang, filterDiff, setFilterDiff, selectedTask, setSelectedTask, executeOperation }) {
+            return (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Task List */}
+                    <div className="lg:col-span-1 space-y-4">
+                        {/* Filters */}
+                        <div className="bg-white p-4 rounded-lg shadow space-y-3">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    🔍 Search
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="Search by ID or description..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    💻 Language
+                                </label>
+                                <select
+                                    value={filterLang}
+                                    onChange={(e) => setFilterLang(e.target.value)}
+                                    className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                >
+                                    <option value="all">All Languages</option>
+                                    <option value="python">Python</option>
+                                    <option value="cpp">C++</option>
+                                    <option value="c">C</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    🎯 Difficulty
+                                </label>
+                                <select
+                                    value={filterDiff}
+                                    onChange={(e) => setFilterDiff(e.target.value)}
+                                    className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                >
+                                    <option value="all">All Difficulties</option>
+                                    {[0, 1, 2, 3, 4, 5].map(d => (
+                                        <option key={d} value={d}>Level {d}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Task Count */}
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
+                            <span className="font-semibold text-blue-900">
+                                {tasks.length} task{tasks.length !== 1 ? 's' : ''} found
+                            </span>
+                        </div>
+
+                        {/* Task Items */}
+                        <div className="bg-white rounded-lg shadow divide-y max-h-96 overflow-y-auto">
+                            {tasks.length === 0 ? (
+                                <div className="p-8 text-center text-gray-500">
+                                    No tasks match your filters
+                                </div>
+                            ) : (
+                                tasks.map(task => (
+                                    <div
+                                        key={task.id}
+                                        onClick={() => setSelectedTask(task)}
+                                        className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${
+                                            selectedTask?.id === task.id ? 'bg-blue-50 border-l-4 border-blue-500' : ''
+                                        }`}
+                                    >
+                                        <div className="font-mono font-semibold text-sm">{task.id}</div>
+                                        <div className="flex items-center gap-2 mt-2 text-xs">
+                                            <span className="bg-gray-200 px-2 py-1 rounded">
+                                                {task.metadata.language}
+                                            </span>
+                                            <span className="bg-blue-200 px-2 py-1 rounded">
+                                                D:{task.metadata.difficulty}
+                                            </span>
+                                            {task.task.cot && (
+                                                <span className="bg-green-200 px-2 py-1 rounded">CoT</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Task Detail */}
+                    <div className="lg:col-span-2">
+                        {selectedTask ? (
+                            <TaskDetail task={selectedTask} executeOperation={executeOperation} />
+                        ) : (
+                            <div className="bg-white p-12 rounded-lg shadow text-center">
+                                <div className="text-6xl mb-4">👈</div>
+                                <div className="text-gray-500 text-lg">Select a task to view details</div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function TaskDetail({ task, executeOperation }) {
+            const [showFullCode, setShowFullCode] = useState(false);
+            const [copied, setCopied] = useState(false);
+            const codeRef = useRef(null);
+
+            // 获取语言类型
+            const getLanguageClass = (lang) => {
+                const langMap = {
+                    'python': 'python',
+                    'cpp': 'cpp',
+                    'c++': 'cpp',
+                    'c': 'c'
+                };
+                return langMap[lang.toLowerCase()] || 'plaintext';
+            };
+
+            useEffect(() => {
+                // 延迟执行高亮，确保 DOM 已更新
+                const timer = setTimeout(() => {
+                    if (codeRef.current && window.hljs) {
+                        const codeBlock = codeRef.current.querySelector('code');
+                        if (codeBlock) {
+                            // 完全移除高亮相关属性
+                            codeBlock.className = getLanguageClass(task.metadata.language);
+                            codeBlock.removeAttribute('data-highlighted');
+                            
+                            // 重新应用高亮
+                            window.hljs.highlightElement(codeBlock);
+                        }
+                    }
+                }, 10);
+
+                return () => clearTimeout(timer);
+            }, [task.task.code, showFullCode, task.metadata.language]);
+            
+            const codePreview = task.task.code.split('\n').slice(0, 20).join('\n');
+            const hasMoreCode = task.task.code.split('\n').length > 20;
+            const displayCode = showFullCode ? task.task.code : codePreview;
+            
+            // 生成行号
+            const lineCount = displayCode.split('\n').length;
+            const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1);
+            
+            // 复制代码
+            const copyCode = () => {
+                navigator.clipboard.writeText(task.task.code).then(() => {
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                });
+            };
+
+            return (
+                <div className="bg-white p-6 rounded-lg shadow space-y-6">
+                    {/* Header */}
+                    <div className="border-b pb-4">
+                        <h2 className="text-2xl font-bold font-mono">{task.id}</h2>
+                        <div className="flex flex-wrap gap-3 mt-3">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100">
+                                💻 {task.metadata.language}
+                            </span>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                🎯 Difficulty: {task.metadata.difficulty}
+                            </span>
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                                📊 Intervention: {task.metadata.intervention}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Description */}
+                    <div>
+                        <h3 className="font-semibold text-lg mb-3 flex items-center">
+                            <span className="mr-2">📝</span>
+                            Description
+                        </h3>
+                        <p className="text-gray-700 leading-relaxed">{task.task.description}</p>
+                    </div>
+
+                    {/* Code with Syntax Highlighting */}
+                    <div>
+                        <div className="flex items-center justify-between mb-3">
+                            <h3 className="font-semibold text-lg flex items-center">
+                                <span className="mr-2">💻</span>
+                                Code
+                                <span className="ml-3 text-sm text-gray-500">
+                                    ({displayCode.split('\n').length} lines)
+                                </span>
+                            </h3>
+                            {hasMoreCode && (
+                                <button
+                                    onClick={() => setShowFullCode(!showFullCode)}
+                                    className="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                                >
+                                    {showFullCode ? '▲ Show Less' : '▼ Show More'}
+                                </button>
+                            )}
+                        </div>
+                        
+                        <div className="code-block shadow-lg" ref={codeRef}>
+                            {/* Code Header */}
+                            <div className="code-header">
+                                <span className="code-language">{task.metadata.language}</span>
+                                <button
+                                    onClick={copyCode}
+                                    className={`copy-button ${copied ? 'copied' : ''}`}
+                                >
+                                    {copied ? '✓ Copied!' : '📋 Copy'}
+                                </button>
+                            </div>
+                            
+                            {/* Code Content with Line Numbers */}
+                            <div className="code-with-lines">
+                                <div className="line-numbers">
+                                    {lineNumbers.map(num => (
+                                        <span key={num}>{num}</span>
+                                    ))}
+                                </div>
+                                <pre style={{ margin: 0, flex: 1 }}>
+                                    <code className={getLanguageClass(task.metadata.language)}>
+{displayCode}</code>
+                                </pre>
+                            </div>
+                            
+                            {/* Show More Indicator */}
+                            {!showFullCode && hasMoreCode && (
+                                <div className="bg-gray-800 text-gray-400 text-center py-2 text-sm border-t border-gray-700">
+                                    ... {task.task.code.split('\n').length - 20} more lines
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Answer */}
+                    {task.task.answer !== null && task.task.answer !== undefined && (
+                        <div>
+                            <h3 className="font-semibold text-lg mb-3 flex items-center">
+                                <span className="mr-2">✅</span>
+                                Answer
+                            </h3>
+                            <div className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-300 rounded-lg p-6">
+                                <span className="text-4xl font-mono font-bold text-green-700">
+                                    {task.task.answer}
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* CoT */}
+                    {task.task.cot && task.task.cot.trim() && (
+                        <div>
+                            <h3 className="font-semibold text-lg mb-3 flex items-center">
+                                <span className="mr-2">🧠</span>
+                                Chain of Thought
+                            </h3>
+                            <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-lg p-4">
+                                <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">{task.task.cot}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex flex-wrap gap-3 pt-4 border-t">
+                        <button
+                            onClick={() => executeOperation('execute', task.id)}
+                            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium shadow-sm"
+                        >
+                            ▶️ Execute
+                        </button>
+                        <button
+                            onClick={() => executeOperation('cot', task.id)}
+                            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium shadow-sm"
+                        >
+                            🧠 Generate CoT
+                        </button>
+                        <button
+                            onClick={() => executeOperation('evaluate', task.id)}
+                            className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors font-medium shadow-sm"
+                        >
+                            🤖 AI Evaluate
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        function OperationsTab({ executeOperation }) {
+            const [numTasks, setNumTasks] = useState(1);
+
+            const operations = [
+                {
+                    id: 'execute',
+                    title: 'Execute All Tasks',
+                    description: '运行所有任务代码并生成答案文件',
+                    icon: '▶️',
+                    color: 'blue',
+                    action: () => executeOperation('execute')
+                },
+                {
+                    id: 'cot',
+                    title: 'Generate CoT',
+                    description: '为所有任务生成思维链推理过程',
+                    icon: '🧠',
+                    color: 'green',
+                    action: () => executeOperation('cot')
+                },
+                {
+                    id: 'evaluate',
+                    title: 'AI Evaluation',
+                    description: '使用5个AI模型评估所有任务',
+                    icon: '🤖',
+                    color: 'purple',
+                    action: () => executeOperation('evaluate')
+                }
+            ];
+
+            return (
+                <div className="space-y-6">
+                    {/* Batch Operations */}
+                    <div>
+                        <h2 className="text-2xl font-bold mb-4">Batch Operations</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {operations.map(op => (
+                                <OperationCard key={op.id} {...op} />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Generate New Tasks */}
+                    <div>
+                        <h2 className="text-2xl font-bold mb-4">Generate New Tasks</h2>
+                        <div className="bg-white p-6 rounded-lg shadow">
+                            <div className="flex items-center mb-4">
+                                <span className="text-3xl mr-3">✨</span>
+                                <div>
+                                    <h3 className="text-lg font-semibold">Create New Tasks</h3>
+                                    <p className="text-gray-600 text-sm">生成新任务并自动运行完整流程</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-3">
+                                <div className="flex-none">
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Number of Tasks
+                                    </label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="10"
+                                        value={numTasks}
+                                        onChange={(e) => setNumTasks(Math.max(1, Math.min(10, parseInt(e.target.value) || 1)))}
+                                        className="w-24 px-3 py-2 border rounded-md text-center font-semibold"
+                                    />
+                                </div>
+                                <div className="flex-1 flex items-end">
+                                    <button
+                                        onClick={() => executeOperation('generate', null, numTasks)}
+                                        className="w-full px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all font-medium shadow-md"
+                                    >
+                                        🚀 Generate {numTasks} Task{numTasks > 1 ? 's' : ''}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function OperationCard({ title, description, icon, color, action }) {
+            const colors = {
+                blue: 'from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700',
+                green: 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700',
+                purple: 'from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700',
+                orange: 'from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700'
+            };
+
+            return (
+                <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <div className="text-4xl mb-4">{icon}</div>
+                    <h3 className="text-lg font-semibold mb-2">{title}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{description}</p>
+                    <button
+                        onClick={action}
+                        className={`w-full px-4 py-2 bg-gradient-to-r ${colors[color]} text-white rounded-lg transition-all font-medium shadow-sm`}
+                    >
+                        Start Operation
+                    </button>
+                </div>
+            );
+        }
+
+        function LogsTab({ logs, setLogs }) {
+            const logContainerRef = useRef(null);
+
+            useEffect(() => {
+                if (logContainerRef.current) {
+                    logContainerRef.current.scrollTop = logContainerRef.current.scrollHeight;
+                }
+            }, [logs]);
+
+            const getLogClass = (type) => {
+                const classes = {
+                    'stdout': 'log-stdout',
+                    'stderr': 'log-stderr',
+                    'info': 'log-info',
+                    'status': 'log-status',
+                    'error': 'log-error'
+                };
+                return classes[type] || 'text-gray-400';
+            };
+
+            return (
+                <div className="bg-white rounded-lg shadow">
+                    <div className="p-4 border-b flex justify-between items-center">
+                        <h3 className="font-semibold text-lg flex items-center">
+                            <span className="mr-2">📋</span>
+                            Operation Logs
+                            <span className="ml-3 text-sm text-gray-500">({logs.length} entries)</span>
+                        </h3>
+                        <button
+                            onClick={() => setLogs([])}
+                            className="px-4 py-2 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                        >
+                            🗑️ Clear Logs
+                        </button>
+                    </div>
+                    <div 
+                        ref={logContainerRef}
+                        className="p-4 bg-gray-900 text-sm font-mono h-96 overflow-y-auto log-container"
+                    >
+                        {logs.length === 0 ? (
+                            <div className="text-gray-500 text-center py-8">
+                                📭 No logs yet. Start an operation to see logs here.
+                            </div>
+                        ) : (
+                            logs.map((log, index) => (
+                                <div key={index} className={`${getLogClass(log.type)} py-1`}>
+                                    <span className="text-gray-500">[{log.type}]</span> {log.message}
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
