@@ -33,10 +33,13 @@ def main():
   # 写入所有代码文件
   python main.py --write-code
   
-  # 处理所有cases（跳过已有COT的）
+  # 处理所有cases(跳过已有COT的)
   python main.py --all
   
-  # 处理所有cases（包括已有COT的）
+  # 处理前10条数据
+  python main.py --all --limit 10
+  
+  # 处理所有cases(包括已有COT的)
   python main.py --all --no-skip
   
   # 处理单个case
@@ -48,15 +51,18 @@ def main():
   # 调整并行数
   python main.py --all --workers 8
   
-  # 完整流程：提取目标 -> 写入代码 -> 处理所有
-  python main.py --extract-targets --write-code --all
+  # 设置超时时间为30秒
+  python main.py --all --timeout 30
+  
+  # 完整流程:提取目标 -> 写入代码 -> 处理前50条
+  python main.py --extract-targets --write-code --all --limit 50
         """
     )
     
     parser.add_argument(
         '--dataset',
         default='TreecEva_data_reduced_formated_cot.json',
-        help='数据集JSON文件路径（默认: TreecEva_data_reduced_formated_cot.json）'
+        help='数据集JSON文件路径(默认: TreecEva_data_reduced_formated_cot.json)'
     )
     
     parser.add_argument(
@@ -80,19 +86,26 @@ def main():
     parser.add_argument(
         '--case',
         type=str,
-        help='处理指定的case ID（如: SL-MIX-S0001）'
+        help='处理指定的case ID(如: SL-MIX-S0001)'
+    )
+    
+    parser.add_argument(
+        '--limit',
+        type=int,
+        default=None,
+        help='限制处理的数据条数(默认: 无限制,处理所有数据)'
     )
     
     parser.add_argument(
         '--no-skip',
         action='store_true',
-        help='不跳过已有COT的cases（默认会跳过）'
+        help='不跳过已有COT的cases(默认会跳过)'
     )
     
     parser.add_argument(
         '--force',
         action='store_true',
-        help='强制重新处理（用于--extract-targets和--write-code）'
+        help='强制重新处理(用于--extract-targets和--write-code)'
     )
     
     parser.add_argument(
@@ -106,7 +119,14 @@ def main():
         '--workers',
         type=int,
         default=4,
-        help='并行处理的worker数量（默认: 4）'
+        help='并行处理的worker数量(默认: 4)'
+    )
+    
+    parser.add_argument(
+        '--timeout',
+        type=int,
+        default=15,
+        help='单个case处理超时时间(秒,默认: 15)'
     )
     
     args = parser.parse_args()
@@ -132,13 +152,17 @@ def main():
     print(f"数据集: {dataset_path}")
     print(f"AI模型: {args.model}")
     print(f"并行数: {args.workers}")
+    print(f"超时时间: {args.timeout}秒")
+    if args.limit:
+        print(f"数据限制: 最多处理 {args.limit} 条")
     print(f"{'='*60}\n")
     
     # 创建处理器
     processor = DatasetProcessor(
         str(dataset_path),
         api_config=api_config,
-        max_workers=args.workers
+        max_workers=args.workers,
+        timeout=args.timeout
     )
     
     # 执行操作
@@ -149,23 +173,13 @@ def main():
         processor.write_code_files(force=args.force)
     
     if args.all:
-        processor.process_all_cases(skip_existing=not args.no_skip)
+        processor.process_all_cases(
+            skip_existing=not args.no_skip,
+            limit=args.limit
+        )
     elif args.case:
         processor.process_case_by_id(args.case)
 
 
 if __name__ == '__main__':
     main()
-
-
-#     # 完整流程
-# python main.py --extract-targets --write-code --all
-
-# # 只提取目标
-# python main.py --extract-targets
-
-# # 处理单个case
-# python main.py --case SL-MIX-S0001
-
-# # 使用不同模型
-# python main.py --all --model qwen3_coder
