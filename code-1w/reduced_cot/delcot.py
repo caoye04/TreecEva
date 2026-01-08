@@ -48,7 +48,7 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
     # JSON文件名（请根据实际文件名修改）
-    json_filename = "TreecEva_data_reduced_formated_cot.json"
+    json_filename = "TreecEva_data_reduced_natural_cot.json"
     
     # 构建完整路径
     json_file_path = os.path.join(script_dir, json_filename)

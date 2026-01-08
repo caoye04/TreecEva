@@ -84,22 +84,58 @@ class NaturalCOTGenerator:
     
     def _read_trimmed_trace(self, case_id):
         """
-        读取剪枝后的追踪文件
+        读取剪枝后的追踪文件,失败则读取原始formated_cot
         
         Args:
             case_id: Case ID (如: SL-MIX-S0001)
             
         Returns:
-            str: 追踪文件内容，如果文件不存在则返回None
+            str: 追踪文件内容,如果文件不存在则尝试读取原始cot
         """
         case_dir = self.temp_code_dir / case_id
         trimmed_file = case_dir / f"trimmed_trace_{case_id}.txt"
         
-        if not trimmed_file.exists():
+        # 先尝试读取剪枝后的追踪文件
+        if trimmed_file.exists():
+            with open(trimmed_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+                # 直接截断到50000字符
+                if len(content) > 50000:
+                    content = content[:50000] + "\n...[内容过长，已截断]"
+                return content
+        
+        # 如果剪枝文件不存在,尝试从原始formated_cot文件读取
+        print(f"    ⚠ 未找到剪枝文件,尝试读取原始cot...")
+        formated_cot_path = self.dataset_dir / 'TreecEva_data_reduced_formated_cot.json'
+        
+        if not formated_cot_path.exists():
+            print(f"    ✗ 原始cot文件也不存在: {formated_cot_path}")
             return None
         
-        with open(trimmed_file, 'r', encoding='utf-8') as f:
-            return f.read()
+        try:
+            with open(formated_cot_path, 'r', encoding='utf-8') as f:
+                formated_data = json.load(f)
+            
+            # 查找对应的case
+            for item in formated_data:
+                if isinstance(item, dict) and item.get('id') == case_id:
+                    cot = item.get('task', {}).get('cot', '')
+                    if cot:
+                        print(f"    ✓ 从原始cot文件读取成功 (长度: {len(cot)} 字符)")
+                        # 直接截断到50000字符
+                        if len(cot) > 50000:
+                            cot = cot[:50000] + "\n...[内容过长，已截断]"
+                        return cot
+                    else:
+                        print(f"    ✗ 原始cot文件中该case没有cot字段")
+                        return None
+            
+            print(f"    ✗ 在原始cot文件中未找到case: {case_id}")
+            return None
+            
+        except Exception as e:
+            print(f"    ✗ 读取原始cot文件失败: {e}")
+            return None
     
     def _generate_prompt(self, description, code, trimmed_trace):
         """
@@ -187,7 +223,7 @@ Generate the COT explanation below:"""
 
     def process_single_case(self, case):
         """
-        处理单个case，生成natural COT
+        处理单个case,生成natural COT
         
         Args:
             case: 数据集中的单个case
@@ -210,13 +246,14 @@ Generate the COT explanation below:"""
         description = case['task']['description']
         code = case['task']['code']
         
-        # 读取剪枝后的追踪文件
-        print(f"  [步骤1/3] 读取剪枝后的追踪文件...")
+        # 读取剪枝后的追踪文件(或原始cot)
+        print(f"  [步骤1/3] 读取追踪数据...")
         trimmed_trace = self._read_trimmed_trace(case_id)
         
         if not trimmed_trace:
-            print(f"  ✗ 错误: 未找到剪枝后的追踪文件")
-            print(f"    预期位置: temp_code/{case_id}/trimmed_trace_{case_id}.txt")
+            print(f"  ✗ 错误: 无法获取追踪数据")
+            print(f"    - 剪枝文件: temp_code/{case_id}/trimmed_trace_{case_id}.txt")
+            print(f"    - 原始文件: TreecEva_data_reduced_formated_cot.json")
             self.stats['failure'] += 1
             return False
         

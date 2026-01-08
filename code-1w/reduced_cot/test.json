@@ -1,0 +1,21 @@
+[
+  {
+    "background": "I am developing a comprehensive evaluation benchmark for large language models in the code reasoning domain. This benchmark specifically focuses on assessing statement-level reasoning capabilities of LLMs across multiple computational paradigms: (1) Arithmetic Operations - including basic arithmetic (addition, subtraction, multiplication, division), advanced mathematical operations (exponentiation, logarithms, trigonometric functions), bitwise operations (AND, OR, XOR, shift operations), and composite calculations combining multiple operation types; (2) Boolean Logic - encompassing comparison operations (equality, inequality, relational comparisons), logical operations (AND, OR, NOT), and short-circuit evaluation patterns; (3) Variable Assignment - including simple assignments, multiple simultaneous assignments, tuple unpacking, and destructuring assignments; (4) Control Flow and Data Structures - covering conditional statements, loops, and basic container operations; (5) Complex Mixed Scenarios - integrating multiple reasoning types in sophisticated logical chains.",
+    "requirements": "Generate additional examples following the provided template format with these specific criteria: (1) Create significantly more complex code samples with extended logical reasoning chains requiring multiple inference steps; (2) Ensure each example has a unique, deterministic answer that can be computed through step-by-step execution; (3) Maintain strict format consistency across all generated examples, matching the exact structure and field organization of the provided samples; (4) Incorporate diverse programming languages and paradigms while maintaining code complexity at an advanced level suitable for challenging LLM reasoning capabilities; (5) Minimize reliance on external library functions and API calls, focusing instead on algorithmic reasoning with basic language constructs."
+  },
+  {
+    "id": "id-tset-001",
+    "metadata": {
+      "category": "Statement-Level",
+      "language": "python",
+      "difficulty": 1,
+      "intervention": 0
+    },
+    "task": {
+      "description": "What is the value of variable 'd' after executing the statement 'd = d + a'?",
+      "code": "a = 1\nb = 2\nc = a + b\nd = 1\nfor i in range(2):\n    d = d + 1\nd = d + a",
+      "answer": 4,
+      "cot": "Target: Find the value of variable d after [line 7] executes\n\n[line 1]  a = 1\nAssign: a = 1\n[line 4]  d = 1\nAssign: d = 1\n[line 5]  for i in range(2):\nLoop Start: i takes its first value 0\n[line 6]  d = d + 1\nUpdate: d changed from 1 (defined at defined at [line 4]) to 1+1 = 2\n[line 5]  for i in range(2):\nLoop Iteration: i is now 1 (iteration 2)\n[line 6]  d = d + 1\nUpdate: d changed from 2 (defined at defined at [line 6]) to 2+1 = 3\n[line 5]  for i in range(2):\nLoop End: Iteration finished\n[line 7]  d = d + a\nCompute: d + a, where d=3 (defined at [line 6]), a=1 (defined at [line 1]) = 4\n\nAnswer: d = 4 (last updated on defined at [line 7])"
+    }
+  }
+]

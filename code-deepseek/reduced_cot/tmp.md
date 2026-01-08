@@ -4,14 +4,6 @@
 
 下面是我的某个数据集cot生产方法，即基于python文件的执行流程与变化，然后进行智能回溯与剪枝，最后用模板化匹配的方法产出cot。
 
-我现在想新增一个组件叫natural_cot_generator.py。
-
-他会调用ai（API_KEY = "sk-tT9Ddv4cOCl5BXW4kivhRQ" BASE_URL = "https://llmapi.paratera.com/v1 AI_APIS = {"DeepSeek-V3.2-Exp": {"base_url": BASE_URL,"api_key": API_KEY,"model": "DeepSeek-V3.2-Exp"}}）
-
-然后读取数据集TreecEva_data_reduced_natural_cot.json中的每个case的description和code，再读取temp_code文件夹中的数据集文件夹中的剪枝后运行流程trimmed_trace_SL-MIX-Sxxxx.txt。把这三个信息再结合适当的prompt，让ai生产cot。并填入TreecEva_data_reduced_natural_cot.json中。
-
-同时由于数据很多，我希望能做到并行处理。
-
 ### 处理思路流程
 
 #### 步骤1: 代码执行追踪
